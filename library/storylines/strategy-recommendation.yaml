@@ -1,0 +1,88 @@
+# Storyline: the classic answer-first strategy deck.
+# Situation → Complication → Resolution, then the reasons, the plan and the ask.
+schemaVersion: 1
+id: strategy-recommendation
+name: Strategy recommendation
+summary: Answer-first recommendation for a decision maker — the governing thought up front, three reasons, the plan and the ask.
+bestFor: [strategy, recommendation, decision, market entry, investment decision, growth strategy, transformation, board decision, consulting]
+audiences: [board, executive committee, CEO, investment committee, steering committee]
+themes: [consulting-classic, executive, corporate-blue]
+ordered: true
+arc: Situation → Complication → Resolution (answer) → 3 reasons → plan → risks → ask
+length: { min: 8, max: 18 }
+tone: [direct, evidence-led, concise]
+principles:
+  - State the recommendation on slide 2. Everything after proves it.
+  - Read the action titles alone — they must argue the full case.
+  - Each reason is MECE with the others and has its own evidence slide(s).
+  - Every number carries a source; illustrative data is labelled as such.
+  - End with an explicit decision request, owner and date.
+sections:
+  - id: open
+    name: Opening
+    slots:
+      - id: cover
+        purpose: Frame the decision the audience is here to make.
+        layouts: [title]
+        guidance: Title is the answer in one sentence ("Entering Germany can add €40M by 2028"), not a topic.
+        inputs: [decision, audience, date]
+      - id: summary
+        purpose: Give the whole argument on one page — situation, complication, resolution and the ask.
+        layouts: [exec-summary]
+        guidance: Use the scr variant. Resolution is the governing thought; the ask is concrete (money, scope, date).
+        inputs: [governing thought, the ask]
+  - id: why
+    name: Why change
+    slots:
+      - id: context
+        purpose: Establish the situation the audience already accepts, quantified.
+        layouts: [kpi-tiles, chart-takeaway]
+        guidance: Two to four numbers the room agrees on. No surprises here.
+        inputs: [baseline metrics]
+      - id: complication
+        purpose: Show what changed and why waiting is costly.
+        layouts: [chart-takeaway, timeline, big-statement]
+        guidance: The title names the threat or opportunity and its timing.
+        inputs: [trend data, competitor moves, deadline]
+  - id: answer
+    name: The recommendation
+    slots:
+      - id: options
+        purpose: Show the options considered and why the recommended one wins on the criteria that matter.
+        layouts: [options-comparison, matrix-2x2]
+        guidance: Same criteria for every option. Mark the recommended option. Include "do nothing".
+        inputs: [options, criteria, assessments]
+      - id: reasons
+        purpose: Prove each of the three reasons behind the recommendation, one slide each.
+        layouts: [chart-takeaway, waterfall, key-points, data-table]
+        repeat: { min: 2, max: 4 }
+        guidance: One reason per slide; the title states the reason as a claim with its number.
+        inputs: [evidence per reason]
+      - id: value
+        purpose: Quantify the value at stake and how it builds up.
+        layouts: [waterfall, kpi-tiles]
+        required: false
+        guidance: A bridge from today to target makes the economics tangible. Make the numbers add up.
+        inputs: [baseline, drivers, target]
+  - id: how
+    name: How we get there
+    slots:
+      - id: plan
+        purpose: Show the phased plan with gates between phases.
+        layouts: [timeline, process-steps]
+        guidance: Phases on one time axis; each gate names the evidence needed to continue.
+        inputs: [phases, milestones, gates]
+      - id: risks
+        purpose: Name the main risks and how each is mitigated.
+        layouts: [data-table, matrix-2x2]
+        required: false
+        guidance: Three to five risks with likelihood, impact and mitigation owner.
+        inputs: [risks, mitigations, owners]
+  - id: close
+    name: Decision
+    slots:
+      - id: ask
+        purpose: Make the decision explicit — what, who, by when — and the immediate next steps.
+        layouts: [next-steps]
+        guidance: Use the decision variant. One decision, owners and dates for next steps.
+        inputs: [decision, owners, dates]

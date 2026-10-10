@@ -1,0 +1,77 @@
+# Storyline: tell a story or share an experience — keynotes, talks, retrospectives for a wide audience.
+# Hook → stakes → journey → turning point → insight → call to action.
+schemaVersion: 1
+id: narrative-story
+name: Narrative story
+summary: A story-led talk that makes one idea memorable — hook, stakes, journey, turning point, insight and a call to action.
+bestFor: [storytelling, keynote, talk, share experience, conference, all-hands, inspiration, lessons, journey, town hall, story]
+audiences: [conference audience, all-hands, community, customers, team]
+themes: [midnight, editorial, modern-pitch]
+ordered: false
+arc: Hook → stakes → journey → turning point → insight → call to action
+length: { min: 8, max: 20 }
+tone: [personal, vivid, concrete]
+principles:
+  - One idea the audience should remember; every slide serves it.
+  - Show, don't list — one image, one number or one sentence per slide.
+  - Put the tension early; the insight lands only after a turning point.
+  - Use real moments, names (with permission) and numbers to make it concrete.
+  - End with one thing the audience can do tomorrow.
+sections:
+  - id: hook
+    name: Hook
+    slots:
+      - id: cover
+        purpose: Promise the idea in a line that makes people curious.
+        layouts: [title]
+        guidance: A short provocative title; subtitle names the talk and the speaker.
+        inputs: [talk title, speaker, event]
+      - id: hook
+        purpose: Open with a moment, a surprising number or a question that creates tension.
+        layouts: [big-statement, text-image]
+        guidance: statement or hero-number variant. One sentence, big. No agenda slide.
+        inputs: [opening moment or number]
+  - id: stakes
+    name: Stakes
+    slots:
+      - id: stakes
+        purpose: Make the audience care — what is at risk and for whom.
+        layouts: [big-statement, kpi-tiles, text-image]
+        guidance: Concrete consequences; one number beats five.
+        inputs: [stakes, who is affected]
+  - id: journey
+    name: Journey
+    slots:
+      - id: journey
+        purpose: Walk through what happened, in order, with the obstacles faced.
+        layouts: [timeline, text-image, process-steps]
+        repeat: { min: 2, max: 5 }
+        guidance: Each slide one beat of the story. Keep the time axis clear (milestones variant).
+        inputs: [key moments, obstacles]
+      - id: turning-point
+        purpose: Show the moment things changed and what caused it.
+        layouts: [big-statement, chart-takeaway, text-image]
+        guidance: Quote or hero-number variants work well; this is the emotional peak.
+        inputs: [turning point, evidence]
+  - id: insight
+    name: Insight
+    slots:
+      - id: insight
+        purpose: State the transferable lesson as a crisp claim.
+        layouts: [big-statement, key-points]
+        guidance: The sentence you want quoted afterwards. Up to three supporting lessons.
+        inputs: [lesson]
+      - id: proof
+        purpose: Prove the lesson generalises beyond this story.
+        layouts: [chart-takeaway, kpi-tiles, big-statement]
+        required: false
+        guidance: Data or a second example; cite the source.
+        inputs: [supporting evidence]
+  - id: action
+    name: Call to action
+    slots:
+      - id: cta
+        purpose: Leave the audience with one thing to do and how to reach you.
+        layouts: [title, next-steps]
+        guidance: Closing variant of title with the call to action as the title and contacts below.
+        inputs: [call to action, contact]

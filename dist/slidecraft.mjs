@@ -198721,6 +198721,42 @@ var chartTakeaway = {
           points: ["Retention, not acquisition, drives the curve"]
         }
       }
+    },
+    {
+      title: "Subscription revenue overtook services in 2025 and now drives growth",
+      variant: "stacked",
+      content: {
+        chart: {
+          label: "Revenue by stream, \u20ACM",
+          categories: ["2022", "2023", "2024", "2025"],
+          series: [
+            { name: "Subscription", values: [8, 12, 17, 24] },
+            { name: "Services", values: [14, 15, 16, 17] }
+          ]
+        },
+        takeaway: {
+          headline: "Recurring revenue is now 59% of the total",
+          points: ["Services stay flat by design", "Subscription grew 44% a year"]
+        }
+      },
+      sources: ["finance-fy25"]
+    },
+    {
+      title: "Average deal size rose 30% since we introduced annual plans",
+      variant: "column",
+      content: {
+        chart: {
+          label: "Average deal size, \u20ACk",
+          categories: ["Q1", "Q2", "Q3", "Q4", "Q1", "Q2"],
+          series: [{ name: "Deal size", values: [20, 21, 22, 24, 25, 26] }],
+          highlight: [5]
+        },
+        takeaway: {
+          headline: "Annual plans lift deal size",
+          points: ["Launched at the start of Q4"]
+        }
+      },
+      sources: ["finance-fy25"]
     }
   ],
   compose(ctx, c) {
@@ -201896,9 +201932,19 @@ function loadDeck(path2) {
       }
       const def = getLayout(g.data.layout);
       if (g.data.variant && def && !def.variants.includes(g.data.variant)) {
-        diagnostics.push(diag("SC-SPEC-002", `Unknown variant "${g.data.variant}" for ${def.id}`, { pointer: `/slides/${i}/variant` }));
+        diagnostics.push(
+          diag("SC-SPEC-002", `Unknown variant "${g.data.variant}" for ${def.id}`, {
+            pointer: `/slides/${i}/variant`
+          })
+        );
       }
-      if (seen.has(g.data.id)) diagnostics.push(diag("SC-SPEC-003", `Duplicate slide id "${g.data.id}"`, { pointer: `/slides/${i}/id`, slide: g.data.id }));
+      if (seen.has(g.data.id))
+        diagnostics.push(
+          diag("SC-SPEC-003", `Duplicate slide id "${g.data.id}"`, {
+            pointer: `/slides/${i}/id`,
+            slide: g.data.id
+          })
+        );
       seen.add(g.data.id);
       slides.push(g.data);
       return;
@@ -204053,6 +204099,54 @@ footer{margin-top:24px;color:var(--muted)}
   writeFileSync7(outPath, html);
   return outPath;
 }
+async function buildHero(out = join12(DOCS_DIR, "media", "hero.png")) {
+  mkdirSync9(dirname3(out), { recursive: true });
+  const picks = [
+    ["strategy-recommendation", "consulting-classic", 1],
+    ["narrative-story", "midnight", 1],
+    ["strategy-recommendation", "executive", 6],
+    ["pitch-deck", "modern-pitch", 5],
+    ["executive-update", "corporate-blue", 3],
+    ["narrative-story", "editorial", 7]
+  ];
+  const W2 = 2400;
+  const H2 = 1100;
+  const tw = 560;
+  const th = tw * (7.5 / 13.333);
+  const gx = 40;
+  const gy = 34;
+  const x0 = W2 - 2 * tw - gx - 70;
+  const y0 = (H2 - 3 * th - 2 * gy) / 2;
+  const pos = [0, 1, 2, 3, 4, 5].map((i) => [
+    x0 + i % 2 * (tw + gx),
+    y0 + Math.floor(i / 2) * (th + gy)
+  ]);
+  let thumbs = "";
+  for (const [i, [story, theme, slideIdx]] of picks.entries()) {
+    const s = getStoryline(story);
+    if (!s) continue;
+    const { scene } = composeDeck(previewDeck(s, theme));
+    const slide = scene.slides[Math.min(slideIdx, scene.slides.length - 1)];
+    const [x, y] = pos[i];
+    const svg2 = slideSvg(scene, slide).replace(
+      /^<svg ([^>]*?)width="[^"]*" height="[^"]*"/,
+      `<svg $1x="${x}" y="${y}" width="${tw}" height="${th.toFixed(1)}"`
+    );
+    thumbs += `<rect x="${x + 8}" y="${y + 12}" width="${tw}" height="${th.toFixed(1)}" fill="#000" opacity="0.3"/>${svg2}`;
+  }
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W2}" height="${H2}" viewBox="0 0 ${W2} ${H2}">
+<defs><linearGradient id="hbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0B1F3A"/><stop offset="1" stop-color="#151B2E"/></linearGradient>
+<radialGradient id="hglow" cx="0.75" cy="0.5" r="0.6"><stop offset="0" stop-color="#1F5FBF" stop-opacity="0.45"/><stop offset="1" stop-color="#1F5FBF" stop-opacity="0"/></radialGradient></defs>
+<rect width="${W2}" height="${H2}" fill="url(#hbg)"/><rect width="${W2}" height="${H2}" fill="url(#hglow)"/>
+<rect x="120" y="330" width="90" height="10" fill="#FF8A3D"/>
+<text x="120" y="450" font-family="Liberation Sans" font-weight="bold" font-size="120" fill="#FFFFFF">SlideCraft</text>
+<text x="124" y="540" font-family="Liberation Sans" font-size="44" fill="#C9D4E5">Describe the goal. Pick a look.</text>
+<text x="124" y="600" font-family="Liberation Sans" font-size="44" fill="#C9D4E5">Ship a partner-ready deck.</text>
+<text x="124" y="700" font-family="Liberation Sans" font-size="28" fill="#8FA0B8">Editable PPTX \xB7 vector PDF \xB7 HTML  \u2014  a Claude Code plugin and CLI</text>
+${thumbs}</svg>`;
+  writeFileSync7(out, await rasterize(svg, W2));
+  return out;
+}
 
 // src/library/check.ts
 function libraryCheck() {
@@ -204140,7 +204234,7 @@ function layoutsDoc() {
 **${l.name}** \u2014 ${l.purpose}
 
 `;
-    md += l.variants.map((v) => `![${l.id} \xB7 ${v}](../gallery/layouts/${l.id}--${v}.png)`).join(" ") + "\n\n";
+    md += [...new Set(l.examples.map((e) => e.variant ?? l.variants[0]))].map((v) => `![${l.id} \xB7 ${v}](../gallery/layouts/${l.id}--${v}.png)`).join(" ") + "\n\n";
     md += `- **Use when:** ${l.useWhen.join("; ")}
 - **Avoid when:** ${l.avoidWhen.join("; ")}
 - **Frame:** ${l.frame === "standard" ? "standard (action title, tracker, lead and source line are drawn for you)" : "full-bleed (the layout draws the whole slide)"}
@@ -204178,12 +204272,13 @@ function themesDoc() {
     md += `| [\`${t.id}\`](#${t.id}) | ${esc3(t.description)} | ${t.bestFor.join(", ")} | ${t.fonts.heading.family} / ${t.fonts.body.family} | ${t.prefers} |
 `;
   for (const t of loadThemes()) {
+    const story = loadStorylines().find((s) => s.themes.includes(t.id))?.id ?? "strategy-recommendation";
     md += `
 ## ${t.id}
 
 **${t.name}** \u2014 ${t.description}
 
-![${t.name}](../gallery/strategy-recommendation--${t.id}.png)
+![${t.name}](../gallery/${story}--${t.id}.png)
 
 `;
     md += `| Role | Color |
@@ -204632,7 +204727,7 @@ ${import_yaml4.default.stringify(deck, { lineWidth: 0 })}`
   ).option("-o, --out <dir>", "output directory").option(
     "--themes <list>",
     "comma-separated theme ids (default: each storyline's recommended themes)"
-  ).option("--storylines <list>", "comma-separated storyline ids (default: all)").action(async (o) => {
+  ).option("--storylines <list>", "comma-separated storyline ids (default: all)").option("--hero", "also render docs/media/hero.png for the README").action(async (o) => {
     const themes = o.themes ? o.themes.split(",") : void 0;
     const storylines = loadStorylines().filter(
       (s) => !o.storylines || o.storylines.split(",").includes(s.id)
@@ -204643,6 +204738,7 @@ ${import_yaml4.default.stringify(deck, { lineWidth: 0 })}`
       storylines
     });
     console.log(`${green("\u2714")} ${r.files.length} images`);
+    if (o.hero) console.log(`${green("\u2714")} ${relative3(process.cwd(), await buildHero())}`);
   });
   program3.command("gen").description("Regenerate reference docs, JSON Schemas and the catalog (CI checks for drift)").action(async () => {
     const files = await generateDocs();

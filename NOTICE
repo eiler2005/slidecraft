@@ -1,0 +1,26 @@
+SlideCraft
+Copyright (c) 2026 Denis Ermilov and SlideCraft contributors
+Licensed under the MIT License (see LICENSE).
+
+This product bundles or builds on the following third-party work:
+
+Fonts (fonts/, SIL Open Font License 1.1 — see each folder's license file and fonts/SOURCES.md)
+  - Liberation Sans 2.1.5, Liberation Serif 2.1.5 — https://github.com/liberationfonts/liberation-fonts
+  - Gelasio — https://github.com/SorkinType/Gelasio
+
+Runtime libraries inlined into dist/slidecraft.mjs (licenses retained by their authors)
+  - pptxgenjs (MIT), pdfkit (MIT), fontkit (MIT), jszip (MIT or GPLv3, used under MIT),
+    zod (MIT), yaml (ISC), commander (MIT)
+  - @resvg/resvg-wasm (MPL-2.0) — dist/resvg.wasm is the unmodified upstream binary
+
+Ideas and inspiration (no code, text or assets copied)
+  - Presenton (https://github.com/presenton/presenton, Apache-2.0): the idea of a layout
+    catalogue with content capacity limits, a template gallery, outline → layout → content
+    generation stages and template-from-PPTX. "Presenton" is a trademark of its owners and is
+    not used to name or brand SlideCraft.
+  - The consulting methodology generalises the author's earlier internal work (client-ai-agents).
+
+Not included
+  - @oai/artifact-tool (OpenAI, proprietary, internal evaluation and testing only) is never
+    copied, vendored or bundled. The optional adapter in src/backends/artifact-tool.ts only calls
+    a copy the user already has installed with Codex.

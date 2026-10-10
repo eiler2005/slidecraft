@@ -198,3 +198,53 @@ footer{margin-top:24px;color:var(--muted)}
   writeFileSync(outPath, html);
   return outPath;
 }
+
+/** README hero: real slides from the examples in several themes, plus the wordmark. */
+export async function buildHero(out = join(DOCS_DIR, 'media', 'hero.png')): Promise<string> {
+  mkdirSync(dirname(out), { recursive: true });
+  const picks: [string, string, number][] = [
+    ['strategy-recommendation', 'consulting-classic', 1],
+    ['narrative-story', 'midnight', 1],
+    ['strategy-recommendation', 'executive', 6],
+    ['pitch-deck', 'modern-pitch', 5],
+    ['executive-update', 'corporate-blue', 3],
+    ['narrative-story', 'editorial', 7],
+  ];
+  const W = 2400;
+  const H = 1100;
+  const tw = 560;
+  const th = tw * (7.5 / 13.333);
+  const gx = 40;
+  const gy = 34;
+  const x0 = W - 2 * tw - gx - 70;
+  const y0 = (H - 3 * th - 2 * gy) / 2;
+  const pos: [number, number][] = [0, 1, 2, 3, 4, 5].map((i) => [
+    x0 + (i % 2) * (tw + gx),
+    y0 + Math.floor(i / 2) * (th + gy),
+  ]);
+  let thumbs = '';
+  for (const [i, [story, theme, slideIdx]] of picks.entries()) {
+    const s = getStoryline(story);
+    if (!s) continue;
+    const { scene } = composeDeck(previewDeck(s, theme));
+    const slide = scene.slides[Math.min(slideIdx, scene.slides.length - 1)]!;
+    const [x, y] = pos[i]!;
+    const svg = slideSvg(scene, slide).replace(
+      /^<svg ([^>]*?)width="[^"]*" height="[^"]*"/,
+      `<svg $1x="${x}" y="${y}" width="${tw}" height="${th.toFixed(1)}"`,
+    );
+    thumbs += `<rect x="${x + 8}" y="${y + 12}" width="${tw}" height="${th.toFixed(1)}" fill="#000" opacity="0.3"/>${svg}`;
+  }
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+<defs><linearGradient id="hbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0B1F3A"/><stop offset="1" stop-color="#151B2E"/></linearGradient>
+<radialGradient id="hglow" cx="0.75" cy="0.5" r="0.6"><stop offset="0" stop-color="#1F5FBF" stop-opacity="0.45"/><stop offset="1" stop-color="#1F5FBF" stop-opacity="0"/></radialGradient></defs>
+<rect width="${W}" height="${H}" fill="url(#hbg)"/><rect width="${W}" height="${H}" fill="url(#hglow)"/>
+<rect x="120" y="330" width="90" height="10" fill="#FF8A3D"/>
+<text x="120" y="450" font-family="Liberation Sans" font-weight="bold" font-size="120" fill="#FFFFFF">SlideCraft</text>
+<text x="124" y="540" font-family="Liberation Sans" font-size="44" fill="#C9D4E5">Describe the goal. Pick a look.</text>
+<text x="124" y="600" font-family="Liberation Sans" font-size="44" fill="#C9D4E5">Ship a partner-ready deck.</text>
+<text x="124" y="700" font-family="Liberation Sans" font-size="28" fill="#8FA0B8">Editable PPTX · vector PDF · HTML  —  a Claude Code plugin and CLI</text>
+${thumbs}</svg>`;
+  writeFileSync(out, await rasterize(svg, W));
+  return out;
+}

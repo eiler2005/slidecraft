@@ -2,11 +2,11 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import YAML from 'yaml';
 import type { z } from 'zod';
+import { getLayout } from '../layouts/index.ts';
 import { STORYLINES_DIR, THEMES_DIR } from '../paths.ts';
 import { type Diagnostic, diag } from '../qa/codes.ts';
 import { Brief } from '../spec/brief.ts';
 import { Deck, type DeckDoc, GhostSlide, Slide } from '../spec/deck.ts';
-import { getLayout } from '../layouts/index.ts';
 import { Storyline } from '../spec/storyline.ts';
 import { Theme } from '../spec/theme.ts';
 
@@ -122,9 +122,19 @@ export function loadDeck(path: string): LoadedDeck {
       }
       const def = getLayout(g.data.layout);
       if (g.data.variant && def && !def.variants.includes(g.data.variant)) {
-        diagnostics.push(diag('SC-SPEC-002', `Unknown variant "${g.data.variant}" for ${def.id}`, { pointer: `/slides/${i}/variant` }));
+        diagnostics.push(
+          diag('SC-SPEC-002', `Unknown variant "${g.data.variant}" for ${def.id}`, {
+            pointer: `/slides/${i}/variant`,
+          }),
+        );
       }
-      if (seen.has(g.data.id)) diagnostics.push(diag('SC-SPEC-003', `Duplicate slide id "${g.data.id}"`, { pointer: `/slides/${i}/id`, slide: g.data.id }));
+      if (seen.has(g.data.id))
+        diagnostics.push(
+          diag('SC-SPEC-003', `Duplicate slide id "${g.data.id}"`, {
+            pointer: `/slides/${i}/id`,
+            slide: g.data.id,
+          }),
+        );
       seen.add(g.data.id);
       slides.push(g.data as unknown as Slide);
       return;

@@ -1,0 +1,412 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "description": "One sentence: the look and what it is best for"
+    },
+    "bestFor": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Storyline ids or task words this theme suits"
+    },
+    "mood": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "dark": {
+      "default": false,
+      "type": "boolean"
+    },
+    "prefers": {
+      "default": "pptx",
+      "description": "Engine that shows this theme best",
+      "type": "string",
+      "enum": [
+        "pptx",
+        "html"
+      ]
+    },
+    "colors": {
+      "type": "object",
+      "properties": {
+        "background": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Hex color, #RRGGBB"
+        },
+        "surface": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Cards, panels, table header fill"
+        },
+        "ink": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Primary text"
+        },
+        "muted": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Secondary text, labels, axis"
+        },
+        "accent": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "The one highlight color"
+        },
+        "accentText": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Text placed on accent fills"
+        },
+        "accentSoft": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Tinted accent for backgrounds and bands"
+        },
+        "rule": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Hairlines, borders, gridlines"
+        },
+        "positive": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Hex color, #RRGGBB"
+        },
+        "negative": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$",
+          "description": "Hex color, #RRGGBB"
+        },
+        "titleInk": {
+          "description": "Action title color; defaults to ink",
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        }
+      },
+      "required": [
+        "background",
+        "surface",
+        "ink",
+        "muted",
+        "accent",
+        "accentText",
+        "accentSoft",
+        "rule",
+        "positive",
+        "negative"
+      ],
+      "additionalProperties": false
+    },
+    "chart": {
+      "minItems": 4,
+      "maxItems": 10,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^#[0-9A-Fa-f]{6}$",
+        "description": "Hex color, #RRGGBB"
+      },
+      "description": "Series palette; index 0 is the highlight series, the rest recede"
+    },
+    "fonts": {
+      "type": "object",
+      "properties": {
+        "heading": {
+          "type": "object",
+          "properties": {
+            "family": {
+              "type": "string",
+              "description": "Font family written into PPTX/HTML, e.g. \"Arial\""
+            },
+            "measure": {
+              "type": "string",
+              "enum": [
+                "liberation-sans",
+                "liberation-serif",
+                "gelasio"
+              ],
+              "description": "Bundled metric-compatible font used for measuring and PDF/PNG"
+            }
+          },
+          "required": [
+            "family",
+            "measure"
+          ],
+          "additionalProperties": false
+        },
+        "body": {
+          "type": "object",
+          "properties": {
+            "family": {
+              "type": "string",
+              "description": "Font family written into PPTX/HTML, e.g. \"Arial\""
+            },
+            "measure": {
+              "type": "string",
+              "enum": [
+                "liberation-sans",
+                "liberation-serif",
+                "gelasio"
+              ],
+              "description": "Bundled metric-compatible font used for measuring and PDF/PNG"
+            }
+          },
+          "required": [
+            "family",
+            "measure"
+          ],
+          "additionalProperties": false
+        },
+        "cyrillic": {
+          "description": "Override when deck text contains Cyrillic and the default lacks glyphs",
+          "type": "object",
+          "properties": {
+            "heading": {
+              "type": "object",
+              "properties": {
+                "family": {
+                  "type": "string",
+                  "description": "Font family written into PPTX/HTML, e.g. \"Arial\""
+                },
+                "measure": {
+                  "type": "string",
+                  "enum": [
+                    "liberation-sans",
+                    "liberation-serif",
+                    "gelasio"
+                  ],
+                  "description": "Bundled metric-compatible font used for measuring and PDF/PNG"
+                }
+              },
+              "required": [
+                "family",
+                "measure"
+              ],
+              "additionalProperties": false
+            },
+            "body": {
+              "type": "object",
+              "properties": {
+                "family": {
+                  "type": "string",
+                  "description": "Font family written into PPTX/HTML, e.g. \"Arial\""
+                },
+                "measure": {
+                  "type": "string",
+                  "enum": [
+                    "liberation-sans",
+                    "liberation-serif",
+                    "gelasio"
+                  ],
+                  "description": "Bundled metric-compatible font used for measuring and PDF/PNG"
+                }
+              },
+              "required": [
+                "family",
+                "measure"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "heading",
+        "body"
+      ],
+      "additionalProperties": false
+    },
+    "type": {
+      "type": "object",
+      "properties": {
+        "cover": {
+          "type": "number",
+          "minimum": 24,
+          "maximum": 72
+        },
+        "title": {
+          "type": "number",
+          "minimum": 16,
+          "maximum": 36,
+          "description": "Action title size, pt"
+        },
+        "subtitle": {
+          "type": "number",
+          "minimum": 11,
+          "maximum": 24
+        },
+        "heading": {
+          "type": "number",
+          "minimum": 11,
+          "maximum": 24
+        },
+        "body": {
+          "type": "number",
+          "minimum": 10,
+          "maximum": 22
+        },
+        "minBody": {
+          "type": "number",
+          "minimum": 9,
+          "maximum": 18,
+          "description": "Smallest size copy-fitting may use"
+        },
+        "small": {
+          "type": "number",
+          "minimum": 8,
+          "maximum": 14
+        },
+        "source": {
+          "type": "number",
+          "minimum": 7,
+          "maximum": 11
+        },
+        "lineHeight": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 1.6,
+          "description": "Exact line spacing as multiple of size"
+        },
+        "titleWeight": {
+          "default": "bold",
+          "type": "string",
+          "enum": [
+            "regular",
+            "bold"
+          ]
+        }
+      },
+      "required": [
+        "cover",
+        "title",
+        "subtitle",
+        "heading",
+        "body",
+        "minBody",
+        "small",
+        "source",
+        "lineHeight",
+        "titleWeight"
+      ],
+      "additionalProperties": false
+    },
+    "decor": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "none",
+            "rule",
+            "wave",
+            "glow",
+            "geo",
+            "gradient",
+            "paper"
+          ]
+        },
+        "colors": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^#[0-9A-Fa-f]{6}$",
+            "description": "Hex color, #RRGGBB"
+          }
+        },
+        "intensity": {
+          "default": 0.6,
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "onContent": {
+          "default": false,
+          "description": "Also draw decor on content slides",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind",
+        "colors",
+        "intensity",
+        "onContent"
+      ],
+      "additionalProperties": false
+    },
+    "chrome": {
+      "type": "object",
+      "properties": {
+        "titleRule": {
+          "default": false,
+          "description": "Hairline under action titles",
+          "type": "boolean"
+        },
+        "accentBar": {
+          "default": false,
+          "description": "Short accent bar above titles",
+          "type": "boolean"
+        },
+        "pageNumbers": {
+          "default": true,
+          "type": "boolean"
+        },
+        "footer": {
+          "description": "Default footer text; decks can override",
+          "type": "string"
+        },
+        "tracker": {
+          "default": true,
+          "description": "Small section label top-left",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "titleRule",
+        "accentBar",
+        "pageNumbers",
+        "tracker"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "description",
+    "bestFor",
+    "mood",
+    "dark",
+    "prefers",
+    "colors",
+    "chart",
+    "fonts",
+    "type",
+    "decor",
+    "chrome"
+  ],
+  "additionalProperties": false
+}

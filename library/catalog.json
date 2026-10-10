@@ -1,0 +1,679 @@
+{
+  "version": "0.1.0",
+  "layouts": [
+    {
+      "id": "title",
+      "name": "Title",
+      "group": "frame",
+      "variants": [
+        "cover",
+        "closing"
+      ],
+      "purpose": "Use for the cover that frames the deck, or a closing slide with the ask and contacts.",
+      "frame": "none"
+    },
+    {
+      "id": "agenda",
+      "name": "Agenda and section divider",
+      "group": "frame",
+      "variants": [
+        "agenda",
+        "section-divider"
+      ],
+      "purpose": "Use for the agenda at the start of a deck, or a section divider that shows where the audience is in the story.",
+      "frame": "none"
+    },
+    {
+      "id": "exec-summary",
+      "name": "Executive summary",
+      "group": "message",
+      "variants": [
+        "scr",
+        "key-messages"
+      ],
+      "purpose": "Use for the answer-first summary: the whole argument on one page, readable without the rest of the deck.",
+      "frame": "standard"
+    },
+    {
+      "id": "key-points",
+      "name": "Key points",
+      "group": "message",
+      "variants": [
+        "columns",
+        "cards",
+        "list"
+      ],
+      "purpose": "Use for two to four parallel points that together prove the title, each with a short heading, support and an optional proof number.",
+      "frame": "standard"
+    },
+    {
+      "id": "big-statement",
+      "name": "Big statement",
+      "group": "message",
+      "variants": [
+        "statement",
+        "quote",
+        "hero-number"
+      ],
+      "purpose": "Use for the one thing the audience must remember: a single bold statement, a customer quote or one hero number, with room to breathe.",
+      "frame": "none"
+    },
+    {
+      "id": "text-image",
+      "name": "Text and image",
+      "group": "message",
+      "variants": [
+        "image-right",
+        "image-left"
+      ],
+      "purpose": "Use for a story beat that needs a photo or illustration next to a few short paragraphs, such as a customer case or a site visit.",
+      "frame": "standard"
+    },
+    {
+      "id": "kpi-tiles",
+      "name": "KPI tiles",
+      "group": "numbers",
+      "variants": [
+        "tiles",
+        "strip"
+      ],
+      "purpose": "Use for 2–4 headline numbers that prove the title at a glance, each with its label, change and context.",
+      "frame": "standard"
+    },
+    {
+      "id": "chart-takeaway",
+      "name": "Chart with takeaway",
+      "group": "numbers",
+      "variants": [
+        "bar",
+        "column",
+        "stacked",
+        "line"
+      ],
+      "purpose": "Use for one chart that proves the title, with the interpretation in a side panel.",
+      "frame": "standard"
+    },
+    {
+      "id": "waterfall",
+      "name": "Waterfall",
+      "group": "numbers",
+      "variants": [
+        "full",
+        "with-takeaway"
+      ],
+      "purpose": "Use for a bridge that explains how a starting total becomes an ending total through positive and negative drivers.",
+      "frame": "standard"
+    },
+    {
+      "id": "data-table",
+      "name": "Data table",
+      "group": "numbers",
+      "variants": [
+        "plain",
+        "with-takeaway"
+      ],
+      "purpose": "Use for a compact table of exact values where the reader needs to look up or compare several attributes at once.",
+      "frame": "standard"
+    },
+    {
+      "id": "options-comparison",
+      "name": "Options comparison",
+      "group": "decide",
+      "variants": [
+        "text",
+        "rating"
+      ],
+      "purpose": "Use for comparing 2–4 options on the same criteria and showing which one wins and why.",
+      "frame": "standard"
+    },
+    {
+      "id": "matrix-2x2",
+      "name": "2×2 matrix",
+      "group": "decide",
+      "variants": [
+        "plot",
+        "quadrants"
+      ],
+      "purpose": "Use for prioritising items on two dimensions, or naming four strategic positions.",
+      "frame": "standard"
+    },
+    {
+      "id": "process-steps",
+      "name": "Process steps",
+      "group": "sequence",
+      "variants": [
+        "chevrons",
+        "numbered"
+      ],
+      "purpose": "Use for a sequence of 3–6 steps where order matters — an approach, a method or a customer journey.",
+      "frame": "standard"
+    },
+    {
+      "id": "timeline",
+      "name": "Timeline",
+      "group": "sequence",
+      "variants": [
+        "milestones",
+        "gantt"
+      ],
+      "purpose": "Use for dated milestones or a phased roadmap on one shared time axis.",
+      "frame": "standard"
+    },
+    {
+      "id": "team-cards",
+      "name": "Team cards",
+      "group": "people",
+      "variants": [
+        "cards",
+        "compact"
+      ],
+      "purpose": "Use for introducing the people behind a proposal: who leads, who delivers, who the client sponsors are.",
+      "frame": "standard"
+    },
+    {
+      "id": "next-steps",
+      "name": "Next steps",
+      "group": "close",
+      "variants": [
+        "actions",
+        "decision"
+      ],
+      "purpose": "Use for the closing slide that turns the recommendation into owned, dated actions, with or without the decision requested.",
+      "frame": "standard"
+    }
+  ],
+  "themes": [
+    {
+      "id": "consulting-classic",
+      "name": "Consulting Classic",
+      "bestFor": [
+        "strategy-recommendation",
+        "executive-update",
+        "business-case",
+        "client-proposal",
+        "research-readout"
+      ],
+      "dark": false,
+      "prefers": "pptx"
+    },
+    {
+      "id": "corporate-blue",
+      "name": "Corporate Blue",
+      "bestFor": [
+        "executive-update",
+        "product-overview",
+        "research-readout",
+        "client-proposal"
+      ],
+      "dark": false,
+      "prefers": "pptx"
+    },
+    {
+      "id": "editorial",
+      "name": "Editorial",
+      "bestFor": [
+        "research-readout",
+        "narrative-story",
+        "case-study"
+      ],
+      "dark": false,
+      "prefers": "pptx"
+    },
+    {
+      "id": "executive",
+      "name": "Executive",
+      "bestFor": [
+        "executive-update",
+        "business-case",
+        "client-proposal"
+      ],
+      "dark": false,
+      "prefers": "pptx"
+    },
+    {
+      "id": "midnight",
+      "name": "Midnight",
+      "bestFor": [
+        "narrative-story",
+        "pitch-deck",
+        "case-study"
+      ],
+      "dark": true,
+      "prefers": "html"
+    },
+    {
+      "id": "modern-pitch",
+      "name": "Modern Pitch",
+      "bestFor": [
+        "pitch-deck",
+        "product-overview"
+      ],
+      "dark": false,
+      "prefers": "pptx"
+    }
+  ],
+  "storylines": [
+    {
+      "id": "business-case",
+      "name": "Business case",
+      "arc": "Recommendation and ask → problem and opportunity → options → economics → risks and sensitivities → funding ask and gates",
+      "bestFor": [
+        "business case",
+        "investment",
+        "budget request",
+        "funding",
+        "capex",
+        "ROI",
+        "NPV",
+        "approval",
+        "project approval",
+        "cost-benefit",
+        "financial case",
+        "investment proposal"
+      ],
+      "themes": [
+        "consulting-classic",
+        "executive"
+      ],
+      "slots": [
+        "cover",
+        "summary",
+        "problem",
+        "drivers",
+        "options",
+        "costs",
+        "value",
+        "returns",
+        "sensitivities",
+        "risks",
+        "recommendation",
+        "roadmap",
+        "funding"
+      ]
+    },
+    {
+      "id": "case-study",
+      "name": "Case study",
+      "arc": "Context → challenge → what we did → results → what we learned → what we would do differently → recommendations",
+      "bestFor": [
+        "case study",
+        "lessons learned",
+        "retrospective",
+        "post-mortem",
+        "project review",
+        "success story",
+        "experience sharing",
+        "after action review",
+        "project closure",
+        "what worked",
+        "customer story"
+      ],
+      "themes": [
+        "editorial",
+        "midnight",
+        "consulting-classic"
+      ],
+      "slots": [
+        "cover",
+        "context",
+        "challenge",
+        "approach",
+        "detail",
+        "results",
+        "voices",
+        "lessons",
+        "do-differently",
+        "recommendations"
+      ]
+    },
+    {
+      "id": "client-proposal",
+      "name": "Client proposal",
+      "arc": "Our understanding → objectives and scope → approach → plan → team → evidence → commercials → next steps",
+      "bestFor": [
+        "proposal",
+        "RFP response",
+        "tender",
+        "bid",
+        "pitch to client",
+        "statement of work",
+        "scope of work",
+        "consulting proposal",
+        "services offer",
+        "engagement",
+        "SOW"
+      ],
+      "themes": [
+        "consulting-classic",
+        "executive",
+        "corporate-blue"
+      ],
+      "slots": [
+        "cover",
+        "summary",
+        "context",
+        "challenge",
+        "objectives",
+        "scope",
+        "approach",
+        "method",
+        "plan",
+        "team",
+        "cases",
+        "fees",
+        "next-steps"
+      ]
+    },
+    {
+      "id": "executive-update",
+      "name": "Executive update",
+      "arc": "Headline status (RAG) → plan vs actual vs forecast → what changed → risks and issues → decisions needed",
+      "bestFor": [
+        "status report",
+        "steerco",
+        "steering committee",
+        "QBR",
+        "board update",
+        "progress update",
+        "program update",
+        "project status",
+        "quarterly review",
+        "monthly review",
+        "RAG"
+      ],
+      "themes": [
+        "executive",
+        "consulting-classic",
+        "corporate-blue"
+      ],
+      "slots": [
+        "cover",
+        "status",
+        "kpis",
+        "plan-vs-actual",
+        "milestones",
+        "changes",
+        "risks",
+        "decisions",
+        "appendix"
+      ]
+    },
+    {
+      "id": "narrative-story",
+      "name": "Narrative story",
+      "arc": "Hook → stakes → journey → turning point → insight → call to action",
+      "bestFor": [
+        "storytelling",
+        "keynote",
+        "talk",
+        "share experience",
+        "conference",
+        "all-hands",
+        "inspiration",
+        "lessons",
+        "journey",
+        "town hall",
+        "story"
+      ],
+      "themes": [
+        "midnight",
+        "editorial",
+        "modern-pitch"
+      ],
+      "slots": [
+        "cover",
+        "hook",
+        "stakes",
+        "journey",
+        "turning-point",
+        "insight",
+        "proof",
+        "cta"
+      ]
+    },
+    {
+      "id": "pitch-deck",
+      "name": "Pitch deck",
+      "arc": "Problem → solution → why now → market → product → business model → traction → competition → go-to-market → team → financials → ask",
+      "bestFor": [
+        "pitch deck",
+        "investor",
+        "fundraising",
+        "seed",
+        "series A",
+        "venture capital",
+        "startup",
+        "funding round",
+        "VC",
+        "demo day",
+        "raise",
+        "pre-seed"
+      ],
+      "themes": [
+        "modern-pitch",
+        "midnight",
+        "corporate-blue"
+      ],
+      "slots": [
+        "cover",
+        "problem",
+        "solution",
+        "why-now",
+        "market",
+        "product",
+        "business-model",
+        "traction",
+        "competition",
+        "go-to-market",
+        "team",
+        "financials",
+        "ask"
+      ]
+    },
+    {
+      "id": "product-overview",
+      "name": "Product overview",
+      "arc": "Job to be done → how it works → key features → proof → roadmap → pricing and packaging → call to action",
+      "bestFor": [
+        "product overview",
+        "product launch",
+        "launch",
+        "go-to-market",
+        "release",
+        "product demo",
+        "product roadmap",
+        "feature announcement",
+        "sales deck",
+        "product update",
+        "platform overview"
+      ],
+      "themes": [
+        "modern-pitch",
+        "corporate-blue",
+        "editorial"
+      ],
+      "slots": [
+        "cover",
+        "job",
+        "how-it-works",
+        "features",
+        "differentiators",
+        "results",
+        "testimonial",
+        "roadmap",
+        "packaging",
+        "cta"
+      ]
+    },
+    {
+      "id": "research-readout",
+      "name": "Research readout",
+      "arc": "Research question → method and sample → key findings → implications → recommendations → appendix",
+      "bestFor": [
+        "research readout",
+        "findings",
+        "survey results",
+        "user research",
+        "market research",
+        "customer research",
+        "insights",
+        "analysis results",
+        "usability study",
+        "interview findings",
+        "study results"
+      ],
+      "themes": [
+        "editorial",
+        "consulting-classic",
+        "corporate-blue"
+      ],
+      "slots": [
+        "cover",
+        "question",
+        "summary",
+        "method",
+        "finding",
+        "segments",
+        "voices",
+        "implications",
+        "recommendations",
+        "next-steps",
+        "method-detail",
+        "detail"
+      ]
+    },
+    {
+      "id": "strategy-recommendation",
+      "name": "Strategy recommendation",
+      "arc": "Situation → Complication → Resolution (answer) → 3 reasons → plan → risks → ask",
+      "bestFor": [
+        "strategy",
+        "recommendation",
+        "decision",
+        "market entry",
+        "investment decision",
+        "growth strategy",
+        "transformation",
+        "board decision",
+        "consulting"
+      ],
+      "themes": [
+        "consulting-classic",
+        "executive",
+        "corporate-blue"
+      ],
+      "slots": [
+        "cover",
+        "summary",
+        "context",
+        "complication",
+        "options",
+        "reasons",
+        "value",
+        "plan",
+        "risks",
+        "ask"
+      ]
+    }
+  ],
+  "engines": [
+    {
+      "kind": "pptx",
+      "id": "pptxgenjs",
+      "license": "MIT",
+      "proprietary": false,
+      "capabilities": {
+        "editable": true,
+        "nativeCharts": true,
+        "speakerNotes": true,
+        "fidelity": "native",
+        "install": "bundled",
+        "ci": true
+      }
+    },
+    {
+      "kind": "pdf",
+      "id": "native",
+      "license": "MIT",
+      "proprietary": false,
+      "capabilities": {
+        "editable": false,
+        "nativeCharts": false,
+        "speakerNotes": false,
+        "fidelity": "same-layout",
+        "install": "bundled",
+        "ci": true
+      }
+    },
+    {
+      "kind": "png",
+      "id": "resvg",
+      "license": "MPL-2.0 (resvg), MIT (SlideCraft)",
+      "proprietary": false,
+      "capabilities": {
+        "editable": false,
+        "nativeCharts": false,
+        "speakerNotes": false,
+        "fidelity": "preview",
+        "install": "bundled (wasm)",
+        "ci": true
+      }
+    },
+    {
+      "kind": "html",
+      "id": "html",
+      "license": "MIT",
+      "proprietary": false,
+      "capabilities": {
+        "editable": false,
+        "nativeCharts": false,
+        "speakerNotes": true,
+        "fidelity": "same-layout",
+        "install": "bundled",
+        "ci": true
+      }
+    },
+    {
+      "kind": "pdf",
+      "id": "html",
+      "license": "MIT (SlideCraft); uses your installed Chrome/Chromium",
+      "proprietary": false,
+      "capabilities": {
+        "editable": false,
+        "nativeCharts": false,
+        "speakerNotes": false,
+        "fidelity": "same-layout",
+        "install": "system Chrome or Chromium",
+        "ci": false
+      }
+    },
+    {
+      "kind": "pdf",
+      "id": "pptx-convert",
+      "license": "uses your installed office suite",
+      "proprietary": false,
+      "capabilities": {
+        "editable": false,
+        "nativeCharts": true,
+        "speakerNotes": false,
+        "fidelity": "identical",
+        "install": "Microsoft PowerPoint (macOS) or LibreOffice",
+        "ci": false
+      }
+    },
+    {
+      "kind": "pptx",
+      "id": "artifact-tool",
+      "license": "Proprietary (OpenAI) — internal evaluation and testing only; never bundled",
+      "proprietary": true,
+      "capabilities": {
+        "editable": true,
+        "nativeCharts": true,
+        "speakerNotes": true,
+        "fidelity": "native",
+        "install": "Codex runtime (@oai/artifact-tool ≥ 2.7.3)",
+        "ci": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,198 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "goal": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 400,
+      "description": "What must be true after the audience sees this deck"
+    },
+    "ask": {
+      "description": "The decision or action requested",
+      "type": "string",
+      "maxLength": 240
+    },
+    "audience": {
+      "type": "object",
+      "properties": {
+        "who": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "knows": {
+          "description": "What they already accept",
+          "type": "string",
+          "maxLength": 300
+        },
+        "cares": {
+          "description": "What they worry about / are measured on",
+          "type": "string",
+          "maxLength": 300
+        }
+      },
+      "required": [
+        "who"
+      ],
+      "additionalProperties": false
+    },
+    "task": {
+      "description": "Kind of deck in plain words, e.g. \"strategy recommendation\", \"board update\", \"keynote story\"",
+      "type": "string",
+      "maxLength": 60
+    },
+    "context": {
+      "type": "string",
+      "maxLength": 4000
+    },
+    "materials": {
+      "default": [],
+      "description": "Paths to source files, relative to brief.yaml",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "length": {
+      "type": "object",
+      "properties": {
+        "slides": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 80
+        },
+        "minutes": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        }
+      },
+      "additionalProperties": false
+    },
+    "language": {
+      "default": "en",
+      "type": "string"
+    },
+    "tone": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "brand": {
+      "type": "object",
+      "properties": {
+        "theme": {
+          "type": "string"
+        },
+        "footer": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "logo": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "usage": {
+      "default": [
+        "edit-together"
+      ],
+      "description": "What will happen with the deck — drives engine recommendations",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "edit-together",
+          "send-pdf",
+          "present-live",
+          "web-link",
+          "automation",
+          "codex"
+        ]
+      }
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "formats": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "pptx",
+              "pdf",
+              "png",
+              "html"
+            ]
+          }
+        },
+        "engines": {
+          "type": "object",
+          "properties": {
+            "pptx": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "pptxgenjs",
+                "artifact-tool"
+              ]
+            },
+            "pdf": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "native",
+                "html",
+                "pptx-convert"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "choice": {
+      "description": "Filled at checkpoint 2 (pick)",
+      "type": "object",
+      "properties": {
+        "storyline": {
+          "type": "string"
+        },
+        "theme": {
+          "type": "string"
+        },
+        "option": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "storyline",
+        "theme"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "goal",
+    "audience",
+    "materials",
+    "language",
+    "tone",
+    "usage"
+  ],
+  "additionalProperties": false
+}

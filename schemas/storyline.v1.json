@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "type": "number",
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "name": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 240,
+      "description": "One sentence: the story shape and when to use it"
+    },
+    "bestFor": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Task words matched against the brief"
+    },
+    "audiences": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "themes": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Recommended themes, best first"
+    },
+    "ordered": {
+      "default": true,
+      "description": "Slots follow a fixed order",
+      "type": "boolean"
+    },
+    "arc": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "The narrative arc, e.g. \"Situation → Complication → Resolution → Ask\""
+    },
+    "length": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        },
+        "max": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "min",
+        "max"
+      ],
+      "additionalProperties": false
+    },
+    "tone": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "principles": {
+      "default": [],
+      "description": "Writing rules specific to this storyline",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sections": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "slots": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                },
+                "purpose": {
+                  "type": "string",
+                  "maxLength": 200,
+                  "description": "What this slide must make the reader believe"
+                },
+                "layouts": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Preferred layouts, best first"
+                },
+                "required": {
+                  "default": true,
+                  "type": "boolean"
+                },
+                "repeat": {
+                  "type": "object",
+                  "properties": {
+                    "min": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    },
+                    "max": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "required": [
+                    "min",
+                    "max"
+                  ],
+                  "additionalProperties": false
+                },
+                "guidance": {
+                  "description": "How to write it: title pattern, evidence, pitfalls",
+                  "type": "string",
+                  "maxLength": 600
+                },
+                "inputs": {
+                  "default": [],
+                  "description": "What the author needs to fill it",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "id",
+                "purpose",
+                "layouts",
+                "required",
+                "inputs"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "slots"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "name",
+    "summary",
+    "bestFor",
+    "audiences",
+    "themes",
+    "ordered",
+    "arc",
+    "length",
+    "tone",
+    "principles",
+    "sections"
+  ],
+  "additionalProperties": false
+}

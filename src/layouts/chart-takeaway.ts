@@ -95,6 +95,42 @@ export const chartTakeaway: LayoutDef<typeof schema> = {
         },
       },
     },
+    {
+      title: 'Subscription revenue overtook services in 2025 and now drives growth',
+      variant: 'stacked',
+      content: {
+        chart: {
+          label: 'Revenue by stream, €M',
+          categories: ['2022', '2023', '2024', '2025'],
+          series: [
+            { name: 'Subscription', values: [8, 12, 17, 24] },
+            { name: 'Services', values: [14, 15, 16, 17] },
+          ],
+        },
+        takeaway: {
+          headline: 'Recurring revenue is now 59% of the total',
+          points: ['Services stay flat by design', 'Subscription grew 44% a year'],
+        },
+      },
+      sources: ['finance-fy25'],
+    },
+    {
+      title: 'Average deal size rose 30% since we introduced annual plans',
+      variant: 'column',
+      content: {
+        chart: {
+          label: 'Average deal size, €k',
+          categories: ['Q1', 'Q2', 'Q3', 'Q4', 'Q1', 'Q2'],
+          series: [{ name: 'Deal size', values: [20, 21, 22, 24, 25, 26] }],
+          highlight: [5],
+        },
+        takeaway: {
+          headline: 'Annual plans lift deal size',
+          points: ['Launched at the start of Q4'],
+        },
+      },
+      sources: ['finance-fy25'],
+    },
   ],
   compose(ctx, c) {
     const { body, colors } = ctx;

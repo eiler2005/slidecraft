@@ -3,7 +3,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import type { Command } from 'commander';
 import YAML from 'yaml';
-import { buildGallery, writePicker } from '../gallery.ts';
+import { buildGallery, buildHero, writePicker } from '../gallery.ts';
 import { getLayout } from '../layouts/index.ts';
 import { libraryCheck } from '../library/check.ts';
 import { generateDocs } from '../library/docs.ts';
@@ -211,7 +211,8 @@ export function registerWorkflowCommands(program: Command): void {
       "comma-separated theme ids (default: each storyline's recommended themes)",
     )
     .option('--storylines <list>', 'comma-separated storyline ids (default: all)')
-    .action(async (o: { out?: string; themes?: string; storylines?: string }) => {
+    .option('--hero', 'also render docs/media/hero.png for the README')
+    .action(async (o: { out?: string; themes?: string; storylines?: string; hero?: boolean }) => {
       const themes = o.themes ? o.themes.split(',') : undefined;
       const storylines = loadStorylines().filter(
         (s) => !o.storylines || o.storylines.split(',').includes(s.id),
@@ -222,6 +223,7 @@ export function registerWorkflowCommands(program: Command): void {
         storylines,
       });
       console.log(`${green('✔')} ${r.files.length} images`);
+      if (o.hero) console.log(`${green('✔')} ${relative(process.cwd(), await buildHero())}`);
     });
 
   program

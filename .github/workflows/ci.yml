@@ -52,7 +52,7 @@ jobs:
         if: hashFiles('docs/reference/*.gen.md') != ''
         run: |
           npm run gen
-          git diff --exit-code docs/reference schemas
+          git diff --exit-code docs/reference schemas library/catalog.json
 
       - name: Validate the skeleton fixture with the committed bundle
         run: node dist/slidecraft.mjs validate tests/fixtures/skeleton/deck.yaml

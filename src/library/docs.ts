@@ -86,8 +86,9 @@ function layoutsDoc(): string {
   for (const l of LAYOUTS) {
     md += `\n## ${l.id}\n\n**${l.name}** — ${l.purpose}\n\n`;
     md +=
-      l.variants.map((v) => `![${l.id} · ${v}](../gallery/layouts/${l.id}--${v}.png)`).join(' ') +
-      '\n\n';
+      [...new Set(l.examples.map((e) => e.variant ?? l.variants[0]))]
+        .map((v) => `![${l.id} · ${v}](../gallery/layouts/${l.id}--${v}.png)`)
+        .join(' ') + '\n\n';
     md += `- **Use when:** ${l.useWhen.join('; ')}\n- **Avoid when:** ${l.avoidWhen.join('; ')}\n- **Frame:** ${l.frame === 'standard' ? 'standard (action title, tracker, lead and source line are drawn for you)' : 'full-bleed (the layout draws the whole slide)'}\n\n`;
     const js = z.toJSONSchema(l.schema, { unrepresentable: 'any' }) as JS;
     md += '| Field | Type | Required | Limits | Description |\n|---|---|---|---|---|\n';
@@ -114,7 +115,10 @@ function themesDoc(): string {
   for (const t of loadThemes())
     md += `| [\`${t.id}\`](#${t.id}) | ${esc(t.description)} | ${t.bestFor.join(', ')} | ${t.fonts.heading.family} / ${t.fonts.body.family} | ${t.prefers} |\n`;
   for (const t of loadThemes()) {
-    md += `\n## ${t.id}\n\n**${t.name}** — ${t.description}\n\n![${t.name}](../gallery/strategy-recommendation--${t.id}.png)\n\n`;
+    // show the theme on a storyline whose gallery includes it
+    const story =
+      loadStorylines().find((s) => s.themes.includes(t.id))?.id ?? 'strategy-recommendation';
+    md += `\n## ${t.id}\n\n**${t.name}** — ${t.description}\n\n![${t.name}](../gallery/${story}--${t.id}.png)\n\n`;
     md += `| Role | Color |\n|---|---|\n${Object.entries(t.colors)
       .map(([k, v]) => `| ${k} | \`${v}\` |`)
       .join('\n')}\n| chart | ${t.chart.map((c) => `\`${c}\``).join(' ')} |\n\n`;

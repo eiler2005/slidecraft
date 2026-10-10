@@ -68,6 +68,12 @@ export type Slide = z.infer<typeof CommonSlide> & { layout: string; variant?: st
     unknown
   >;
 
+/** Ghost slides only need the common fields: content is written after the title chain is approved. */
+export const GhostSlide = CommonSlide.extend({
+  layout: z.enum(LAYOUTS.map((l) => l.id) as [string, ...string[]]),
+  variant: z.string().optional(),
+}).passthrough();
+
 export const Include = z
   .object({ include: z.string().describe('Path to a YAML list of slides, relative to deck.yaml') })
   .strict();

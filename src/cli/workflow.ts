@@ -63,7 +63,7 @@ export function scaffoldDeck(
           title:
             slot.id === 'cover'
               ? brief.goal.slice(0, 140)
-              : `TODO action title — ${slot.purpose}`.slice(0, 140),
+              : `TODO action title — ${slot.purpose.replace(/\.$/, '')}`.slice(0, 140),
           status: 'ghost',
           ghost: {
             exhibit: `${layout.name}: ${slot.purpose}`.slice(0, 200),

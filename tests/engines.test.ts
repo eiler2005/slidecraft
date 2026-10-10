@@ -89,4 +89,17 @@ describe('workflow helpers', () => {
     expect(deck.slides.length).toBeGreaterThanOrEqual(9);
     expect(deck.slides.every((s) => s.status === 'ghost')).toBe(true);
   });
+
+  it('validates ghost slides without content fields but still checks layout and variant', async () => {
+    const { writeFileSync } = await import('node:fs');
+    const dir = mkdtempSync(join(tmpdir(), 'sc-ghost-'));
+    const p = join(dir, 'deck.yaml');
+    writeFileSync(
+      p,
+      'schemaVersion: 1\nid: g\ntitle: Ghost\nstatus: ghost\nslides:\n  - { id: a, layout: waterfall, title: A claim that the waterfall will prove }\n  - { id: b, layout: waterfall, variant: nope, title: Another claim the deck will prove }\n',
+    );
+    const { checkDeck } = await import('../src/build.ts');
+    const r = checkDeck(p);
+    expect(r.diagnostics.map((d) => d.code)).toEqual(['SC-SPEC-002']);
+  });
 });

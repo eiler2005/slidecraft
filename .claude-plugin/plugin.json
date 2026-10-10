@@ -1,0 +1,9 @@
+{
+  "name": "slidecraft",
+  "description": "Describe the goal, pick a look, ship a partner-ready deck: guided storyline → ghost deck → editable PPTX, vector PDF and HTML, with partner-grade review.",
+  "author": { "name": "Denis Ermilov", "url": "https://github.com/eiler2005" },
+  "homepage": "https://github.com/eiler2005/slidecraft",
+  "repository": "https://github.com/eiler2005/slidecraft",
+  "license": "MIT",
+  "keywords": ["presentations", "slides", "pptx", "pdf", "consulting", "storytelling", "pitch-deck"]
+}

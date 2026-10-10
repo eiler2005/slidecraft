@@ -7,7 +7,7 @@
  *  - kind 'pdf' / id 'html': the same document, printed to PDF by the system
  *    Chrome/Chromium in headless mode (no browser automation library involved).
  */
-import { execFile, execFileSync } from 'node:child_process';
+import { execFileSync, spawn } from 'node:child_process';
 import {
   accessSync,
   constants,
@@ -316,23 +316,56 @@ function detectChrome(): Detection {
   return chromeDetection;
 }
 
-function runChrome(bin: string, args: string[], timeoutMs: number): Promise<{ stderr: string }> {
+/**
+ * Run headless Chrome until the PDF is written. Chrome can linger after printing
+ * (background services, first-run work), so we stop it ourselves as soon as it reports
+ * "bytes written to file" or the PDF size is stable, instead of waiting for exit.
+ */
+function runChrome(
+  bin: string,
+  args: string[],
+  timeoutMs: number,
+  pdfPath?: string,
+): Promise<{ stderr: string }> {
   return new Promise((resolve, reject) => {
-    execFile(
-      bin,
-      args,
-      { timeout: timeoutMs, maxBuffer: 16 * 1024 * 1024 },
-      (err, _out, stderr) => {
-        if (err) {
-          const e = err as NodeJS.ErrnoException & { killed?: boolean };
-          const why = e.killed
-            ? `timed out after ${Math.round(timeoutMs / 1000)}s`
-            : `exited with ${e.code ?? 'error'}`;
-          reject(
-            new Error(`Chrome ${why}: ${String(stderr).trim().split('\n').slice(-3).join(' | ')}`),
-          );
-        } else resolve({ stderr: String(stderr) });
-      },
+    const child = spawn(bin, args, { stdio: ['ignore', 'pipe', 'pipe'] });
+    let stderr = '';
+    let done = false;
+    let lastSize = -1;
+    const finish = (err?: Error) => {
+      if (done) return;
+      done = true;
+      clearInterval(poll);
+      clearTimeout(timer);
+      if (child.exitCode === null) child.kill('SIGTERM');
+      if (err) reject(err);
+      else resolve({ stderr });
+    };
+    child.stderr.on('data', (d: Buffer) => {
+      stderr += d.toString();
+      if (/bytes written to file/.test(stderr)) setTimeout(() => finish(), 150);
+    });
+    child.stdout.on('data', () => {});
+    child.on('error', (e) => finish(e));
+    child.on('exit', (code) => {
+      if (pdfPath && existsSync(pdfPath) && statSync(pdfPath).size > 0) finish();
+      else if (code !== 0)
+        finish(
+          new Error(
+            `Chrome exited with ${code}: ${stderr.trim().split('\n').slice(-3).join(' | ')}`,
+          ),
+        );
+      else finish();
+    });
+    const poll = setInterval(() => {
+      if (!pdfPath || !existsSync(pdfPath)) return;
+      const size = statSync(pdfPath).size;
+      if (size > 0 && size === lastSize) finish();
+      lastSize = size;
+    }, 400);
+    const timer = setTimeout(
+      () => finish(new Error(`Chrome timed out after ${Math.round(timeoutMs / 1000)}s`)),
+      timeoutMs,
     );
   });
 }
@@ -379,6 +412,7 @@ export const htmlPdfEngine: Engine = {
           pathToFileURL(htmlPath).href,
         ],
         120_000,
+        tmpPdf,
       );
       if (!existsSync(tmpPdf) || statSync(tmpPdf).size === 0)
         throw new Error('Chrome finished but wrote no PDF');

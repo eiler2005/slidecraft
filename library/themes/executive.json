@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "executive",
+  "name": "Executive",
+  "description": "Warm white page, graphite ink and one violet accent with serif headings — a calm, generous look for leadership updates and decision memos.",
+  "bestFor": ["executive-update", "business-case", "client-proposal"],
+  "mood": ["calm", "generous", "decisive"],
+  "dark": false,
+  "prefers": "pptx",
+  "colors": {
+    "background": "#FBF9F5",
+    "surface": "#F1EEE8",
+    "ink": "#1E2228",
+    "muted": "#5A5F68",
+    "accent": "#5B3FD1",
+    "accentText": "#FFFFFF",
+    "accentSoft": "#EAE6F8",
+    "rule": "#D8D3C8",
+    "positive": "#2B7554",
+    "negative": "#B03F2E",
+    "titleInk": "#1E2228"
+  },
+  "chart": ["#5B3FD1", "#1E2228", "#9A88E3", "#B9B3C8", "#6B6F78", "#DCD7CC"],
+  "fonts": {
+    "heading": { "family": "Georgia", "measure": "gelasio" },
+    "body": { "family": "Arial", "measure": "liberation-sans" },
+    "cyrillic": { "heading": { "family": "Times New Roman", "measure": "liberation-serif" } }
+  },
+  "type": {
+    "cover": 42,
+    "title": 26,
+    "subtitle": 17,
+    "heading": 16,
+    "body": 14,
+    "minBody": 11,
+    "small": 10,
+    "source": 8,
+    "lineHeight": 1.25,
+    "titleWeight": "regular"
+  },
+  "decor": { "kind": "rule", "colors": ["#5B3FD1"], "intensity": 1, "onContent": false },
+  "chrome": { "titleRule": true, "accentBar": false, "pageNumbers": true, "tracker": true }
+}

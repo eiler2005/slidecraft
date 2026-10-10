@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "editorial",
+  "name": "Editorial",
+  "description": "Warm paper stock, deep ink and a terracotta accent with serif headings and a fine page frame — a magazine feel for research and storytelling.",
+  "bestFor": ["research-readout", "narrative-story", "case-study"],
+  "mood": ["literary", "warm", "considered"],
+  "dark": false,
+  "prefers": "pptx",
+  "colors": {
+    "background": "#FBF8F3",
+    "surface": "#F0EAE0",
+    "ink": "#221E1A",
+    "muted": "#625A50",
+    "accent": "#B4492B",
+    "accentText": "#FFFFFF",
+    "accentSoft": "#F3DFD5",
+    "rule": "#D6CCBC",
+    "positive": "#3A6B4A",
+    "negative": "#A8332A",
+    "titleInk": "#221E1A"
+  },
+  "chart": ["#B4492B", "#221E1A", "#C98C6F", "#8C7F6E", "#3F5F4F", "#DDD3C3"],
+  "fonts": {
+    "heading": { "family": "Georgia", "measure": "gelasio" },
+    "body": { "family": "Arial", "measure": "liberation-sans" },
+    "cyrillic": { "heading": { "family": "Times New Roman", "measure": "liberation-serif" } }
+  },
+  "type": {
+    "cover": 44,
+    "title": 24,
+    "subtitle": 17,
+    "heading": 16,
+    "body": 14,
+    "minBody": 11,
+    "small": 10,
+    "source": 8,
+    "lineHeight": 1.25,
+    "titleWeight": "bold"
+  },
+  "decor": { "kind": "paper", "colors": ["#B4492B"], "intensity": 0.6, "onContent": true },
+  "chrome": { "titleRule": false, "accentBar": false, "pageNumbers": true, "tracker": true }
+}

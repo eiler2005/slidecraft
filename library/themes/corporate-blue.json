@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "corporate-blue",
+  "name": "Corporate Blue",
+  "description": "Light surfaces, royal blue accent and flowing gradient waves — a confident, friendly look for business reviews and sales reports.",
+  "bestFor": ["executive-update", "product-overview", "research-readout", "client-proposal"],
+  "mood": ["confident", "approachable", "corporate"],
+  "dark": false,
+  "prefers": "pptx",
+  "colors": {
+    "background": "#FFFFFF",
+    "surface": "#EFF4FC",
+    "ink": "#10213F",
+    "muted": "#52617A",
+    "accent": "#1B55D6",
+    "accentText": "#FFFFFF",
+    "accentSoft": "#DCE7FB",
+    "rule": "#CCD8EC",
+    "positive": "#12805C",
+    "negative": "#C23B3B",
+    "titleInk": "#0D2A6B"
+  },
+  "chart": ["#1B55D6", "#10213F", "#6F9BEA", "#A9C2F0", "#52617A", "#D5E0F5"],
+  "fonts": {
+    "heading": { "family": "Arial", "measure": "liberation-sans" },
+    "body": { "family": "Arial", "measure": "liberation-sans" }
+  },
+  "type": {
+    "cover": 40,
+    "title": 24,
+    "subtitle": 16,
+    "heading": 15,
+    "body": 14,
+    "minBody": 11,
+    "small": 10,
+    "source": 8,
+    "lineHeight": 1.2,
+    "titleWeight": "bold"
+  },
+  "decor": {
+    "kind": "wave",
+    "colors": ["#1B55D6", "#7FB0F5"],
+    "intensity": 0.85,
+    "onContent": true
+  },
+  "chrome": { "titleRule": false, "accentBar": true, "pageNumbers": true, "tracker": true }
+}

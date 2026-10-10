@@ -72,7 +72,12 @@ export function decorSvg(
       break;
     }
     case 'paper': {
-      body = `<rect x="${W * 0.035}" y="${H * 0.05}" width="${W * 0.93}" height="${H * 0.9}" fill="none" stroke="${a}" stroke-width="${W * 0.0012}" opacity="${op(0.9)}"/>`;
+      // Content slides use a wider frame so it clears the footer and page number.
+      const f =
+        placement === 'content'
+          ? { x: 0.02, y: 0.03, w: 0.96, h: 0.94 }
+          : { x: 0.035, y: 0.05, w: 0.93, h: 0.9 };
+      body = `<rect x="${W * f.x}" y="${H * f.y}" width="${W * f.w}" height="${H * f.h}" fill="none" stroke="${a}" stroke-width="${W * 0.0012}" opacity="${op(0.9)}"/>`;
       if (placement !== 'content')
         body += `<rect x="${W * 0.035}" y="${H * 0.05}" width="${W * 0.012}" height="${H * 0.9}" fill="${a}" opacity="${op(1)}"/>`;
       break;

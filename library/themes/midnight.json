@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "midnight",
+  "name": "Midnight",
+  "description": "Near-black navy canvas, off-white type and a warm orange glow — cinematic and focused, made for keynotes, pitches and stories.",
+  "bestFor": ["narrative-story", "pitch-deck", "case-study"],
+  "mood": ["cinematic", "bold", "focused"],
+  "dark": true,
+  "prefers": "html",
+  "colors": {
+    "background": "#0E1116",
+    "surface": "#171C24",
+    "ink": "#F2EFE9",
+    "muted": "#A4ADBA",
+    "accent": "#FF8A3D",
+    "accentText": "#141008",
+    "accentSoft": "#2C2118",
+    "rule": "#2C3440",
+    "positive": "#4CC38A",
+    "negative": "#FF6B5E",
+    "titleInk": "#FFFFFF"
+  },
+  "chart": ["#FF8A3D", "#E9E4DA", "#7C8AA0", "#4E5B6E", "#B8A48C", "#2F3948"],
+  "fonts": {
+    "heading": { "family": "Arial", "measure": "liberation-sans" },
+    "body": { "family": "Arial", "measure": "liberation-sans" }
+  },
+  "type": {
+    "cover": 44,
+    "title": 26,
+    "subtitle": 18,
+    "heading": 16,
+    "body": 15,
+    "minBody": 12,
+    "small": 11,
+    "source": 8,
+    "lineHeight": 1.2,
+    "titleWeight": "bold"
+  },
+  "decor": {
+    "kind": "glow",
+    "colors": ["#FF8A3D", "#B2441A"],
+    "intensity": 0.7,
+    "onContent": true
+  },
+  "chrome": { "titleRule": false, "accentBar": true, "pageNumbers": true, "tracker": true }
+}

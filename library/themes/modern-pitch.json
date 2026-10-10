@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "id": "modern-pitch",
+  "name": "Modern Pitch",
+  "description": "Crisp white, electric indigo and big bold titles with playful geometric shapes — the energetic look for startup and product decks.",
+  "bestFor": ["pitch-deck", "product-overview"],
+  "mood": ["energetic", "bold", "modern"],
+  "dark": false,
+  "prefers": "pptx",
+  "colors": {
+    "background": "#FFFFFF",
+    "surface": "#F4F5FB",
+    "ink": "#12122B",
+    "muted": "#585A78",
+    "accent": "#4F46E5",
+    "accentText": "#FFFFFF",
+    "accentSoft": "#E6E5FB",
+    "rule": "#D9DAEB",
+    "positive": "#0F8A5F",
+    "negative": "#D1364F",
+    "titleInk": "#12122B"
+  },
+  "chart": ["#4F46E5", "#12122B", "#8E88F0", "#C0BEF6", "#585A78", "#E4E4F0"],
+  "fonts": {
+    "heading": { "family": "Arial", "measure": "liberation-sans" },
+    "body": { "family": "Arial", "measure": "liberation-sans" }
+  },
+  "type": {
+    "cover": 50,
+    "title": 28,
+    "subtitle": 18,
+    "heading": 16,
+    "body": 14,
+    "minBody": 11,
+    "small": 10,
+    "source": 8,
+    "lineHeight": 1.15,
+    "titleWeight": "bold"
+  },
+  "decor": {
+    "kind": "geo",
+    "colors": ["#4F46E5", "#FF7F6E"],
+    "intensity": 0.55,
+    "onContent": false
+  },
+  "chrome": { "titleRule": false, "accentBar": true, "pageNumbers": true, "tracker": true }
+}

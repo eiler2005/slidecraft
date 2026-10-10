@@ -87,6 +87,17 @@ async function drawNode(doc: Doc, n: SceneNode): Promise<void> {
       doc.restore();
       return;
     }
+    case 'polygon': {
+      doc.save();
+      doc.polygon(...n.points.map(([x, y]) => [x * P, y * P] as [number, number]));
+      if (n.fill) doc.fillOpacity(n.fillOpacity ?? 1).fillColor(n.fill);
+      if (n.stroke) applyStroke(doc, n.stroke);
+      if (n.fill && n.stroke) doc.fillAndStroke();
+      else if (n.fill) doc.fill();
+      else if (n.stroke) doc.stroke();
+      doc.restore();
+      return;
+    }
     case 'line': {
       doc.save();
       applyStroke(doc, n.stroke);

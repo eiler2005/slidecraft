@@ -35,7 +35,13 @@ function deckFor(layoutId: string, themeId: string, exIndex: number): LoadedDeck
     sources: (ex.sources ?? []).map((id) => ({ id, title: `Source ${id}`, illustrative: true })),
     slides: [raw],
   });
-  return { deck, slides: [slide as never], path: '/tmp/harness.yaml', baseDir: '/tmp', diagnostics: [] };
+  return {
+    deck,
+    slides: [slide as never],
+    path: '/tmp/harness.yaml',
+    baseDir: '/tmp',
+    diagnostics: [],
+  };
 }
 
 describe.each(LAYOUTS.map((l) => [l.id, l] as const))('layout %s', (id, def) => {

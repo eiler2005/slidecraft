@@ -231,6 +231,29 @@ function addNode(pptx: Pptx, slide: Slide, n: SceneNode): Promise<void> | void {
       slide.addShape(pptx.ShapeType.ellipse, o);
       return;
     }
+    case 'polygon': {
+      const { x, y, w, h } = n.box;
+      const points: Any[] = n.points.map(([px, py], i) =>
+        i === 0 ? { x: px - x, y: py - y, moveTo: true } : { x: px - x, y: py - y },
+      );
+      points.push({ close: true });
+      const o: Any = {
+        x,
+        y,
+        w: Math.max(0.001, w),
+        h: Math.max(0.001, h),
+        points,
+        line: lineProps(n.stroke),
+      };
+      o.fill = n.fill
+        ? {
+            color: hex(n.fill),
+            transparency: n.fillOpacity !== undefined ? Math.round((1 - n.fillOpacity) * 100) : 0,
+          }
+        : { type: 'none' };
+      slide.addShape(pptx.ShapeType.custGeom, o);
+      return;
+    }
     case 'line': {
       const x = Math.min(n.x1, n.x2);
       const y = Math.min(n.y1, n.y2);
@@ -344,7 +367,10 @@ export async function normalizeZip(buf: Buffer, epoch: Date): Promise<Buffer> {
   const renames = new Map<string, string>();
   for (const [re, fmt] of [
     [/^ppt\/charts\/chart(\d+)\.xml$/, (n: number) => `chart${n}.xml`],
-    [/^ppt\/embeddings\/Microsoft_Excel_Worksheet(\d+)\.xlsx$/, (n: number) => `Microsoft_Excel_Worksheet${n}.xlsx`],
+    [
+      /^ppt\/embeddings\/Microsoft_Excel_Worksheet(\d+)\.xlsx$/,
+      (n: number) => `Microsoft_Excel_Worksheet${n}.xlsx`,
+    ],
   ] as const) {
     const nums = Object.keys(zin.files)
       .map((n) => re.exec(n)?.[1])
@@ -369,7 +395,8 @@ export async function normalizeZip(buf: Buffer, epoch: Date): Promise<Buffer> {
     const f = zin.files[original]!;
     if (f.dir) continue;
     let data: string | Uint8Array = await f.async('uint8array');
-    if (renames.size && /\.(xml|rels)$/.test(name)) data = rename(Buffer.from(data).toString('utf8'));
+    if (renames.size && /\.(xml|rels)$/.test(name))
+      data = rename(Buffer.from(data).toString('utf8'));
     if (name.endsWith('.xlsx')) data = await normalizeZip(Buffer.from(data), epoch);
     if (name.endsWith('docProps/core.xml')) {
       data = Buffer.from(data)

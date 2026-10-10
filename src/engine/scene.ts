@@ -111,6 +111,18 @@ export interface EllipseNode {
   role?: string;
 }
 
+/** Closed polygon, absolute points in inches (chevrons, arrows, Harvey balls). */
+export interface PolygonNode {
+  kind: 'polygon';
+  /** Bounding box of the points (computed by ctx.polygon). */
+  box: Box;
+  points: [number, number][];
+  fill?: Color;
+  fillOpacity?: number;
+  stroke?: Stroke;
+  role?: string;
+}
+
 export interface LineNode {
   kind: 'line';
   x1: number;
@@ -202,6 +214,7 @@ export type SceneNode =
   | TextNode
   | RectNode
   | EllipseNode
+  | PolygonNode
   | LineNode
   | ImageNode
   | TableNode

@@ -7,6 +7,7 @@ import type {
   ImageNode,
   LineNode,
   Paragraph,
+  PolygonNode,
   RectNode,
   SceneNode,
   Stroke,
@@ -100,6 +101,11 @@ export interface ComposeContext {
   paragraphs(items: string[], opts?: { bullet?: boolean; spaceBefore?: number }): Paragraph[];
   rect(box: Box, opts?: Omit<RectNode, 'kind' | 'box'>): RectNode;
   ellipse(box: Box, opts?: Omit<EllipseNode, 'kind' | 'box'>): EllipseNode;
+  /** Closed polygon from absolute points (inches). */
+  polygon(
+    points: [number, number][],
+    opts?: Omit<PolygonNode, 'kind' | 'box' | 'points'>,
+  ): PolygonNode;
   line(
     x1: number,
     y1: number,

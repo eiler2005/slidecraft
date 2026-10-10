@@ -82,6 +82,13 @@ export function nodeSvg(n: SceneNode): string {
         : 'fill="none"';
       return `<ellipse cx="${px(n.box.x + n.box.w / 2)}" cy="${px(n.box.y + n.box.h / 2)}" rx="${px(n.box.w / 2)}" ry="${px(n.box.h / 2)}" ${fill} ${strokeAttrs(n.stroke)}/>`;
     }
+    case 'polygon': {
+      const fill = n.fill
+        ? `fill="${n.fill}"${n.fillOpacity !== undefined ? ` fill-opacity="${n.fillOpacity}"` : ''}`
+        : 'fill="none"';
+      const pts = n.points.map(([x, y]) => `${px(x)},${px(y)}`).join(' ');
+      return `<polygon points="${pts}" ${fill} ${strokeAttrs(n.stroke)}/>`;
+    }
     case 'line': {
       let out = `<line x1="${px(n.x1)}" y1="${px(n.y1)}" x2="${px(n.x2)}" y2="${px(n.y2)}" ${strokeAttrs(n.stroke)}/>`;
       if (n.arrowEnd) {

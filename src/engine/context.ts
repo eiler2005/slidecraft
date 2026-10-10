@@ -160,6 +160,21 @@ export function createContext(
       return n;
     },
 
+    polygon(points, opts = {}) {
+      const xs = points.map((p) => p[0]);
+      const ys = points.map((p) => p[1]);
+      const x = Math.min(...xs);
+      const y = Math.min(...ys);
+      const n = {
+        kind: 'polygon' as const,
+        box: { x, y, w: Math.max(...xs) - x, h: Math.max(...ys) - y },
+        points,
+        ...opts,
+      };
+      nodes.push(n);
+      return n;
+    },
+
     line(x1, y1, x2, y2, stroke = {}, opts = {}) {
       const n = {
         kind: 'line' as const,

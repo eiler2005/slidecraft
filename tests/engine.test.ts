@@ -37,7 +37,11 @@ describe('text measurement', () => {
   });
 
   it('wraps greedily and never exceeds the width', () => {
-    const laid = layoutText([para('The quick brown fox jumps over the lazy dog '.repeat(4))], style(), 3);
+    const laid = layoutText(
+      [para('The quick brown fox jumps over the lazy dog '.repeat(4))],
+      style(),
+      3,
+    );
     expect(laid.lines.length).toBeGreaterThan(2);
     expect(laid.maxLineWidth).toBeLessThanOrEqual(3 + 1e-6);
   });
@@ -45,7 +49,13 @@ describe('text measurement', () => {
   it('steps the size down and reports overflow instead of truncating', () => {
     const text = [para('word '.repeat(200))];
     const box = { x: 0, y: 0, w: 3, h: 1 };
-    const s = { family: 'Arial', measure: 'liberation-sans' as const, color: '#000000', align: 'left' as const, valign: 'top' as const };
+    const s = {
+      family: 'Arial',
+      measure: 'liberation-sans' as const,
+      color: '#000000',
+      align: 'left' as const,
+      valign: 'top' as const,
+    };
     const r = fitText(text, box, s, [14, 12, 10], 1.2);
     expect(r.fits).toBe(false);
     expect(r.size).toBe(10);
@@ -69,7 +79,12 @@ describe('charts', () => {
   it('decomposes a waterfall that crosses zero into stacked series', () => {
     const theme = getTheme('consulting-classic')!;
     const c = buildChart(
-      { type: 'waterfall', categories: ['Start', 'Loss', 'Gain', 'End'], series: [{ name: 'Δ', values: [10, -25, 8, -7] }], highlight: [0, 3] },
+      {
+        type: 'waterfall',
+        categories: ['Start', 'Loss', 'Gain', 'End'],
+        series: [{ name: 'Δ', values: [10, -25, 8, -7] }],
+        highlight: [0, 3],
+      },
       { x: 0, y: 0, w: 8, h: 4 },
       { theme, font: theme.fonts.body },
     );

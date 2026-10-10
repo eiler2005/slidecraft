@@ -14,6 +14,7 @@ import type { Engine } from './types.ts';
 const P = 72; // pt per inch
 
 type Doc = InstanceType<typeof PDFDocument>;
+const imageCache = new WeakMap<Doc, Map<string, unknown>>();
 
 function fontName(m: MeasureFont, f: Face) {
   return `${m}-${f}`;
@@ -129,10 +130,28 @@ async function drawNode(doc: Doc, n: SceneNode): Promise<void> {
     }
     case 'image': {
       const { x, y, w, h } = n.box;
-      let buf: Buffer | undefined;
-      if (n.svg) buf = await rasterize(n.svg, Math.min(2400, w * 180));
-      else if (n.path) buf = readFileSync(n.path);
-      else if (n.data) buf = Buffer.from(n.data.base64, 'base64');
+      // One image object per distinct source per document: pdfkit decodes PNGs
+      // asynchronously, and embedding the same bytes twice is not byte-stable.
+      const key = n.svg
+        ? `svg:${n.svg}`
+        : n.path
+          ? `path:${n.path}`
+          : n.data
+            ? `data:${n.data.base64.slice(0, 64)}${n.data.base64.length}`
+            : '';
+      const cache = imageCache.get(doc) ?? new Map<string, unknown>();
+      imageCache.set(doc, cache);
+      let buf: unknown = key ? cache.get(key) : undefined;
+      if (!buf && key) {
+        let bytes: Buffer | undefined;
+        if (n.svg) bytes = await rasterize(n.svg, Math.min(2400, w * 180));
+        else if (n.path) bytes = readFileSync(n.path);
+        else if (n.data) bytes = Buffer.from(n.data.base64, 'base64');
+        if (bytes) {
+          buf = (doc as unknown as { openImage(b: Buffer): unknown }).openImage(bytes);
+          cache.set(key, buf);
+        }
+      }
       if (!buf) {
         doc.save();
         doc
@@ -158,8 +177,17 @@ async function drawNode(doc: Doc, n: SceneNode): Promise<void> {
       doc.save();
       doc.rect(x * P, y * P, w * P, h * P).clip();
       if (n.fit === 'cover')
-        doc.image(buf, x * P, y * P, { cover: [w * P, h * P], align: 'center', valign: 'center' });
-      else doc.image(buf, x * P, y * P, { fit: [w * P, h * P], align: 'center', valign: 'center' });
+        doc.image(buf as Buffer, x * P, y * P, {
+          cover: [w * P, h * P],
+          align: 'center',
+          valign: 'center',
+        });
+      else
+        doc.image(buf as Buffer, x * P, y * P, {
+          fit: [w * P, h * P],
+          align: 'center',
+          valign: 'center',
+        });
       doc.restore();
       return;
     }
@@ -208,8 +236,17 @@ async function drawNode(doc: Doc, n: SceneNode): Promise<void> {
   }
 }
 
+/** Flatten decor onto the master background: opaque PNG, no alpha mask (pdfkit's alpha split is not byte-stable). */
+function onBackground(svg: string, bg: string): string {
+  return svg.replace(/(<svg[^>]*>)/, `$1<rect width="100%" height="100%" fill="${bg}"/>`);
+}
+
 async function drawMaster(doc: Doc, m: Master, slideNo: number) {
-  for (const n of m.nodes) await drawNode(doc, n);
+  for (const n of m.nodes) {
+    if (n.kind === 'image' && n.svg && n.decorative)
+      await drawNode(doc, { ...n, svg: onBackground(n.svg, m.background) });
+    else await drawNode(doc, n);
+  }
   if (m.slideNumber) {
     const s = m.slideNumber;
     doc.font(fontName(s.style.measure, 'regular')).fontSize(s.style.size).fillColor(s.style.color);

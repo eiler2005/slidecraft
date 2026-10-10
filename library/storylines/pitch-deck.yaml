@@ -1,0 +1,105 @@
+# Storyline: an investor pitch that makes the opportunity feel inevitable and the team the right one to seize it.
+# Problem → solution → why now → market → product → model → traction → competition → go-to-market → team → financials → ask.
+schemaVersion: 1
+id: pitch-deck
+name: Pitch deck
+summary: Investor pitch — the problem, the solution, why now, market, product, business model, traction, competition, go-to-market, team, financials and the ask.
+bestFor: [pitch deck, investor, fundraising, seed, series A, venture capital, startup, funding round, VC, demo day, raise, pre-seed]
+audiences: [venture investors, angel investors, accelerator panel, strategic investors, corporate venture]
+themes: [modern-pitch, midnight, corporate-blue]
+ordered: true
+arc: Problem → solution → why now → market → product → business model → traction → competition → go-to-market → team → financials → ask
+length: { min: 10, max: 16 }
+tone: [confident, visual, honest]
+principles:
+  - One message per slide, and one visual. The deck must be understood in three minutes of skimming.
+  - Traction goes as early as it is strong. Real numbers beat any claim about the market.
+  - Size the market bottom-up (customers times price) and show the maths. A top-down percentage invites doubt.
+  - Name real competitors and say honestly why you win. Never claim there is none.
+  - Close with a precise ask, covering how much, for what runway and which milestones it buys.
+sections:
+  - id: opening
+    name: Opening
+    slots:
+      - id: cover
+        purpose: State what the company does in a line that sticks.
+        layouts: [title]
+        guidance: Company name and a one-line description in plain words ("Payroll for gig platforms, in one API"). Add the round, the date and contact details.
+        inputs: [company name, one-line description, round, contact]
+  - id: problem-solution
+    name: Problem and solution
+    slots:
+      - id: problem
+        purpose: Make the audience feel a painful, frequent and expensive problem.
+        layouts: [big-statement, key-points, kpi-tiles]
+        guidance: One customer, one painful moment, one number for its cost. Use a customer quote if possible. Avoid describing the problem as "inefficiency". Show who has it and how often.
+        inputs: [target customer, pain, cost of problem, customer evidence]
+      - id: solution
+        purpose: Show how the product removes the pain, in one view.
+        layouts: [text-image, key-points]
+        guidance: Title states the outcome for the customer, not the technology. Before-and-after works well. Three benefits at most. Product detail comes later.
+        inputs: [value proposition, key benefits, before and after]
+      - id: why-now
+        purpose: Explain what changed that makes this possible and necessary today.
+        layouts: [timeline, key-points, chart-takeaway]
+        guidance: Name two or three concrete shifts (regulation, technology cost curve, behaviour change) with dates or data. Without a clear shift, investors ask why it was not done five years ago.
+        inputs: [market shifts, enabling technologies, dates and data]
+  - id: market-product
+    name: Market and product
+    slots:
+      - id: market
+        purpose: Show the market is large enough to build a big company, using a credible build-up.
+        layouts: [chart-takeaway, kpi-tiles]
+        guidance: Bottom-up sizing ("120k clinics times EUR 8k per year is EUR 960M"). Show the beachhead segment you win first and the expansion path. Cite sources for counts and prices.
+        inputs: [customer counts, price point, beachhead segment, expansion segments, sources]
+      - id: product
+        purpose: Show the product working, and what is hard to copy.
+        layouts: [text-image, process-steps, key-points]
+        repeat: { min: 1, max: 3 }
+        guidance: Screenshots or a three-step flow of real product, not mock-ups of intent. Title states what the user can now do. Mention the technical or data advantage in one sentence.
+        inputs: [screenshots, user flow, differentiating technology]
+      - id: business-model
+        purpose: Show how the company makes money and why the unit economics work.
+        layouts: [key-points, data-table, kpi-tiles]
+        guidance: Pricing, who pays, revenue per customer, gross margin, CAC and payback. Show current numbers, then target. If early, show the assumptions and the evidence for them.
+        inputs: [revenue model, pricing, ACV, gross margin, CAC, payback]
+  - id: proof
+    name: Proof
+    slots:
+      - id: traction
+        purpose: Prove demand with the strongest metrics, trending the right way.
+        layouts: [chart-takeaway, kpi-tiles, big-statement]
+        repeat: { min: 1, max: 2 }
+        guidance: Growth chart with months on the axis and the headline stat in the title ("MRR grew 14% a month for 9 months"). Add logos or a quote from customers. Pick the metrics your stage is judged on and show cohort retention if good.
+        inputs: [revenue, growth rate, users, retention, customers, pilots]
+      - id: competition
+        purpose: Position against real alternatives and show where we win.
+        layouts: [matrix-2x2, options-comparison]
+        guidance: Two axes that matter to the customer, with us in the empty corner. Include the incumbent alternative, often a spreadsheet or an agency. Back the claim with a one-line reason per rival.
+        inputs: [competitors, positioning axes, our advantage]
+      - id: go-to-market
+        purpose: Show how we will win customers repeatably and affordably.
+        layouts: [process-steps, key-points, chart-takeaway]
+        guidance: The channel that works today, the evidence it scales (conversion, CAC by channel), and the next channel. Name the sales motion (self-serve, inside sales, enterprise).
+        inputs: [channels, funnel conversion, CAC by channel, sales cycle, next channel]
+  - id: team-financials
+    name: Team and financials
+    slots:
+      - id: team
+        purpose: Show why this team is the one to win.
+        layouts: [team-cards]
+        guidance: Founders and key hires with one line each on directly relevant achievements. Show advisors and investors only when they add credibility. Name the key hire gaps and how the round fills them.
+        inputs: [founders, key hires, advisors, notable backers]
+      - id: financials
+        purpose: Show the plan the money buys and the milestones it reaches.
+        layouts: [chart-takeaway, data-table, waterfall]
+        guidance: Three-year revenue and burn, headcount by function, and break-even or next-round milestone. Make the assumptions visible. Keep to one chart plus a small table.
+        inputs: [revenue forecast, burn, headcount plan, key assumptions]
+  - id: ask
+    name: The ask
+    slots:
+      - id: ask
+        purpose: State how much we are raising, for what, and the milestones it buys.
+        layouts: [kpi-tiles, key-points, big-statement]
+        guidance: Amount, instrument, use of funds as a percentage split, and the milestones reached at the end of runway ("18 months, EUR 3M ARR"). Close on contact details, not a thank-you slide.
+        inputs: [amount, instrument, use of funds, runway, milestones, contact]

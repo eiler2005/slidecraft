@@ -1,0 +1,106 @@
+# Storyline: a business case that earns an investment or budget decision.
+# Problem and opportunity → options (incl. do nothing) → economics → risks → recommendation → funding ask and gates.
+schemaVersion: 1
+id: business-case
+name: Business case
+summary: Investment or budget request — the problem, options including do-nothing, the economics, risks and sensitivities, a recommendation, and a gated funding ask.
+bestFor: [business case, investment, budget request, funding, capex, ROI, NPV, approval, project approval, cost-benefit, financial case, investment proposal]
+audiences: [investment committee, CFO, executive committee, board, budget holder, finance]
+themes: [consulting-classic, executive]
+ordered: true
+arc: Recommendation and ask → problem and opportunity → options → economics → risks and sensitivities → funding ask and gates
+length: { min: 8, max: 16 }
+tone: [rigorous, balanced, decision-ready]
+principles:
+  - Put the recommendation and the amount requested on page two. The rest is the proof.
+  - Always include do-nothing as a costed option. It is the real baseline for every benefit.
+  - Show the economics as a bridge that adds up, with assumptions visible and sourced.
+  - Show sensitivities and the break-even point. A case that survives its downside is a credible one.
+  - Release money in tranches tied to gates with explicit evidence, not as a single cheque.
+sections:
+  - id: open
+    name: Opening
+    slots:
+      - id: cover
+        purpose: Name the investment and the decision being requested.
+        layouts: [title]
+        guidance: Title states the ask in numbers ("Approve EUR 4.2M to consolidate three plants into one by 2028"). Subtitle gives the sponsor, the committee and the date.
+        inputs: [investment name, amount, sponsor, committee, date]
+      - id: summary
+        purpose: Give the problem, recommended option, economics and ask on one page.
+        layouts: [exec-summary]
+        guidance: Use the scr variant. Resolution carries NPV or payback, total investment and the headline risk. The ask names the amount and the first gate.
+        inputs: [problem, recommended option, NPV or payback, ask]
+  - id: need
+    name: Problem and opportunity
+    slots:
+      - id: problem
+        purpose: Show the problem or opportunity is real, quantified and urgent.
+        layouts: [chart-takeaway, kpi-tiles, big-statement]
+        repeat: { min: 1, max: 2 }
+        guidance: Quantify the cost of the problem or size of the prize per year. Title states it as a claim with a figure. Use data the finance team can reproduce. Separate facts from estimates.
+        inputs: [baseline metrics, problem cost or opportunity size, trend, sources]
+      - id: drivers
+        purpose: Explain why the status quo will not fix this and why act now.
+        layouts: [timeline, key-points, big-statement]
+        required: false
+        guidance: Name the trigger (regulation, contract end, capacity limit, competitor move) with a date. This is the urgency case, so keep it factual.
+        inputs: [triggers, deadlines, dependencies]
+  - id: options
+    name: Options
+    slots:
+      - id: options
+        purpose: Compare the realistic options, including do-nothing, on the same criteria.
+        layouts: [options-comparison, matrix-2x2]
+        guidance: Three or four options, always including do-nothing and a low-cost variant. Same criteria for each (cost, benefit, risk, time, fit). Mark the recommended option and say why it wins in the title.
+        inputs: [options, criteria, assessments, shortlisting logic]
+  - id: economics
+    name: Economics
+    slots:
+      - id: costs
+        purpose: Show total investment and run costs of the recommended option.
+        layouts: [data-table, chart-takeaway]
+        guidance: One-off versus recurring, capex versus opex, by year. Include contingency and internal effort. State the cost basis (quotes, estimates, benchmarks).
+        inputs: [one-off costs, run costs, contingency, quote sources]
+      - id: value
+        purpose: Show how benefits build up and what they are worth.
+        layouts: [waterfall, chart-takeaway]
+        guidance: A bridge from baseline to target, by lever. Split hard (cash) from soft benefits and count only hard ones in the headline. Show year of first benefit and ramp-up.
+        inputs: [baseline, benefit levers, ramp-up, owners per lever]
+      - id: returns
+        purpose: Show net return versus do-nothing — NPV, payback and cumulative cash.
+        layouts: [waterfall, chart-takeaway, kpi-tiles]
+        guidance: Cumulative cash chart showing break-even year, or NPV bridge. State discount rate, horizon and terminal value assumptions. All options on the same basis.
+        inputs: [NPV, IRR, payback, discount rate, horizon, cash profile]
+  - id: risk
+    name: Risks and sensitivities
+    slots:
+      - id: sensitivities
+        purpose: Show how the case behaves when key assumptions turn out worse.
+        layouts: [chart-takeaway, data-table]
+        guidance: Tornado or table of the three to five assumptions that move NPV most, with break-even values ("The case holds unless adoption falls below 55%"). Include a downside scenario.
+        inputs: [key assumptions, ranges, NPV impact, scenarios]
+      - id: risks
+        purpose: Name the main delivery and benefit risks and how each is controlled.
+        layouts: [data-table, matrix-2x2]
+        guidance: Three to five risks with likelihood, impact, mitigation and owner. Include risks to benefits, not only to delivery. Show residual risk after mitigation.
+        inputs: [risks, mitigations, owners]
+  - id: ask
+    name: Recommendation and funding
+    slots:
+      - id: recommendation
+        purpose: State the recommended option and why, tied to the decision criteria.
+        layouts: [big-statement, key-points]
+        guidance: One sentence recommendation, then up to three reasons that map to the criteria used in the options slide. No new data here.
+        inputs: [recommended option, three reasons]
+      - id: roadmap
+        purpose: Show the delivery plan and where benefits arrive.
+        layouts: [timeline, process-steps]
+        required: false
+        guidance: Phases with milestones and the point where each benefit starts. Gates appear here as diamonds with the evidence needed to pass.
+        inputs: [phases, milestones, benefit timing]
+      - id: funding
+        purpose: Request a specific sum, released in tranches against named gates.
+        layouts: [next-steps, data-table]
+        guidance: Use the decision variant. Table of tranche, amount, gate, evidence required and decision owner. The ask is the first tranche now plus the in-principle approval of the rest.
+        inputs: [tranches, amounts, gate criteria, approvers, next steps]

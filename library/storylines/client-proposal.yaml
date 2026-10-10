@@ -1,0 +1,112 @@
+# Storyline: a proposal or RFP response that wins by showing we understand the problem before we sell the solution.
+# Understanding → objectives and scope → approach → plan → team → evidence → commercials → next steps.
+schemaVersion: 1
+id: client-proposal
+name: Client proposal
+summary: Proposal to a client — our understanding of the problem kept apart from our approach, then scope, plan, team, proof, commercials and next steps.
+bestFor: [proposal, RFP response, tender, bid, pitch to client, statement of work, scope of work, consulting proposal, services offer, engagement, SOW]
+audiences: [client executive, procurement committee, project sponsor, selection panel, buying committee]
+themes: [consulting-classic, executive, corporate-blue]
+ordered: true
+arc: Our understanding → objectives and scope → approach → plan → team → evidence → commercials → next steps
+length: { min: 10, max: 20 }
+tone: [confident, client-centred, specific]
+principles:
+  - Understanding comes first and stands alone. The client must recognise their own situation before they hear our solution.
+  - Use the client's words and numbers from the brief or interviews, not our template language.
+  - Every part of the approach traces to an objective. Cut method that serves no stated goal.
+  - Proof beats claims. Two relevant cases with outcomes outweigh a page of credentials.
+  - Make the price easy to compare. Show what is in, what is out and the assumptions behind the fee.
+sections:
+  - id: open
+    name: Opening
+    slots:
+      - id: cover
+        purpose: Name the client, the engagement and the date.
+        layouts: [title]
+        guidance: Title frames the engagement in the client's terms ("Accelerating Northwind's move to a single customer platform"), not "Proposal for services". Subtitle gives the client name, our firm and the date.
+        inputs: [client, engagement title, our firm, date]
+      - id: summary
+        purpose: Summarise the situation, what we propose, why us and the ask on one page.
+        layouts: [exec-summary]
+        guidance: Use the scr variant. The reader who stops here should know the problem, our answer, the timeline and fee range. Keep it to the client's priorities.
+        inputs: [situation, complication, proposed answer, headline fee and timeline]
+  - id: understanding
+    name: Our understanding
+    slots:
+      - id: context
+        purpose: Show we understand the client's situation and ambition in their terms.
+        layouts: [text-image, key-points, kpi-tiles]
+        guidance: Reflect strategy, market pressure and constraints back using their own figures. Title states the situation as a claim the client would sign. No solution language on this slide.
+        inputs: [client strategy, key facts, source documents, interview notes]
+      - id: challenge
+        purpose: Define the core problem or opportunity and why it matters now.
+        layouts: [key-points, chart-takeaway, big-statement]
+        guidance: Name two to four root challenges, not symptoms. Quantify the cost of the problem where you can. Flag any assumption you could not verify, so the client can correct it.
+        inputs: [challenges, evidence, cost of inaction, assumptions]
+  - id: scope
+    name: Objectives and scope
+    slots:
+      - id: objectives
+        purpose: State what success looks like for the client, as measurable outcomes.
+        layouts: [key-points, kpi-tiles]
+        guidance: Three or four objectives with a measure each. Separate outcomes the client wants from outputs we deliver. Confirm that these match the brief.
+        inputs: [objectives, success measures, brief]
+      - id: scope
+        purpose: Fix what is in scope, out of scope and assumed, to prevent later disputes.
+        layouts: [options-comparison, data-table, key-points]
+        guidance: Columns for in scope, out of scope, client dependencies. Be explicit about geographies, business units and deliverable formats. Put optional modules in a separate column.
+        inputs: [in scope, out of scope, dependencies, optional modules]
+  - id: approach
+    name: Our approach
+    slots:
+      - id: approach
+        purpose: Show how we will reach the objectives, phase by phase.
+        layouts: [process-steps, key-points]
+        guidance: Chevrons for three to five phases, each with activities, deliverables and the client decision at its end. Title states the logic ("Three phases take Northwind from diagnosis to a funded roadmap in 12 weeks").
+        inputs: [phases, activities, deliverables, decision points]
+      - id: method
+        purpose: Explain the specific methods, tools or assets that make our approach different.
+        layouts: [key-points, text-image, matrix-2x2]
+        required: false
+        repeat: { min: 0, max: 3 }
+        guidance: Only methods that change the outcome, such as a diagnostic, benchmark or model. Show one example output. Avoid generic claims like "proven methodology".
+        inputs: [methods, proprietary assets, sample outputs]
+  - id: plan
+    name: Plan and team
+    slots:
+      - id: plan
+        purpose: Show the timeline, milestones and the client's role in them.
+        layouts: [timeline, process-steps]
+        guidance: Gantt variant with phases, milestones, steering meetings and client inputs on one axis. State the start date and the date of the final deliverable.
+        inputs: [start date, phases, milestones, governance cadence]
+      - id: team
+        purpose: Introduce the people who will do the work and their relevant experience.
+        layouts: [team-cards]
+        guidance: Name the lead, the day-to-day manager and key experts, each with role, allocation and one line of directly relevant experience. Show the client team we need from them.
+        inputs: [team members, roles, allocation, bios]
+  - id: proof
+    name: Evidence
+    slots:
+      - id: cases
+        purpose: Prove we have solved a comparable problem, with results.
+        layouts: [text-image, kpi-tiles, key-points]
+        repeat: { min: 1, max: 3 }
+        guidance: One case per slide in the pattern situation, what we did, result with a number. Choose cases similar in problem and industry. Get client permission or anonymise. Add a quote if you have one.
+        inputs: [case studies, results, permissions, references]
+  - id: commercials
+    name: Commercials
+    slots:
+      - id: fees
+        purpose: Present the fee, what it covers and the terms.
+        layouts: [data-table, options-comparison]
+        guidance: Fee per phase or per option (for example core and extended scope). State fixed fee or time and materials, expenses treatment, payment terms and validity date. Tie each line to a deliverable.
+        inputs: [fees per phase, pricing model, expenses, payment terms, validity]
+  - id: close
+    name: Next steps
+    slots:
+      - id: next-steps
+        purpose: Make agreeing and starting easy, with owners and dates.
+        layouts: [next-steps]
+        guidance: Use the actions variant. Steps from questions and clarifications to contract signature and kickoff, each with an owner and a date. Name one contact.
+        inputs: [next steps, dates, contact person]

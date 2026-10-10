@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/eiler2005/slidecraft/tree/main/docs
+    about: How-to guides and reference. Check here first, especially for adding a layout.

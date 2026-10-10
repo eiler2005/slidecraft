@@ -1,0 +1,88 @@
+# Storyline: a product or launch overview that leads with the customer's job, not the feature list.
+# Job to be done → how it works → key features → proof → roadmap → packaging → call to action.
+schemaVersion: 1
+id: product-overview
+name: Product overview
+summary: Product or launch overview for customers or internal stakeholders — the job to be done, how it works, key features, proof, roadmap, packaging and a call to action.
+bestFor: [product overview, product launch, launch, go-to-market, release, product demo, product roadmap, feature announcement, sales deck, product update, platform overview]
+audiences: [prospective customers, customers, sales team, internal stakeholders, partners, leadership team]
+themes: [modern-pitch, corporate-blue, editorial]
+ordered: true
+arc: Job to be done → how it works → key features → proof → roadmap → pricing and packaging → call to action
+length: { min: 8, max: 16 }
+tone: [clear, benefit-led, energetic]
+principles:
+  - Start with the customer's job and pain, in their words. The product appears only after the need is clear.
+  - Describe benefits first and features second. Each feature title states what the user can now do.
+  - Show the real product (screens, a flow, a number) rather than adjectives.
+  - Proof is specific. A named customer with a measured result beats "trusted by leaders".
+  - End with one action for this audience, not a menu of options.
+sections:
+  - id: opening
+    name: Opening
+    slots:
+      - id: cover
+        purpose: Name the product and its promise in one line.
+        layouts: [title]
+        guidance: Product name plus the outcome it delivers ("Relay. Ship releases without the weekend."). Subtitle gives the version or launch date and the presenter.
+        inputs: [product name, promise, version or date, presenter]
+      - id: job
+        purpose: Frame the job the customer is trying to get done and why it is hard today.
+        layouts: [big-statement, key-points, text-image]
+        guidance: Describe who, what they are trying to achieve and the obstacle, in the customer's voice. A quote or hero number from research works well. Do not mention the product yet.
+        inputs: [target user, job to be done, current workarounds, customer quote]
+  - id: how
+    name: How it works
+    slots:
+      - id: how-it-works
+        purpose: Show the product's core flow in three to five steps.
+        layouts: [process-steps, text-image]
+        guidance: Chevrons with one verb phrase per step and a screen or icon each. Title states the end-to-end outcome and time saved ("From request to approved in three clicks"). Keep the vocabulary of the user.
+        inputs: [user flow, step descriptions, screenshots]
+      - id: features
+        purpose: Present the key capabilities and the benefit of each.
+        layouts: [key-points, text-image]
+        repeat: { min: 1, max: 3 }
+        guidance: Three to six features, each with benefit, one line of how, and a visual. Group by user goal, not by product module. A deep-dive slide per hero feature is allowed. Cut the long tail to an appendix.
+        inputs: [features, benefits, screenshots, hero feature]
+      - id: differentiators
+        purpose: Show what makes this product different from alternatives.
+        layouts: [options-comparison, matrix-2x2, key-points]
+        required: false
+        guidance: Compare on criteria the customer cares about, including the current workaround. Be fair to alternatives. Do not use feature checkmark grids with ten rows.
+        inputs: [alternatives, comparison criteria, our strengths]
+  - id: proof
+    name: Proof
+    slots:
+      - id: results
+        purpose: Prove the product delivers, with metrics from real usage.
+        layouts: [kpi-tiles, chart-takeaway]
+        guidance: Three or four numbers with baseline and timeframe ("Onboarding fell from 14 days to 3 across 40 customers"). Say whether the data are pilots or production. Cite the source.
+        inputs: [customer results, usage metrics, sample size, time period]
+      - id: testimonial
+        purpose: Add a credible voice from a customer or user.
+        layouts: [big-statement, text-image]
+        required: false
+        guidance: Quote variant. Name, role and company, with permission. Choose the quote that states a specific result, not general praise.
+        inputs: [quote, name and role, company, permission]
+  - id: future
+    name: Roadmap and packaging
+    slots:
+      - id: roadmap
+        purpose: Show where the product is going and when, to build confidence without overpromising.
+        layouts: [timeline, key-points]
+        guidance: Now, next, later columns or a milestones view. Tie each item to a customer problem. Mark dates as committed or indicative. Do not put more than two quarters in the committed zone.
+        inputs: [roadmap items, timing, confidence level, customer problems]
+      - id: packaging
+        purpose: Make the offer and its price clear, and help the buyer choose.
+        layouts: [data-table, options-comparison]
+        guidance: Two to four plans with who each is for, what is included and the price or price logic. Highlight the recommended plan. Include limits and what costs extra, so nothing surprises the buyer.
+        inputs: [plans, inclusions, prices, limits, add-ons]
+  - id: close
+    name: Call to action
+    slots:
+      - id: cta
+        purpose: Tell the audience the single next step and how to take it.
+        layouts: [next-steps, title]
+        guidance: One action phrased as a verb ("Start the 30-day pilot by 15 March"), with owner, link or contact. For internal audiences, name the support you need and by when.
+        inputs: [call to action, deadline, contact, link]

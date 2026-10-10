@@ -1,0 +1,102 @@
+# Storyline: a research readout that moves from question and evidence to implications and recommendations.
+# Research question → method and sample → key findings (one per slide) → implications → recommendations → appendix.
+schemaVersion: 1
+id: research-readout
+name: Research readout
+summary: Findings readout for a survey, user research or analysis — the question, method and sample, one finding per slide, implications, recommendations and an appendix.
+bestFor: [research readout, findings, survey results, user research, market research, customer research, insights, analysis results, usability study, interview findings, study results]
+audiences: [product team, leadership team, stakeholders, marketing team, client, research community]
+themes: [editorial, consulting-classic, corporate-blue]
+ordered: true
+arc: Research question → method and sample → key findings → implications → recommendations → appendix
+length: { min: 8, max: 20 }
+tone: [objective, insightful, plain-spoken]
+principles:
+  - Open with the question and the top-line answer, so the audience knows what the research settles.
+  - One finding per slide, and the title is the finding stated as a sentence with its number.
+  - Show the evidence that carries the claim, whether a chart, a quote or both. Do not show every cut of the data.
+  - State sample size, method and limits plainly. Say what the data cannot tell us.
+  - Separate findings (what we saw) from implications (what it means) and recommendations (what to do).
+sections:
+  - id: framing
+    name: Framing
+    slots:
+      - id: cover
+        purpose: Name the study, the team and the date.
+        layouts: [title]
+        guidance: Title names the topic and, if possible, the headline ("Why new users stop at step three. Findings from 24 interviews"). Subtitle gives the researchers, the date and the fieldwork period.
+        inputs: [study title, researchers, date, fieldwork period]
+      - id: question
+        purpose: State the question the research was meant to answer and why it matters.
+        layouts: [big-statement, key-points]
+        guidance: The primary question in one sentence, and up to three sub-questions or hypotheses. Say which decision the answer informs and who owns it.
+        inputs: [research question, hypotheses, decision it informs]
+      - id: summary
+        purpose: Give the answer, the key findings and the recommendations in one view.
+        layouts: [exec-summary, key-points]
+        guidance: Use the key-messages variant. Three to five findings each in one sentence with a number, then the main recommendation. Someone who reads only this page should act correctly.
+        inputs: [top findings, headline numbers, main recommendation]
+  - id: method
+    name: Method and sample
+    slots:
+      - id: method
+        purpose: Show how the research was done and who took part, so the findings can be trusted.
+        layouts: [key-points, kpi-tiles, process-steps]
+        guidance: Method, sample size, recruitment, fieldwork dates and segments, as a small fact panel. One line on weighting or coding. Keep detail in the appendix and name the main limitation here, not only there.
+        inputs: [methods, sample size, recruitment, segments, dates, limitations]
+  - id: findings
+    name: Findings
+    slots:
+      - id: finding
+        purpose: Report one finding with the evidence that supports it.
+        layouts: [chart-takeaway, key-points, big-statement, data-table]
+        repeat: { min: 3, max: 8 }
+        guidance: Title states the finding with a number or a contrast ("62% of admins never open the reports tab"). Show one chart with a takeaway, or one quote and a count. Mark statistical significance and base size. Order by importance, not by survey order.
+        inputs: [finding, supporting data, base size, verbatim quotes]
+      - id: segments
+        purpose: Show where results differ meaningfully between groups.
+        layouts: [data-table, chart-takeaway, matrix-2x2]
+        required: false
+        guidance: Only differences that are significant and decision-relevant. Compare two or three segments on the same measures. Warn when a subgroup is small. Describe personas only when the data separates them.
+        inputs: [segment definitions, results by segment, significance, base sizes]
+      - id: voices
+        purpose: Make the numbers human with verbatim evidence.
+        layouts: [big-statement, text-image]
+        required: false
+        repeat: { min: 0, max: 3 }
+        guidance: Quote variant. Choose quotes that illustrate a finding already proven by the data, with participant ID or role. Never use a quote as the only support for a claim.
+        inputs: [verbatim quotes, participant roles]
+  - id: so-what
+    name: Implications and recommendations
+    slots:
+      - id: implications
+        purpose: Explain what the findings mean for the business or product.
+        layouts: [key-points, matrix-2x2, options-comparison]
+        guidance: Three or four implications, each linking a finding to a consequence ("Onboarding, not pricing, drives churn in the first month"). State confidence. Flag where findings contradict prior beliefs.
+        inputs: [implications, linked findings, confidence]
+      - id: recommendations
+        purpose: Recommend specific actions ranked by impact and effort.
+        layouts: [data-table, matrix-2x2, key-points]
+        guidance: Table with action, finding it addresses, impact, effort and suggested owner. Rank them and mark the top two to start now. A 2x2 of impact against effort helps prioritisation.
+        inputs: [actions, linked findings, impact, effort, owners]
+      - id: next-steps
+        purpose: Say what happens next and what further research is needed.
+        layouts: [next-steps]
+        guidance: Use the actions variant. Decisions needed from the audience, follow-up studies for open questions, and when results will be shared again. Name owners and dates.
+        inputs: [decisions, follow-up research, owners, dates]
+  - id: appendix
+    name: Appendix
+    slots:
+      - id: method-detail
+        purpose: Document the method in enough detail to audit or replicate it.
+        layouts: [data-table, key-points]
+        required: false
+        guidance: Sampling frame, screener, questionnaire or interview guide, weighting, coding scheme and response rates. Title each page plainly. Link to the raw data location.
+        inputs: [sampling, instruments, weighting, response rate, data location]
+      - id: detail
+        purpose: Hold the full tables and extra cuts that back up the main findings.
+        layouts: [data-table, chart-takeaway]
+        required: false
+        repeat: { min: 0, max: 6 }
+        guidance: Full cross-tabs, additional charts and extended quote sets. Each page has an action title. Reference the main slide that relies on it.
+        inputs: [full tables, extra charts, additional quotes]

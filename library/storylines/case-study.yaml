@@ -1,0 +1,89 @@
+# Storyline: a case story or retrospective that turns one experience into lessons others can reuse.
+# Context → challenge → what we did → results → what we learned → what we would change → recommendations.
+schemaVersion: 1
+id: case-study
+name: Case study
+summary: Lessons-learned story of a project or initiative — context, challenge, what we did, results, what we learned, what we would do differently, and recommendations.
+bestFor: [case study, lessons learned, retrospective, post-mortem, project review, success story, experience sharing, after action review, project closure, what worked, customer story]
+audiences: [peers and practitioners, leadership team, project teams, community of practice, prospective clients]
+themes: [editorial, midnight, consulting-classic]
+ordered: true
+arc: Context → challenge → what we did → results → what we learned → what we would do differently → recommendations
+length: { min: 8, max: 16 }
+tone: [candid, reflective, constructive]
+principles:
+  - Tell it as a story with a clear question, such as "How did we cut release time by 70%?" and keep returning to it.
+  - Separate what happened (facts, dates, numbers) from what we conclude (lessons). Never blur them.
+  - Be honest about mistakes and constraints. Candour is what makes the lessons believable.
+  - Every lesson is transferable. State it so a team in another context could apply it.
+  - Close on what the audience should do differently, not on a recap of the project.
+sections:
+  - id: setup
+    name: Context and challenge
+    slots:
+      - id: cover
+        purpose: Name the case and the question it answers.
+        layouts: [title]
+        guidance: Title poses the story as a result or question ("From 6 weeks to 2 days. How Finance rebuilt month-end close"). Subtitle gives the team, period and presenter.
+        inputs: [case title, team, period, presenter]
+      - id: context
+        purpose: Give the audience just enough background to follow the story.
+        layouts: [text-image, key-points, kpi-tiles]
+        guidance: Who we were, what we were responsible for and the starting situation with two or three baseline numbers. Keep it to one slide, as the audience wants the story.
+        inputs: [organisation or team, scope, baseline metrics, timeframe]
+      - id: challenge
+        purpose: Explain the problem we faced and why it was hard.
+        layouts: [big-statement, key-points, chart-takeaway]
+        guidance: State the trigger, the stakes and the constraints (budget, people, time). Show the real obstacle, not the neat one in hindsight. A single number for the cost of the problem is effective.
+        inputs: [trigger, stakes, constraints, cost of problem]
+  - id: action
+    name: What we did
+    slots:
+      - id: approach
+        purpose: Show what we did, in order, and the key decisions on the way.
+        layouts: [timeline, process-steps]
+        guidance: Milestones variant for chronology, chevrons for a method. Mark the two or three decisions that mattered most and what we considered instead. Title states the approach ("We piloted in one region before rolling out to eleven").
+        inputs: [phases, key decisions, alternatives considered, dates]
+      - id: detail
+        purpose: Go deeper on the one or two moves that made the difference.
+        layouts: [text-image, key-points, chart-takeaway]
+        required: false
+        repeat: { min: 0, max: 3 }
+        guidance: One slide per critical move with what we did, why, and the evidence it worked. Use screenshots, diagrams or artefacts from the project. Skip activity that did not change the outcome.
+        inputs: [critical moves, rationale, artefacts, evidence]
+  - id: outcome
+    name: Results
+    slots:
+      - id: results
+        purpose: Show what we achieved against the starting point and the goal.
+        layouts: [kpi-tiles, chart-takeaway, waterfall]
+        guidance: Three or four headline numbers with before, after and the target. Include misses. Say how long the results were measured and what else changed. Title carries the headline result.
+        inputs: [before and after metrics, targets, measurement period, caveats]
+      - id: voices
+        purpose: Add the human view of the result from users, customers or the team.
+        layouts: [big-statement, text-image]
+        required: false
+        guidance: Quote variant. One concrete voice with name and role, not a collage of praise. Pair it with the number it illustrates.
+        inputs: [quote, name and role, permission]
+  - id: learning
+    name: Lessons
+    slots:
+      - id: lessons
+        purpose: State what worked and what we learned, as transferable lessons.
+        layouts: [key-points, big-statement]
+        repeat: { min: 1, max: 2 }
+        guidance: Three to five lessons, each phrased as a rule ("Fix the data definition before the dashboard") followed by the evidence from the case. Order by importance. Distinguish lessons we are sure of from hypotheses.
+        inputs: [lessons, supporting evidence, confidence]
+      - id: do-differently
+        purpose: Be candid about what we would change if we started again.
+        layouts: [options-comparison, key-points, data-table]
+        guidance: Two columns, what we did and what we would do instead, with the cost of the mistake (weeks lost, budget). Name root causes, not people. Include things outside our control.
+        inputs: [mistakes, root causes, better alternatives, cost of mistakes]
+  - id: apply
+    name: Recommendations
+    slots:
+      - id: recommendations
+        purpose: Tell the audience what to do with these lessons.
+        layouts: [next-steps, key-points]
+        guidance: Three to five concrete recommendations for teams facing a similar situation, each with a first step. Use the actions variant. Offer a contact, template or playbook if one exists.
+        inputs: [recommendations, first steps, resources, contact]

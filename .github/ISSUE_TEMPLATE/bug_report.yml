@@ -1,0 +1,50 @@
+name: Bug report
+description: Something renders wrong, a command fails, or output differs between PPTX, PDF and HTML.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Please do not attach client material. Reduce the problem to a small deck spec with placeholder content.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you expected, and what you got instead.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Include a minimal `deck.yaml` (placeholder content only) and the exact command.
+      render: shell
+    validations:
+      required: true
+  - type: dropdown
+    id: output
+    attributes:
+      label: Output format
+      multiple: true
+      options: [PPTX, PDF, HTML, PNG preview, validate / QA codes, Other]
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: SlideCraft version
+      description: Output of `slidecraft --version`, or the commit SHA.
+    validations:
+      required: true
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      description: OS and Node version (`node -v`), and the PowerPoint / viewer you opened the file in.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or screenshots
+      description: Paste CLI output; drag in a screenshot of the slide if relevant.

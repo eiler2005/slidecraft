@@ -1,0 +1,49 @@
+name: New layout
+description: Propose a new slide layout. Layouts are exhibits that serve a storyline step.
+labels: [layout]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        See `docs/how-to/add-layout.md` for how layouts are built. Use placeholder content only.
+  - type: textarea
+    id: purpose
+    attributes:
+      label: Exhibit purpose
+      description: What does this exhibit let the reader see or decide? State the so-what in one sentence.
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Example content
+      description: A realistic but fictional example, ideally as the YAML slide spec you would like to write.
+      render: yaml
+    validations:
+      required: true
+  - type: input
+    id: reference
+    attributes:
+      label: Reference image link
+      description: Link to a public image of a similar exhibit (no client material).
+      placeholder: https://
+  - type: dropdown
+    id: storyline
+    attributes:
+      label: Storyline it serves
+      options:
+        - Executive summary
+        - Situation and context
+        - Problem / diagnosis
+        - Options and trade-offs
+        - Recommendation
+        - Roadmap and next steps
+        - Appendix / backup
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints
+      description: Min / max items, text length limits, chart types, dense vs sparse variants.

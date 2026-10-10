@@ -1,0 +1,18 @@
+#!/bin/sh
+# SlideCraft pre-commit: privacy check, biome on staged files, typecheck.
+set -e
+GIT="${GIT_BIN:-git}"
+"$GIT" --version >/dev/null 2>&1 || GIT=/usr/bin/git
+cd "$("$GIT" rev-parse --show-toplevel)"
+HOOKS="$(dirname "$0")"
+
+"$HOOKS/privacy-check" index
+
+if [ -x node_modules/.bin/biome ]; then
+  npx --no-install biome check --staged --no-errors-on-unmatched
+else
+  echo "pre-commit: biome not installed locally, falling back to npm run lint"
+  npm run lint
+fi
+
+npx --no-install tsc --noEmit

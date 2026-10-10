@@ -1,0 +1,4 @@
+#!/bin/sh
+# Thin wrapper; the logic lives in privacy-check.mjs (Node, no dependencies).
+# Usage: privacy-check index | tree | commit <sha>
+exec node "$(dirname "$0")/privacy-check.mjs" "$@"

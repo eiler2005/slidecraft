@@ -1,0 +1,87 @@
+# Storyline: a status update for a board, steering committee or QBR that ends in decisions, not information.
+# Headline status → plan vs actual vs forecast → what changed → risks and issues → decisions needed.
+schemaVersion: 1
+id: executive-update
+name: Executive update
+summary: Status-first update for a board or steerco — RAG headline, plan vs actual vs forecast, what changed, risks and issues, and the decisions needed.
+bestFor: [status report, steerco, steering committee, QBR, board update, progress update, program update, project status, quarterly review, monthly review, RAG]
+audiences: [board, steering committee, executive committee, sponsors, leadership team]
+themes: [executive, consulting-classic, corporate-blue]
+ordered: true
+arc: Headline status (RAG) → plan vs actual vs forecast → what changed → risks and issues → decisions needed
+length: { min: 6, max: 12 }
+tone: [factual, candid, concise]
+principles:
+  - Lead with the overall status and the one thing that needs attention. Never bury a red.
+  - Plan, actual and forecast share one axis and one unit, so the gap is visible at a glance.
+  - Report change since the last meeting. Do not re-explain the project every time.
+  - Every risk or issue has an owner, a mitigation and a date. A list of worries is not a status.
+  - Close with decisions requested, each with an owner and a deadline. If nothing needs deciding, shorten the deck.
+sections:
+  - id: headline
+    name: Headline
+    slots:
+      - id: cover
+        purpose: Identify the programme, the period and the status owner.
+        layouts: [title]
+        guidance: Title names the programme and period ("Atlas programme, Q3 steering committee"). No marketing language. Subtitle gives the date and the presenter.
+        inputs: [programme name, period, presenter, date]
+      - id: status
+        purpose: Give the overall RAG status, the headline message and the asks on one page.
+        layouts: [exec-summary, key-points, kpi-tiles]
+        guidance: Title states the status as a claim ("Atlas is amber, launch holds if we approve the vendor change"). Show RAG per dimension (scope, schedule, budget, quality) with one line of reasoning each. State the decisions needed in the same page.
+        inputs: [overall RAG, RAG per dimension, headline message, decisions needed]
+  - id: performance
+    name: Performance
+    slots:
+      - id: kpis
+        purpose: Show the few metrics that define success against target.
+        layouts: [kpi-tiles, data-table]
+        guidance: Three to five KPIs, each with actual, target and trend arrow. Same definitions as last period, and flag any redefinition. Do not add vanity metrics to fill the page.
+        inputs: [KPIs, targets, actuals, prior period]
+      - id: plan-vs-actual
+        purpose: Show where we are against plan and where we expect to land, on one axis.
+        layouts: [chart-takeaway, timeline, waterfall]
+        repeat: { min: 1, max: 3 }
+        guidance: One slide per dimension that matters (budget, schedule, benefits). Plot plan, actual and forecast together, forecast visually distinct. Title states the gap ("Spend is 8% under plan, but the forecast overruns by EUR 1.2M"). Same unit and baseline everywhere.
+        inputs: [plan, actuals to date, forecast, variance drivers]
+      - id: milestones
+        purpose: Show milestone delivery, what slipped and the effect on the end date.
+        layouts: [timeline, data-table]
+        required: false
+        guidance: Gantt or milestone view with status colour. Mark slipped milestones and show the new date next to the baseline. State whether the critical path moved.
+        inputs: [milestones, baseline dates, current forecast dates]
+  - id: change
+    name: What changed
+    slots:
+      - id: changes
+        purpose: Say what moved since the last meeting, and why.
+        layouts: [key-points, data-table]
+        guidance: Three to five changes ordered by impact, each with cause and consequence. Include good news. Cover scope, budget and schedule changes explicitly, not only incidents.
+        inputs: [changes since last review, causes, impacts]
+  - id: risk
+    name: Risks and issues
+    slots:
+      - id: risks
+        purpose: Show the top risks and live issues with exposure, owner and mitigation.
+        layouts: [data-table, matrix-2x2]
+        guidance: Maximum five items. Separate risks (may happen) from issues (happening now). Columns are exposure, mitigation, owner, due date and trend vs last review. Quantify exposure in money or days. Put escalations at the top.
+        inputs: [risks, issues, likelihood, impact, mitigations, owners]
+  - id: decisions
+    name: Decisions and next steps
+    slots:
+      - id: decisions
+        purpose: Ask for explicit decisions, with owner and date, and list the actions that follow.
+        layouts: [next-steps]
+        guidance: Use the decision variant. Each decision is phrased as a yes/no or a choice between options, with our recommendation and the cost of delay. Add next-period actions with owners and dates.
+        inputs: [decisions, recommendation, deadline, actions, owners]
+  - id: backup
+    name: Backup
+    slots:
+      - id: appendix
+        purpose: Hold detail the committee may ask about without crowding the main flow.
+        layouts: [data-table, chart-takeaway, timeline]
+        required: false
+        repeat: { min: 0, max: 4 }
+        guidance: Detailed financials, full risk register, workstream status, dependency map. Title each as a normal action title. The main flow must stand without them.
+        inputs: [detailed tables, full risk register, workstream detail]

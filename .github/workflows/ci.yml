@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  check:
+    name: check (${{ matrix.os }}, node ${{ matrix.node }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node: ['22.x']
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      - name: Bundle is up to date (dist/ is committed)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          node scripts/bundle.mjs
+          git diff --exit-code dist/
+
+      - name: Generated reference docs and schemas are up to date
+        if: hashFiles('docs/reference/*.gen.md') != ''
+        run: |
+          npm run gen
+          git diff --exit-code docs/reference schemas
+
+      - name: Validate the skeleton fixture with the committed bundle
+        run: node dist/slidecraft.mjs validate tests/fixtures/skeleton/deck.yaml
+
+      - name: Build the skeleton fixture
+        run: node dist/slidecraft.mjs build tests/fixtures/skeleton/deck.yaml -o out/ci
+
+      - name: Upload deck preview
+        if: matrix.os == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: deck-preview
+          path: out/ci
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Privacy check (all tracked files)
+        run: .githooks/privacy-check tree

@@ -34,7 +34,7 @@
     "test": "vitest run",
     "gen": "tsx src/cli/main.ts gen",
     "check": "npm run lint && npm run typecheck && npm run test",
-    "hooks": "git config core.hooksPath .githooks"
+    "hooks": "node -e \"require('child_process').execFileSync(process.platform==='darwin'&&require('fs').existsSync('/usr/bin/git')?'/usr/bin/git':'git',['config','core.hooksPath','.githooks'],{stdio:'inherit'})\""
   },
   "dependencies": {
     "@resvg/resvg-wasm": "2.6.2",

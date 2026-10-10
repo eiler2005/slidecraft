@@ -38,6 +38,8 @@ const ALLOWLIST = [
   { dir: 'docs/media/', exts: MEDIA },
   { dir: 'tests/fixtures/', exts: '*' },
   { dir: 'tests/__snapshots__/', exts: ['png', 'pdf', 'pptx'] },
+  // original artwork used by the fictional example decks
+  { dir: /^examples\/[^/]+\/assets\//, exts: ['png', 'jpg', 'jpeg', 'webp'] },
 ];
 
 const TEXT_EXTS = new Set(['md', 'yaml', 'yml', 'json', 'txt', 'csv', 'ts', 'mjs']);
@@ -152,12 +154,14 @@ function pathViolations(path) {
 
   const ext = extOf(path);
   if (BINARY_EXTS.has(ext)) {
-    const rule = ALLOWLIST.find((a) => path.startsWith(a.dir));
+    const rule = ALLOWLIST.find((a) =>
+      typeof a.dir === 'string' ? path.startsWith(a.dir) : a.dir.test(path),
+    );
     const allowed = rule && !NEVER_EXTS.has(ext) && (rule.exts === '*' || rule.exts.includes(ext));
     if (!allowed) {
       out.push(
         `binary/secret-bearing file type ".${ext}" is not allowed here ` +
-          `(allowed only in fonts/, dist/, docs/gallery/, docs/media/, tests/fixtures/, tests/__snapshots__/)`,
+          `(allowed only in fonts/, dist/, docs/gallery/, docs/media/, examples/*/assets/, tests/fixtures/, tests/__snapshots__/)`,
       );
     }
   }

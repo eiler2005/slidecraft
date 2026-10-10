@@ -10,7 +10,7 @@ Please report security issues privately through [GitHub security advisories](htt
 |---|---|---|
 | Your briefs, decks, materials and outputs | `./slidecraft/<deck>/` in your working directory (or `./work/`) | Never — git-ignored, blocked by the privacy hook |
 | Library (layouts, themes, storylines, references) | this repository | Yes |
-| Example decks | `examples/` — fictional companies and figures only | Yes |
+| Example decks | `examples/` — fictional companies and figures, original artwork in `assets/` | Yes |
 | Fonts, CLI bundle | `fonts/`, `dist/` | Yes |
 
 SlideCraft runs locally. The CLI makes no network requests. The HTML deck is self-contained (fonts and images embedded). Optional engines call software already on your machine (Chrome, PowerPoint, LibreOffice, the Codex runtime) and nothing else.
@@ -20,7 +20,7 @@ SlideCraft runs locally. The CLI makes no network requests. The HTML deck is sel
 `npm run hooks` enables `.githooks/`. `privacy-check` blocks commits and pushes that contain:
 
 - anything under `slidecraft/`, `work/`, `out/` or path segments named `clients` / `private`;
-- binaries (PPTX, PDF, images, archives, keys) outside `fonts/`, `dist/`, `docs/gallery/`, `docs/media/`, `tests/fixtures/`;
+- binaries (PPTX, PDF, images, archives, keys) outside `fonts/`, `dist/`, `docs/gallery/`, `docs/media/`, `examples/*/assets/` (images only), `tests/fixtures/`;
 - private keys, likely secrets and AWS keys;
 - email addresses other than example domains.
 

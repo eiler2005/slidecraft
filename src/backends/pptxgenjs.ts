@@ -319,6 +319,10 @@ async function defineMaster(pptx: Pptx, m: Master, scene: Scene) {
           h: scene.format.h,
         },
       });
+    } else if (n.kind === 'image' && n.path) {
+      objects.push({
+        image: { path: n.path, x: n.box.x, y: n.box.y, w: n.box.w, h: n.box.h, altText: n.alt },
+      });
     } else if (n.kind === 'text') {
       objects.push({
         text: {

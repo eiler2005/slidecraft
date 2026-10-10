@@ -29,7 +29,7 @@ export const Brief = z
       .strict(),
     task: z
       .string()
-      .max(60)
+      .max(120)
       .optional()
       .describe(
         'Kind of deck in plain words, e.g. "strategy recommendation", "board update", "keynote story"',

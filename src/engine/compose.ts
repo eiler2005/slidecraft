@@ -1,7 +1,9 @@
+import { existsSync, readFileSync } from 'node:fs';
 import { getLayout } from '../layouts/index.ts';
 import type { LoadedDeck } from '../library/load.ts';
 import { getTheme } from '../library/load.ts';
 import { type Diagnostic, diag } from '../qa/codes.ts';
+import { pngSize } from '../qa/pptx-verify.ts';
 import type { Slide } from '../spec/deck.ts';
 import type { FontSpec, Theme } from '../spec/theme.ts';
 import { mix } from './color.ts';
@@ -37,6 +39,17 @@ function collectStrings(v: unknown, out: string[]): void {
   else if (Array.isArray(v)) v.forEach((x) => collectStrings(x, out));
   else if (v && typeof v === 'object') Object.values(v).forEach((x) => collectStrings(x, out));
 }
+
+/** Plans and governance: their numbers are commitments (dates, durations, steps), not data claims. */
+const PLAN_LAYOUTS = new Set([
+  'next-steps',
+  'timeline',
+  'process-steps',
+  'gate-matrix',
+  'agenda',
+  'raci',
+  'team-cards',
+]);
 
 /** Keys whose numbers are structure (dates, indices, positions), not claims needing a source. */
 const NON_CLAIM_KEYS = new Set([
@@ -143,6 +156,26 @@ function buildMasters(
       });
     }
     const bg = c.background;
+    if (theme.chrome.logo && existsSync(theme.chrome.logo)) {
+      const size = pngSize(readFileSync(theme.chrome.logo));
+      const ratio = size ? size.w / size.h : 3;
+      const h = id === 'cover' ? 0.55 : 0.3;
+      const w = Math.min(id === 'cover' ? 2.6 : 1.6, h * ratio);
+      const hh = w / ratio;
+      const box =
+        id === 'cover'
+          ? { x: format.w - format.margin.r - w, y: format.h - 0.95 - hh / 2, w, h: hh }
+          : { x: format.w - format.margin.r - w, y: format.margin.t - 0.04, w, h: hh };
+      nodes.push({
+        kind: 'image',
+        box,
+        path: theme.chrome.logo,
+        alt: 'Logo',
+        fit: 'contain',
+        decorative: true,
+        role: 'logo',
+      });
+    }
     if (id === 'content' || id === 'divider') {
       const ft = footer ?? theme.chrome.footer;
       if (ft)
@@ -322,7 +355,13 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
         field: 'sources',
       });
     }
-    if (!isGhost && def.frame === 'standard' && !srcText && hasNumbers(slideContent(slide))) {
+    if (
+      !isGhost &&
+      def.frame === 'standard' &&
+      !srcText &&
+      !PLAN_LAYOUTS.has(def.id) &&
+      hasNumbers(slideContent(slide))
+    ) {
       ctx.issue(
         deck.status === 'final'
           ? diag('SC-SRC-002', 'Slide shows numbers but cites no source', {

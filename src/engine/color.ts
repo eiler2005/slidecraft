@@ -43,3 +43,14 @@ export function contrast(a: string, b: string): number {
 export function onColor(bg: string, dark = '#111111', light = '#FFFFFF'): string {
   return contrast(bg, dark) >= contrast(bg, light) ? dark : light;
 }
+
+/** Darken (or lighten on dark backgrounds) `fg` until it reaches `ratio` against `bg`. */
+export function ensureContrast(fg: string, bg: string, ratio = 4.5): string {
+  if (contrast(fg, bg) >= ratio) return fg;
+  const target = luminance(bg) > 0.4 ? '#000000' : '#FFFFFF';
+  for (let t = 0.05; t <= 1; t += 0.05) {
+    const c = mix(fg, target, t);
+    if (contrast(c, bg) >= ratio) return c;
+  }
+  return target;
+}

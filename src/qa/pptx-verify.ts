@@ -25,7 +25,7 @@ function texts(n: SceneNode, out: string[]): void {
     n.primitives.forEach((p) => (p as { role?: string }).role === 'chart-total' && texts(p, out));
 }
 
-function pngSize(buf: Uint8Array): { w: number; h: number } | undefined {
+export function pngSize(buf: Uint8Array): { w: number; h: number } | undefined {
   if (buf[0] === 0x89 && buf[1] === 0x50) {
     const v = new DataView(buf.buffer, buf.byteOffset, buf.byteLength);
     return { w: v.getUint32(16), h: v.getUint32(20) };

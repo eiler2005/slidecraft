@@ -1,0 +1,71 @@
+# Storyline: start a project or programme with shared goals, scope, plan and governance.
+schemaVersion: 1
+id: project-kickoff
+name: Project kickoff
+summary: Align a team and its sponsors on why the project exists, what is in and out of scope, how it will run and what success looks like.
+bestFor: [kickoff, kick-off, project start, programme launch, onboarding, charter, project plan, mobilisation, scope]
+audiences: [project team, sponsors, steering committee, stakeholders]
+themes: [corporate-blue, consulting-classic, executive]
+ordered: true
+arc: Why → objectives and success measures → scope → approach and plan → governance and roles → risks → first 30 days
+length: { min: 8, max: 14 }
+tone: [clear, practical, energising]
+principles:
+  - Lead with the business problem and the outcome, not the work breakdown.
+  - Make scope explicit — what is out of scope prevents more conflict than what is in.
+  - Every objective has a measure, a baseline and a target.
+  - Name one accountable owner per decision; show the RACI, not an org chart.
+  - End with what happens in the next 30 days and who does it.
+sections:
+  - id: why
+    name: Why
+    slots:
+      - id: cover
+        purpose: Name the project and the outcome it exists to deliver.
+        layouts: [title]
+        inputs: [project name, sponsor, date]
+      - id: case
+        purpose: Explain the problem and why it matters now.
+        layouts: [exec-summary, big-statement, kpi-tiles]
+        guidance: SCR variant works well — situation, complication, what this project resolves.
+        inputs: [problem, cost of inaction]
+  - id: what
+    name: What
+    slots:
+      - id: objectives
+        purpose: State 3–4 objectives with measures, baselines and targets.
+        layouts: [kpi-tiles, data-table, key-points]
+        inputs: [objectives, metrics, baselines, targets]
+      - id: scope
+        purpose: Make in-scope and out-of-scope explicit.
+        layouts: [options-comparison, key-points, data-table]
+        guidance: A two-column in / out table avoids later disputes; list assumptions.
+        inputs: [scope, exclusions, assumptions]
+  - id: how
+    name: How
+    slots:
+      - id: approach
+        purpose: Show the phases and what each delivers.
+        layouts: [process-steps, gate-matrix]
+        inputs: [phases, deliverables, gates]
+      - id: plan
+        purpose: Put workstreams and milestones on one time axis.
+        layouts: [timeline]
+        inputs: [workstreams, milestones, dates]
+      - id: governance
+        purpose: Show who decides what and how the team meets.
+        layouts: [raci, team-cards]
+        guidance: Exactly one A per decision; add the meeting cadence in notes or a key-points slide.
+        inputs: [roles, decisions, cadence]
+      - id: risks
+        purpose: Name the risks that could derail the project and their owners.
+        layouts: [risk-matrix, data-table]
+        required: false
+        inputs: [risks, owners]
+  - id: next
+    name: Next 30 days
+    slots:
+      - id: next-steps
+        purpose: List the first actions with owners and dates.
+        layouts: [next-steps]
+        inputs: [actions, owners, dates]

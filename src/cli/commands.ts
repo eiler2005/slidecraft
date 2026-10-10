@@ -156,7 +156,12 @@ export function registerCommands(program: Command): void {
     .action((id: string | undefined, o: { json?: boolean }) => {
       const list = id ? LAYOUTS.filter((l) => l.id === id) : LAYOUTS;
       if (id && !list.length) {
-        console.error(`unknown layout "${id}"`);
+        const hint = loadThemes().some((t) => t.id === id)
+          ? ` — "${id}" is a theme; try \`slidecraft themes\``
+          : loadStorylines().some((s) => s.id === id)
+            ? ` — "${id}" is a storyline; try \`slidecraft storylines\``
+            : '';
+        console.error(`unknown layout "${id}"${hint}`);
         process.exitCode = EXIT.usage;
         return;
       }
@@ -259,70 +264,82 @@ export function registerCommands(program: Command): void {
     .option('--dir <dir>', 'parent directory', 'slidecraft')
     .option('--goal <text>', 'what must be true after the audience sees the deck')
     .option('--audience <text>', 'who the deck is for')
-    .action((slug: string, o: { dir: string; goal?: string; audience?: string }) => {
-      if (!/^[a-z0-9][a-z0-9-]*$/.test(slug)) {
-        console.error('slug must be kebab-case, e.g. "germany-entry"');
-        process.exitCode = EXIT.usage;
-        return;
-      }
-      const dir = resolve(o.dir, slug);
-      if (existsSync(join(dir, 'brief.yaml'))) {
-        console.error(`${relative(process.cwd(), dir)}/brief.yaml already exists`);
-        process.exitCode = EXIT.usage;
-        return;
-      }
-      mkdirSync(join(dir, 'sections'), { recursive: true });
-      const brief = {
-        schemaVersion: 1,
-        id: slug,
-        goal:
-          o.goal ??
-          'TODO: what must be true after the audience sees this deck (decision, belief, action)',
-        ask: 'TODO: the decision or action you request',
-        audience: {
-          who: o.audience ?? 'TODO: who reads or hears this',
-          knows: 'TODO',
-          cares: 'TODO',
-        },
-        task: 'TODO: e.g. strategy recommendation, board update, pitch, keynote story',
-        materials: [],
-        length: { slides: 10 },
-        language: 'en',
-        usage: ['edit-together'],
-      };
-      writeFileSync(
-        join(dir, 'brief.yaml'),
-        `# SlideCraft brief — schema: schemas/brief.v1.json\n${YAML.stringify(brief)}`,
-      );
-      const deck = {
-        schemaVersion: 1,
-        id: slug,
-        title: 'TODO: the answer in one sentence',
-        theme: 'consulting-classic',
-        status: 'ghost',
-        sources: [],
-        slides: [
-          {
-            id: 'cover',
-            layout: 'title',
-            title: 'TODO: the answer in one sentence',
-            kicker: 'Discussion document',
+    .option('--json', 'machine-readable output')
+    .action(
+      (slug: string, o: { dir: string; goal?: string; audience?: string; json?: boolean }) => {
+        if (!/^[a-z0-9][a-z0-9-]*$/.test(slug)) {
+          console.error('slug must be kebab-case, e.g. "germany-entry"');
+          process.exitCode = EXIT.usage;
+          return;
+        }
+        const dir = resolve(o.dir, slug);
+        if (existsSync(join(dir, 'brief.yaml'))) {
+          console.error(`${relative(process.cwd(), dir)}/brief.yaml already exists`);
+          process.exitCode = EXIT.usage;
+          return;
+        }
+        mkdirSync(join(dir, 'sections'), { recursive: true });
+        const brief = {
+          schemaVersion: 1,
+          id: slug,
+          goal:
+            o.goal ??
+            'TODO: what must be true after the audience sees this deck (decision, belief, action)',
+          ask: 'TODO: the decision or action you request',
+          audience: {
+            who: o.audience ?? 'TODO: who reads or hears this',
+            knows: 'TODO',
+            cares: 'TODO',
           },
-          {
-            id: 'summary',
-            layout: 'exec-summary',
-            variant: 'scr',
-            title: 'TODO: action title for the summary',
-            ghost: { exhibit: 'SCR summary with the decision requested', confidence: 'likely' },
-          },
-        ],
-      };
-      writeFileSync(
-        join(dir, 'deck.yaml'),
-        `# SlideCraft deck — schema: schemas/deck.v1.json\n${YAML.stringify(deck)}`,
-      );
-      console.log(
-        `${green('✔')} ${relative(process.cwd(), dir)}/brief.yaml\n${green('✔')} ${relative(process.cwd(), dir)}/deck.yaml`,
-      );
-    });
+          task: 'TODO: e.g. board update, pitch, keynote',
+          materials: [],
+          length: { slides: 10 },
+          language: 'en',
+          usage: ['edit-together'],
+        };
+        writeFileSync(
+          join(dir, 'brief.yaml'),
+          `# SlideCraft brief — schema: schemas/brief.v1.json\n${YAML.stringify(brief)}`,
+        );
+        const deck = {
+          schemaVersion: 1,
+          id: slug,
+          title: 'TODO: the answer in one sentence',
+          theme: 'consulting-classic',
+          status: 'ghost',
+          sources: [],
+          slides: [
+            {
+              id: 'cover',
+              layout: 'title',
+              title: 'TODO: the answer in one sentence',
+              kicker: 'Discussion document',
+            },
+            {
+              id: 'summary',
+              layout: 'exec-summary',
+              variant: 'scr',
+              title: 'TODO: action title for the summary',
+              ghost: { exhibit: 'SCR summary with the decision requested', confidence: 'likely' },
+            },
+          ],
+        };
+        writeFileSync(
+          join(dir, 'deck.yaml'),
+          `# SlideCraft deck — schema: schemas/deck.v1.json\n${YAML.stringify(deck)}`,
+        );
+        if (wantsJson(o.json)) {
+          printJson({
+            ok: true,
+            dir,
+            brief: join(dir, 'brief.yaml'),
+            deck: join(dir, 'deck.yaml'),
+          });
+          return;
+        }
+        console.log(
+          `${green('✔')} ${relative(process.cwd(), dir)}/brief.yaml\n${green('✔')} ${relative(process.cwd(), dir)}/deck.yaml`,
+        );
+      },
+    );
 }

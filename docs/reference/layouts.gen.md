@@ -16,12 +16,18 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 | [`kpi-tiles`](#kpi-tiles) | numbers | `tiles`, `strip` | Use for 2–4 headline numbers that prove the title at a glance, each with its label, change and context. |
 | [`chart-takeaway`](#chart-takeaway) | numbers | `bar`, `column`, `stacked`, `line` | Use for one chart that proves the title, with the interpretation in a side panel. |
 | [`waterfall`](#waterfall) | numbers | `full`, `with-takeaway` | Use for a bridge that explains how a starting total becomes an ending total through positive and negative drivers. |
+| [`funnel`](#funnel) | numbers | `funnel`, `pyramid` | Use for a conversion funnel (where volume is lost) or a pyramid (levels that build on each other). |
 | [`data-table`](#data-table) | numbers | `plain`, `with-takeaway` | Use for a compact table of exact values where the reader needs to look up or compare several attributes at once. |
-| [`options-comparison`](#options-comparison) | decide | `text`, `rating` | Use for comparing 2–4 options on the same criteria and showing which one wins and why. |
+| [`options-comparison`](#options-comparison) | decide | `text`, `rating` | Use for comparing 2–5 options on the same criteria and showing which one wins and why. |
 | [`matrix-2x2`](#matrix-2x2) | decide | `plot`, `quadrants` | Use for prioritising items on two dimensions, or naming four strategic positions. |
+| [`issue-tree`](#issue-tree) | decide | `issue`, `driver` | Use for breaking a question into MECE sub-questions (issue tree) or a metric into its drivers (driver tree). |
+| [`risk-matrix`](#risk-matrix) | decide | `heatmap` | Use for showing the main risks by likelihood and impact, with owners and mitigations. |
 | [`process-steps`](#process-steps) | sequence | `chevrons`, `numbered` | Use for a sequence of 3–6 steps where order matters — an approach, a method or a customer journey. |
 | [`timeline`](#timeline) | sequence | `milestones`, `gantt` | Use for dated milestones or a phased roadmap on one shared time axis. |
+| [`gate-matrix`](#gate-matrix) | sequence | `gates` | Use for a stage-gate plan: what each stage delivers and what evidence opens the next one, and who decides. |
+| [`process-compare`](#process-compare) | sequence | `lanes` | Use for showing what changes in a process: today’s steps against the proposed ones, with changed steps highlighted. |
 | [`team-cards`](#team-cards) | people | `cards`, `compact` | Use for introducing the people behind a proposal: who leads, who delivers, who the client sponsors are. |
+| [`raci`](#raci) | people | `raci` | Use for showing who is Responsible, Accountable, Consulted and Informed for each decision or activity. |
 | [`next-steps`](#next-steps) | close | `actions`, `decision` | Use for the closing slide that turns the recommendation into owned, dated actions, with or without the decision requested. |
 
 ## title
@@ -413,6 +419,55 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 
 </details>
 
+## funnel
+
+**Funnel / pyramid** — Use for a conversion funnel (where volume is lost) or a pyramid (levels that build on each other).
+
+![funnel · funnel](../gallery/layouts/funnel--funnel.png) ![funnel · pyramid](../gallery/layouts/funnel--pyramid.png)
+
+- **Use when:** Sales or marketing funnels and drop-off; Customer journey conversion; Hierarchies of needs, capabilities or priorities (pyramid)
+- **Avoid when:** Stages are not a narrowing sequence — use chart-takeaway (bar); Exact values matter most — use data-table
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `stages` | object[] | yes | 3–6 items | funnel: widest first. pyramid: top (smallest) first |
+| `stages[].label` | string | yes | ≤ 30 chars |  |
+| `stages[].value` | string |  | ≤ 12 chars | funnel: the volume at this stage, e.g. "12,400" |
+| `stages[].note` | string |  | ≤ 80 chars |  |
+| `conversions` | string[] |  | each ≤ 8 chars | funnel: conversion between consecutive stages, e.g. "34%" |
+| `highlight` | integer |  | 0…9007199254740991 | Stage to emphasise (e.g. the biggest drop) |
+| `takeaway` | string |  | ≤ 140 chars |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: funnel
+  variant: funnel
+  title: Most trials are lost before activation — fixing onboarding is worth more than more traffic
+  sources:
+    - finance-fy25
+  stages:
+    - label: Website visitors
+      value: 48,000
+    - label: Trial sign-ups
+      value: 3,100
+    - label: Activated trials
+      value: "820"
+      note: Only a quarter of trials reach first value
+    - label: Paying customers
+      value: "310"
+  conversions:
+    - 6.5%
+    - 26%
+    - 38%
+  highlight: 2
+  takeaway: Doubling activation adds as many customers as doubling sign-ups — at a fraction of the cost
+```
+
+</details>
+
 ## data-table
 
 **Data table** — Use for a compact table of exact values where the reader needs to look up or compare several attributes at once.
@@ -492,7 +547,7 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 
 ## options-comparison
 
-**Options comparison** — Use for comparing 2–4 options on the same criteria and showing which one wins and why.
+**Options comparison** — Use for comparing 2–5 options on the same criteria and showing which one wins and why.
 
 ![options-comparison · text](../gallery/layouts/options-comparison--text.png) ![options-comparison · rating](../gallery/layouts/options-comparison--rating.png)
 
@@ -502,7 +557,7 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 
 | Field | Type | Required | Limits | Description |
 |---|---|---|---|---|
-| `options` | object[] | yes | 2–4 items |  |
+| `options` | object[] | yes | 2–5 items |  |
 | `options[].name` | string | yes | ≤ 28 chars |  |
 | `options[].summary` | string |  | ≤ 90 chars | One line on what the option is |
 | `criteria` | object[] | yes | 2–6 items |  |
@@ -633,6 +688,130 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 
 </details>
 
+## issue-tree
+
+**Issue / driver tree** — Use for breaking a question into MECE sub-questions (issue tree) or a metric into its drivers (driver tree).
+
+![issue-tree · issue](../gallery/layouts/issue-tree--issue.png) ![issue-tree · driver](../gallery/layouts/issue-tree--driver.png)
+
+- **Use when:** Structuring a problem before the analysis (hypothesis tree); Showing which hypotheses the analysis confirmed or rejected; Explaining how a top-line metric decomposes into drivers
+- **Avoid when:** A sequence of steps — use process-steps; More than ~10 leaves — split into two slides
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `root` | object | yes |  |  |
+| `root.label` | string | yes | ≤ 90 chars | The question (issue) or the top metric (driver) |
+| `root.value` | string |  | ≤ 12 chars |  |
+| `branches` | object[] | yes | 2–4 items | MECE sub-questions or drivers; at most 10 leaves in total |
+| `branches[].label` | string | yes | ≤ 60 chars |  |
+| `branches[].value` | string |  | ≤ 12 chars |  |
+| `branches[].status` | `confirmed` \| `rejected` \| `open` |  |  | Hypothesis status after analysis |
+| `branches[].leaves` | object[] | yes | 1–4 items |  |
+| `branches[].leaves[].label` | string | yes | ≤ 70 chars |  |
+| `branches[].leaves[].value` | string |  | ≤ 12 chars | driver variant: the number this node contributes |
+| `branches[].leaves[].status` | `confirmed` \| `rejected` \| `open` |  |  | Hypothesis status after analysis |
+| `takeaway` | string |  | ≤ 140 chars |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: issue-tree
+  variant: issue
+  title: Margin fell because of mix and price, not cost — two of six hypotheses hold
+  sources:
+    - finance-fy25
+  root:
+    label: Why did operating margin fall 4 points in FY2025?
+  branches:
+    - label: Revenue mix shifted
+      status: confirmed
+      leaves:
+        - label: More low-margin SMB deals
+          status: confirmed
+        - label: Fewer services attached
+          status: open
+    - label: Prices eroded
+      status: confirmed
+      leaves:
+        - label: Discounting above policy
+          status: confirmed
+        - label: Competitor price cuts
+          status: rejected
+    - label: Costs rose
+      status: rejected
+      leaves:
+        - label: Cloud costs per user
+          status: rejected
+        - label: Support headcount
+          status: rejected
+  takeaway: Fix discount governance and deal mix first; cost programmes would not move margin
+```
+
+</details>
+
+## risk-matrix
+
+**Risk heatmap** — Use for showing the main risks by likelihood and impact, with owners and mitigations.
+
+![risk-matrix · heatmap](../gallery/layouts/risk-matrix--heatmap.png)
+
+- **Use when:** Risk sections of investment and programme decks; Steering-committee risk reviews; Pre-mortems
+- **Avoid when:** Risks without any assessment — use data-table; More than eight risks — show the top ones and move the rest to backup
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `risks` | object[] | yes | 2–8 items |  |
+| `risks[].id` | string | yes | ≤ 4 chars | Short id shown in the grid, e.g. "R1" |
+| `risks[].title` | string | yes | ≤ 60 chars |  |
+| `risks[].likelihood` | integer | yes | 1…3 | 1 low · 2 medium · 3 high |
+| `risks[].impact` | integer | yes | 1…3 | 1 low · 2 medium · 3 high |
+| `risks[].owner` | string |  | ≤ 22 chars |  |
+| `risks[].mitigation` | string |  | ≤ 70 chars |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: risk-matrix
+  title: Two high risks need owners this quarter; the rest are monitored
+  sources:
+    - market-model
+  risks:
+    - id: R1
+      title: Partners under-deliver pipeline
+      likelihood: 2
+      impact: 3
+      owner: Strategy
+      mitigation: Quarterly targets with exit clauses
+    - id: R2
+      title: Localisation slips past Q2
+      likelihood: 3
+      impact: 3
+      owner: Product
+      mitigation: Dedicated squad, scope frozen
+    - id: R3
+      title: Rivals undercut on price
+      likelihood: 3
+      impact: 2
+      owner: Sales
+      mitigation: Price floor agreed with CFO
+    - id: R4
+      title: Data-residency audit delay
+      likelihood: 1
+      impact: 2
+      owner: Legal
+    - id: R5
+      title: Key hire not found
+      likelihood: 2
+      impact: 1
+      owner: HR
+```
+
+</details>
+
 ## process-steps
 
 **Process steps** — Use for a sequence of 3–6 steps where order matters — an approach, a method or a customer journey.
@@ -731,6 +910,123 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 
 </details>
 
+## gate-matrix
+
+**Stages and gates** — Use for a stage-gate plan: what each stage delivers and what evidence opens the next one, and who decides.
+
+![gate-matrix · gates](../gallery/layouts/gate-matrix--gates.png)
+
+- **Use when:** Phased investments with go / no-go decisions; Pilots that scale only on evidence; Launch readiness
+- **Avoid when:** Dates matter more than criteria — use timeline (gantt); More than four stages — group them
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `stages` | object[] | yes | 3–4 items |  |
+| `stages[].name` | string | yes | ≤ 22 chars |  |
+| `stages[].output` | string | yes | ≤ 90 chars | What the stage delivers |
+| `gates` | object[] | yes |  | One gate on each boundary between stages (stages − 1) |
+| `gates[].name` | string | yes | ≤ 18 chars |  |
+| `gates[].criteria` | string[] | yes | 1–3 items, each ≤ 60 chars | Evidence needed to pass |
+| `gates[].decider` | string | yes | ≤ 30 chars | Who decides at the gate |
+| `current` | integer |  | 0…9007199254740991 | Index of the stage we are in now |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: gate-matrix
+  title: Each phase is funded only when the previous gate shows evidence, capping risk at €6M
+  sources:
+    - market-model
+  stages:
+    - name: Pilot
+      output: 15 partner-sourced clients live in two regions
+    - name: Scale partners
+      output: Four partners, 40 reference clients, unit economics proven
+    - name: Go direct
+      output: Direct sales team for enterprise accounts
+  gates:
+    - name: Gate 1
+      criteria:
+        - ≥ 15 signed clients
+        - Churn below 3% a quarter
+      decider: Board
+    - name: Gate 2
+      criteria:
+        - ≥ 40 references
+        - CAC payback under 18 months
+      decider: Board + CFO
+  current: 0
+```
+
+</details>
+
+## process-compare
+
+**Current vs proposed process** — Use for showing what changes in a process: today’s steps against the proposed ones, with changed steps highlighted.
+
+![process-compare · lanes](../gallery/layouts/process-compare--lanes.png)
+
+- **Use when:** Operating-model or automation proposals; Before/after of a customer journey; Explaining where time or cost disappears
+- **Avoid when:** A single process without a comparison — use process-steps; Organisational change without steps — use key-points
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `current` | object | yes |  | The process today |
+| `current.label` | string | yes | ≤ 20 chars |  |
+| `current.steps` | object[] | yes | 2–6 items |  |
+| `current.steps[].label` | string | yes | ≤ 30 chars |  |
+| `current.steps[].changed` | boolean |  |  |  |
+| `current.steps[].note` | string |  | ≤ 48 chars |  |
+| `current.metric` | string |  | ≤ 14 chars | Outcome of the lane, e.g. "9 days" |
+| `proposed` | object | yes |  | The proposed process; mark steps that change with changed: true |
+| `proposed.label` | string | yes | ≤ 20 chars |  |
+| `proposed.steps` | object[] | yes | 2–6 items |  |
+| `proposed.steps[].label` | string | yes | ≤ 30 chars |  |
+| `proposed.steps[].changed` | boolean |  |  |  |
+| `proposed.steps[].note` | string |  | ≤ 48 chars |  |
+| `proposed.metric` | string |  | ≤ 14 chars | Outcome of the lane, e.g. "9 days" |
+| `metricLabel` | string |  | ≤ 36 chars | What the lane metrics measure, e.g. "Order-to-cash time" |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: process-compare
+  title: Automating credit checks and invoicing cuts order-to-cash from 9 days to 3
+  sources:
+    - finance-fy25
+  metricLabel: Order-to-cash time
+  current:
+    label: Today
+    metric: 9 days
+    steps:
+      - label: Order received
+      - label: Manual credit check
+        note: 2–3 days
+      - label: Ship
+      - label: Invoice by email
+        note: 4 days
+      - label: Payment
+  proposed:
+    label: Proposed
+    metric: 3 days
+    steps:
+      - label: Order received
+      - label: Automated credit check
+        changed: true
+        note: minutes
+      - label: Ship
+      - label: e-Invoice on dispatch
+        changed: true
+        note: same day
+      - label: Payment
+```
+
+</details>
+
 ## team-cards
 
 **Team cards** — Use for introducing the people behind a proposal: who leads, who delivers, who the client sponsors are.
@@ -769,6 +1065,72 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
     - name: Tomas Weber
       role: Program Director
       bio: Ran Northwind’s UK platform migration on time and 8% under budget.
+```
+
+</details>
+
+## raci
+
+**RACI / decision rights** — Use for showing who is Responsible, Accountable, Consulted and Informed for each decision or activity.
+
+![raci · raci](../gallery/layouts/raci--raci.png)
+
+- **Use when:** Governance of a programme or new operating model; Clarifying decision rights before a launch; Hand-offs between teams
+- **Avoid when:** Just listing team members — use team-cards; More than 7 roles — group roles first
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `roles` | string[] | yes | 3–7 items, each ≤ 18 chars | Columns: roles or teams, short names |
+| `activities` | string[] | yes | 3–9 items, each ≤ 56 chars | Rows: decisions or activities |
+| `cells` | `R` \| `A` \| `C` \| `I` \| `A/R` \| ``[][] | yes |  | One row per activity, one code per role: R, A, C, I, A/R or empty |
+| `note` | string |  | ≤ 140 chars |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: raci
+  title: One accountable owner per decision ends the pricing stalemate
+  roles:
+    - CEO
+    - CFO
+    - Sales
+    - Product
+    - Legal
+  activities:
+    - Set list prices
+    - Approve discounts above 15%
+    - Change packaging
+    - Sign partner contracts
+    - Publish price changes
+  cells:
+    - - I
+      - A
+      - C
+      - R
+      - ""
+    - - ""
+      - A
+      - R
+      - I
+      - ""
+    - - I
+      - C
+      - C
+      - A/R
+      - ""
+    - - A
+      - C
+      - R
+      - ""
+      - C
+    - - ""
+      - I
+      - R
+      - A
+      - C
+  note: Today three of five decisions have two or more accountable owners
 ```
 
 </details>

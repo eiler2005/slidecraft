@@ -47,7 +47,7 @@
     "task": {
       "description": "Kind of deck in plain words, e.g. \"strategy recommendation\", \"board update\", \"keynote story\"",
       "type": "string",
-      "maxLength": 60
+      "maxLength": 120
     },
     "context": {
       "type": "string",

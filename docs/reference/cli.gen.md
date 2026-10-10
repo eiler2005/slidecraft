@@ -151,6 +151,7 @@ Options:
   --dir <dir>        parent directory (default: "slidecraft")
   --goal <text>      what must be true after the audience sees the deck
   --audience <text>  who the deck is for
+  --json             machine-readable output
   -h, --help         display help for command
 ```
 
@@ -262,5 +263,73 @@ Validate storylines, themes and layouts against each other
 Options:
   --json      machine-readable output
   -h, --help  display help for command
+```
+
+## `codex install`
+
+Install SlideCraft skills into Codex (~/.codex/skills)
+
+```
+Usage: slidecraft slidecraft codex install [options]
+
+Install SlideCraft skills into Codex (~/.codex/skills)
+
+Options:
+  --dir <dir>  Codex skills directory (default: $CODEX_HOME/skills or
+               ~/.codex/skills)
+  -h, --help   display help for command
+```
+
+## `codex uninstall`
+
+Remove SlideCraft skills from Codex
+
+```
+Usage: slidecraft slidecraft codex uninstall [options]
+
+Remove SlideCraft skills from Codex
+
+Options:
+  --dir <dir>  Codex skills directory
+  -h, --help   display help for command
+```
+
+## `theme import`
+
+Create a theme from a .pptx / .potx: colours, fonts and logo
+
+```
+Usage: slidecraft slidecraft theme import [options] <file>
+
+Create a theme from a .pptx / .potx: colours, fonts and logo
+
+Arguments:
+  file              brand template (.pptx or .potx)
+
+Options:
+  --id <id>         kebab-case theme id, e.g. contoso
+  --name <name>     display name
+  -o, --out <dir>   output folder (default: ./slidecraft-theme next to the file)
+  --font-dir <dir>  folder with the brand font files (TTF/OTF) to measure them
+                    exactly
+  --json            machine-readable output
+  -h, --help        display help for command
+```
+
+## `calibrate`
+
+Check that line breaks match PowerPoint for a theme's fonts (needs PowerPoint or LibreOffice + poppler)
+
+```
+Usage: slidecraft slidecraft calibrate [options]
+
+Check that line breaks match PowerPoint for a theme's fonts (needs PowerPoint or
+LibreOffice + poppler)
+
+Options:
+  --theme <id|path>  theme id or theme JSON path (default: "consulting-classic")
+  -o, --out <dir>    output folder (default: "slidecraft/calibration")
+  --json             machine-readable output
+  -h, --help         display help for command
 ```
 

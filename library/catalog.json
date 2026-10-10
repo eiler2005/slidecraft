@@ -105,6 +105,17 @@
       "frame": "standard"
     },
     {
+      "id": "funnel",
+      "name": "Funnel / pyramid",
+      "group": "numbers",
+      "variants": [
+        "funnel",
+        "pyramid"
+      ],
+      "purpose": "Use for a conversion funnel (where volume is lost) or a pyramid (levels that build on each other).",
+      "frame": "standard"
+    },
+    {
       "id": "data-table",
       "name": "Data table",
       "group": "numbers",
@@ -123,7 +134,7 @@
         "text",
         "rating"
       ],
-      "purpose": "Use for comparing 2–4 options on the same criteria and showing which one wins and why.",
+      "purpose": "Use for comparing 2–5 options on the same criteria and showing which one wins and why.",
       "frame": "standard"
     },
     {
@@ -135,6 +146,27 @@
         "quadrants"
       ],
       "purpose": "Use for prioritising items on two dimensions, or naming four strategic positions.",
+      "frame": "standard"
+    },
+    {
+      "id": "issue-tree",
+      "name": "Issue / driver tree",
+      "group": "decide",
+      "variants": [
+        "issue",
+        "driver"
+      ],
+      "purpose": "Use for breaking a question into MECE sub-questions (issue tree) or a metric into its drivers (driver tree).",
+      "frame": "standard"
+    },
+    {
+      "id": "risk-matrix",
+      "name": "Risk heatmap",
+      "group": "decide",
+      "variants": [
+        "heatmap"
+      ],
+      "purpose": "Use for showing the main risks by likelihood and impact, with owners and mitigations.",
       "frame": "standard"
     },
     {
@@ -160,6 +192,26 @@
       "frame": "standard"
     },
     {
+      "id": "gate-matrix",
+      "name": "Stages and gates",
+      "group": "sequence",
+      "variants": [
+        "gates"
+      ],
+      "purpose": "Use for a stage-gate plan: what each stage delivers and what evidence opens the next one, and who decides.",
+      "frame": "standard"
+    },
+    {
+      "id": "process-compare",
+      "name": "Current vs proposed process",
+      "group": "sequence",
+      "variants": [
+        "lanes"
+      ],
+      "purpose": "Use for showing what changes in a process: today’s steps against the proposed ones, with changed steps highlighted.",
+      "frame": "standard"
+    },
+    {
       "id": "team-cards",
       "name": "Team cards",
       "group": "people",
@@ -168,6 +220,16 @@
         "compact"
       ],
       "purpose": "Use for introducing the people behind a proposal: who leads, who delivers, who the client sponsors are.",
+      "frame": "standard"
+    },
+    {
+      "id": "raci",
+      "name": "RACI / decision rights",
+      "group": "people",
+      "variants": [
+        "raci"
+      ],
+      "purpose": "Use for showing who is Responsible, Accountable, Consulted and Informed for each decision or activity.",
       "frame": "standard"
     },
     {
@@ -471,6 +533,37 @@
       ]
     },
     {
+      "id": "post-mortem",
+      "name": "Post-mortem",
+      "arc": "Summary → impact → timeline → root causes → what worked → actions with owners",
+      "bestFor": [
+        "post-mortem",
+        "postmortem",
+        "incident review",
+        "retrospective",
+        "lessons learned",
+        "root cause",
+        "failure analysis",
+        "after-action review",
+        "retro"
+      ],
+      "themes": [
+        "consulting-classic",
+        "editorial",
+        "executive"
+      ],
+      "slots": [
+        "cover",
+        "summary",
+        "impact",
+        "timeline",
+        "root-causes",
+        "process",
+        "worked",
+        "actions"
+      ]
+    },
+    {
       "id": "product-overview",
       "name": "Product overview",
       "arc": "Job to be done → how it works → key features → proof → roadmap → pricing and packaging → call to action",
@@ -503,6 +596,38 @@
         "roadmap",
         "packaging",
         "cta"
+      ]
+    },
+    {
+      "id": "project-kickoff",
+      "name": "Project kickoff",
+      "arc": "Why → objectives and success measures → scope → approach and plan → governance and roles → risks → first 30 days",
+      "bestFor": [
+        "kickoff",
+        "kick-off",
+        "project start",
+        "programme launch",
+        "onboarding",
+        "charter",
+        "project plan",
+        "mobilisation",
+        "scope"
+      ],
+      "themes": [
+        "corporate-blue",
+        "consulting-classic",
+        "executive"
+      ],
+      "slots": [
+        "cover",
+        "case",
+        "objectives",
+        "scope",
+        "approach",
+        "plan",
+        "governance",
+        "risks",
+        "next-steps"
       ]
     },
     {
@@ -573,6 +698,37 @@
         "plan",
         "risks",
         "ask"
+      ]
+    },
+    {
+      "id": "training-workshop",
+      "name": "Training / workshop",
+      "arc": "Why it matters → learning objectives → the idea → worked example → practice → recap → resources",
+      "bestFor": [
+        "training",
+        "workshop",
+        "onboarding session",
+        "masterclass",
+        "tutorial",
+        "course",
+        "teach",
+        "enablement",
+        "lunch and learn"
+      ],
+      "themes": [
+        "modern-pitch",
+        "editorial",
+        "corporate-blue"
+      ],
+      "slots": [
+        "cover",
+        "why",
+        "objectives",
+        "concept",
+        "example",
+        "exercise",
+        "recap",
+        "resources"
       ]
     }
   ],

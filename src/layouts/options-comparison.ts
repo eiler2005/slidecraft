@@ -17,7 +17,7 @@ const schema = z
           .strict(),
       )
       .min(2)
-      .max(4),
+      .max(5),
     criteria: z
       .array(
         z
@@ -63,7 +63,7 @@ export const optionsComparison: LayoutDef<typeof schema> = {
   id: 'options-comparison',
   name: 'Options comparison',
   group: 'decide',
-  purpose: 'Use for comparing 2–4 options on the same criteria and showing which one wins and why.',
+  purpose: 'Use for comparing 2–5 options on the same criteria and showing which one wins and why.',
   useWhen: [
     'Choosing between strategic options, vendors or scenarios',
     'Showing that "do nothing" was considered',

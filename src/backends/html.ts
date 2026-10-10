@@ -22,7 +22,7 @@ import {
 import { homedir, tmpdir } from 'node:os';
 import { delimiter, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { type Face, fontBuffer, VECTOR_FAMILY } from '../engine/fonts.ts';
+import { type Face, fontBuffer, measureFontIds, vectorFamily } from '../engine/fonts.ts';
 import type { Scene } from '../engine/scene.ts';
 import type { MeasureFont } from '../spec/theme.ts';
 import { esc, slideSvg } from './svg.ts';
@@ -38,8 +38,8 @@ const FACE_CSS: Record<Face, { weight: string; style: string }> = {
 /** @font-face rules for every bundled family that the slides actually reference. */
 function fontFaceCss(usedMarkup: string): string {
   let css = '';
-  for (const measure of Object.keys(VECTOR_FAMILY) as MeasureFont[]) {
-    const family = VECTOR_FAMILY[measure];
+  for (const measure of measureFontIds() as MeasureFont[]) {
+    const family = vectorFamily(measure);
     // Liberation Sans is the fallback of the placeholder/slide-number drawing code.
     if (measure !== 'liberation-sans' && !usedMarkup.includes(family)) continue;
     for (const face of Object.keys(FACE_CSS) as Face[]) {

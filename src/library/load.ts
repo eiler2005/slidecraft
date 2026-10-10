@@ -2,13 +2,45 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import YAML from 'yaml';
 import type { z } from 'zod';
+import { isMeasureFont, registerMeasureFont } from '../engine/fonts.ts';
 import { getLayout } from '../layouts/index.ts';
 import { STORYLINES_DIR, THEMES_DIR } from '../paths.ts';
 import { type Diagnostic, diag } from '../qa/codes.ts';
 import { Brief } from '../spec/brief.ts';
 import { Deck, type DeckDoc, GhostSlide, Slide } from '../spec/deck.ts';
 import { Storyline } from '../spec/storyline.ts';
-import { Theme } from '../spec/theme.ts';
+import type { Theme } from '../spec/theme.ts';
+import { Theme as ThemeSchema } from '../spec/theme.ts';
+
+/** Parse a theme file; register its brand fonts and resolve its logo relative to the file. */
+export function readThemeFile(path: string): Theme {
+  const abs = resolve(path);
+  const r = ThemeSchema.safeParse(JSON.parse(readFileSync(abs, 'utf8')));
+  if (!r.success) throw new Error(`Invalid theme ${path}: ${r.error.message}`);
+  const theme = r.data;
+  const base = dirname(abs);
+  const specs = [
+    theme.fonts.heading,
+    theme.fonts.body,
+    theme.fonts.cyrillic?.heading,
+    theme.fonts.cyrillic?.body,
+  ];
+  for (const f of specs) {
+    if (!f?.files) continue;
+    const files = Object.fromEntries(
+      Object.entries(f.files).map(([k, v]) => [k, resolve(base, v)]),
+    ) as { regular: string };
+    registerMeasureFont(f.measure, files);
+  }
+  for (const f of specs) {
+    if (f && !isMeasureFont(f.measure))
+      throw new Error(
+        `Theme ${theme.id}: unknown measure font "${f.measure}" — add "files" with the font's TTF/OTF`,
+      );
+  }
+  if (theme.chrome.logo) theme.chrome.logo = resolve(base, theme.chrome.logo);
+  return theme;
+}
 
 let themeCache: Theme[] | undefined;
 export function loadThemes(): Theme[] {
@@ -16,13 +48,16 @@ export function loadThemes(): Theme[] {
   themeCache = readdirSync(THEMES_DIR)
     .filter((f) => f.endsWith('.json'))
     .sort()
-    .map((f) => {
-      const raw = JSON.parse(readFileSync(join(THEMES_DIR, f), 'utf8'));
-      const r = Theme.safeParse(raw);
-      if (!r.success) throw new Error(`Invalid theme ${f}: ${r.error.message}`);
-      return r.data;
-    });
+    .map((f) => readThemeFile(join(THEMES_DIR, f)));
   return themeCache;
+}
+
+/** Make a theme from outside the library (e.g. a brand theme next to the deck) available by id. */
+export function registerTheme(theme: Theme): void {
+  const all = loadThemes();
+  const i = all.findIndex((t) => t.id === theme.id);
+  if (i >= 0) all[i] = theme;
+  else all.push(theme);
 }
 
 export function getTheme(id: string): Theme | undefined {
@@ -52,6 +87,16 @@ export function getStoryline(id: string): Storyline | undefined {
 export function zodDiagnostics(err: z.ZodError, prefix = ''): Diagnostic[] {
   return err.issues.map((i) =>
     diag('SC-SPEC-001', i.message, {
+      ...(/Unrecognized key/.test(i.message) &&
+      /"(theme|storyline|format|footer|output|schemaVersion|language|author)"/.test(i.message)
+        ? {
+            hint: 'This is a deck-level field — move it to the top of deck.yaml, not inside a slide.',
+          }
+        : /Unrecognized key/.test(i.message)
+          ? {
+              hint: 'If this key looks like the end of a sentence, a value containing ", " or ": " inside { … } was split by YAML — quote the value, e.g. { summary: "Two resellers, direct later" }.',
+            }
+          : {}),
       pointer: `${prefix}/${i.path.map(String).join('/')}`,
       ...(i.code === 'too_big' && 'maximum' in i ? { limit: `max ${String(i.maximum)}` } : {}),
     }),
@@ -83,6 +128,25 @@ export function loadDeck(path: string): LoadedDeck {
     };
   }
   const deck = top.data;
+  // `theme: ./brand/contoso.json` — a brand theme file next to the deck
+  if (/\.json$/i.test(deck.theme)) {
+    const p = resolve(baseDir, deck.theme);
+    if (!existsSync(p)) {
+      diagnostics.push(
+        diag('SC-SPEC-002', `Theme file not found: ${deck.theme}`, { pointer: '/theme' }),
+      );
+    } else {
+      try {
+        const t = readThemeFile(p);
+        registerTheme(t);
+        deck.theme = t.id;
+      } catch (e) {
+        diagnostics.push(
+          diag('SC-SPEC-001', String(e instanceof Error ? e.message : e), { pointer: '/theme' }),
+        );
+      }
+    }
+  }
   const expanded: unknown[] = [];
   deck.slides.forEach((s, i) => {
     if (s && typeof s === 'object' && 'include' in (s as object)) {

@@ -1,0 +1,66 @@
+# Storyline: blameless review of an incident, failed launch or project — what happened and what changes.
+schemaVersion: 1
+id: post-mortem
+name: Post-mortem
+summary: A blameless review of what happened, why, what it cost and the changes that prevent a repeat — with owners and dates.
+bestFor: [post-mortem, postmortem, incident review, retrospective, lessons learned, root cause, failure analysis, after-action review, retro]
+audiences: [leadership team, engineering, operations, project team]
+themes: [consulting-classic, editorial, executive]
+ordered: true
+arc: Summary → impact → timeline → root causes → what worked → actions with owners
+length: { min: 6, max: 12 }
+tone: [blameless, factual, specific]
+principles:
+  - "Blameless: describe systems and decisions, not people."
+  - Separate facts (timeline, impact) from interpretation (causes).
+  - Root causes come from an issue tree, not the first explanation found.
+  - Say what worked as well as what failed — it is what you keep.
+  - Every action has one owner, a date and a way to verify it is done.
+sections:
+  - id: summary
+    name: Summary
+    slots:
+      - id: cover
+        purpose: Name the event and the review date.
+        layouts: [title]
+      - id: summary
+        purpose: Give what happened, the impact and the top changes in one page.
+        layouts: [exec-summary]
+        guidance: key-messages variant — impact, cause, top actions.
+        inputs: [event, impact, causes, actions]
+  - id: facts
+    name: What happened
+    slots:
+      - id: impact
+        purpose: Quantify the impact on customers, revenue and the team.
+        layouts: [kpi-tiles, chart-takeaway]
+        inputs: [impact metrics]
+      - id: timeline
+        purpose: Show the timeline from first signal to resolution.
+        layouts: [timeline]
+        guidance: milestones variant; highlight the moment detection or response could have been faster.
+        inputs: [timestamps, events]
+  - id: causes
+    name: Why
+    slots:
+      - id: root-causes
+        purpose: Break the failure into contributing causes and show which were confirmed.
+        layouts: [issue-tree]
+        inputs: [hypotheses, evidence]
+      - id: process
+        purpose: Show where the process broke compared with how it should work.
+        layouts: [process-compare, process-steps]
+        required: false
+        inputs: [process today, intended process]
+  - id: learn
+    name: What we keep and change
+    slots:
+      - id: worked
+        purpose: Name what worked and should be kept.
+        layouts: [key-points]
+        required: false
+        inputs: [what worked]
+      - id: actions
+        purpose: List the changes with owners, dates and how we will verify them.
+        layouts: [next-steps]
+        inputs: [actions, owners, dates]

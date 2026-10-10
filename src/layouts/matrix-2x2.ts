@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ensureContrast } from '../engine/color.ts';
 import { textWidthPt } from '../engine/fonts.ts';
 import { cols } from '../engine/format.ts';
 import { diag } from '../qa/codes.ts';
@@ -141,7 +142,7 @@ export const matrix2x2: LayoutDef<typeof schema> = {
         {
           size: 'small',
           bold: true,
-          color: target ? colors.accent : colors.muted,
+          color: target ? ensureContrast(colors.accent, colors.accentSoft) : colors.muted,
           maxLines: 1,
           fixed: true,
           field: `quadrants/${i}/name`,
@@ -239,8 +240,13 @@ export const matrix2x2: LayoutDef<typeof schema> = {
       const order = c.items.map((it, i) => ({ it, i })).sort((a, b) => b.it.y - a.it.y);
       for (const { it, i } of order) {
         const px = mx + 0.1 + it.x * (mw - 0.2);
-        const py = my + 0.1 + (1 - it.y) * (mh - 0.2);
+        let py = my + 0.1 + (1 - it.y) * (mh - 0.2);
         const r = it.highlight ? 0.08 : 0.065;
+        // keep dots off the quadrant names (the first `quadrants.length` obstacles)
+        for (const q of placed.slice(0, c.quadrants.length)) {
+          if (px + r > q.x && px - r < q.x + q.w && py + r > q.y && py - r < q.y + q.h)
+            py = q.y + q.h + r + 0.04;
+        }
         ctx.ellipse(
           { x: px - r, y: py - r, w: 2 * r, h: 2 * r },
           { fill: it.highlight ? colors.accent : colors.muted, role: 'item' },
@@ -268,7 +274,7 @@ export const matrix2x2: LayoutDef<typeof schema> = {
           {
             size,
             bold: !!it.highlight,
-            color: it.highlight ? colors.ink : colors.muted,
+            color: colors.ink,
             maxLines: 1,
             fixed: true,
             field: `items/${i}/label`,

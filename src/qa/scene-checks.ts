@@ -92,6 +92,35 @@ export function checkScene(scene: Scene): Diagnostic[] {
         }
       }
     }
+    // text that starts inside a filled panel must stay inside it
+    for (const { t, i } of texts) {
+      const ink = textExtent(t);
+      if (ink.w <= 0 || t.role === 'source' || t.role === 'footer') continue;
+      for (let j = i - 1; j >= 0; j--) {
+        const n = s.nodes[j]!;
+        if (n.kind !== 'rect' || !n.fill || n.box.w < 0.6 || n.box.h < 0.4) continue;
+        const b = n.box;
+        const startsInside =
+          t.box.x >= b.x - EPS &&
+          t.box.y >= b.y - EPS &&
+          t.box.x <= b.x + b.w &&
+          t.box.y <= b.y + b.h;
+        if (!startsInside) continue;
+        if (ink.x + ink.w > b.x + b.w + 0.03 || ink.y + ink.h > b.y + b.h + 0.03) {
+          out.push(
+            diag(
+              'SC-GEOM-003',
+              `Text "${t.lines[0]?.segments[0]?.text.slice(0, 30) ?? ''}" runs past its panel`,
+              {
+                slide: s.id,
+                ...(t.pointer ? { pointer: t.pointer } : {}),
+              },
+            ),
+          );
+        }
+        break;
+      }
+    }
     // contrast
     for (const { t, i } of texts) {
       const back = bgAt(

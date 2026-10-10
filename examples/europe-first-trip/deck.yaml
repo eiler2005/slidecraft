@@ -1,0 +1,113 @@
+# SlideCraft deck — schema: ../../schemas/deck.v1.json
+# A five-slide example built from a live end-to-end run (Claude Code plugin agents and Codex),
+# then curated. Figures are illustrative planning values, not statistics.
+schemaVersion: 1
+id: europe-first-trip
+title: Five European cities that make a perfect first trip
+storyline: strategy-recommendation
+theme: editorial
+status: review
+language: en
+author: SlideCraft travel desk
+footer: SlideCraft example · Illustrative figures
+sources:
+  - id: travel-est
+    title: SlideCraft illustrative travel estimates, 2026
+    illustrative: true
+output:
+  formats: [pptx, pdf, png, html]
+slides:
+  - id: cover
+    layout: title
+    title: Five European cities that make a perfect first trip
+    kicker: Travel guide · first-timers' edition
+    subtitle: Rome, Paris, Barcelona, Berlin and Prague — each wins a different kind of trip. Here is how to pick yours.
+    presenter: SlideCraft travel desk
+    date: "2026"
+    notes: Promise the audience a decision, not a ranking. By the end they should know which city fits them.
+
+  - id: value-map
+    layout: matrix-2x2
+    variant: plot
+    tracker: The landscape
+    title: Prague and Berlin deliver big-city sights at two-thirds of the daily cost of Paris
+    xAxis: { label: Typical daily budget, low: Lower, high: Higher }
+    yAxis: { label: Famous sights within walking distance, low: Fewer, high: More }
+    quadrants:
+      - { name: Icons on a budget }
+      - { name: Icons at a price }
+      - { name: Easy-going value }
+      - { name: Lifestyle splurge }
+    items:
+      - { label: Prague, x: 0.18, y: 0.72, highlight: true }
+      - { label: Berlin, x: 0.32, y: 0.58, highlight: true }
+      - { label: Rome, x: 0.62, y: 0.9 }
+      - { label: Paris, x: 0.88, y: 0.84 }
+      - { label: Barcelona, x: 0.58, y: 0.46 }
+    takeaway: Rome and Paris are worth the premium if icons are the point; otherwise Prague and Berlin stretch the budget furthest
+    sources: [travel-est]
+    notes: Positions are illustrative judgements from typical budgets and sight density in the historic centres.
+
+  - id: fit
+    layout: options-comparison
+    variant: rating
+    tracker: Which city for which traveller
+    title: Every city wins a different kind of trip — match it to what you love most
+    options:
+      - { name: Rome }
+      - { name: Paris }
+      - { name: Barcelona }
+      - { name: Berlin }
+      - { name: Prague }
+    criteria:
+      - { name: History and ruins }
+      - { name: Art and museums }
+      - { name: Food scene }
+      - { name: Beach and outdoors }
+      - { name: Nightlife and culture }
+      - { name: Value for money }
+    cells:
+      - [4, 2, 2, 3, 3]
+      - [3, 4, 3, 3, 2]
+      - [4, 4, 4, 2, 2]
+      - [1, 1, 4, 2, 1]
+      - [2, 3, 3, 4, 2]
+      - [2, 1, 2, 3, 4]
+    verdict: "Pick by the row you care about most: ruins → Rome, art → Paris, sun → Barcelona, culture → Berlin, value → Prague"
+    sources: [travel-est]
+
+  - id: budget
+    layout: chart-takeaway
+    variant: bar
+    tracker: What it costs
+    title: A day in Paris costs almost twice as much as a day in Prague
+    chart:
+      label: Typical daily budget per person, €, mid-range hotel, meals and transport
+      categories: [Paris, Rome, Barcelona, Berlin, Prague]
+      series: [{ name: Daily budget, values: [210, 170, 165, 150, 115] }]
+      unit: €
+      highlight: [Prague]
+    takeaway:
+      headline: Spend the savings on a longer stay
+      points:
+        - Five days in Prague cost about the same as three in Paris
+        - Book central hotels early; they are most of the bill
+    sources: [travel-est]
+
+  - id: when
+    layout: data-table
+    variant: plain
+    tracker: Pick yours
+    title: Go in spring or early autumn — every city is at its best, and cheaper, outside July and August
+    header: [If you love…, Go to, Best months, Daily budget, Don't miss]
+    rows:
+      - [History and ruins, Rome, Apr–May · Sep–Oct, "€170", Colosseum at opening time]
+      - [Art and museums, Paris, Apr–Jun · Sep–Oct, "€210", Musée d'Orsay on a weekday]
+      - [Sun and food, Barcelona, May–Jun · Sep, "€165", Sagrada Família and the Boqueria]
+      - [Culture and nightlife, Berlin, May–Sep, "€150", Museum Island and a Kreuzberg evening]
+      - [Value and old-town charm, Prague, Apr–Jun · Sep–Oct, "€115", Charles Bridge at sunrise]
+    colWeights: [1.7, 1.1, 1.6, 1.1, 2.6]
+    align: [left, left, left, right, left]
+    highlightRow: 4
+    note: Budgets are illustrative per-person estimates for a mid-range trip, excluding flights.
+    sources: [travel-est]

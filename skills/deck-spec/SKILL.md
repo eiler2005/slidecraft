@@ -42,7 +42,9 @@ Common fields on every slide: `id`, `layout`, `variant`, `title`, `lead`, `track
 ## Pitfalls
 
 - **Quote values containing `, ` or `: ` inside `{ … }`** — `{ summary: "Two resellers, direct later" }`. Unquoted, YAML splits it into keys (`SC-SPEC-001 Unrecognized key`).
-- Numbers need `sources:` ids that exist in the deck `sources:` list (or a `source:` line). Dates, owners and indices do not.
+- Numbers need `sources:` ids that exist in the deck `sources:` list (or a `source:` line). Dates, owners and indices do not, and plan slides (next-steps, timeline, process-steps, gate-matrix, raci, agenda) never need a source. Mark sample figures with a source that has `illustrative: true` — the source line then starts "Illustrative data."
+- Deck-level fields (`theme`, `storyline`, `footer`, `output`) live at the top of deck.yaml, never inside a slide.
+- `theme:` may be a path to a brand theme JSON (`./slidecraft-theme/contoso.json`, from `slidecraft theme import`).
 - Limits (`maxLength`, `maxItems`) are early warnings; the measurer decides (`SC-FIT-001` with the characters to cut). Rewrite, never truncate.
 - Chart series need one value per category. Waterfall `total: true` steps show absolute values; others are deltas and must add up.
 - Inline emphasis: `**bold**`, `*italic*` only.

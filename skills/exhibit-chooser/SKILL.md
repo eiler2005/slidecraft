@@ -27,5 +27,12 @@ Pick the exhibit from the **relationship** the title claims, not from the data y
 | Who does it | `team-cards` · cards / compact |
 | What we ask and what happens next | `next-steps` · decision / actions |
 | Where we are in the deck | `agenda` · agenda / section-divider |
+| A problem broken into causes / hypotheses | `issue-tree` · issue |
+| A metric broken into drivers | `issue-tree` · driver |
+| Where volume is lost / levels that build | `funnel` · funnel / pyramid |
+| Who decides what | `raci` |
+| Stages and the evidence that opens the next | `gate-matrix` |
+| How a process changes | `process-compare` |
+| Risks by likelihood and impact | `risk-matrix` |
 
 Rules: one message per slide; highlight only the insight (`highlight`); every number sourced; if the data cannot prove the title, change the title or flag the gap — never stretch the chart.

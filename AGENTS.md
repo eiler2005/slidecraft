@@ -2,7 +2,7 @@
 
 SlideCraft turns a goal into a consulting-grade deck: brief → template → storyline → ghost deck → build → review. In Claude Code use the plugin (`/slidecraft:new`). Any other agent follows this file. Run commands from the repo root.
 
-`sc` below means `node dist/slidecraft.mjs` (zero install, Node ≥ 22.12). Every command accepts `--json`; non-TTY output is JSON by default.
+`sc` below means `node dist/slidecraft.mjs` (zero install, Node ≥ 22.12). **Codex:** run `sc codex install` once to get the `slidecraft` skills in `~/.codex/skills`. Every command accepts `--json`; non-TTY output is JSON by default.
 
 ## The workflow — stop at each ✅ and ask the user
 

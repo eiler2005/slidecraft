@@ -1,7 +1,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { initWasm, Resvg } from '@resvg/resvg-wasm';
-import { allFontPaths } from '../engine/fonts.ts';
+import { allFontPaths, fontRegistryVersion } from '../engine/fonts.ts';
 import type { Scene } from '../engine/scene.ts';
 import { resvgWasmPath } from '../paths.ts';
 import { slideSvg } from './svg.ts';
@@ -9,11 +9,15 @@ import type { Engine } from './types.ts';
 
 let ready: Promise<void> | undefined;
 let fontBuffers: Uint8Array[] | undefined;
+let fontsAt = -1;
 
 export async function ensureResvg(): Promise<void> {
   if (!ready) ready = initWasm(readFileSync(resvgWasmPath()));
   await ready;
-  if (!fontBuffers) fontBuffers = allFontPaths().map((f) => new Uint8Array(readFileSync(f.path)));
+  if (!fontBuffers || fontsAt !== fontRegistryVersion()) {
+    fontBuffers = allFontPaths().map((f) => new Uint8Array(readFileSync(f.path)));
+    fontsAt = fontRegistryVersion();
+  }
 }
 
 /** Rasterise an SVG string to PNG at a given pixel width. */

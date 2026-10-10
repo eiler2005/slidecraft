@@ -13,15 +13,18 @@ SlideCraft ships in milestones. Each one ends with something people can use, tes
 - QA with stable diagnostic codes; deterministic builds; manifest; CI; privacy hooks.
 - Docs: tutorials, how-to guides, generated reference, explanation, ADRs.
 
-## M3 — Bring your brand
+## M3 — Bring your brand · *partly shipped*
 
-- Theme from a `.pptx`/`.potx`: colours, fonts, logo, footer; validate contrast and measurability.
+- ✅ Theme from a `.pptx`/`.potx`: colours, fonts, logo (`slidecraft theme import`).
+- ✅ Brand font files as measure fonts (`fonts.*.files`), embedded in PDF/PNG/HTML.
 - Use the customer's slide master in PPTX output (placeholders mapped to the frame).
 - Logo slot and brand-safe decor; theme preview gallery generated on import.
-- Optional calibration run against PowerPoint for a new brand font (go/no-go report).
+- ✅ `slidecraft calibrate --theme …` — go/no-go report against PowerPoint/LibreOffice.
 
-## M4 — Library growth
+## M4 — Library growth · *partly shipped*
 
+- ✅ 22 layouts: added issue/driver tree, RACI, gate matrix, current-vs-proposed process, funnel/pyramid, risk heatmap.
+- ✅ Storylines: project kickoff, post-mortem, training/workshop.
 - 30+ layouts, covering the full M/V catalogue (`library/references/patterns.md`): issue / diagnostic tree, pyramid, funnel, maturity model, gate matrix, current-vs-proposed process, RACI / decision rights, risk matrix, value driver tree, org chart, coverage map, before/after.
 - Storylines: project kickoff, post-mortem, training / workshop, sales QBR, investment committee memo.
 - Variant-level thumbnails and "when not to use" examples in the reference.

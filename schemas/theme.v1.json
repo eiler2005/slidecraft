@@ -141,12 +141,30 @@
             },
             "measure": {
               "type": "string",
-              "enum": [
-                "liberation-sans",
-                "liberation-serif",
-                "gelasio"
-              ],
+              "pattern": "^[a-z0-9-]+$",
               "description": "Bundled metric-compatible font used for measuring and PDF/PNG"
+            },
+            "files": {
+              "description": "Brand font files (TTF/OTF), relative to the theme file; registers `measure` as a new measure font",
+              "type": "object",
+              "properties": {
+                "regular": {
+                  "type": "string"
+                },
+                "bold": {
+                  "type": "string"
+                },
+                "italic": {
+                  "type": "string"
+                },
+                "boldItalic": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "regular"
+              ],
+              "additionalProperties": false
             }
           },
           "required": [
@@ -164,12 +182,30 @@
             },
             "measure": {
               "type": "string",
-              "enum": [
-                "liberation-sans",
-                "liberation-serif",
-                "gelasio"
-              ],
+              "pattern": "^[a-z0-9-]+$",
               "description": "Bundled metric-compatible font used for measuring and PDF/PNG"
+            },
+            "files": {
+              "description": "Brand font files (TTF/OTF), relative to the theme file; registers `measure` as a new measure font",
+              "type": "object",
+              "properties": {
+                "regular": {
+                  "type": "string"
+                },
+                "bold": {
+                  "type": "string"
+                },
+                "italic": {
+                  "type": "string"
+                },
+                "boldItalic": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "regular"
+              ],
+              "additionalProperties": false
             }
           },
           "required": [
@@ -191,12 +227,30 @@
                 },
                 "measure": {
                   "type": "string",
-                  "enum": [
-                    "liberation-sans",
-                    "liberation-serif",
-                    "gelasio"
-                  ],
+                  "pattern": "^[a-z0-9-]+$",
                   "description": "Bundled metric-compatible font used for measuring and PDF/PNG"
+                },
+                "files": {
+                  "description": "Brand font files (TTF/OTF), relative to the theme file; registers `measure` as a new measure font",
+                  "type": "object",
+                  "properties": {
+                    "regular": {
+                      "type": "string"
+                    },
+                    "bold": {
+                      "type": "string"
+                    },
+                    "italic": {
+                      "type": "string"
+                    },
+                    "boldItalic": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "regular"
+                  ],
+                  "additionalProperties": false
                 }
               },
               "required": [
@@ -214,12 +268,30 @@
                 },
                 "measure": {
                   "type": "string",
-                  "enum": [
-                    "liberation-sans",
-                    "liberation-serif",
-                    "gelasio"
-                  ],
+                  "pattern": "^[a-z0-9-]+$",
                   "description": "Bundled metric-compatible font used for measuring and PDF/PNG"
+                },
+                "files": {
+                  "description": "Brand font files (TTF/OTF), relative to the theme file; registers `measure` as a new measure font",
+                  "type": "object",
+                  "properties": {
+                    "regular": {
+                      "type": "string"
+                    },
+                    "bold": {
+                      "type": "string"
+                    },
+                    "italic": {
+                      "type": "string"
+                    },
+                    "boldItalic": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "regular"
+                  ],
+                  "additionalProperties": false
                 }
               },
               "required": [
@@ -381,6 +453,10 @@
           "default": true,
           "description": "Small section label top-left",
           "type": "boolean"
+        },
+        "logo": {
+          "description": "PNG/JPEG logo, relative to the theme file; top-right on content slides, bottom-right on covers",
+          "type": "string"
         }
       },
       "required": [
@@ -390,6 +466,10 @@
         "tracker"
       ],
       "additionalProperties": false
+    },
+    "source": {
+      "description": "Where the theme came from, e.g. \"imported from brand.potx\"",
+      "type": "string"
     }
   },
   "required": [

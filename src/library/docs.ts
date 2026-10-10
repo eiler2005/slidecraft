@@ -8,8 +8,9 @@ import { Command } from 'commander';
 import YAML from 'yaml';
 import { z } from 'zod';
 import { detect, engines } from '../backends/registry.ts';
+import { registerCodexCommands } from '../cli/codex.ts';
 import { registerCommands } from '../cli/commands.ts';
-import { registerWorkflowCommands } from '../cli/workflow.ts';
+import { registerBrandCommands, registerWorkflowCommands } from '../cli/workflow.ts';
 import { LAYOUTS } from '../layouts/index.ts';
 import { DOCS_DIR, LIBRARY_DIR, SCHEMAS_DIR, VERSION } from '../paths.ts';
 import { CODES } from '../qa/codes.ts';
@@ -183,6 +184,8 @@ function cliDoc(): string {
   const program = new Command().name('slidecraft');
   registerCommands(program);
   registerWorkflowCommands(program);
+  registerCodexCommands(program);
+  registerBrandCommands(program);
   let md = HEADER('CLI reference', 'src/cli/*.ts');
   md +=
     'Run from a clone with `node dist/slidecraft.mjs <command>` (zero install) or `npx tsx src/cli/main.ts <command>` during development. When stdout is not a terminal, commands that support `--json` print JSON.\n\n';

@@ -59,7 +59,7 @@ You approve four checkpoints; everything between them is automated. Strategy wor
 
 ## Template gallery
 
-A template is **a storyline (the shape of the argument for a task) × a theme (the look)**. Any storyline works in any theme. Nine storylines × six themes, built from sixteen layouts.
+A template is **a storyline (the shape of the argument for a task) × a theme (the look)**. Any storyline works in any theme. Twelve storylines × six themes (or your own brand theme), built from twenty-two layouts.
 
 <table>
   <tr>
@@ -76,7 +76,11 @@ A template is **a storyline (the shape of the argument for a task) × a theme (t
 
 <p align="center"><a href="docs/reference/storylines.gen.md">All 9 storylines →</a> · <a href="docs/reference/themes.gen.md">All 6 themes →</a> · <a href="docs/reference/layouts.gen.md">All 16 layouts →</a></p>
 
-Also included: **business case**, **product overview**, **case study / lessons learned**. Bring your own outline and SlideCraft maps it onto layouts.
+Also included: **business case**, **product overview**, **case study**, **project kickoff**, **post-mortem**, **training / workshop**. Bring your own outline and SlideCraft maps it onto layouts.
+
+Small and quick: [`examples/europe-first-trip`](examples/europe-first-trip/deck.yaml) — a five-slide travel guide (2×2 value map, Harvey-ball fit by traveller type, budget chart, "who should go where" table), produced in a live end-to-end run with the plugin agents and with Codex, then curated.
+
+**Your brand:** `slidecraft theme import brand.potx --id contoso --font-dir ./fonts` creates a theme with your colours, fonts and logo; `slidecraft calibrate --theme ./slidecraft-theme/contoso.json` checks line breaks against real PowerPoint ([apply your brand](docs/how-to/apply-brand.md)).
 
 ## Outputs and engines
 
@@ -106,7 +110,14 @@ One spec, several engines — you choose, SlideCraft recommends based on what yo
 
 No `npm install` needed: the CLI ships as a committed bundle (`dist/slidecraft.mjs`) and runs on Node ≥ 22.12.
 
-**With Codex or any agent** — clone the repo and point the agent at [`AGENTS.md`](AGENTS.md).
+**With OpenAI Codex** — clone the repo, then install the Codex skills (they call the same zero-install CLI):
+
+```sh
+node dist/slidecraft.mjs codex install      # → ~/.codex/skills/slidecraft*
+codex "Using SlideCraft, make a 5-slide deck that …"
+```
+
+Any other agent: point it at [`AGENTS.md`](AGENTS.md).
 
 **As a CLI**
 
@@ -147,16 +158,16 @@ Methodology: [writing standard](library/references/writing-standard.md) · [visu
 |---|---|
 | Frame | `title` (cover, closing) · `agenda` (agenda, section-divider) |
 | Message | `exec-summary` (SCR, key messages) · `key-points` · `big-statement` (statement, quote, hero number) · `text-image` |
-| Numbers | `kpi-tiles` · `chart-takeaway` (bar, column, stacked, line) · `waterfall` · `data-table` |
-| Decide | `options-comparison` (text, Harvey-ball rating) · `matrix-2x2` |
-| Sequence | `process-steps` (chevrons, numbered) · `timeline` (milestones, gantt) |
-| People · Close | `team-cards` · `next-steps` (decision, actions) |
+| Numbers | `kpi-tiles` · `chart-takeaway` (bar, column, stacked, line) · `waterfall` · `funnel` (funnel, pyramid) · `data-table` |
+| Decide | `options-comparison` (text, Harvey-ball rating, up to 5 options) · `matrix-2x2` · `issue-tree` (issue, driver) · `risk-matrix` |
+| Sequence | `process-steps` (chevrons, numbered) · `timeline` (milestones, gantt) · `gate-matrix` · `process-compare` (current vs proposed) |
+| People · Close | `team-cards` · `raci` · `next-steps` (decision, actions) |
 
 Contracts, limits and thumbnails: [layouts reference](docs/reference/layouts.gen.md). Add your own: [add a layout](docs/how-to/add-layout.md).
 
 ## Roadmap
 
-Brand themes from your `.potx`, 30+ layouts (issue trees, funnels, RACI…), template-from-PPTX via Claude vision, freeform HTML mode for creative decks, DOCX and one-pagers. See [ROADMAP.md](ROADMAP.md).
+Next: the customer's own slide master in PPTX output, template-from-PPTX via Claude vision, freeform HTML mode, DOCX and one-pagers. See [ROADMAP.md](ROADMAP.md).
 
 ## Contributing
 

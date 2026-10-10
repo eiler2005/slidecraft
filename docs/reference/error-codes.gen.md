@@ -22,6 +22,7 @@
 | `SC-GLYPH-001` | error | Font lacks glyphs for this text | The measuring font has no glyphs for some characters, so layout cannot be guaranteed. | Use a theme whose fonts cover the script, or set a `fonts.cyrillic` override in the theme. |
 | `SC-GEOM-001` | error | Element outside the slide | A node extends beyond the page and would be clipped. | This is a layout bug — report it with the deck that triggers it. |
 | `SC-GEOM-002` | warning | Content elements overlap | Two text or data elements intersect. | Reduce content so the layout can space it, or report a layout bug. |
+| `SC-GEOM-003` | warning | Text spills out of its panel | Text starts inside a card, band or panel but its ink extends past the panel edge. | Shorten the text, reduce the number of items, or choose a layout with larger panels. |
 | `SC-CONTRAST-001` | warning | Low text contrast | Text color against its background is below WCAG AA (4.5:1 body, 3:1 large). | Adjust the theme colors or the highlight choice. |
 | `SC-DENSITY-001` | warning | Slide is dense | The slide carries more words than a reader can absorb in one pass. | Split into two slides or move detail into speaker notes. |
 | `SC-STORY-001` | info | Storyline slot not covered | The chosen storyline expects a slide for this purpose and none was found. | Add the slide, or ignore if the slot does not apply to this deck. |

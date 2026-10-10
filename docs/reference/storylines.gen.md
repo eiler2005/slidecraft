@@ -13,9 +13,12 @@ A storyline is the shape of the argument for a kind of task. `slidecraft templat
 | [`executive-update`](#executive-update) | Headline status (RAG) → plan vs actual vs forecast → what changed → risks and issues → decisions needed | status report, steerco, steering committee, QBR, board update, progress update | executive, consulting-classic, corporate-blue |
 | [`narrative-story`](#narrative-story) | Hook → stakes → journey → turning point → insight → call to action | storytelling, keynote, talk, share experience, conference, all-hands | midnight, editorial, modern-pitch |
 | [`pitch-deck`](#pitch-deck) | Problem → solution → why now → market → product → business model → traction → competition → go-to-market → team → financials → ask | pitch deck, investor, fundraising, seed, series A, venture capital | modern-pitch, midnight, corporate-blue |
+| [`post-mortem`](#post-mortem) | Summary → impact → timeline → root causes → what worked → actions with owners | post-mortem, postmortem, incident review, retrospective, lessons learned, root cause | consulting-classic, editorial, executive |
 | [`product-overview`](#product-overview) | Job to be done → how it works → key features → proof → roadmap → pricing and packaging → call to action | product overview, product launch, launch, go-to-market, release, product demo | modern-pitch, corporate-blue, editorial |
+| [`project-kickoff`](#project-kickoff) | Why → objectives and success measures → scope → approach and plan → governance and roles → risks → first 30 days | kickoff, kick-off, project start, programme launch, onboarding, charter | corporate-blue, consulting-classic, executive |
 | [`research-readout`](#research-readout) | Research question → method and sample → key findings → implications → recommendations → appendix | research readout, findings, survey results, user research, market research, customer research | editorial, consulting-classic, corporate-blue |
 | [`strategy-recommendation`](#strategy-recommendation) | Situation → Complication → Resolution (answer) → 3 reasons → plan → risks → ask | strategy, recommendation, decision, market entry, investment decision, growth strategy | consulting-classic, executive, corporate-blue |
+| [`training-workshop`](#training-workshop) | Why it matters → learning objectives → the idea → worked example → practice → recap → resources | training, workshop, onboarding session, masterclass, tutorial, course | modern-pitch, editorial, corporate-blue |
 
 ## business-case
 
@@ -203,6 +206,34 @@ A storyline is the shape of the argument for a kind of task. `slidecraft templat
 | Team and financials | `financials` | Show the plan the money buys and the milestones it reaches. | `chart-takeaway`, `data-table`, `waterfall` | yes |
 | The ask | `ask` | State how much we are raising, for what, and the milestones it buys. | `kpi-tiles`, `key-points`, `big-statement` | yes |
 
+## post-mortem
+
+**Post-mortem** — A blameless review of what happened, why, what it cost and the changes that prevent a repeat — with owners and dates.
+
+![Post-mortem](../gallery/post-mortem--consulting-classic.png)
+
+- **Arc:** Summary → impact → timeline → root causes → what worked → actions with owners
+- **Length:** 6–12 slides · **Audiences:** leadership team, engineering, operations, project team
+
+**Principles**
+
+- Blameless: describe systems and decisions, not people.
+- Separate facts (timeline, impact) from interpretation (causes).
+- Root causes come from an issue tree, not the first explanation found.
+- Say what worked as well as what failed — it is what you keep.
+- Every action has one owner, a date and a way to verify it is done.
+
+| Section | Slot | Purpose | Layouts | Required |
+|---|---|---|---|---|
+| Summary | `cover` | Name the event and the review date. | `title` | yes |
+| Summary | `summary` | Give what happened, the impact and the top changes in one page. | `exec-summary` | yes |
+| What happened | `impact` | Quantify the impact on customers, revenue and the team. | `kpi-tiles`, `chart-takeaway` | yes |
+| What happened | `timeline` | Show the timeline from first signal to resolution. | `timeline` | yes |
+| Why | `root-causes` | Break the failure into contributing causes and show which were confirmed. | `issue-tree` | yes |
+| Why | `process` | Show where the process broke compared with how it should work. | `process-compare`, `process-steps` | optional |
+| What we keep and change | `worked` | Name what worked and should be kept. | `key-points` | optional |
+| What we keep and change | `actions` | List the changes with owners, dates and how we will verify them. | `next-steps` | yes |
+
 ## product-overview
 
 **Product overview** — Product or launch overview for customers or internal stakeholders — the job to be done, how it works, key features, proof, roadmap, packaging and a call to action.
@@ -232,6 +263,35 @@ A storyline is the shape of the argument for a kind of task. `slidecraft templat
 | Roadmap and packaging | `roadmap` | Show where the product is going and when, to build confidence without overpromising. | `timeline`, `key-points` | yes |
 | Roadmap and packaging | `packaging` | Make the offer and its price clear, and help the buyer choose. | `data-table`, `options-comparison` | yes |
 | Call to action | `cta` | Tell the audience the single next step and how to take it. | `next-steps`, `title` | yes |
+
+## project-kickoff
+
+**Project kickoff** — Align a team and its sponsors on why the project exists, what is in and out of scope, how it will run and what success looks like.
+
+![Project kickoff](../gallery/project-kickoff--corporate-blue.png)
+
+- **Arc:** Why → objectives and success measures → scope → approach and plan → governance and roles → risks → first 30 days
+- **Length:** 8–14 slides · **Audiences:** project team, sponsors, steering committee, stakeholders
+
+**Principles**
+
+- Lead with the business problem and the outcome, not the work breakdown.
+- Make scope explicit — what is out of scope prevents more conflict than what is in.
+- Every objective has a measure, a baseline and a target.
+- Name one accountable owner per decision; show the RACI, not an org chart.
+- End with what happens in the next 30 days and who does it.
+
+| Section | Slot | Purpose | Layouts | Required |
+|---|---|---|---|---|
+| Why | `cover` | Name the project and the outcome it exists to deliver. | `title` | yes |
+| Why | `case` | Explain the problem and why it matters now. | `exec-summary`, `big-statement`, `kpi-tiles` | yes |
+| What | `objectives` | State 3–4 objectives with measures, baselines and targets. | `kpi-tiles`, `data-table`, `key-points` | yes |
+| What | `scope` | Make in-scope and out-of-scope explicit. | `options-comparison`, `key-points`, `data-table` | yes |
+| How | `approach` | Show the phases and what each delivers. | `process-steps`, `gate-matrix` | yes |
+| How | `plan` | Put workstreams and milestones on one time axis. | `timeline` | yes |
+| How | `governance` | Show who decides what and how the team meets. | `raci`, `team-cards` | yes |
+| How | `risks` | Name the risks that could derail the project and their owners. | `risk-matrix`, `data-table` | optional |
+| Next 30 days | `next-steps` | List the first actions with owners and dates. | `next-steps` | yes |
 
 ## research-readout
 
@@ -294,3 +354,31 @@ A storyline is the shape of the argument for a kind of task. `slidecraft templat
 | How we get there | `plan` | Show the phased plan with gates between phases. | `timeline`, `process-steps` | yes |
 | How we get there | `risks` | Name the main risks and how each is mitigated. | `data-table`, `matrix-2x2` | optional |
 | Decision | `ask` | Make the decision explicit — what, who, by when — and the immediate next steps. | `next-steps` | yes |
+
+## training-workshop
+
+**Training / workshop** — Teach one method or tool so participants can use it tomorrow — objectives, the idea, a worked example, practice and a recap.
+
+![Training / workshop](../gallery/training-workshop--modern-pitch.png)
+
+- **Arc:** Why it matters → learning objectives → the idea → worked example → practice → recap → resources
+- **Length:** 8–16 slides · **Audiences:** new joiners, practitioners, team, partners, customers
+
+**Principles**
+
+- State what participants will be able to do afterwards, as verbs.
+- One concept per slide; show it before you explain it.
+- Use one running example throughout the session.
+- Plan practice time and say how long each exercise takes.
+- End with a one-slide recap and where to get help.
+
+| Section | Slot | Purpose | Layouts | Required |
+|---|---|---|---|---|
+| Opening | `cover` | Name the session and who it is for. | `title` | yes |
+| Opening | `why` | Show the problem this method solves with a concrete moment or number. | `big-statement`, `text-image` | yes |
+| Opening | `objectives` | List 2–4 things participants will be able to do afterwards. | `key-points` | yes |
+| Learn | `concept` ×1–3 | Explain the method in steps. | `process-steps`, `funnel` | yes |
+| Learn | `example` ×1–3 | Walk through a worked example from start to finish. | `text-image`, `process-compare`, `chart-takeaway` | yes |
+| Practice | `exercise` | Set an exercise with the time allowed and what to produce. | `key-points`, `big-statement` | yes |
+| Close | `recap` | Recap the method in one slide. | `exec-summary`, `key-points` | yes |
+| Close | `resources` | Point to templates, help and the next session. | `title`, `next-steps` | yes |

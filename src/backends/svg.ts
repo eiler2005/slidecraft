@@ -4,7 +4,7 @@
  */
 import { readFileSync } from 'node:fs';
 import { extname } from 'node:path';
-import { VECTOR_FAMILY } from '../engine/fonts.ts';
+import { vectorFamily } from '../engine/fonts.ts';
 import type { Master, Scene, SceneNode, SceneSlide, Stroke, TextNode } from '../engine/scene.ts';
 
 export const PX_PER_IN = 96;
@@ -43,7 +43,7 @@ function dataUri(path: string): string {
 }
 
 export function textSvg(t: TextNode): string {
-  const fam = VECTOR_FAMILY[t.style.measure];
+  const fam = vectorFamily(t.style.measure);
   const size = ptpx(t.style.size);
   let out = '';
   for (const line of t.lines) {
@@ -156,7 +156,7 @@ export function masterSvg(m: Master, slideNo: number): string {
   let out = m.nodes.map(nodeSvg).join('');
   if (m.slideNumber) {
     const s = m.slideNumber;
-    const fam = VECTOR_FAMILY[s.style.measure];
+    const fam = vectorFamily(s.style.measure);
     const x = s.style.align === 'right' ? px(s.box.x + s.box.w) : px(s.box.x);
     const anchor = s.style.align === 'right' ? ' text-anchor="end"' : '';
     out += `<text x="${x}" y="${px(s.box.y + s.box.h * 0.8)}"${anchor} font-family="${fam}" font-size="${ptpx(s.style.size)}" fill="${s.style.color}">${slideNo}</text>`;

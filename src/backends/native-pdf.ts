@@ -5,7 +5,7 @@
 import { createWriteStream, mkdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import PDFDocument from 'pdfkit';
-import { type Face, faceOf, fontPath } from '../engine/fonts.ts';
+import { type Face, faceOf, fontPath, measureFontIds } from '../engine/fonts.ts';
 import type { Master, Scene, SceneNode, Stroke, TextNode } from '../engine/scene.ts';
 import type { MeasureFont } from '../spec/theme.ts';
 import { rasterize } from './resvg.ts';

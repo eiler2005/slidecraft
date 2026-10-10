@@ -6,6 +6,12 @@ All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachang
 
 ### Added
 - `SLIDECRAFT_PPTX_ENGINE` / `SLIDECRAFT_PDF_ENGINE`: machine-wide engine preference used for `auto`, with automatic fallback.
+- **Codex:** `slidecraft codex install` packages the skills for OpenAI Codex; verified with a live `codex exec` run.
+- **Live end-to-end runs** of `/slidecraft:new` with the plugin agents (Opus strategist, Sonnet writers, Haiku copy-fitter, Opus reviewer) and of Codex; fixes from both: `new --json`, scaffold honours `length.slides` (breadth-first), panel-overflow check `SC-GEOM-003`, YAML comma and deck-field hints, plan layouts exempt from source checks, recommended formats carried into the deck, `options-comparison` up to 5 options, clearer `layouts <theme-id>` error, shorter `task` placeholder.
+- **Brand (M3):** `theme import` from .pptx/.potx (colours, fonts, logo), brand font files as measure fonts, logo on masters, `calibrate --theme` against PowerPoint; `theme:` may be a JSON path next to the deck.
+- **Layouts (M4):** `issue-tree`, `raci`, `gate-matrix`, `process-compare`, `funnel`, `risk-matrix` (22 total). **Storylines:** `project-kickoff`, `post-mortem`, `training-workshop` (12 total).
+- **Example:** `examples/europe-first-trip` — five-slide travel guide.
+- `ensureContrast()` colour helper.
 - Docs: [engines compared](docs/explanation/engines-compared.md) — pros, cons and recommended setups.
 
 ## [0.1.0] — 2026-10-10

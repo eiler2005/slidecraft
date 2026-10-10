@@ -6,13 +6,30 @@ export const HexColor = z
   .describe('Hex color, #RRGGBB');
 
 /** Fonts we can measure exactly. Each stands in for a system font written into PPTX. */
-export const MeasureFont = z.enum(['liberation-sans', 'liberation-serif', 'gelasio']);
-export type MeasureFont = z.infer<typeof MeasureFont>;
+/**
+ * Font used for measuring and vector output: a bundled metric-compatible font
+ * (`liberation-sans` ↔ Arial, `liberation-serif` ↔ Times New Roman, `gelasio` ↔ Georgia)
+ * or the id of a brand font the theme provides with `files`.
+ */
+export const MeasureFont = z.string().regex(/^[a-z0-9-]+$/);
+export type MeasureFont = string;
 
 export const FontSpec = z
   .object({
     family: z.string().describe('Font family written into PPTX/HTML, e.g. "Arial"'),
     measure: MeasureFont.describe('Bundled metric-compatible font used for measuring and PDF/PNG'),
+    files: z
+      .object({
+        regular: z.string(),
+        bold: z.string().optional(),
+        italic: z.string().optional(),
+        boldItalic: z.string().optional(),
+      })
+      .strict()
+      .optional()
+      .describe(
+        'Brand font files (TTF/OTF), relative to the theme file; registers `measure` as a new measure font',
+      ),
   })
   .strict();
 export type FontSpec = z.infer<typeof FontSpec>;
@@ -89,8 +106,18 @@ export const Theme = z
         pageNumbers: z.boolean().default(true),
         footer: z.string().optional().describe('Default footer text; decks can override'),
         tracker: z.boolean().default(true).describe('Small section label top-left'),
+        logo: z
+          .string()
+          .optional()
+          .describe(
+            'PNG/JPEG logo, relative to the theme file; top-right on content slides, bottom-right on covers',
+          ),
       })
       .strict(),
+    source: z
+      .string()
+      .optional()
+      .describe('Where the theme came from, e.g. "imported from brand.potx"'),
   })
   .strict();
 

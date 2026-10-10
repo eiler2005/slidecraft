@@ -1,0 +1,16 @@
+# SlideCraft brief — schema: ../../schemas/brief.v1.json
+# Small fictional example: a five-slide travel guide. All figures are illustrative.
+schemaVersion: 1
+id: europe-first-trip
+goal: First-time visitors pick the European city that fits how they like to travel — and know when to go and what it costs.
+ask: Choose one anchor city for your first trip
+audience:
+  who: First-time travellers to Europe
+  knows: The famous names — Rome, Paris, Barcelona — but not how they differ
+  cares: Budget, crowds and getting the most out of a short trip
+task: travel guide recommendation
+length: { slides: 5 }
+language: en
+tone: [warm, practical]
+usage: [edit-together, present-live]
+choice: { storyline: strategy-recommendation, theme: editorial }

@@ -1,0 +1,64 @@
+# Storyline: teach a method or tool — objectives, concepts, a worked example, practice, recap.
+schemaVersion: 1
+id: training-workshop
+name: Training / workshop
+summary: Teach one method or tool so participants can use it tomorrow — objectives, the idea, a worked example, practice and a recap.
+bestFor: [training, workshop, onboarding session, masterclass, tutorial, course, teach, enablement, lunch and learn]
+audiences: [new joiners, practitioners, team, partners, customers]
+themes: [modern-pitch, editorial, corporate-blue]
+ordered: true
+arc: Why it matters → learning objectives → the idea → worked example → practice → recap → resources
+length: { min: 8, max: 16 }
+tone: [friendly, concrete, step-by-step]
+principles:
+  - State what participants will be able to do afterwards, as verbs.
+  - One concept per slide; show it before you explain it.
+  - Use one running example throughout the session.
+  - Plan practice time and say how long each exercise takes.
+  - End with a one-slide recap and where to get help.
+sections:
+  - id: open
+    name: Opening
+    slots:
+      - id: cover
+        purpose: Name the session and who it is for.
+        layouts: [title]
+      - id: why
+        purpose: Show the problem this method solves with a concrete moment or number.
+        layouts: [big-statement, text-image]
+        inputs: [motivating example]
+      - id: objectives
+        purpose: List 2–4 things participants will be able to do afterwards.
+        layouts: [key-points]
+        guidance: list variant; start each with a verb.
+        inputs: [learning objectives]
+  - id: learn
+    name: Learn
+    slots:
+      - id: concept
+        purpose: Explain the method in steps.
+        layouts: [process-steps, funnel]
+        repeat: { min: 1, max: 3 }
+        inputs: [steps of the method]
+      - id: example
+        purpose: Walk through a worked example from start to finish.
+        layouts: [text-image, process-compare, chart-takeaway]
+        repeat: { min: 1, max: 3 }
+        inputs: [example]
+  - id: practice
+    name: Practice
+    slots:
+      - id: exercise
+        purpose: Set an exercise with the time allowed and what to produce.
+        layouts: [key-points, big-statement]
+        inputs: [exercise, timing]
+  - id: close
+    name: Close
+    slots:
+      - id: recap
+        purpose: Recap the method in one slide.
+        layouts: [exec-summary, key-points]
+      - id: resources
+        purpose: Point to templates, help and the next session.
+        layouts: [title, next-steps]
+        inputs: [links, contacts]

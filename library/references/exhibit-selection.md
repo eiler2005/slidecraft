@@ -26,6 +26,14 @@ Start from the sentence in the title. Identify the **relationship** it claims, t
 | **Who** (team, owners) | `team-cards` · cards / compact | Responsibilities matter more than people → table | Bios longer than two lines |
 | **The decision and next steps** | `next-steps` · decision / actions | — | Actions without owners or dates |
 | **Navigation** | `agenda` · agenda / section-divider | Decks under ~10 slides | Agendas that list generic topics |
+| **Problem structure / root causes** | `issue-tree` · issue | A sequence → `process-steps` | Branches that overlap (not MECE) |
+| **Metric decomposition** | `issue-tree` · driver | A bridge over time → `waterfall` | Drivers that do not multiply/add to the root |
+| **Where volume is lost** | `funnel` · funnel | Stages that do not narrow → bar chart | Missing conversion rates |
+| **Levels that build on each other** | `funnel` · pyramid | Unordered items → `key-points` | Pyramids where order is arbitrary |
+| **Decision rights** | `raci` | Who is on the team → `team-cards` | More than one A per row |
+| **Stage-gate plan** | `gate-matrix` | Dates matter most → `timeline` | Gates without evidence or a decider |
+| **What changes in a process** | `process-compare` | No comparison → `process-steps` | Unchanged steps highlighted |
+| **Risks by likelihood × impact** | `risk-matrix` | Risks without assessment → `data-table` | No owners or mitigations |
 
 ## Relationship patterns in detail
 

@@ -6,33 +6,115 @@ import type { MeasureFont } from '../spec/theme.ts';
 
 export type Face = 'regular' | 'bold' | 'italic' | 'boldItalic';
 
-const FILES: Record<MeasureFont, Record<Face, string>> = {
+interface FontEntry {
+  /** Family name inside the TTF files (used by SVG / HTML / PNG renderers). */
+  vector: string;
+  /** Absolute paths per face; missing faces fall back to regular. */
+  files: Partial<Record<Face, string>> & { regular: string };
+  builtin: boolean;
+}
+
+const BUILTIN: Record<string, { vector: string; files: Record<Face, string> }> = {
   'liberation-sans': {
-    regular: 'liberation-sans/LiberationSans-Regular.ttf',
-    bold: 'liberation-sans/LiberationSans-Bold.ttf',
-    italic: 'liberation-sans/LiberationSans-Italic.ttf',
-    boldItalic: 'liberation-sans/LiberationSans-BoldItalic.ttf',
+    vector: 'Liberation Sans',
+    files: {
+      regular: 'liberation-sans/LiberationSans-Regular.ttf',
+      bold: 'liberation-sans/LiberationSans-Bold.ttf',
+      italic: 'liberation-sans/LiberationSans-Italic.ttf',
+      boldItalic: 'liberation-sans/LiberationSans-BoldItalic.ttf',
+    },
   },
   'liberation-serif': {
-    regular: 'liberation-serif/LiberationSerif-Regular.ttf',
-    bold: 'liberation-serif/LiberationSerif-Bold.ttf',
-    italic: 'liberation-serif/LiberationSerif-Italic.ttf',
-    boldItalic: 'liberation-serif/LiberationSerif-BoldItalic.ttf',
+    vector: 'Liberation Serif',
+    files: {
+      regular: 'liberation-serif/LiberationSerif-Regular.ttf',
+      bold: 'liberation-serif/LiberationSerif-Bold.ttf',
+      italic: 'liberation-serif/LiberationSerif-Italic.ttf',
+      boldItalic: 'liberation-serif/LiberationSerif-BoldItalic.ttf',
+    },
   },
   gelasio: {
-    regular: 'gelasio/Gelasio-Regular.ttf',
-    bold: 'gelasio/Gelasio-Bold.ttf',
-    italic: 'gelasio/Gelasio-Italic.ttf',
-    boldItalic: 'gelasio/Gelasio-BoldItalic.ttf',
+    vector: 'Gelasio',
+    files: {
+      regular: 'gelasio/Gelasio-Regular.ttf',
+      bold: 'gelasio/Gelasio-Bold.ttf',
+      italic: 'gelasio/Gelasio-Italic.ttf',
+      boldItalic: 'gelasio/Gelasio-BoldItalic.ttf',
+    },
   },
 };
 
-/** Family names as registered inside the TTF files (used by SVG/HTML renderers). */
-export const VECTOR_FAMILY: Record<MeasureFont, string> = {
-  'liberation-sans': 'Liberation Sans',
-  'liberation-serif': 'Liberation Serif',
-  gelasio: 'Gelasio',
-};
+/**
+ * Measure-font registry: the bundled metric-compatible fonts plus brand fonts that
+ * themes register from their own TTF/OTF files (ADR 0005). Every engine reads from here.
+ */
+const REGISTRY = new Map<string, FontEntry>(
+  Object.entries(BUILTIN).map(([id, e]) => [
+    id,
+    {
+      vector: e.vector,
+      files: Object.fromEntries(
+        Object.entries(e.files).map(([f, rel]) => [f, join(FONTS_DIR, rel)]),
+      ) as FontEntry['files'],
+      builtin: true,
+    },
+  ]),
+);
+
+export const BUILTIN_MEASURE_FONTS = Object.keys(BUILTIN);
+let registryVersion = 0;
+export const fontRegistryVersion = () => registryVersion;
+
+/** Register a brand font for measuring and vector rendering. Idempotent per id. */
+export function registerMeasureFont(
+  id: string,
+  files: Partial<Record<Face, string>> & { regular: string },
+  vector?: string,
+): void {
+  const prev = REGISTRY.get(id);
+  if (prev && prev.files.regular === files.regular) return;
+  let family = vector;
+  if (!family) {
+    try {
+      family = (fontkit.openSync(files.regular) as fontkit.Font).familyName;
+    } catch {
+      family = id;
+    }
+  }
+  REGISTRY.set(id, { vector: family, files, builtin: false });
+  fontCache.clear();
+  widthCache.clear();
+  registryVersion++;
+}
+
+export function isMeasureFont(id: string): boolean {
+  return REGISTRY.has(id);
+}
+
+export function measureFontIds(): string[] {
+  return [...REGISTRY.keys()];
+}
+
+function entry(id: string): FontEntry {
+  const e = REGISTRY.get(id);
+  if (!e)
+    throw new Error(
+      `Unknown measure font "${id}" — use ${BUILTIN_MEASURE_FONTS.join(', ')} or give the theme font files`,
+    );
+  return e;
+}
+
+/** Family name inside the font files (SVG/HTML/PNG). */
+export function vectorFamily(id: MeasureFont): string {
+  return entry(id).vector;
+}
+
+/** @deprecated use vectorFamily(); kept for callers that index by id. */
+export const VECTOR_FAMILY: Record<string, string> = new Proxy({} as Record<string, string>, {
+  get: (_t, k: string) => entry(k).vector,
+  ownKeys: () => [...REGISTRY.keys()],
+  getOwnPropertyDescriptor: () => ({ enumerable: true, configurable: true }),
+});
 
 export function faceOf(bold?: boolean, italic?: boolean): Face {
   if (bold && italic) return 'boldItalic';
@@ -42,14 +124,15 @@ export function faceOf(bold?: boolean, italic?: boolean): Face {
 }
 
 export function fontPath(font: MeasureFont, face: Face): string {
-  return join(FONTS_DIR, FILES[font][face]);
+  const e = entry(font);
+  return e.files[face] ?? e.files.regular;
 }
 
 export function allFontPaths(): { font: MeasureFont; face: Face; path: string }[] {
   const out: { font: MeasureFont; face: Face; path: string }[] = [];
-  for (const font of Object.keys(FILES) as MeasureFont[]) {
-    for (const face of Object.keys(FILES[font]) as Face[]) {
-      out.push({ font, face, path: fontPath(font, face) });
+  for (const [font, e] of REGISTRY) {
+    for (const face of ['regular', 'bold', 'italic', 'boldItalic'] as Face[]) {
+      if (e.files[face] || face === 'regular') out.push({ font, face, path: fontPath(font, face) });
     }
   }
   return out;

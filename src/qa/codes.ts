@@ -103,6 +103,12 @@ export const CODES = {
     why: 'Two text or data elements intersect.',
     fix: 'Reduce content so the layout can space it, or report a layout bug.',
   },
+  'SC-GEOM-003': {
+    severity: 'warning',
+    title: 'Text spills out of its panel',
+    why: 'Text starts inside a card, band or panel but its ink extends past the panel edge.',
+    fix: 'Shorten the text, reduce the number of items, or choose a layout with larger panels.',
+  },
   'SC-CONTRAST-001': {
     severity: 'warning',
     title: 'Low text contrast',

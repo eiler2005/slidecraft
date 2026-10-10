@@ -7,9 +7,17 @@ import { buildGallery, buildHero, writePicker } from '../gallery.ts';
 import { getLayout } from '../layouts/index.ts';
 import { libraryCheck } from '../library/check.ts';
 import { generateDocs } from '../library/docs.ts';
-import { getStoryline, getTheme, loadBrief, loadStorylines, loadThemes } from '../library/load.ts';
+import {
+  getStoryline,
+  getTheme,
+  loadBrief,
+  loadStorylines,
+  readThemeFile,
+} from '../library/load.ts';
 import { rankStorylines, templateOptions } from '../library/rank.ts';
 import { recommendOutput } from '../library/recommend.ts';
+import { importTheme } from '../library/theme-import.ts';
+import { runCalibration } from '../qa/calibrate.ts';
 import type { Brief } from '../spec/brief.ts';
 import {
   bold,
@@ -42,6 +50,39 @@ function requireBrief(path: string): Brief {
   return brief;
 }
 
+/**
+ * Trim a scaffold to the brief's slide budget: always keep the cover and the closing ask,
+ * then required slots in storyline order, then optional ones. Order is preserved.
+ */
+function fitToLength(
+  slides: Record<string, unknown>[],
+  meta: { required: boolean; repeatExtra: boolean; section: number }[],
+  target?: number,
+): Record<string, unknown>[] {
+  if (!target || slides.length <= target) return slides;
+  const keep = new Set<number>([0, slides.length - 1]);
+  // breadth first: one required slot from every section before a second one from any
+  const seen = new Set<number>([meta[slides.length - 1]!.section]);
+  const firstPerSection = meta
+    .map((m, i) => ({ m, i }))
+    .filter(({ m, i }) => {
+      if (!m.required || m.repeatExtra || keep.has(i) || seen.has(m.section)) return false;
+      seen.add(m.section);
+      return true;
+    });
+  const ranked = [
+    ...firstPerSection,
+    ...meta.map((m, i) => ({ m, i })).filter(({ m }) => m.required && !m.repeatExtra),
+    ...meta.map((m, i) => ({ m, i })).filter(({ m }) => m.required && m.repeatExtra),
+    ...meta.map((m, i) => ({ m, i })).filter(({ m }) => !m.required),
+  ];
+  for (const { i } of ranked) {
+    if (keep.size >= target) break;
+    keep.add(i);
+  }
+  return slides.filter((_, i) => keep.has(i));
+}
+
 /** Ghost deck from a storyline: one slide per slot, action titles to be written. */
 export function scaffoldDeck(
   brief: Brief,
@@ -51,6 +92,7 @@ export function scaffoldDeck(
   const s = getStoryline(storylineId);
   if (!s) throw new Error(`unknown storyline "${storylineId}"`);
   const slides: Record<string, unknown>[] = [];
+  const meta: { required: boolean; repeatExtra: boolean; section: number }[] = [];
   for (const sec of s.sections) {
     for (const slot of sec.slots) {
       const n = slot.repeat ? Math.max(1, slot.repeat.min) : 1;
@@ -77,9 +119,15 @@ export function scaffoldDeck(
         if (slot.guidance)
           slide.notes = `Guidance: ${slot.guidance}${slot.layouts.length > 1 ? `\nAlternative layouts: ${slot.layouts.slice(1).join(', ')}` : ''}`;
         slides.push(slide);
+        meta.push({
+          required: slot.required,
+          repeatExtra: i > 0,
+          section: s.sections.indexOf(sec),
+        });
       }
     }
   }
+  const picked = fitToLength(slides, meta, brief.length?.slides);
   return {
     schemaVersion: 1,
     id: brief.id,
@@ -91,7 +139,7 @@ export function scaffoldDeck(
     ...(brief.brand?.footer ? { footer: brief.brand.footer } : {}),
     sources: [],
     ...(brief.output?.formats || brief.output?.engines ? { output: brief.output } : {}),
-    slides,
+    slides: picked,
   };
 }
 
@@ -183,13 +231,18 @@ export function registerWorkflowCommands(program: Command): void {
     .requiredOption('-b, --brief <path>', 'brief.yaml')
     .option('-o, --out <path>', 'deck.yaml path (default: next to the brief)')
     .option('--force', 'overwrite an existing deck.yaml')
-    .action((o: { brief: string; out?: string; force?: boolean }) => {
+    .action(async (o: { brief: string; out?: string; force?: boolean }) => {
       const brief = requireBrief(o.brief);
       if (!brief.choice) throw new Error('brief has no choice yet — run `slidecraft choose` first');
       const out = resolve(o.out ?? join(dirname(resolve(o.brief)), 'deck.yaml'));
       if (existsSync(out) && !o.force)
         throw new Error(`${relative(process.cwd(), out)} exists (use --force)`);
       const deck = scaffoldDeck(brief, brief.choice.storyline, brief.choice.theme);
+      if (!deck.output) {
+        // carry the recommended formats/engines (e.g. html for present-live) into the deck
+        const plan = await recommendOutput(brief.usage, getTheme(brief.choice.theme));
+        deck.output = { formats: plan.formats, engines: plan.engines };
+      }
       mkdirSync(dirname(out), { recursive: true });
       writeFileSync(
         out,
@@ -248,5 +301,87 @@ export function registerWorkflowCommands(program: Command): void {
         console.log(summary(d));
       }
       process.exitCode = d.some((x) => x.severity === 'error') ? EXIT.deckErrors : EXIT.ok;
+    });
+}
+
+export function registerBrandCommands(program: Command): void {
+  const theme = program.command('theme').description('Brand themes');
+  theme
+    .command('import')
+    .description('Create a theme from a .pptx / .potx: colours, fonts and logo')
+    .argument('<file>', 'brand template (.pptx or .potx)')
+    .requiredOption('--id <id>', 'kebab-case theme id, e.g. contoso')
+    .option('--name <name>', 'display name')
+    .option('-o, --out <dir>', 'output folder (default: ./slidecraft-theme next to the file)')
+    .option(
+      '--font-dir <dir>',
+      'folder with the brand font files (TTF/OTF) to measure them exactly',
+    )
+    .option('--json', 'machine-readable output')
+    .action(
+      async (
+        file: string,
+        o: { id: string; name?: string; out?: string; fontDir?: string; json?: boolean },
+      ) => {
+        if (!/^[a-z0-9][a-z0-9-]*$/.test(o.id)) throw new Error('--id must be kebab-case');
+        const r = await importTheme(file, {
+          id: o.id,
+          ...(o.name ? { name: o.name } : {}),
+          ...(o.out ? { out: o.out } : {}),
+          ...(o.fontDir ? { fontDir: o.fontDir } : {}),
+        });
+        if (wantsJson(o.json)) {
+          printJson(r);
+          return;
+        }
+        console.log(
+          `${green('✔')} ${relative(process.cwd(), r.themePath)}${r.logo ? `\n${green('✔')} ${relative(process.cwd(), r.logo)}` : ''}`,
+        );
+        r.notes.forEach((n) => console.log(dim(`  · ${n}`)));
+        console.log(
+          dim(
+            `\nUse it: theme: ${relative(process.cwd(), r.themePath)}   (path relative to deck.yaml)`,
+          ),
+        );
+      },
+    );
+
+  program
+    .command('calibrate')
+    .description(
+      "Check that line breaks match PowerPoint for a theme's fonts (needs PowerPoint or LibreOffice + poppler)",
+    )
+    .option('--theme <id|path>', 'theme id or theme JSON path', 'consulting-classic')
+    .option('-o, --out <dir>', 'output folder', 'slidecraft/calibration')
+    .option('--json', 'machine-readable output')
+    .action(async (o: { theme: string; out: string; json?: boolean }) => {
+      const t = /\.json$/i.test(o.theme) ? readThemeFile(o.theme) : getTheme(o.theme);
+      if (!t) throw new Error(`unknown theme "${o.theme}"`);
+      const fonts = [
+        t.fonts.heading,
+        t.fonts.body,
+        ...(t.fonts.cyrillic?.heading ? [t.fonts.cyrillic.heading] : []),
+      ];
+      const r = await runCalibration(fonts, resolve(o.out));
+      if (wantsJson(o.json)) {
+        printJson(r);
+        return;
+      }
+      if (r.skipped) {
+        console.log(
+          `calibration PPTX written to ${relative(process.cwd(), r.pptx)}; comparison skipped: ${r.skipped}`,
+        );
+        return;
+      }
+      r.mismatches.forEach((m) => console.log(dim(`  ${m}`)));
+      console.log(
+        `\n${r.total} strings · identical ${r.same} (${((r.same / r.total) * 100).toFixed(1)}%) · PowerPoint needs more lines ${r.more} · fewer ${r.fewer}`,
+      );
+      console.log(
+        r.go
+          ? green('GO — measurement matches PowerPoint for this theme')
+          : 'NO-GO — increase spacing or provide the exact font files',
+      );
+      process.exitCode = r.go ? 0 : 1;
     });
 }

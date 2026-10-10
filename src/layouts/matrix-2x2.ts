@@ -226,7 +226,16 @@ export const matrix2x2: LayoutDef<typeof schema> = {
 
     if (ctx.variant === 'plot' && c.items) {
       const size = theme.type.small;
-      const placed: { x: number; y: number; w: number; h: number }[] = [];
+      // quadrant names are obstacles too, so item labels never sit on top of them
+      const placed: { x: number; y: number; w: number; h: number }[] = c.quadrants.map((q, i) => ({
+        x: qBoxes[i]!.x + 0.15,
+        y: qBoxes[i]!.y + 0.12,
+        w:
+          (textWidthPt(ctx.fonts.body.measure, 'bold', theme.type.small, q.name.toUpperCase()) /
+            72) *
+          1.04,
+        h: 0.26,
+      }));
       const order = c.items.map((it, i) => ({ it, i })).sort((a, b) => b.it.y - a.it.y);
       for (const { it, i } of order) {
         const px = mx + 0.1 + it.x * (mw - 0.2);

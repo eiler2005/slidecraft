@@ -1,0 +1,19 @@
+# SlideCraft brief — schema: ../../schemas/brief.v1.json
+# Fictional example: Northwind Analytics is not a real company; all figures are illustrative.
+schemaVersion: 1
+id: northwind-germany
+goal: The board approves a partner-led entry into the German mid-market and a €6M phase-1 budget.
+ask: Approve the €6M phase-1 budget and the partner shortlist at the 14 November board meeting
+audience:
+  who: Northwind board of directors (CEO, CFO, three non-executives)
+  knows: The UK business is profitable and growing 18% a year; Germany has been discussed for two years.
+  cares: Capital at risk, distraction from the UK core, and how quickly a bad bet can be stopped.
+task: strategy recommendation
+context: Two competitors are preparing German launches in 2027. Finance and strategy have sized the market and compared three entry options.
+materials: []
+length: { slides: 12 }
+language: en
+tone: [direct, evidence-led]
+brand: { footer: Northwind Analytics · Confidential — for board discussion }
+usage: [edit-together, send-pdf]
+choice: { storyline: strategy-recommendation, theme: consulting-classic, option: A }

@@ -219,6 +219,27 @@ export const timeline: LayoutDef<typeof schema> = {
       color: colors.ink,
       width: 1,
     });
+    // today marker under the bars so labels stay readable
+    if (c.today !== undefined && c.today < periods.length) {
+      const tx = gx + (c.today + 0.5) * colW;
+      ctx.line(tx, body.y + headH - 0.05, tx, body.y + headH + gridH + 0.05, {
+        color: colors.accent,
+        width: 1.25,
+        dash: 'dash',
+      });
+      ctx.text(
+        'Today',
+        { x: tx - 0.5, y: body.y + headH + gridH + 0.06, w: 1, h: 0.24 },
+        {
+          size: 'small',
+          bold: true,
+          color: colors.accent,
+          align: 'center',
+          maxLines: 1,
+          fixed: true,
+        },
+      );
+    }
     rws.forEach((r, ri) => {
       const y = body.y + headH + ri * rowH;
       ctx.line(body.x, y + rowH, body.x + body.w, y + rowH, { color: colors.rule, width: 0.5 });
@@ -270,25 +291,5 @@ export const timeline: LayoutDef<typeof schema> = {
         }
       });
     });
-    if (c.today !== undefined && c.today < periods.length) {
-      const tx = gx + (c.today + 0.5) * colW;
-      ctx.line(tx, body.y + headH - 0.05, tx, body.y + headH + gridH + 0.05, {
-        color: colors.accent,
-        width: 1.25,
-        dash: 'dash',
-      });
-      ctx.text(
-        'Today',
-        { x: tx - 0.5, y: body.y + headH + gridH + 0.06, w: 1, h: 0.24 },
-        {
-          size: 'small',
-          bold: true,
-          color: colors.accent,
-          align: 'center',
-          maxLines: 1,
-          fixed: true,
-        },
-      );
-    }
   },
 };

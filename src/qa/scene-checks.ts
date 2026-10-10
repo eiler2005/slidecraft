@@ -3,13 +3,30 @@ import type { Box, Scene, SceneNode, TextNode } from '../engine/scene.ts';
 import { type Diagnostic, diag } from './codes.ts';
 
 const EPS = 0.02;
+/** Text roles that are ornaments (oversized glyphs) and may sit close to other text. */
+const DECORATIVE_TEXT = new Set(['quote-mark']);
 
 function inside(b: Box, W: number, H: number): boolean {
   return b.x >= -EPS && b.y >= -EPS && b.x + b.w <= W + EPS && b.y + b.h <= H + EPS;
 }
 
+/** Ink extent of laid-out text: cap height above the first baseline to descenders below the last. */
 function textExtent(t: TextNode): Box {
-  return { x: t.box.x, y: t.box.y, w: t.box.w, h: Math.min(t.box.h, t.contentHeight) };
+  if (!t.lines.length) return { x: t.box.x, y: t.box.y, w: 0, h: 0 };
+  const em = t.style.size / 72;
+  let minX = Number.POSITIVE_INFINITY;
+  let maxX = Number.NEGATIVE_INFINITY;
+  for (const l of t.lines) {
+    for (const seg of l.segments) {
+      if (!seg.text.trim()) continue;
+      minX = Math.min(minX, seg.x);
+      maxX = Math.max(maxX, seg.x + seg.width);
+    }
+  }
+  if (!Number.isFinite(minX)) return { x: t.box.x, y: t.box.y, w: 0, h: 0 };
+  const top = t.lines[0]!.baseline - em * 0.72;
+  const bottom = t.lines[t.lines.length - 1]!.baseline + em * 0.2;
+  return { x: t.box.x + minX, y: t.box.y + top, w: maxX - minX, h: bottom - top };
 }
 
 function overlap(a: Box, b: Box): number {
@@ -55,7 +72,8 @@ export function checkScene(scene: Scene): Diagnostic[] {
           ),
         );
       }
-      if (n.kind === 'text' && n.lines.length) texts.push({ t: n, i });
+      if (n.kind === 'text' && n.lines.length && !DECORATIVE_TEXT.has(n.role ?? ''))
+        texts.push({ t: n, i });
     });
     // overlaps between text blocks (ignoring nested decorations)
     for (let a = 0; a < texts.length; a++) {

@@ -1,0 +1,143 @@
+# SlideCraft deck — schema: ../../schemas/deck.v1.json
+# Fictional example: Fabrikam Freight is an invented startup; all figures are illustrative.
+schemaVersion: 1
+id: fabrikam-seed
+title: Fabrikam turns idle truck space into same-day freight
+storyline: pitch-deck
+theme: modern-pitch
+status: review
+language: en
+author: Fabrikam Freight
+footer: Fabrikam Freight · Seed round 2026
+sources:
+  - id: fab-metrics
+    title: Fabrikam platform metrics, Sep 2026
+    illustrative: true
+  - id: market-est
+    title: Fabrikam market estimate (top-down and bottom-up), 2026
+    illustrative: true
+slides:
+  - id: cover
+    layout: title
+    title: Fabrikam turns idle truck space into same-day freight
+    kicker: Seed round · 2026
+    subtitle: A marketplace that fills the 30% of truck capacity that drives empty every day
+    presenter: Maya Lindqvist, CEO
+    date: October 2026
+
+  - id: problem
+    layout: big-statement
+    variant: hero-number
+    title: Every third truck on the road is driving with empty space
+    number: "31%"
+    label: of regional truck capacity runs empty
+    context: Small shippers still pay for full loads or wait days for consolidated freight.
+    sources: [market-est]
+
+  - id: solution
+    layout: process-steps
+    variant: numbered
+    tracker: Solution
+    title: Shippers book spare space in minutes and it moves the same day
+    steps:
+      - { title: Post a load, body: "Shippers enter size, pickup and deadline in under a minute" }
+      - { title: Match live capacity, body: "We match loads to trucks already on the route, priced in real time" }
+      - { title: Track to the door, body: Live tracking and proof of delivery in one link }
+      - { title: Carriers get paid, body: "Carriers earn on space that used to drive empty, paid within 48 hours" }
+    sources: [fab-metrics]
+
+  - id: market
+    layout: kpi-tiles
+    variant: tiles
+    tracker: Market
+    title: Regional part-load freight is a €14B market in our first three countries
+    tiles:
+      - { value: "€14B", label: Total addressable market, note: "Part-load regional freight, DE · NL · PL" }
+      - { value: "€2.1B", label: Serviceable market, note: Shippers under 50 loads a month }
+      - { value: "€160M", label: Obtainable by 2029, note: 7.5% of serviceable market }
+    highlight: 1
+    sources: [market-est]
+
+  - id: traction
+    layout: chart-takeaway
+    variant: column
+    tracker: Traction
+    title: Monthly bookings grew eight-fold in nine months with no paid marketing
+    chart:
+      label: Loads booked per month, thousands
+      categories: [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep]
+      series: [{ name: Loads, values: [0.6, 0.8, 1.1, 1.5, 2.0, 2.6, 3.4, 4.1, 4.9] }]
+      decimals: 1
+      highlight: [8]
+    takeaway:
+      headline: Growth is organic and repeat-driven
+      points:
+        - 68% of bookings come from returning shippers
+        - Gross margin per load reached 21% in September
+    sources: [fab-metrics]
+
+  - id: competition
+    layout: matrix-2x2
+    variant: plot
+    tracker: Competition
+    title: We are the only player that is both instant and built for small shippers
+    xAxis: { label: Speed to book, low: Days, high: Minutes }
+    yAxis: { label: Fit for small shippers, low: Low, high: High }
+    quadrants: [{ name: Brokers }, { name: Our space }, { name: Freight forwarders }, { name: Digital load boards }]
+    items:
+      - { label: Fabrikam, x: 0.88, y: 0.86, highlight: true }
+      - { label: Contoso Freight, x: 0.72, y: 0.3 }
+      - { label: Local brokers, x: 0.2, y: 0.7 }
+      - { label: Large forwarders, x: 0.15, y: 0.18 }
+      - { label: Tailspin Board, x: 0.62, y: 0.42 }
+
+  - id: model
+    layout: data-table
+    variant: with-takeaway
+    tracker: Business model
+    title: Each load earns a 21% take rate and pays back acquisition in two months
+    header: [Unit economics, Per load]
+    rows:
+      - [Average booking value, "€310"]
+      - [Take rate, "21%"]
+      - [Contribution after payments, "€58"]
+      - [Shipper acquisition cost, "€115"]
+      - [Payback, "2 months"]
+    align: [left, right]
+    colWeights: [2.2, 1]
+    takeaway:
+      headline: Marketplace economics from day one
+      points:
+        - Take rate holds as volume grows because matching improves
+    sources: [fab-metrics]
+
+  - id: team
+    layout: team-cards
+    variant: compact
+    tracker: Team
+    title: A team that has built marketplaces and run fleets
+    people:
+      - { name: Maya Lindqvist, role: CEO, bio: Built the shipper side of a European load board to 40k users }
+      - { name: Tomás Ferreira, role: CTO, bio: Led routing and pricing engines at a ride-hailing scale-up }
+      - { name: Ana Kowalska, role: COO, bio: Ran a 300-truck regional fleet for eight years }
+      - { name: Jonas Weber, role: Head of Growth, bio: Grew B2B self-serve revenue from zero to €12M ARR }
+    source: Founder profiles (fictional)
+
+  - id: ask
+    layout: next-steps
+    variant: decision
+    tracker: The ask
+    title: "€3M seed takes us to three countries and break-even in 2028"
+    decision: Raise €3M seed to launch the Netherlands and Poland and reach 25k loads a month
+    steps:
+      - { action: Launch in the Netherlands with two anchor carriers, owner: COO, due: Q1 2027 }
+      - { action: Ship dynamic pricing v2 and carrier app, owner: CTO, due: Q2 2027 }
+      - { action: Enter Poland via cross-border lanes, owner: CEO, due: Q4 2027 }
+    sources: [fab-metrics]
+
+  - id: close
+    layout: title
+    variant: closing
+    title: Let's fill the empty space together
+    subtitle: Data room and product demo available on request
+    contact: [maya@fabrikam.example]

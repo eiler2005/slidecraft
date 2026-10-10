@@ -1,0 +1,188 @@
+# SlideCraft deck — schema: ../../schemas/deck.v1.json
+# Fictional example (see claims.md): Northwind, Contoso and Fabrikam are invented; all figures are illustrative.
+schemaVersion: 1
+id: northwind-germany
+title: Entering the German mid-market can add €40M revenue by 2028
+storyline: strategy-recommendation
+theme: consulting-classic
+status: review
+language: en
+author: Strategy team
+footer: Northwind Analytics · Confidential — for board discussion
+sources:
+  - id: finance-fy25
+    title: Northwind management accounts FY2025
+    illustrative: true
+  - id: market-model
+    title: Strategy team market model, Oct 2026
+    illustrative: true
+  - id: benchmarks
+    title: Four comparable SaaS entries into Germany, 2019–2025
+    illustrative: true
+output:
+  formats: [pptx, pdf, png]
+  engines: { pptx: auto, pdf: auto }
+slides:
+  - id: cover
+    layout: title
+    title: Entering the German mid-market can add €40M revenue by 2028
+    kicker: Board discussion document
+    subtitle: Recommendation and phased plan for a decision at the 14 November board meeting
+    presenter: Strategy team
+    date: October 2026
+    notes: Open with the answer. The board has discussed Germany for two years — today is about a decision, not another option paper.
+
+  - id: summary
+    layout: exec-summary
+    variant: scr
+    tracker: Executive summary
+    title: Entering Germany now captures a €40M window before two rivals scale
+    situation: Our UK mid-market business grew 18% a year since 2022 and now funds itself; the product is proven in a regulated market.
+    complication: Two well-funded competitors are preparing German launches in 2027, and switching costs make early share sticky.
+    resolution: Enter Germany in 2027 through a partner-led model, scaling direct sales only after 40 reference clients.
+    ask: Approve a €6M phase-1 budget and the partner shortlist at this meeting
+    sources: [finance-fy25, market-model]
+    notes: If the board reads only this page, it can make the decision.
+
+  - id: baseline
+    layout: kpi-tiles
+    variant: tiles
+    tracker: Why change
+    title: The UK business is profitable, growing and ready to fund a second market
+    tiles:
+      - { value: "€42M", label: Revenue FY2025, delta: "+18% YoY", trend: up, note: Mid-market drove 60% of growth }
+      - { value: "23%", label: Operating margin, delta: "+3.1 pts", trend: up, note: Highest in five years }
+      - { value: "112%", label: Net revenue retention, delta: "+4 pts", trend: up, note: Expansion within existing accounts }
+      - { value: "€9M", label: Free cash flow, delta: "+€2.4M", trend: up, note: Covers phase 1 without new capital }
+    highlight: 3
+    sources: [finance-fy25]
+
+  - id: window
+    layout: chart-takeaway
+    variant: column
+    tracker: Why change
+    title: The German mid-market is three times our UK base and still under-served
+    chart:
+      label: Addressable mid-market firms, thousands
+      categories: [UK, Germany, France, Netherlands, Nordics]
+      series: [{ name: Firms, values: [14, 41, 28, 9.5, 12] }]
+      decimals: 0
+      highlight: [Germany]
+    takeaway:
+      headline: Germany is the largest prize
+      points:
+        - The top vendor holds under 12% share; no one owns the segment yet
+        - Two rivals plan 2027 launches — early references will decide share
+    sources: [market-model]
+
+  - id: options
+    layout: options-comparison
+    variant: text
+    tracker: The recommendation
+    title: A partner-led entry beats direct build and acquisition on speed and risk
+    options:
+      - { name: Direct build, summary: Own sales team from day one }
+      - { name: Partner-led, summary: "Two resellers, direct later" }
+      - { name: Acquire, summary: Buy a local player }
+    criteria:
+      - { name: Time to first revenue }
+      - { name: Capital at risk }
+      - { name: Control of customer }
+      - { name: Reversibility }
+    cells:
+      - [18 months, 7 months, 4 months]
+      - ["€14M", "€6M", "€35–45M"]
+      - [Full, Shared in years 1–2, Full]
+      - [Low — sunk cost, High — exit gates, Very low]
+    recommended: 1
+    verdict: Partner-led keeps €6M at risk with quarterly exit gates and still reaches revenue in 2027
+    sources: [market-model, benchmarks]
+
+  - id: reason-speed
+    layout: chart-takeaway
+    variant: bar
+    tracker: The recommendation
+    title: Partners cut time to first revenue from 18 to 7 months
+    chart:
+      label: Months from decision to first recurring revenue, comparable entries
+      categories: [Partner-led (avg), Hybrid, Direct build (avg), Greenfield subsidiary]
+      series: [{ name: Months, values: [7, 11, 18, 22] }]
+      highlight: [0]
+    takeaway:
+      headline: Speed wins the window
+      points:
+        - Partners bring warm pipelines and local compliance know-how
+        - Seven months puts us live before both rivals launch
+    sources: [benchmarks]
+
+  - id: reason-value
+    layout: waterfall
+    variant: with-takeaway
+    tracker: The recommendation
+    title: Germany adds €40M by 2028 on top of a growing UK base
+    chart:
+      label: Revenue bridge FY2025 → FY2028, €M
+      unit: ""
+      steps:
+        - { label: FY2025, value: 42, total: true }
+        - { label: UK growth, value: 31 }
+        - { label: Germany partners, value: 28 }
+        - { label: Germany direct, value: 12 }
+        - { label: Price changes, value: 4 }
+        - { label: Churn, value: -9 }
+        - { label: FY2028, value: 108, total: true }
+    takeaway:
+      headline: Germany is 40% of new revenue
+      points:
+        - "€28M of the €40M comes through partners in years 1–2"
+        - Direct sales add €12M only after Gate 2
+    sources: [market-model]
+
+  - id: plan
+    layout: timeline
+    variant: gantt
+    tracker: How we get there
+    title: Localisation is the critical path; direct sales scale only after Gate 2
+    periods: [Q4 26, Q1 27, Q2 27, Q3 27, Q4 27, Q1 28]
+    rows:
+      - { name: Partner selection, bars: [{ start: 0, end: 1, label: Shortlist → sign }] }
+      - { name: Localisation, highlight: true, bars: [{ start: 1, end: 2, label: Critical path }] }
+      - { name: Pilot clients, bars: [{ start: 2, end: 4, label: 15 references }] }
+      - { name: Gate reviews, bars: [{ start: 2, end: 2, label: Gate 1 }, { start: 5, end: 5, label: Gate 2 }] }
+      - { name: Direct sales, bars: [{ start: 5, end: 5, label: Scale }] }
+    today: 0
+    sources: [market-model]
+
+  - id: risks
+    layout: data-table
+    variant: plain
+    tracker: How we get there
+    title: Three risks matter most, and each has an owner and an early signal
+    header: [Risk, Likelihood, Impact, Mitigation, Owner]
+    rows:
+      - [Partners under-deliver pipeline, Medium, High, Two partners with quarterly targets and exit clauses, Strategy]
+      - [Localisation slips past Q2 2027, Medium, High, Dedicated squad; scope frozen at German UI and hosting, Product]
+      - [Rivals undercut on price, High, Medium, Lead on compliance and service; price floor agreed with CFO, Sales]
+    colWeights: [2.4, 1, 1, 3.2, 1.1]
+    align: [left, center, center, left, left]
+    sources: [market-model]
+
+  - id: ask
+    layout: next-steps
+    variant: decision
+    tracker: Decision
+    title: "Decision today: approve phase 1 so partners can be signed by January"
+    decision: Approve the €6M phase-1 budget and the shortlist of two German partners
+    steps:
+      - { action: Sign letters of intent with the two shortlisted partners, owner: Strategy, due: 28 Nov }
+      - { action: Stand up the localisation squad and freeze scope, owner: Product, due: 5 Dec }
+      - { action: Register the German entity and open accounts, owner: Finance, due: 19 Dec }
+      - { action: First quarterly gate review with the board, owner: CEO, due: Mar 2027 }
+    sources: [market-model]
+
+  - id: close
+    layout: title
+    variant: closing
+    title: Questions and discussion
+    subtitle: Appendix with market model and partner profiles available on request
+    contact: [strategy@northwind.example]

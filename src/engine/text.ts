@@ -220,7 +220,14 @@ export function fitText(
     const overflow = Math.max(0, laid.contentHeight - box.h);
     const fits = overflow <= 1e-3 && !tooMany && !laid.splitWord;
     const node = makeTextNode(paragraphs, box, s, laid, extra);
-    result = { node, fits, overflow, size, lines: lineCount, maxLines: extra.maxLines ?? maxLines };
+    result = {
+      node,
+      fits,
+      overflow,
+      size,
+      lines: lineCount,
+      maxLines: Math.min(extra.maxLines ?? maxLines, maxLines),
+    };
     if (fits) return result;
   }
   return result!;

@@ -1,0 +1,124 @@
+# SlideCraft deck — schema: ../../schemas/deck.v1.json
+# Fictional example: a conference talk sharing a finance team's experience. All names and figures are invented.
+schemaVersion: 1
+id: close-in-a-morning
+title: We stopped closing the books and started trusting them
+storyline: narrative-story
+theme: midnight
+status: review
+language: en
+author: Finance Operations, Tailspin Logistics
+footer: FinOps Summit 2026
+sources:
+  - id: tailspin-ops
+    title: Tailspin Logistics finance operations log, 2024–2026
+    illustrative: true
+  - id: peer-survey
+    title: Peer survey of 120 mid-size finance teams, 2026
+    illustrative: true
+output:
+  formats: [html, pdf, pptx, png]
+  engines: { pptx: auto, pdf: auto }
+slides:
+  - id: cover
+    layout: title
+    title: We stopped closing the books and started trusting them
+    kicker: FinOps Summit 2026
+    subtitle: How a two-day month-end close became a morning routine — and what it changed for everyone else
+    presenter: Finance Operations, Tailspin Logistics
+    date: November 2026
+
+  - id: hook
+    layout: big-statement
+    variant: hero-number
+    title: Every month, forty people stopped work for two days to count money we already had
+    number: "2 days"
+    label: lost to the month-end close, twelve times a year
+    context: Reconciling forty bank accounts by hand, while sales, ops and auditors waited for the numbers.
+    sources: [tailspin-ops]
+
+  - id: stakes
+    layout: big-statement
+    variant: quote
+    title: What our COO told us in 2024
+    quote: I don't need faster numbers. I need numbers I don't have to argue about.
+    attribution: Head of Operations
+    role: Tailspin Logistics
+
+  - id: journey-1
+    layout: text-image
+    variant: image-right
+    tracker: Journey
+    title: The real problem was not speed but forty sources of truth
+    body:
+      - Every subsidiary kept its own bank feed, its own spreadsheet and its own way of booking fees.
+      - Errors surfaced only after the books closed, so the close was really a hunt for mistakes.
+      - Faster tools would only have made us find the same mistakes sooner.
+    image: assets/reconciliation.png
+    alt: Abstract illustration of forty reconciliation sheets with one highlighted
+    caption: Forty sources of truth, one of them always wrong
+
+  - id: journey-2
+    layout: timeline
+    variant: milestones
+    tracker: Journey
+    title: Eighteen months, four decisions, one close that runs itself
+    milestones:
+      - { date: Mar 2024, title: One bank feed, body: All forty accounts into one ledger }
+      - { date: Aug 2024, title: "Rules, not people", body: Matching rules replace manual ticks }
+      - { date: Jan 2025, title: Daily close, body: Exceptions reviewed every morning }
+      - { date: Jun 2025, title: Auditor access, body: "Same files, no extra requests", highlight: true }
+      - { date: Sep 2025, title: Morning close, body: Books final before noon on day one }
+    sources: [tailspin-ops]
+
+  - id: turning-point
+    layout: big-statement
+    variant: statement
+    title: The close got fast the day we stopped treating it as an event
+    support: Once exceptions were cleared every morning, month-end was just another morning.
+
+  - id: results
+    layout: kpi-tiles
+    variant: strip
+    tracker: What changed
+    title: The close now ends before noon, and nobody waits for the numbers
+    tiles:
+      - { value: "4h", label: Month-end close, delta: "from 2 days", trend: down, note: Final before noon on day one }
+      - { value: "0", label: Audit follow-up requests, delta: "from 37", trend: down, note: Auditors read the same files }
+      - { value: "9", label: People involved, delta: "from 40", trend: down, note: The rest went back to their jobs }
+    highlight: 0
+    sources: [tailspin-ops]
+
+  - id: insight
+    layout: key-points
+    variant: cards
+    tracker: Insight
+    title: Three lessons travel to any team that closes the books
+    points:
+      - { heading: "Fix the sources, not the speed", body: One feed and one ledger removed most errors before anyone looked for them. }
+      - { heading: Make exceptions daily, body: A small daily queue beats a monthly mountain; the close becomes a non-event. }
+      - { heading: Share the same files, body: "When auditors and managers read one version, arguments about numbers disappear." }
+
+  - id: proof
+    layout: chart-takeaway
+    variant: bar
+    tracker: Insight
+    title: Teams that reconcile daily close their books three times faster
+    chart:
+      label: Median days to close, by reconciliation frequency
+      categories: [Daily, Weekly, Monthly]
+      series: [{ name: Days, values: [1.2, 2.6, 4.1] }]
+      decimals: 1
+      highlight: [Daily]
+    takeaway:
+      headline: Frequency beats effort
+      points:
+        - Across 120 peer teams, daily matching mattered more than headcount
+    sources: [peer-survey]
+
+  - id: cta
+    layout: title
+    variant: closing
+    title: "Tomorrow morning: reconcile one account before lunch"
+    subtitle: Then do it again the next day. That is the whole method.
+    contact: [finops@tailspin.example]

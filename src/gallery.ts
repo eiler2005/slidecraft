@@ -52,11 +52,15 @@ export function previewDeck(storyline: Storyline, themeId: string): LoadedDeck {
   }
   const raws: Record<string, unknown>[] = [];
   const sources = new Set<string>();
+  const used = new Map<string, number>();
   for (const sec of storyline.sections) {
     for (const slot of sec.slots) {
       const def = LAYOUTS.find((l) => slot.layouts.includes(l.id));
       if (!def) continue;
-      const ex = def.examples[0]!;
+      // rotate through a layout's examples so repeated slots do not show the same slide
+      const n = used.get(def.id) ?? 0;
+      used.set(def.id, n + 1);
+      const ex = def.examples[n % def.examples.length]!;
       ex.sources?.forEach((s) => sources.add(s));
       raws.push({
         id: `${slot.id}`,
@@ -99,17 +103,18 @@ export interface GalleryResult {
 export async function buildGallery(opts: {
   out?: string;
   storylines: Storyline[];
-  themes: string[];
+  /** Themes to render; default: each storyline's recommended themes. */
+  themes?: string[];
   width?: number;
 }): Promise<GalleryResult> {
   const out = resolve(opts.out ?? join(DOCS_DIR, 'gallery'));
   mkdirSync(join(out, 'layouts'), { recursive: true });
   const files: string[] = [];
   for (const s of opts.storylines) {
-    for (const t of opts.themes) {
+    for (const t of opts.themes ?? s.themes) {
       const { scene } = composeDeck(previewDeck(s, t));
       const p = join(out, `${s.id}--${t}.png`);
-      writeFileSync(p, await contactSheetPng(scene, opts.width ?? 1800));
+      writeFileSync(p, await contactSheetPng(scene, opts.width ?? 1400));
       files.push(p);
     }
   }

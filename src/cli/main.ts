@@ -2,6 +2,7 @@
 import { Command } from 'commander';
 import '../backends/extra.ts';
 import { registerCommands } from './commands.ts';
+import { registerWorkflowCommands } from './workflow.ts';
 
 const program = new Command();
 program
@@ -12,6 +13,7 @@ program
   .showHelpAfterError();
 
 registerCommands(program);
+registerWorkflowCommands(program);
 
 program.parseAsync(process.argv).catch((err: unknown) => {
   process.stderr.write(`slidecraft: ${err instanceof Error ? err.message : String(err)}\n`);

@@ -1,0 +1,95 @@
+# SlideCraft deck — schema: ../../schemas/deck.v1.json
+# Fictional example: a quarterly steering committee update. All names and figures are invented.
+schemaVersion: 1
+id: contoso-q3-steerco
+title: The ERP programme is on budget but six weeks late; two decisions keep go-live in Q1
+storyline: executive-update
+theme: executive
+status: review
+language: en
+author: Programme office
+footer: Contoso Group · ERP programme steering committee · Q3 2026
+sources:
+  - id: pmo
+    title: Programme office status report, 30 Sep 2026
+    illustrative: true
+slides:
+  - id: cover
+    layout: title
+    title: The ERP programme is on budget but six weeks late; two decisions keep go-live in Q1
+    kicker: Steering committee · Q3 2026
+    subtitle: Status, risks and two decisions needed today
+    presenter: Programme office
+    date: 7 October 2026
+
+  - id: summary
+    layout: exec-summary
+    variant: key-messages
+    tracker: Summary
+    title: Delivery is recoverable if we decide on data migration scope today
+    messages:
+      - { headline: "Spend is 2% under plan at €18.4M of €31M", detail: "Forecast at completion holds at €30.6M including contingency." }
+      - { headline: Data migration is six weeks behind the plan, detail: Legacy customer records need more cleansing than estimated. }
+      - { headline: Two decisions protect a Q1 2027 go-live, detail: Narrow migration scope and add a second cut-over rehearsal. }
+    ask: Approve the reduced migration scope and the second rehearsal budget of €0.4M
+    sources: [pmo]
+
+  - id: status
+    layout: kpi-tiles
+    variant: tiles
+    tracker: Status
+    title: Budget and benefits are on track; schedule is the one red flag
+    tiles:
+      - { value: "€18.4M", label: Spent to date, delta: "−2% vs plan", trend: down, note: Of €31M approved budget }
+      - { value: "6 wks", label: Schedule slip, delta: "+4 wks QoQ", trend: up, note: Driven by data migration }
+      - { value: "82%", label: Test cases passed, delta: "+11 pts", trend: up, note: Target 95% before cut-over }
+      - { value: "3", label: Open high risks, delta: "−2 QoQ", trend: down, note: All with owners and dates }
+    highlight: 1
+    sources: [pmo]
+
+  - id: plan-vs-actual
+    layout: timeline
+    variant: gantt
+    tracker: Status
+    title: Migration now ends in December; cut-over holds if the rehearsal is added
+    periods: [Jul, Aug, Sep, Oct, Nov, Dec, Jan, Feb]
+    rows:
+      - { name: Build and configure, bars: [{ start: 0, end: 2, label: Complete }] }
+      - { name: Data migration, highlight: true, bars: [{ start: 1, end: 5, label: "+6 weeks" }] }
+      - { name: Testing, bars: [{ start: 3, end: 5, label: SIT and UAT }] }
+      - { name: Cut-over rehearsals, bars: [{ start: 5, end: 5, label: R1 }, { start: 6, end: 6, label: R2 }] }
+      - { name: Go-live, bars: [{ start: 7, end: 7, label: Go-live }] }
+    today: 3
+    sources: [pmo]
+
+  - id: decisions
+    layout: options-comparison
+    variant: text
+    tracker: Decisions
+    title: Narrowing migration scope is the only option that protects the Q1 go-live
+    options:
+      - { name: Migrate everything, summary: All records since 2012 }
+      - { name: Narrow scope, summary: "Active customers, last 5 years" }
+      - { name: Delay go-live, summary: Move to Q2 2027 }
+    criteria:
+      - { name: Go-live date }
+      - { name: Extra cost }
+      - { name: Business impact }
+    cells:
+      - [Q2 2027, Q1 2027, Q2 2027]
+      - ["€1.1M", "€0.4M", "€1.8M"]
+      - [None, Archive query tool for old records, Second budget cycle on legacy ERP]
+    recommended: 1
+    verdict: Narrow scope keeps go-live in Q1 for €0.4M; older records stay searchable in the archive
+    sources: [pmo]
+
+  - id: ask
+    layout: next-steps
+    variant: actions
+    tracker: Next steps
+    title: Four actions over the next six weeks get migration back on plan
+    steps:
+      - { action: Confirm the reduced migration scope with business owners, owner: Programme director, due: 14 Oct }
+      - { action: Contract the archive query tool, owner: IT procurement, due: 31 Oct }
+      - { action: Schedule the second cut-over rehearsal, owner: Cut-over lead, due: 15 Nov }
+      - { action: Report recovery progress at the November steering committee, owner: Programme office, due: 4 Nov }

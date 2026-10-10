@@ -337,9 +337,15 @@ function runChrome(
       done = true;
       clearInterval(poll);
       clearTimeout(timer);
-      if (child.exitCode === null) child.kill('SIGTERM');
-      if (err) reject(err);
-      else resolve({ stderr });
+      const settle = () => (err ? reject(err) : resolve({ stderr }));
+      if (child.exitCode !== null) return settle();
+      // Let Chrome finish writing its profile before the caller removes the temp dir.
+      const force = setTimeout(() => child.kill('SIGKILL'), 3000);
+      child.once('exit', () => {
+        clearTimeout(force);
+        settle();
+      });
+      child.kill('SIGTERM');
     };
     child.stderr.on('data', (d: Buffer) => {
       stderr += d.toString();
@@ -426,7 +432,11 @@ export const htmlPdfEngine: Engine = {
         ],
       };
     } finally {
-      rmSync(tmp, { recursive: true, force: true });
+      try {
+        rmSync(tmp, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+      } catch {
+        // a lingering Chrome helper may still hold the profile; the OS cleans temp dirs
+      }
     }
   },
 };

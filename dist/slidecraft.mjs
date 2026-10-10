@@ -168218,9 +168218,14 @@ function runChrome(bin, args, timeoutMs, pdfPath) {
       done = true;
       clearInterval(poll);
       clearTimeout(timer);
-      if (child.exitCode === null) child.kill("SIGTERM");
-      if (err) reject(err);
-      else resolve8({ stderr });
+      const settle2 = () => err ? reject(err) : resolve8({ stderr });
+      if (child.exitCode !== null) return settle2();
+      const force = setTimeout(() => child.kill("SIGKILL"), 3e3);
+      child.once("exit", () => {
+        clearTimeout(force);
+        settle2();
+      });
+      child.kill("SIGTERM");
     };
     child.stderr.on("data", (d) => {
       stderr += d.toString();
@@ -168307,7 +168312,10 @@ var htmlPdfEngine = {
         ]
       };
     } finally {
-      rmSync2(tmp, { recursive: true, force: true });
+      try {
+        rmSync2(tmp, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+      } catch {
+      }
     }
   }
 };

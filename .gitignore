@@ -9,3 +9,7 @@ node_modules/
 .env.*
 # test artefacts
 /tests/.output/
+
+# build outputs of examples and picker pages
+examples/*/dist/
+**/.slidecraft/

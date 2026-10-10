@@ -8,7 +8,10 @@
       "!docs/gallery",
       "!**/*.min.*",
       "!work",
-      "!slidecraft"
+      "!slidecraft",
+      "!tests/.output",
+      "!schemas",
+      "!library/catalog.json"
     ]
   },
   "formatter": {

@@ -86,10 +86,8 @@ function layoutsDoc(): string {
     md += `| [\`${l.id}\`](#${l.id}) | ${l.group} | ${l.variants.map((v) => `\`${v}\``).join(', ')} | ${esc(l.purpose)} |\n`;
   for (const l of LAYOUTS) {
     md += `\n## ${l.id}\n\n**${l.name}** — ${l.purpose}\n\n`;
-    md +=
-      [...new Set(l.examples.map((e) => e.variant ?? l.variants[0]))]
-        .map((v) => `![${l.id} · ${v}](../gallery/layouts/${l.id}--${v}.png)`)
-        .join(' ') + '\n\n';
+    const shown = [...new Set(l.examples.map((e) => e.variant ?? l.variants[0]))];
+    md += `${shown.map((v) => `![${l.id} · ${v}](../gallery/layouts/${l.id}--${v}.png)`).join(' ')}\n\n`;
     md += `- **Use when:** ${l.useWhen.join('; ')}\n- **Avoid when:** ${l.avoidWhen.join('; ')}\n- **Frame:** ${l.frame === 'standard' ? 'standard (action title, tracker, lead and source line are drawn for you)' : 'full-bleed (the layout draws the whole slide)'}\n\n`;
     const js = z.toJSONSchema(l.schema, { unrepresentable: 'any' }) as JS;
     md += '| Field | Type | Required | Limits | Description |\n|---|---|---|---|---|\n';

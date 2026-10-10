@@ -177943,7 +177943,7 @@ function fontName(m, f) {
   return `${m}-${f}`;
 }
 function registerFonts(doc) {
-  for (const m of ["liberation-sans", "liberation-serif", "gelasio"]) {
+  for (const m of measureFontIds()) {
     for (const f of ["regular", "bold", "italic", "boldItalic"])
       doc.registerFont(fontName(m, f), fontPath(m, f));
   }
@@ -205733,7 +205733,10 @@ function layoutsDoc() {
 **${l.name}** \u2014 ${l.purpose}
 
 `;
-    md += [...new Set(l.examples.map((e) => e.variant ?? l.variants[0]))].map((v) => `![${l.id} \xB7 ${v}](../gallery/layouts/${l.id}--${v}.png)`).join(" ") + "\n\n";
+    const shown = [...new Set(l.examples.map((e) => e.variant ?? l.variants[0]))];
+    md += `${shown.map((v) => `![${l.id} \xB7 ${v}](../gallery/layouts/${l.id}--${v}.png)`).join(" ")}
+
+`;
     md += `- **Use when:** ${l.useWhen.join("; ")}
 - **Avoid when:** ${l.avoidWhen.join("; ")}
 - **Frame:** ${l.frame === "standard" ? "standard (action title, tracker, lead and source line are drawn for you)" : "full-bleed (the layout draws the whole slide)"}

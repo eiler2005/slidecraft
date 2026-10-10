@@ -21,7 +21,7 @@ function fontName(m: MeasureFont, f: Face) {
 }
 
 function registerFonts(doc: Doc) {
-  for (const m of ['liberation-sans', 'liberation-serif', 'gelasio'] as MeasureFont[]) {
+  for (const m of measureFontIds()) {
     for (const f of ['regular', 'bold', 'italic', 'boldItalic'] as Face[])
       doc.registerFont(fontName(m, f), fontPath(m, f));
   }

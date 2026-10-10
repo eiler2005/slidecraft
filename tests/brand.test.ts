@@ -73,7 +73,46 @@ describe('workflow fixes from live runs', () => {
     expect(main).toContain('/dist/slidecraft.mjs');
     const spec = readFileSync(join(dir, 'slidecraft-deck-spec', 'SKILL.md'), 'utf8');
     expect(spec).toMatch(/^---\nname: slidecraft-deck-spec\n/);
-    expect(spec).not.toContain('${CLAUDE_PLUGIN_ROOT}');
+    expect(spec).not.toContain(['$', '{CLAUDE_PLUGIN_ROOT}'].join(''));
     expect(existsSync(join(dir, 'slidecraft', 'agents', 'openai.yaml'))).toBe(true);
+  });
+
+  it('renders PDF, PNG and HTML with a brand font registered by a theme file', async () => {
+    const { mkdirSync, writeFileSync, copyFileSync } = await import('node:fs');
+    const dir = mkdtempSync(join(tmpdir(), 'sc-brandfont-'));
+    mkdirSync(join(dir, 'brand'));
+    copyFileSync(fontPath('liberation-serif', 'regular'), join(dir, 'brand', 'Brand-Regular.ttf'));
+    copyFileSync(fontPath('liberation-serif', 'bold'), join(dir, 'brand', 'Brand-Bold.ttf'));
+    const base = JSON.parse(
+      readFileSync(join(import.meta.dirname, '../library/themes/consulting-classic.json'), 'utf8'),
+    );
+    base.id = 'brandfont';
+    base.fonts.heading = {
+      family: 'Brand Serif',
+      measure: 'brandfont-heading',
+      files: { regular: './Brand-Regular.ttf', bold: './Brand-Bold.ttf' },
+    };
+    writeFileSync(join(dir, 'brand', 'brandfont.json'), JSON.stringify(base));
+    const deck = readFileSync(FIXTURE, 'utf8').replace(
+      'theme: consulting-classic',
+      'theme: ./brand/brandfont.json',
+    );
+    writeFileSync(join(dir, 'deck.yaml'), deck);
+    const r = await buildDeck(join(dir, 'deck.yaml'), {
+      outDir: join(dir, 'out'),
+      formats: ['pptx', 'pdf', 'png', 'html'],
+    });
+    expect(r.diagnostics.filter((d) => d.severity === 'error')).toEqual([]);
+    expect(r.files.map((f) => f.kind).sort()).toEqual([
+      'html',
+      'pdf',
+      'png',
+      'png',
+      'png',
+      'png',
+      'pptx',
+    ]);
+    const pptxXml = readFileSync(r.files.find((f) => f.kind === 'pptx')!.path).toString('latin1');
+    expect(pptxXml.length).toBeGreaterThan(1000);
   });
 });

@@ -203829,8 +203829,9 @@ ${dim(`${" ".repeat(21)}best for: ${x.bestFor.join(", ")}`)}`
 ${dim(`${" ".repeat(27)}${x.arc}`)}`)
       );
   });
-  program3.command("schema").description("Write JSON Schemas (deck, brief, theme, storyline) for editors and agents").option("-o, --out <dir>", "output directory", SCHEMAS_DIR).action((o) => {
-    mkdirSync8(o.out, { recursive: true });
+  program3.command("schema").description("Write JSON Schemas (deck, brief, theme, storyline) for editors and agents").option("-o, --out <dir>", "output directory (default: <slidecraft>/schemas)").action((o) => {
+    const out = o.out ?? SCHEMAS_DIR;
+    mkdirSync8(out, { recursive: true });
     const opts = { target: "draft-2020-12", unrepresentable: "any" };
     const files = {
       "deck.v1.json": deckJsonSchema(),
@@ -203839,9 +203840,9 @@ ${dim(`${" ".repeat(27)}${x.arc}`)}`)
       "storyline.v1.json": external_exports.toJSONSchema(Storyline, opts)
     };
     for (const [name, schema17] of Object.entries(files)) {
-      writeFileSync6(join11(o.out, name), `${JSON.stringify(schema17, null, 2)}
+      writeFileSync6(join11(out, name), `${JSON.stringify(schema17, null, 2)}
 `);
-      console.log(`${green("\u2714")} ${relative2(process.cwd(), join11(o.out, name))}`);
+      console.log(`${green("\u2714")} ${relative2(process.cwd(), join11(out, name))}`);
     }
   });
   program3.command("doctor").description("Show available output engines, versions and install hints").option("--json", "machine-readable output").action(async (o) => {

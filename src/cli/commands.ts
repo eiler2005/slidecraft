@@ -200,9 +200,10 @@ export function registerCommands(program: Command): void {
   program
     .command('schema')
     .description('Write JSON Schemas (deck, brief, theme, storyline) for editors and agents')
-    .option('-o, --out <dir>', 'output directory', SCHEMAS_DIR)
-    .action((o: { out: string }) => {
-      mkdirSync(o.out, { recursive: true });
+    .option('-o, --out <dir>', 'output directory (default: <slidecraft>/schemas)')
+    .action((o: { out?: string }) => {
+      const out = o.out ?? SCHEMAS_DIR;
+      mkdirSync(out, { recursive: true });
       const opts = { target: 'draft-2020-12' as const, unrepresentable: 'any' as const };
       const files: Record<string, unknown> = {
         'deck.v1.json': deckJsonSchema(),
@@ -211,8 +212,8 @@ export function registerCommands(program: Command): void {
         'storyline.v1.json': z.toJSONSchema(Storyline, opts),
       };
       for (const [name, schema] of Object.entries(files)) {
-        writeFileSync(join(o.out, name), `${JSON.stringify(schema, null, 2)}\n`);
-        console.log(`${green('✔')} ${relative(process.cwd(), join(o.out, name))}`);
+        writeFileSync(join(out, name), `${JSON.stringify(schema, null, 2)}\n`);
+        console.log(`${green('✔')} ${relative(process.cwd(), join(out, name))}`);
       }
     });
 

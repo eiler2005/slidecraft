@@ -117,8 +117,7 @@ Usage: slidecraft slidecraft schema [options]
 Write JSON Schemas (deck, brief, theme, storyline) for editors and agents
 
 Options:
-  -o, --out <dir>  output directory (default:
-                   "/Users/DenisErmilov/aiprojects/slidecraft/schemas")
+  -o, --out <dir>  output directory (default: <slidecraft>/schemas)
   -h, --help       display help for command
 ```
 

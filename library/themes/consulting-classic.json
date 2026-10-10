@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "consulting-classic",
+  "name": "Consulting Classic",
+  "description": "White page, deep navy ink and a single blue accent — the restrained, answer-first look of top-tier strategy decks.",
+  "bestFor": [
+    "strategy-recommendation",
+    "executive-update",
+    "business-case",
+    "client-proposal",
+    "research-readout"
+  ],
+  "mood": ["restrained", "analytical", "boardroom"],
+  "dark": false,
+  "prefers": "pptx",
+  "colors": {
+    "background": "#FFFFFF",
+    "surface": "#F2F5F9",
+    "ink": "#0B1F3A",
+    "muted": "#5B6B7F",
+    "accent": "#1F5FBF",
+    "accentText": "#FFFFFF",
+    "accentSoft": "#E3ECF9",
+    "rule": "#C9D2DE",
+    "positive": "#2E7D5B",
+    "negative": "#B23A3A",
+    "titleInk": "#0B1F3A"
+  },
+  "chart": ["#1F5FBF", "#0B1F3A", "#7F9CC4", "#B9C7DA", "#5B6B7F", "#DCE3EC"],
+  "fonts": {
+    "heading": { "family": "Arial", "measure": "liberation-sans" },
+    "body": { "family": "Arial", "measure": "liberation-sans" }
+  },
+  "type": {
+    "cover": 40,
+    "title": 24,
+    "subtitle": 16,
+    "heading": 15,
+    "body": 14,
+    "minBody": 11,
+    "small": 10,
+    "source": 8,
+    "lineHeight": 1.2,
+    "titleWeight": "bold"
+  },
+  "decor": { "kind": "rule", "colors": ["#1F5FBF"], "intensity": 1, "onContent": false },
+  "chrome": { "titleRule": false, "accentBar": true, "pageNumbers": true, "tracker": true }
+}

@@ -1,0 +1,51 @@
+schemaVersion: 1
+id: skeleton
+title: Entering the German mid-market can add €40M revenue by 2028
+theme: consulting-classic
+status: draft
+footer: Northwind Analytics · Confidential — for discussion
+sources:
+  - id: finance-fy25
+    title: Northwind finance, FY2025 management accounts
+    illustrative: true
+slides:
+  - id: cover
+    layout: title
+    title: Entering the German mid-market can add €40M revenue by 2028
+    kicker: Board discussion document
+    subtitle: Recommendation and phased plan for a decision at the 14 November board meeting
+    presenter: Strategy team
+    date: October 2026
+  - id: summary
+    layout: exec-summary
+    variant: scr
+    tracker: Executive summary
+    title: Entering Germany now captures a €40M window before two rivals scale
+    situation: Our UK mid-market business grew 18% a year since 2022 and now funds itself; the product is proven in a regulated market.
+    complication: Two well-funded competitors are preparing German launches in 2027, and switching costs make early share sticky.
+    resolution: Enter Germany in 2027 through a partner-led model, scaling direct sales only after 40 reference clients.
+    ask: Approve a €6M phase-1 budget and the partner shortlist at this meeting
+    sources: [finance-fy25]
+    notes: Lead with the window — the competitors' timing is the reason to decide now.
+  - id: profit-pool
+    layout: chart-takeaway
+    variant: bar
+    tracker: Where we make money
+    title: Enterprise and mid-market hold 78% of profit on 41% of revenue
+    chart:
+      label: Operating profit by segment, €M, FY2025
+      categories: [Enterprise, Mid-market, SMB, Public sector, Partners]
+      series: [{ name: Profit, values: [42, 31, 9, 7, 4] }]
+      highlight: [Enterprise, Mid-market]
+    takeaway:
+      headline: Two segments carry the business
+      points:
+        - SMB revenue is large but margin is thin after support costs
+        - Growth investment should follow profit, not revenue
+    sources: [finance-fy25]
+  - id: thanks
+    layout: title
+    variant: closing
+    title: "Decision needed today: approve phase 1 budget of €6M"
+    subtitle: Questions and discussion
+    contact: [strategy@northwind.example]

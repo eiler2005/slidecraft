@@ -1,0 +1,9 @@
+* text=auto eol=lf
+*.ttf binary
+*.png binary
+*.wasm binary
+*.pptx binary
+*.pdf binary
+dist/** linguist-generated=true -diff
+docs/reference/*.gen.md linguist-generated=true
+package-lock.json linguist-generated=true -diff

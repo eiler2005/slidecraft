@@ -1,0 +1,59 @@
+{
+  "name": "slidecraft",
+  "version": "0.1.0",
+  "description": "Describe the goal. Pick a look. Ship a partner-ready deck. A Claude Code plugin and CLI that turns a brief into editable PPTX, vector PDF and HTML decks.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Denis Ermilov",
+  "homepage": "https://github.com/eiler2005/slidecraft",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eiler2005/slidecraft.git"
+  },
+  "keywords": [
+    "presentations",
+    "slides",
+    "pptx",
+    "pdf",
+    "consulting",
+    "claude-code-plugin",
+    "ai-agents"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "bin": {
+    "slidecraft": "dist/slidecraft.mjs"
+  },
+  "scripts": {
+    "dev": "tsx src/cli/main.ts",
+    "build": "node scripts/bundle.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "test": "vitest run",
+    "gen": "tsx src/cli/main.ts gen",
+    "check": "npm run lint && npm run typecheck && npm run test"
+  },
+  "dependencies": {
+    "@resvg/resvg-wasm": "2.6.2",
+    "commander": "15.0.0",
+    "fontkit": "2.0.4",
+    "jszip": "3.10.2",
+    "pdfkit": "0.20.2",
+    "playwright-core": "1.64.0",
+    "pptxgenjs": "4.0.1",
+    "yaml": "2.9.1",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "@types/fontkit": "2.0.9",
+    "@types/node": "22.19.3",
+    "@types/pdfkit": "0.17.6",
+    "esbuild": "0.28.2",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2",
+    "vitest": "5.0.3"
+  }
+}

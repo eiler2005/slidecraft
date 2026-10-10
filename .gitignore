@@ -1,0 +1,11 @@
+node_modules/
+# user work stays local — never commit client material
+/work/
+/slidecraft/
+/out/
+*.log
+.DS_Store
+.env
+.env.*
+# test artefacts
+/tests/.output/

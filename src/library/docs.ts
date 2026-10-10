@@ -157,7 +157,7 @@ function storylinesDoc(): string {
 async function enginesDoc(): Promise<string> {
   let md = HEADER('Output engines', 'src/backends/*.ts');
   md +=
-    'Every engine renders the same Scene IR, so layouts look the same in every output. Choose with `output.engines` in deck.yaml, `--pptx-engine` / `--pdf-engine`, or let `auto` decide. See [choose an output engine](../how-to/choose-output-engine.md) for recommendations.\n\n';
+    'Every engine renders the same Scene IR, so layouts look the same in every output. Choose with `output.engines` in deck.yaml, `--pptx-engine` / `--pdf-engine`, or let `auto` decide. See [choose an output engine](../how-to/choose-output-engine.md) for recommendations and [engines compared](../explanation/engines-compared.md) for pros and cons.\n\n';
   md +=
     '| Kind | Engine | What | Editable | Native charts | Notes | Fidelity | Install | License | CI |\n|---|---|---|---|---|---|---|---|---|---|\n';
   const y = (b: boolean) => (b ? '✅' : '—');
@@ -166,7 +166,7 @@ async function enginesDoc(): Promise<string> {
     md += `| ${e.kind} | \`${e.id}\` | ${esc(e.label)} | ${y(c.editable)} | ${y(c.nativeCharts)} | ${y(c.speakerNotes)} | ${c.fidelity} | ${esc(c.install)} | ${esc(e.license)} | ${y(c.ci)} |\n`;
   }
   void detect;
-  md += `\n## How \`auto\` resolves\n\n1. **PPTX** — \`artifact-tool\` when running inside Codex and the runtime is installed; otherwise \`pptxgenjs\`.\n2. **PDF** — \`html\` when the theme prefers HTML (\`prefers: html\`) and Chrome is installed; otherwise \`native\`.\n3. **PNG** — \`resvg\`. **HTML** — \`html\`.\n\nFidelity levels: **native** = real PowerPoint objects; **identical** = rendered by PowerPoint/LibreOffice itself; **same-layout** = identical geometry and line breaks, drawn with the bundled metric-compatible fonts; **preview** = raster thumbnails.\n\n\`@oai/artifact-tool\` is proprietary (OpenAI, internal evaluation and testing only). SlideCraft never bundles it; the adapter calls a copy already installed with Codex.\n`;
+  md += `\n## How \`auto\` resolves\n\n0. **Preference** — \`SLIDECRAFT_PPTX_ENGINE\` / \`SLIDECRAFT_PDF_ENGINE\` when set and available.\n1. **PPTX** — \`artifact-tool\` when running inside Codex and the runtime is installed; otherwise \`pptxgenjs\`.\n2. **PDF** — \`html\` when the theme prefers HTML (\`prefers: html\`) and Chrome is installed; otherwise \`native\`.\n3. **PNG** — \`resvg\`. **HTML** — \`html\`.\n\nFidelity levels: **native** = real PowerPoint objects; **identical** = rendered by PowerPoint/LibreOffice itself; **same-layout** = identical geometry and line breaks, drawn with the bundled metric-compatible fonts; **preview** = raster thumbnails.\n\n\`@oai/artifact-tool\` is proprietary (OpenAI, internal evaluation and testing only). SlideCraft never bundles it; the adapter calls a copy already installed with Codex.\n`;
   return md;
 }
 

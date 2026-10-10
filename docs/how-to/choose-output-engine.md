@@ -36,8 +36,30 @@ node dist/slidecraft.mjs build deck.yaml --pptx-engine artifact-tool
 
 In `brief.yaml`, `usage:` (`edit-together`, `send-pdf`, `present-live`, `web-link`, `automation`, `codex`) drives the recommendation shown by `slidecraft templates --brief`.
 
+## Pros and cons in one line each
+
+| Engine | Strength | Watch out for |
+|---|---|---|
+| `pptxgenjs` | Open, everywhere, masters, calibrated against PowerPoint, reproducible | Waterfall/stacked labels are text boxes over native charts |
+| `artifact-tool` | Codex-native runtime with its own renderer and PPTX import | Proprietary, internal use only; not in CI; chrome per slide |
+| `native` PDF | Instant, vector, deterministic | Not drawn by PowerPoint |
+| `pptx-convert` PDF | Pixel-identical to PowerPoint | Needs PowerPoint/LibreOffice; slower |
+| `html` | Best visuals, one file, presenter mode | Not editable in PowerPoint; PDF needs Chrome |
+
+Full trade-offs and recommended setups: [engines compared](../explanation/engines-compared.md).
+
+## Set a personal default
+
+```sh
+export SLIDECRAFT_PPTX_ENGINE=artifact-tool   # e.g. Codex users; falls back to pptxgenjs if missing
+export SLIDECRAFT_PDF_ENGINE=pptx-convert      # e.g. you always send PDFs
+```
+
+Used whenever a deck says `auto`; explicit flags and `output.engines` win.
+
 ## What `auto` does
 
+- **Preference:** `SLIDECRAFT_PPTX_ENGINE` / `SLIDECRAFT_PDF_ENGINE`, if set and available.
 - **PPTX:** `artifact-tool` only when running inside Codex and the runtime is installed; otherwise `pptxgenjs`.
 - **PDF:** `html` when the theme says `prefers: html` (e.g. `midnight`) and Chrome is installed; otherwise `native`.
 - **PNG:** `resvg`. **HTML:** `html`.

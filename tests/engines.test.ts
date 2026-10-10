@@ -102,4 +102,13 @@ describe('workflow helpers', () => {
     const r = checkDeck(p);
     expect(r.diagnostics.map((d) => d.code)).toEqual(['SC-SPEC-002']);
   });
+
+  it('honours SLIDECRAFT_PPTX_ENGINE for auto and falls back when unavailable', async () => {
+    const { resolveEngine } = await import('../src/backends/registry.ts');
+    process.env.SLIDECRAFT_PPTX_ENGINE = 'does-not-exist';
+    expect((await resolveEngine('pptx', 'auto')).engine?.id).toBe('pptxgenjs');
+    process.env.SLIDECRAFT_PPTX_ENGINE = 'pptxgenjs';
+    expect((await resolveEngine('pptx', 'auto')).reason).toContain('SLIDECRAFT_PPTX_ENGINE');
+    delete process.env.SLIDECRAFT_PPTX_ENGINE;
+  });
 });

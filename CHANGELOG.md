@@ -4,6 +4,10 @@ All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachang
 
 ## [Unreleased]
 
+### Added
+- `SLIDECRAFT_PPTX_ENGINE` / `SLIDECRAFT_PDF_ENGINE`: machine-wide engine preference used for `auto`, with automatic fallback.
+- Docs: [engines compared](docs/explanation/engines-compared.md) — pros, cons and recommended setups.
+
 ## [0.1.0] — 2026-10-10
 
 ### Added

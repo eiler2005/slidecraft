@@ -90,7 +90,9 @@ One spec, several engines — you choose, SlideCraft recommends based on what yo
 | `html` | HTML + PDF | in browser | Present from a browser, share a link, storytelling with rich decor | Chrome for PDF | MIT |
 | `artifact-tool` | PPTX | ✅ | You work inside Codex and want its runtime | Codex runtime | proprietary, internal use only — never bundled |
 
-`slidecraft doctor` shows what is available on your machine. Details and recommendations: [choose an output engine](docs/how-to/choose-output-engine.md) · [engine reference](docs/reference/engines.gen.md).
+**Recommended:** `pptxgenjs` for anything that leaves your team; `artifact-tool` for internal drafts when you live in Codex (`export SLIDECRAFT_PPTX_ENGINE=artifact-tool` — falls back automatically); always a PDF — `native` for speed, `pptx-convert` when the PDF is the deliverable; HTML when you present from a browser.
+
+`slidecraft doctor` shows what is available on your machine. Pros and cons of every engine: [engines compared](docs/explanation/engines-compared.md) · [choose an output engine](docs/how-to/choose-output-engine.md) · [engine reference](docs/reference/engines.gen.md).
 
 ## Install
 

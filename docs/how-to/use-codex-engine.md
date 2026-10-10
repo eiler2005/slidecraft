@@ -17,6 +17,8 @@ Version ≥ 2.7.3 is required. `node dist/slidecraft.mjs doctor` shows what was 
 node dist/slidecraft.mjs build deck.yaml -f pptx --pptx-engine artifact-tool
 ```
 
+To prefer it everywhere (not only inside Codex), set `export SLIDECRAFT_PPTX_ENGINE=artifact-tool`; builds fall back to `pptxgenjs` when the runtime is missing, and an explicit `--pptx-engine pptxgenjs` still wins — use that for client deliverables.
+
 Inside Codex, `auto` picks it automatically when available (detected via `CODEX_HOME`/`CODEX_SANDBOX`, or force with `SLIDECRAFT_IN_CODEX=1`). The build prints a license notice and `manifest.json` records `license: proprietary`.
 
 ## Differences from pptxgenjs

@@ -51,6 +51,14 @@ export async function resolveEngine(
   theme?: Theme,
 ): Promise<{ engine?: Engine; reason: string }> {
   const req = requested && requested !== 'auto' ? requested : undefined;
+  // Machine-wide preference (e.g. SLIDECRAFT_PPTX_ENGINE=artifact-tool for Codex users):
+  // used only when the deck asks for `auto`, and falls back to the auto chain if unavailable.
+  const pref = !req ? process.env[`SLIDECRAFT_${kind.toUpperCase()}_ENGINE`] : undefined;
+  if (pref && pref !== 'auto') {
+    const e = findEngine(kind, pref);
+    if (e && (await detect(e)).available)
+      return { engine: e, reason: `preferred via SLIDECRAFT_${kind.toUpperCase()}_ENGINE` };
+  }
   if (req) {
     const e = findEngine(kind, req);
     if (!e) return { reason: `unknown ${kind} engine "${req}"` };

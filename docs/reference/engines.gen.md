@@ -3,7 +3,7 @@
 
 > **Audience:** deck authors, agents and contributors · **Generated from:** src/backends/*.ts · **Version:** 0.1.0
 
-Every engine renders the same Scene IR, so layouts look the same in every output. Choose with `output.engines` in deck.yaml, `--pptx-engine` / `--pdf-engine`, or let `auto` decide. See [choose an output engine](../how-to/choose-output-engine.md) for recommendations.
+Every engine renders the same Scene IR, so layouts look the same in every output. Choose with `output.engines` in deck.yaml, `--pptx-engine` / `--pdf-engine`, or let `auto` decide. See [choose an output engine](../how-to/choose-output-engine.md) for recommendations and [engines compared](../explanation/engines-compared.md) for pros and cons.
 
 | Kind | Engine | What | Editable | Native charts | Notes | Fidelity | Install | License | CI |
 |---|---|---|---|---|---|---|---|---|---|
@@ -17,6 +17,7 @@ Every engine renders the same Scene IR, so layouts look the same in every output
 
 ## How `auto` resolves
 
+0. **Preference** — `SLIDECRAFT_PPTX_ENGINE` / `SLIDECRAFT_PDF_ENGINE` when set and available.
 1. **PPTX** — `artifact-tool` when running inside Codex and the runtime is installed; otherwise `pptxgenjs`.
 2. **PDF** — `html` when the theme prefers HTML (`prefers: html`) and Chrome is installed; otherwise `native`.
 3. **PNG** — `resvg`. **HTML** — `html`.

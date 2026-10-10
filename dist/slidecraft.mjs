@@ -178146,6 +178146,12 @@ function inCodex() {
 }
 async function resolveEngine(kind, requested, theme) {
   const req = requested && requested !== "auto" ? requested : void 0;
+  const pref = !req ? process.env[`SLIDECRAFT_${kind.toUpperCase()}_ENGINE`] : void 0;
+  if (pref && pref !== "auto") {
+    const e = findEngine(kind, pref);
+    if (e && (await detect(e)).available)
+      return { engine: e, reason: `preferred via SLIDECRAFT_${kind.toUpperCase()}_ENGINE` };
+  }
   if (req) {
     const e = findEngine(kind, req);
     if (!e) return { reason: `unknown ${kind} engine "${req}"` };
@@ -204327,7 +204333,7 @@ ${s.principles.map((p) => `- ${p}`).join("\n")}
 }
 async function enginesDoc() {
   let md = HEADER("Output engines", "src/backends/*.ts");
-  md += "Every engine renders the same Scene IR, so layouts look the same in every output. Choose with `output.engines` in deck.yaml, `--pptx-engine` / `--pdf-engine`, or let `auto` decide. See [choose an output engine](../how-to/choose-output-engine.md) for recommendations.\n\n";
+  md += "Every engine renders the same Scene IR, so layouts look the same in every output. Choose with `output.engines` in deck.yaml, `--pptx-engine` / `--pdf-engine`, or let `auto` decide. See [choose an output engine](../how-to/choose-output-engine.md) for recommendations and [engines compared](../explanation/engines-compared.md) for pros and cons.\n\n";
   md += "| Kind | Engine | What | Editable | Native charts | Notes | Fidelity | Install | License | CI |\n|---|---|---|---|---|---|---|---|---|---|\n";
   const y = (b) => b ? "\u2705" : "\u2014";
   for (const e of engines()) {
@@ -204339,6 +204345,7 @@ async function enginesDoc() {
   md += `
 ## How \`auto\` resolves
 
+0. **Preference** \u2014 \`SLIDECRAFT_PPTX_ENGINE\` / \`SLIDECRAFT_PDF_ENGINE\` when set and available.
 1. **PPTX** \u2014 \`artifact-tool\` when running inside Codex and the runtime is installed; otherwise \`pptxgenjs\`.
 2. **PDF** \u2014 \`html\` when the theme prefers HTML (\`prefers: html\`) and Chrome is installed; otherwise \`native\`.
 3. **PNG** \u2014 \`resvg\`. **HTML** \u2014 \`html\`.

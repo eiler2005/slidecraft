@@ -8,7 +8,7 @@
 import { execFileSync, spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { basename, join } from 'node:path';
+import { basename, dirname, join, resolve } from 'node:path';
 import type { Engine } from './types.ts';
 
 const POWERPOINT = '/Applications/Microsoft PowerPoint.app';
@@ -101,6 +101,24 @@ function viaLibreOffice(bin: string, inPptx: string, outDir: string): string {
   return join(outDir, basename(inPptx).replace(/\.pptx$/i, '.pdf'));
 }
 
+/** Any .pptx → PDF with PowerPoint (macOS) or LibreOffice; used by the engine and by `import --render`. */
+export function convertToPdf(inPptx: string, outPdf: string): void {
+  const c = pickConverter();
+  if (!c)
+    throw new Error('No converter available (PowerPoint or LibreOffice) — run `slidecraft doctor`');
+  mkdirSync(dirname(outPdf), { recursive: true });
+  if (c.kind === 'powerpoint') viaPowerPoint(resolve(inPptx), resolve(outPdf));
+  else {
+    const tmp = mkdtempSync(join(tmpdir(), 'sc-conv-'));
+    try {
+      copyFileSync(viaLibreOffice(c.bin, resolve(inPptx), tmp), outPdf);
+    } finally {
+      rmSync(tmp, { recursive: true, force: true });
+    }
+  }
+  if (!existsSync(outPdf)) throw new Error('Converter finished but no PDF was written');
+}
+
 export const pptxConvertEngine: Engine = {
   id: 'pptx-convert',
   kind: 'pdf',
@@ -134,22 +152,10 @@ export const pptxConvertEngine: Engine = {
   async render(_scene, opts) {
     if (!opts.pptxPath)
       throw new Error('pptx-convert needs the PPTX built first (add pptx to formats)');
-    const c = pickConverter();
-    if (!c) throw new Error('No converter available — run `slidecraft doctor`');
     mkdirSync(opts.outDir, { recursive: true });
     const out = join(opts.outDir, `${opts.baseName}.pdf`);
-    if (c.kind === 'powerpoint') {
-      viaPowerPoint(opts.pptxPath, out);
-    } else {
-      const tmp = mkdtempSync(join(tmpdir(), 'sc-conv-'));
-      try {
-        const produced = viaLibreOffice(c.bin, opts.pptxPath, tmp);
-        copyFileSync(produced, out);
-      } finally {
-        rmSync(tmp, { recursive: true, force: true });
-      }
-    }
-    if (!existsSync(out)) throw new Error('Converter finished but no PDF was written');
+    convertToPdf(opts.pptxPath, out);
+    const c = pickConverter()!;
     return {
       files: [{ path: out, kind: 'pdf', engine: 'pptx-convert' }],
       diagnostics: [],

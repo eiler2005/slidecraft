@@ -26,3 +26,9 @@ Three PDF engines; choose by what the PDF is for.
 ```sh
 pdftoppm -png -r 60 dist/<id>.pdf /tmp/page   # optional: rasterise and look at every page
 ```
+
+## Accessibility and links
+
+The `native` engine writes a **tagged PDF**: slide titles are headings, charts and pictures carry alt text, tables keep header cells, and decoration is marked as artifacts. Sources with a `url` become clickable links. Details: [Export A4, one-pager and DOCX](export-documents.md#accessible-pdf).
+
+`pptx-convert` PDFs are tagged by PowerPoint or LibreOffice themselves. The `html` engine's Chrome PDF is not tagged.

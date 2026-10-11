@@ -44,4 +44,8 @@ node dist/slidecraft.mjs build your-deck/deck.yaml -f png
 
 ## Not yet
 
-Reusing the template's own slide master (placeholders, background art) inside the PPTX is planned — see [ROADMAP](../../ROADMAP.md). Today SlideCraft builds its own master from the imported tokens and logo.
+## The brand's Office theme travels with the deck
+
+The import also saves the template's Office theme part as `<id>.theme.xml`, and the theme JSON points to it (`"officeTheme"`). Every PPTX built with this theme carries that part. In PowerPoint, *Design › Variants* and the colour and font pickers then show the brand's palette and fonts. Shapes people add later pick up the brand automatically.
+
+SlideCraft still builds its own masters (background, decor, footer, logo) from the imported tokens. Reusing the template's own placeholder layouts and background art is on the [ROADMAP](../../ROADMAP.md).

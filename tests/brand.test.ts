@@ -26,6 +26,33 @@ describe('brand import', () => {
     expect(t.chart.length).toBeGreaterThanOrEqual(4);
   });
 
+  it('carries the brand Office theme part into PPTX output', async () => {
+    const JSZip = (await import('jszip')).default;
+    const { writeFileSync } = await import('node:fs');
+    const out = mkdtempSync(join(tmpdir(), 'sc-master-'));
+    const built = await buildDeck(FIXTURE, { outDir: out, formats: ['pptx'] });
+    // a "brand" template: same file, theme renamed so we can recognise it
+    const zip = await JSZip.loadAsync(readFileSync(built.files[0]!.path));
+    const themeXml = (await zip.file('ppt/theme/theme1.xml')!.async('string')).replace(
+      /<a:theme ([^>]*)name="[^"]*"/,
+      '<a:theme $1name="Contoso Brand"',
+    );
+    zip.file('ppt/theme/theme1.xml', themeXml);
+    const brand = join(out, 'brand.pptx');
+    writeFileSync(brand, await zip.generateAsync({ type: 'nodebuffer' }));
+    const r = await importTheme(brand, { id: 'contoso', out: join(out, 'theme') });
+    expect(readThemeFile(r.themePath).officeTheme).toMatch(/contoso\.theme\.xml$/);
+    const deck = join(out, 'deck.yaml');
+    writeFileSync(
+      deck,
+      readFileSync(FIXTURE, 'utf8').replace(/^theme: .*$/m, 'theme: theme/contoso.json'),
+    );
+    const b = await buildDeck(deck, { outDir: join(out, 'dist'), formats: ['pptx'] });
+    expect(b.diagnostics.filter((d) => d.severity === 'error')).toEqual([]);
+    const outZip = await JSZip.loadAsync(readFileSync(b.files[0]!.path));
+    expect(await outZip.file('ppt/theme/theme1.xml')!.async('string')).toContain('Contoso Brand');
+  });
+
   it('measures a brand font registered from files exactly like the file it points to', () => {
     registerMeasureFont('brand-test', {
       regular: fontPath('liberation-sans', 'regular'),

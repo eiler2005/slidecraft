@@ -3,6 +3,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import type { Command } from 'commander';
 import YAML from 'yaml';
+import { convertToPdf } from '../backends/pptx-convert.ts';
 import { buildGallery, buildHero, writePicker } from '../gallery.ts';
 import { getLayout } from '../layouts/index.ts';
 import { libraryCheck } from '../library/check.ts';
@@ -20,6 +21,7 @@ import { rankStorylines, templateOptions } from '../library/rank.ts';
 import { recommendOutput } from '../library/recommend.ts';
 import { importTheme } from '../library/theme-import.ts';
 import { runCalibration } from '../qa/calibrate.ts';
+import { buildSite } from '../site.ts';
 import type { Brief } from '../spec/brief.ts';
 import {
   bold,
@@ -282,6 +284,19 @@ export function registerWorkflowCommands(program: Command): void {
     });
 
   program
+    .command('site')
+    .description(
+      'Build the static gallery site (GitHub Pages): full gallery, example decks, links to docs',
+    )
+    .option('-o, --out <dir>', 'output directory', 'site')
+    .action(async (o: { out: string }) => {
+      const r = await buildSite(o.out);
+      console.log(
+        `${green('✔')} ${relative(process.cwd(), r.out)}/index.html · ${r.images} images · ${r.examples} example decks`,
+      );
+    });
+
+  program
     .command('gen')
     .description('Regenerate reference docs, JSON Schemas and the catalog (CI checks for drift)')
     .action(async () => {
@@ -357,14 +372,26 @@ export function registerBrandCommands(program: Command): void {
     .option('-o, --out <dir>', 'output folder (default: ./slidecraft/<file-name>)')
     .option('--id <id>', 'deck id')
     .option('--theme <id|path>', 'theme for the draft', 'consulting-classic')
+    .option(
+      '--render',
+      'also render the original to original.pdf (PowerPoint/LibreOffice) for a visual redesign pass',
+    )
     .option('--json', 'machine-readable output')
     .action(
-      async (file: string, o: { out?: string; id?: string; theme: string; json?: boolean }) => {
+      async (
+        file: string,
+        o: { out?: string; id?: string; theme: string; render?: boolean; json?: boolean },
+      ) => {
         const r = await importPptx(file, {
           ...(o.out ? { out: o.out } : {}),
           ...(o.id ? { id: o.id } : {}),
           theme: o.theme,
         });
+        if (o.render) {
+          const pdf = join(dirname(r.deckPath), 'original.pdf');
+          convertToPdf(file, pdf);
+          (r as typeof r & { original?: string }).original = pdf;
+        }
         if (wantsJson(o.json)) {
           printJson(r);
           return;

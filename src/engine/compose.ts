@@ -432,5 +432,6 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
     },
   };
   if (deck.author) scene.author = deck.author;
+  if (theme.officeTheme) scene.officeTheme = theme.officeTheme;
   return { scene, diagnostics };
 }

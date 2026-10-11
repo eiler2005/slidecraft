@@ -406,11 +406,79 @@ function addChart(slide: Any, n: ChartNode) {
     };
   }
   slide.charts.add(n.type === 'line' ? 'line' : 'bar', cfg);
+  // The runtime has no plot-area API; the manual layout is written into the chart XML after
+  // export (pinPlotAreas), so overlays computed by the engine line up with the bars.
+  const b = n.box;
+  plots.push({
+    x: (n.plot.x - b.x) / b.w,
+    y: (n.plot.y - b.y) / b.h,
+    w: n.plot.w / b.w,
+    h: n.plot.h / b.h,
+  });
+  for (const p of n.primitives)
+    if ((p as { role?: string }).role === 'chart-total') addText(slide, p as TextNode);
 }
 
-async function drawMaster(slide: Any, m: Master, slideNo: number) {
-  slide.background.fill = m.background;
-  for (const n of m.nodes) await addNode(slide, n);
+/** Inner plot boxes (fractions of the chart frame) in the order charts were added. */
+let plots: { x: number; y: number; w: number; h: number }[] = [];
+
+/** Write each chart's manual inner plot layout, matching charts to parts in slide order. */
+async function pinPlotAreas(buf: Buffer, list: typeof plots): Promise<Buffer> {
+  if (!list.length) return buf;
+  const JSZip = (await import('jszip')).default;
+  const zip = await JSZip.loadAsync(buf);
+  const pres = (await zip.file('ppt/presentation.xml')!.async('string')) ?? '';
+  const presRels = (await zip.file('ppt/_rels/presentation.xml.rels')!.async('string')) ?? '';
+  const target = (rels: string, id: string) =>
+    new RegExp(
+      `<Relationship [^>]*(?:Id="${id}"[^>]*Target="([^"]+)"|Target="([^"]+)"[^>]*Id="${id}")`,
+    ).exec(rels);
+  const norm = (base: string, t: string) =>
+    t.startsWith('/') ? t.slice(1) : join(base, t).replace(/\\/g, '/');
+  const slideParts = [...pres.matchAll(/<p:sldId [^>]*r:id="([^"]+)"/g)].map((m) => {
+    const t = target(presRels, m[1]!);
+    return norm('ppt', t?.[1] ?? t?.[2] ?? '');
+  });
+  let k = 0;
+  for (const part of slideParts) {
+    const xml = (await zip.file(part)?.async('string')) ?? '';
+    const relsPath = part.replace(/slides\/(slide\d+\.xml)$/, 'slides/_rels/$1.rels');
+    const rels = (await zip.file(relsPath)?.async('string')) ?? '';
+    for (const m of xml.matchAll(/<c:chart [^>]*r:id="([^"]+)"/g)) {
+      const t = target(rels, m[1]!);
+      const chartPart = norm('ppt/slides', t?.[1] ?? t?.[2] ?? '');
+      const p = list[k++];
+      const cx = await zip.file(chartPart)?.async('string');
+      if (!p || !cx) continue;
+      const layout = `<c:layout><c:manualLayout><c:layoutTarget val="inner"/><c:xMode val="edge"/><c:yMode val="edge"/><c:x val="${p.x.toFixed(4)}"/><c:y val="${p.y.toFixed(4)}"/><c:w val="${p.w.toFixed(4)}"/><c:h val="${p.h.toFixed(4)}"/></c:manualLayout></c:layout>`;
+      zip.file(
+        chartPart,
+        cx.replace(
+          /<c:plotArea>(\s*<c:layout\s*\/>|\s*<c:layout>[\s\S]*?<\/c:layout>)?/,
+          `<c:plotArea>${layout}`,
+        ),
+      );
+    }
+  }
+  return zip.generateAsync({ type: 'nodebuffer' });
+}
+
+/** Scene masters become real slide layouts (one master): decor, footer and logo live there once. */
+async function buildLayouts(p: Any, scene: Scene): Promise<Record<string, Any>> {
+  const master = p.masters.add('SlideCraft');
+  const out: Record<string, Any> = {};
+  for (const [id, m] of Object.entries(scene.masters)) {
+    const layout = p.layouts.add(`SlideCraft ${id}`);
+    layout.setParentLayoutId(master.id);
+    layout.background.fill = m.background;
+    for (const n of m.nodes) await addNode(layout, n);
+    out[id] = layout;
+  }
+  return out;
+}
+
+/** Slide number: a per-slide text box (the runtime exposes no slide-number field). */
+function drawSlideNumber(slide: Any, m: Master, slideNo: number) {
   if (m.slideNumber) {
     const s = m.slideNumber;
     const t = slide.shapes.add({
@@ -469,9 +537,12 @@ export const artifactToolEngine: Engine = {
     const p = at.Presentation.create({
       slideSize: { width: px(scene.format.w), height: px(scene.format.h) },
     });
+    plots = [];
+    const layouts = await buildLayouts(p, scene);
     for (const s of scene.slides) {
       const slide = p.slides.add();
-      await drawMaster(slide, scene.masters[s.master]!, s.index + 1);
+      slide.setLayout(layouts[s.master]);
+      drawSlideNumber(slide, scene.masters[s.master]!, s.index + 1);
       if (s.background) slide.background.fill = s.background;
       for (const n of s.nodes) await addNode(slide, n);
       if (s.notes) slide.speakerNotes.textFrame.setText(s.notes);
@@ -481,7 +552,15 @@ export const artifactToolEngine: Engine = {
     const file = await at.PresentationFile.exportPptx(p);
     const tmp = `${out}.tmp`;
     await file.save(tmp);
-    writeFileSync(out, await normalizeZip(readFileSync(tmp), opts.epoch));
+    const pinned = await pinPlotAreas(readFileSync(tmp), plots);
+    writeFileSync(
+      out,
+      await normalizeZip(
+        pinned,
+        opts.epoch,
+        scene.officeTheme ? { officeTheme: scene.officeTheme } : {},
+      ),
+    );
     for (const f of readdirSync(opts.outDir))
       if (f.startsWith(`${opts.baseName}.pptx.tmp`)) rmSync(join(opts.outDir, f), { force: true });
     return {
@@ -489,8 +568,8 @@ export const artifactToolEngine: Engine = {
       diagnostics: [],
       limitations: [
         'Built with the proprietary Codex artifact-tool runtime (internal evaluation and testing only).',
-        'Chrome (footer, page number, decor) is drawn on each slide rather than on a slide master.',
-        'Chart plot area is laid out by the runtime; stacked-chart totals and waterfall connectors are omitted.',
+        'Page numbers are per-slide text boxes (no slide-number field); decor, footer and logo sit on slide layouts.',
+        'Waterfall connectors are omitted.',
       ],
     };
   },

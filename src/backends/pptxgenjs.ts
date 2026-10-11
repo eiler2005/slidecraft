@@ -3,7 +3,7 @@
  * text boxes (zero insets, exact line spacing, no autofit), tables, charts and
  * speaker notes. Decor is a rasterised background image on the slide master.
  */
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import JSZip from 'jszip';
 import pptxgenModule from 'pptxgenjs';
@@ -363,7 +363,11 @@ async function defineMaster(pptx: Pptx, m: Master, scene: Scene) {
 }
 
 /** Re-zip with fixed timestamps and fixed docProps dates so builds are byte-reproducible. */
-export async function normalizeZip(buf: Buffer, epoch: Date): Promise<Buffer> {
+export async function normalizeZip(
+  buf: Buffer,
+  epoch: Date,
+  opts: { officeTheme?: string } = {},
+): Promise<Buffer> {
   const zin = await JSZip.loadAsync(buf);
   const zout = new JSZip();
   const iso = epoch.toISOString().replace(/\.\d{3}Z$/, 'Z');
@@ -412,6 +416,8 @@ export async function normalizeZip(buf: Buffer, epoch: Date): Promise<Buffer> {
           '<a:hlinkClick $1><a:extLst><a:ext uri="{A12FA001-AC4F-418D-AE19-62706E023703}"><ahyp:hlinkClr xmlns:ahyp="http://schemas.microsoft.com/office/drawing/2018/hyperlinkcolor" val="tx"/></a:ext></a:extLst></a:hlinkClick>',
         );
     }
+    // Brand theme part: Design tab, theme colours and fonts follow the customer's template.
+    if (opts.officeTheme && name === 'ppt/theme/theme1.xml') data = readFileSync(opts.officeTheme);
     if (name.endsWith('docProps/core.xml')) {
       data = Buffer.from(data)
         .toString('utf8')
@@ -445,7 +451,7 @@ export async function renderPptx(scene: Scene, epoch: Date): Promise<Buffer> {
     if (s.notes) slide.addNotes(s.notes);
   }
   const raw = (await pptx.write({ outputType: 'nodebuffer' })) as Buffer;
-  return normalizeZip(raw, epoch);
+  return normalizeZip(raw, epoch, scene.officeTheme ? { officeTheme: scene.officeTheme } : {});
 }
 
 export const pptxgenjsEngine: Engine = {

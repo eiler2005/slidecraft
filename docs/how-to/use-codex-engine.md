@@ -23,8 +23,8 @@ Inside Codex, `auto` picks it automatically when available (detected via `CODEX_
 
 ## Differences from pptxgenjs
 
-- Footer, page numbers and decor are drawn on each slide (no slide master).
-- The runtime lays out chart plot areas; stacked-chart totals and waterfall connector lines are omitted; waterfall labels are per-point overrides.
+- Decor, footer and logo sit on real slide layouts (one per SlideCraft master). Page numbers are per-slide text boxes, because the runtime has no slide-number field.
+- Chart plot areas are pinned to SlideCraft's geometry after export, so stacked totals line up. Waterfall connector lines are omitted, and waterfall labels are per-point overrides.
 - Bullet hanging indents are approximate.
 - Geometry is rounded to whole pixels (< 0.5 px).
 

@@ -17,7 +17,7 @@ Codex has no sub-agents here: run the stages yourself, in order, and **stop at e
 
 ## Engines in Codex
 
-Inside Codex prefer the local artifact-tool runtime for PPTX: prefix builds with `SLIDECRAFT_IN_CODEX=1` (falls back to the open `pptxgenjs` engine if the runtime is missing). Tell the user once: artifact-tool is proprietary, licensed for internal evaluation and testing only — for client deliverables rebuild with `--pptx-engine pptxgenjs`. PDF: `native`, or `--pdf-engine pptx-convert` when the PDF goes to readers. HTML with `-f html` for presenting. Details: `{{SLIDECRAFT_ROOT}}/docs/explanation/engines-compared.md`.
+Inside Codex prefer the local artifact-tool runtime for PPTX: prefix builds with `SLIDECRAFT_IN_CODEX=1` (falls back to the open `pptxgenjs` engine if the runtime is missing). Tell the user once: artifact-tool is proprietary, licensed for internal evaluation and testing only — for client deliverables rebuild with `--pptx-engine pptxgenjs`. PDF: `native`, or `--pdf-engine pptx-convert` when the PDF goes to readers. HTML with `-f html` for presenting; `-f onepager` and `-f docx` for pre-reads. For `text-image` slides with `imagePrompt` and no `image`, generate the picture with your image tool, save it to `assets/<slide-id>.png` next to the deck and set `image:`. To restyle an existing deck: `sc import <file.pptx> --render --json`, look at `original.pdf`, then redesign slide by slide. Details: `{{SLIDECRAFT_ROOT}}/docs/explanation/engines-compared.md`.
 
 ## 1 · Brief ✅
 

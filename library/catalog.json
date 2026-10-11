@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "layouts": [
     {
       "id": "title",
@@ -67,6 +67,28 @@
         "image-left"
       ],
       "purpose": "Use for a story beat that needs a photo or illustration next to a few short paragraphs, such as a customer case or a site visit.",
+      "frame": "standard"
+    },
+    {
+      "id": "text",
+      "name": "Text",
+      "group": "message",
+      "variants": [
+        "bullets",
+        "paragraphs",
+        "two-column"
+      ],
+      "purpose": "Use for plain text when no exhibit fits — bullets, short paragraphs or two columns. Also where imported slides land.",
+      "frame": "standard"
+    },
+    {
+      "id": "before-after",
+      "name": "Before and after",
+      "group": "message",
+      "variants": [
+        "panels"
+      ],
+      "purpose": "Use for a change told as two states — how things are today and how they will be — with one number on each side.",
       "frame": "standard"
     },
     {
@@ -160,6 +182,27 @@
       "frame": "standard"
     },
     {
+      "id": "maturity-model",
+      "name": "Maturity model",
+      "group": "decide",
+      "variants": [
+        "grid",
+        "staircase"
+      ],
+      "purpose": "Use for showing where an organisation stands on a maturity scale and where it should get to — one capability as a staircase, or several on one grid.",
+      "frame": "standard"
+    },
+    {
+      "id": "coverage-map",
+      "name": "Coverage map",
+      "group": "decide",
+      "variants": [
+        "grid"
+      ],
+      "purpose": "Use for showing the state of many functions at once on stable geometry — what is covered, partly covered, planned or missing.",
+      "frame": "standard"
+    },
+    {
       "id": "risk-matrix",
       "name": "Risk heatmap",
       "group": "decide",
@@ -220,6 +263,16 @@
         "compact"
       ],
       "purpose": "Use for introducing the people behind a proposal: who leads, who delivers, who the client sponsors are.",
+      "frame": "standard"
+    },
+    {
+      "id": "org-chart",
+      "name": "Org chart",
+      "group": "people",
+      "variants": [
+        "tree"
+      ],
+      "purpose": "Use for a reporting structure two levels deep: who leads, which units report to them and who sits in each.",
       "frame": "standard"
     },
     {
@@ -461,6 +514,39 @@
       ]
     },
     {
+      "id": "investment-memo",
+      "name": "Investment memo",
+      "arc": "Recommendation → thesis → market → business quality → financials and valuation → risks and mitigations → terms and next steps",
+      "bestFor": [
+        "investment memo",
+        "investment committee",
+        "ic memo",
+        "acquisition",
+        "m&a",
+        "deal",
+        "due diligence",
+        "venture investment",
+        "private equity",
+        "capex approval"
+      ],
+      "themes": [
+        "executive",
+        "consulting-classic",
+        "editorial"
+      ],
+      "slots": [
+        "cover",
+        "summary",
+        "thesis",
+        "market",
+        "quality",
+        "plan",
+        "valuation",
+        "risks",
+        "decision"
+      ]
+    },
+    {
       "id": "narrative-story",
       "name": "Narrative story",
       "arc": "Hook → stakes → journey → turning point → insight → call to action",
@@ -668,6 +754,36 @@
       ]
     },
     {
+      "id": "sales-qbr",
+      "name": "Sales / customer QBR",
+      "arc": "Headline of the quarter → results vs plan → value delivered → what is working / not → next quarter plan → asks",
+      "bestFor": [
+        "qbr",
+        "quarterly business review",
+        "account review",
+        "customer review",
+        "sales review",
+        "pipeline review",
+        "renewal",
+        "expansion"
+      ],
+      "themes": [
+        "corporate-blue",
+        "consulting-classic",
+        "modern-pitch"
+      ],
+      "slots": [
+        "cover",
+        "summary",
+        "scorecard",
+        "trend",
+        "value",
+        "working",
+        "plan",
+        "asks"
+      ]
+    },
+    {
       "id": "strategy-recommendation",
       "name": "Strategy recommendation",
       "arc": "Situation → Complication → Resolution (answer) → 3 reasons → plan → risks → ask",
@@ -772,6 +888,34 @@
         "speakerNotes": false,
         "fidelity": "preview",
         "install": "bundled (wasm)",
+        "ci": true
+      }
+    },
+    {
+      "kind": "onepager",
+      "id": "onepager",
+      "license": "MIT",
+      "proprietary": false,
+      "capabilities": {
+        "editable": false,
+        "nativeCharts": false,
+        "speakerNotes": false,
+        "fidelity": "same-layout",
+        "install": "bundled",
+        "ci": true
+      }
+    },
+    {
+      "kind": "docx",
+      "id": "docx",
+      "license": "MIT",
+      "proprietary": false,
+      "capabilities": {
+        "editable": true,
+        "nativeCharts": false,
+        "speakerNotes": true,
+        "fidelity": "preview",
+        "install": "bundled",
         "ci": true
       }
     },

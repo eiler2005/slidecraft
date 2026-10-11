@@ -13,35 +13,36 @@ SlideCraft ships in milestones. Each one ends with something people can use, tes
 - QA with stable diagnostic codes; deterministic builds; manifest; CI; privacy hooks.
 - Docs: tutorials, how-to guides, generated reference, explanation, ADRs.
 
-## M3 — Bring your brand · *partly shipped*
+## v0.2 — shipped
+
+### M3 — Bring your brand · *shipped*
 
 - ✅ Theme from a `.pptx`/`.potx`: colours, fonts, logo (`slidecraft theme import`).
-- ✅ Brand font files as measure fonts (`fonts.*.files`), embedded in PDF/PNG/HTML.
-- Use the customer's slide master in PPTX output (placeholders mapped to the frame).
-- Logo slot and brand-safe decor; theme preview gallery generated on import.
-- ✅ `slidecraft calibrate --theme …` — go/no-go report against PowerPoint/LibreOffice.
+- ✅ Brand font files as measure fonts (`fonts.*.files`), embedded in PDF, PNG and HTML.
+- ✅ The template's Office theme part travels into PPTX output (Design tab, colour and font pickers).
+- ✅ `slidecraft calibrate --theme …` — go/no-go report against PowerPoint or LibreOffice.
+- Next: reuse the template's own placeholder layouts and background art (map its placeholders onto the SlideCraft frame).
 
-## M4 — Library growth · *partly shipped*
+### M4 — Library growth · *shipped*
 
-- ✅ 22 layouts: added issue/driver tree, RACI, gate matrix, current-vs-proposed process, funnel/pyramid, risk heatmap.
-- ✅ Storylines: project kickoff, post-mortem, training/workshop.
-- 30+ layouts, covering the full M/V catalogue (`library/references/patterns.md`): issue / diagnostic tree, pyramid, funnel, maturity model, gate matrix, current-vs-proposed process, RACI / decision rights, risk matrix, value driver tree, org chart, coverage map, before/after.
-- Storylines: project kickoff, post-mortem, training / workshop, sales QBR, investment committee memo.
-- Variant-level thumbnails and "when not to use" examples in the reference.
+- ✅ 27 layouts. Added: issue/driver tree, RACI, gate matrix, current-vs-proposed process, funnel/pyramid, risk heatmap, maturity model, coverage map, before/after, org chart, text.
+- ✅ 14 storylines. Added: project kickoff, post-mortem, training/workshop, sales QBR, investment memo.
+- Next: architecture with a linked register (V06), evidence chain (V08), role calendar (V11), and variant-level "when not to use" examples in the reference.
 
-## M5 — Template from your PPTX
+### M5 — From your existing PPTX · *shipped*
 
-- Render an existing deck, let Claude (vision) mark editable vs decorative regions and text capacity, and emit layout definitions that reuse the original geometry.
-- Import an existing deck's content into `deck.yaml` for restyling or review.
+- ✅ `slidecraft import` — content, tables, chart data, pictures and notes into `deck.yaml`; `--render` for the original as PDF.
+- ✅ `/slidecraft:import` — Claude reads the rendered original and redesigns each slide (action titles, exhibits, sources).
+- Next: emit reusable layout definitions from a template's geometry (editable vs decorative regions, text capacity).
 
-## M6 — Quality and reach
+### M6 — Quality and reach · *shipped*
 
-- Freeform HTML mode for creative, story-led decks (PDF/web only) with the same overflow checklist.
-- Visual regression on golden PNGs in CI; automatic fix loop for fit diagnostics.
-- Tagged, accessible PDF; reading-order checks.
-- A4 reading decks and one-pagers; DOCX export.
-- Image generation for `text-image` slots (opt-in, with provenance in the manifest).
-- `npm publish` (`npx slidecraft`), docs site with the gallery on GitHub Pages.
+- ✅ Visual regression on PNG hashes of every layout in a light and a dark theme, in CI.
+- ✅ Tagged, accessible PDF (headings, alt text, table headers, artifacts); source hyperlinks in every format.
+- ✅ A4 landscape format, one-pager, DOCX memo.
+- ✅ Image generation for `text-image` slots (`slidecraft images`, opt-in; prompt kept as provenance).
+- ✅ npm package `@eiler2005/slidecraft` (zero runtime deps), gallery site on GitHub Pages.
+- Next: freeform HTML mode for story-led decks; an automatic fix loop for fit diagnostics; reading-order checks on PPTX.
 
 ## Principles for what goes in
 

@@ -278,7 +278,10 @@ export async function importTheme(
       ...(logoRel ? { logo: logoRel } : {}),
     },
     source: `imported from ${basename(file)}`,
+    officeTheme: `${opts.id}.theme.xml`,
   };
+  // keep the brand's own theme part (no relationships needed: colours, fonts, effects)
+  writeFileSync(join(outDir, `${opts.id}.theme.xml`), xml);
   const themePath = join(outDir, `${opts.id}.json`);
   writeFileSync(themePath, `${JSON.stringify(theme, null, 2)}\n`);
   if (contrast(accent, bg) < 3)

@@ -1,0 +1,70 @@
+# Storyline: an investment committee memo — thesis, evidence, valuation, risks, recommendation.
+schemaVersion: 1
+id: investment-memo
+name: Investment memo
+summary: Make the case for (or against) an investment or acquisition to an investment committee — thesis, market, business quality, valuation, risks and a clear recommendation.
+bestFor: [investment memo, investment committee, ic memo, acquisition, m&a, deal, due diligence, venture investment, private equity, capex approval]
+audiences: [investment committee, board, partners, cfo]
+themes: [executive, consulting-classic, editorial]
+ordered: true
+arc: Recommendation → thesis → market → business quality → financials and valuation → risks and mitigations → terms and next steps
+length: { min: 8, max: 15 }
+tone: [rigorous, balanced, decisive]
+principles:
+  - State the recommendation, the price and the conditions on the first content slide.
+  - Separate the thesis (why this wins) from the evidence (what we checked).
+  - Show the downside case as clearly as the base case.
+  - Every risk has a likelihood, an impact and a mitigation or a walk-away condition.
+  - Distinguish verified facts from management claims; cite diligence sources.
+sections:
+  - id: answer
+    name: Recommendation
+    slots:
+      - id: cover
+        purpose: Name the deal, the committee and the date.
+        layouts: [title]
+        inputs: [deal name, committee, date]
+      - id: summary
+        purpose: Recommendation, price and conditions in one page.
+        layouts: [exec-summary]
+        inputs: [recommendation, valuation, conditions]
+  - id: thesis
+    name: Thesis
+    slots:
+      - id: thesis
+        purpose: State the two or three reasons this investment wins.
+        layouts: [key-points, issue-tree]
+        inputs: [thesis points]
+      - id: market
+        purpose: Show the market size and growth the thesis relies on.
+        layouts: [chart-takeaway, funnel, kpi-tiles]
+        inputs: [market data, sources]
+      - id: quality
+        purpose: Show business quality — retention, margins, unit economics.
+        layouts: [kpi-tiles, chart-takeaway, data-table]
+        inputs: [cohorts, margins, unit economics]
+  - id: numbers
+    name: Financials and valuation
+    slots:
+      - id: plan
+        purpose: Show the base and downside cases.
+        layouts: [chart-takeaway, data-table]
+        inputs: [projections, cases]
+      - id: valuation
+        purpose: Bridge from entry value to expected return.
+        layouts: [waterfall, options-comparison]
+        inputs: [valuation, returns]
+  - id: risk
+    name: Risks
+    slots:
+      - id: risks
+        purpose: Rate the risks and name mitigations or walk-away conditions.
+        layouts: [risk-matrix, data-table]
+        inputs: [risks, mitigations]
+  - id: close
+    name: Decision
+    slots:
+      - id: decision
+        purpose: Ask for the decision and list the conditions and next steps.
+        layouts: [next-steps]
+        inputs: [decision, conditions, timetable]

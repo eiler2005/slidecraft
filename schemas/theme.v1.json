@@ -470,6 +470,10 @@
     "source": {
       "description": "Where the theme came from, e.g. \"imported from brand.potx\"",
       "type": "string"
+    },
+    "officeTheme": {
+      "description": "Brand Office theme part (theme1.xml), relative to the theme file; written into PPTX output so the Design tab and colour pickers show the brand",
+      "type": "string"
     }
   },
   "required": [

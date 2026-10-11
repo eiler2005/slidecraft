@@ -11,12 +11,12 @@
 
 <p align="center">
   <b>Describe the goal. Pick a look. Ship a partner-ready deck.</b><br>
-  <a href="#install">Install</a> · <a href="docs/tutorials/first-deck-in-10-minutes.md">First deck in 10 minutes</a> · <a href="#template-gallery">Gallery</a> · <a href="docs/README.md">Docs</a> · <a href="ROADMAP.md">Roadmap</a> · <a href="CHANGELOG.md">Changelog</a>
+  <a href="#install">Install</a> · <a href="docs/tutorials/first-deck-in-10-minutes.md">First deck in 10 minutes</a> · <a href="https://eiler2005.github.io/slidecraft/">Gallery site</a> · <a href="docs/README.md">Docs</a> · <a href="ROADMAP.md">Roadmap</a> · <a href="CHANGELOG.md">Changelog</a>
 </p>
 
 ---
 
-**SlideCraft** turns a goal into a consulting-grade presentation. You say what the deck must achieve and for whom. SlideCraft proposes templates for the task, builds the storyline and a ghost deck of action titles for you to approve, then writes the slides and renders them to an **editable PowerPoint, a vector PDF and a self-contained HTML deck**. A partner-style review closes the loop.
+**SlideCraft** turns a goal into a consulting-grade presentation. You say what the deck must achieve and for whom. SlideCraft proposes templates for the task, builds the storyline and a ghost deck of action titles for you to approve, then writes the slides and renders them to an **editable PowerPoint, an accessible vector PDF and a self-contained HTML deck** — plus a one-pager and a Word memo when readers read rather than watch. A partner-style review closes the loop.
 
 It is a **Claude Code plugin** (skills + model-tiered agents) on top of a **zero-install CLI**. Every layout is measured with metric-compatible fonts, so text that fits in SlideCraft fits in PowerPoint — verified line by line against real PowerPoint output.
 
@@ -59,7 +59,7 @@ You approve four checkpoints; everything between them is automated. Strategy wor
 
 ## Template gallery
 
-A template is **a storyline (the shape of the argument for a task) × a theme (the look)**. Any storyline works in any theme. Twelve storylines × six themes (or your own brand theme), built from twenty-two layouts.
+A template is **a storyline (the shape of the argument for a task) × a theme (the look)**. Any storyline works in any theme. Fourteen storylines × six themes (or your own brand theme), built from twenty-seven layouts. The [gallery site](https://eiler2005.github.io/slidecraft/) shows every storyline in every theme and the example decks in every format.
 
 <table>
   <tr>
@@ -74,13 +74,15 @@ A template is **a storyline (the shape of the argument for a task) × a theme (t
   </tr>
 </table>
 
-<p align="center"><a href="docs/reference/storylines.gen.md">All 9 storylines →</a> · <a href="docs/reference/themes.gen.md">All 6 themes →</a> · <a href="docs/reference/layouts.gen.md">All 16 layouts →</a></p>
+<p align="center"><a href="docs/reference/storylines.gen.md">All 14 storylines →</a> · <a href="docs/reference/themes.gen.md">All 6 themes →</a> · <a href="docs/reference/layouts.gen.md">All 27 layouts →</a></p>
 
-Also included: **business case**, **product overview**, **case study**, **project kickoff**, **post-mortem**, **training / workshop**. Bring your own outline and SlideCraft maps it onto layouts.
+Also included: **business case**, **product overview**, **case study**, **project kickoff**, **post-mortem**, **training / workshop**, **sales / customer QBR**, **investment memo**. Bring your own outline and SlideCraft maps it onto layouts.
 
 Small and quick: [`examples/europe-first-trip`](examples/europe-first-trip/deck.yaml) — a five-slide travel guide (2×2 value map, Harvey-ball fit by traveller type, budget chart, "who should go where" table), produced in a live end-to-end run with the plugin agents and with Codex, then curated.
 
-**Your brand:** `slidecraft theme import brand.potx --id contoso --font-dir ./fonts` creates a theme with your colours, fonts and logo; `slidecraft calibrate --theme ./slidecraft-theme/contoso.json` checks line breaks against real PowerPoint ([apply your brand](docs/how-to/apply-brand.md)).
+**Your brand:** `slidecraft theme import brand.potx --id contoso --font-dir ./fonts` creates a theme with your colours, fonts and logo; `slidecraft calibrate --theme ./slidecraft-theme/contoso.json` checks line breaks against real PowerPoint ([apply your brand](docs/how-to/apply-brand.md)). The brand's Office theme travels into every PPTX.
+
+**Your old decks:** `slidecraft import old.pptx --render` extracts text, tables, chart data, pictures and notes into a draft `deck.yaml`; `/slidecraft:import` then redesigns it slide by slide from the rendered original ([import a PPTX](docs/how-to/import-pptx.md)).
 
 ## Outputs and engines
 
@@ -93,6 +95,8 @@ One spec, several engines — you choose, SlideCraft recommends based on what yo
 | `pptx-convert` | PDF | — | PDF goes to readers — rendered by PowerPoint/LibreOffice itself, pixel-identical | your office suite | — |
 | `html` | HTML + PDF | in browser | Present from a browser, share a link, storytelling with rich decor | Chrome for PDF | MIT |
 | `artifact-tool` | PPTX | ✅ | You work inside Codex and want its runtime | Codex runtime | proprietary, internal use only — never bundled |
+| `onepager` | PDF (A4) | — | The argument on one page: every slide as a thumbnail with its action title | bundled | MIT |
+| `docx` | DOCX | ✅ | Pre-reads and memos: titles as headings, editable text and tables, exhibits as images | bundled | MIT |
 
 **Recommended:** `pptxgenjs` for anything that leaves your team; `artifact-tool` for internal drafts when you live in Codex (`export SLIDECRAFT_PPTX_ENGINE=artifact-tool` — falls back automatically); always a PDF — `native` for speed, `pptx-convert` when the PDF is the deliverable; HTML when you present from a browser.
 
@@ -122,6 +126,12 @@ Any other agent: point it at [`AGENTS.md`](AGENTS.md).
 **As a CLI**
 
 ```sh
+npx @eiler2005/slidecraft new "Board must decide whether to enter Germany" --json   # once published to npm
+```
+
+Or from a clone:
+
+```sh
 git clone https://github.com/eiler2005/slidecraft && cd slidecraft
 node dist/slidecraft.mjs build examples/strategy-recommendation/deck.yaml
 open examples/strategy-recommendation/dist/northwind-germany.pptx
@@ -134,8 +144,10 @@ Write `deck.yaml` by hand: [tutorial](docs/tutorials/cli-without-agent.md) · [d
 | File | What it is |
 |---|---|
 | `<id>.pptx` | Editable PowerPoint: native text boxes, tables and charts, speaker notes, slide masters per theme |
-| `<id>.pdf` | Vector PDF with embedded fonts and selectable text (or PowerPoint-rendered with `pptx-convert`) |
+| `<id>.pdf` | Tagged, accessible vector PDF: headings, alt text, table headers, source links (or PowerPoint-rendered with `pptx-convert`) |
 | `<id>.html` | One self-contained file: keyboard navigation, presenter notes (`N`), print to PDF |
+| `<id>-onepager.pdf` | A4 one-page summary: the title chain with slide thumbnails |
+| `<id>.docx` | Word memo: action titles as headings, editable text and tables, exhibits as images, notes |
 | `previews/NN-<slide>.png` | Slide previews for review and sharing |
 | `manifest.json` | Engines and versions, sha256 of inputs and outputs, check results, limitations, `visual_review: false` until a human signs off |
 
@@ -157,21 +169,21 @@ Methodology: [writing standard](library/references/writing-standard.md) · [visu
 | Group | Layouts |
 |---|---|
 | Frame | `title` (cover, closing) · `agenda` (agenda, section-divider) |
-| Message | `exec-summary` (SCR, key messages) · `key-points` · `big-statement` (statement, quote, hero number) · `text-image` |
+| Message | `exec-summary` (SCR, key messages) · `key-points` · `big-statement` (statement, quote, hero number) · `text-image` · `text` · `before-after` |
 | Numbers | `kpi-tiles` · `chart-takeaway` (bar, column, stacked, line) · `waterfall` · `funnel` (funnel, pyramid) · `data-table` |
-| Decide | `options-comparison` (text, Harvey-ball rating, up to 5 options) · `matrix-2x2` · `issue-tree` (issue, driver) · `risk-matrix` |
+| Decide | `options-comparison` (text, Harvey-ball rating, up to 5 options) · `matrix-2x2` · `issue-tree` (issue, driver) · `maturity-model` (grid, staircase) · `coverage-map` · `risk-matrix` |
 | Sequence | `process-steps` (chevrons, numbered) · `timeline` (milestones, gantt) · `gate-matrix` · `process-compare` (current vs proposed) |
-| People · Close | `team-cards` · `raci` · `next-steps` (decision, actions) |
+| People · Close | `team-cards` · `org-chart` · `raci` · `next-steps` (decision, actions) |
 
 Contracts, limits and thumbnails: [layouts reference](docs/reference/layouts.gen.md). Add your own: [add a layout](docs/how-to/add-layout.md).
 
 ## Roadmap
 
-Next: the customer's own slide master in PPTX output, template-from-PPTX via Claude vision, freeform HTML mode, DOCX and one-pagers. See [ROADMAP.md](ROADMAP.md).
+Shipped in 0.2: PPTX import and vision redesign, brand Office theme in output, 27 layouts and 14 storylines, tagged PDF with source links, A4, one-pager, DOCX, image generation, visual regression in CI, the gallery site. Next: the customer's own placeholder layouts, freeform HTML mode, a fit-fix loop. See [ROADMAP.md](ROADMAP.md).
 
 ## Contributing
 
-Issues and PRs welcome — new layouts, themes and storylines especially. Start with [CONTRIBUTING.md](CONTRIBUTING.md); `npm run check` runs lint, types and 250+ tests.
+Issues and PRs welcome — new layouts, themes and storylines especially. Start with [CONTRIBUTING.md](CONTRIBUTING.md); `npm run check` runs lint, types and 550+ tests, including pixel-hash visual regression of every layout.
 
 ## License and acknowledgements
 

@@ -20,6 +20,8 @@ Node ≥ 22.12. Run the CLI from source with `npx tsx src/cli/main.ts <command>`
 - **Keep the layers independent.** Layouts never hard-code colours or fonts; themes never contain geometry; storylines reference layouts by id only.
 - **Generated files are generated.** After changing layouts, themes, storylines, CLI or codes run `npm run gen` (reference docs, schemas, catalog) and, if previews changed, `npx tsx src/cli/main.ts gallery --hero`.
 - **The bundle is committed.** Run `npm run build` before your final commit; CI fails if `dist/` is stale.
+- **Pixels are guarded.** `tests/visual.test.ts` compares PNG hashes of every layout example in `consulting-classic` and `midnight` with `tests/golden/visual.json`. When a visual change is intended, look at the renders in `tests/.output/visual/`, then accept them with `UPDATE_GOLDEN=1 npx vitest run tests/visual.test.ts` and commit the updated JSON.
+- **The gallery site is not committed.** `slidecraft site` (and the Pages workflow) renders the full matrix; `docs/gallery/` keeps only the images the README and docs embed.
 
 ## By type of change
 

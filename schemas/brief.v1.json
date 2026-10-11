@@ -133,7 +133,9 @@
               "pptx",
               "pdf",
               "png",
-              "html"
+              "html",
+              "onepager",
+              "docx"
             ]
           }
         },

@@ -13,3 +13,4 @@ node_modules/
 # build outputs of examples and picker pages
 examples/*/dist/
 **/.slidecraft/
+/site/

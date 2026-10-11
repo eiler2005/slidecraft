@@ -118,6 +118,12 @@ export const Theme = z
       .string()
       .optional()
       .describe('Where the theme came from, e.g. "imported from brand.potx"'),
+    officeTheme: z
+      .string()
+      .optional()
+      .describe(
+        'Brand Office theme part (theme1.xml), relative to the theme file; written into PPTX output so the Design tab and colour pickers show the brand',
+      ),
   })
   .strict();
 

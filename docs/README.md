@@ -13,6 +13,9 @@
 | Decide PPTX vs PDF vs HTML and which engine | [Choose formats and engines](how-to/choose-output-engine.md) |
 | Send a PDF that looks exactly like PowerPoint | [Export a PDF](how-to/export-pdf.md) · [pptx-convert setup](how-to/pptx-convert-setup.md) |
 | Present from a browser | [Export an HTML deck](how-to/export-html-deck.md) |
+| Print, pre-read, memo: A4, one-pager, Word | [Export A4, one-pager and DOCX](how-to/export-documents.md) |
+| Restyle an existing PowerPoint | [Import a PPTX](how-to/import-pptx.md) |
+| Fill image slots with generated pictures | [Generate images](how-to/generate-images.md) |
 | Work in Codex | [Use with Codex](how-to/use-with-codex.md) · [Codex engine](how-to/use-codex-engine.md) |
 | Fix a check error | [Fix overflow and check errors](how-to/fix-overflow-and-check-errors.md) |
 | Add sources, images, my outline | [Cite sources](how-to/cite-sources.md) · [Add images](how-to/add-images.md) · [Bring your outline](how-to/bring-your-outline.md) |

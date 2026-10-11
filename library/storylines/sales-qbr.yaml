@@ -1,0 +1,65 @@
+# Storyline: quarterly business review with a customer or a sales team — results, value delivered, plan.
+schemaVersion: 1
+id: sales-qbr
+name: Sales / customer QBR
+summary: Review the quarter with a customer or account team — results against plan, value delivered, what is changing and the plan and asks for next quarter.
+bestFor: [qbr, quarterly business review, account review, customer review, sales review, pipeline review, renewal, expansion]
+audiences: [customer executives, account team, sales leadership, customer success]
+themes: [corporate-blue, consulting-classic, modern-pitch]
+ordered: true
+arc: Headline of the quarter → results vs plan → value delivered → what is working / not → next quarter plan → asks
+length: { min: 6, max: 12 }
+tone: [factual, partnership, forward-looking]
+principles:
+  - Open with the one sentence the customer should repeat to their boss.
+  - Show results against the plan agreed last quarter, not just the good numbers.
+  - Translate activity into value in the customer's own metrics.
+  - Be explicit about what did not work and what changes because of it.
+  - Close with specific asks on both sides, with owners and dates.
+sections:
+  - id: headline
+    name: The quarter
+    slots:
+      - id: cover
+        purpose: Name the account, the quarter and the review.
+        layouts: [title]
+        inputs: [account, quarter, date]
+      - id: summary
+        purpose: Give the headline of the quarter and the two or three asks.
+        layouts: [exec-summary]
+        inputs: [headline, asks]
+  - id: results
+    name: Results
+    slots:
+      - id: scorecard
+        purpose: Show the agreed metrics against plan.
+        layouts: [kpi-tiles, data-table]
+        guidance: Same metrics as last QBR; show plan, actual and the delta.
+        inputs: [metrics, plan, actuals]
+      - id: trend
+        purpose: Show the trend behind the most important metric.
+        layouts: [chart-takeaway]
+        required: false
+        inputs: [time series]
+      - id: value
+        purpose: Translate results into value the customer recognises.
+        layouts: [before-after, waterfall, kpi-tiles]
+        inputs: [baseline, value delivered, method]
+  - id: learn
+    name: What we learned
+    slots:
+      - id: working
+        purpose: What worked, what did not and what changes.
+        layouts: [key-points, coverage-map]
+        inputs: [wins, issues, changes]
+  - id: next
+    name: Next quarter
+    slots:
+      - id: plan
+        purpose: Put the next-quarter initiatives on a time axis.
+        layouts: [timeline, process-steps]
+        inputs: [initiatives, dates, owners]
+      - id: asks
+        purpose: Close with the asks on both sides.
+        layouts: [next-steps]
+        inputs: [asks, owners, dates]

@@ -13,7 +13,7 @@ function findRoot(start: string): string {
     if (existsSync(pkg)) {
       try {
         const name = JSON.parse(readFileSync(pkg, 'utf8')).name;
-        if (name === 'slidecraft') return dir;
+        if (name === 'slidecraft' || name === '@eiler2005/slidecraft') return dir;
       } catch {
         // keep walking
       }

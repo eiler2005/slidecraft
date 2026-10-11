@@ -2,7 +2,28 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
-## [Unreleased]
+## [0.2.0] — 2026-10-11
+
+### Added
+- **Import (M5):** `slidecraft import file.pptx [--render]` extracts slides in order — titles (placeholder or largest text), native chart data, tables, pictures, notes — into a draft `deck.yaml`. Over-limit text is shortened, and the original is kept in notes. `--render` writes `original.pdf` through PowerPoint or LibreOffice. New skill `/slidecraft:import` redesigns the draft from the rendered original (vision pass, old → new title chain checkpoint).
+- **Brand master (M3):** `theme import` keeps the template's Office theme part (`officeTheme`). Every PPTX built with the theme carries it, so PowerPoint's Design tab and colour and font pickers show the brand.
+- **Layouts (M4):** `text` (bullets, paragraphs, two-column), `before-after`, `maturity-model` (grid, staircase), `coverage-map`, `org-chart` — 27 in total. **Storylines:** `sales-qbr`, `investment-memo` — 14 in total.
+- **Accessible PDF (M6):** the native PDF is tagged. Titles are `H1`, charts and pictures are `Figure` with alt text (chart alt text lists the data), tables are `TH`/`TD`, and decoration is marked as artifacts.
+- **Source links (M6):** sources with a `url` become hyperlinks in PPTX (run colour kept), PDF, HTML and DOCX.
+- **Documents (M6):**
+  - `format: a4-landscape`, with every layout checked in A4;
+  - `onepager` output: A4 portrait title chain with vector thumbnails;
+  - `docx` output: Word memo with headings, editable text and tables, exhibits as images, links and notes.
+- **Images (M6):** `imagePrompt` on `text-image`; `slidecraft images deck.yaml [--dry-run] [--force]` fills empty slots through an OpenAI-compatible API and writes `image:` back with comments preserved.
+- **Visual regression (M6):** `tests/visual.test.ts` hashes PNG renders of every layout example in a light and a dark theme. CI uploads the changed renders on failure.
+- **Gallery site (M6):** `slidecraft site` builds the full gallery and every example in every format; `.github/workflows/pages.yml` publishes it to GitHub Pages. Only the curated images stay in git.
+- **npm (M6):** package `@eiler2005/slidecraft` (bin `slidecraft`) with zero runtime dependencies (everything is in the bundle), a `files` whitelist and a `prepublishOnly` check.
+
+### Changed
+- `artifact-tool` adapter: decor, footer and logo live on real slide layouts instead of every slide. Chart plot areas are pinned to SlideCraft geometry after export, so stacked totals are drawn and line up. The brand Office theme is applied here too.
+- `raci` legend scales to narrow pages.
+
+## Earlier unreleased work (shipped in 0.2.0)
 
 ### Added
 - `SLIDECRAFT_PPTX_ENGINE` / `SLIDECRAFT_PDF_ENGINE`: machine-wide engine preference used for `auto`, with automatic fallback.

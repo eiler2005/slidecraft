@@ -34,6 +34,11 @@ Start from the sentence in the title. Identify the **relationship** it claims, t
 | **Stage-gate plan** | `gate-matrix` | Dates matter most → `timeline` | Gates without evidence or a decider |
 | **What changes in a process** | `process-compare` | No comparison → `process-steps` | Unchanged steps highlighted |
 | **Risks by likelihood × impact** | `risk-matrix` | Risks without assessment → `data-table` | No owners or mitigations |
+| **Where we stand on a maturity scale** | `maturity-model` · grid / staircase | Levels that do not build on each other → `key-points` | Target levels without a date |
+| **State of many functions at once** | `coverage-map` | Fewer than six items → `key-points` | Changing the rows between snapshots |
+| **A change as two states** | `before-after` · panels | The change is a sequence → `process-compare` | Before and after measured differently |
+| **Reporting lines** | `org-chart` · tree | Decision rights → `raci` | Charts deeper than two levels |
+| **Plain text that really is text** | `text` · bullets / paragraphs / two-column | Parallel points with headings → `key-points` | Using it to avoid choosing an exhibit |
 
 ## Relationship patterns in detail
 

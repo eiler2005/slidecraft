@@ -13,11 +13,11 @@ Two independent catalogues. A **management pattern (M)** is the decision a mater
 | M03 | Status: plan, actual, forecast | What changed and what intervention is needed? | Cut-off date, baseline plan, actual, forecast, decision | `kpi-tiles`, `timeline` (gantt); storyline `executive-update` |
 | M04 | Stage readiness and gates | On what evidence does the next stage open? | Stage output, condition, evidence, deciding role | `gate-matrix` |
 | M05 | Options and conditional recommendation | How do we choose under known constraints? | Options, shared criteria, unknowns, decision rule | `options-comparison` (text, rating) |
-| M06 | Pilot and value case | What will we test and how do we measure value? | Hypothesis, baseline, metric, measurement method | `kpi-tiles`, `waterfall`; value tree in backlog (M4) |
+| M06 | Pilot and value case | What will we test and how do we measure value? | Hypothesis, baseline, metric, measurement method | `kpi-tiles`, `waterfall`, `before-after`, `issue-tree` (driver) |
 | M07 | Acceptance and launch decision | What proves quality and what authorises launch? | Scenarios, criteria with status, test results, deciding role | `data-table`, `next-steps` (decision) |
 | M08 | Roadmap, dependencies and escalation | When is the result available and what blocks it? | Work items, dependencies, milestones, plan and forecast | `timeline` (gantt, milestones) |
 | M09 | Accountability and decision rights | Who decides, on what basis, within which limits? | Components or roles, boundaries, grounds, deciding role | `raci` |
-| M10 | Decomposition, priorities and cadence | How do levels of work connect to decision horizons? | Levels, definitions, horizons, roles, outputs | `process-steps`, `data-table`; hierarchy layout in backlog (M4) |
+| M10 | Decomposition, priorities and cadence | How do levels of work connect to decision horizons? | Levels, definitions, horizons, roles, outputs | `maturity-model` (staircase), `funnel` (pyramid), `org-chart`, `data-table` |
 
 ## Visual patterns
 
@@ -32,10 +32,10 @@ Two independent catalogues. A **management pattern (M)** is the decision a mater
 | V07 | Work and milestones on one time axis | When does the result become available? | Work items, milestones, plan, forecast, result | Implemented via `timeline` |
 | V08 | Evidence chain | What is the answer based on? | Condition, source, check, result, exception | Partly via `process-steps` (numbered); backlog (M4) |
 | V09 | Value drivers and metrics | How does an action become measurable value? | Action, result, baseline, metric, measurement | Implemented via `issue-tree` (driver) and `waterfall` |
-| V10 | Hierarchy, meaning and horizon | How do levels of work connect? | Levels, definitions, horizons, results, roles | Backlog (M4) |
+| V10 | Hierarchy, meaning and horizon | How do levels of work connect? | Levels, definitions, horizons, results, roles | Implemented via `maturity-model` (staircase), `funnel` (pyramid) and `org-chart` |
 | V11 | Role calendar and cadence | Who takes part when, regularly? | Roles, cycles, scale, events, outputs | Partly via `timeline` (gantt); backlog (M4) |
 | V12 | Two conditions, four actions (2×2) | How do conditions change the preferred approach? | Axis definitions, categories, actions, choice rule | Implemented via `matrix-2x2` |
-| V13 | Coverage map with stable geometry | Where did the state of the same functions change? | Stable objects and ids, snapshots, status definitions, evidence | Backlog (M4) |
+| V13 | Coverage map with stable geometry | Where did the state of the same functions change? | Stable objects and ids, snapshots, status definitions, evidence | Implemented via `coverage-map` |
 | V14 | Diagnostic tree and next step | Which step follows from a yes, borderline or unknown answer? | Questions with criteria, labelled branches, actions, stop rule | Implemented via `issue-tree` (issue) |
 | V15 | Action, callout and result check | How does the reader find the object, act and verify? | Steps, target object, role, expected result, check | Partly via `text-image` + `process-steps`; backlog (M4) |
 

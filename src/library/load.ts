@@ -39,6 +39,7 @@ export function readThemeFile(path: string): Theme {
       );
   }
   if (theme.chrome.logo) theme.chrome.logo = resolve(base, theme.chrome.logo);
+  if (theme.officeTheme) theme.officeTheme = resolve(base, theme.officeTheme);
   return theme;
 }
 

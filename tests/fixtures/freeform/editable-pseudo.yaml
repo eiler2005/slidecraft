@@ -1,0 +1,12 @@
+schemaVersion: 1
+id: editable-pseudo
+title: Editable browser details
+theme: midnight
+slides:
+  - id: pseudo
+    layout: freeform-canvas
+    title: Pseudo-elements are editable PowerPoint primitives
+    alt: A card with an inner ring, an absolute label and a CSS arrowhead.
+    css: |
+      .card{position:relative;width:360px;height:180px;border:2px solid #155EEF;border-radius:24px;background:#EFF6FF;display:grid;place-items:center;font:700 20pt/1.1 Arial;color:#10263D}.card:before{content:"";position:absolute;inset:18px;border:2px solid #0D9488;border-radius:50%}.card:after{content:"EDITABLE";position:absolute;top:12px;right:16px;font:700 9pt/1 Arial;color:#155EEF}.tail{position:absolute;right:90px;bottom:40px;width:170px;height:24px;background:#E8EDF3;text-align:center;font:700 9pt/24px Arial;color:#10263D}.tail:after{content:"";position:absolute;right:-13px;border-top:12px solid transparent;border-bottom:12px solid transparent;border-left:13px solid #E8EDF3}
+    html: <div class="card">Браузерная геометрия</div><div class="tail">и стрелка</div>

@@ -56,6 +56,15 @@ export const CommonSlide = z.object({
     .describe('Action title: one full-sentence claim, ideally 8–14 words; the body proves it'),
   lead: z.string().max(160).optional().describe('Optional one-line lead under the title'),
   tracker: z.string().max(40).optional().describe('Section label shown above the title'),
+  frame: z
+    .enum(['standard', 'none'])
+    .optional()
+    .describe('Explicit frame override; otherwise use the layout and theme canvasFrame'),
+  bottomLine: z
+    .string()
+    .max(400)
+    .optional()
+    .describe('Bottom conclusion band, styled by the theme independently of the exhibit'),
   sources: z
     .array(z.string())
     .optional()
@@ -147,6 +156,7 @@ export const Deck = z
           .object({
             pptx: z.enum(['auto', 'pptxgenjs', 'artifact-tool']).default('auto'),
             pdf: z.enum(['auto', 'native', 'html', 'pptx-convert']).default('auto'),
+            png: z.enum(['auto', 'resvg', 'pptx-convert']).optional(),
           })
           .strict()
           .default({ pptx: 'auto', pdf: 'auto' }),

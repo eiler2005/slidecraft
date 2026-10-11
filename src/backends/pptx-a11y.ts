@@ -17,6 +17,9 @@ export function shapeName(
   slideId: string | undefined,
 ): string | undefined {
   if (t.role === 'title') return slideId ? `${TITLE_NAME} sc:${slideId}/title` : TITLE_NAME;
+  if (t.role?.startsWith('ppt:') && slideId) return `sc:${slideId}/ppt/${t.role.slice(4)}`;
+  if (!t.pointer && t.role?.startsWith('chrome-') && slideId)
+    return `sc:${slideId}/chrome/${t.role.slice(7)}`;
   if (!t.pointer || !slideId) return undefined;
   const m = /^\/slides\/\d+(\/.+)$/.exec(t.pointer);
   return m ? `sc:${slideId}${m[1]}` : undefined;

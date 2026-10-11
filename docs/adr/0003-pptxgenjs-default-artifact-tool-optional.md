@@ -7,8 +7,8 @@ The predecessor built PPTX only through `@oai/artifact-tool` from the Codex runt
 
 ## Decision
 - **Default:** `pptxgenjs` (MIT): native text boxes with zero insets and exact line spacing, native tables, native charts with explicit axes and manual plot layout, slide masters per theme, speaker notes. Output zips are normalised for byte-reproducibility.
-- **Optional:** an `artifact-tool` adapter that *calls* a locally installed Codex runtime (found via `SLIDECRAFT_ARTIFACT_TOOL` or the stable runtime symlink, version ≥ 2.7.3). It is never copied, vendored or bundled; `auto` selects it only inside Codex; the build prints a license notice and the manifest records `proprietary`.
+- **Optional:** an `artifact-tool` adapter that *calls* a locally installed Codex runtime (found via `SLIDECRAFT_ARTIFACT_TOOL` or the stable runtime symlink, version ≥ 2.7.3). It is never copied, vendored or bundled; it must be selected explicitly for internal evaluation/testing (not production, commercial use or benchmarking). `auto` stays portable even inside Codex; the build prints a license notice and the manifest records `proprietary`.
 
 ## Consequences
 - Every user and CI gets editable PPTX with no proprietary dependency.
-- Codex users can still use their runtime; documented limitations: chrome drawn per slide, runtime-controlled plot area (stacked totals and waterfall connectors omitted), approximate bullet indents.
+- Codex users can evaluate their runtime against the same Scene IR. The available OpenAI presentation skill may assist authoring and review without introducing a proprietary dependency in SlideCraft's shared themes or components.

@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: editable-authored
+title: Authored editable alternative
+theme: midnight
+slides:
+  - id: authored
+    layout: freeform-canvas
+    title: An authored PPT alternative replaces automatic extraction
+    alt: A card and label.
+    css: .card{width:200px;height:100px;background:#EFF6FF}
+    html: <div class="card">This remains the HTML reference</div>
+    ppt:
+      - { id: card, kind: rect, x: 0.4, y: 0.7, w: 3.1, h: 1.4, fill: "#EFF6FF", stroke: { color: "#155EEF", width: 1.5 }, radius: 0.16 }
+      - { id: card-label, kind: text, x: 0.65, y: 1.14, w: 2.6, h: 0.35, text: "Редактируемая подпись", size: 18, color: "#10263D", bold: true, align: center }
+      - { id: connector, kind: line, x1: 3.5, y1: 1.4, x2: 4.4, y2: 1.4, stroke: { color: "#155EEF", width: 1.5 }, arrowEnd: true }

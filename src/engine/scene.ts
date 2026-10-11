@@ -214,8 +214,53 @@ export interface ChartNode {
 }
 
 /**
- * Freeform HTML (layout `freeform`). Rendered natively by the HTML engines; the build
- * rasterises it with Chrome for every other engine (an ImageNode with the same alt text).
+ * Explicit, editable equivalent of an HTML element. Coordinates are inches relative to
+ * the owning HTML canvas. Stable ids let an agent edit the intended PowerPoint object
+ * rather than reverse-engineering a CSS selector or a rendered screenshot.
+ */
+export type PptAlternative =
+  | {
+      id: string;
+      kind: 'text';
+      x: number;
+      y: number;
+      w: number;
+      h: number;
+      text: string;
+      size: number;
+      color?: Color;
+      bold?: boolean;
+      italic?: boolean;
+      align?: 'left' | 'center' | 'right';
+      lineHeight?: number;
+    }
+  | {
+      id: string;
+      kind: 'rect' | 'ellipse';
+      x: number;
+      y: number;
+      w: number;
+      h: number;
+      fill?: Color;
+      fillOpacity?: number;
+      stroke?: Stroke;
+      radius?: number;
+    }
+  | {
+      id: string;
+      kind: 'line';
+      x1: number;
+      y1: number;
+      x2: number;
+      y2: number;
+      stroke: Stroke;
+      arrowEnd?: boolean;
+    };
+
+/**
+ * Freeform HTML (layout `freeform`). Rendered natively by the HTML engines. `ppt` is a
+ * semantic editable alternative used by PPTX; otherwise Chrome geometry extraction
+ * creates one. This makes an intentional visual equivalent reviewable in deck YAML.
  */
 export interface HtmlNode {
   kind: 'html';
@@ -228,6 +273,8 @@ export interface HtmlNode {
   alt: string;
   /** Theme tokens exposed to the fragment as CSS variables. */
   vars: Record<string, string>;
+  /** Optional authored editable PPT equivalent of the HTML composition. */
+  ppt?: PptAlternative[];
   role?: string;
   pointer?: string;
 }

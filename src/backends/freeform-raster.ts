@@ -10,7 +10,14 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { freeformId, freeformMarkup, MEASURE_SCRIPT } from '../engine/freeform.ts';
-import type { HtmlNode, ImageNode, Scene, SceneNode, TextStyle } from '../engine/scene.ts';
+import type {
+  HtmlNode,
+  ImageNode,
+  PptAlternative,
+  Scene,
+  SceneNode,
+  TextStyle,
+} from '../engine/scene.ts';
 import { layoutText, makeTextNode, para } from '../engine/text.ts';
 import { type Diagnostic, diag } from '../qa/codes.ts';
 import { findChrome, fontFaceCss, runChrome } from './html.ts';
@@ -21,7 +28,7 @@ const SCALE = 2;
 
 type NativeItem =
   | {
-      kind: 'rect';
+      kind: 'rect' | 'ellipse';
       slide: string;
       x: number;
       y: number;
@@ -47,17 +54,37 @@ type NativeItem =
       italic: boolean;
       align: 'left' | 'center' | 'right';
       lineHeight: number;
+    }
+  | {
+      kind: 'polygon';
+      slide: string;
+      points: [number, number][];
+      fill: string;
+      opacity?: number;
     };
 
 /**
  * Browser layout extraction for the editable subset of freeform CSS.  Coordinates come
  * from Chrome after grid/flex/layout resolution rather than attempting to reimplement CSS.
- * This is deliberately conservative: gradients, shadows and pseudo-elements
- * are reported instead of being silently approximated as an image.
+ * This is deliberately conservative: gradients, shadows and arbitrary transforms
+ * are reported instead of being silently approximated as an image.  Pseudo-elements
+ * that resolve to editable text, rectangles, circles or CSS border triangles are
+ * extracted too — they are common in otherwise simple HTML templates.
  */
 const NATIVE_SCRIPT = `<script>
-(()=>{const out={items:[],unsupported:[]},rgb=v=>{let m=v.match(/^rgba?\\(([^)]+)\\)/);if(!m)return null;let a=m[1].split(',').map(x=>x.trim());let h=n=>Math.max(0,Math.min(255,Math.round(+n))).toString(16).padStart(2,'0');return {hex:'#'+h(a[0])+h(a[1])+h(a[2]),alpha:a[3]===undefined?1:+a[3]};},add=(o)=>out.items.push(o);for(const root of document.querySelectorAll('.sc-ff')){let rr=root.getBoundingClientRect(), id=root.id;for(const e of [root,...root.querySelectorAll('*')]){let s=getComputedStyle(e),r=e.getBoundingClientRect();if(!r.width||!r.height)continue;if(s.boxShadow!=='none'||s.backgroundImage!=='none'||s.clipPath!=='none'||s.filter!=='none')out.unsupported.push({id,feature:'shadow, gradient/image, clip-path or filter'});let bg=rgb(s.backgroundColor), bs=[s.borderTop,s.borderRight,s.borderBottom,s.borderLeft].map((_,i)=>({w:parseFloat([s.borderTopWidth,s.borderRightWidth,s.borderBottomWidth,s.borderLeftWidth][i]),c:rgb([s.borderTopColor,s.borderRightColor,s.borderBottomColor,s.borderLeftColor][i])}));let same=bs.every(b=>b.w===bs[0].w&&b.c&&bs[0].c&&b.c.hex===bs[0].c.hex&&b.c.alpha===bs[0].c.alpha);if((bg&&bg.alpha>0)||bs.some(b=>b.w>0)){add({kind:'rect',slide:id,x:r.left-rr.left,y:r.top-rr.top,w:r.width,h:r.height,fill:bg&&bg.alpha?bg.hex:undefined,opacity:bg?bg.alpha:undefined,stroke:same&&bs[0].w?bs[0].c.hex:undefined,strokeWidth:same&&bs[0].w?bs[0].w*.75:undefined,radius:parseFloat(s.borderTopLeftRadius)||0});if(!same)bs.forEach((b,i)=>{if(!b.w||!b.c)return;let q=i===0?[r.left,r.top,r.width,b.w]:i===1?[r.right-b.w,r.top,b.w,r.height]:i===2?[r.left,r.bottom-b.w,r.width,b.w]:[r.left,r.top,b.w,r.height];add({kind:'rect',slide:id,x:q[0]-rr.left,y:q[1]-rr.top,w:q[2],h:q[3],fill:b.c.hex,opacity:b.c.alpha});});}}
-let walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);for(let n; n=walker.nextNode();){let raw=n.textContent||'';if(!raw.trim())continue;let p=n.parentElement,s=getComputedStyle(p),col=rgb(s.color)||{hex:'#000000',alpha:1},groups=new Map();for(let i=0;i<raw.length;i++){let range=document.createRange();range.setStart(n,i);range.setEnd(n,i+1);let r=range.getBoundingClientRect();if(!r.width&&!/\\s/.test(raw[i]))continue;let k=Math.round(r.top*2)/2;let g=groups.get(k);if(!g){g={x:r.left,y:r.top,right:r.right,h:r.height,text:''};groups.set(k,g)}g.x=Math.min(g.x,r.left);g.right=Math.max(g.right,r.right);g.h=Math.max(g.h,r.height);g.text+=raw[i];}for(const g of groups.values()){let text=g.text.replace(/\\s+/g,' ').trim();if(!text)continue;add({kind:'text',slide:id,x:g.x-rr.left,y:g.y-rr.top,w:Math.max(2,g.right-g.x+3),h:Math.max(g.h+4,parseFloat(s.fontSize)*1.35),text,color:col.hex,size:parseFloat(s.fontSize)*.75,bold:+s.fontWeight>=600,italic:s.fontStyle.includes('italic'),align:s.textAlign==='center'?'center':s.textAlign==='right'||s.textAlign==='end'?'right':'left',lineHeight:parseFloat(s.lineHeight)/parseFloat(s.fontSize)||1.2});}}if(getComputedStyle(root,'::before').content!=='none'||getComputedStyle(root,'::after').content!=='none')out.unsupported.push({id,feature:'pseudo-element'});}document.body.setAttribute('data-sc-native',JSON.stringify(out));})();</script>`;
+(async()=>{
+  await document.fonts.ready;
+  const out={items:[],unsupported:[]}, add=o=>out.items.push(o), n=v=>Number.parseFloat(v)||0;
+  const rgb=v=>{let m=(v||'').match(/^rgba?\\(([^)]+)\\)/);if(!m)return null;let a=m[1].split(',').map(x=>x.trim());let h=x=>Math.max(0,Math.min(255,Math.round(+x))).toString(16).padStart(2,'0');return {hex:'#'+h(a[0])+h(a[1])+h(a[2]),alpha:a[3]===undefined?1:+a[3]};};
+  const unquote=v=>v==='none'||v==='normal'?'':v.replace(/^['"]|['"]$/g,'').replace(/\\\\A /g,'\\n');
+  const unsupported=(id,feature)=>{if(!out.unsupported.some(x=>x.id===id&&x.feature===feature))out.unsupported.push({id,feature});};
+  const transform=(id,s)=>{if(s.transform==='none')return [0,0];let m=s.transform.match(/^matrix\\(([^)]+)\\)$/);if(!m){unsupported(id,'non-affine transform');return [0,0]}let a=m[1].split(',').map(n);if(Math.abs(a[0]-1)>.001||Math.abs(a[1])>.001||Math.abs(a[2])>.001||Math.abs(a[3]-1)>.001){unsupported(id,'rotation or scale transform');return [0,0]}return [a[4],a[5]]};
+  const borders=s=>[0,1,2,3].map(i=>({w:n([s.borderTopWidth,s.borderRightWidth,s.borderBottomWidth,s.borderLeftWidth][i]),c:rgb([s.borderTopColor,s.borderRightColor,s.borderBottomColor,s.borderLeftColor][i])}));
+  function rect(id,rr,r,s){let bg=rgb(s.backgroundColor),bs=borders(s),same=bs.every(b=>b.w===bs[0].w&&b.c&&bs[0].c&&b.c.hex===bs[0].c.hex&&b.c.alpha===bs[0].c.alpha);if((bg&&bg.alpha>0)||bs.some(b=>b.w>0)){add({kind:s.borderTopLeftRadius.includes('%')&&n(s.borderTopLeftRadius)>=50?'ellipse':'rect',slide:id,x:r.left-rr.left,y:r.top-rr.top,w:r.width,h:r.height,fill:bg&&bg.alpha?bg.hex:undefined,opacity:bg?bg.alpha:undefined,stroke:same&&bs[0].w?bs[0].c.hex:undefined,strokeWidth:same&&bs[0].w?bs[0].w*.75:undefined,radius:Math.min(n(s.borderTopLeftRadius),r.width/2,r.height/2)});if(!same)bs.forEach((b,i)=>{if(!b.w||!b.c)return;let q=i===0?[r.left,r.top,r.width,b.w]:i===1?[r.right-b.w,r.top,b.w,r.height]:i===2?[r.left,r.bottom-b.w,r.width,b.w]:[r.left,r.top,b.w,r.height];add({kind:'rect',slide:id,x:q[0]-rr.left,y:q[1]-rr.top,w:q[2],h:q[3],fill:b.c.hex,opacity:b.c.alpha});});}}
+  function text(id,rr,s,r,value){let col=rgb(s.color)||{hex:'#000000'},size=n(s.fontSize),_translation=transform(id,s);if(!value)return;add({kind:'text',slide:id,x:r.left-rr.left,y:r.top-rr.top,w:Math.max(2,r.width+18,r.width*1.18),h:Math.max(r.height+4,size*1.35),text:value,color:col.hex,size:size*.75,bold:+s.fontWeight>=600,italic:s.fontStyle.includes('italic'),align:'left',lineHeight:n(s.lineHeight)/size||1.2});}
+  function addPseudo(e,which,id,rr){let s=getComputedStyle(e,which),value=unquote(s.content),bs=borders(s),bg=rgb(s.backgroundColor),visible=!!(bg&&bg.alpha>0)||bs.some(b=>b.w&&b.c&&b.c.alpha>0);if(!value&&!visible)return;let absolute=s.position==='absolute'||s.position==='fixed';if(!absolute){let first;for(const node of e.childNodes){if(node.nodeType===Node.TEXT_NODE&&(node.textContent||'').trim()){let range=document.createRange();range.selectNodeContents(node);first=range.getBoundingClientRect();break}}if(!first){unsupported(id,'inline pseudo-element without measurable text anchor');return}let size=n(s.fontSize), gap=n(s.marginRight);text(id,rr,s,{left:first.left-size*.65-gap,top:first.top,width:size*.65,height:first.height},value);return;}let probe=document.createElement('span');for(const key of s)probe.style.setProperty(key,s.getPropertyValue(key));probe.style.content='normal';probe.textContent=value;e.appendChild(probe);let pr=probe.getBoundingClientRect(),r={left:pr.left,top:pr.top,right:pr.right,bottom:pr.bottom,width:pr.width,height:pr.height};probe.remove();if(!r.width&&!r.height&&value){let size=n(s.fontSize);r.width=Math.max(size,value.length*size*.65);r.height=size*1.35;}let colored=bs.map((b,i)=>b.w>0&&b.c&&b.c.alpha>0?i:-1).filter(i=>i>=0);if(!value&&r.width<=bs[1].w+bs[3].w+.1&&r.height<=bs[0].w+bs[2].w+.1&&colored.length===1){let i=colored[0],b=bs[i],x=r.left-rr.left,y=r.top-rr.top,w=r.width,h=r.height,cx=x+bs[3].w,cy=y+bs[0].w,pts=i===0?[[x,y],[x+w,y],[cx,cy]]:i===1?[[x+w,y],[x+w,y+h],[cx,cy]]:i===2?[[x,y+h],[x+w,y+h],[cx,cy]]:[[x,y],[x,y+h],[cx,cy]];add({kind:'polygon',slide:id,points:pts,fill:b.c.hex,opacity:b.c.alpha});return;}rect(id,rr,r,s);if(value)text(id,rr,s,r,value);}
+  for(const root of document.querySelectorAll('.sc-ff')){let rr=root.getBoundingClientRect(),id=root.id;for(const e of [root,...root.querySelectorAll('*')]){let s=getComputedStyle(e),r=e.getBoundingClientRect();if(!r.width||!r.height||s.display==='none'||s.visibility==='hidden')continue;if(['IMG','SVG','CANVAS','VIDEO','IFRAME'].includes(e.tagName.toUpperCase()))unsupported(id,'embedded visual element '+e.tagName+' requires a native ppt equivalent');if(s.boxShadow!=='none'||s.backgroundImage!=='none'||s.clipPath!=='none'||s.filter!=='none')unsupported(id,'shadow, gradient/image, clip-path or filter');rect(id,rr,r,s);addPseudo(e,'::before',id,rr);addPseudo(e,'::after',id,rr);}let walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);for(let node;node=walker.nextNode();){let raw=node.textContent||'';if(!raw.trim())continue;let p=node.parentElement,s=getComputedStyle(p),groups=new Map();for(let i=0;i<raw.length;i++){let range=document.createRange();range.setStart(node,i);range.setEnd(node,i+1);let r=range.getBoundingClientRect();if(!r.width&&!/\\s/.test(raw[i]))continue;let k=Math.round(r.top*2)/2,g=groups.get(k);if(!g){g={left:r.left,top:r.top,right:r.right,height:r.height,text:''};groups.set(k,g)}g.left=Math.min(g.left,r.left);g.right=Math.max(g.right,r.right);g.height=Math.max(g.height,r.height);g.text+=raw[i];}for(const g of groups.values()){let value=g.text.replace(/\\s+/g,' ').trim();if(s.textTransform==='uppercase')value=value.toUpperCase();if(s.textTransform==='lowercase')value=value.toLowerCase();if(s.textTransform==='capitalize')value=value.replace(/\\b\\S/g,x=>x.toUpperCase());text(id,rr,s,{left:g.left,top:g.top,width:g.right-g.left,height:g.height},value);}}}document.body.setAttribute('data-sc-native',JSON.stringify(out));
+})();</script>`;
 
 function chromeArgs(tmp: string): string[] {
   return [
@@ -110,6 +137,52 @@ const placeholder = (n: HtmlNode): ImageNode => ({
   placeholderLabel: 'Freeform HTML — needs Chrome to render here',
   role: 'freeform',
 });
+
+/** Materialise an authored HTML→PPT alternative. All coordinates are local to the HTML canvas. */
+function authoredPptNodes(
+  node: HtmlNode,
+  items: PptAlternative[],
+  font: { family: string; measure: TextStyle['measure'] },
+): SceneNode[] {
+  return items.map((item) => {
+    const role = `ppt:${item.id}`;
+    if (item.kind === 'text') {
+      const style: TextStyle = {
+        family: font.family,
+        measure: font.measure,
+        size: item.size,
+        lineSpacing: item.size * (item.lineHeight ?? 1.2),
+        color: item.color ?? '#000000',
+        bold: item.bold,
+        italic: item.italic,
+        align: item.align ?? 'left',
+        valign: 'top',
+      };
+      const box = { x: node.box.x + item.x, y: node.box.y + item.y, w: item.w, h: item.h };
+      const paragraphs = [para(item.text)];
+      return makeTextNode(paragraphs, box, style, layoutText(paragraphs, style, box.w), { role });
+    }
+    if (item.kind === 'line')
+      return {
+        kind: 'line',
+        x1: node.box.x + item.x1,
+        y1: node.box.y + item.y1,
+        x2: node.box.x + item.x2,
+        y2: node.box.y + item.y2,
+        stroke: item.stroke,
+        arrowEnd: item.arrowEnd,
+        role,
+      };
+    return {
+      kind: item.kind,
+      box: { x: node.box.x + item.x, y: node.box.y + item.y, w: item.w, h: item.h },
+      ...(item.fill ? { fill: item.fill, fillOpacity: item.fillOpacity } : {}),
+      ...(item.stroke ? { stroke: item.stroke } : {}),
+      ...(item.kind === 'rect' && item.radius ? { radius: item.radius } : {}),
+      role,
+    };
+  });
+}
 
 export async function flattenFreeform(
   scene: Scene,
@@ -257,6 +330,21 @@ export async function nativeFreeform(
       }
   if (!placed.length) return { scene, diagnostics: [] };
   const diagnostics: Diagnostic[] = [];
+  const authored = placed.filter((p) => p.node.ppt?.length);
+  const automatic = placed.filter((p) => !p.node.ppt?.length);
+  const font = scene.fonts?.body ?? { family: 'Arial', measure: 'liberation-sans' as const };
+  const nodes = new Map(authored.map((p) => [p.node, authoredPptNodes(p.node, p.node.ppt!, font)]));
+  if (!automatic.length)
+    return {
+      scene: {
+        ...scene,
+        slides: scene.slides.map((s) => ({
+          ...s,
+          nodes: s.nodes.flatMap((n) => (n.kind === 'html' ? (nodes.get(n) ?? [n]) : [n])),
+        })),
+      },
+      diagnostics,
+    };
   const bin = findChrome();
   if (!bin) {
     diagnostics.push(
@@ -266,9 +354,9 @@ export async function nativeFreeform(
     );
     return { scene, diagnostics };
   }
-  const width = Math.ceil(Math.max(...placed.map((p) => p.node.box.w)) * PX);
+  const width = Math.ceil(Math.max(...automatic.map((p) => p.node.box.w)) * PX);
   const height = Math.max(1, top);
-  const blocks = placed
+  const blocks = automatic
     .map(
       (p) =>
         `<div style="position:absolute;left:0;top:${p.top}px">${freeformMarkup(p.node, p.id)}</div>`,
@@ -276,7 +364,6 @@ export async function nativeFreeform(
     .join('');
   const page = `<!doctype html><html><head><meta charset="utf-8"><style>${fontFaceCss(blocks)}html,body{margin:0;padding:0;background:transparent;width:${width}px;height:${height}px;overflow:hidden}</style></head><body>${blocks}${NATIVE_SCRIPT}</body></html>`;
   const tmp = mkdtempSync(join(tmpdir(), 'slidecraft-native-freeform-'));
-  const nodes = new Map<HtmlNode, SceneNode[]>();
   try {
     const file = join(tmp, 'native.html');
     writeFileSync(file, page);
@@ -292,8 +379,12 @@ export async function nativeFreeform(
       items: NativeItem[];
       unsupported: { id: string; feature: string }[];
     };
-    const unsupported = new Map(extracted.unsupported.map((x) => [x.id, x.feature]));
-    for (const p of placed) {
+    const unsupported = new Map<string, string>();
+    for (const item of extracted.unsupported) {
+      const previous = unsupported.get(item.id);
+      unsupported.set(item.id, previous ? `${previous}; ${item.feature}` : item.feature);
+    }
+    for (const p of automatic) {
       const feature = unsupported.get(p.id);
       if (feature) {
         diagnostics.push(
@@ -303,15 +394,14 @@ export async function nativeFreeform(
         );
         continue;
       }
-      const font = scene.fonts?.body ?? { family: 'Arial', measure: 'liberation-sans' as const };
       const slideTitle = scene.slides.find((s) => s.id === p.slide)?.title;
       const list: SceneNode[] = [];
       for (const item of extracted.items.filter((x) => x.slide === p.id)) {
-        const x = p.node.box.x + item.x / PX;
-        const y = p.node.box.y + item.y / PX;
-        if (item.kind === 'rect') {
+        if (item.kind === 'rect' || item.kind === 'ellipse') {
+          const x = p.node.box.x + item.x / PX;
+          const y = p.node.box.y + item.y / PX;
           list.push({
-            kind: 'rect',
+            kind: item.kind,
             box: { x, y, w: item.w / PX, h: item.h / PX },
             ...(item.fill ? { fill: item.fill, fillOpacity: item.opacity } : {}),
             ...(item.stroke
@@ -320,11 +410,34 @@ export async function nativeFreeform(
             ...(item.radius ? { radius: item.radius / PX } : {}),
             role: 'freeform-native-shape',
           });
-        } else {
+        } else if (item.kind === 'polygon') {
+          const points = item.points.map(([px, py]) => [
+            p.node.box.x + px / PX,
+            p.node.box.y + py / PX,
+          ]) as [number, number][];
+          const xs = points.map(([px]) => px);
+          const ys = points.map(([, py]) => py);
+          list.push({
+            kind: 'polygon',
+            points,
+            box: {
+              x: Math.min(...xs),
+              y: Math.min(...ys),
+              w: Math.max(...xs) - Math.min(...xs),
+              h: Math.max(...ys) - Math.min(...ys),
+            },
+            fill: item.fill,
+            fillOpacity: item.opacity,
+            role: 'freeform-native-shape',
+          });
+        } else if (item.kind === 'text') {
+          const x = p.node.box.x + item.x / PX;
+          const y = p.node.box.y + item.y / PX;
           const style: TextStyle = {
             family: font.family,
             measure: font.measure,
             size: item.size,
+            // Each item is already one browser-measured line.
             lineSpacing: item.size * item.lineHeight,
             color: item.color,
             bold: item.bold,

@@ -7,9 +7,11 @@ import { businessModelCanvas } from './business-model-canvas.ts';
 import { cadence } from './cadence.ts';
 import { callout } from './callout.ts';
 import { chartTakeaway } from './chart-takeaway.ts';
+import { composition } from './composition.ts';
 import { coverageMap } from './coverage-map.ts';
 import { dataTable } from './data-table.ts';
 import { evidenceChain } from './evidence-chain.ts';
+import { evidencePanorama } from './evidence-panorama.ts';
 import { execSummary } from './exec-summary.ts';
 import { fiveForces } from './five-forces.ts';
 import { footballField } from './football-field.ts';
@@ -51,6 +53,7 @@ export const LAYOUTS: LayoutDef[] = [
   agenda,
   execSummary,
   keyPoints,
+  composition,
   bigStatement,
   textImage,
   text,
@@ -59,6 +62,7 @@ export const LAYOUTS: LayoutDef[] = [
   freeformCanvas,
   nativeCanvas,
   kpiTiles,
+  evidencePanorama,
   chartTakeaway,
   waterfall,
   bubbleChart,

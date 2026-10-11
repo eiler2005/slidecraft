@@ -14,6 +14,7 @@ export interface ContextInit {
   fonts: { heading: FontSpec; body: FontSpec };
   slideId: string;
   slideIndex: number;
+  pointerPrefix?: string;
   variant: string;
   slide: { title: string; lead?: string };
   body: Box;
@@ -33,7 +34,7 @@ export function createContext(
   const { theme, format, fonts } = init;
   const nodes: SceneNode[] = [];
   const diagnostics: Diagnostic[] = [];
-  const base = `/slides/${init.slideIndex}`;
+  const base = init.pointerPrefix ?? `/slides/${init.slideIndex}`;
   const ptr = (field?: string) => (field ? `${base}/${field}` : base);
   const colors = { ...theme.colors, chart: theme.chart };
 
@@ -56,6 +57,7 @@ export function createContext(
     format,
     fonts,
     slideId: init.slideId,
+    slideIndex: init.slideIndex,
     variant: init.variant,
     slide: init.slide,
     baseDir: init.baseDir,

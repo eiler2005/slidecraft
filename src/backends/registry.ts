@@ -49,7 +49,7 @@ export function inCodex(): boolean {
 
 /**
  * Resolve `auto` deterministically:
- *  pptx: artifact-tool when running inside Codex and detected, else pptxgenjs.
+ *  pptx: pptxgenjs everywhere; artifact-tool is an explicit local evaluation option.
  *  pdf:  html when the theme prefers html and Chrome is available, else native.
  *  png:  resvg.  html: html.  onepager / docx: their bundled engine.
  */
@@ -76,10 +76,7 @@ export async function resolveEngine(
       : { reason: `${e.label} unavailable: ${d.detail ?? ''}` };
   }
   if (kind === 'pptx') {
-    const at = findEngine('pptx', 'artifact-tool');
-    if (at && inCodex() && (await detect(at)).available)
-      return { engine: at, reason: 'auto: running inside Codex' };
-    return { engine: pptxgenjsEngine, reason: 'auto: default' };
+    return { engine: pptxgenjsEngine, reason: 'auto: portable editable PPTX' };
   }
   if (kind === 'pdf') {
     const html = findEngine('pdf', 'html');

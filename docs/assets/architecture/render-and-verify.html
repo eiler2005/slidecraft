@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Одна композиция — разные движки и проверки</title>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #F5F7FA;   /* white-smoke */
+      --color-ink:     #0A2033;   /* jet-black */
+      --color-muted:   #596E7C;   /* blue-slate */
+      --color-accent:  #0960D5;   /* atomic-tangerine */
+      --font-sans:     Arial, sans-serif;
+      --font-serif:    'Instrument Serif', 'Noto Serif', 'Noto Serif KR', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 2rem;
+    }
+
+    .frame { max-width: 1280px; width: 100%; }
+    /* The SVG holds its readable width (min-width == the viewBox width, so the
+       type ramp is never silently scaled down). This wrapper lets a narrow
+       screen scroll the diagram instead of the whole page. */
+    .diagram-container { width: 100%; overflow-x: auto; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 2.4vw + 0.75rem, 2rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--color-ink);
+      margin-bottom: 1.5rem;
+    }
+
+    svg { width: 100%; min-width: 1280px; display: block; }
+    /* Paper has no scrollbar, so the local scroller would clip instead of
+       scroll. Let the diagram scale down to the sheet: smaller but whole
+       beats sharp but cut off. Must come after the svg rule above - a media
+       query adds no specificity, so a later plain rule would win. */
+    @media print {
+      .diagram-container { overflow-x: visible; }
+      svg { min-width: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <div class="diagram-container">
+      <svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="render-and-verify-title render-and-verify-desc">
+<title id="render-and-verify-title">Одна композиция — разные движки и проверки</title><desc id="render-and-verify-desc">HTML и редактируемый PPTX используют Scene IR; проверка состава и рендер настоящего PowerPoint дополняют визуальное сравнение.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#596E7C"/></marker><marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#0960D5"/></marker><marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#0960D5"/></marker></defs>
+<rect width="1280" height="720" fill="#F5F7FA"/>
+<text x="40" y="60" font-family="Arial" font-size="12" fill="#596E7C">SLIDECRAFT / ARCHITECTURE</text>
+<text x="40" y="112" font-family="Arial" font-size="40" font-weight="600" fill="#0A2033">Одна композиция — разные движки и проверки</text>
+<path d="M280 324 H304 Q312 324 312 316 V232 Q312 224 320 224 H360" fill="none" stroke="#596E7C" stroke-width="1.5" marker-end="url(#arrow)"/><path d="M280 356 H320 Q328 356 328 364 V456 Q328 464 336 464 H360" fill="none" stroke="#596E7C" stroke-width="1.5" marker-end="url(#arrow)"/><path d="M616 464 H680" fill="none" stroke="#596E7C" stroke-width="1.5" marker-end="url(#arrow)"/><path d="M808 416 V368" fill="none" stroke="#596E7C" stroke-width="1.5" marker-end="url(#arrow)"/><path d="M616 224 H664 Q672 224 672 232 V312 Q672 320 680 320 H704" fill="none" stroke="#596E7C" stroke-width="1.5" marker-end="url(#arrow)"/><path d="M616 496 H640 Q648 496 648 504 V576 Q648 584 656 584 H680" fill="none" stroke="#596E7C" stroke-width="1.5" marker-end="url(#arrow)"/><path d="M936 320 H1000" fill="none" stroke="#596E7C" stroke-width="1.5" marker-end="url(#arrow)"/><path d="M936 584 H1112 Q1120 584 1120 576 V368" fill="none" stroke="#596E7C" stroke-width="1.5" marker-end="url(#arrow)"/><g><rect x="40" y="292" width="240" height="96" rx="6" fill="#DFEAFC" stroke="#0960D5"/><text x="56" y="322" font-family="Arial" font-size="16" font-weight="600" fill="#0A2033">Scene IR</text><text x="56" y="346" font-family="Arial" font-size="12" fill="#596E7C">Текст · фигуры · таблицы</text><text x="56" y="366" font-family="Arial" font-size="12" fill="#596E7C">Диаграммы · источники · notes</text></g><g><rect x="360" y="176" width="256" height="96" rx="6" fill="#FFFFFF" stroke="#DCE3EB"/><text x="376" y="206" font-family="Arial" font-size="16" font-weight="600" fill="#0A2033">HTML / SVG</text><text x="376" y="230" font-family="Arial" font-size="12" fill="#596E7C">Рендер общей композиции</text><text x="376" y="250" font-family="Arial" font-size="12" fill="#596E7C">Зафиксированный эталон</text></g><g><rect x="360" y="416" width="256" height="112" rx="6" fill="#FFFFFF" stroke="#DCE3EB"/><text x="376" y="446" font-family="Arial" font-size="16" font-weight="600" fill="#0A2033">Редактируемый PPTX</text><text x="376" y="470" font-family="Arial" font-size="12" fill="#596E7C">pptxgenjs по умолчанию</text><text x="376" y="490" font-family="Arial" font-size="12" fill="#596E7C">OpenAI — опция internal evaluation</text><text x="376" y="510" font-family="Arial" font-size="12" fill="#596E7C">Без замены слайда картинкой</text></g><g><rect x="680" y="416" width="256" height="112" rx="6" fill="#FFFFFF" stroke="#DCE3EB"/><text x="696" y="446" font-family="Arial" font-size="16" font-weight="600" fill="#0A2033">Office-рендер</text><text x="696" y="470" font-family="Arial" font-size="12" fill="#596E7C">PPTX → PowerPoint / LibreOffice</text><text x="696" y="490" font-family="Arial" font-size="12" fill="#596E7C">PDF → изображения страниц</text></g><g><rect x="704" y="272" width="232" height="96" rx="6" fill="#DFEAFC" stroke="#0960D5"/><text x="720" y="302" font-family="Arial" font-size="16" font-weight="600" fill="#0A2033">Визуальная проверка</text><text x="720" y="326" font-family="Arial" font-size="12" fill="#596E7C">HTML ↔ фактический PPTX</text><text x="720" y="346" font-family="Arial" font-size="12" fill="#596E7C">Цель ≥95%, требуется измерение</text></g><g><rect x="680" y="544" width="256" height="80" rx="6" fill="#FFFFFF" stroke="#DCE3EB"/><text x="696" y="574" font-family="Arial" font-size="16" font-weight="600" fill="#0A2033">Проверка состава</text><text x="696" y="598" font-family="Arial" font-size="12" fill="#596E7C">Тексты · notes · chrome · объекты</text></g><g><rect x="1000" y="272" width="240" height="96" rx="6" fill="#FFFFFF" stroke="#DCE3EB"/><text x="1016" y="302" font-family="Arial" font-size="16" font-weight="600" fill="#0A2033">Отчёт + исправления</text><text x="1016" y="326" font-family="Arial" font-size="12" fill="#596E7C">Ошибки, ограничения, движок</text><text x="1016" y="346" font-family="Arial" font-size="12" fill="#596E7C">Результат не равен гарантии</text></g>
+<line x1="40" y1="656" x2="1240" y2="656" stroke="#DCE3EB"/>
+<text x="40" y="688" font-family="Arial" font-size="12" fill="#596E7C">resvg показывает Scene, не результат PowerPoint. Структурные тесты не заменяют visual-diff и просмотр каждого слайда.</text></svg>
+    </div>
+  </div>
+</body>
+</html>
+

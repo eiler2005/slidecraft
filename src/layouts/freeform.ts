@@ -4,6 +4,65 @@ import { sanitizeCss, sanitizeHtml } from '../engine/freeform.ts';
 import { diag } from '../qa/codes.ts';
 import type { LayoutDef } from './types.ts';
 
+const pptStroke = z
+  .object({
+    color: z.string().regex(/^#[0-9a-fA-F]{6}$/),
+    width: z.number().positive(),
+    dash: z.enum(['solid', 'dash', 'dot']).optional(),
+  })
+  .strict();
+const pptItem = z.discriminatedUnion('kind', [
+  z
+    .object({
+      id: z.string().regex(/^[a-z][a-z0-9-]*$/),
+      kind: z.literal('text'),
+      x: z.number(),
+      y: z.number(),
+      w: z.number().positive(),
+      h: z.number().positive(),
+      text: z.string(),
+      size: z.number().positive(),
+      color: z
+        .string()
+        .regex(/^#[0-9a-fA-F]{6}$/)
+        .optional(),
+      bold: z.boolean().optional(),
+      italic: z.boolean().optional(),
+      align: z.enum(['left', 'center', 'right']).optional(),
+      lineHeight: z.number().positive().optional(),
+    })
+    .strict(),
+  z
+    .object({
+      id: z.string().regex(/^[a-z][a-z0-9-]*$/),
+      kind: z.enum(['rect', 'ellipse']),
+      x: z.number(),
+      y: z.number(),
+      w: z.number().positive(),
+      h: z.number().positive(),
+      fill: z
+        .string()
+        .regex(/^#[0-9a-fA-F]{6}$/)
+        .optional(),
+      fillOpacity: z.number().min(0).max(1).optional(),
+      stroke: pptStroke.optional(),
+      radius: z.number().nonnegative().optional(),
+    })
+    .strict(),
+  z
+    .object({
+      id: z.string().regex(/^[a-z][a-z0-9-]*$/),
+      kind: z.literal('line'),
+      x1: z.number(),
+      y1: z.number(),
+      x2: z.number(),
+      y2: z.number(),
+      stroke: pptStroke,
+      arrowEnd: z.boolean().optional(),
+    })
+    .strict(),
+]);
+
 const schema = z
   .object({
     html: z
@@ -13,6 +72,17 @@ const schema = z
         'HTML fragment for the slide body. Theme tokens: var(--ink), var(--accent), var(--font-heading)…',
       ),
     css: z.string().max(6000).optional().describe('CSS for the fragment; scoped to this slide'),
+    ppt: z
+      .array(pptItem)
+      .min(1)
+      .max(250)
+      .refine((items) => new Set(items.map((item) => item.id)).size === items.length, {
+        message: 'PowerPoint alternative ids must be unique within the slide',
+      })
+      .optional()
+      .describe(
+        'Editable PowerPoint equivalent, with stable ids and coordinates in inches relative to the HTML canvas. This is used for PPTX while html remains the visual reference.',
+      ),
     alt: z
       .string()
       .min(10)
@@ -34,7 +104,7 @@ export const freeform: LayoutDef<typeof schema> = {
   ],
   avoidWhen: [
     'Any exhibit a layout already covers — layouts stay editable in PowerPoint',
-    'Decks the audience will edit: editable PPTX is the default and this layout is rejected unless output.editablePptx is explicitly false',
+    'Complex CSS without a verified editable equivalent: supply ppt primitives rather than silently rasterising content',
   ],
   variants: ['body'],
   frame: 'standard',
@@ -88,6 +158,7 @@ export const freeform: LayoutDef<typeof schema> = {
         '--size-body': `${theme.type.body}pt`,
         '--size-small': `${theme.type.small}pt`,
       },
+      ...(c.ppt ? { ppt: c.ppt } : {}),
       role: 'freeform',
       pointer: ctx.ptr('html'),
     });

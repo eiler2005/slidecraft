@@ -62,7 +62,16 @@ describe('MCP server', () => {
       const tools = await c.call('tools/list');
       const names = tools.result.tools.map((t: { name: string }) => t.name);
       expect(names).toEqual(
-        expect.arrayContaining(['guide', 'new_deck', 'check', 'preview_slide', 'build', 'ingest']),
+        expect.arrayContaining([
+          'guide',
+          'new_deck',
+          'check',
+          'preview_slide',
+          'build',
+          'ingest',
+          'list_components',
+          'list_exhibits',
+        ]),
       );
       for (const t of tools.result.tools) expect(t.inputSchema.type).toBe('object');
 

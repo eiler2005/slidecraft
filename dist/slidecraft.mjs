@@ -327,7 +327,7 @@ var require_BufferList = __commonJS({
         this.head = this.tail = null;
         this.length = 0;
       };
-      BufferList.prototype.join = function join26(s2) {
+      BufferList.prototype.join = function join27(s2) {
         if (this.length === 0) return "";
         var p = this.head;
         var ret = "" + p.data;
@@ -137486,7 +137486,7 @@ var require_createNode = __commonJS({
       if (value instanceof String || value instanceof Number || value instanceof Boolean || typeof BigInt !== "undefined" && value instanceof BigInt) {
         value = value.valueOf();
       }
-      const { aliasDuplicateObjects, onAnchor, onTagObj, schema: schema42, sourceObjects } = ctx;
+      const { aliasDuplicateObjects, onAnchor, onTagObj, schema: schema44, sourceObjects } = ctx;
       let ref = void 0;
       if (aliasDuplicateObjects && value && typeof value === "object") {
         ref = sourceObjects.get(value);
@@ -137500,7 +137500,7 @@ var require_createNode = __commonJS({
       }
       if (tagName?.startsWith("!!"))
         tagName = defaultTagPrefix + tagName.slice(2);
-      let tagObj = findTagObject(value, tagName, schema42.tags);
+      let tagObj = findTagObject(value, tagName, schema44.tags);
       if (!tagObj) {
         if (value && typeof value.toJSON === "function") {
           value = value.toJSON();
@@ -137511,7 +137511,7 @@ var require_createNode = __commonJS({
             ref.node = node3;
           return node3;
         }
-        tagObj = value instanceof Map ? schema42[identity.MAP] : Symbol.iterator in Object(value) ? schema42[identity.SEQ] : schema42[identity.MAP];
+        tagObj = value instanceof Map ? schema44[identity.MAP] : Symbol.iterator in Object(value) ? schema44[identity.SEQ] : schema44[identity.MAP];
       }
       if (onTagObj) {
         onTagObj(tagObj);
@@ -137537,7 +137537,7 @@ var require_Collection = __commonJS({
     var createNode = require_createNode();
     var identity = require_identity();
     var Node = require_Node();
-    function collectionFromPath(schema42, path2, value) {
+    function collectionFromPath(schema44, path2, value) {
       let v = value;
       for (let i = path2.length - 1; i >= 0; --i) {
         const k = path2[i];
@@ -137555,16 +137555,16 @@ var require_Collection = __commonJS({
         onAnchor: () => {
           throw new Error("This should not happen, please report a bug.");
         },
-        schema: schema42,
+        schema: schema44,
         sourceObjects: /* @__PURE__ */ new Map()
       });
     }
     var isEmptyPath = (path2) => path2 == null || typeof path2 === "object" && !!path2[Symbol.iterator]().next().done;
     var Collection = class extends Node.NodeBase {
-      constructor(type, schema42) {
+      constructor(type, schema44) {
         super(type);
         Object.defineProperty(this, "schema", {
-          value: schema42,
+          value: schema44,
           configurable: true,
           enumerable: false,
           writable: true
@@ -137575,11 +137575,11 @@ var require_Collection = __commonJS({
        *
        * @param schema - If defined, overwrites the original's schema
        */
-      clone(schema42) {
+      clone(schema44) {
         const copy = Object.create(Object.getPrototypeOf(this), Object.getOwnPropertyDescriptors(this));
-        if (schema42)
-          copy.schema = schema42;
-        copy.items = copy.items.map((it) => identity.isNode(it) || identity.isPair(it) ? it.clone(schema42) : it);
+        if (schema44)
+          copy.schema = schema44;
+        copy.items = copy.items.map((it) => identity.isNode(it) || identity.isPair(it) ? it.clone(schema44) : it);
         if (this.range)
           copy.range = this.range.slice();
         return copy;
@@ -138531,12 +138531,12 @@ var require_Pair = __commonJS({
         this.key = key;
         this.value = value;
       }
-      clone(schema42) {
+      clone(schema44) {
         let { key, value } = this;
         if (identity.isNode(key))
-          key = key.clone(schema42);
+          key = key.clone(schema44);
         if (identity.isNode(value))
-          value = value.clone(schema42);
+          value = value.clone(schema44);
         return new _Pair(key, value);
       }
       toJSON(_, ctx) {
@@ -138729,17 +138729,17 @@ var require_YAMLMap = __commonJS({
       static get tagName() {
         return "tag:yaml.org,2002:map";
       }
-      constructor(schema42) {
-        super(identity.MAP, schema42);
+      constructor(schema44) {
+        super(identity.MAP, schema44);
         this.items = [];
       }
       /**
        * A generic collection parsing method that can be extended
        * to other node classes that inherit from YAMLMap
        */
-      static from(schema42, obj2, ctx) {
+      static from(schema44, obj2, ctx) {
         const { keepUndefined, replacer } = ctx;
-        const map2 = new this(schema42);
+        const map2 = new this(schema44);
         const add2 = (key, value) => {
           if (typeof replacer === "function")
             value = replacer.call(obj2, key, value);
@@ -138755,8 +138755,8 @@ var require_YAMLMap = __commonJS({
           for (const key of Object.keys(obj2))
             add2(key, obj2[key]);
         }
-        if (typeof schema42.sortMapEntries === "function") {
-          map2.items.sort(schema42.sortMapEntries);
+        if (typeof schema44.sortMapEntries === "function") {
+          map2.items.sort(schema44.sortMapEntries);
         }
         return map2;
       }
@@ -138863,7 +138863,7 @@ var require_map = __commonJS({
           onError("Expected a mapping for this tag");
         return map3;
       },
-      createNode: (schema42, obj2, ctx) => YAMLMap.YAMLMap.from(schema42, obj2, ctx)
+      createNode: (schema44, obj2, ctx) => YAMLMap.YAMLMap.from(schema44, obj2, ctx)
     };
     exports.map = map2;
   }
@@ -138883,8 +138883,8 @@ var require_YAMLSeq = __commonJS({
       static get tagName() {
         return "tag:yaml.org,2002:seq";
       }
-      constructor(schema42) {
-        super(identity.SEQ, schema42);
+      constructor(schema44) {
+        super(identity.SEQ, schema44);
         this.items = [];
       }
       add(value) {
@@ -138959,9 +138959,9 @@ var require_YAMLSeq = __commonJS({
           onComment
         });
       }
-      static from(schema42, obj2, ctx) {
+      static from(schema44, obj2, ctx) {
         const { replacer } = ctx;
-        const seq = new this(schema42);
+        const seq = new this(schema44);
         if (obj2 && Symbol.iterator in Object(obj2)) {
           let i = 0;
           for (let it of obj2) {
@@ -139001,7 +139001,7 @@ var require_seq = __commonJS({
           onError("Expected a sequence for this tag");
         return seq2;
       },
-      createNode: (schema42, obj2, ctx) => YAMLSeq.YAMLSeq.from(schema42, obj2, ctx)
+      createNode: (schema44, obj2, ctx) => YAMLSeq.YAMLSeq.from(schema44, obj2, ctx)
     };
     exports.seq = seq;
   }
@@ -139197,7 +139197,7 @@ var require_schema = __commonJS({
     var bool = require_bool();
     var float = require_float();
     var int2 = require_int();
-    var schema42 = [
+    var schema44 = [
       map2.map,
       seq.seq,
       string4.string,
@@ -139210,7 +139210,7 @@ var require_schema = __commonJS({
       float.floatExp,
       float.float
     ];
-    exports.schema = schema42;
+    exports.schema = schema44;
   }
 });
 
@@ -139276,8 +139276,8 @@ var require_schema2 = __commonJS({
         return str;
       }
     };
-    var schema42 = [map2.map, seq.seq].concat(jsonScalars, jsonError);
-    exports.schema = schema42;
+    var schema44 = [map2.map, seq.seq].concat(jsonScalars, jsonError);
+    exports.schema = schema44;
   }
 });
 
@@ -139381,9 +139381,9 @@ ${cn.comment}` : item2.comment;
         onError("Expected a sequence for this tag");
       return seq;
     }
-    function createPairs(schema42, iterable, ctx) {
+    function createPairs(schema44, iterable, ctx) {
       const { replacer } = ctx;
-      const pairs2 = new YAMLSeq.YAMLSeq(schema42);
+      const pairs2 = new YAMLSeq.YAMLSeq(schema44);
       pairs2.tag = "tag:yaml.org,2002:pairs";
       let i = 0;
       if (iterable && Symbol.iterator in Object(iterable))
@@ -139468,8 +139468,8 @@ var require_omap = __commonJS({
         }
         return map2;
       }
-      static from(schema42, iterable, ctx) {
-        const pairs$1 = pairs.createPairs(schema42, iterable, ctx);
+      static from(schema44, iterable, ctx) {
+        const pairs$1 = pairs.createPairs(schema44, iterable, ctx);
         const omap2 = new this();
         omap2.items = pairs$1.items;
         return omap2;
@@ -139496,7 +139496,7 @@ var require_omap = __commonJS({
         }
         return Object.assign(new YAMLOMap(), pairs$1);
       },
-      createNode: (schema42, iterable, ctx) => YAMLOMap.from(schema42, iterable, ctx)
+      createNode: (schema44, iterable, ctx) => YAMLOMap.from(schema44, iterable, ctx)
     };
     exports.YAMLOMap = YAMLOMap;
     exports.omap = omap;
@@ -139671,8 +139671,8 @@ var require_set = __commonJS({
     var Pair = require_Pair();
     var YAMLMap = require_YAMLMap();
     var YAMLSet = class _YAMLSet extends YAMLMap.YAMLMap {
-      constructor(schema42) {
-        super(schema42);
+      constructor(schema44) {
+        super(schema44);
         this.tag = _YAMLSet.tag;
       }
       add(key) {
@@ -139716,9 +139716,9 @@ var require_set = __commonJS({
         else
           throw new Error("Set items must all have null values");
       }
-      static from(schema42, iterable, ctx) {
+      static from(schema44, iterable, ctx) {
         const { replacer } = ctx;
-        const set3 = new this(schema42);
+        const set3 = new this(schema44);
         if (iterable && Symbol.iterator in Object(iterable))
           for (let value of iterable) {
             if (typeof replacer === "function")
@@ -139735,7 +139735,7 @@ var require_set = __commonJS({
       nodeClass: YAMLSet,
       default: false,
       tag: "tag:yaml.org,2002:set",
-      createNode: (schema42, iterable, ctx) => YAMLSet.from(schema42, iterable, ctx),
+      createNode: (schema44, iterable, ctx) => YAMLSet.from(schema44, iterable, ctx),
       resolve(map2, onError) {
         if (identity.isMap(map2)) {
           if (map2.hasAllNullValues(true))
@@ -139857,7 +139857,7 @@ var require_schema3 = __commonJS({
     var pairs = require_pairs();
     var set2 = require_set();
     var timestamp = require_timestamp();
-    var schema42 = [
+    var schema44 = [
       map2.map,
       seq.seq,
       string4.string,
@@ -139880,7 +139880,7 @@ var require_schema3 = __commonJS({
       timestamp.floatTime,
       timestamp.timestamp
     ];
-    exports.schema = schema42;
+    exports.schema = schema44;
   }
 });
 
@@ -139895,7 +139895,7 @@ var require_tags = __commonJS({
     var bool = require_bool();
     var float = require_float();
     var int2 = require_int();
-    var schema42 = require_schema();
+    var schema44 = require_schema();
     var schema$1 = require_schema2();
     var binary = require_binary();
     var merge2 = require_merge();
@@ -139905,7 +139905,7 @@ var require_tags = __commonJS({
     var set2 = require_set();
     var timestamp = require_timestamp();
     var schemas = /* @__PURE__ */ new Map([
-      ["core", schema42.schema],
+      ["core", schema44.schema],
       ["failsafe", [map2.map, seq.seq, string4.string]],
       ["json", schema$1.schema],
       ["yaml11", schema$2.schema],
@@ -139989,9 +139989,9 @@ var require_Schema = __commonJS({
     var tags = require_tags();
     var sortMapEntriesByKey = (a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0;
     var Schema = class _Schema {
-      constructor({ compat, customTags, merge: merge2, resolveKnownTags, schema: schema42, sortMapEntries, toStringDefaults }) {
+      constructor({ compat, customTags, merge: merge2, resolveKnownTags, schema: schema44, sortMapEntries, toStringDefaults }) {
         this.compat = Array.isArray(compat) ? tags.getTags(compat, "compat") : compat ? tags.getTags(null, compat) : null;
-        this.name = typeof schema42 === "string" && schema42 || "core";
+        this.name = typeof schema44 === "string" && schema44 || "core";
         this.knownTags = resolveKnownTags ? tags.coreKnownTags : {};
         this.tags = tags.getTags(customTags, this.name, merge2);
         this.toStringOptions = toStringDefaults ?? null;
@@ -141580,11 +141580,11 @@ var require_compose_scalar = __commonJS({
         scalar2.comment = comment;
       return scalar2;
     }
-    function findScalarTagByName(schema42, value, tagName, tagToken, onError) {
+    function findScalarTagByName(schema44, value, tagName, tagToken, onError) {
       if (tagName === "!")
-        return schema42[identity.SCALAR];
+        return schema44[identity.SCALAR];
       const matchWithTest = [];
-      for (const tag of schema42.tags) {
+      for (const tag of schema44.tags) {
         if (!tag.collection && tag.tag === tagName) {
           if (tag.default && tag.test)
             matchWithTest.push(tag);
@@ -141595,18 +141595,18 @@ var require_compose_scalar = __commonJS({
       for (const tag of matchWithTest)
         if (tag.test?.test(value))
           return tag;
-      const kt = schema42.knownTags[tagName];
+      const kt = schema44.knownTags[tagName];
       if (kt && !kt.collection) {
-        schema42.tags.push(Object.assign({}, kt, { default: false, test: void 0 }));
+        schema44.tags.push(Object.assign({}, kt, { default: false, test: void 0 }));
         return kt;
       }
       onError(tagToken, "TAG_RESOLVE_FAILED", `Unresolved tag: ${tagName}`, tagName !== "tag:yaml.org,2002:str");
-      return schema42[identity.SCALAR];
+      return schema44[identity.SCALAR];
     }
-    function findScalarTagByTest({ atKey, directives, schema: schema42 }, value, token, onError) {
-      const tag = schema42.tags.find((tag2) => (tag2.default === true || atKey && tag2.default === "key") && tag2.test?.test(value)) || schema42[identity.SCALAR];
-      if (schema42.compat) {
-        const compat = schema42.compat.find((tag2) => tag2.default && tag2.test?.test(value)) ?? schema42[identity.SCALAR];
+    function findScalarTagByTest({ atKey, directives, schema: schema44 }, value, token, onError) {
+      const tag = schema44.tags.find((tag2) => (tag2.default === true || atKey && tag2.default === "key") && tag2.test?.test(value)) || schema44[identity.SCALAR];
+      if (schema44.compat) {
+        const compat = schema44.compat.find((tag2) => tag2.default && tag2.test?.test(value)) ?? schema44[identity.SCALAR];
         if (tag.tag !== compat.tag) {
           const ts = directives.tagString(tag.tag);
           const cs = directives.tagString(compat.tag);
@@ -147468,6 +147468,9 @@ function chartAlt(n) {
 var TITLE_NAME = "SlideCraft Title";
 function shapeName(t, slideId) {
   if (t.role === "title") return slideId ? `${TITLE_NAME} sc:${slideId}/title` : TITLE_NAME;
+  if (t.role?.startsWith("ppt:") && slideId) return `sc:${slideId}/ppt/${t.role.slice(4)}`;
+  if (!t.pointer && t.role?.startsWith("chrome-") && slideId)
+    return `sc:${slideId}/chrome/${t.role.slice(7)}`;
   if (!t.pointer || !slideId) return void 0;
   const m = /^\/slides\/\d+(\/.+)$/.exec(t.pointer);
   return m ? `sc:${slideId}${m[1]}` : void 0;
@@ -153072,13 +153075,17 @@ async function applyTemplate(deck, template, opts = {}) {
     });
     const tLayoutXml = await out.file(layout).async("string");
     const slideXml = await out.file(dest).async("string");
-    out.file(
-      dest,
-      slideXml.replace(
-        "</p:spTree>",
-        `${placeholderShapes(tLayoutXml, i + 1, role === "cover" ? void 0 : opts.footer, 9e3)}</p:spTree>`
-      )
-    );
+    const footer = role === "cover" ? void 0 : opts.footer;
+    let placeholders = placeholderShapes(tLayoutXml, i + 1, footer, 9e3);
+    if (footer && !placeholders.includes('name="Footer"')) {
+      const escaped = footer.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      const shape = [...layoutXml.matchAll(/<p:sp>[\s\S]*?<\/p:sp>/g)].map((m) => m[0]).find(
+        (sp) => [...sp.matchAll(/<a:t>([^<]*)<\/a:t>/g)].map((m) => m[1]).join("") === escaped
+      );
+      if (shape)
+        placeholders += shape.replace(/(<p:cNvPr\s+id=")\d+("[^>]*name=")[^"]*/, "$19001$2Footer");
+    }
+    out.file(dest, slideXml.replace("</p:spTree>", `${placeholders}</p:spTree>`));
     const rid = nextRid();
     presRels.push({ id: rid, type: T_SLIDE, target: `slides/slide${i + 1}.xml`, external: false });
     sldIds.push(`<p:sldId id="${256 + i}" r:id="${rid}"/>`);
@@ -167594,7 +167601,7 @@ var resvgEngine = {
       files,
       diagnostics: [],
       limitations: [
-        "Previews use bundled metric-compatible fonts; PowerPoint renders with Arial/Georgia."
+        "Scene previews rendered by resvg, not by PowerPoint. Font support and text rendering may differ; use --png-engine pptx-convert for actual Office previews."
       ]
     };
   }
@@ -167603,6 +167610,9 @@ var resvgEngine = {
 // src/backends/pptxgenjs.ts
 var PptxGenJS2 = PptxGenJS.default ?? PptxGenJS;
 var hex = (c) => c.replace("#", "").toUpperCase();
+function pptFontFace(family) {
+  return /^(system-ui|-apple-system|blinkmacsystemfont)$/i.test(family.trim()) ? "Arial" : family;
+}
 function lineProps(s2) {
   if (!s2) return { type: "none" };
   return {
@@ -167644,7 +167654,7 @@ function textOpts(t, slideId) {
     w: t.box.w,
     h: t.box.h,
     margin: 0,
-    fontFace: t.style.family,
+    fontFace: pptFontFace(t.style.family),
     fontSize: t.style.size,
     color: hex(t.style.color),
     lineSpacing: t.style.lineSpacing,
@@ -167688,7 +167698,7 @@ function addChart(pptx, slide, n) {
     valAxisLineShow: false,
     catAxisLabelFontSize: n.catLabels.size,
     catAxisLabelColor: hex(n.catLabels.color),
-    catAxisLabelFontFace: n.font.family,
+    catAxisLabelFontFace: pptFontFace(n.font.family),
     catAxisLineShow: true,
     catAxisLineColor: "C9D2DE",
     catGridLine: { style: "none" },
@@ -167698,7 +167708,7 @@ function addChart(pptx, slide, n) {
     showLegend: n.legend,
     legendPos: "t",
     legendFontSize: n.catLabels.size,
-    legendFontFace: n.font.family,
+    legendFontFace: pptFontFace(n.font.family),
     showValue: n.nativeLabels,
     dataLabelFormatCode: n.labels.format,
     dataLabelFontSize: n.labels.size,
@@ -167786,16 +167796,20 @@ function addNode(pptx, slide, n, slideId) {
     case "rect": {
       const shape = n.radius ? pptx.ShapeType.roundRect : pptx.ShapeType.rect;
       const o = { x: n.box.x, y: n.box.y, w: n.box.w, h: n.box.h, line: lineProps(n.stroke) };
+      const name = shapeName(n, slideId);
+      if (name) o.objectName = name;
       o.fill = n.fill ? {
         color: hex(n.fill),
         transparency: n.fillOpacity !== void 0 ? Math.round((1 - n.fillOpacity) * 100) : 0
       } : { type: "none" };
-      if (n.radius) o.rectRadius = Math.min(1, n.radius / (Math.min(n.box.w, n.box.h) / 2));
+      if (n.radius) o.rectRadius = Math.min(n.radius, Math.min(n.box.w, n.box.h) / 2);
       slide.addShape(shape, o);
       return;
     }
     case "ellipse": {
       const o = { x: n.box.x, y: n.box.y, w: n.box.w, h: n.box.h, line: lineProps(n.stroke) };
+      const name = shapeName(n, slideId);
+      if (name) o.objectName = name;
       o.fill = n.fill ? {
         color: hex(n.fill),
         transparency: n.fillOpacity !== void 0 ? Math.round((1 - n.fillOpacity) * 100) : 0
@@ -167817,6 +167831,8 @@ function addNode(pptx, slide, n, slideId) {
         points,
         line: lineProps(n.stroke)
       };
+      const name = shapeName(n, slideId);
+      if (name) o.objectName = name;
       o.fill = n.fill ? {
         color: hex(n.fill),
         transparency: n.fillOpacity !== void 0 ? Math.round((1 - n.fillOpacity) * 100) : 0
@@ -167834,6 +167850,8 @@ function addNode(pptx, slide, n, slideId) {
         h: Math.max(1e-4, Math.abs(n.y2 - n.y1)),
         line: { ...lineProps(n.stroke), ...n.arrowEnd ? { endArrowType: "triangle" } : {} }
       };
+      const name = shapeName(n, slideId);
+      if (name) o.objectName = name;
       if (n.x2 < n.x1 !== n.y2 < n.y1 && n.x1 !== n.x2 && n.y1 !== n.y2) o.flipV = true;
       slide.addShape(pptx.ShapeType.line, o);
       return;
@@ -167849,7 +167867,7 @@ function addNode(pptx, slide, n, slideId) {
           return {
             text: textRuns(t),
             options: {
-              fontFace: t.style.family,
+              fontFace: pptFontFace(t.style.family),
               fontSize: t.style.size,
               color: hex(t.style.color),
               bold: t.style.bold ?? false,
@@ -167944,7 +167962,7 @@ async function defineMaster(pptx, m, scene) {
       y: s2.box.y,
       w: s2.box.w,
       h: s2.box.h,
-      fontFace: s2.style.family,
+      fontFace: pptFontFace(s2.style.family),
       fontSize: s2.style.size,
       color: hex(s2.style.color),
       align: s2.style.align,
@@ -168018,7 +168036,11 @@ async function renderPptx(scene, epoch) {
   pptx.author = scene.author ?? "SlideCraft";
   pptx.company = "";
   pptx.subject = `Generated by SlideCraft ${VERSION2}`;
-  pptx.theme = { headFontFace: "Arial", bodyFontFace: "Arial" };
+  pptx.theme = {
+    headFontFace: scene.fonts?.heading.family ?? "Arial",
+    bodyFontFace: scene.fonts?.body.family ?? "Arial",
+    lang: scene.language
+  };
   for (const m of Object.values(scene.masters)) await defineMaster(pptx, m, scene);
   for (const s2 of scene.slides) {
     const slide = pptx.addSlide({ masterName: s2.master });
@@ -168161,7 +168183,7 @@ function addText2(slide, t, slideId) {
   };
   shape.text.set(paragraphs(t, t.paragraphs));
 }
-function pathShape(slide, pts, close, fill, stroke) {
+function pathShape(slide, pts, close, fill, stroke, name) {
   const xs = pts.map((p) => p[0]);
   const ys = pts.map((p) => p[1]);
   const x2 = Math.min(...xs);
@@ -168174,6 +168196,7 @@ function pathShape(slide, pts, close, fill, stroke) {
   if (close) commands.push({ close: {} });
   slide.shapes.add({
     geometry: "custom",
+    ...name ? { name } : {},
     position: { left: px2(x2), top: px2(y), width: px2(w), height: px2(h) },
     fill: fill ?? "none",
     line: line(stroke),
@@ -168181,12 +168204,14 @@ function pathShape(slide, pts, close, fill, stroke) {
   });
 }
 async function addNode2(slide, n, slideId) {
+  const name = shapeName(n, slideId);
   switch (n.kind) {
     case "text":
       return addText2(slide, n, slideId);
     case "rect": {
       const cfg = {
         geometry: n.radius ? "roundRect" : "rect",
+        ...name ? { name } : {},
         position: { left: px2(n.box.x), top: px2(n.box.y), width: px2(n.box.w), height: px2(n.box.h) },
         fill: n.fill ?? "none",
         line: line(n.stroke)
@@ -168198,13 +168223,14 @@ async function addNode2(slide, n, slideId) {
     case "ellipse":
       slide.shapes.add({
         geometry: "ellipse",
+        ...name ? { name } : {},
         position: { left: px2(n.box.x), top: px2(n.box.y), width: px2(n.box.w), height: px2(n.box.h) },
         fill: n.fill ?? "none",
         line: line(n.stroke)
       });
       return;
     case "polygon":
-      return pathShape(slide, n.points, true, n.fill, n.stroke);
+      return pathShape(slide, n.points, true, n.fill, n.stroke, name);
     case "line": {
       pathShape(
         slide,
@@ -168214,7 +168240,8 @@ async function addNode2(slide, n, slideId) {
         ],
         false,
         void 0,
-        n.stroke
+        n.stroke,
+        name
       );
       if (n.arrowEnd) {
         const ang = Math.atan2(n.y2 - n.y1, n.x2 - n.x1);
@@ -169155,10 +169182,75 @@ var pptxConvertEngine = {
   }
 };
 
+// src/backends/pptx-preview.ts
+import { execFileSync as execFileSync3, spawnSync as spawnSync2 } from "node:child_process";
+import { copyFileSync as copyFileSync3, mkdirSync as mkdirSync6, mkdtempSync as mkdtempSync3, readdirSync as readdirSync2, rmSync as rmSync4 } from "node:fs";
+import { tmpdir as tmpdir3 } from "node:os";
+import { join as join8 } from "node:path";
+var pptxPreviewEngine = {
+  id: "pptx-convert",
+  kind: "png",
+  label: "PNG previews rendered from PPTX by Office",
+  license: "uses your installed office suite and Poppler",
+  needsPptx: true,
+  capabilities: {
+    editable: false,
+    nativeCharts: true,
+    speakerNotes: false,
+    fidelity: "identical",
+    install: "PowerPoint or LibreOffice, plus Poppler (pdftoppm)",
+    ci: false
+  },
+  async detect() {
+    const office = await pptxConvertEngine.detect();
+    if (!office.available) return office;
+    if (spawnSync2("pdftoppm", ["-v"]).status !== 0)
+      return { available: false, detail: "pdftoppm not found", install: "Install Poppler" };
+    return { available: true, detail: `${office.detail}; Poppler PNG rasterisation` };
+  },
+  async render(scene, opts) {
+    if (!opts.pptxPath) throw new Error("Office PNG previews require a built PPTX");
+    const width = opts.previewWidth ?? 1600;
+    if (!Number.isSafeInteger(width) || width < 1 || width > 1e4)
+      throw new Error("Office preview width must be an integer between 1 and 10000");
+    const tmp = mkdtempSync3(join8(tmpdir3(), "slidecraft-office-preview-"));
+    try {
+      const pdf = join8(tmp, "office.pdf");
+      convertToPdf(opts.pptxPath, pdf);
+      execFileSync3(
+        "pdftoppm",
+        ["-png", "-scale-to-x", String(width), "-scale-to-y", "-1", pdf, join8(tmp, "page")],
+        { timeout: 18e4, stdio: ["ignore", "pipe", "pipe"] }
+      );
+      const pages = readdirSync2(tmp).filter((f) => /^page-\d+\.png$/.test(f)).sort((a, b) => Number(/\d+/.exec(a)[0]) - Number(/\d+/.exec(b)[0]));
+      if (pages.length !== scene.slides.length)
+        throw new Error(`Office returned ${pages.length} pages for ${scene.slides.length} slides`);
+      const dir = join8(opts.outDir, "previews-office");
+      mkdirSync6(dir, { recursive: true });
+      const files = pages.map((page2, i) => {
+        const slide = scene.slides[i];
+        const path2 = join8(dir, previewName(slide.index, slide.id));
+        copyFileSync3(join8(tmp, page2), path2);
+        return { path: path2, kind: "png", engine: "pptx-convert" };
+      });
+      const office = await pptxConvertEngine.detect();
+      return {
+        files,
+        diagnostics: [],
+        limitations: [
+          `Actual PPTX rendered by ${office.detail}; PNGs rasterised by Poppler. Visual comparison/review is still required.`
+        ]
+      };
+    } finally {
+      rmSync4(tmp, { recursive: true, force: true });
+    }
+  }
+};
+
 // src/backends/docx.ts
 var import_jszip4 = __toESM(require_lib3(), 1);
-import { mkdirSync as mkdirSync6, writeFileSync as writeFileSync5 } from "node:fs";
-import { join as join8 } from "node:path";
+import { mkdirSync as mkdirSync7, writeFileSync as writeFileSync5 } from "node:fs";
+import { join as join9 } from "node:path";
 var TEXT_LAYOUTS = /* @__PURE__ */ new Set([
   "exec-summary",
   "key-points",
@@ -169364,8 +169456,8 @@ var docxEngine = {
     return { available: true, detail: "bundled" };
   },
   async render(scene, opts) {
-    mkdirSync6(opts.outDir, { recursive: true });
-    const p = join8(opts.outDir, `${opts.baseName}.docx`);
+    mkdirSync7(opts.outDir, { recursive: true });
+    const p = join9(opts.outDir, `${opts.baseName}.docx`);
     writeFileSync5(p, await renderDocx(scene, opts.epoch));
     return {
       files: [{ path: p, kind: "docx", engine: "docx" }],
@@ -169378,8 +169470,8 @@ var docxEngine = {
 };
 
 // src/backends/native-pdf.ts
-import { createWriteStream, mkdirSync as mkdirSync7, readFileSync as readFileSync9 } from "node:fs";
-import { join as join9 } from "node:path";
+import { createWriteStream, mkdirSync as mkdirSync8, readFileSync as readFileSync9 } from "node:fs";
+import { join as join10 } from "node:path";
 
 // node_modules/pdfkit/js/standard-fonts/chunks/standardGlyphNames-w3QlG7PW.mjs
 var glyphNames = "space exclam quotedbl numbersign dollar percent ampersand quotesingle parenleft parenright asterisk plus comma hyphen period slash zero one two three four five six seven eight nine colon semicolon less equal greater question at A B C D E F G H I J K L M N O P Q R S T U V W X Y Z bracketleft backslash bracketright asciicircum underscore grave a b c d e f g h i j k l m n o p q r s t u v w x y z braceleft bar braceright asciitilde Euro quotesinglbase florin quotedblbase ellipsis dagger daggerdbl circumflex perthousand Scaron guilsinglleft OE Zcaron quoteleft quoteright quotedblleft quotedblright bullet endash emdash tilde trademark scaron guilsinglright oe zcaron ydieresis exclamdown cent sterling currency yen brokenbar section dieresis copyright ordfeminine guillemotleft logicalnot registered macron degree plusminus twosuperior threesuperior acute mu paragraph periodcentered cedilla onesuperior ordmasculine guillemotright onequarter onehalf threequarters questiondown Agrave Aacute Acircumflex Atilde Adieresis Aring AE Ccedilla Egrave Eacute Ecircumflex Edieresis Igrave Iacute Icircumflex Idieresis Eth Ntilde Ograve Oacute Ocircumflex Otilde Odieresis multiply Oslash Ugrave Uacute Ucircumflex Udieresis Yacute Thorn germandbls agrave aacute acircumflex atilde adieresis aring ae ccedilla egrave eacute ecircumflex edieresis igrave iacute icircumflex idieresis eth ntilde ograve oacute ocircumflex otilde odieresis divide oslash ugrave uacute ucircumflex udieresis yacute thorn";
@@ -179113,8 +179205,8 @@ var nativePdfEngine = {
     return { available: true, detail: "bundled" };
   },
   async render(scene, opts) {
-    mkdirSync7(opts.outDir, { recursive: true });
-    const p = join9(opts.outDir, `${opts.baseName}.pdf`);
+    mkdirSync8(opts.outDir, { recursive: true });
+    const p = join10(opts.outDir, `${opts.baseName}.pdf`);
     await renderPdf(scene, p, opts.epoch);
     return {
       files: [{ path: p, kind: "pdf", engine: "native" }],
@@ -179127,8 +179219,8 @@ var nativePdfEngine = {
 };
 
 // src/backends/onepager.ts
-import { createWriteStream as createWriteStream2, mkdirSync as mkdirSync8 } from "node:fs";
-import { join as join10 } from "node:path";
+import { createWriteStream as createWriteStream2, mkdirSync as mkdirSync9 } from "node:fs";
+import { join as join11 } from "node:path";
 var P2 = 72;
 var PAGE = { w: 8.268, h: 11.693 };
 var M = 0.6;
@@ -179258,8 +179350,8 @@ var onePagerEngine = {
     return { available: true, detail: "bundled" };
   },
   async render(scene, opts) {
-    mkdirSync8(opts.outDir, { recursive: true });
-    const p = join10(opts.outDir, `${opts.baseName}-onepager.pdf`);
+    mkdirSync9(opts.outDir, { recursive: true });
+    const p = join11(opts.outDir, `${opts.baseName}-onepager.pdf`);
     await renderOnePager(scene, p, opts.epoch);
     return {
       files: [{ path: p, kind: "onepager", engine: "onepager" }],
@@ -179314,10 +179406,7 @@ async function resolveEngine(kind, requested, theme) {
     return d.available ? { engine: e, reason: "requested" } : { reason: `${e.label} unavailable: ${d.detail ?? ""}` };
   }
   if (kind === "pptx") {
-    const at = findEngine("pptx", "artifact-tool");
-    if (at && inCodex() && (await detect(at)).available)
-      return { engine: at, reason: "auto: running inside Codex" };
-    return { engine: pptxgenjsEngine, reason: "auto: default" };
+    return { engine: pptxgenjsEngine, reason: "auto: portable editable PPTX" };
   }
   if (kind === "pdf") {
     const html2 = findEngine("pdf", "html");
@@ -179336,12 +179425,13 @@ async function resolveEngine(kind, requested, theme) {
 registerEngine(htmlEngine);
 registerEngine(htmlPdfEngine);
 registerEngine(pptxConvertEngine);
+registerEngine(pptxPreviewEngine);
 registerEngine(artifactToolEngine);
 
 // src/cli/codex.ts
-import { existsSync as existsSync6, mkdirSync as mkdirSync9, readdirSync as readdirSync2, readFileSync as readFileSync10, rmSync as rmSync4, writeFileSync as writeFileSync6 } from "node:fs";
+import { existsSync as existsSync6, mkdirSync as mkdirSync10, readdirSync as readdirSync3, readFileSync as readFileSync10, rmSync as rmSync5, writeFileSync as writeFileSync6 } from "node:fs";
 import { homedir as homedir3 } from "node:os";
-import { join as join11, relative as relative2, resolve as resolve4 } from "node:path";
+import { join as join12, relative as relative2, resolve as resolve4 } from "node:path";
 
 // src/cli/output.ts
 var EXIT = { ok: 0, deckErrors: 1, usage: 2, engine: 3 };
@@ -179411,11 +179501,11 @@ function description(md) {
 }
 function installCodex(dir, root = ROOT) {
   const written = [];
-  mkdirSync9(dir, { recursive: true });
-  const main = readFileSync10(join11(root, "codex", "skills", "slidecraft", "SKILL.md"), "utf8");
+  mkdirSync10(dir, { recursive: true });
+  const main = readFileSync10(join12(root, "codex", "skills", "slidecraft", "SKILL.md"), "utf8");
   const targets = [["slidecraft", transform(main, root), "SlideCraft"]];
   for (const s2 of CODEX_SHARED) {
-    const md = readFileSync10(join11(root, "skills", s2, "SKILL.md"), "utf8");
+    const md = readFileSync10(join12(root, "skills", s2, "SKILL.md"), "utf8");
     const name = `${PREFIX}${s2}`;
     const body = transform(md, root, name).replace(
       /`(storyline-architect|action-title-writer|ghost-deck-skeleton|exhibit-chooser|deck-spec|partner-review-checklist)`( skill)?/g,
@@ -179424,11 +179514,11 @@ function installCodex(dir, root = ROOT) {
     targets.push([name, body, `SlideCraft \xB7 ${s2.replace(/-/g, " ")}`]);
   }
   for (const [name, body, display] of targets) {
-    const d = join11(dir, name);
-    rmSync4(d, { recursive: true, force: true });
-    mkdirSync9(join11(d, "agents"), { recursive: true });
-    writeFileSync6(join11(d, "SKILL.md"), body);
-    writeFileSync6(join11(d, "agents", "openai.yaml"), openaiYaml(display, description(body)));
+    const d = join12(dir, name);
+    rmSync5(d, { recursive: true, force: true });
+    mkdirSync10(join12(d, "agents"), { recursive: true });
+    writeFileSync6(join12(d, "SKILL.md"), body);
+    writeFileSync6(join12(d, "agents", "openai.yaml"), openaiYaml(display, description(body)));
     written.push(d);
   }
   return written;
@@ -179436,17 +179526,17 @@ function installCodex(dir, root = ROOT) {
 function uninstallCodex(dir) {
   if (!existsSync6(dir)) return [];
   const removed = [];
-  for (const n of readdirSync2(dir)) {
+  for (const n of readdirSync3(dir)) {
     if (n === "slidecraft" || n.startsWith(PREFIX)) {
-      rmSync4(join11(dir, n), { recursive: true, force: true });
-      removed.push(join11(dir, n));
+      rmSync5(join12(dir, n), { recursive: true, force: true });
+      removed.push(join12(dir, n));
     }
   }
   return removed;
 }
 function registerCodexCommands(program3) {
   const codex = program3.command("codex").description("Use SlideCraft from OpenAI Codex");
-  const defaultDir = () => join11(process.env.CODEX_HOME ?? join11(homedir3(), ".codex"), "skills");
+  const defaultDir = () => join12(process.env.CODEX_HOME ?? join12(homedir3(), ".codex"), "skills");
   codex.command("install").description("Install SlideCraft skills into Codex (~/.codex/skills)").option(
     "--dir <dir>",
     "Codex skills directory (default: $CODEX_HOME/skills or ~/.codex/skills)"
@@ -179470,8 +179560,8 @@ In Codex: "Using SlideCraft, make a deck that \u2026"`
 
 // src/cli/commands.ts
 var import_yaml2 = __toESM(require_dist(), 1);
-import { existsSync as existsSync13, mkdirSync as mkdirSync11, writeFileSync as writeFileSync9 } from "node:fs";
-import { join as join15, relative as relative4, resolve as resolve10 } from "node:path";
+import { existsSync as existsSync13, mkdirSync as mkdirSync12, writeFileSync as writeFileSync9 } from "node:fs";
+import { join as join16, relative as relative4, resolve as resolve10 } from "node:path";
 
 // node_modules/zod/v4/classic/external.js
 var external_exports = {};
@@ -180139,7 +180229,7 @@ function assertNotEqual(val) {
   return val;
 }
 function toZod() {
-  return (schema42) => schema42;
+  return (schema44) => schema44;
 }
 function assertIs(_arg) {
 }
@@ -180232,8 +180322,8 @@ function rawShape(def) {
   const desc = Object.getOwnPropertyDescriptor(def, "shape");
   return desc?.get ? desc.get.raw : desc?.value;
 }
-function sourceShape(schema42) {
-  return rawShape(schema42._zod.def) ?? schema42._zod.def.shape;
+function sourceShape(schema44) {
+  return rawShape(schema44._zod.def) ?? schema44._zod.def.shape;
 }
 function deferProp(target, key, getter) {
   Object.defineProperty(target, key, {
@@ -180286,8 +180376,8 @@ function mergeDefs(...defs) {
   }
   return Object.defineProperties({}, mergedDescriptors);
 }
-function cloneDef(schema42) {
-  return mergeDefs(schema42._zod.def);
+function cloneDef(schema44) {
+  return mergeDefs(schema44._zod.def);
 }
 function getElementAtPath(obj2, path2) {
   if (!path2)
@@ -180509,19 +180599,19 @@ var BIGINT_FORMAT_RANGES = {
   int64: [/* @__PURE__ */ BigInt("-9223372036854775808"), /* @__PURE__ */ BigInt("9223372036854775807")],
   uint64: [/* @__PURE__ */ BigInt(0), /* @__PURE__ */ BigInt("18446744073709551615")]
 };
-function pick(schema42, mask) {
-  const currDef = schema42._zod.def;
+function pick(schema44, mask) {
+  const currDef = schema44._zod.def;
   const checks = currDef.checks;
   const hasChecks = checks && checks.length > 0;
   if (hasChecks) {
     throw new Error(".pick() cannot be used on object schemas containing refinements");
   }
   const newShape = {};
-  mirrorShape(newShape, schema42, maskedKeys(schema42, mask));
-  return clone(schema42, mergeDefs(currDef, { shape: newShape, checks: [] }));
+  mirrorShape(newShape, schema44, maskedKeys(schema44, mask));
+  return clone(schema44, mergeDefs(currDef, { shape: newShape, checks: [] }));
 }
-function maskedKeys(schema42, mask) {
-  const raw = sourceShape(schema42);
+function maskedKeys(schema44, mask) {
+  const raw = sourceShape(schema44);
   const keys = [];
   for (const key of Reflect.ownKeys(mask)) {
     if (!Object.getOwnPropertyDescriptor(raw, key)?.enumerable) {
@@ -180532,45 +180622,45 @@ function maskedKeys(schema42, mask) {
   }
   return keys;
 }
-function omit(schema42, mask) {
-  const currDef = schema42._zod.def;
+function omit(schema44, mask) {
+  const currDef = schema44._zod.def;
   const checks = currDef.checks;
   const hasChecks = checks && checks.length > 0;
   if (hasChecks) {
     throw new Error(".omit() cannot be used on object schemas containing refinements");
   }
-  const omitted = new Set(maskedKeys(schema42, mask));
+  const omitted = new Set(maskedKeys(schema44, mask));
   const newShape = {};
-  mirrorShape(newShape, schema42, Reflect.ownKeys(sourceShape(schema42)).filter((key) => !omitted.has(key)));
-  return clone(schema42, mergeDefs(currDef, { shape: newShape, checks: [] }));
+  mirrorShape(newShape, schema44, Reflect.ownKeys(sourceShape(schema44)).filter((key) => !omitted.has(key)));
+  return clone(schema44, mergeDefs(currDef, { shape: newShape, checks: [] }));
 }
-function extend(schema42, shape) {
+function extend(schema44, shape) {
   if (!isPlainObject(shape)) {
     throw new Error("Invalid input to extend: expected a plain object");
   }
-  const checks = schema42._zod.def.checks;
+  const checks = schema44._zod.def.checks;
   const hasChecks = checks && checks.length > 0;
   if (hasChecks) {
-    const existingShape = sourceShape(schema42);
+    const existingShape = sourceShape(schema44);
     for (const key of Reflect.ownKeys(shape)) {
       if (Object.getOwnPropertyDescriptor(existingShape, key) !== void 0) {
         throw new Error("Cannot overwrite keys on object schemas containing refinements. Use `.safeExtend()` instead.");
       }
     }
   }
-  return clone(schema42, mergeDefs(schema42._zod.def, { shape: extended(schema42, shape) }));
+  return clone(schema44, mergeDefs(schema44._zod.def, { shape: extended(schema44, shape) }));
 }
-function extended(schema42, shape) {
+function extended(schema44, shape) {
   const newShape = {};
-  mirrorShape(newShape, schema42, Reflect.ownKeys(sourceShape(schema42)));
+  mirrorShape(newShape, schema44, Reflect.ownKeys(sourceShape(schema44)));
   mirrorProps(newShape, shape);
   return newShape;
 }
-function safeExtend(schema42, shape) {
+function safeExtend(schema44, shape) {
   if (!isPlainObject(shape)) {
     throw new Error("Invalid input to safeExtend: expected a plain object");
   }
-  return clone(schema42, mergeDefs(schema42._zod.def, { shape: extended(schema42, shape) }));
+  return clone(schema44, mergeDefs(schema44._zod.def, { shape: extended(schema44, shape) }));
 }
 function merge(a, b) {
   if (!b?._zod?.def) {
@@ -180591,26 +180681,26 @@ function merge(a, b) {
   });
   return clone(a, def);
 }
-function partial(Class2, schema42, mask, name = "partial") {
-  const currDef = schema42._zod.def;
+function partial(Class2, schema44, mask, name = "partial") {
+  const currDef = schema44._zod.def;
   const checks = currDef.checks;
   const hasChecks = checks && checks.length > 0;
   if (hasChecks) {
     throw new Error(`.${name}() cannot be used on object schemas containing refinements`);
   }
-  const selected = mask ? new Set(maskedKeys(schema42, mask)) : void 0;
+  const selected = mask ? new Set(maskedKeys(schema44, mask)) : void 0;
   const newShape = {};
-  mirrorShape(newShape, schema42, Reflect.ownKeys(sourceShape(schema42)), Class2 && ((value, key) => selected && !selected.has(key) ? value : new Class2({ type: "optional", innerType: value })));
-  return clone(schema42, mergeDefs(schema42._zod.def, { shape: newShape, checks: [] }));
+  mirrorShape(newShape, schema44, Reflect.ownKeys(sourceShape(schema44)), Class2 && ((value, key) => selected && !selected.has(key) ? value : new Class2({ type: "optional", innerType: value })));
+  return clone(schema44, mergeDefs(schema44._zod.def, { shape: newShape, checks: [] }));
 }
-function required(Class2, schema42, mask) {
-  const selected = mask ? new Set(maskedKeys(schema42, mask)) : void 0;
+function required(Class2, schema44, mask) {
+  const selected = mask ? new Set(maskedKeys(schema44, mask)) : void 0;
   const newShape = {};
-  mirrorShape(newShape, schema42, Reflect.ownKeys(sourceShape(schema42)), (value, key) => (
+  mirrorShape(newShape, schema44, Reflect.ownKeys(sourceShape(schema44)), (value, key) => (
     // overwrite with non-optional
     selected && !selected.has(key) ? value : new Class2({ type: "nonoptional", innerType: value })
   ));
-  return clone(schema42, mergeDefs(schema42._zod.def, { shape: newShape }));
+  return clone(schema44, mergeDefs(schema44._zod.def, { shape: newShape }));
 }
 function aborted(x2, startIndex = 0) {
   if (x2.aborted === true)
@@ -181215,9 +181305,9 @@ function finalizeParams(callee, params) {
   return { callee: params?.callee ?? callee, Err: params?.Err };
 }
 var _parse = (_Err) => {
-  const fn = (schema42, value, _ctx, _params) => {
+  const fn = (schema44, value, _ctx, _params) => {
     const ctx = _ctx ? { ..._ctx, async: false } : { async: false };
-    const result = schema42._zod.run({ value, issues: [] }, ctx);
+    const result = schema44._zod.run({ value, issues: [] }, ctx);
     if (result instanceof Promise) {
       throw new $ZodAsyncError();
     }
@@ -181232,9 +181322,9 @@ var _parse = (_Err) => {
 };
 var parse2 = /* @__PURE__ */ _parse($ZodRealError);
 var _parseAsync = (_Err) => {
-  const fn = async (schema42, value, _ctx, params) => {
+  const fn = async (schema44, value, _ctx, params) => {
     const ctx = _ctx ? { ..._ctx, async: true } : { async: true };
-    let result = schema42._zod.run({ value, issues: [] }, ctx);
+    let result = schema44._zod.run({ value, issues: [] }, ctx);
     if (result instanceof Promise)
       result = await result;
     if (result.issues.length) {
@@ -181247,9 +181337,9 @@ var _parseAsync = (_Err) => {
   return fn;
 };
 var parseAsync = /* @__PURE__ */ _parseAsync($ZodRealError);
-var _safeParse = (_Err) => (schema42, value, _ctx) => {
+var _safeParse = (_Err) => (schema44, value, _ctx) => {
   const ctx = _ctx ? { ..._ctx, async: false } : { async: false };
-  const result = schema42._zod.run({ value, issues: [] }, ctx);
+  const result = schema44._zod.run({ value, issues: [] }, ctx);
   if (result instanceof Promise) {
     throw new $ZodAsyncError();
   }
@@ -181275,9 +181365,9 @@ function failure(Err, issues, ctx) {
     }
   };
 }
-var _safeParseAsync = (_Err) => async (schema42, value, _ctx) => {
+var _safeParseAsync = (_Err) => async (schema44, value, _ctx) => {
   const ctx = _ctx ? { ..._ctx, async: true } : { async: true };
-  let result = schema42._zod.run({ value, issues: [] }, ctx);
+  let result = schema44._zod.run({ value, issues: [] }, ctx);
   if (result instanceof Promise)
     result = await result;
   return result.issues.length ? failure(_Err, result.issues, ctx) : { success: true, data: result.value };
@@ -181285,88 +181375,88 @@ var _safeParseAsync = (_Err) => async (schema42, value, _ctx) => {
 var safeParseAsync = /* @__PURE__ */ _safeParseAsync($ZodRealError);
 var COMPILE_INVALID = /* @__PURE__ */ Symbol.for("zod.compile.invalid");
 var COMPILE_FALLBACK = /* @__PURE__ */ Symbol.for("zod.compile.fallback");
-var validate = ((schema42, value, _ctx) => {
-  const validator = schema42._zod.bag.validator;
+var validate = ((schema44, value, _ctx) => {
+  const validator = schema44._zod.bag.validator;
   if (validator !== void 0) {
     if (validator(value) !== COMPILE_INVALID)
       return true;
     if (validator.definite === true && _ctx === void 0)
       return false;
   }
-  return validateFallback(schema42, value, _ctx);
+  return validateFallback(schema44, value, _ctx);
 });
-function validateFallback(schema42, value, _ctx) {
+function validateFallback(schema44, value, _ctx) {
   const ctx = _ctx ? { ..._ctx, async: false, abortEarly: true } : { async: false, abortEarly: true };
-  const fallbackRun = schema42._zod.bag.fallbackRun;
+  const fallbackRun = schema44._zod.bag.fallbackRun;
   let result;
   if (fallbackRun) {
     ctx[COMPILE_FALLBACK] = true;
     result = fallbackRun({ value, issues: [] }, ctx);
   } else {
-    result = schema42._zod.run({ value, issues: [] }, ctx);
+    result = schema44._zod.run({ value, issues: [] }, ctx);
   }
   if (result instanceof Promise) {
     throw new $ZodAsyncError();
   }
   return result.issues.length === 0;
 }
-var validateAsync = async (schema42, value, _ctx) => {
+var validateAsync = async (schema44, value, _ctx) => {
   const ctx = _ctx ? { ..._ctx, async: true, abortEarly: true } : { async: true, abortEarly: true };
-  let result = schema42._zod.run({ value, issues: [] }, ctx);
+  let result = schema44._zod.run({ value, issues: [] }, ctx);
   if (result instanceof Promise)
     result = await result;
   return result.issues.length === 0;
 };
 var _encode = (_Err) => {
   const parse4 = _parse(_Err);
-  const fn = (schema42, value, _ctx, _params) => {
+  const fn = (schema44, value, _ctx, _params) => {
     const ctx = _ctx ? { ..._ctx, direction: "backward" } : { direction: "backward" };
-    return parse4(schema42, value, ctx, finalizeParams(fn, _params));
+    return parse4(schema44, value, ctx, finalizeParams(fn, _params));
   };
   return fn;
 };
 var encode = /* @__PURE__ */ _encode($ZodRealError);
 var _decode = (_Err) => {
   const parse4 = _parse(_Err);
-  const fn = (schema42, value, _ctx, _params) => {
-    return parse4(schema42, value, _ctx, finalizeParams(fn, _params));
+  const fn = (schema44, value, _ctx, _params) => {
+    return parse4(schema44, value, _ctx, finalizeParams(fn, _params));
   };
   return fn;
 };
 var decode = /* @__PURE__ */ _decode($ZodRealError);
 var _encodeAsync = (_Err) => {
   const parseAsync3 = _parseAsync(_Err);
-  const fn = async (schema42, value, _ctx, _params) => {
+  const fn = async (schema44, value, _ctx, _params) => {
     const ctx = _ctx ? { ..._ctx, direction: "backward" } : { direction: "backward" };
-    return await parseAsync3(schema42, value, ctx, finalizeParams(fn, _params));
+    return await parseAsync3(schema44, value, ctx, finalizeParams(fn, _params));
   };
   return fn;
 };
 var encodeAsync = /* @__PURE__ */ _encodeAsync($ZodRealError);
 var _decodeAsync = (_Err) => {
   const parseAsync3 = _parseAsync(_Err);
-  const fn = async (schema42, value, _ctx, _params) => {
-    return await parseAsync3(schema42, value, _ctx, finalizeParams(fn, _params));
+  const fn = async (schema44, value, _ctx, _params) => {
+    return await parseAsync3(schema44, value, _ctx, finalizeParams(fn, _params));
   };
   return fn;
 };
 var decodeAsync = /* @__PURE__ */ _decodeAsync($ZodRealError);
-var _safeEncode = (_Err) => (schema42, value, _ctx) => {
+var _safeEncode = (_Err) => (schema44, value, _ctx) => {
   const ctx = _ctx ? { ..._ctx, direction: "backward" } : { direction: "backward" };
-  return _safeParse(_Err)(schema42, value, ctx);
+  return _safeParse(_Err)(schema44, value, ctx);
 };
 var safeEncode = /* @__PURE__ */ _safeEncode($ZodRealError);
-var _safeDecode = (_Err) => (schema42, value, _ctx) => {
-  return _safeParse(_Err)(schema42, value, _ctx);
+var _safeDecode = (_Err) => (schema44, value, _ctx) => {
+  return _safeParse(_Err)(schema44, value, _ctx);
 };
 var safeDecode = /* @__PURE__ */ _safeDecode($ZodRealError);
-var _safeEncodeAsync = (_Err) => async (schema42, value, _ctx) => {
+var _safeEncodeAsync = (_Err) => async (schema44, value, _ctx) => {
   const ctx = _ctx ? { ..._ctx, direction: "backward" } : { direction: "backward" };
-  return _safeParseAsync(_Err)(schema42, value, ctx);
+  return _safeParseAsync(_Err)(schema44, value, ctx);
 };
 var safeEncodeAsync = /* @__PURE__ */ _safeEncodeAsync($ZodRealError);
-var _safeDecodeAsync = (_Err) => async (schema42, value, _ctx) => {
-  return _safeParseAsync(_Err)(schema42, value, _ctx);
+var _safeDecodeAsync = (_Err) => async (schema44, value, _ctx) => {
+  return _safeParseAsync(_Err)(schema44, value, _ctx);
 };
 var safeDecodeAsync = /* @__PURE__ */ _safeDecodeAsync($ZodRealError);
 
@@ -181982,8 +182072,8 @@ var $ZodCheckProperties = /* @__PURE__ */ $constructor("$ZodCheckProperties", (i
     entries ?? (entries = Reflect.ownKeys(def.shape).map((key) => [key, def.shape[key]]));
     const input2 = payload.value;
     let proms;
-    for (const [key, schema42] of entries) {
-      const result = schema42._zod.run({ value: input2[key], issues: [] }, {});
+    for (const [key, schema44] of entries) {
+      const result = schema44._zod.run({ value: input2[key], issues: [] }, {});
       if (result instanceof Promise) {
         proms ?? (proms = []);
         proms.push(result.then((result2) => handleCheckPropertyResult(result2, payload, key)));
@@ -183077,10 +183167,10 @@ var $ZodObjectJIT = /* @__PURE__ */ $constructor("$ZodObjectJIT", (inst, def) =>
       const id = ids[key];
       const k = typeof key === "symbol" ? `syms[${syms.indexOf(key)}]` : esc2(key);
       const isPresent = `${k} in input`;
-      const schema42 = shape[key];
-      const optin = schema42?._zod?.optin;
+      const schema44 = shape[key];
+      const optin = schema44?._zod?.optin;
       const isOptionalIn = optin !== void 0;
-      const isOptionalOut = schema42?._zod?.optout === "optional";
+      const isOptionalOut = schema44?._zod?.optout === "optional";
       doc.write(`const ${id} = ${parseStr(k)};`);
       if (isOptionalIn && isOptionalOut) {
         const assign = optin === "optional" ? `${id}_present` : `${id}.value !== undefined || ${id}_present`;
@@ -184259,8 +184349,8 @@ function handleReadonlyResult(payload) {
     payload.value = Object.freeze(payload.value);
   return payload;
 }
-function leafPattern(schema42) {
-  const def = schema42._zod.def;
+function leafPattern(schema44) {
+  const def = schema44._zod.def;
   let pattern2 = def.pattern;
   let isInt = !!def.format?.includes("int");
   let minimum;
@@ -184283,13 +184373,13 @@ function leafPattern(schema42) {
     return "(?!)";
   if (minimum !== void 0 || maximum !== void 0)
     return string({ minimum, maximum }).source;
-  const own2 = schema42._zod.pattern;
+  const own2 = schema44._zod.pattern;
   return (isInt && own2 === number2 ? integer : own2)?.source;
 }
-function partPattern(schema42) {
-  const def = schema42._zod.def;
-  const own2 = schema42._zod.pattern?.source;
-  const inner = def.innerType ?? schema42._zod.innerType;
+function partPattern(schema44) {
+  const def = schema44._zod.def;
+  const own2 = schema44._zod.pattern?.source;
+  const inner = def.innerType ?? schema44._zod.innerType;
   if (inner) {
     const before = inner._zod.pattern?.source;
     const after = partPattern(inner);
@@ -184303,7 +184393,7 @@ function partPattern(schema42) {
     if (sources.every(Boolean))
       return `^(${sources.map((s2) => cleanRegex(s2)).join("|")})$`;
   }
-  return leafPattern(schema42);
+  return leafPattern(schema44);
 }
 var $ZodTemplateLiteral = /* @__PURE__ */ $constructor("$ZodTemplateLiteral", (inst, def) => {
   $ZodType.init(inst, def);
@@ -192333,11 +192423,11 @@ var $ZodRegistry = class {
     this._map = /* @__PURE__ */ new WeakMap();
     this._idmap = /* @__PURE__ */ new Map();
   }
-  add(schema42, ..._meta) {
+  add(schema44, ..._meta) {
     const meta3 = _meta[0];
-    this._map.set(schema42, meta3);
+    this._map.set(schema44, meta3);
     if (meta3 && typeof meta3 === "object" && "id" in meta3) {
-      this._idmap.set(meta3.id, schema42);
+      this._idmap.set(meta3.id, schema44);
     }
     return this;
   }
@@ -192346,26 +192436,26 @@ var $ZodRegistry = class {
     this._idmap = /* @__PURE__ */ new Map();
     return this;
   }
-  remove(schema42) {
-    const meta3 = this._map.get(schema42);
+  remove(schema44) {
+    const meta3 = this._map.get(schema44);
     if (meta3 && typeof meta3 === "object" && "id" in meta3) {
       this._idmap.delete(meta3.id);
     }
-    this._map.delete(schema42);
+    this._map.delete(schema44);
     return this;
   }
-  get(schema42) {
-    const p = schema42._zod.parent;
+  get(schema44) {
+    const p = schema44._zod.parent;
     if (p) {
       const pm = { ...this.get(p) ?? {} };
       delete pm.id;
-      const f = { ...pm, ...this._map.get(schema42) };
+      const f = { ...pm, ...this._map.get(schema44) };
       return Object.keys(f).length ? f : void 0;
     }
-    return this._map.get(schema42);
+    return this._map.get(schema44);
   }
-  has(schema42) {
-    return this._map.has(schema42);
+  has(schema44) {
+    return this._map.has(schema44);
   }
 };
 function registry() {
@@ -192390,31 +192480,31 @@ var ZodCompileUnsupportedError = class extends Error {
     this.islandable = islandable;
   }
 };
-function compileValidator(schema42, parser) {
+function compileValidator(schema44, parser) {
   try {
-    return compileFn(schema42, { assertOnly: true });
+    return compileFn(schema44, { assertOnly: true });
   } catch {
     return parser;
   }
 }
-function compile(schema42, options) {
+function compile(schema44, options) {
   try {
-    const parser = compileFn(schema42);
-    const clone2 = withParser(schema42, parser);
-    clone2._zod.bag.validator = compileValidator(schema42, parser);
+    const parser = compileFn(schema44);
+    const clone2 = withParser(schema44, parser);
+    clone2._zod.bag.validator = compileValidator(schema44, parser);
     return clone2;
   } catch (err) {
     if (options?.strict)
       throw err;
-    return schema42;
+    return schema44;
   }
 }
-function withParser(schema42, parser) {
-  if (isRecursiveSchema(schema42)) {
+function withParser(schema44, parser) {
+  if (isRecursiveSchema(schema44)) {
     throw new ZodCompileUnsupportedError("a schema whose subtree contains a reference cycle");
   }
-  const clone2 = clone(schema42);
-  const liveRun = schema42._zod.run;
+  const clone2 = clone(schema44);
+  const liveRun = schema44._zod.run;
   const originalRun = liveRun.__originalRun ?? liveRun;
   const wrapped = (payload, ctx) => {
     if (ctx?.async || ctx?.direction === "backward" || ctx?.skipChecks || ctx?.[FALLBACK_FLAG]) {
@@ -192437,7 +192527,7 @@ function withParser(schema42, parser) {
   clone2._zod.bag.validator = parser;
   clone2._zod.run = wrapped;
   if (!liveRun.__originalRun)
-    installCompiledUserMethods(clone2, schema42, parser);
+    installCompiledUserMethods(clone2, schema44, parser);
   return clone2;
 }
 function installCompiledUserMethods(target, source, parser) {
@@ -192464,10 +192554,10 @@ function installCompiledUserMethods(target, source, parser) {
     };
   }
 }
-function compileFn(schema42, options) {
+function compileFn(schema44, options) {
   let recursive2 = true;
   try {
-    recursive2 = isRecursiveSchema(schema42);
+    recursive2 = isRecursiveSchema(schema44);
   } catch {
   }
   if (recursive2) {
@@ -192480,7 +192570,7 @@ function compileFn(schema42, options) {
     definite: true
   };
   const doc = new Doc2(["input"]);
-  const outputAccessor = generateCheck(doc, ctx, schema42, "input", !options?.assertOnly);
+  const outputAccessor = generateCheck(doc, ctx, schema44, "input", !options?.assertOnly);
   doc.write(outputAccessor === null ? `return true;` : `return ${outputAccessor};`);
   const constantNames = ["INVALID", ...ctx.constants.keys()];
   const constantValues = [INVALID, ...ctx.constants.values()];
@@ -192520,20 +192610,20 @@ function addUserConstant(ctx, fn) {
 function newVar(ctx) {
   return `v${ctx.varCounter++}`;
 }
-function runtimeRun(schema42, value) {
-  const result = schema42._zod.run({ value, issues: [] }, {});
+function runtimeRun(schema44, value) {
+  const result = schema44._zod.run({ value, issues: [] }, {});
   if (result && typeof result.then === "function")
     return INVALID;
   const r = result;
   return r.issues.length === 0 ? r.value : INVALID;
 }
-function compileChild(doc, ctx, schema42, accessor, needsValue = true) {
+function compileChild(doc, ctx, schema44, accessor, needsValue = true) {
   const contentLen = doc.content.length;
   const constantCount = ctx.constants.size;
   const constantCounter = ctx.constantCounter;
   const varCounter = ctx.varCounter;
   try {
-    return generateCheck(doc, ctx, schema42, accessor, needsValue);
+    return generateCheck(doc, ctx, schema44, accessor, needsValue);
   } catch (err) {
     if (!(err instanceof ZodCompileUnsupportedError) || !err.islandable)
       throw err;
@@ -192545,12 +192635,12 @@ function compileChild(doc, ctx, schema42, accessor, needsValue = true) {
     }
     ctx.constantCounter = constantCounter;
     ctx.varCounter = varCounter;
-    return emitRuntimeIsland(doc, ctx, schema42, accessor);
+    return emitRuntimeIsland(doc, ctx, schema44, accessor);
   }
 }
-function emitRuntimeIsland(doc, ctx, schema42, accessor) {
+function emitRuntimeIsland(doc, ctx, schema44, accessor) {
   ctx.definite = false;
-  const schemaConst = addConstant(ctx, schema42);
+  const schemaConst = addConstant(ctx, schema44);
   const runConst = addConstant(ctx, runtimeRun);
   const outVar = newVar(ctx);
   doc.write(`const ${outVar} = ${runConst}(${schemaConst}, ${accessor});`);
@@ -192565,8 +192655,8 @@ var WHEN_DEFAULTED_CHECKS = /* @__PURE__ */ new Set([
   "min_length",
   "length_equals"
 ]);
-function generateChecks(doc, ctx, schema42, accessor) {
-  const schemaChecks = schema42._zod.def.checks;
+function generateChecks(doc, ctx, schema44, accessor) {
+  const schemaChecks = schema44._zod.def.checks;
   if (!schemaChecks || schemaChecks.length === 0)
     return accessor;
   let currentAccessor = accessor;
@@ -192941,8 +193031,8 @@ function generateStringFormatCheck(doc, ctx, def, accessor, needsValue = true) {
   }
   return accessor;
 }
-function generateCheck(doc, ctx, schema42, accessor, needsValue = true) {
-  const def = schema42._zod.def;
+function generateCheck(doc, ctx, schema44, accessor, needsValue = true) {
+  const def = schema44._zod.def;
   const type = def.type;
   if (def.coerce) {
     throw new ZodCompileUnsupportedError(`coercion (z.coerce.${type}())`);
@@ -192951,16 +193041,16 @@ function generateCheck(doc, ctx, schema42, accessor, needsValue = true) {
   let typeAccessor;
   switch (type) {
     case "string":
-      typeAccessor = generateStringCheck(doc, ctx, schema42, accessor, buildsValue);
+      typeAccessor = generateStringCheck(doc, ctx, schema44, accessor, buildsValue);
       break;
     case "number":
-      typeAccessor = generateNumberCheck(doc, schema42, accessor);
+      typeAccessor = generateNumberCheck(doc, schema44, accessor);
       break;
     case "boolean":
       typeAccessor = generateBooleanCheck(doc, accessor);
       break;
     case "bigint":
-      typeAccessor = generateBigIntCheck(doc, schema42, accessor);
+      typeAccessor = generateBigIntCheck(doc, schema44, accessor);
       break;
     case "symbol":
       typeAccessor = generateSymbolCheck(doc, accessor);
@@ -192989,79 +193079,79 @@ function generateCheck(doc, ctx, schema42, accessor, needsValue = true) {
       typeAccessor = generateDateCheck(doc, accessor);
       break;
     case "object":
-      typeAccessor = generateObjectCheck(doc, ctx, schema42, accessor, buildsValue);
+      typeAccessor = generateObjectCheck(doc, ctx, schema44, accessor, buildsValue);
       break;
     case "optional":
-      typeAccessor = generateOptionalCheck(doc, ctx, schema42, accessor, buildsValue);
+      typeAccessor = generateOptionalCheck(doc, ctx, schema44, accessor, buildsValue);
       break;
     case "nullable":
-      typeAccessor = generateNullableCheck(doc, ctx, schema42, accessor, buildsValue);
+      typeAccessor = generateNullableCheck(doc, ctx, schema44, accessor, buildsValue);
       break;
     case "array":
-      typeAccessor = generateArrayCheck(doc, ctx, schema42, accessor, buildsValue);
+      typeAccessor = generateArrayCheck(doc, ctx, schema44, accessor, buildsValue);
       break;
     case "literal":
-      typeAccessor = generateLiteralCheck(doc, ctx, schema42, accessor);
+      typeAccessor = generateLiteralCheck(doc, ctx, schema44, accessor);
       break;
     case "enum":
-      typeAccessor = generateEnumCheck(doc, ctx, schema42, accessor);
+      typeAccessor = generateEnumCheck(doc, ctx, schema44, accessor);
       break;
     case "readonly": {
-      const innerOut = generateWrapperCheck(doc, ctx, schema42, accessor);
+      const innerOut = generateWrapperCheck(doc, ctx, schema44, accessor);
       const frozenVar = newVar(ctx);
       doc.write(`const ${frozenVar} = Object.freeze(${innerOut});`);
       typeAccessor = frozenVar;
       break;
     }
     case "success":
-      generateWrapperCheck(doc, ctx, schema42, accessor);
+      generateWrapperCheck(doc, ctx, schema44, accessor);
       typeAccessor = "true";
       break;
     case "default":
     case "prefault":
-      typeAccessor = generateDefaultCheck(doc, ctx, schema42, accessor);
+      typeAccessor = generateDefaultCheck(doc, ctx, schema44, accessor);
       break;
     case "nonoptional":
-      typeAccessor = generateNonOptionalCheck(doc, ctx, schema42, accessor);
+      typeAccessor = generateNonOptionalCheck(doc, ctx, schema44, accessor);
       break;
     case "tuple":
-      typeAccessor = generateTupleCheck(doc, ctx, schema42, accessor);
+      typeAccessor = generateTupleCheck(doc, ctx, schema44, accessor);
       break;
     case "union":
-      typeAccessor = generateUnionCheck(doc, ctx, schema42, accessor);
+      typeAccessor = generateUnionCheck(doc, ctx, schema44, accessor);
       break;
     case "intersection":
-      typeAccessor = generateIntersectionCheck(doc, ctx, schema42, accessor);
+      typeAccessor = generateIntersectionCheck(doc, ctx, schema44, accessor);
       break;
     case "record":
-      typeAccessor = generateRecordCheck(doc, ctx, schema42, accessor);
+      typeAccessor = generateRecordCheck(doc, ctx, schema44, accessor);
       break;
     case "map":
-      typeAccessor = generateMapCheck(doc, ctx, schema42, accessor);
+      typeAccessor = generateMapCheck(doc, ctx, schema44, accessor);
       break;
     case "set":
-      typeAccessor = generateSetCheck(doc, ctx, schema42, accessor);
+      typeAccessor = generateSetCheck(doc, ctx, schema44, accessor);
       break;
     case "file":
       typeAccessor = generateFileCheck(doc, accessor);
       break;
     case "template_literal":
-      typeAccessor = generateTemplateLiteralCheck(doc, ctx, schema42, accessor);
+      typeAccessor = generateTemplateLiteralCheck(doc, ctx, schema44, accessor);
       break;
     case "lazy":
-      typeAccessor = generateLazyCheck(doc, ctx, schema42, accessor);
+      typeAccessor = generateLazyCheck(doc, ctx, schema44, accessor);
       break;
     case "pipe":
-      typeAccessor = generatePipeCheck(doc, ctx, schema42, accessor);
+      typeAccessor = generatePipeCheck(doc, ctx, schema44, accessor);
       break;
     case "custom":
-      typeAccessor = generateCustomCheck(doc, ctx, schema42, accessor);
+      typeAccessor = generateCustomCheck(doc, ctx, schema44, accessor);
       break;
     case "transform":
-      typeAccessor = generateTransformCheck(doc, ctx, schema42, accessor);
+      typeAccessor = generateTransformCheck(doc, ctx, schema44, accessor);
       break;
     case "catch":
-      typeAccessor = generateCatchCheck(doc, ctx, schema42, accessor);
+      typeAccessor = generateCatchCheck(doc, ctx, schema44, accessor);
       break;
     default: {
       void type;
@@ -193070,18 +193160,18 @@ function generateCheck(doc, ctx, schema42, accessor, needsValue = true) {
   }
   if (typeAccessor === null)
     return null;
-  return generateChecks(doc, ctx, schema42, typeAccessor);
+  return generateChecks(doc, ctx, schema44, typeAccessor);
 }
-function generateStringCheck(doc, ctx, schema42, accessor, needsValue = true) {
+function generateStringCheck(doc, ctx, schema44, accessor, needsValue = true) {
   doc.write(`if (typeof ${accessor} !== "string") return INVALID;`);
-  const def = schema42._zod.def;
+  const def = schema44._zod.def;
   if (def.format === void 0)
     return accessor;
   return generateStringFormatCheck(doc, ctx, def, accessor, needsValue);
 }
-function generateNumberCheck(doc, schema42, accessor) {
+function generateNumberCheck(doc, schema44, accessor) {
   doc.write(`if (typeof ${accessor} !== "number" || !Number.isFinite(${accessor})) return INVALID;`);
-  const def = schema42._zod.def;
+  const def = schema44._zod.def;
   if (def.check === "number_format" && def.format) {
     generateNumberFormatCheck(doc, { format: def.format }, accessor);
   }
@@ -193091,9 +193181,9 @@ function generateBooleanCheck(doc, accessor) {
   doc.write(`if (typeof ${accessor} !== "boolean") return INVALID;`);
   return accessor;
 }
-function generateBigIntCheck(doc, schema42, accessor) {
+function generateBigIntCheck(doc, schema44, accessor) {
   doc.write(`if (typeof ${accessor} !== "bigint") return INVALID;`);
-  const def = schema42._zod.def;
+  const def = schema44._zod.def;
   if (def.format) {
     switch (def.format) {
       case "int64":
@@ -193130,8 +193220,8 @@ function generateDateCheck(doc, accessor) {
   doc.write(`if (!(${accessor} instanceof Date) || Number.isNaN(${accessor}.getTime())) return INVALID;`);
   return accessor;
 }
-function generateObjectCheck(doc, ctx, schema42, accessor, buildsValue = true) {
-  const def = schema42._zod.def;
+function generateObjectCheck(doc, ctx, schema44, accessor, buildsValue = true) {
+  const def = schema44._zod.def;
   doc.write(`if (typeof ${accessor} !== "object" || ${accessor} === null || Array.isArray(${accessor})) return INVALID;`);
   const shape = def.shape;
   const keys = Object.keys(shape);
@@ -193249,9 +193339,9 @@ function generateObjectCheck(doc, ctx, schema42, accessor, buildsValue = true) {
   }
   return outputVar;
 }
-function generateOptionalCheck(doc, ctx, schema42, accessor, buildsValue = true) {
-  const def = schema42._zod.def;
-  if (isExactOptional(schema42)) {
+function generateOptionalCheck(doc, ctx, schema44, accessor, buildsValue = true) {
+  const def = schema44._zod.def;
+  if (isExactOptional(schema44)) {
     return generateCheck(doc, ctx, def.innerType, accessor, buildsValue);
   }
   if (def.innerType._zod.optin === "defaulted") {
@@ -193288,16 +193378,16 @@ function generateOptionalCheck(doc, ctx, schema42, accessor, buildsValue = true)
   doc.write(`}`);
   return outputVar;
 }
-function isExactOptional(schema42) {
-  return schema42._zod.traits?.has("$ZodExactOptional") === true;
+function isExactOptional(schema44) {
+  return schema44._zod.traits?.has("$ZodExactOptional") === true;
 }
-function requiresPresenceCheck(schema42) {
-  return schema42._zod.optin === void 0 && fastPathAcceptsAbsence(schema42);
+function requiresPresenceCheck(schema44) {
+  return schema44._zod.optin === void 0 && fastPathAcceptsAbsence(schema44);
 }
-function fastPathAcceptsAbsence(schema42) {
-  if (schema42._zod.def.coerce)
+function fastPathAcceptsAbsence(schema44) {
+  if (schema44._zod.def.coerce)
     return true;
-  const def = schema42._zod.def;
+  const def = schema44._zod.def;
   switch (def.type) {
     case "any":
     case "unknown":
@@ -193332,7 +193422,7 @@ function fastPathAcceptsAbsence(schema42) {
     case "literal":
       return !!def.values?.includes(void 0);
     case "enum":
-      return !!schema42._zod.values?.has(void 0);
+      return !!schema44._zod.values?.has(void 0);
     case "optional":
     case "nullable":
     case "readonly":
@@ -193352,14 +193442,14 @@ function fastPathAcceptsAbsence(schema42) {
       return true;
   }
 }
-function dropsWhenAbsent(schema42) {
-  return schema42._zod.optin === "optional" && schema42._zod.optout === "optional";
+function dropsWhenAbsent(schema44) {
+  return schema44._zod.optin === "optional" && schema44._zod.optout === "optional";
 }
-function mayOmitUndefined(schema42) {
-  return (schema42._zod.optin !== "defaulted" || schema42._zod.optout === "optional") && mayOutputUndefined(schema42);
+function mayOmitUndefined(schema44) {
+  return (schema44._zod.optin !== "defaulted" || schema44._zod.optout === "optional") && mayOutputUndefined(schema44);
 }
-function mayOutputUndefined(schema42) {
-  const def = schema42._zod.def;
+function mayOutputUndefined(schema44) {
+  const def = schema44._zod.def;
   switch (def.type) {
     case "string":
     case "number":
@@ -193383,7 +193473,7 @@ function mayOutputUndefined(schema42) {
     case "literal":
       return !!def.values?.includes(void 0);
     case "enum":
-      return !!schema42._zod.values?.has(void 0);
+      return !!schema44._zod.values?.has(void 0);
     case "optional":
       return true;
     case "nullable":
@@ -193400,8 +193490,8 @@ function mayOutputUndefined(schema42) {
       return true;
   }
 }
-function generateNullableCheck(doc, ctx, schema42, accessor, buildsValue = true) {
-  const def = schema42._zod.def;
+function generateNullableCheck(doc, ctx, schema44, accessor, buildsValue = true) {
+  const def = schema44._zod.def;
   const outputVar = buildsValue ? newVar(ctx) : null;
   if (outputVar)
     doc.write(`let ${outputVar} = null;`);
@@ -193414,8 +193504,8 @@ function generateNullableCheck(doc, ctx, schema42, accessor, buildsValue = true)
   doc.write(`}`);
   return outputVar;
 }
-function generateArrayCheck(doc, ctx, schema42, accessor, buildsValue = true) {
-  const def = schema42._zod.def;
+function generateArrayCheck(doc, ctx, schema44, accessor, buildsValue = true) {
+  const def = schema44._zod.def;
   doc.write(`if (!Array.isArray(${accessor})) return INVALID;`);
   const outputVar = buildsValue ? newVar(ctx) : null;
   const iVar = newVar(ctx);
@@ -193432,8 +193522,8 @@ function generateArrayCheck(doc, ctx, schema42, accessor, buildsValue = true) {
   doc.write(`}`);
   return outputVar;
 }
-function generateLiteralCheck(doc, ctx, schema42, accessor) {
-  const def = schema42._zod.def;
+function generateLiteralCheck(doc, ctx, schema44, accessor) {
+  const def = schema44._zod.def;
   const values = def.values;
   if (values.length !== 1) {
     const literalSet = addConstant(ctx, new Set(values));
@@ -193461,8 +193551,8 @@ function generateLiteralCheck(doc, ctx, schema42, accessor) {
   }
   return accessor;
 }
-function generateEnumCheck(doc, ctx, schema42, accessor) {
-  const values = schema42._zod.values;
+function generateEnumCheck(doc, ctx, schema44, accessor) {
+  const values = schema44._zod.values;
   if (!values) {
     throw new ZodCompileUnsupportedError("enum schema without enumerated values");
   }
@@ -193470,15 +193560,15 @@ function generateEnumCheck(doc, ctx, schema42, accessor) {
   doc.write(`if (!${enumSet}.has(${accessor})) return INVALID;`);
   return accessor;
 }
-function generateWrapperCheck(doc, ctx, schema42, accessor) {
-  const def = schema42._zod.def;
+function generateWrapperCheck(doc, ctx, schema44, accessor) {
+  const def = schema44._zod.def;
   return generateCheck(doc, ctx, def.innerType, accessor);
 }
-function generateDefaultCheck(doc, ctx, schema42, accessor) {
-  const def = schema42._zod.def;
-  const descriptor = Object.getOwnPropertyDescriptor(schema42._zod.def, "defaultValue");
-  const defaultGetter = descriptor ? () => schema42._zod.def.defaultValue : void 0;
-  if (schema42._zod.def.type === "prefault") {
+function generateDefaultCheck(doc, ctx, schema44, accessor) {
+  const def = schema44._zod.def;
+  const descriptor = Object.getOwnPropertyDescriptor(schema44._zod.def, "defaultValue");
+  const defaultGetter = descriptor ? () => schema44._zod.def.defaultValue : void 0;
+  if (schema44._zod.def.type === "prefault") {
     if (!defaultGetter) {
       return generateCheck(doc, ctx, def.innerType, accessor);
     }
@@ -193514,16 +193604,16 @@ function generateDefaultCheck(doc, ctx, schema42, accessor) {
   }
   return outputVar;
 }
-function generateNonOptionalCheck(doc, ctx, schema42, accessor) {
-  const def = schema42._zod.def;
+function generateNonOptionalCheck(doc, ctx, schema44, accessor) {
+  const def = schema44._zod.def;
   const innerOutput = generateCheck(doc, ctx, def.innerType, accessor);
   const outputVar = newVar(ctx);
   doc.write(`const ${outputVar} = ${innerOutput};`);
   doc.write(`if (${outputVar} === undefined) return INVALID;`);
   return outputVar;
 }
-function generateTupleCheck(doc, ctx, schema42, accessor) {
-  const def = schema42._zod.def;
+function generateTupleCheck(doc, ctx, schema44, accessor) {
+  const def = schema44._zod.def;
   const items = def.items;
   const rest = def.rest;
   doc.write(`if (!Array.isArray(${accessor})) return INVALID;`);
@@ -193597,8 +193687,8 @@ function getTupleOptStart2(items, key) {
   }
   return 0;
 }
-function generateUnionCheck(doc, ctx, schema42, accessor) {
-  const def = schema42._zod.def;
+function generateUnionCheck(doc, ctx, schema44, accessor) {
+  const def = schema44._zod.def;
   const options = def.options;
   if (def.discriminator) {
     return generateDiscriminatedUnionCheck(doc, ctx, def, accessor);
@@ -193698,8 +193788,8 @@ function literalEquality(ctx, accessor, value) {
   }
   throw new ZodCompileUnsupportedError(`literal discriminator value ${String(value)}`);
 }
-function generateIntersectionCheck(doc, ctx, schema42, accessor) {
-  const def = schema42._zod.def;
+function generateIntersectionCheck(doc, ctx, schema44, accessor) {
+  const def = schema44._zod.def;
   ctx.definite = false;
   const leftOutput = compileChild(doc, ctx, def.left, accessor);
   const rightOutput = compileChild(doc, ctx, def.right, accessor);
@@ -193709,8 +193799,8 @@ function generateIntersectionCheck(doc, ctx, schema42, accessor) {
   doc.write(`if (!${mergedVar}.valid) return INVALID;`);
   return `${mergedVar}.data`;
 }
-function generateRecordCheck(doc, ctx, schema42, accessor) {
-  const def = schema42._zod.def;
+function generateRecordCheck(doc, ctx, schema44, accessor) {
+  const def = schema44._zod.def;
   const isPlainObjectConst = addConstant(ctx, isPlainObject);
   doc.write(`if (!${isPlainObjectConst}(${accessor})) return INVALID;`);
   const outputVar = newVar(ctx);
@@ -193813,8 +193903,8 @@ function literalPropertyKey(ctx, key) {
     return esc2(key);
   return addConstant(ctx, key);
 }
-function generateMapCheck(doc, ctx, schema42, accessor) {
-  const def = schema42._zod.def;
+function generateMapCheck(doc, ctx, schema44, accessor) {
+  const def = schema44._zod.def;
   doc.write(`if (!(${accessor} instanceof Map)) return INVALID;`);
   const outputVar = newVar(ctx);
   const kVar = newVar(ctx);
@@ -193829,8 +193919,8 @@ function generateMapCheck(doc, ctx, schema42, accessor) {
   doc.write(`}`);
   return outputVar;
 }
-function generateSetCheck(doc, ctx, schema42, accessor) {
-  const def = schema42._zod.def;
+function generateSetCheck(doc, ctx, schema44, accessor) {
+  const def = schema44._zod.def;
   doc.write(`if (!(${accessor} instanceof Set)) return INVALID;`);
   const outputVar = newVar(ctx);
   const valVar = newVar(ctx);
@@ -193847,9 +193937,9 @@ function generateFileCheck(doc, accessor) {
   doc.write(`if (!(${accessor} instanceof File)) return INVALID;`);
   return accessor;
 }
-function generateTemplateLiteralCheck(doc, ctx, schema42, accessor) {
+function generateTemplateLiteralCheck(doc, ctx, schema44, accessor) {
   doc.write(`if (typeof ${accessor} !== "string") return INVALID;`);
-  const pattern2 = schema42._zod.pattern;
+  const pattern2 = schema44._zod.pattern;
   if (pattern2) {
     const patternConst = addConstant(ctx, pattern2);
     doc.write(`${patternConst}.lastIndex = 0;`);
@@ -193857,8 +193947,8 @@ function generateTemplateLiteralCheck(doc, ctx, schema42, accessor) {
   }
   return accessor;
 }
-function generateLazyCheck(doc, ctx, schema42, accessor) {
-  const def = schema42._zod.def;
+function generateLazyCheck(doc, ctx, schema44, accessor) {
+  const def = schema44._zod.def;
   const getterConst = addUserConstant(ctx, def.getter);
   const cacheConst = addConstant(ctx, { parser: null });
   doc.write(`if (!${cacheConst}.parser) {`);
@@ -193877,8 +193967,8 @@ function generateLazyCheck(doc, ctx, schema42, accessor) {
   doc.write(`if (${outputVar} === INVALID) return INVALID;`);
   return outputVar;
 }
-function generatePipeCheck(doc, ctx, schema42, accessor) {
-  const def = schema42._zod.def;
+function generatePipeCheck(doc, ctx, schema44, accessor) {
+  const def = schema44._zod.def;
   const inputOutput = generateCheck(doc, ctx, def.in, accessor);
   if (def.transform) {
     if (isAsyncFunction(def.transform)) {
@@ -193904,8 +193994,8 @@ function generatePipeCheck(doc, ctx, schema42, accessor) {
 function isAsyncFunction(fn) {
   return typeof fn === "function" && (fn.constructor.name === "AsyncFunction" || fn[Symbol.toStringTag] === "AsyncFunction");
 }
-function generateCustomCheck(doc, ctx, schema42, accessor) {
-  const def = schema42._zod.def;
+function generateCustomCheck(doc, ctx, schema44, accessor) {
+  const def = schema44._zod.def;
   if (def.fn) {
     if (isAsyncFunction(def.fn)) {
       throw new ZodCompileAsyncError("z.compile: async custom predicates are not supported");
@@ -193930,8 +194020,8 @@ function runtimeCatch(innerSchema, catchValue, value) {
     return r.value;
   return catchValue();
 }
-function generateCatchCheck(doc, ctx, schema42, accessor) {
-  const def = schema42._zod.def;
+function generateCatchCheck(doc, ctx, schema44, accessor) {
+  const def = schema44._zod.def;
   if (!def.catchValue[CONSTANT_CATCH]) {
     throw new ZodCompileUnsupportedError("catch with a callback (only a constant catch value compiles)", false);
   }
@@ -193953,8 +194043,8 @@ function generateCatchCheck(doc, ctx, schema42, accessor) {
   doc.write(`}`);
   return outputVar;
 }
-function generateTransformCheck(doc, ctx, schema42, accessor) {
-  const def = schema42._zod.def;
+function generateTransformCheck(doc, ctx, schema44, accessor) {
+  const def = schema44._zod.def;
   if (def.transform) {
     if (isAsyncFunction(def.transform)) {
       throw new ZodCompileAsyncError("z.compile: async transforms are not supported");
@@ -194629,11 +194719,11 @@ function _endsWith(suffix, params) {
   });
 }
 // @__NO_SIDE_EFFECTS__
-function _property(property, schema42, params) {
+function _property(property, schema44, params) {
   return new $ZodCheckProperty({
     check: "property",
     property,
-    schema: schema42,
+    schema: schema44,
     ...normalizeParams(params)
   });
 }
@@ -194889,23 +194979,23 @@ function _promise(Class2, innerType) {
 function _custom(Class2, fn, _params) {
   const norm3 = normalizeParams(_params);
   norm3.abort ?? (norm3.abort = true);
-  const schema42 = new Class2({
+  const schema44 = new Class2({
     type: "custom",
     check: "custom",
     fn,
     ...norm3
   });
-  return schema42;
+  return schema44;
 }
 // @__NO_SIDE_EFFECTS__
 function _refine(Class2, fn, _params) {
-  const schema42 = new Class2({
+  const schema44 = new Class2({
     type: "custom",
     check: "custom",
     fn,
     ...normalizeParams(_params)
   });
-  return schema42;
+  return schema44;
 }
 // @__NO_SIDE_EFFECTS__
 function _superRefine(fn, params) {
@@ -195071,8 +195161,8 @@ function initializeContext(params) {
     external: params?.external ?? void 0
   };
 }
-function handleUnrepresentable(schema42, ctx, json2, params, message) {
-  const result = typeof ctx.unrepresentable === "function" ? ctx.unrepresentable({ zodSchema: schema42, path: params.path, message }) : ctx.unrepresentable;
+function handleUnrepresentable(schema44, ctx, json2, params, message) {
+  const result = typeof ctx.unrepresentable === "function" ? ctx.unrepresentable({ zodSchema: schema44, path: params.path, message }) : ctx.unrepresentable;
   if (result === "any")
     return false;
   if (result === void 0 || result === "throw")
@@ -195080,42 +195170,42 @@ function handleUnrepresentable(schema42, ctx, json2, params, message) {
   Object.assign(json2, result);
   return true;
 }
-function processSchema(schema42, ctx, _params = { path: [], schemaPath: [] }) {
+function processSchema(schema44, ctx, _params = { path: [], schemaPath: [] }) {
   var _a3;
-  const def = schema42._zod.def;
-  const seen = ctx.seen.get(schema42);
+  const def = schema44._zod.def;
+  const seen = ctx.seen.get(schema44);
   if (seen) {
     seen.count++;
-    const isCycle = _params.schemaPath.includes(schema42);
+    const isCycle = _params.schemaPath.includes(schema44);
     if (isCycle) {
       seen.cycle = _params.path;
     }
     return seen.schema;
   }
   const result = { schema: {}, count: 1, cycle: void 0, path: _params.path };
-  ctx.seen.set(schema42, result);
+  ctx.seen.set(schema44, result);
   ctx.sharedDefsExtractedFor = void 0;
   ctx.sharedEmitDoneFor = void 0;
-  const overrideSchema = schema42._zod.toJSONSchema?.();
+  const overrideSchema = schema44._zod.toJSONSchema?.();
   if (overrideSchema) {
     result.schema = overrideSchema;
   } else {
     const params = {
       ..._params,
-      schemaPath: [..._params.schemaPath, schema42],
+      schemaPath: [..._params.schemaPath, schema44],
       path: _params.path
     };
-    if (schema42._zod.processJSONSchema) {
-      schema42._zod.processJSONSchema(ctx, result.schema, params);
+    if (schema44._zod.processJSONSchema) {
+      schema44._zod.processJSONSchema(ctx, result.schema, params);
     } else {
       const _json = result.schema;
       const processor = ctx.processors[def.type];
       if (!processor) {
         throw new Error(`[toJSONSchema]: Non-representable type encountered: ${def.type}`);
       }
-      processor(schema42, ctx, _json, params);
+      processor(schema44, ctx, _json, params);
     }
-    const parent = schema42._zod.parent;
+    const parent = schema44._zod.parent;
     if (parent) {
       if (!result.ref)
         result.ref = parent;
@@ -195123,24 +195213,24 @@ function processSchema(schema42, ctx, _params = { path: [], schemaPath: [] }) {
       ctx.seen.get(parent).isParent = true;
     }
   }
-  const meta3 = ctx.metadataRegistry.get(schema42);
+  const meta3 = ctx.metadataRegistry.get(schema44);
   if (meta3)
     assignProps(result.schema, meta3);
-  if (ctx.io === "input" && isTransforming(schema42)) {
+  if (ctx.io === "input" && isTransforming(schema44)) {
     delete result.schema.examples;
     delete result.schema.default;
   }
   if (ctx.io === "input" && "_prefault" in result.schema)
     (_a3 = result.schema).default ?? (_a3.default = result.schema._prefault);
   delete result.schema._prefault;
-  const _result = ctx.seen.get(schema42);
+  const _result = ctx.seen.get(schema44);
   return _result.schema;
 }
 function encodeJSONPointerSegment(segment) {
   return segment.replace(/~/g, "~0").replace(/\//g, "~1");
 }
-function extractDefs(ctx, schema42) {
-  const root = ctx.seen.get(schema42);
+function extractDefs(ctx, schema44) {
+  const root = ctx.seen.get(schema44);
   if (!root)
     throw new Error("Unprocessed schema. This is a bug in Zod.");
   if (ctx.external && ctx.sharedDefsExtractedFor === ctx.external)
@@ -195185,11 +195275,11 @@ function extractDefs(ctx, schema42) {
     seen.def = { ...seen.schema };
     if (defId)
       seen.defId = defId;
-    const schema43 = seen.schema;
-    for (const key in schema43) {
-      delete schema43[key];
+    const schema45 = seen.schema;
+    for (const key in schema45) {
+      delete schema45[key];
     }
-    schema43.$ref = ref;
+    schema45.$ref = ref;
   };
   if (ctx.cycles === "throw") {
     for (const entry2 of ctx.seen.entries()) {
@@ -195203,13 +195293,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
   }
   for (const entry2 of ctx.seen.entries()) {
     const seen = entry2[1];
-    if (schema42 === entry2[0]) {
+    if (schema44 === entry2[0]) {
       extractToDef(entry2);
       continue;
     }
     if (ctx.external) {
       const ext2 = ctx.external.registry.get(entry2[0])?.id;
-      if (schema42 !== entry2[0] && ext2) {
+      if (schema44 !== entry2[0] && ext2) {
         extractToDef(entry2);
         continue;
       }
@@ -195232,9 +195322,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
   if (ctx.external)
     ctx.sharedDefsExtractedFor = ctx.external;
 }
-function compactTypeUnion(schema42) {
-  const options = schema42.anyOf;
-  if (!Array.isArray(options) || options.length === 0 || schema42.type !== void 0)
+function compactTypeUnion(schema44) {
+  const options = schema44.anyOf;
+  if (!Array.isArray(options) || options.length === 0 || schema44.type !== void 0)
     return;
   const types = [];
   for (const option of options) {
@@ -195252,8 +195342,8 @@ function compactTypeUnion(schema42) {
         types.push(member);
     }
   }
-  delete schema42.anyOf;
-  schema42.type = types.length === 1 ? types[0] : types;
+  delete schema44.anyOf;
+  schema44.type = types.length === 1 ? types[0] : types;
 }
 var FOLDABLE_KEYS = /* @__PURE__ */ new Set(["type", "properties", "required", "additionalProperties"]);
 var UNION_KEYS = ["oneOf", "anyOf"];
@@ -195340,16 +195430,16 @@ function foldIntersection(json2) {
   delete json2.allOf;
   assignProps(json2, folded);
 }
-function finalize(ctx, schema42) {
-  const root = ctx.seen.get(schema42);
+function finalize(ctx, schema44) {
+  const root = ctx.seen.get(schema44);
   if (!root)
     throw new Error("Unprocessed schema. This is a bug in Zod.");
   const flattenRef = (zodSchema) => {
     const seen = ctx.seen.get(zodSchema);
     if (seen.ref === null)
       return;
-    const schema43 = seen.def ?? seen.schema;
-    const _cached = { ...schema43 };
+    const schema45 = seen.def ?? seen.schema;
+    const _cached = { ...schema45 };
     const ref = seen.ref;
     seen.ref = null;
     if (ref) {
@@ -195357,28 +195447,28 @@ function finalize(ctx, schema42) {
       const refSeen = ctx.seen.get(ref);
       const refSchema = refSeen.schema;
       if (refSchema.$ref && (ctx.target === "draft-07" || ctx.target === "draft-04" || ctx.target === "openapi-3.0")) {
-        schema43.allOf = schema43.allOf ?? [];
-        schema43.allOf.push(refSchema);
+        schema45.allOf = schema45.allOf ?? [];
+        schema45.allOf.push(refSchema);
       } else {
-        assignProps(schema43, refSchema);
+        assignProps(schema45, refSchema);
       }
-      assignProps(schema43, _cached);
+      assignProps(schema45, _cached);
       const isParentRef = zodSchema._zod.parent === ref;
       if (isParentRef) {
-        for (const key in schema43) {
+        for (const key in schema45) {
           if (key === "$ref" || key === "allOf")
             continue;
           if (!(key in _cached)) {
-            delete schema43[key];
+            delete schema45[key];
           }
         }
       }
       if (refSchema.$ref && refSeen.def) {
-        for (const key in schema43) {
+        for (const key in schema45) {
           if (key === "$ref" || key === "allOf")
             continue;
-          if (key in refSeen.def && JSON.stringify(schema43[key]) === JSON.stringify(refSeen.def[key])) {
-            delete schema43[key];
+          if (key in refSeen.def && JSON.stringify(schema45[key]) === JSON.stringify(refSeen.def[key])) {
+            delete schema45[key];
           }
         }
       }
@@ -195388,13 +195478,13 @@ function finalize(ctx, schema42) {
       flattenRef(parent);
       const parentSeen = ctx.seen.get(parent);
       if (parentSeen?.schema.$ref) {
-        schema43.$ref = parentSeen.schema.$ref;
+        schema45.$ref = parentSeen.schema.$ref;
         if (parentSeen.def) {
-          for (const key in schema43) {
+          for (const key in schema45) {
             if (key === "$ref" || key === "allOf")
               continue;
-            if (key in parentSeen.def && JSON.stringify(schema43[key]) === JSON.stringify(parentSeen.def[key])) {
-              delete schema43[key];
+            if (key in parentSeen.def && JSON.stringify(schema45[key]) === JSON.stringify(parentSeen.def[key])) {
+              delete schema45[key];
             }
           }
         }
@@ -195402,7 +195492,7 @@ function finalize(ctx, schema42) {
     }
     ctx.override({
       zodSchema,
-      jsonSchema: schema43,
+      jsonSchema: schema45,
       path: seen.path ?? []
     });
   };
@@ -195448,13 +195538,13 @@ function finalize(ctx, schema42) {
   } else {
   }
   if (ctx.external?.uri) {
-    const id = ctx.external.registry.get(schema42)?.id;
+    const id = ctx.external.registry.get(schema44)?.id;
     if (!id)
       throw new Error("Schema is missing an `id` property");
     result.$id = ctx.external.uri(id);
   }
   assignProps(result, root.defId ? root.schema : root.def ?? root.schema);
-  const rootMetaId = ctx.metadataRegistry.get(schema42)?.id;
+  const rootMetaId = ctx.metadataRegistry.get(schema44)?.id;
   if (rootMetaId !== void 0 && result.id === rootMetaId)
     delete result.id;
   const defs = ctx.external?.defs ?? {};
@@ -195484,10 +195574,10 @@ function finalize(ctx, schema42) {
     const finalized = JSON.parse(JSON.stringify(result));
     Object.defineProperty(finalized, "~standard", {
       value: {
-        ...schema42["~standard"],
+        ...schema44["~standard"],
         jsonSchema: {
-          input: createStandardJSONSchemaMethod(schema42, "input", ctx.processors),
-          output: createStandardJSONSchemaMethod(schema42, "output", ctx.processors)
+          input: createStandardJSONSchemaMethod(schema44, "input", ctx.processors),
+          output: createStandardJSONSchemaMethod(schema44, "output", ctx.processors)
         }
       },
       enumerable: false,
@@ -195551,18 +195641,18 @@ function isTransforming(_schema, _ctx) {
   }
   return false;
 }
-var createToJSONSchemaMethod = (schema42, processors = {}) => (params) => {
+var createToJSONSchemaMethod = (schema44, processors = {}) => (params) => {
   const ctx = initializeContext({ ...params, processors });
-  processSchema(schema42, ctx);
-  extractDefs(ctx, schema42);
-  return finalize(ctx, schema42);
+  processSchema(schema44, ctx);
+  extractDefs(ctx, schema44);
+  return finalize(ctx, schema44);
 };
-var createStandardJSONSchemaMethod = (schema42, io, processors = {}) => (params) => {
+var createStandardJSONSchemaMethod = (schema44, io, processors = {}) => (params) => {
   const { libraryOptions, target } = params ?? {};
   const ctx = initializeContext({ ...libraryOptions ?? {}, target, io, processors });
-  processSchema(schema42, ctx);
-  extractDefs(ctx, schema42);
-  return finalize(ctx, schema42);
+  processSchema(schema44, ctx);
+  extractDefs(ctx, schema44);
+  return finalize(ctx, schema44);
 };
 
 // node_modules/zod/v4/core/json-schema-processors.js
@@ -195626,13 +195716,13 @@ var contributors = {
   },
   mime_type: (agg, def) => intersectMime(agg, def.mime)
 };
-function aggregateChecks(schema42) {
+function aggregateChecks(schema44) {
   const agg = {};
-  const def = schema42._zod.def;
-  const list = schema42._zod.traits.has("$ZodCheck") ? [schema42, ...def.checks ?? []] : def.checks ?? [];
+  const def = schema44._zod.def;
+  const list = schema44._zod.traits.has("$ZodCheck") ? [schema44, ...def.checks ?? []] : def.checks ?? [];
   for (const ch of list)
     contributors[ch._zod.def.check]?.(agg, ch._zod.def);
-  const bag = schema42._zod.bag;
+  const bag = schema44._zod.bag;
   if (bag.minimum !== void 0)
     narrowMin(agg, "minimum", bag.minimum);
   if (bag.exclusiveMinimum !== void 0)
@@ -195667,10 +195757,10 @@ var exactPatterns = /* @__PURE__ */ new Map([
   [base64urlCharset, base64url]
 ]);
 var exactPattern = (p) => exactPatterns.get(p) ?? p;
-var stringProcessor = (schema42, ctx, _json, _params) => {
+var stringProcessor = (schema44, ctx, _json, _params) => {
   const json2 = _json;
   json2.type = "string";
-  const { minimum, maximum, format, patterns, contentEncoding, laxFormat } = aggregateChecks(schema42);
+  const { minimum, maximum, format, patterns, contentEncoding, laxFormat } = aggregateChecks(schema44);
   if (typeof minimum === "number")
     json2.minLength = minimum;
   if (typeof maximum === "number")
@@ -195699,9 +195789,9 @@ var stringProcessor = (schema42, ctx, _json, _params) => {
     }
   }
 };
-var numberProcessor = (schema42, ctx, _json, params) => {
+var numberProcessor = (schema44, ctx, _json, params) => {
   const json2 = _json;
-  const { minimum, maximum, multipleOf, exclusiveMaximum, exclusiveMinimum, isInt } = aggregateChecks(schema42);
+  const { minimum, maximum, multipleOf, exclusiveMaximum, exclusiveMinimum, isInt } = aggregateChecks(schema44);
   json2.type = isInt ? "integer" : "number";
   const exMin = typeof exclusiveMinimum === "number" && exclusiveMinimum >= (minimum ?? Number.NEGATIVE_INFINITY);
   const exMax = typeof exclusiveMaximum === "number" && exclusiveMaximum <= (maximum ?? Number.POSITIVE_INFINITY);
@@ -195732,7 +195822,7 @@ var numberProcessor = (schema42, ctx, _json, params) => {
       if (Number.isFinite(divisor) && divisor !== 0)
         divisors.add(Math.abs(divisor));
       else
-        handleUnrepresentable(schema42, ctx, json2, params, `A multipleOf divisor of ${divisor} cannot be represented in JSON Schema`);
+        handleUnrepresentable(schema44, ctx, json2, params, `A multipleOf divisor of ${divisor} cannot be represented in JSON Schema`);
     }
     const [first2, ...rest] = divisors;
     if (first2 !== void 0)
@@ -195744,11 +195834,11 @@ var numberProcessor = (schema42, ctx, _json, params) => {
 var booleanProcessor = (_schema, _ctx, json2, _params) => {
   json2.type = "boolean";
 };
-var bigintProcessor = (schema42, ctx, json2, params) => {
-  handleUnrepresentable(schema42, ctx, json2, params, "BigInt cannot be represented in JSON Schema");
+var bigintProcessor = (schema44, ctx, json2, params) => {
+  handleUnrepresentable(schema44, ctx, json2, params, "BigInt cannot be represented in JSON Schema");
 };
-var symbolProcessor = (schema42, ctx, json2, params) => {
-  handleUnrepresentable(schema42, ctx, json2, params, "Symbols cannot be represented in JSON Schema");
+var symbolProcessor = (schema44, ctx, json2, params) => {
+  handleUnrepresentable(schema44, ctx, json2, params, "Symbols cannot be represented in JSON Schema");
 };
 var nullProcessor = (_schema, ctx, json2, _params) => {
   if (ctx.target === "openapi-3.0") {
@@ -195759,11 +195849,11 @@ var nullProcessor = (_schema, ctx, json2, _params) => {
     json2.type = "null";
   }
 };
-var undefinedProcessor = (schema42, ctx, json2, params) => {
-  handleUnrepresentable(schema42, ctx, json2, params, "Undefined cannot be represented in JSON Schema");
+var undefinedProcessor = (schema44, ctx, json2, params) => {
+  handleUnrepresentable(schema44, ctx, json2, params, "Undefined cannot be represented in JSON Schema");
 };
-var voidProcessor = (schema42, ctx, json2, params) => {
-  handleUnrepresentable(schema42, ctx, json2, params, "Void cannot be represented in JSON Schema");
+var voidProcessor = (schema44, ctx, json2, params) => {
+  handleUnrepresentable(schema44, ctx, json2, params, "Void cannot be represented in JSON Schema");
 };
 var neverProcessor = (_schema, _ctx, json2, _params) => {
   json2.not = {};
@@ -195772,11 +195862,11 @@ var anyProcessor = (_schema, _ctx, _json, _params) => {
 };
 var unknownProcessor = (_schema, _ctx, _json, _params) => {
 };
-var dateProcessor = (schema42, ctx, json2, params) => {
-  handleUnrepresentable(schema42, ctx, json2, params, "Date cannot be represented in JSON Schema");
+var dateProcessor = (schema44, ctx, json2, params) => {
+  handleUnrepresentable(schema44, ctx, json2, params, "Date cannot be represented in JSON Schema");
 };
-var enumProcessor = (schema42, _ctx, json2, _params) => {
-  const def = schema42._zod.def;
+var enumProcessor = (schema44, _ctx, json2, _params) => {
+  const def = schema44._zod.def;
   const values = getEnumValues(def.entries);
   if (values.length === 0) {
     json2.not = {};
@@ -195788,8 +195878,8 @@ var enumProcessor = (schema42, _ctx, json2, _params) => {
     json2.type = "string";
   json2.enum = values;
 };
-var literalProcessor = (schema42, ctx, json2, params) => {
-  const def = schema42._zod.def;
+var literalProcessor = (schema44, ctx, json2, params) => {
+  const def = schema44._zod.def;
   if (def.values.length === 0) {
     json2.not = {};
     return;
@@ -195797,10 +195887,10 @@ var literalProcessor = (schema42, ctx, json2, params) => {
   const vals = [];
   for (const val of def.values) {
     if (val === void 0) {
-      if (handleUnrepresentable(schema42, ctx, json2, params, "Literal `undefined` cannot be represented in JSON Schema"))
+      if (handleUnrepresentable(schema44, ctx, json2, params, "Literal `undefined` cannot be represented in JSON Schema"))
         return;
     } else if (typeof val === "bigint") {
-      if (handleUnrepresentable(schema42, ctx, json2, params, "BigInt literals cannot be represented in JSON Schema"))
+      if (handleUnrepresentable(schema44, ctx, json2, params, "BigInt literals cannot be represented in JSON Schema"))
         return;
       vals.push(Number(val));
     } else {
@@ -195828,23 +195918,23 @@ var literalProcessor = (schema42, ctx, json2, params) => {
     json2.enum = vals;
   }
 };
-var nanProcessor = (schema42, ctx, json2, params) => {
-  handleUnrepresentable(schema42, ctx, json2, params, "NaN cannot be represented in JSON Schema");
+var nanProcessor = (schema44, ctx, json2, params) => {
+  handleUnrepresentable(schema44, ctx, json2, params, "NaN cannot be represented in JSON Schema");
 };
-var templateLiteralProcessor = (schema42, _ctx, json2, _params) => {
+var templateLiteralProcessor = (schema44, _ctx, json2, _params) => {
   const _json = json2;
-  const pattern2 = schema42._zod.pattern;
+  const pattern2 = schema44._zod.pattern;
   if (!pattern2)
     throw new Error("Pattern not found in template literal");
   _json.type = "string";
   _json.pattern = pattern2.source;
 };
-var fileProcessor = (schema42, _ctx, json2, _params) => {
+var fileProcessor = (schema44, _ctx, json2, _params) => {
   const _json = json2;
   _json.type = "string";
   _json.format = "binary";
   _json.contentEncoding = "binary";
-  const { minimum, maximum, mime } = aggregateChecks(schema42);
+  const { minimum, maximum, mime } = aggregateChecks(schema44);
   if (minimum !== void 0)
     _json.minLength = minimum;
   if (maximum !== void 0)
@@ -195861,25 +195951,25 @@ var fileProcessor = (schema42, _ctx, json2, _params) => {
 var successProcessor = (_schema, _ctx, json2, _params) => {
   json2.type = "boolean";
 };
-var customProcessor = (schema42, ctx, json2, params) => {
-  handleUnrepresentable(schema42, ctx, json2, params, "Custom types cannot be represented in JSON Schema");
+var customProcessor = (schema44, ctx, json2, params) => {
+  handleUnrepresentable(schema44, ctx, json2, params, "Custom types cannot be represented in JSON Schema");
 };
-var functionProcessor = (schema42, ctx, json2, params) => {
-  handleUnrepresentable(schema42, ctx, json2, params, "Function types cannot be represented in JSON Schema");
+var functionProcessor = (schema44, ctx, json2, params) => {
+  handleUnrepresentable(schema44, ctx, json2, params, "Function types cannot be represented in JSON Schema");
 };
-var transformProcessor = (schema42, ctx, json2, params) => {
-  handleUnrepresentable(schema42, ctx, json2, params, "Transforms cannot be represented in JSON Schema");
+var transformProcessor = (schema44, ctx, json2, params) => {
+  handleUnrepresentable(schema44, ctx, json2, params, "Transforms cannot be represented in JSON Schema");
 };
-var mapProcessor = (schema42, ctx, json2, params) => {
-  handleUnrepresentable(schema42, ctx, json2, params, "Map cannot be represented in JSON Schema");
+var mapProcessor = (schema44, ctx, json2, params) => {
+  handleUnrepresentable(schema44, ctx, json2, params, "Map cannot be represented in JSON Schema");
 };
-var setProcessor = (schema42, ctx, json2, params) => {
-  handleUnrepresentable(schema42, ctx, json2, params, "Set cannot be represented in JSON Schema");
+var setProcessor = (schema44, ctx, json2, params) => {
+  handleUnrepresentable(schema44, ctx, json2, params, "Set cannot be represented in JSON Schema");
 };
-var arrayProcessor = (schema42, ctx, _json, params) => {
+var arrayProcessor = (schema44, ctx, _json, params) => {
   const json2 = _json;
-  const def = schema42._zod.def;
-  const { minimum, maximum } = aggregateChecks(schema42);
+  const def = schema44._zod.def;
+  const { minimum, maximum } = aggregateChecks(schema44);
   if (typeof minimum === "number")
     json2.minItems = minimum;
   if (typeof maximum === "number")
@@ -195890,22 +195980,22 @@ var arrayProcessor = (schema42, ctx, _json, params) => {
     path: [...params.path, "items"]
   });
 };
-function inputOptin(schema42) {
-  const def = schema42._zod.def;
+function inputOptin(schema44) {
+  const def = schema44._zod.def;
   if (def.type === "pipe" && def.in._zod.traits.has("$ZodTransform")) {
     return inputOptin(def.out);
   }
   if (def.type === "catch") {
     return inputOptin(def.innerType);
   }
-  return schema42._zod.optin;
+  return schema44._zod.optin;
 }
-var objectProcessor = (schema42, ctx, _json, params) => {
+var objectProcessor = (schema44, ctx, _json, params) => {
   const json2 = _json;
-  const def = schema42._zod.def;
+  const def = schema44._zod.def;
   const shape = def.shape;
   const symbolKeys = Object.getOwnPropertySymbols(shape);
-  if (symbolKeys.length && handleUnrepresentable(schema42, ctx, json2, params, "Symbol keys cannot be represented in JSON Schema")) {
+  if (symbolKeys.length && handleUnrepresentable(schema44, ctx, json2, params, "Symbol keys cannot be represented in JSON Schema")) {
     return;
   }
   json2.type = "object";
@@ -195938,8 +196028,8 @@ var objectProcessor = (schema42, ctx, _json, params) => {
     });
   }
 };
-var unionProcessor = (schema42, ctx, json2, params) => {
-  const def = schema42._zod.def;
+var unionProcessor = (schema44, ctx, json2, params) => {
+  const def = schema44._zod.def;
   const isExclusive = def.inclusive === false;
   const options = def.options.map((x2, i) => processSchema(x2, ctx, {
     ...params,
@@ -195951,8 +196041,8 @@ var unionProcessor = (schema42, ctx, json2, params) => {
     json2.anyOf = options;
   }
 };
-var intersectionProcessor = (schema42, ctx, json2, params) => {
-  const def = schema42._zod.def;
+var intersectionProcessor = (schema44, ctx, json2, params) => {
+  const def = schema44._zod.def;
   const a = processSchema(def.left, ctx, {
     ...params,
     path: [...params.path, "allOf", 0]
@@ -195969,9 +196059,9 @@ var intersectionProcessor = (schema42, ctx, json2, params) => {
   json2.allOf = allOf;
   ctx.intersections.push(allOf);
 };
-var tupleProcessor = (schema42, ctx, _json, params) => {
+var tupleProcessor = (schema44, ctx, _json, params) => {
   const json2 = _json;
-  const def = schema42._zod.def;
+  const def = schema44._zod.def;
   json2.type = "array";
   const prefixPath = ctx.target === "draft-2020-12" ? "prefixItems" : "items";
   const restPath = ctx.target === "draft-2020-12" ? "items" : ctx.target === "openapi-3.0" ? "items" : "additionalItems";
@@ -196027,7 +196117,7 @@ var tupleProcessor = (schema42, ctx, _json, params) => {
     if (isClosed)
       json2.maxItems = maxItems;
   }
-  const { minimum, maximum } = aggregateChecks(schema42);
+  const { minimum, maximum } = aggregateChecks(schema44);
   if (typeof minimum === "number")
     json2.minItems = minimum;
   if (typeof maximum === "number")
@@ -196096,9 +196186,9 @@ function rewriteKeyNames(ctx) {
     }
   }
 }
-var recordProcessor = (schema42, ctx, _json, params) => {
+var recordProcessor = (schema44, ctx, _json, params) => {
   const json2 = _json;
-  const def = schema42._zod.def;
+  const def = schema44._zod.def;
   json2.type = "object";
   const keyType = def.keyType;
   const patterns = aggregateChecks(keyType).patterns;
@@ -196123,7 +196213,7 @@ var recordProcessor = (schema42, ctx, _json, params) => {
         pendingRecords.set(ctx, pending);
         ctx.deferred.push(() => rewriteKeyNames(ctx));
       }
-      pending.push(schema42);
+      pending.push(schema44);
     }
     json2.additionalProperties = processSchema(def.valueType, ctx, {
       ...params,
@@ -196139,10 +196229,10 @@ var recordProcessor = (schema42, ctx, _json, params) => {
     }
   }
 };
-var nullableProcessor = (schema42, ctx, json2, params) => {
-  const def = schema42._zod.def;
+var nullableProcessor = (schema44, ctx, json2, params) => {
+  const def = schema44._zod.def;
   const inner = processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema42);
+  const seen = ctx.seen.get(schema44);
   if (ctx.target === "openapi-3.0") {
     seen.ref = def.innerType;
     json2.nullable = true;
@@ -196150,14 +196240,14 @@ var nullableProcessor = (schema42, ctx, json2, params) => {
     json2.anyOf = [inner, { type: "null" }];
   }
 };
-var nonoptionalProcessor = (schema42, ctx, _json, params) => {
-  const def = schema42._zod.def;
+var nonoptionalProcessor = (schema44, ctx, _json, params) => {
+  const def = schema44._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema42);
+  const seen = ctx.seen.get(schema44);
   seen.ref = def.innerType;
 };
 var UNREPRESENTABLE_DEFAULT = /* @__PURE__ */ Symbol();
-function serializeDefaultValue(value, schema42, ctx, json2, params) {
+function serializeDefaultValue(value, schema44, ctx, json2, params) {
   let unrepresentable = false;
   const serialized = JSON.stringify(value, (_, val) => {
     if (typeof val !== "bigint")
@@ -196167,74 +196257,74 @@ function serializeDefaultValue(value, schema42, ctx, json2, params) {
   });
   if (!unrepresentable)
     return JSON.parse(serialized);
-  handleUnrepresentable(schema42, ctx, json2, params, "BigInt defaults cannot be represented in JSON Schema");
+  handleUnrepresentable(schema44, ctx, json2, params, "BigInt defaults cannot be represented in JSON Schema");
   return UNREPRESENTABLE_DEFAULT;
 }
-var defaultProcessor = (schema42, ctx, json2, params) => {
-  const def = schema42._zod.def;
+var defaultProcessor = (schema44, ctx, json2, params) => {
+  const def = schema44._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema42);
+  const seen = ctx.seen.get(schema44);
   seen.ref = def.innerType;
-  const value = serializeDefaultValue(def.defaultValue, schema42, ctx, json2, params);
+  const value = serializeDefaultValue(def.defaultValue, schema44, ctx, json2, params);
   if (value !== UNREPRESENTABLE_DEFAULT)
     json2.default = value;
 };
-var prefaultProcessor = (schema42, ctx, json2, params) => {
-  const def = schema42._zod.def;
+var prefaultProcessor = (schema44, ctx, json2, params) => {
+  const def = schema44._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema42);
+  const seen = ctx.seen.get(schema44);
   seen.ref = def.innerType;
   if (ctx.io !== "input")
     return;
-  const value = serializeDefaultValue(def.defaultValue, schema42, ctx, json2, params);
+  const value = serializeDefaultValue(def.defaultValue, schema44, ctx, json2, params);
   if (value !== UNREPRESENTABLE_DEFAULT)
     json2._prefault = value;
 };
-var catchProcessor = (schema42, ctx, json2, params) => {
-  const def = schema42._zod.def;
+var catchProcessor = (schema44, ctx, json2, params) => {
+  const def = schema44._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema42);
+  const seen = ctx.seen.get(schema44);
   seen.ref = def.innerType;
   let catchValue;
   try {
     catchValue = def.catchValue(void 0);
   } catch {
-    handleUnrepresentable(schema42, ctx, json2, params, "Dynamic catch values are not supported in JSON Schema");
+    handleUnrepresentable(schema44, ctx, json2, params, "Dynamic catch values are not supported in JSON Schema");
     return;
   }
   json2.default = catchValue;
 };
-var pipeProcessor = (schema42, ctx, _json, params) => {
-  const def = schema42._zod.def;
+var pipeProcessor = (schema44, ctx, _json, params) => {
+  const def = schema44._zod.def;
   const inIsTransform = def.in._zod.traits.has("$ZodTransform");
   const innerType = ctx.io === "input" ? inIsTransform ? def.out : def.in : def.out;
   processSchema(innerType, ctx, params);
-  const seen = ctx.seen.get(schema42);
+  const seen = ctx.seen.get(schema44);
   seen.ref = innerType;
 };
-var readonlyProcessor = (schema42, ctx, json2, params) => {
-  const def = schema42._zod.def;
+var readonlyProcessor = (schema44, ctx, json2, params) => {
+  const def = schema44._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema42);
+  const seen = ctx.seen.get(schema44);
   seen.ref = def.innerType;
   json2.readOnly = true;
 };
-var promiseProcessor = (schema42, ctx, _json, params) => {
-  const def = schema42._zod.def;
+var promiseProcessor = (schema44, ctx, _json, params) => {
+  const def = schema44._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema42);
+  const seen = ctx.seen.get(schema44);
   seen.ref = def.innerType;
 };
-var optionalProcessor = (schema42, ctx, _json, params) => {
-  const def = schema42._zod.def;
+var optionalProcessor = (schema44, ctx, _json, params) => {
+  const def = schema44._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema42);
+  const seen = ctx.seen.get(schema44);
   seen.ref = def.innerType;
 };
-var lazyProcessor = (schema42, ctx, _json, params) => {
-  const innerType = schema42._zod.innerType;
+var lazyProcessor = (schema44, ctx, _json, params) => {
+  const innerType = schema44._zod.innerType;
   processSchema(innerType, ctx, params);
-  const seen = ctx.seen.get(schema42);
+  const seen = ctx.seen.get(schema44);
   seen.ref = innerType;
 };
 var allProcessors = {
@@ -196284,8 +196374,8 @@ function toJSONSchema(input2, params) {
     const ctx2 = initializeContext({ ...params, processors: allProcessors });
     const defs = {};
     for (const entry2 of registry2._idmap.entries()) {
-      const [_, schema42] = entry2;
-      processSchema(schema42, ctx2);
+      const [_, schema44] = entry2;
+      processSchema(schema44, ctx2);
     }
     const schemas = {};
     const external = {
@@ -196295,9 +196385,9 @@ function toJSONSchema(input2, params) {
     };
     ctx2.external = external;
     for (const entry2 of registry2._idmap.entries()) {
-      const [key, schema42] = entry2;
-      extractDefs(ctx2, schema42);
-      assignProp(schemas, key, finalize(ctx2, schema42));
+      const [key, schema44] = entry2;
+      extractDefs(ctx2, schema44);
+      assignProp(schemas, key, finalize(ctx2, schema44));
     }
     if (Object.keys(defs).length > 0) {
       const defsSegment = ctx2.target === "draft-2020-12" ? "$defs" : "definitions";
@@ -196366,14 +196456,14 @@ var JSONSchemaGenerator = class {
    * Process a schema to prepare it for JSON Schema generation.
    * This must be called before emit().
    */
-  process(schema42, _params = { path: [], schemaPath: [] }) {
-    return processSchema(schema42, this.ctx, _params);
+  process(schema44, _params = { path: [], schemaPath: [] }) {
+    return processSchema(schema44, this.ctx, _params);
   }
   /**
    * Emit the final JSON Schema after processing.
    * Must call process() first.
    */
-  emit(schema42, _params) {
+  emit(schema44, _params) {
     if (_params) {
       if (_params.cycles)
         this.ctx.cycles = _params.cycles;
@@ -196384,8 +196474,8 @@ var JSONSchemaGenerator = class {
     }
     this.ctx.sharedDefsExtractedFor = void 0;
     this.ctx.sharedEmitDoneFor = void 0;
-    extractDefs(this.ctx, schema42);
-    const result = finalize(this.ctx, schema42);
+    extractDefs(this.ctx, schema44);
+    const result = finalize(this.ctx, schema44);
     const { "~standard": _, ...plainResult } = result;
     return plainResult;
   }
@@ -197478,8 +197568,8 @@ var ZodArray = /* @__PURE__ */ $constructor("ZodArray", (inst, def) => {
 function array(element, params) {
   return _array(ZodArray, element, params);
 }
-function keyof(schema42) {
-  const shape = schema42._zod.def.shape;
+function keyof(schema44) {
+  const shape = schema44._zod.def.shape;
   return _enum2(Object.keys(shape));
 }
 var ZodObject = /* @__PURE__ */ $constructor("ZodObject", (inst, def) => {
@@ -198127,11 +198217,11 @@ function json(params) {
   });
   return jsonSchema;
 }
-function preprocess(fn, schema42) {
+function preprocess(fn, schema44) {
   return new ZodPreprocess({
     type: "pipe",
     in: transform2(fn),
-    out: schema42
+    out: schema44
   });
 }
 
@@ -198263,8 +198353,8 @@ var RECOGNIZED_KEYS = /* @__PURE__ */ new Set([
   "nullable",
   "readOnly"
 ]);
-function detectVersion(schema42, defaultTarget) {
-  const $schema = schema42.$schema;
+function detectVersion(schema44, defaultTarget) {
+  const $schema = schema44.$schema;
   if ($schema === "https://json-schema.org/draft/2020-12/schema") {
     return "draft-2020-12";
   }
@@ -198492,27 +198582,27 @@ function getTupleRest(restSchema, ctx) {
   return convertSchema(restSchema, ctx);
 }
 var fullTime = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d+)?(?:Z|[+-](?:[01]\d|2[0-3]):[0-5]\d)$/;
-function convertBaseSchema(schema42, ctx) {
-  if (schema42.not !== void 0) {
-    if (typeof schema42.not === "object" && Object.keys(schema42.not).length === 0) {
+function convertBaseSchema(schema44, ctx) {
+  if (schema44.not !== void 0) {
+    if (typeof schema44.not === "object" && Object.keys(schema44.not).length === 0) {
       return z.never();
     }
     throw new Error("not is not supported in Zod (except { not: {} } for never)");
   }
-  if (schema42.unevaluatedItems !== void 0) {
+  if (schema44.unevaluatedItems !== void 0) {
     throw new Error("unevaluatedItems is not supported");
   }
-  if (schema42.unevaluatedProperties !== void 0) {
+  if (schema44.unevaluatedProperties !== void 0) {
     throw new Error("unevaluatedProperties is not supported");
   }
-  if (schema42.if !== void 0 || schema42.then !== void 0 || schema42.else !== void 0) {
+  if (schema44.if !== void 0 || schema44.then !== void 0 || schema44.else !== void 0) {
     throw new Error("Conditional schemas (if/then/else) are not supported");
   }
-  if (schema42.dependentSchemas !== void 0 || schema42.dependentRequired !== void 0) {
+  if (schema44.dependentSchemas !== void 0 || schema44.dependentRequired !== void 0) {
     throw new Error("dependentSchemas and dependentRequired are not supported");
   }
-  if (schema42.$ref) {
-    const refPath = schema42.$ref;
+  if (schema44.$ref) {
+    const refPath = schema44.$ref;
     if (ctx.refs.has(refPath)) {
       return ctx.refs.get(refPath);
     }
@@ -198531,9 +198621,9 @@ function convertBaseSchema(schema42, ctx) {
     ctx.processing.delete(refPath);
     return zodSchema2;
   }
-  if (schema42.enum !== void 0) {
-    const enumValues = schema42.enum;
-    if (ctx.version === "openapi-3.0" && schema42.nullable === true && enumValues.length === 1 && enumValues[0] === null) {
+  if (schema44.enum !== void 0) {
+    const enumValues = schema44.enum;
+    if (ctx.version === "openapi-3.0" && schema44.nullable === true && enumValues.length === 1 && enumValues[0] === null) {
       return z.null();
     }
     if (enumValues.length === 0) {
@@ -198551,13 +198641,13 @@ function convertBaseSchema(schema42, ctx) {
     }
     return z.union([literalSchemas[0], literalSchemas[1], ...literalSchemas.slice(2)]);
   }
-  if (schema42.const !== void 0) {
-    return z.literal(schema42.const);
+  if (schema44.const !== void 0) {
+    return z.literal(schema44.const);
   }
-  const type = schema42.type;
+  const type = schema44.type;
   if (Array.isArray(type)) {
     const typeSchemas = type.map((t) => {
-      const typeSchema = { ...schema42, type: t };
+      const typeSchema = { ...schema44, type: t };
       return convertBaseSchema(typeSchema, ctx);
     });
     if (typeSchemas.length === 0) {
@@ -198575,8 +198665,8 @@ function convertBaseSchema(schema42, ctx) {
   switch (type) {
     case "string": {
       let stringSchema = z.string();
-      if (schema42.format) {
-        const format = schema42.format;
+      if (schema44.format) {
+        const format = schema44.format;
         if (format === "email") {
           stringSchema = stringSchema.check(z.email());
         } else if (format === "uri" || format === "uri-reference") {
@@ -198631,14 +198721,14 @@ function convertBaseSchema(schema42, ctx) {
           stringSchema = stringSchema.check(z.ksuid());
         }
       }
-      if (typeof schema42.minLength === "number") {
-        stringSchema = stringSchema.min(schema42.minLength);
+      if (typeof schema44.minLength === "number") {
+        stringSchema = stringSchema.min(schema44.minLength);
       }
-      if (typeof schema42.maxLength === "number") {
-        stringSchema = stringSchema.max(schema42.maxLength);
+      if (typeof schema44.maxLength === "number") {
+        stringSchema = stringSchema.max(schema44.maxLength);
       }
-      if (schema42.pattern) {
-        stringSchema = stringSchema.regex(new RegExp(schema42.pattern));
+      if (schema44.pattern) {
+        stringSchema = stringSchema.regex(new RegExp(schema44.pattern));
       }
       zodSchema = stringSchema;
       break;
@@ -198646,24 +198736,24 @@ function convertBaseSchema(schema42, ctx) {
     case "number":
     case "integer": {
       let numberSchema = type === "integer" ? z.number().int() : z.number();
-      if (typeof schema42.minimum === "number" && schema42.exclusiveMinimum !== true) {
-        numberSchema = numberSchema.min(schema42.minimum);
+      if (typeof schema44.minimum === "number" && schema44.exclusiveMinimum !== true) {
+        numberSchema = numberSchema.min(schema44.minimum);
       }
-      if (typeof schema42.maximum === "number" && schema42.exclusiveMaximum !== true) {
-        numberSchema = numberSchema.max(schema42.maximum);
+      if (typeof schema44.maximum === "number" && schema44.exclusiveMaximum !== true) {
+        numberSchema = numberSchema.max(schema44.maximum);
       }
-      if (typeof schema42.exclusiveMinimum === "number") {
-        numberSchema = numberSchema.gt(schema42.exclusiveMinimum);
-      } else if (schema42.exclusiveMinimum === true && typeof schema42.minimum === "number") {
-        numberSchema = numberSchema.gt(schema42.minimum);
+      if (typeof schema44.exclusiveMinimum === "number") {
+        numberSchema = numberSchema.gt(schema44.exclusiveMinimum);
+      } else if (schema44.exclusiveMinimum === true && typeof schema44.minimum === "number") {
+        numberSchema = numberSchema.gt(schema44.minimum);
       }
-      if (typeof schema42.exclusiveMaximum === "number") {
-        numberSchema = numberSchema.lt(schema42.exclusiveMaximum);
-      } else if (schema42.exclusiveMaximum === true && typeof schema42.maximum === "number") {
-        numberSchema = numberSchema.lt(schema42.maximum);
+      if (typeof schema44.exclusiveMaximum === "number") {
+        numberSchema = numberSchema.lt(schema44.exclusiveMaximum);
+      } else if (schema44.exclusiveMaximum === true && typeof schema44.maximum === "number") {
+        numberSchema = numberSchema.lt(schema44.maximum);
       }
-      if (typeof schema42.multipleOf === "number") {
-        numberSchema = numberSchema.multipleOf(schema42.multipleOf);
+      if (typeof schema44.multipleOf === "number") {
+        numberSchema = numberSchema.multipleOf(schema44.multipleOf);
       }
       zodSchema = numberSchema;
       break;
@@ -198678,15 +198768,15 @@ function convertBaseSchema(schema42, ctx) {
     }
     case "object": {
       const shape = {};
-      const properties = schema42.properties || {};
-      const requiredSet = new Set(schema42.required || []);
-      const additionalSchema = typeof schema42.additionalProperties === "object" ? convertSchema(schema42.additionalProperties, ctx) : void 0;
+      const properties = schema44.properties || {};
+      const requiredSet = new Set(schema44.required || []);
+      const additionalSchema = typeof schema44.additionalProperties === "object" ? convertSchema(schema44.additionalProperties, ctx) : void 0;
       for (const [key, propSchema] of Object.entries(properties)) {
         const propZodSchema = convertSchema(propSchema, ctx);
         assignProp(shape, key, requiredSet.has(key) ? propZodSchema : propZodSchema.optional());
       }
-      if (schema42.patternProperties) {
-        const patternProps = schema42.patternProperties;
+      if (schema44.patternProperties) {
+        const patternProps = schema44.patternProperties;
         const patternKeys = Object.keys(patternProps);
         const looseRecords = [];
         for (const pattern2 of patternKeys) {
@@ -198710,7 +198800,7 @@ function convertBaseSchema(schema42, ctx) {
           }
           zodSchema = result;
         }
-        if (schema42.additionalProperties === false) {
+        if (schema44.additionalProperties === false) {
           const propertyKeys = Object.keys(shape);
           const patterns = patternKeys.map((p) => new RegExp(p));
           const basePatternSchema = zodSchema;
@@ -198737,7 +198827,7 @@ function convertBaseSchema(schema42, ctx) {
         }
       } else {
         const objectSchema = z.object(shape);
-        if (schema42.additionalProperties === false) {
+        if (schema44.additionalProperties === false) {
           zodSchema = objectSchema.strict();
         } else if (additionalSchema) {
           zodSchema = objectSchema.catchall(additionalSchema);
@@ -198745,13 +198835,13 @@ function convertBaseSchema(schema42, ctx) {
           zodSchema = objectSchema.passthrough();
         }
       }
-      const hasKeyGuard = schema42.propertyNames !== void 0 && schema42.propertyNames !== true;
-      const minProperties = typeof schema42.minProperties === "number" ? schema42.minProperties : void 0;
-      const maxProperties = typeof schema42.maxProperties === "number" ? schema42.maxProperties : void 0;
+      const hasKeyGuard = schema44.propertyNames !== void 0 && schema44.propertyNames !== true;
+      const minProperties = typeof schema44.minProperties === "number" ? schema44.minProperties : void 0;
+      const maxProperties = typeof schema44.maxProperties === "number" ? schema44.maxProperties : void 0;
       if (hasKeyGuard || minProperties !== void 0 || maxProperties !== void 0) {
         let keySchema;
         if (hasKeyGuard) {
-          const keyJSONSchema = typeof schema42.propertyNames === "object" && schema42.propertyNames.type === void 0 ? { type: "string", ...schema42.propertyNames } : schema42.propertyNames;
+          const keyJSONSchema = typeof schema44.propertyNames === "object" && schema44.propertyNames.type === void 0 ? { type: "string", ...schema44.propertyNames } : schema44.propertyNames;
           keySchema = convertSchema(keyJSONSchema, ctx);
         }
         zodSchema = checkObjectGuards(zodSchema, { keySchema, minProperties, maxProperties });
@@ -198759,53 +198849,53 @@ function convertBaseSchema(schema42, ctx) {
       break;
     }
     case "array": {
-      const prefixItems = schema42.prefixItems;
-      const items = schema42.items;
+      const prefixItems = schema44.prefixItems;
+      const items = schema44.items;
       if (prefixItems && Array.isArray(prefixItems)) {
-        const minItems = typeof schema42.minItems === "number" ? schema42.minItems : 0;
+        const minItems = typeof schema44.minItems === "number" ? schema44.minItems : 0;
         const tupleItems = prefixItems.map((item2) => convertSchema(item2, ctx));
         const positionalItems = applyMinItems(tupleItems, minItems);
         const rest = !Array.isArray(items) ? getTupleRest(items, ctx) : void 0;
         const tupleSchema = z.tuple(positionalItems);
         zodSchema = rest ? tupleSchema.rest(rest) : tupleSchema;
-        if (typeof schema42.minItems === "number") {
-          zodSchema = zodSchema.check(z.minLength(schema42.minItems));
+        if (typeof schema44.minItems === "number") {
+          zodSchema = zodSchema.check(z.minLength(schema44.minItems));
         }
-        if (typeof schema42.maxItems === "number") {
-          zodSchema = zodSchema.check(z.maxLength(schema42.maxItems));
+        if (typeof schema44.maxItems === "number") {
+          zodSchema = zodSchema.check(z.maxLength(schema44.maxItems));
         }
       } else if (Array.isArray(items)) {
-        const minItems = typeof schema42.minItems === "number" ? schema42.minItems : 0;
+        const minItems = typeof schema44.minItems === "number" ? schema44.minItems : 0;
         const tupleItems = items.map((item2) => convertSchema(item2, ctx));
         const positionalItems = applyMinItems(tupleItems, minItems);
-        const rest = getTupleRest(schema42.additionalItems, ctx);
+        const rest = getTupleRest(schema44.additionalItems, ctx);
         const tupleSchema = z.tuple(positionalItems);
         zodSchema = rest ? tupleSchema.rest(rest) : tupleSchema;
-        if (typeof schema42.minItems === "number") {
-          zodSchema = zodSchema.check(z.minLength(schema42.minItems));
+        if (typeof schema44.minItems === "number") {
+          zodSchema = zodSchema.check(z.minLength(schema44.minItems));
         }
-        if (typeof schema42.maxItems === "number") {
-          zodSchema = zodSchema.check(z.maxLength(schema42.maxItems));
+        if (typeof schema44.maxItems === "number") {
+          zodSchema = zodSchema.check(z.maxLength(schema44.maxItems));
         }
       } else if (items !== void 0) {
         const element = convertSchema(items, ctx);
         let arraySchema = z.array(element);
-        if (typeof schema42.minItems === "number") {
-          arraySchema = arraySchema.min(schema42.minItems);
+        if (typeof schema44.minItems === "number") {
+          arraySchema = arraySchema.min(schema44.minItems);
         }
-        if (typeof schema42.maxItems === "number") {
-          arraySchema = arraySchema.max(schema42.maxItems);
+        if (typeof schema44.maxItems === "number") {
+          arraySchema = arraySchema.max(schema44.maxItems);
         }
         zodSchema = arraySchema;
       } else {
         zodSchema = z.array(z.any());
       }
-      if (schema42.uniqueItems === true || schema42.contains !== void 0) {
+      if (schema44.uniqueItems === true || schema44.contains !== void 0) {
         zodSchema = checkArrayGuards(zodSchema, {
-          uniqueItems: schema42.uniqueItems === true,
-          containsSchema: schema42.contains !== void 0 ? convertSchema(schema42.contains, ctx) : void 0,
-          minContains: typeof schema42.minContains === "number" ? schema42.minContains : void 0,
-          maxContains: typeof schema42.maxContains === "number" ? schema42.maxContains : void 0
+          uniqueItems: schema44.uniqueItems === true,
+          containsSchema: schema44.contains !== void 0 ? convertSchema(schema44.contains, ctx) : void 0,
+          minContains: typeof schema44.minContains === "number" ? schema44.minContains : void 0,
+          maxContains: typeof schema44.maxContains === "number" ? schema44.maxContains : void 0
         });
       }
       break;
@@ -198815,94 +198905,94 @@ function convertBaseSchema(schema42, ctx) {
   }
   return zodSchema;
 }
-function convertSchema(schema42, ctx) {
-  if (typeof schema42 === "boolean") {
-    return schema42 ? z.any() : z.never();
+function convertSchema(schema44, ctx) {
+  if (typeof schema44 === "boolean") {
+    return schema44 ? z.any() : z.never();
   }
-  let baseSchema = convertBaseSchema(schema42, ctx);
-  const hasExplicitType = schema42.type || schema42.enum !== void 0 || schema42.const !== void 0;
-  if (schema42.anyOf && Array.isArray(schema42.anyOf)) {
-    const options = schema42.anyOf.map((s2) => convertSchema(s2, ctx));
+  let baseSchema = convertBaseSchema(schema44, ctx);
+  const hasExplicitType = schema44.type || schema44.enum !== void 0 || schema44.const !== void 0;
+  if (schema44.anyOf && Array.isArray(schema44.anyOf)) {
+    const options = schema44.anyOf.map((s2) => convertSchema(s2, ctx));
     const anyOfUnion = z.union(options);
     baseSchema = hasExplicitType ? z.intersection(baseSchema, anyOfUnion) : anyOfUnion;
   }
-  if (schema42.oneOf && Array.isArray(schema42.oneOf)) {
-    const options = schema42.oneOf.map((s2) => convertSchema(s2, ctx));
+  if (schema44.oneOf && Array.isArray(schema44.oneOf)) {
+    const options = schema44.oneOf.map((s2) => convertSchema(s2, ctx));
     const oneOfUnion = z.xor(options);
     baseSchema = hasExplicitType ? z.intersection(baseSchema, oneOfUnion) : oneOfUnion;
   }
-  if (schema42.allOf && Array.isArray(schema42.allOf)) {
-    if (schema42.allOf.length === 0) {
+  if (schema44.allOf && Array.isArray(schema44.allOf)) {
+    if (schema44.allOf.length === 0) {
       baseSchema = hasExplicitType ? baseSchema : z.any();
     } else {
-      let result = hasExplicitType ? baseSchema : convertSchema(schema42.allOf[0], ctx);
+      let result = hasExplicitType ? baseSchema : convertSchema(schema44.allOf[0], ctx);
       const startIdx = hasExplicitType ? 0 : 1;
-      for (let i = startIdx; i < schema42.allOf.length; i++) {
-        result = z.intersection(result, convertSchema(schema42.allOf[i], ctx));
+      for (let i = startIdx; i < schema44.allOf.length; i++) {
+        result = z.intersection(result, convertSchema(schema44.allOf[i], ctx));
       }
       baseSchema = result;
     }
   }
-  if (schema42.nullable === true && ctx.version === "openapi-3.0") {
+  if (schema44.nullable === true && ctx.version === "openapi-3.0") {
     baseSchema = z.nullable(baseSchema);
   }
-  if (schema42.readOnly === true) {
+  if (schema44.readOnly === true) {
     baseSchema = z.readonly(baseSchema);
   }
-  if (schema42.default !== void 0) {
-    baseSchema = baseSchema.default(schema42.default);
+  if (schema44.default !== void 0) {
+    baseSchema = baseSchema.default(schema44.default);
   }
   const extraMeta = {};
   const coreMetadataKeys = ["$id", "id", "$comment", "$anchor", "$vocabulary", "$dynamicRef", "$dynamicAnchor"];
   for (const key of coreMetadataKeys) {
-    if (key in schema42) {
-      extraMeta[key] = schema42[key];
+    if (key in schema44) {
+      extraMeta[key] = schema44[key];
     }
   }
   const contentMetadataKeys = ["contentEncoding", "contentMediaType", "contentSchema"];
   for (const key of contentMetadataKeys) {
-    if (key in schema42) {
-      extraMeta[key] = schema42[key];
+    if (key in schema44) {
+      extraMeta[key] = schema44[key];
     }
   }
-  if (schema42.type === "object" && schema42.$ref === void 0) {
-    if (schema42.propertyNames !== void 0 && !containsRef(schema42.propertyNames)) {
-      extraMeta.propertyNames = schema42.propertyNames;
+  if (schema44.type === "object" && schema44.$ref === void 0) {
+    if (schema44.propertyNames !== void 0 && !containsRef(schema44.propertyNames)) {
+      extraMeta.propertyNames = schema44.propertyNames;
     }
     for (const key of ["minProperties", "maxProperties"]) {
-      if (schema42[key] !== void 0)
-        extraMeta[key] = schema42[key];
+      if (schema44[key] !== void 0)
+        extraMeta[key] = schema44[key];
     }
   }
-  if (schema42.type === "array" && schema42.$ref === void 0) {
-    if (schema42.contains !== void 0 && !containsRef(schema42.contains)) {
-      extraMeta.contains = schema42.contains;
+  if (schema44.type === "array" && schema44.$ref === void 0) {
+    if (schema44.contains !== void 0 && !containsRef(schema44.contains)) {
+      extraMeta.contains = schema44.contains;
     }
     for (const key of ["uniqueItems", "minContains", "maxContains"]) {
-      if (schema42[key] !== void 0)
-        extraMeta[key] = schema42[key];
+      if (schema44[key] !== void 0)
+        extraMeta[key] = schema44[key];
     }
   }
-  for (const key of Object.keys(schema42)) {
+  for (const key of Object.keys(schema44)) {
     if (!RECOGNIZED_KEYS.has(key)) {
-      assignProp(extraMeta, key, schema42[key]);
+      assignProp(extraMeta, key, schema44[key]);
     }
   }
   if (Object.keys(extraMeta).length > 0) {
     ctx.registry.add(baseSchema, extraMeta);
   }
-  if (schema42.description) {
-    baseSchema = baseSchema.describe(schema42.description);
+  if (schema44.description) {
+    baseSchema = baseSchema.describe(schema44.description);
   }
   return baseSchema;
 }
-function fromJSONSchema(schema42, params) {
-  if (typeof schema42 === "boolean") {
-    return schema42 ? z.any() : z.never();
+function fromJSONSchema(schema44, params) {
+  if (typeof schema44 === "boolean") {
+    return schema44 ? z.any() : z.never();
   }
   let normalized;
   try {
-    normalized = JSON.parse(JSON.stringify(schema42));
+    normalized = JSON.parse(JSON.stringify(schema44));
   } catch {
     throw new Error("fromJSONSchema input is not valid JSON (possibly cyclic); use $defs/$ref for recursive schemas");
   }
@@ -198921,7 +199011,7 @@ function fromJSONSchema(schema42, params) {
 
 // node_modules/zod/v4/core/visit.js
 var RESOLVING = /* @__PURE__ */ Symbol("z.visit/resolving");
-function visit(schema42, fnOrHandlers) {
+function visit(schema44, fnOrHandlers) {
   const fn = typeof fnOrHandlers === "function" ? fnOrHandlers : (node2, rewritten) => {
     const h = fnOrHandlers[node2._zod.def.type];
     return h ? h(node2, rewritten) : node2;
@@ -199071,12 +199161,12 @@ function visit(schema42, fnOrHandlers) {
       }
     }
   }
-  return run(schema42);
+  return run(schema44);
 }
 
 // node_modules/zod/v4/classic/deep-partial.js
-function deepPartial(schema42) {
-  return visit(schema42, {
+function deepPartial(schema44) {
+  return visit(schema44, {
     object: (s2) => s2.partial(),
     // Every partialed option now admits `undefined`, which the constructor rejects as a duplicate.
     union: (s2) => {
@@ -199099,8 +199189,8 @@ function outSide(def) {
 function inSide(def) {
   return def.in._zod.traits.has("$ZodTransform") ? outSide(def) : def.in;
 }
-function input(schema42) {
-  return visit(schema42, {
+function input(schema44) {
+  return visit(schema44, {
     pipe: (s2) => inSide(s2._zod.def),
     // A default value belongs to the output side, so a rewritten inner type leaves it stranded. `.default()` widens the declared input type with `undefined`, and `optional` is what carries that across.
     default: (s2, rewritten) => rewritten ? optional(s2._zod.def.innerType) : s2,
@@ -199108,8 +199198,8 @@ function input(schema42) {
     catch: (s2, rewritten) => rewritten ? s2._zod.def.innerType : s2
   });
 }
-function output(schema42) {
-  return visit(schema42, {
+function output(schema44) {
+  return visit(schema44, {
     pipe: (s2) => outSide(s2._zod.def),
     // A prefault value is fed through the schema, which makes it input-side, so a rewritten inner type leaves it stranded.
     prefault: (s2, rewritten) => rewritten ? s2._zod.def.innerType : s2
@@ -199143,14 +199233,14 @@ function date4(params) {
 
 // src/build.ts
 import { createHash as createHash2 } from "node:crypto";
-import { mkdirSync as mkdirSync10, readFileSync as readFileSync18, writeFileSync as writeFileSync8 } from "node:fs";
-import { join as join14, relative as relative3, resolve as resolve9 } from "node:path";
+import { mkdirSync as mkdirSync11, readFileSync as readFileSync18, writeFileSync as writeFileSync8 } from "node:fs";
+import { join as join15, relative as relative3, resolve as resolve9 } from "node:path";
 
 // src/backends/freeform-raster.ts
 import { spawn as spawn2 } from "node:child_process";
-import { existsSync as existsSync7, mkdtempSync as mkdtempSync3, readFileSync as readFileSync11, rmSync as rmSync5, writeFileSync as writeFileSync7 } from "node:fs";
-import { tmpdir as tmpdir3 } from "node:os";
-import { join as join12 } from "node:path";
+import { existsSync as existsSync7, mkdtempSync as mkdtempSync4, readFileSync as readFileSync11, rmSync as rmSync6, writeFileSync as writeFileSync7 } from "node:fs";
+import { tmpdir as tmpdir4 } from "node:os";
+import { join as join13 } from "node:path";
 import { pathToFileURL as pathToFileURL3 } from "node:url";
 
 // src/engine/text.ts
@@ -199504,6 +199594,12 @@ var CODES = {
     why: "A string from the scene was not found in the written presentation XML.",
     fix: "This is an engine bug \u2014 report it with the deck that triggers it."
   },
+  "SC-PPTX-002": {
+    severity: "error",
+    title: "Slide element missing after export",
+    why: "A named chrome/bridge object, master text or speaker note did not survive the selected renderer.",
+    fix: "Repair the engine mapping or provide an editable equivalent; do not remove the element from the reference to pass verification."
+  },
   "SC-IMG-001": {
     severity: "warning",
     title: "Image resolution too low",
@@ -199585,8 +199681,19 @@ function diag(code, message, extra = {}) {
 var PX3 = 96;
 var SCALE = 2;
 var NATIVE_SCRIPT = `<script>
-(()=>{const out={items:[],unsupported:[]},rgb=v=>{let m=v.match(/^rgba?\\(([^)]+)\\)/);if(!m)return null;let a=m[1].split(',').map(x=>x.trim());let h=n=>Math.max(0,Math.min(255,Math.round(+n))).toString(16).padStart(2,'0');return {hex:'#'+h(a[0])+h(a[1])+h(a[2]),alpha:a[3]===undefined?1:+a[3]};},add=(o)=>out.items.push(o);for(const root of document.querySelectorAll('.sc-ff')){let rr=root.getBoundingClientRect(), id=root.id;for(const e of [root,...root.querySelectorAll('*')]){let s=getComputedStyle(e),r=e.getBoundingClientRect();if(!r.width||!r.height)continue;if(s.boxShadow!=='none'||s.backgroundImage!=='none'||s.clipPath!=='none'||s.filter!=='none')out.unsupported.push({id,feature:'shadow, gradient/image, clip-path or filter'});let bg=rgb(s.backgroundColor), bs=[s.borderTop,s.borderRight,s.borderBottom,s.borderLeft].map((_,i)=>({w:parseFloat([s.borderTopWidth,s.borderRightWidth,s.borderBottomWidth,s.borderLeftWidth][i]),c:rgb([s.borderTopColor,s.borderRightColor,s.borderBottomColor,s.borderLeftColor][i])}));let same=bs.every(b=>b.w===bs[0].w&&b.c&&bs[0].c&&b.c.hex===bs[0].c.hex&&b.c.alpha===bs[0].c.alpha);if((bg&&bg.alpha>0)||bs.some(b=>b.w>0)){add({kind:'rect',slide:id,x:r.left-rr.left,y:r.top-rr.top,w:r.width,h:r.height,fill:bg&&bg.alpha?bg.hex:undefined,opacity:bg?bg.alpha:undefined,stroke:same&&bs[0].w?bs[0].c.hex:undefined,strokeWidth:same&&bs[0].w?bs[0].w*.75:undefined,radius:parseFloat(s.borderTopLeftRadius)||0});if(!same)bs.forEach((b,i)=>{if(!b.w||!b.c)return;let q=i===0?[r.left,r.top,r.width,b.w]:i===1?[r.right-b.w,r.top,b.w,r.height]:i===2?[r.left,r.bottom-b.w,r.width,b.w]:[r.left,r.top,b.w,r.height];add({kind:'rect',slide:id,x:q[0]-rr.left,y:q[1]-rr.top,w:q[2],h:q[3],fill:b.c.hex,opacity:b.c.alpha});});}}
-let walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);for(let n; n=walker.nextNode();){let raw=n.textContent||'';if(!raw.trim())continue;let p=n.parentElement,s=getComputedStyle(p),col=rgb(s.color)||{hex:'#000000',alpha:1},groups=new Map();for(let i=0;i<raw.length;i++){let range=document.createRange();range.setStart(n,i);range.setEnd(n,i+1);let r=range.getBoundingClientRect();if(!r.width&&!/\\s/.test(raw[i]))continue;let k=Math.round(r.top*2)/2;let g=groups.get(k);if(!g){g={x:r.left,y:r.top,right:r.right,h:r.height,text:''};groups.set(k,g)}g.x=Math.min(g.x,r.left);g.right=Math.max(g.right,r.right);g.h=Math.max(g.h,r.height);g.text+=raw[i];}for(const g of groups.values()){let text=g.text.replace(/\\s+/g,' ').trim();if(!text)continue;add({kind:'text',slide:id,x:g.x-rr.left,y:g.y-rr.top,w:Math.max(2,g.right-g.x+3),h:Math.max(g.h+4,parseFloat(s.fontSize)*1.35),text,color:col.hex,size:parseFloat(s.fontSize)*.75,bold:+s.fontWeight>=600,italic:s.fontStyle.includes('italic'),align:s.textAlign==='center'?'center':s.textAlign==='right'||s.textAlign==='end'?'right':'left',lineHeight:parseFloat(s.lineHeight)/parseFloat(s.fontSize)||1.2});}}if(getComputedStyle(root,'::before').content!=='none'||getComputedStyle(root,'::after').content!=='none')out.unsupported.push({id,feature:'pseudo-element'});}document.body.setAttribute('data-sc-native',JSON.stringify(out));})();</script>`;
+(async()=>{
+  await document.fonts.ready;
+  const out={items:[],unsupported:[]}, add=o=>out.items.push(o), n=v=>Number.parseFloat(v)||0;
+  const rgb=v=>{let m=(v||'').match(/^rgba?\\(([^)]+)\\)/);if(!m)return null;let a=m[1].split(',').map(x=>x.trim());let h=x=>Math.max(0,Math.min(255,Math.round(+x))).toString(16).padStart(2,'0');return {hex:'#'+h(a[0])+h(a[1])+h(a[2]),alpha:a[3]===undefined?1:+a[3]};};
+  const unquote=v=>v==='none'||v==='normal'?'':v.replace(/^['"]|['"]$/g,'').replace(/\\\\A /g,'\\n');
+  const unsupported=(id,feature)=>{if(!out.unsupported.some(x=>x.id===id&&x.feature===feature))out.unsupported.push({id,feature});};
+  const transform=(id,s)=>{if(s.transform==='none')return [0,0];let m=s.transform.match(/^matrix\\(([^)]+)\\)$/);if(!m){unsupported(id,'non-affine transform');return [0,0]}let a=m[1].split(',').map(n);if(Math.abs(a[0]-1)>.001||Math.abs(a[1])>.001||Math.abs(a[2])>.001||Math.abs(a[3]-1)>.001){unsupported(id,'rotation or scale transform');return [0,0]}return [a[4],a[5]]};
+  const borders=s=>[0,1,2,3].map(i=>({w:n([s.borderTopWidth,s.borderRightWidth,s.borderBottomWidth,s.borderLeftWidth][i]),c:rgb([s.borderTopColor,s.borderRightColor,s.borderBottomColor,s.borderLeftColor][i])}));
+  function rect(id,rr,r,s){let bg=rgb(s.backgroundColor),bs=borders(s),same=bs.every(b=>b.w===bs[0].w&&b.c&&bs[0].c&&b.c.hex===bs[0].c.hex&&b.c.alpha===bs[0].c.alpha);if((bg&&bg.alpha>0)||bs.some(b=>b.w>0)){add({kind:s.borderTopLeftRadius.includes('%')&&n(s.borderTopLeftRadius)>=50?'ellipse':'rect',slide:id,x:r.left-rr.left,y:r.top-rr.top,w:r.width,h:r.height,fill:bg&&bg.alpha?bg.hex:undefined,opacity:bg?bg.alpha:undefined,stroke:same&&bs[0].w?bs[0].c.hex:undefined,strokeWidth:same&&bs[0].w?bs[0].w*.75:undefined,radius:Math.min(n(s.borderTopLeftRadius),r.width/2,r.height/2)});if(!same)bs.forEach((b,i)=>{if(!b.w||!b.c)return;let q=i===0?[r.left,r.top,r.width,b.w]:i===1?[r.right-b.w,r.top,b.w,r.height]:i===2?[r.left,r.bottom-b.w,r.width,b.w]:[r.left,r.top,b.w,r.height];add({kind:'rect',slide:id,x:q[0]-rr.left,y:q[1]-rr.top,w:q[2],h:q[3],fill:b.c.hex,opacity:b.c.alpha});});}}
+  function text(id,rr,s,r,value){let col=rgb(s.color)||{hex:'#000000'},size=n(s.fontSize),_translation=transform(id,s);if(!value)return;add({kind:'text',slide:id,x:r.left-rr.left,y:r.top-rr.top,w:Math.max(2,r.width+18,r.width*1.18),h:Math.max(r.height+4,size*1.35),text:value,color:col.hex,size:size*.75,bold:+s.fontWeight>=600,italic:s.fontStyle.includes('italic'),align:'left',lineHeight:n(s.lineHeight)/size||1.2});}
+  function addPseudo(e,which,id,rr){let s=getComputedStyle(e,which),value=unquote(s.content),bs=borders(s),bg=rgb(s.backgroundColor),visible=!!(bg&&bg.alpha>0)||bs.some(b=>b.w&&b.c&&b.c.alpha>0);if(!value&&!visible)return;let absolute=s.position==='absolute'||s.position==='fixed';if(!absolute){let first;for(const node of e.childNodes){if(node.nodeType===Node.TEXT_NODE&&(node.textContent||'').trim()){let range=document.createRange();range.selectNodeContents(node);first=range.getBoundingClientRect();break}}if(!first){unsupported(id,'inline pseudo-element without measurable text anchor');return}let size=n(s.fontSize), gap=n(s.marginRight);text(id,rr,s,{left:first.left-size*.65-gap,top:first.top,width:size*.65,height:first.height},value);return;}let probe=document.createElement('span');for(const key of s)probe.style.setProperty(key,s.getPropertyValue(key));probe.style.content='normal';probe.textContent=value;e.appendChild(probe);let pr=probe.getBoundingClientRect(),r={left:pr.left,top:pr.top,right:pr.right,bottom:pr.bottom,width:pr.width,height:pr.height};probe.remove();if(!r.width&&!r.height&&value){let size=n(s.fontSize);r.width=Math.max(size,value.length*size*.65);r.height=size*1.35;}let colored=bs.map((b,i)=>b.w>0&&b.c&&b.c.alpha>0?i:-1).filter(i=>i>=0);if(!value&&r.width<=bs[1].w+bs[3].w+.1&&r.height<=bs[0].w+bs[2].w+.1&&colored.length===1){let i=colored[0],b=bs[i],x=r.left-rr.left,y=r.top-rr.top,w=r.width,h=r.height,cx=x+bs[3].w,cy=y+bs[0].w,pts=i===0?[[x,y],[x+w,y],[cx,cy]]:i===1?[[x+w,y],[x+w,y+h],[cx,cy]]:i===2?[[x,y+h],[x+w,y+h],[cx,cy]]:[[x,y],[x,y+h],[cx,cy]];add({kind:'polygon',slide:id,points:pts,fill:b.c.hex,opacity:b.c.alpha});return;}rect(id,rr,r,s);if(value)text(id,rr,s,r,value);}
+  for(const root of document.querySelectorAll('.sc-ff')){let rr=root.getBoundingClientRect(),id=root.id;for(const e of [root,...root.querySelectorAll('*')]){let s=getComputedStyle(e),r=e.getBoundingClientRect();if(!r.width||!r.height||s.display==='none'||s.visibility==='hidden')continue;if(['IMG','SVG','CANVAS','VIDEO','IFRAME'].includes(e.tagName.toUpperCase()))unsupported(id,'embedded visual element '+e.tagName+' requires a native ppt equivalent');if(s.boxShadow!=='none'||s.backgroundImage!=='none'||s.clipPath!=='none'||s.filter!=='none')unsupported(id,'shadow, gradient/image, clip-path or filter');rect(id,rr,r,s);addPseudo(e,'::before',id,rr);addPseudo(e,'::after',id,rr);}let walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);for(let node;node=walker.nextNode();){let raw=node.textContent||'';if(!raw.trim())continue;let p=node.parentElement,s=getComputedStyle(p),groups=new Map();for(let i=0;i<raw.length;i++){let range=document.createRange();range.setStart(node,i);range.setEnd(node,i+1);let r=range.getBoundingClientRect();if(!r.width&&!/\\s/.test(raw[i]))continue;let k=Math.round(r.top*2)/2,g=groups.get(k);if(!g){g={left:r.left,top:r.top,right:r.right,height:r.height,text:''};groups.set(k,g)}g.left=Math.min(g.left,r.left);g.right=Math.max(g.right,r.right);g.height=Math.max(g.height,r.height);g.text+=raw[i];}for(const g of groups.values()){let value=g.text.replace(/\\s+/g,' ').trim();if(s.textTransform==='uppercase')value=value.toUpperCase();if(s.textTransform==='lowercase')value=value.toLowerCase();if(s.textTransform==='capitalize')value=value.replace(/\\b\\S/g,x=>x.toUpperCase());text(id,rr,s,{left:g.left,top:g.top,width:g.right-g.left,height:g.height},value);}}}document.body.setAttribute('data-sc-native',JSON.stringify(out));
+})();</script>`;
 function chromeArgs(tmp) {
   return [
     "--headless=new",
@@ -199595,7 +199702,7 @@ function chromeArgs(tmp) {
     "--no-default-browser-check",
     "--disable-extensions",
     "--hide-scrollbars",
-    `--user-data-dir=${join12(tmp, "profile")}`,
+    `--user-data-dir=${join13(tmp, "profile")}`,
     ...process.platform === "linux" && process.getuid?.() === 0 ? ["--no-sandbox"] : []
   ];
 }
@@ -199630,6 +199737,46 @@ var placeholder = (n) => ({
   placeholderLabel: "Freeform HTML \u2014 needs Chrome to render here",
   role: "freeform"
 });
+function authoredPptNodes(node2, items, font) {
+  return items.map((item2) => {
+    const role = `ppt:${item2.id}`;
+    if (item2.kind === "text") {
+      const style = {
+        family: font.family,
+        measure: font.measure,
+        size: item2.size,
+        lineSpacing: item2.size * (item2.lineHeight ?? 1.2),
+        color: item2.color ?? "#000000",
+        bold: item2.bold,
+        italic: item2.italic,
+        align: item2.align ?? "left",
+        valign: "top"
+      };
+      const box2 = { x: node2.box.x + item2.x, y: node2.box.y + item2.y, w: item2.w, h: item2.h };
+      const paragraphs4 = [para(item2.text)];
+      return makeTextNode(paragraphs4, box2, style, layoutText(paragraphs4, style, box2.w), { role });
+    }
+    if (item2.kind === "line")
+      return {
+        kind: "line",
+        x1: node2.box.x + item2.x1,
+        y1: node2.box.y + item2.y1,
+        x2: node2.box.x + item2.x2,
+        y2: node2.box.y + item2.y2,
+        stroke: item2.stroke,
+        arrowEnd: item2.arrowEnd,
+        role
+      };
+    return {
+      kind: item2.kind,
+      box: { x: node2.box.x + item2.x, y: node2.box.y + item2.y, w: item2.w, h: item2.h },
+      ...item2.fill ? { fill: item2.fill, fillOpacity: item2.fillOpacity } : {},
+      ...item2.stroke ? { stroke: item2.stroke } : {},
+      ...item2.kind === "rect" && item2.radius ? { radius: item2.radius } : {},
+      role
+    };
+  });
+}
 async function flattenFreeform(scene, minPt) {
   const placed = [];
   let top = 0;
@@ -199660,9 +199807,9 @@ async function flattenFreeform(scene, minPt) {
       (p) => `<div style="position:absolute;left:0;top:${p.top}px">${freeformMarkup(p.node, p.id)}</div>`
     ).join("");
     const page2 = (extra = "") => `<!doctype html><html><head><meta charset="utf-8"><style>${fontFaceCss(blocks)}html,body{margin:0;padding:0;background:transparent;width:${width}px;height:${height}px;overflow:hidden}</style></head><body>${blocks}${extra}</body></html>`;
-    const tmp = mkdtempSync3(join12(tmpdir3(), "slidecraft-freeform-"));
+    const tmp = mkdtempSync4(join13(tmpdir4(), "slidecraft-freeform-"));
     try {
-      const measureHtml = join12(tmp, "measure.html");
+      const measureHtml = join13(tmp, "measure.html");
       writeFileSync7(measureHtml, page2(MEASURE_SCRIPT));
       const dom = await dumpDom(bin, [
         ...chromeArgs(tmp),
@@ -199693,8 +199840,8 @@ async function flattenFreeform(scene, minPt) {
             )
           );
       }
-      const shotHtml = join12(tmp, "shot.html");
-      const png = join12(tmp, "shot.png");
+      const shotHtml = join13(tmp, "shot.html");
+      const png = join13(tmp, "shot.png");
       writeFileSync7(shotHtml, page2());
       await runChrome(
         bin,
@@ -199736,7 +199883,7 @@ async function flattenFreeform(scene, minPt) {
       );
     } finally {
       try {
-        rmSync5(tmp, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+        rmSync6(tmp, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
       } catch {
       }
     }
@@ -199761,6 +199908,21 @@ async function nativeFreeform(scene) {
       }
   if (!placed.length) return { scene, diagnostics: [] };
   const diagnostics = [];
+  const authored = placed.filter((p) => p.node.ppt?.length);
+  const automatic = placed.filter((p) => !p.node.ppt?.length);
+  const font = scene.fonts?.body ?? { family: "Arial", measure: "liberation-sans" };
+  const nodes = new Map(authored.map((p) => [p.node, authoredPptNodes(p.node, p.node.ppt, font)]));
+  if (!automatic.length)
+    return {
+      scene: {
+        ...scene,
+        slides: scene.slides.map((s2) => ({
+          ...s2,
+          nodes: s2.nodes.flatMap((n) => n.kind === "html" ? nodes.get(n) ?? [n] : [n])
+        }))
+      },
+      diagnostics
+    };
   const bin = findChrome();
   if (!bin) {
     diagnostics.push(
@@ -199770,16 +199932,15 @@ async function nativeFreeform(scene) {
     );
     return { scene, diagnostics };
   }
-  const width = Math.ceil(Math.max(...placed.map((p) => p.node.box.w)) * PX3);
+  const width = Math.ceil(Math.max(...automatic.map((p) => p.node.box.w)) * PX3);
   const height = Math.max(1, top);
-  const blocks = placed.map(
+  const blocks = automatic.map(
     (p) => `<div style="position:absolute;left:0;top:${p.top}px">${freeformMarkup(p.node, p.id)}</div>`
   ).join("");
   const page2 = `<!doctype html><html><head><meta charset="utf-8"><style>${fontFaceCss(blocks)}html,body{margin:0;padding:0;background:transparent;width:${width}px;height:${height}px;overflow:hidden}</style></head><body>${blocks}${NATIVE_SCRIPT}</body></html>`;
-  const tmp = mkdtempSync3(join12(tmpdir3(), "slidecraft-native-freeform-"));
-  const nodes = /* @__PURE__ */ new Map();
+  const tmp = mkdtempSync4(join13(tmpdir4(), "slidecraft-native-freeform-"));
   try {
-    const file2 = join12(tmp, "native.html");
+    const file2 = join13(tmp, "native.html");
     writeFileSync7(file2, page2);
     const dom = await dumpDom(bin, [
       ...chromeArgs(tmp),
@@ -199790,8 +199951,12 @@ async function nativeFreeform(scene) {
     const attr = /data-sc-native="([^"]*)"/.exec(dom)?.[1];
     if (!attr) throw new Error("Chrome did not return editable freeform geometry");
     const extracted = JSON.parse(attr.replace(/&quot;/g, '"').replace(/&amp;/g, "&"));
-    const unsupported = new Map(extracted.unsupported.map((x2) => [x2.id, x2.feature]));
-    for (const p of placed) {
+    const unsupported = /* @__PURE__ */ new Map();
+    for (const item2 of extracted.unsupported) {
+      const previous = unsupported.get(item2.id);
+      unsupported.set(item2.id, previous ? `${previous}; ${item2.feature}` : item2.feature);
+    }
+    for (const p of automatic) {
       const feature = unsupported.get(p.id);
       if (feature) {
         diagnostics.push(
@@ -199801,26 +199966,48 @@ async function nativeFreeform(scene) {
         );
         continue;
       }
-      const font = scene.fonts?.body ?? { family: "Arial", measure: "liberation-sans" };
       const slideTitle = scene.slides.find((s2) => s2.id === p.slide)?.title;
       const list = [];
       for (const item2 of extracted.items.filter((x2) => x2.slide === p.id)) {
-        const x2 = p.node.box.x + item2.x / PX3;
-        const y = p.node.box.y + item2.y / PX3;
-        if (item2.kind === "rect") {
+        if (item2.kind === "rect" || item2.kind === "ellipse") {
+          const x2 = p.node.box.x + item2.x / PX3;
+          const y = p.node.box.y + item2.y / PX3;
           list.push({
-            kind: "rect",
+            kind: item2.kind,
             box: { x: x2, y, w: item2.w / PX3, h: item2.h / PX3 },
             ...item2.fill ? { fill: item2.fill, fillOpacity: item2.opacity } : {},
             ...item2.stroke ? { stroke: { color: item2.stroke, width: item2.strokeWidth ?? 0.75 } } : {},
             ...item2.radius ? { radius: item2.radius / PX3 } : {},
             role: "freeform-native-shape"
           });
-        } else {
+        } else if (item2.kind === "polygon") {
+          const points = item2.points.map(([px4, py2]) => [
+            p.node.box.x + px4 / PX3,
+            p.node.box.y + py2 / PX3
+          ]);
+          const xs = points.map(([px4]) => px4);
+          const ys = points.map(([, py2]) => py2);
+          list.push({
+            kind: "polygon",
+            points,
+            box: {
+              x: Math.min(...xs),
+              y: Math.min(...ys),
+              w: Math.max(...xs) - Math.min(...xs),
+              h: Math.max(...ys) - Math.min(...ys)
+            },
+            fill: item2.fill,
+            fillOpacity: item2.opacity,
+            role: "freeform-native-shape"
+          });
+        } else if (item2.kind === "text") {
+          const x2 = p.node.box.x + item2.x / PX3;
+          const y = p.node.box.y + item2.y / PX3;
           const style = {
             family: font.family,
             measure: font.measure,
             size: item2.size,
+            // Each item is already one browser-measured line.
             lineSpacing: item2.size * item2.lineHeight,
             color: item2.color,
             bold: item2.bold,
@@ -199847,7 +200034,7 @@ async function nativeFreeform(scene) {
     );
   } finally {
     try {
-      rmSync5(tmp, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+      rmSync6(tmp, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
     } catch {
     }
   }
@@ -202160,6 +202347,7 @@ import { isAbsolute as isAbsolute2, resolve as resolve5 } from "node:path";
 // src/qa/pptx-verify.ts
 var import_jszip5 = __toESM(require_lib3(), 1);
 import { readFileSync as readFileSync12 } from "node:fs";
+import { posix as posix2 } from "node:path";
 var norm = (s2) => s2.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/\s+/g, "");
 function texts(n, out) {
   if (n.kind === "text")
@@ -202189,6 +202377,21 @@ function pngSize(buf) {
 async function verifyPptx(path2, scene) {
   const zip = await import_jszip5.default.loadAsync(readFileSync12(path2));
   const out = [];
+  const xmlOf = async (part) => await zip.file(part)?.async("string") ?? "";
+  const linkedPart = async (part, type) => {
+    const rels4 = await xmlOf(
+      posix2.join(posix2.dirname(part), "_rels", `${posix2.basename(part)}.rels`)
+    );
+    for (const relationship of rels4.matchAll(/<Relationship\b[^>]*\/>/g)) {
+      const tag = relationship[0];
+      if (!new RegExp(`Type="[^"]*/${type}"`).test(tag)) continue;
+      const target = /Target="([^"]+)"/.exec(tag)?.[1];
+      if (target)
+        return target.startsWith("/") ? target.slice(1) : posix2.normalize(posix2.join(posix2.dirname(part), target));
+    }
+    return void 0;
+  };
+  const visibleText = (xml) => norm([...xml.matchAll(/<a:t>([^<]*)<\/a:t>/g)].map((m) => m[1]).join(""));
   let checked = 0;
   for (const s2 of scene.slides) {
     const xml = await zip.file(`ppt/slides/slide${s2.index + 1}.xml`)?.async("string");
@@ -202197,6 +202400,35 @@ async function verifyPptx(path2, scene) {
       continue;
     }
     const hay = norm([...xml.matchAll(/<a:t>([^<]*)<\/a:t>/g)].map((m) => m[1]).join(""));
+    const part = `ppt/slides/slide${s2.index + 1}.xml`;
+    for (const node2 of s2.nodes) {
+      if (!node2.role?.startsWith("chrome-") && !node2.role?.startsWith("ppt:")) continue;
+      const name = shapeName(node2, s2.id);
+      if (name && !xml.includes(`name="${name}"`))
+        out.push(diag("SC-PPTX-002", `Named editable element missing: ${name}`, { slide: s2.id }));
+    }
+    const layoutPart = await linkedPart(part, "slideLayout");
+    const masterPart = layoutPart ? await linkedPart(layoutPart, "slideMaster") : void 0;
+    const inherited = `${layoutPart ? await xmlOf(layoutPart) : ""}${masterPart ? await xmlOf(masterPart) : ""}`;
+    const masterText = [];
+    const master = scene.masters[s2.master];
+    master?.nodes.forEach((node2) => texts(node2, masterText));
+    for (const value of masterText)
+      if (norm(value) && !visibleText(xml + inherited).includes(norm(value)))
+        out.push(
+          diag("SC-PPTX-002", `Master text missing: ${value.slice(0, 60)}`, { slide: s2.id })
+        );
+    if (master?.slideNumber && !/type="slidenum"/.test(xml + inherited))
+      out.push(
+        diag("SC-PPTX-002", "Page-number field missing from slide/layout/master", { slide: s2.id })
+      );
+    if (s2.notes) {
+      const notesPart = await linkedPart(part, "notesSlide");
+      if (!notesPart || !visibleText(await xmlOf(notesPart)).includes(norm(s2.notes)))
+        out.push(
+          diag("SC-PPTX-002", "Speaker notes missing or incomplete after export", { slide: s2.id })
+        );
+    }
     const want = [];
     s2.nodes.forEach((n) => texts(n, want));
     for (const w of want) {
@@ -202597,10 +202829,474 @@ var chartTakeaway = {
   }
 };
 
+// src/engine/context.ts
+import { existsSync as existsSync9 } from "node:fs";
+import { isAbsolute as isAbsolute3, resolve as resolve6 } from "node:path";
+function sizeLadder(start, min) {
+  const out = [];
+  for (let s2 = start; s2 >= min - 1e-6; s2 -= start > 20 ? 2 : 1) out.push(+s2.toFixed(1));
+  if (out[out.length - 1] !== min) out.push(min);
+  return out;
+}
+function createContext(init) {
+  const { theme, format, fonts } = init;
+  const nodes = [];
+  const diagnostics = [];
+  const base = init.pointerPrefix ?? `/slides/${init.slideIndex}`;
+  const ptr = (field) => field ? `${base}/${field}` : base;
+  const colors = { ...theme.colors, chart: theme.chart };
+  const semantic = (s2) => {
+    if (typeof s2 === "number") return s2;
+    return theme.type[s2 ?? "body"];
+  };
+  const toParagraphs = (content) => {
+    if (typeof content === "string") return content.split(/\n{2,}/).map((p) => para(p));
+    if (content.length === 0) return [para("")];
+    if (typeof content[0] === "string") return content.map((p) => para(p));
+    return content;
+  };
+  const ctx = {
+    nodes,
+    diagnostics,
+    theme,
+    format,
+    fonts,
+    slideId: init.slideId,
+    slideIndex: init.slideIndex,
+    variant: init.variant,
+    slide: init.slide,
+    baseDir: init.baseDir,
+    body: init.body,
+    page: { x: 0, y: 0, w: format.w, h: format.h },
+    colors,
+    ptr,
+    paragraphs(items, opts = {}) {
+      return items.map((t, i) => {
+        const p = para(t, opts.bullet ? { bullet: true } : {});
+        if (i > 0 && opts.spaceBefore) p.spaceBefore = opts.spaceBefore;
+        return p;
+      });
+    },
+    text(content, box2, opts = {}) {
+      const paragraphs4 = toParagraphs(content);
+      const font = opts.font === "heading" ? fonts.heading : fonts.body;
+      const start = semantic(opts.size);
+      const sizes = opts.sizes ?? (opts.fixed ? [start] : sizeLadder(start, Math.min(start, theme.type.minBody)));
+      const style = {
+        family: font.family,
+        measure: font.measure,
+        color: opts.color ?? theme.colors.ink,
+        bold: opts.bold ?? false,
+        italic: opts.italic ?? false,
+        align: opts.align ?? "left",
+        valign: opts.valign ?? "top"
+      };
+      const extra = {};
+      if (opts.role) extra.role = opts.role;
+      if (opts.field) extra.pointer = ptr(opts.field);
+      if (opts.bulletIndent) extra.bulletIndent = opts.bulletIndent;
+      if (opts.maxLines !== void 0) extra.maxLines = opts.maxLines;
+      const r = fitText(
+        paragraphs4,
+        box2,
+        style,
+        sizes,
+        opts.lineHeight ?? theme.type.lineHeight,
+        extra
+      );
+      const txt = plainText(paragraphs4);
+      if (!r.fits) {
+        const laid = layoutText(paragraphs4, r.node.style, box2.w, opts.bulletIndent ?? 14);
+        if (laid.splitWord) {
+          diagnostics.push(
+            diag(
+              "SC-FIT-003",
+              `A word in "${txt.slice(0, 60)}" is wider than its ${box2.w.toFixed(2)}in column`,
+              {
+                slide: init.slideId,
+                pointer: ptr(opts.field)
+              }
+            )
+          );
+        } else {
+          const lineIn = r.node.style.lineSpacing / 72;
+          const extraLines = Math.max(
+            1,
+            Math.ceil(r.overflow / lineIn - 1e-6),
+            r.lines - r.maxLines
+          );
+          const avgCharsPerLine = Math.max(1, Math.round(txt.length / Math.max(1, r.lines)));
+          diagnostics.push(
+            diag(
+              "SC-FIT-001",
+              `Text does not fit at ${r.size}pt: needs ${r.lines} lines, box holds ${r.maxLines}`,
+              {
+                slide: init.slideId,
+                pointer: ptr(opts.field),
+                measured: `${txt.length} chars / ${r.lines} lines`,
+                limit: `${r.maxLines} lines`,
+                hint: `Cut about ${extraLines * avgCharsPerLine} characters (+${extraLines} line${extraLines > 1 ? "s" : ""}), split the point, or move detail to notes.`
+              }
+            )
+          );
+        }
+      } else if (r.size < start - 0.01 && !opts.sizes) {
+        diagnostics.push(
+          diag("SC-FIT-002", `Text shrunk from ${start}pt to ${r.size}pt to fit`, {
+            slide: init.slideId,
+            pointer: ptr(opts.field)
+          })
+        );
+      }
+      nodes.push(r.node);
+      return r.node;
+    },
+    rect(box2, opts = {}) {
+      const n = { kind: "rect", box: box2, ...opts };
+      nodes.push(n);
+      return n;
+    },
+    ellipse(box2, opts = {}) {
+      const n = { kind: "ellipse", box: box2, ...opts };
+      nodes.push(n);
+      return n;
+    },
+    polygon(points, opts = {}) {
+      const xs = points.map((p) => p[0]);
+      const ys = points.map((p) => p[1]);
+      const x2 = Math.min(...xs);
+      const y = Math.min(...ys);
+      const n = {
+        kind: "polygon",
+        box: { x: x2, y, w: Math.max(...xs) - x2, h: Math.max(...ys) - y },
+        points,
+        ...opts
+      };
+      nodes.push(n);
+      return n;
+    },
+    line(x1, y1, x2, y2, stroke = {}, opts = {}) {
+      const n = {
+        kind: "line",
+        x1,
+        y1,
+        x2,
+        y2,
+        stroke: {
+          color: stroke.color ?? theme.colors.rule,
+          width: stroke.width ?? 0.75,
+          ...stroke.dash ? { dash: stroke.dash } : {}
+        },
+        ...opts.arrowEnd ? { arrowEnd: true } : {},
+        ...opts.role ? { role: opts.role } : {}
+      };
+      nodes.push(n);
+      return n;
+    },
+    image(box2, src, alt, opts = {}) {
+      let path2;
+      if (src) {
+        const p = isAbsolute3(src) ? src : resolve6(init.baseDir, src);
+        if (existsSync9(p)) path2 = p;
+      }
+      if (!path2) {
+        diagnostics.push(
+          diag("SC-IMG-002", src ? `Image not found: ${src}` : "Image slot is empty", {
+            slide: init.slideId,
+            pointer: ptr(opts.field),
+            severity: src ? "warning" : "info"
+          })
+        );
+      }
+      const n = {
+        kind: "image",
+        box: box2,
+        ...path2 ? { path: path2 } : {},
+        alt,
+        fit: opts.fit ?? "cover",
+        placeholderLabel: opts.label ?? "Image placeholder",
+        role: "image"
+      };
+      nodes.push(n);
+      return n;
+    },
+    table(spec, box2) {
+      const rowsAll = spec.header ? [spec.header, ...spec.rows] : spec.rows;
+      const ncol = Math.max(...rowsAll.map((r) => r.length));
+      const weights = spec.colWeights ?? Array.from({ length: ncol }, (_, i) => i === 0 ? 1.3 : 1);
+      const wsum = weights.reduce((a, b) => a + b, 0);
+      const colW = weights.map((w) => box2.w * w / wsum);
+      const pad3 = { l: 0.08, r: 0.08, t: 0.06, b: 0.06 };
+      const start = spec.size ?? theme.type.body - 1;
+      const ladder = sizeLadder(start, theme.type.minBody - 1);
+      let chosen;
+      let fitted = false;
+      for (const size2 of ladder) {
+        const cells2 = [];
+        const rowH2 = [];
+        rowsAll.forEach((row, ri) => {
+          const isHead = !!spec.header && ri === 0;
+          const dataRow = spec.header ? ri - 1 : ri;
+          const cellRow = [];
+          let maxH = 0;
+          for (let ci = 0; ci < ncol; ci++) {
+            const raw = row[ci] ?? "";
+            const hl = spec.highlightCol === ci || spec.highlightRow !== void 0 && spec.highlightRow === dataRow;
+            const s2 = {
+              family: (isHead ? fonts.heading : fonts.body).family,
+              measure: (isHead ? fonts.heading : fonts.body).measure,
+              size: isHead ? Math.max(size2 - 1, theme.type.small) : size2,
+              lineSpacing: +((isHead ? Math.max(size2 - 1, theme.type.small) : size2) * 1.18).toFixed(
+                2
+              ),
+              color: isHead ? hl ? theme.colors.accent : theme.colors.muted : theme.colors.ink,
+              bold: isHead || spec.firstColBold !== false && ci === 0 || hl && !isHead && spec.highlightRow === dataRow,
+              align: spec.align?.[ci] ?? "left",
+              valign: "top"
+            };
+            const ps = [para(raw)];
+            const w = colW[ci] - pad3.l - pad3.r;
+            const laid = layoutText(ps, s2, w);
+            const hgt = laid.contentHeight + pad3.t + pad3.b;
+            maxH = Math.max(maxH, hgt);
+            const cell = {
+              text: makeTextNode(ps, { x: 0, y: 0, w, h: laid.contentHeight }, s2, laid)
+            };
+            if (hl && !isHead) cell.fill = theme.colors.accentSoft;
+            if (isHead) cell.borderBottom = { color: theme.colors.ink, width: 1 };
+            else cell.borderBottom = { color: theme.colors.rule, width: 0.5 };
+            cellRow.push(cell);
+          }
+          rowH2.push(Math.max(maxH, isHead ? 0.34 : 0.36));
+          cells2.push(cellRow);
+        });
+        chosen = { cells: cells2, rowH: rowH2 };
+        if (rowH2.reduce((a, b) => a + b, 0) <= box2.h + 1e-3) {
+          fitted = true;
+          break;
+        }
+      }
+      const { cells, rowH } = chosen;
+      let y = box2.y;
+      cells.forEach((row, ri) => {
+        let x2 = box2.x;
+        row.forEach((cell, ci) => {
+          const w = colW[ci];
+          cell.text.box = {
+            x: x2 + pad3.l,
+            y: y + pad3.t,
+            w: w - pad3.l - pad3.r,
+            h: rowH[ri] - pad3.t - pad3.b
+          };
+          x2 += w;
+        });
+        y += rowH[ri];
+      });
+      const total = rowH.reduce((a, b) => a + b, 0);
+      if (!fitted) {
+        diagnostics.push(
+          diag("SC-FIT-001", `Table needs ${total.toFixed(2)}in, box holds ${box2.h.toFixed(2)}in`, {
+            slide: init.slideId,
+            pointer: ptr(spec.field),
+            measured: `${rowsAll.length} rows`,
+            limit: `${box2.h.toFixed(2)}in`,
+            hint: "Shorten cell text, drop a row or column, or move detail to backup."
+          })
+        );
+      }
+      const node2 = {
+        kind: "table",
+        box: { ...box2, h: Math.min(total, box2.h + 2) },
+        colW,
+        rowH,
+        cells,
+        pad: pad3,
+        role: "table",
+        ...spec.field ? { pointer: ptr(spec.field) } : {}
+      };
+      nodes.push(node2);
+      return node2;
+    },
+    chart(spec, box2) {
+      const n = buildChart(spec, box2, { theme, font: fonts.body });
+      if (spec.field) n.pointer = ptr(spec.field);
+      nodes.push(n);
+      return n;
+    },
+    add(node2) {
+      nodes.push(node2);
+    },
+    issue(d) {
+      diagnostics.push({ ...d, slide: d.slide ?? init.slideId });
+    }
+  };
+  return ctx;
+}
+
+// src/layouts/composition.ts
+var region = external_exports.object({
+  x: external_exports.number().min(0).max(1),
+  y: external_exports.number().min(0).max(1),
+  w: external_exports.number().positive().max(1),
+  h: external_exports.number().positive().max(1)
+}).strict().refine(
+  (b) => b.x + b.w <= 1.000001 && b.y + b.h <= 1.000001,
+  "Component region must stay inside the slide body"
+);
+var schema10 = external_exports.object({
+  components: external_exports.array(
+    external_exports.object({
+      id: external_exports.string().regex(/^[a-z][a-z0-9-]*$/),
+      layout: external_exports.string(),
+      variant: external_exports.string().optional(),
+      box: region.describe("Fractions of the available body, not page coordinates"),
+      content: external_exports.record(external_exports.string(), external_exports.unknown())
+    }).strict()
+  ).min(1).max(12).superRefine((items, ctx) => {
+    const ids = /* @__PURE__ */ new Set();
+    items.forEach((item2, i) => {
+      if (ids.has(item2.id))
+        ctx.addIssue({ code: "custom", path: [i, "id"], message: "Duplicate component id" });
+      ids.add(item2.id);
+      items.slice(0, i).forEach((other) => {
+        const a = item2.box, b = other.box;
+        if (Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x) > 1e-6 && Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y) > 1e-6)
+          ctx.addIssue({
+            code: "custom",
+            path: [i, "box"],
+            message: `Overlaps component ${other.id}`
+          });
+      });
+    });
+  })
+}).strict();
+function isComposable(layout) {
+  return layout.frame === "standard" && layout.master === "content" && !["composition", "freeform"].includes(layout.id);
+}
+var composition = {
+  id: "composition",
+  name: "Component composition",
+  group: "message",
+  purpose: "Assemble several existing native exhibits in explicit body regions, keeping one shared frame and theme.",
+  useWhen: ["One message needs two complementary exhibits from the existing library"],
+  avoidWhen: [
+    "Independent messages that belong on separate slides",
+    "Dense layouts squeezed into unreadable regions"
+  ],
+  variants: ["regions"],
+  frame: "standard",
+  master: "content",
+  schema: schema10,
+  examples: [
+    {
+      title: "Capabilities and execution jointly support the rollout",
+      content: {
+        components: [
+          {
+            id: "capabilities",
+            layout: "key-points",
+            variant: "cards",
+            box: { x: 0, y: 0, w: 0.48, h: 1 },
+            content: {
+              points: [
+                { heading: "Shared data", body: "One agreed source." },
+                { heading: "Clear roles", body: "Named decision owners." }
+              ]
+            }
+          },
+          {
+            id: "execution",
+            layout: "key-points",
+            variant: "columns",
+            box: { x: 0.52, y: 0, w: 0.48, h: 1 },
+            content: {
+              points: [
+                { heading: "Test first", body: "Validate the critical path." },
+                { heading: "Scale next", body: "Expand after review." }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  compose(ctx, c) {
+    c.components.forEach((part, i) => {
+      const pointer = ctx.ptr(`components/${i}`);
+      const def = getLayout(part.layout);
+      if (!def || !isComposable(def)) {
+        ctx.issue(
+          diag("SC-SPEC-002", `Layout ${part.layout} is not a composable native body exhibit`, {
+            pointer: `${pointer}/layout`
+          })
+        );
+        return;
+      }
+      const variant = part.variant ?? def.variants[0];
+      if (!def.variants.includes(variant)) {
+        ctx.issue(
+          diag("SC-SPEC-002", `Unknown ${def.id} variant ${variant}`, {
+            pointer: `${pointer}/variant`
+          })
+        );
+        return;
+      }
+      const parsed = def.schema.safeParse(part.content);
+      if (!parsed.success) {
+        for (const issue2 of parsed.error.issues)
+          ctx.issue(
+            diag("SC-SPEC-001", issue2.message, {
+              pointer: `${pointer}/content/${issue2.path.join("/")}`
+            })
+          );
+        return;
+      }
+      const b = part.box, parent = ctx.body;
+      const body = {
+        x: parent.x + b.x * parent.w,
+        y: parent.y + b.y * parent.h,
+        w: b.w * parent.w,
+        h: b.h * parent.h
+      };
+      const child = createContext({
+        theme: ctx.theme,
+        format: ctx.format,
+        fonts: ctx.fonts,
+        slideId: ctx.slideId,
+        slideIndex: ctx.slideIndex,
+        slide: ctx.slide,
+        baseDir: ctx.baseDir,
+        variant,
+        body,
+        pointerPrefix: `${pointer}/content`
+      });
+      def.compose(child, parsed.data);
+      child.nodes.forEach((node2) => ctx.add(node2));
+      child.diagnostics.forEach((d) => ctx.issue(d));
+      for (const node2 of child.nodes) {
+        const n = node2.kind === "line" ? {
+          x: Math.min(node2.x1, node2.x2),
+          y: Math.min(node2.y1, node2.y2),
+          w: Math.abs(node2.x2 - node2.x1),
+          h: Math.abs(node2.y2 - node2.y1)
+        } : node2.box;
+        if (n.x < body.x - 0.01 || n.y < body.y - 0.01 || n.x + n.w > body.x + body.w + 0.01 || n.y + n.h > body.y + body.h + 0.01)
+          ctx.issue(
+            diag(
+              "SC-SPEC-001",
+              `Component ${part.id} exceeds its region; enlarge the region or choose a simpler exhibit`,
+              { pointer: `${pointer}/box` }
+            )
+          );
+      }
+    });
+  }
+};
+
 // src/layouts/coverage-map.ts
 var Status = external_exports.enum(["none", "planned", "partial", "full"]);
 var Item = external_exports.object({ label: external_exports.string().max(28), status: Status }).strict();
-var schema10 = external_exports.object({
+var schema11 = external_exports.object({
   groups: external_exports.array(external_exports.object({ name: external_exports.string().max(24), items: external_exports.array(Item).min(1).max(6) }).strict()).min(2).max(6).describe("Rows of functions or capabilities; keep the same rows between snapshots"),
   snapshot: external_exports.string().max(30).optional().describe('When the map was taken, e.g. "As of Q3 2026"'),
   statusLabels: external_exports.object({
@@ -202627,7 +203323,7 @@ var coverageMap = {
   variants: ["grid"],
   frame: "standard",
   master: "content",
-  schema: schema10,
+  schema: schema11,
   examples: [
     {
       title: "Automation covers most of order-to-cash; record-to-report is the gap to close next",
@@ -202755,7 +203451,7 @@ var coverageMap = {
 };
 
 // src/layouts/data-table.ts
-var schema11 = external_exports.object({
+var schema12 = external_exports.object({
   header: external_exports.array(external_exports.string().max(28)).min(2).max(6).describe('Column headings with units: "Revenue, \u20ACM"'),
   rows: external_exports.array(external_exports.array(external_exports.string().max(80))).min(2).max(10).describe("Data rows; every row has exactly one cell per header column"),
   highlightRow: external_exports.number().int().min(0).optional().describe("Index of the one data row the title is about"),
@@ -202786,7 +203482,7 @@ var dataTable = {
   variants: ["plain", "with-takeaway"],
   frame: "standard",
   master: "content",
-  schema: schema11,
+  schema: schema12,
   examples: [
     {
       title: "Germany is the largest and least concentrated of the four target markets",
@@ -202930,7 +203626,7 @@ var dataTable = {
 
 // src/layouts/evidence-chain.ts
 var Result = external_exports.enum(["pass", "partial", "fail", "unknown"]);
-var schema12 = external_exports.object({
+var schema13 = external_exports.object({
   steps: external_exports.array(
     external_exports.object({
       check: external_exports.string().max(40).describe("What was checked"),
@@ -202965,7 +203661,7 @@ var evidenceChain = {
   variants: ["chain"],
   frame: "standard",
   master: "content",
-  schema: schema12,
+  schema: schema13,
   examples: [
     {
       title: "Four independent checks support releasing the new pricing to all regions",
@@ -203124,8 +203820,159 @@ var evidenceChain = {
   }
 };
 
+// src/layouts/evidence-panorama.ts
+var schema14 = external_exports.object({
+  metric: external_exports.object({
+    value: external_exports.string().min(1).max(12),
+    label: external_exports.string().min(1).max(70),
+    context: external_exports.string().max(120),
+    implication: external_exports.string().max(120)
+  }).strict(),
+  cards: external_exports.array(
+    external_exports.object({
+      label: external_exports.string().min(1).max(70),
+      title: external_exports.string().min(1).max(90),
+      body: external_exports.string().min(1).max(240)
+    }).strict()
+  ).length(4)
+}).strict();
+var evidencePanorama = {
+  id: "evidence-panorama",
+  name: "Evidence panorama",
+  group: "numbers",
+  purpose: "Connect one sourced headline metric to four parallel models, implications or use cases; equal cards express categories, not relative magnitude.",
+  useWhen: [
+    "One observation motivates four different strategic responses",
+    "Compare four models with a common context and a shared bottom-line conclusion"
+  ],
+  avoidWhen: [
+    "The title claims a ranking or market share: use a chart",
+    "Alternatives must be scored against identical criteria: use options-comparison"
+  ],
+  variants: ["metric-and-cards"],
+  frame: "standard",
+  master: "content",
+  schema: schema14,
+  examples: [
+    {
+      title: "Strong adoption supports four distinct service models, not one universal offer",
+      content: {
+        metric: {
+          value: "72%",
+          label: "of surveyed teams",
+          context: "use at least one shared service",
+          implication: "Adoption alone does not determine the operating model"
+        },
+        cards: [
+          {
+            label: "SELF-SERVICE",
+            title: "Routine requests",
+            body: "A guided catalogue makes repeatable work accessible."
+          },
+          {
+            label: "SPECIALIST SUPPORT",
+            title: "Complex decisions",
+            body: "Expert teams handle ambiguity and exceptions."
+          },
+          {
+            label: "SHARED PLATFORM",
+            title: "Common capabilities",
+            body: "Reusable infrastructure supports several service lines."
+          },
+          {
+            label: "PARTNERSHIPS",
+            title: "External capabilities",
+            body: "Partners provide skills that are needed selectively."
+          }
+        ]
+      },
+      sources: ["illustrative-survey"]
+    }
+  ],
+  compose(ctx, c) {
+    const { colors, body } = ctx;
+    const [stat, grid2] = cols(body, [1, 3.15], 0.32);
+    ctx.rect(stat, { fill: colors.ink, radius: 0.09, role: "stat-panel" });
+    const inner = { x: stat.x + 0.24, y: stat.y + 0.25, w: stat.w - 0.48, h: stat.h - 0.5 };
+    ctx.text(
+      c.metric.value,
+      { ...inner, h: 0.86 },
+      {
+        size: 48,
+        bold: true,
+        color: colors.background,
+        align: "center",
+        maxLines: 1,
+        field: "metric/value"
+      }
+    );
+    ctx.text(
+      c.metric.label,
+      { ...inner, y: inner.y + 1.03, h: 0.6 },
+      {
+        size: 15,
+        bold: true,
+        color: contrast(colors.chart[2], colors.ink) >= 4.5 ? colors.chart[2] : colors.background,
+        align: "center",
+        maxLines: 2,
+        field: "metric/label"
+      }
+    );
+    const contextY = inner.y + 1.83;
+    ctx.text(
+      c.metric.context,
+      { ...inner, y: contextY, h: Math.max(0.7, stat.h - 3.1) },
+      { size: 14, color: colors.background, align: "center", maxLines: 4, field: "metric/context" }
+    );
+    const rule = stat.y + stat.h - 1.12;
+    ctx.line(inner.x, rule, inner.x + inner.w, rule, { color: colors.muted, width: 0.65 });
+    ctx.text(
+      c.metric.implication,
+      { ...inner, y: rule + 0.15, h: 0.8 },
+      {
+        size: 13,
+        bold: true,
+        color: colors.background,
+        align: "center",
+        maxLines: 4,
+        field: "metric/implication"
+      }
+    );
+    const bands = rows(grid2, [1, 1], 0.23);
+    c.cards.forEach((card2, i) => {
+      const box2 = columns(bands[Math.floor(i / 2)], 2, 0.27)[i % 2];
+      const accent = colors.chart[i % colors.chart.length];
+      ctx.rect(box2, {
+        fill: colors.surface,
+        stroke: { color: colors.rule, width: 0.6 },
+        radius: 0.09,
+        role: "comparison-card"
+      });
+      ctx.rect({ ...box2, w: 0.085 }, { fill: accent, radius: 0.0425, role: "card-accent" });
+      const text4 = { x: box2.x + 0.32, y: box2.y + 0.21, w: box2.w - 0.56, h: 0.35 };
+      ctx.text(card2.label, text4, {
+        size: 10,
+        bold: true,
+        color: contrast(accent, colors.surface) >= 4.5 ? accent : colors.ink,
+        maxLines: 2,
+        field: `cards/${i}/label`
+      });
+      ctx.text(
+        card2.title,
+        { ...text4, y: box2.y + 0.62, h: 0.44 },
+        { size: 17, bold: true, maxLines: 2, field: `cards/${i}/title` }
+      );
+      ctx.text(
+        card2.body,
+        { ...text4, y: box2.y + 1.07, h: box2.h - 1.22 },
+        { size: 13, color: colors.muted, maxLines: 4, field: `cards/${i}/body` }
+      );
+    });
+  }
+};
+
 // src/layouts/exec-summary.ts
-var schema13 = external_exports.object({
+var schema15 = external_exports.object({
   situation: external_exports.string().max(260).optional().describe("SCR variant: what the audience already accepts"),
   complication: external_exports.string().max(260).optional().describe("SCR variant: what changed / why act now"),
   resolution: external_exports.string().max(300).optional().describe("SCR variant: the answer \u2014 your recommendation"),
@@ -203154,7 +204001,7 @@ var execSummary = {
   variants: ["scr", "key-messages"],
   frame: "standard",
   master: "content",
-  schema: schema13,
+  schema: schema15,
   examples: [
     {
       title: "Entering Germany now captures a \u20AC40M window before two rivals scale",
@@ -203310,7 +204157,7 @@ var Force = external_exports.object({
   rating: Rating.describe("Strength of the force: high means it squeezes profit"),
   points: external_exports.array(external_exports.string().max(70)).min(1).max(3).describe("The evidence behind the rating")
 }).strict();
-var schema14 = external_exports.object({
+var schema16 = external_exports.object({
   entrants: Force.describe("Threat of new entrants"),
   suppliers: Force.describe("Bargaining power of suppliers"),
   rivalry: Force.describe("Rivalry among existing competitors (the centre)"),
@@ -203341,7 +204188,7 @@ var fiveForces = {
   variants: ["diagram"],
   frame: "standard",
   master: "content",
-  schema: schema14,
+  schema: schema16,
   examples: [
     {
       title: "German regional freight is attractive: buyers are fragmented and entry is hard",
@@ -203433,7 +204280,7 @@ var fiveForces = {
 };
 
 // src/layouts/football-field.ts
-var schema15 = external_exports.object({
+var schema17 = external_exports.object({
   metric: external_exports.string().max(48).describe('What the ranges show, e.g. "Equity value, \u20ACM"'),
   unit: external_exports.string().max(6).optional(),
   decimals: external_exports.number().int().min(0).max(2).optional(),
@@ -203466,7 +204313,7 @@ var footballField = {
   variants: ["ranges"],
   frame: "standard",
   master: "content",
-  schema: schema15,
+  schema: schema17,
   examples: [
     {
       title: "Every method supports a bid of up to \u20AC410M; the asking price sits above all but one",
@@ -203609,11 +204456,60 @@ var footballField = {
 };
 
 // src/layouts/freeform.ts
-var schema16 = external_exports.object({
+var pptStroke = external_exports.object({
+  color: external_exports.string().regex(/^#[0-9a-fA-F]{6}$/),
+  width: external_exports.number().positive(),
+  dash: external_exports.enum(["solid", "dash", "dot"]).optional()
+}).strict();
+var pptItem = external_exports.discriminatedUnion("kind", [
+  external_exports.object({
+    id: external_exports.string().regex(/^[a-z][a-z0-9-]*$/),
+    kind: external_exports.literal("text"),
+    x: external_exports.number(),
+    y: external_exports.number(),
+    w: external_exports.number().positive(),
+    h: external_exports.number().positive(),
+    text: external_exports.string(),
+    size: external_exports.number().positive(),
+    color: external_exports.string().regex(/^#[0-9a-fA-F]{6}$/).optional(),
+    bold: external_exports.boolean().optional(),
+    italic: external_exports.boolean().optional(),
+    align: external_exports.enum(["left", "center", "right"]).optional(),
+    lineHeight: external_exports.number().positive().optional()
+  }).strict(),
+  external_exports.object({
+    id: external_exports.string().regex(/^[a-z][a-z0-9-]*$/),
+    kind: external_exports.enum(["rect", "ellipse"]),
+    x: external_exports.number(),
+    y: external_exports.number(),
+    w: external_exports.number().positive(),
+    h: external_exports.number().positive(),
+    fill: external_exports.string().regex(/^#[0-9a-fA-F]{6}$/).optional(),
+    fillOpacity: external_exports.number().min(0).max(1).optional(),
+    stroke: pptStroke.optional(),
+    radius: external_exports.number().nonnegative().optional()
+  }).strict(),
+  external_exports.object({
+    id: external_exports.string().regex(/^[a-z][a-z0-9-]*$/),
+    kind: external_exports.literal("line"),
+    x1: external_exports.number(),
+    y1: external_exports.number(),
+    x2: external_exports.number(),
+    y2: external_exports.number(),
+    stroke: pptStroke,
+    arrowEnd: external_exports.boolean().optional()
+  }).strict()
+]);
+var schema18 = external_exports.object({
   html: external_exports.string().max(12e3).describe(
     "HTML fragment for the slide body. Theme tokens: var(--ink), var(--accent), var(--font-heading)\u2026"
   ),
   css: external_exports.string().max(6e3).optional().describe("CSS for the fragment; scoped to this slide"),
+  ppt: external_exports.array(pptItem).min(1).max(250).refine((items) => new Set(items.map((item2) => item2.id)).size === items.length, {
+    message: "PowerPoint alternative ids must be unique within the slide"
+  }).optional().describe(
+    "Editable PowerPoint equivalent, with stable ids and coordinates in inches relative to the HTML canvas. This is used for PPTX while html remains the visual reference."
+  ),
   alt: external_exports.string().min(10).max(300).describe("What the slide shows, in words \u2014 for screen readers and the DOCX memo")
 }).strict();
 var freeform = {
@@ -203628,12 +204524,12 @@ var freeform = {
   ],
   avoidWhen: [
     "Any exhibit a layout already covers \u2014 layouts stay editable in PowerPoint",
-    "Decks the audience will edit: editable PPTX is the default and this layout is rejected unless output.editablePptx is explicitly false"
+    "Complex CSS without a verified editable equivalent: supply ppt primitives rather than silently rasterising content"
   ],
   variants: ["body"],
   frame: "standard",
   master: "content",
-  schema: schema16,
+  schema: schema18,
   examples: [
     {
       title: "Three numbers tell the story of the first year",
@@ -203681,6 +204577,7 @@ var freeform = {
         "--size-body": `${theme.type.body}pt`,
         "--size-small": `${theme.type.small}pt`
       },
+      ...c.ppt ? { ppt: c.ppt } : {},
       role: "freeform",
       pointer: ctx.ptr("html")
     });
@@ -203698,7 +204595,7 @@ var freeformCanvas = {
 };
 
 // src/layouts/funnel.ts
-var schema17 = external_exports.object({
+var schema19 = external_exports.object({
   stages: external_exports.array(
     external_exports.object({
       label: external_exports.string().max(30),
@@ -203727,7 +204624,7 @@ var funnel = {
   variants: ["funnel", "pyramid"],
   frame: "standard",
   master: "content",
-  schema: schema17,
+  schema: schema19,
   examples: [
     {
       title: "Most trials are lost before activation \u2014 fixing onboarding is worth more than more traffic",
@@ -203859,7 +204756,7 @@ var funnel = {
 };
 
 // src/layouts/gate-matrix.ts
-var schema18 = external_exports.object({
+var schema20 = external_exports.object({
   stages: external_exports.array(
     external_exports.object({
       name: external_exports.string().max(22),
@@ -203892,7 +204789,7 @@ var gateMatrix = {
   variants: ["gates"],
   frame: "standard",
   master: "content",
-  schema: schema18,
+  schema: schema20,
   examples: [
     {
       title: "Each phase is funded only when the previous gate shows evidence, capping risk at \u20AC6M",
@@ -204056,7 +204953,7 @@ var Leaf = external_exports.object({
   value: external_exports.string().max(12).optional().describe("driver variant: the number this node contributes"),
   status: Status2.optional()
 }).strict();
-var schema19 = external_exports.object({
+var schema21 = external_exports.object({
   root: external_exports.object({
     label: external_exports.string().max(90).describe("The question (issue) or the top metric (driver)"),
     value: external_exports.string().max(12).optional()
@@ -204103,7 +205000,7 @@ var issueTree = {
   variants: ["issue", "driver"],
   frame: "standard",
   master: "content",
-  schema: schema19,
+  schema: schema21,
   examples: [
     {
       title: "Margin fell because of mix and price, not cost \u2014 two of six hypotheses hold",
@@ -204354,7 +205251,7 @@ var issueTree = {
 };
 
 // src/layouts/key-points.ts
-var schema20 = external_exports.object({
+var schema22 = external_exports.object({
   points: external_exports.array(
     external_exports.object({
       heading: external_exports.string().max(60).describe("The point as a short claim, not a topic label"),
@@ -204382,7 +205279,7 @@ var keyPoints = {
   variants: ["columns", "cards", "list"],
   frame: "standard",
   master: "content",
-  schema: schema20,
+  schema: schema22,
   examples: [
     {
       title: "Three strengths make Contoso a credible partner for the German launch",
@@ -204600,7 +205497,7 @@ var Tile = external_exports.object({
   trend: external_exports.enum(["up", "down", "flat"]).optional().describe("Direction of the delta; colors it and picks the glyph (default: flat)"),
   note: external_exports.string().max(100).optional().describe("One line of context: definition or driver")
 }).strict();
-var schema21 = external_exports.object({
+var schema23 = external_exports.object({
   tiles: external_exports.array(Tile).min(2).max(4).describe("The 2\u20134 headline numbers, most important first"),
   highlight: external_exports.number().int().min(0).max(3).optional().describe("Index of the one tile the title is about; it gets the accent color")
 }).strict();
@@ -204672,7 +205569,7 @@ var kpiTiles = {
   variants: ["tiles", "strip"],
   frame: "standard",
   master: "content",
-  schema: schema21,
+  schema: schema23,
   examples: [
     {
       title: "FY2025 revenue reached \u20AC42M, up 18%, with margin at a three-year high",
@@ -204829,7 +205726,7 @@ var kpiTiles = {
 };
 
 // src/layouts/marimekko.ts
-var schema22 = external_exports.object({
+var schema24 = external_exports.object({
   unit: external_exports.string().max(6).optional().describe('Unit of the column totals, e.g. "\u20ACB"'),
   totalLabel: external_exports.string().max(40).optional().describe('What column width shows, e.g. "Market size, \u20ACB"'),
   series: external_exports.array(external_exports.string().max(20)).min(2).max(6).describe('Players or sub-segments stacked in every column; put "Others" last'),
@@ -204861,7 +205758,7 @@ var marimekko = {
   variants: ["shares"],
   frame: "standard",
   master: "content",
-  schema: schema22,
+  schema: schema24,
   examples: [
     {
       title: "We lead in the two smallest segments; mid-market is the large pool we barely touch",
@@ -204994,7 +205891,7 @@ var Axis2 = external_exports.object({
   low: external_exports.string().max(16),
   high: external_exports.string().max(16)
 }).strict();
-var schema23 = external_exports.object({
+var schema25 = external_exports.object({
   xAxis: Axis2,
   yAxis: Axis2,
   quadrants: external_exports.array(external_exports.object({ name: external_exports.string().max(36), note: external_exports.string().max(110).optional() }).strict()).length(4).describe(
@@ -205027,7 +205924,7 @@ var matrix2x2 = {
   variants: ["plot", "quadrants"],
   frame: "standard",
   master: "content",
-  schema: schema23,
+  schema: schema25,
   examples: [
     {
       title: "Four initiatives deliver most of the value for modest effort",
@@ -205264,7 +206161,7 @@ var Dimension = external_exports.object({
   current: external_exports.number().int().min(1).describe("Level today, 1-based"),
   target: external_exports.number().int().min(1).describe("Level we aim for, 1-based")
 }).strict();
-var schema24 = external_exports.object({
+var schema26 = external_exports.object({
   levels: external_exports.array(Level).min(3).max(5).describe("Maturity levels, lowest first"),
   dimensions: external_exports.array(Dimension).min(1).max(6).optional().describe("grid variant: capabilities assessed on the levels"),
   current: external_exports.number().int().min(1).optional().describe("staircase variant: level today"),
@@ -205457,7 +206354,7 @@ var maturityModel = {
   variants: ["grid", "staircase"],
   frame: "standard",
   master: "content",
-  schema: schema24,
+  schema: schema26,
   examples: [
     {
       title: "Data foundations are a level behind the use cases we want to run next year",
@@ -205556,7 +206453,7 @@ var line2 = external_exports.object({
   width: external_exports.number().positive().max(12).default(1),
   arrowEnd: external_exports.boolean().optional()
 }).strict();
-var schema25 = external_exports.object({
+var schema27 = external_exports.object({
   elements: external_exports.array(external_exports.discriminatedUnion("kind", [rect, ellipse, text, line2])).min(1).max(120)
 }).strict();
 function box(ctx, e) {
@@ -205585,7 +206482,7 @@ var nativeCanvas = {
   variants: ["body"],
   frame: "standard",
   master: "content",
-  schema: schema25,
+  schema: schema27,
   examples: [
     {
       title: "The service reduces onboarding time without changing the approval standard",
@@ -205688,7 +206585,7 @@ var nativeCanvas = {
 };
 
 // src/layouts/next-steps.ts
-var schema26 = external_exports.object({
+var schema28 = external_exports.object({
   decision: external_exports.string().max(160).optional().describe(
     'The ask, one sentence that starts with a verb: "Approve a \u20AC6M phase-1 budget and the partner shortlist". Required for the decision variant'
   ),
@@ -205718,7 +206615,7 @@ var nextSteps = {
   variants: ["actions", "decision"],
   frame: "standard",
   master: "content",
-  schema: schema26,
+  schema: schema28,
   examples: [
     {
       title: "Six actions in the next 30 days put the German launch on track",
@@ -205932,7 +206829,7 @@ var nextSteps = {
 };
 
 // src/layouts/options-comparison.ts
-var schema27 = external_exports.object({
+var schema29 = external_exports.object({
   options: external_exports.array(
     external_exports.object({
       name: external_exports.string().max(28),
@@ -205986,7 +206883,7 @@ var optionsComparison = {
   variants: ["text", "rating"],
   frame: "standard",
   master: "content",
-  schema: schema27,
+  schema: schema29,
   examples: [
     {
       title: "A partner-led entry beats direct build and acquisition on speed and risk",
@@ -206221,7 +207118,7 @@ var Unit = Person.extend({
   members: external_exports.array(external_exports.string().max(40)).max(4).optional().describe("Up to four names or sub-teams listed under the unit"),
   highlight: external_exports.boolean().optional().describe("Emphasise this unit (new, changing, the ask)")
 }).strict();
-var schema28 = external_exports.object({
+var schema30 = external_exports.object({
   root: Person.describe("Top of the chart"),
   units: external_exports.array(Unit).min(2).max(5).describe("Direct reports or units")
 }).strict();
@@ -206242,7 +207139,7 @@ var orgChart = {
   variants: ["tree"],
   frame: "standard",
   master: "content",
-  schema: schema28,
+  schema: schema30,
   examples: [
     {
       title: "A small transformation office reports to the COO and owns the four workstreams",
@@ -206371,7 +207268,7 @@ var FACTORS = {
   environmental: "Environmental",
   legal: "Legal"
 };
-var schema29 = external_exports.object({
+var schema31 = external_exports.object({
   factors: external_exports.array(
     external_exports.object({
       factor: external_exports.enum(
@@ -206399,7 +207296,7 @@ var pestel = {
   variants: ["grid"],
   frame: "standard",
   master: "content",
-  schema: schema29,
+  schema: schema31,
   examples: [
     {
       title: "Regulation and labour costs move the German case most; technology works for us",
@@ -206479,7 +207376,7 @@ var Lane = external_exports.object({
   steps: external_exports.array(Step).min(2).max(6),
   metric: external_exports.string().max(14).optional().describe('Outcome of the lane, e.g. "9 days"')
 }).strict();
-var schema30 = external_exports.object({
+var schema32 = external_exports.object({
   current: Lane.describe("The process today"),
   proposed: Lane.describe("The proposed process; mark steps that change with changed: true"),
   metricLabel: external_exports.string().max(36).optional().describe('What the lane metrics measure, e.g. "Order-to-cash time"')
@@ -206593,7 +207490,7 @@ var processCompare = {
   variants: ["lanes"],
   frame: "standard",
   master: "content",
-  schema: schema30,
+  schema: schema32,
   examples: [
     {
       title: "Automating credit checks and invoicing cuts order-to-cash from 9 days to 3",
@@ -206647,7 +207544,7 @@ var processCompare = {
 };
 
 // src/layouts/process-steps.ts
-var schema31 = external_exports.object({
+var schema33 = external_exports.object({
   steps: external_exports.array(
     external_exports.object({
       title: external_exports.string().max(36).describe('Verb-led step name, e.g. "Sign two partners"'),
@@ -206674,7 +207571,7 @@ var processSteps = {
   variants: ["chevrons", "numbered"],
   frame: "standard",
   master: "content",
-  schema: schema31,
+  schema: schema33,
   examples: [
     {
       title: "A four-step partner-led entry limits risk at every stage",
@@ -206862,7 +207759,7 @@ var processSteps = {
 
 // src/layouts/raci.ts
 var CODE = external_exports.enum(["R", "A", "C", "I", "A/R", ""]);
-var schema32 = external_exports.object({
+var schema34 = external_exports.object({
   roles: external_exports.array(external_exports.string().max(18)).min(3).max(7).describe("Columns: roles or teams, short names"),
   activities: external_exports.array(external_exports.string().max(56)).min(3).max(9).describe("Rows: decisions or activities"),
   cells: external_exports.array(external_exports.array(CODE)).describe("One row per activity, one code per role: R, A, C, I, A/R or empty"),
@@ -206885,7 +207782,7 @@ var raci = {
   variants: ["raci"],
   frame: "standard",
   master: "content",
-  schema: schema32,
+  schema: schema34,
   examples: [
     {
       title: "One accountable owner per decision ends the pricing stalemate",
@@ -207041,7 +207938,7 @@ var raci = {
 };
 
 // src/layouts/risk-matrix.ts
-var schema33 = external_exports.object({
+var schema35 = external_exports.object({
   risks: external_exports.array(
     external_exports.object({
       id: external_exports.string().max(4).describe('Short id shown in the grid, e.g. "R1"'),
@@ -207070,7 +207967,7 @@ var riskMatrix = {
   variants: ["heatmap"],
   frame: "standard",
   master: "content",
-  schema: schema33,
+  schema: schema35,
   examples: [
     {
       title: "Two high risks need owners this quarter; the rest are monitored",
@@ -207227,7 +208124,7 @@ var riskMatrix = {
 
 // src/layouts/swot.ts
 var Items = (what) => external_exports.array(external_exports.string().max(90)).min(1).max(4).describe(`${what} \u2014 one specific, evidenced point each`);
-var schema34 = external_exports.object({
+var schema36 = external_exports.object({
   strengths: Items("Internal, helpful"),
   weaknesses: Items("Internal, harmful"),
   opportunities: Items("External, helpful"),
@@ -207253,7 +208150,7 @@ var swot = {
   variants: ["grid", "with-implications"],
   frame: "standard",
   master: "content",
-  schema: schema34,
+  schema: schema36,
   examples: [
     {
       title: "Northwind wins on service and data, but must fix cost before low-cost rivals scale",
@@ -207358,7 +208255,7 @@ var swot = {
 };
 
 // src/layouts/team-cards.ts
-var schema35 = external_exports.object({
+var schema37 = external_exports.object({
   people: external_exports.array(
     external_exports.object({
       name: external_exports.string().max(40).describe("Full name"),
@@ -207388,7 +208285,7 @@ var teamCards = {
   variants: ["cards", "compact"],
   frame: "standard",
   master: "content",
-  schema: schema35,
+  schema: schema37,
   examples: [
     {
       title: "A senior team that has run three German launches leads the entry",
@@ -207587,7 +208484,7 @@ var Column = external_exports.object({
   heading: external_exports.string().max(50).optional(),
   items: external_exports.array(external_exports.string().max(220)).min(1).max(6)
 }).strict();
-var schema36 = external_exports.object({
+var schema38 = external_exports.object({
   items: external_exports.array(external_exports.string().max(240)).min(1).max(8).optional().describe("bullets / paragraphs variants"),
   left: Column.optional().describe("two-column variant"),
   right: Column.optional().describe("two-column variant")
@@ -207609,7 +208506,7 @@ var text2 = {
   variants: ["bullets", "paragraphs", "two-column"],
   frame: "standard",
   master: "content",
-  schema: schema36,
+  schema: schema38,
   examples: [
     {
       title: "Three principles keep the pilot small, measurable and reversible",
@@ -207708,7 +208605,7 @@ var text2 = {
 };
 
 // src/layouts/text-image.ts
-var schema37 = external_exports.object({
+var schema39 = external_exports.object({
   body: external_exports.array(external_exports.string().max(260)).min(1).max(4).describe("1\u20134 short paragraphs (or bullets) that tell the story next to the image"),
   bullets: external_exports.boolean().default(false).describe("Set true to show the body strings as bullets instead of paragraphs"),
   image: external_exports.string().optional().describe("Image path relative to the deck file; leave empty to show a placeholder"),
@@ -207734,7 +208631,7 @@ var textImage = {
   variants: ["image-right", "image-left"],
   frame: "standard",
   master: "content",
-  schema: schema37,
+  schema: schema39,
   examples: [
     {
       title: "Contoso turned a two-day month-end close into a morning routine",
@@ -207806,7 +208703,7 @@ var textImage = {
 };
 
 // src/layouts/timeline.ts
-var schema38 = external_exports.object({
+var schema40 = external_exports.object({
   milestones: external_exports.array(
     external_exports.object({
       date: external_exports.string().max(16),
@@ -207848,7 +208745,7 @@ var timeline = {
   variants: ["milestones", "gantt"],
   frame: "standard",
   master: "content",
-  schema: schema38,
+  schema: schema40,
   examples: [
     {
       title: "First German revenue lands in Q3 2027, nine months after the decision",
@@ -208067,7 +208964,7 @@ var timeline = {
 };
 
 // src/layouts/title.ts
-var schema39 = external_exports.object({
+var schema41 = external_exports.object({
   kicker: external_exports.string().max(48).optional().describe('Small label above the title, e.g. "Board meeting \xB7 Q3 review"'),
   subtitle: external_exports.string().max(170).optional().describe("One sentence framing the decision or story"),
   presenter: external_exports.string().max(70).optional(),
@@ -208084,7 +208981,7 @@ var title = {
   variants: ["cover", "closing"],
   frame: "none",
   master: "cover",
-  schema: schema39,
+  schema: schema41,
   examples: [
     {
       title: "Entering the German mid-market can add \u20AC40M revenue by 2028",
@@ -208209,7 +209106,7 @@ var title = {
 };
 
 // src/layouts/tornado.ts
-var schema40 = external_exports.object({
+var schema42 = external_exports.object({
   metric: external_exports.string().max(48).describe('What moves, e.g. "NPV, \u20ACM"'),
   base: external_exports.number().describe("Base-case value of the metric"),
   baseLabel: external_exports.string().max(24).optional().describe('Defaults to "Base case"'),
@@ -208242,7 +209139,7 @@ var tornado = {
   variants: ["bars"],
   frame: "standard",
   master: "content",
-  schema: schema40,
+  schema: schema42,
   examples: [
     {
       title: "Price and volume decide the case; cost assumptions barely move it",
@@ -208382,7 +209279,7 @@ var Step2 = external_exports.object({
   value: external_exports.number().describe("Delta for a driver (negative = decrease); the absolute level when total is true"),
   total: external_exports.boolean().optional().describe("True for start, subtotal and end bars: they stand on the baseline")
 }).strict();
-var schema41 = external_exports.object({
+var schema43 = external_exports.object({
   chart: external_exports.object({
     label: external_exports.string().max(90).optional().describe('What is bridged, with unit and period: "EBITDA bridge FY24 to FY25, \u20ACM"'),
     steps: external_exports.array(Step2).min(3).max(12).describe("Start total, drivers, then end total; the drivers must sum to the end total"),
@@ -208442,7 +209339,7 @@ var waterfall = {
   variants: ["full", "with-takeaway"],
   frame: "standard",
   master: "content",
-  schema: schema41,
+  schema: schema43,
   examples: [
     {
       title: "EBITDA grew \u20AC9M in FY25 as price and volume outran cost inflation",
@@ -208560,6 +209457,7 @@ var LAYOUTS = [
   agenda,
   execSummary,
   keyPoints,
+  composition,
   bigStatement,
   textImage,
   text2,
@@ -208568,6 +209466,7 @@ var LAYOUTS = [
   freeformCanvas,
   nativeCanvas,
   kpiTiles,
+  evidencePanorama,
   chartTakeaway,
   waterfall,
   bubbleChart,
@@ -208605,8 +209504,8 @@ function getLayout(id) {
 
 // src/library/load.ts
 var import_yaml = __toESM(require_dist(), 1);
-import { existsSync as existsSync10, readdirSync as readdirSync3, readFileSync as readFileSync16 } from "node:fs";
-import { dirname as dirname3, join as join13, resolve as resolve7 } from "node:path";
+import { existsSync as existsSync11, readdirSync as readdirSync4, readFileSync as readFileSync16 } from "node:fs";
+import { dirname as dirname3, join as join14, resolve as resolve8 } from "node:path";
 
 // src/spec/brief.ts
 var Usage = external_exports.enum([
@@ -208656,8 +209555,8 @@ var Brief = external_exports.object({
 
 // src/library/data.ts
 import { createHash } from "node:crypto";
-import { existsSync as existsSync9, readFileSync as readFileSync15 } from "node:fs";
-import { isAbsolute as isAbsolute3, resolve as resolve6 } from "node:path";
+import { existsSync as existsSync10, readFileSync as readFileSync15 } from "node:fs";
+import { isAbsolute as isAbsolute4, resolve as resolve7 } from "node:path";
 
 // src/library/sheets.ts
 import { readFileSync as readFileSync14 } from "node:fs";
@@ -208838,8 +209737,8 @@ function resolveData(facts, slides, baseDir) {
   const report = { facts: {}, files: [] };
   const seen = /* @__PURE__ */ new Set();
   const sheetFor = (f, pointer) => {
-    const path2 = isAbsolute3(f.file) ? f.file : resolve6(baseDir, f.file);
-    if (!existsSync9(path2)) {
+    const path2 = isAbsolute4(f.file) ? f.file : resolve7(baseDir, f.file);
+    if (!existsSync10(path2)) {
       diagnostics.push(diag("SC-DATA-001", `Data file not found: ${f.file}`, { pointer }));
       return void 0;
     }
@@ -209001,6 +209900,8 @@ var CommonSlide = external_exports.object({
   title: external_exports.string().min(3).max(140).describe("Action title: one full-sentence claim, ideally 8\u201314 words; the body proves it"),
   lead: external_exports.string().max(160).optional().describe("Optional one-line lead under the title"),
   tracker: external_exports.string().max(40).optional().describe("Section label shown above the title"),
+  frame: external_exports.enum(["standard", "none"]).optional().describe("Explicit frame override; otherwise use the layout and theme canvasFrame"),
+  bottomLine: external_exports.string().max(400).optional().describe("Bottom conclusion band, styled by the theme independently of the exhibit"),
   sources: external_exports.array(external_exports.string()).optional().describe(
     'Ids from the deck `sources:` list, optionally with a place: "annual-report#p14", "#p14-16", "#slide3", "#sheet:Plan"'
   ),
@@ -209054,7 +209955,8 @@ var Deck = external_exports.object({
     formats: external_exports.array(external_exports.enum(["pptx", "pdf", "png", "html", "onepager", "docx"])).default(["pptx", "pdf", "png"]),
     engines: external_exports.object({
       pptx: external_exports.enum(["auto", "pptxgenjs", "artifact-tool"]).default("auto"),
-      pdf: external_exports.enum(["auto", "native", "html", "pptx-convert"]).default("auto")
+      pdf: external_exports.enum(["auto", "native", "html", "pptx-convert"]).default("auto"),
+      png: external_exports.enum(["auto", "resvg", "pptx-convert"]).optional()
     }).strict().default({ pptx: "auto", pdf: "auto" }),
     editablePptx: external_exports.boolean().default(true).describe(
       "Require editable PowerPoint objects. Set false only to deliberately rasterise freeform HTML into a PPTX picture."
@@ -209115,22 +210017,10 @@ var Storyline = external_exports.object({
   ).min(1)
 }).strict();
 
-// src/spec/theme.ts
+// src/spec/color.ts
 var HexColor = external_exports.string().regex(/^#[0-9A-Fa-f]{6}$/, "Use a #RRGGBB hex color").describe("Hex color, #RRGGBB");
-var MeasureFont = external_exports.string().regex(/^[a-z0-9-]+$/);
-var FontSpec = external_exports.object({
-  family: external_exports.string().describe('Font family written into PPTX/HTML, e.g. "Arial"'),
-  measure: MeasureFont.describe("Bundled metric-compatible font used for measuring and PDF/PNG"),
-  files: external_exports.object({
-    regular: external_exports.string(),
-    bold: external_exports.string().optional(),
-    italic: external_exports.string().optional(),
-    boldItalic: external_exports.string().optional()
-  }).strict().optional().describe(
-    "Brand font files (TTF/OTF), relative to the theme file; registers `measure` as a new measure font"
-  )
-}).strict();
-var DecorKind = external_exports.enum(["none", "rule", "wave", "glow", "geo", "gradient", "paper"]);
+
+// src/spec/chrome.ts
 var ArtItem = external_exports.object({
   image: external_exports.string().describe("PNG/JPEG relative to the theme file"),
   x: external_exports.number(),
@@ -209148,6 +210038,70 @@ var ArtShape = external_exports.object({
   stroke: external_exports.object({ color: HexColor, width: external_exports.number().min(0) }).strict().optional(),
   radius: external_exports.number().min(0).optional()
 }).strict();
+var ThemeChrome = external_exports.object({
+  titleRule: external_exports.boolean().default(false).describe("Hairline under action titles"),
+  accentBar: external_exports.boolean().default(false).describe("Short accent bar above titles"),
+  pageNumbers: external_exports.boolean().default(true),
+  footer: external_exports.string().optional().describe("Default footer text; decks can override"),
+  tracker: external_exports.boolean().default(true).describe("Small section label top-left"),
+  canvasFrame: external_exports.enum(["none", "standard"]).optional().describe(
+    "Opt canvas layouts into the shared theme frame; standard preserves title, sources and numbering"
+  ),
+  sideRail: external_exports.object({
+    width: external_exports.number().positive().max(0.5).default(0.12),
+    radius: external_exports.number().nonnegative().max(0.25).default(0.06),
+    color: HexColor.optional()
+  }).strict().optional().describe("Editable full-height accent rail, inches"),
+  markerWithTracker: external_exports.boolean().optional().describe("Keep the accent marker beside the section label"),
+  pageBadge: external_exports.object({
+    fill: HexColor.optional(),
+    color: HexColor.optional(),
+    minDigits: external_exports.number().int().min(1).max(4).default(2)
+  }).strict().optional().describe("Header page number in an editable rounded badge instead of the footer field"),
+  sources: external_exports.object({
+    visible: external_exports.boolean().default(true),
+    prefix: external_exports.string().max(32).default("Source:"),
+    color: HexColor.optional(),
+    size: external_exports.number().min(7).max(14).optional()
+  }).strict().optional().describe("Shared source-line styling; citation text and links remain slide data"),
+  takeaway: external_exports.object({
+    fill: HexColor.optional(),
+    color: HexColor.optional(),
+    accent: HexColor.optional(),
+    height: external_exports.number().min(0.35).max(1.5).default(0.65),
+    radius: external_exports.number().min(0).max(0.3).default(0.06)
+  }).strict().optional().describe("Shared editable takeaway band; its text is the slide bottomLine field"),
+  logo: external_exports.string().optional().describe(
+    "PNG/JPEG logo, relative to the theme file; top-right on content slides, bottom-right on covers"
+  ),
+  art: external_exports.object({
+    size: external_exports.object({ w: external_exports.number().positive(), h: external_exports.number().positive() }).strict().describe("Slide size the positions refer to (inches); scaled to the deck format"),
+    cover: external_exports.array(ArtItem).default([]),
+    content: external_exports.array(ArtItem).default([]),
+    shapes: external_exports.object({
+      cover: external_exports.array(ArtShape).default([]),
+      content: external_exports.array(ArtShape).default([])
+    }).strict().optional().describe("Vector decoration from the template masters, drawn under the pictures")
+  }).strict().optional().describe(
+    "Background art from a brand template, drawn under everything on SlideCraft masters"
+  )
+}).strict();
+
+// src/spec/theme.ts
+var MeasureFont = external_exports.string().regex(/^[a-z0-9-]+$/);
+var FontSpec = external_exports.object({
+  family: external_exports.string().describe('Font family written into PPTX/HTML, e.g. "Arial"'),
+  measure: MeasureFont.describe("Bundled metric-compatible font used for measuring and PDF/PNG"),
+  files: external_exports.object({
+    regular: external_exports.string(),
+    bold: external_exports.string().optional(),
+    italic: external_exports.string().optional(),
+    boldItalic: external_exports.string().optional()
+  }).strict().optional().describe(
+    "Brand font files (TTF/OTF), relative to the theme file; registers `measure` as a new measure font"
+  )
+}).strict();
+var DecorKind = external_exports.enum(["none", "rule", "wave", "glow", "geo", "gradient", "paper"]);
 var Theme = external_exports.object({
   schemaVersion: external_exports.literal(1),
   id: external_exports.string().regex(/^[a-z0-9-]+$/),
@@ -209194,27 +210148,7 @@ var Theme = external_exports.object({
     intensity: external_exports.number().min(0).max(1).default(0.6),
     onContent: external_exports.boolean().default(false).describe("Also draw decor on content slides")
   }).strict(),
-  chrome: external_exports.object({
-    titleRule: external_exports.boolean().default(false).describe("Hairline under action titles"),
-    accentBar: external_exports.boolean().default(false).describe("Short accent bar above titles"),
-    pageNumbers: external_exports.boolean().default(true),
-    footer: external_exports.string().optional().describe("Default footer text; decks can override"),
-    tracker: external_exports.boolean().default(true).describe("Small section label top-left"),
-    logo: external_exports.string().optional().describe(
-      "PNG/JPEG logo, relative to the theme file; top-right on content slides, bottom-right on covers"
-    ),
-    art: external_exports.object({
-      size: external_exports.object({ w: external_exports.number().positive(), h: external_exports.number().positive() }).strict().describe("Slide size the positions refer to (inches); scaled to the deck format"),
-      cover: external_exports.array(ArtItem).default([]),
-      content: external_exports.array(ArtItem).default([]),
-      shapes: external_exports.object({
-        cover: external_exports.array(ArtShape).default([]),
-        content: external_exports.array(ArtShape).default([])
-      }).strict().optional().describe("Vector decoration from the template masters, drawn under the pictures")
-    }).strict().optional().describe(
-      "Background art from a brand template, drawn under everything on SlideCraft masters"
-    )
-  }).strict(),
+  chrome: ThemeChrome,
   source: external_exports.string().optional().describe('Where the theme came from, e.g. "imported from brand.potx"'),
   template: external_exports.string().optional().describe(
     "The brand's own .pptx/.potx, relative to the theme file: PPTX output is built inside it, on its slide masters and layouts"
@@ -209226,7 +210160,7 @@ var Theme = external_exports.object({
 
 // src/library/load.ts
 function readThemeFile(path2) {
-  const abs = resolve7(path2);
+  const abs = resolve8(path2);
   const r = Theme.safeParse(JSON.parse(readFileSync16(abs, "utf8")));
   if (!r.success) throw new Error(`Invalid theme ${path2}: ${r.error.message}`);
   const theme = r.data;
@@ -209240,7 +210174,7 @@ function readThemeFile(path2) {
   for (const f of specs) {
     if (!f?.files) continue;
     const files = Object.fromEntries(
-      Object.entries(f.files).map(([k, v]) => [k, resolve7(base, v)])
+      Object.entries(f.files).map(([k, v]) => [k, resolve8(base, v)])
     );
     registerMeasureFont(f.measure, files);
   }
@@ -209250,18 +210184,18 @@ function readThemeFile(path2) {
         `Theme ${theme.id}: unknown measure font "${f.measure}" \u2014 add "files" with the font's TTF/OTF`
       );
   }
-  if (theme.chrome.logo) theme.chrome.logo = resolve7(base, theme.chrome.logo);
+  if (theme.chrome.logo) theme.chrome.logo = resolve8(base, theme.chrome.logo);
   if (theme.chrome.art)
     for (const list of [theme.chrome.art.cover, theme.chrome.art.content])
-      for (const a of list) a.image = resolve7(base, a.image);
-  if (theme.officeTheme) theme.officeTheme = resolve7(base, theme.officeTheme);
-  if (theme.template) theme.template = resolve7(base, theme.template);
+      for (const a of list) a.image = resolve8(base, a.image);
+  if (theme.officeTheme) theme.officeTheme = resolve8(base, theme.officeTheme);
+  if (theme.template) theme.template = resolve8(base, theme.template);
   return theme;
 }
 var themeCache;
 function loadThemes() {
   if (themeCache) return themeCache;
-  themeCache = readdirSync3(THEMES_DIR).filter((f) => f.endsWith(".json")).sort().map((f) => readThemeFile(join13(THEMES_DIR, f)));
+  themeCache = readdirSync4(THEMES_DIR).filter((f) => f.endsWith(".json")).sort().map((f) => readThemeFile(join14(THEMES_DIR, f)));
   return themeCache;
 }
 function registerTheme(theme) {
@@ -209276,9 +210210,9 @@ function getTheme(id) {
 var storyCache;
 function loadStorylines() {
   if (storyCache) return storyCache;
-  if (!existsSync10(STORYLINES_DIR)) return [];
-  storyCache = readdirSync3(STORYLINES_DIR).filter((f) => f.endsWith(".yaml")).sort().map((f) => {
-    const raw = import_yaml.default.parse(readFileSync16(join13(STORYLINES_DIR, f), "utf8"));
+  if (!existsSync11(STORYLINES_DIR)) return [];
+  storyCache = readdirSync4(STORYLINES_DIR).filter((f) => f.endsWith(".yaml")).sort().map((f) => {
+    const raw = import_yaml.default.parse(readFileSync16(join14(STORYLINES_DIR, f), "utf8"));
     const r = Storyline.safeParse(raw);
     if (!r.success) throw new Error(`Invalid storyline ${f}: ${r.error.message}`);
     return r.data;
@@ -209302,7 +210236,7 @@ function zodDiagnostics(err, prefix = "") {
   );
 }
 function loadDeck(path2) {
-  const abs = resolve7(path2);
+  const abs = resolve8(path2);
   const baseDir = dirname3(abs);
   const diagnostics = [];
   const raw = import_yaml.default.parse(readFileSync16(abs, "utf8"));
@@ -209318,8 +210252,8 @@ function loadDeck(path2) {
   }
   const deck = top.data;
   if (/\.json$/i.test(deck.theme)) {
-    const p = resolve7(baseDir, deck.theme);
-    if (!existsSync10(p)) {
+    const p = resolve8(baseDir, deck.theme);
+    if (!existsSync11(p)) {
       diagnostics.push(
         diag("SC-SPEC-002", `Theme file not found: ${deck.theme}`, { pointer: "/theme" })
       );
@@ -209336,8 +210270,8 @@ function loadDeck(path2) {
     }
   }
   if (/\.json$/i.test(deck.format)) {
-    const p = resolve7(baseDir, deck.format);
-    const r = existsSync10(p) ? FormatFile.safeParse(JSON.parse(readFileSync16(p, "utf8"))) : void 0;
+    const p = resolve8(baseDir, deck.format);
+    const r = existsSync11(p) ? FormatFile.safeParse(JSON.parse(readFileSync16(p, "utf8"))) : void 0;
     if (!r?.success)
       diagnostics.push(
         diag(
@@ -209365,8 +210299,8 @@ function loadDeck(path2) {
   const expanded = [];
   deck.slides.forEach((s2, i) => {
     if (s2 && typeof s2 === "object" && "include" in s2) {
-      const inc = resolve7(baseDir, String(s2.include));
-      if (!existsSync10(inc)) {
+      const inc = resolve8(baseDir, String(s2.include));
+      if (!existsSync11(inc)) {
         diagnostics.push(
           diag("SC-SPEC-004", `Include not found: ${s2.include}`, {
             pointer: `/slides/${i}/include`
@@ -209489,313 +210423,170 @@ function loadDeck(path2) {
   };
 }
 function loadBrief(path2) {
-  const raw = import_yaml.default.parse(readFileSync16(resolve7(path2), "utf8"));
+  const raw = import_yaml.default.parse(readFileSync16(resolve8(path2), "utf8"));
   const r = Brief.safeParse(raw);
   if (!r.success) return { diagnostics: zodDiagnostics(r.error) };
   return { brief: r.data, diagnostics: [] };
 }
 
-// src/engine/context.ts
-import { existsSync as existsSync11 } from "node:fs";
-import { isAbsolute as isAbsolute4, resolve as resolve8 } from "node:path";
-function sizeLadder(start, min) {
-  const out = [];
-  for (let s2 = start; s2 >= min - 1e-6; s2 -= start > 20 ? 2 : 1) out.push(+s2.toFixed(1));
-  if (out[out.length - 1] !== min) out.push(min);
-  return out;
+// src/engine/chrome.ts
+function composeHeader(ctx, slide, index) {
+  const { theme, format, colors: c } = ctx;
+  if (theme.chrome.tracker && slide.tracker) {
+    ctx.text(
+      slide.tracker.toUpperCase(),
+      {
+        ...format.tracker,
+        x: format.tracker.x + (theme.chrome.markerWithTracker ? 0.6 : 0),
+        w: format.tracker.w - (theme.chrome.markerWithTracker ? 0.6 : 0) - (theme.chrome.pageBadge ? 0.8 : 0)
+      },
+      {
+        role: "tracker",
+        size: "small",
+        bold: true,
+        color: c.accent,
+        fixed: true,
+        maxLines: 1,
+        field: "tracker"
+      }
+    );
+  }
+  if (theme.chrome.accentBar && !(theme.chrome.tracker && slide.tracker))
+    ctx.rect(
+      { x: format.title.x, y: format.title.y - 0.1, w: 0.55, h: 0.05 },
+      { fill: c.accent, role: "accent-bar" }
+    );
+  const t = theme.type.title;
+  const fitDiags = ctx.diagnostics.length;
+  const titleNode = ctx.text(slide.title, format.title, {
+    role: "title",
+    font: "heading",
+    sizes: [t, t - 2],
+    bold: theme.type.titleWeight === "bold",
+    color: c.titleInk ?? c.ink,
+    maxLines: 2,
+    lineHeight: 1.12,
+    field: "title"
+  });
+  const added = ctx.diagnostics.splice(fitDiags);
+  if (added.some((d) => d.code === "SC-FIT-001" || d.code === "SC-FIT-003")) {
+    ctx.diagnostics.push(
+      diag(
+        "SC-TITLE-001",
+        `Title needs ${titleNode.lines.length} lines at ${titleNode.style.size}pt`,
+        {
+          slide: slide.id,
+          pointer: ctx.ptr("title"),
+          measured: `${slide.title.length} chars`,
+          limit: "2 lines (~90 chars)"
+        }
+      )
+    );
+  }
+  if (theme.chrome.titleRule) {
+    const yRule = format.title.y + format.title.h + 0.04;
+    ctx.line(
+      format.title.x,
+      yRule,
+      format.title.x + format.title.w,
+      yRule,
+      {
+        color: c.rule,
+        width: 0.75
+      },
+      { role: "chrome-title-rule" }
+    );
+  }
+  if (slide.lead)
+    ctx.text(slide.lead, format.lead, {
+      role: "lead",
+      size: "subtitle",
+      color: c.muted,
+      maxLines: 1,
+      field: "lead"
+    });
+  const words = slide.title.trim().split(/\s+/).length;
+  if (words < 5)
+    ctx.issue(
+      diag(
+        "SC-TITLE-002",
+        `Title "${slide.title}" has ${words} words \u2014 likely a topic, not a claim`,
+        { pointer: ctx.ptr("title") }
+      )
+    );
+  if (/[.]$/.test(slide.title.trim()))
+    ctx.issue(diag("SC-TITLE-003", "Title ends with a period", { pointer: ctx.ptr("title") }));
+  const rail = theme.chrome.sideRail;
+  if (rail)
+    ctx.rect(
+      { x: 0, y: 0, w: rail.width, h: format.h },
+      { fill: rail.color ?? c.accent, radius: rail.radius, role: "chrome-side-rail" }
+    );
+  if (theme.chrome.accentBar && theme.chrome.markerWithTracker && slide.tracker) {
+    ctx.rect(
+      { x: format.tracker.x, y: format.tracker.y + 0.07, w: 0.35, h: 0.055 },
+      { fill: c.accent, radius: 0.025, role: "chrome-section-marker" }
+    );
+  }
+  if (theme.chrome.pageNumbers && theme.chrome.pageBadge) {
+    const badge2 = theme.chrome.pageBadge;
+    const box2 = {
+      x: format.w - format.margin.r - 0.58,
+      y: format.tracker.y - 0.035,
+      w: 0.58,
+      h: 0.33
+    };
+    ctx.rect(box2, { fill: badge2.fill ?? c.ink, radius: 0.165, role: "chrome-page-badge" });
+    ctx.text(String(index + 1).padStart(badge2.minDigits, "0"), box2, {
+      size: "small",
+      bold: true,
+      color: badge2.color ?? c.background,
+      align: "center",
+      valign: "middle",
+      fixed: true,
+      maxLines: 1,
+      role: "chrome-page-number"
+    });
+  }
 }
-function createContext(init) {
-  const { theme, format, fonts } = init;
-  const nodes = [];
-  const diagnostics = [];
-  const base = `/slides/${init.slideIndex}`;
-  const ptr = (field) => field ? `${base}/${field}` : base;
-  const colors = { ...theme.colors, chart: theme.chart };
-  const semantic = (s2) => {
-    if (typeof s2 === "number") return s2;
-    return theme.type[s2 ?? "body"];
-  };
-  const toParagraphs = (content) => {
-    if (typeof content === "string") return content.split(/\n{2,}/).map((p) => para(p));
-    if (content.length === 0) return [para("")];
-    if (typeof content[0] === "string") return content.map((p) => para(p));
-    return content;
-  };
-  const ctx = {
-    nodes,
-    diagnostics,
-    theme,
-    format,
-    fonts,
-    slideId: init.slideId,
-    variant: init.variant,
-    slide: init.slide,
-    baseDir: init.baseDir,
-    body: init.body,
-    page: { x: 0, y: 0, w: format.w, h: format.h },
-    colors,
-    ptr,
-    paragraphs(items, opts = {}) {
-      return items.map((t, i) => {
-        const p = para(t, opts.bullet ? { bullet: true } : {});
-        if (i > 0 && opts.spaceBefore) p.spaceBefore = opts.spaceBefore;
-        return p;
-      });
-    },
-    text(content, box2, opts = {}) {
-      const paragraphs4 = toParagraphs(content);
-      const font = opts.font === "heading" ? fonts.heading : fonts.body;
-      const start = semantic(opts.size);
-      const sizes = opts.sizes ?? (opts.fixed ? [start] : sizeLadder(start, Math.min(start, theme.type.minBody)));
-      const style = {
-        family: font.family,
-        measure: font.measure,
-        color: opts.color ?? theme.colors.ink,
-        bold: opts.bold ?? false,
-        italic: opts.italic ?? false,
-        align: opts.align ?? "left",
-        valign: opts.valign ?? "top"
-      };
-      const extra = {};
-      if (opts.role) extra.role = opts.role;
-      if (opts.field) extra.pointer = ptr(opts.field);
-      if (opts.bulletIndent) extra.bulletIndent = opts.bulletIndent;
-      if (opts.maxLines !== void 0) extra.maxLines = opts.maxLines;
-      const r = fitText(
-        paragraphs4,
-        box2,
-        style,
-        sizes,
-        opts.lineHeight ?? theme.type.lineHeight,
-        extra
-      );
-      const txt = plainText(paragraphs4);
-      if (!r.fits) {
-        const laid = layoutText(paragraphs4, r.node.style, box2.w, opts.bulletIndent ?? 14);
-        if (laid.splitWord) {
-          diagnostics.push(
-            diag(
-              "SC-FIT-003",
-              `A word in "${txt.slice(0, 60)}" is wider than its ${box2.w.toFixed(2)}in column`,
-              {
-                slide: init.slideId,
-                pointer: ptr(opts.field)
-              }
-            )
-          );
-        } else {
-          const lineIn = r.node.style.lineSpacing / 72;
-          const extraLines = Math.max(
-            1,
-            Math.ceil(r.overflow / lineIn - 1e-6),
-            r.lines - r.maxLines
-          );
-          const avgCharsPerLine = Math.max(1, Math.round(txt.length / Math.max(1, r.lines)));
-          diagnostics.push(
-            diag(
-              "SC-FIT-001",
-              `Text does not fit at ${r.size}pt: needs ${r.lines} lines, box holds ${r.maxLines}`,
-              {
-                slide: init.slideId,
-                pointer: ptr(opts.field),
-                measured: `${txt.length} chars / ${r.lines} lines`,
-                limit: `${r.maxLines} lines`,
-                hint: `Cut about ${extraLines * avgCharsPerLine} characters (+${extraLines} line${extraLines > 1 ? "s" : ""}), split the point, or move detail to notes.`
-              }
-            )
-          );
-        }
-      } else if (r.size < start - 0.01 && !opts.sizes) {
-        diagnostics.push(
-          diag("SC-FIT-002", `Text shrunk from ${start}pt to ${r.size}pt to fit`, {
-            slide: init.slideId,
-            pointer: ptr(opts.field)
-          })
-        );
-      }
-      nodes.push(r.node);
-      return r.node;
-    },
-    rect(box2, opts = {}) {
-      const n = { kind: "rect", box: box2, ...opts };
-      nodes.push(n);
-      return n;
-    },
-    ellipse(box2, opts = {}) {
-      const n = { kind: "ellipse", box: box2, ...opts };
-      nodes.push(n);
-      return n;
-    },
-    polygon(points, opts = {}) {
-      const xs = points.map((p) => p[0]);
-      const ys = points.map((p) => p[1]);
-      const x2 = Math.min(...xs);
-      const y = Math.min(...ys);
-      const n = {
-        kind: "polygon",
-        box: { x: x2, y, w: Math.max(...xs) - x2, h: Math.max(...ys) - y },
-        points,
-        ...opts
-      };
-      nodes.push(n);
-      return n;
-    },
-    line(x1, y1, x2, y2, stroke = {}, opts = {}) {
-      const n = {
-        kind: "line",
-        x1,
-        y1,
-        x2,
-        y2,
-        stroke: {
-          color: stroke.color ?? theme.colors.rule,
-          width: stroke.width ?? 0.75,
-          ...stroke.dash ? { dash: stroke.dash } : {}
-        },
-        ...opts.arrowEnd ? { arrowEnd: true } : {},
-        ...opts.role ? { role: opts.role } : {}
-      };
-      nodes.push(n);
-      return n;
-    },
-    image(box2, src, alt, opts = {}) {
-      let path2;
-      if (src) {
-        const p = isAbsolute4(src) ? src : resolve8(init.baseDir, src);
-        if (existsSync11(p)) path2 = p;
-      }
-      if (!path2) {
-        diagnostics.push(
-          diag("SC-IMG-002", src ? `Image not found: ${src}` : "Image slot is empty", {
-            slide: init.slideId,
-            pointer: ptr(opts.field),
-            severity: src ? "warning" : "info"
-          })
-        );
-      }
-      const n = {
-        kind: "image",
-        box: box2,
-        ...path2 ? { path: path2 } : {},
-        alt,
-        fit: opts.fit ?? "cover",
-        placeholderLabel: opts.label ?? "Image placeholder",
-        role: "image"
-      };
-      nodes.push(n);
-      return n;
-    },
-    table(spec, box2) {
-      const rowsAll = spec.header ? [spec.header, ...spec.rows] : spec.rows;
-      const ncol = Math.max(...rowsAll.map((r) => r.length));
-      const weights = spec.colWeights ?? Array.from({ length: ncol }, (_, i) => i === 0 ? 1.3 : 1);
-      const wsum = weights.reduce((a, b) => a + b, 0);
-      const colW = weights.map((w) => box2.w * w / wsum);
-      const pad3 = { l: 0.08, r: 0.08, t: 0.06, b: 0.06 };
-      const start = spec.size ?? theme.type.body - 1;
-      const ladder = sizeLadder(start, theme.type.minBody - 1);
-      let chosen;
-      let fitted = false;
-      for (const size2 of ladder) {
-        const cells2 = [];
-        const rowH2 = [];
-        rowsAll.forEach((row, ri) => {
-          const isHead = !!spec.header && ri === 0;
-          const dataRow = spec.header ? ri - 1 : ri;
-          const cellRow = [];
-          let maxH = 0;
-          for (let ci = 0; ci < ncol; ci++) {
-            const raw = row[ci] ?? "";
-            const hl = spec.highlightCol === ci || spec.highlightRow !== void 0 && spec.highlightRow === dataRow;
-            const s2 = {
-              family: (isHead ? fonts.heading : fonts.body).family,
-              measure: (isHead ? fonts.heading : fonts.body).measure,
-              size: isHead ? Math.max(size2 - 1, theme.type.small) : size2,
-              lineSpacing: +((isHead ? Math.max(size2 - 1, theme.type.small) : size2) * 1.18).toFixed(
-                2
-              ),
-              color: isHead ? hl ? theme.colors.accent : theme.colors.muted : theme.colors.ink,
-              bold: isHead || spec.firstColBold !== false && ci === 0 || hl && !isHead && spec.highlightRow === dataRow,
-              align: spec.align?.[ci] ?? "left",
-              valign: "top"
-            };
-            const ps = [para(raw)];
-            const w = colW[ci] - pad3.l - pad3.r;
-            const laid = layoutText(ps, s2, w);
-            const hgt = laid.contentHeight + pad3.t + pad3.b;
-            maxH = Math.max(maxH, hgt);
-            const cell = {
-              text: makeTextNode(ps, { x: 0, y: 0, w, h: laid.contentHeight }, s2, laid)
-            };
-            if (hl && !isHead) cell.fill = theme.colors.accentSoft;
-            if (isHead) cell.borderBottom = { color: theme.colors.ink, width: 1 };
-            else cell.borderBottom = { color: theme.colors.rule, width: 0.5 };
-            cellRow.push(cell);
-          }
-          rowH2.push(Math.max(maxH, isHead ? 0.34 : 0.36));
-          cells2.push(cellRow);
-        });
-        chosen = { cells: cells2, rowH: rowH2 };
-        if (rowH2.reduce((a, b) => a + b, 0) <= box2.h + 1e-3) {
-          fitted = true;
-          break;
-        }
-      }
-      const { cells, rowH } = chosen;
-      let y = box2.y;
-      cells.forEach((row, ri) => {
-        let x2 = box2.x;
-        row.forEach((cell, ci) => {
-          const w = colW[ci];
-          cell.text.box = {
-            x: x2 + pad3.l,
-            y: y + pad3.t,
-            w: w - pad3.l - pad3.r,
-            h: rowH[ri] - pad3.t - pad3.b
-          };
-          x2 += w;
-        });
-        y += rowH[ri];
-      });
-      const total = rowH.reduce((a, b) => a + b, 0);
-      if (!fitted) {
-        diagnostics.push(
-          diag("SC-FIT-001", `Table needs ${total.toFixed(2)}in, box holds ${box2.h.toFixed(2)}in`, {
-            slide: init.slideId,
-            pointer: ptr(spec.field),
-            measured: `${rowsAll.length} rows`,
-            limit: `${box2.h.toFixed(2)}in`,
-            hint: "Shorten cell text, drop a row or column, or move detail to backup."
-          })
-        );
-      }
-      const node2 = {
-        kind: "table",
-        box: { ...box2, h: Math.min(total, box2.h + 2) },
-        colW,
-        rowH,
-        cells,
-        pad: pad3,
-        role: "table",
-        ...spec.field ? { pointer: ptr(spec.field) } : {}
-      };
-      nodes.push(node2);
-      return node2;
-    },
-    chart(spec, box2) {
-      const n = buildChart(spec, box2, { theme, font: fonts.body });
-      if (spec.field) n.pointer = ptr(spec.field);
-      nodes.push(n);
-      return n;
-    },
-    add(node2) {
-      nodes.push(node2);
-    },
-    issue(d) {
-      diagnostics.push({ ...d, slide: d.slide ?? init.slideId });
+function composeSource(ctx, runs) {
+  const style = ctx.theme.chrome.sources;
+  if (style?.visible === false) return;
+  ctx.text([{ runs }], ctx.format.source, {
+    role: "source",
+    size: style?.size ?? "source",
+    color: style?.color ?? ctx.colors.muted,
+    maxLines: 2,
+    valign: "bottom",
+    field: "sources"
+  });
+}
+function composeTakeaway(ctx, text4, y) {
+  const style = ctx.theme.chrome.takeaway;
+  const height = style?.height ?? 0.65;
+  const box2 = { x: ctx.body.x, y, w: ctx.body.w, h: height };
+  ctx.rect(box2, {
+    fill: style?.fill ?? ctx.colors.accentSoft,
+    radius: style?.radius ?? 0.06,
+    role: "chrome-takeaway-band"
+  });
+  ctx.rect(
+    { ...box2, w: 0.07 },
+    { fill: style?.accent ?? ctx.colors.accent, radius: 0.035, role: "chrome-takeaway-accent" }
+  );
+  ctx.text(
+    text4,
+    { x: box2.x + 0.23, y: box2.y + 0.08, w: box2.w - 0.43, h: box2.h - 0.16 },
+    {
+      role: "chrome-takeaway",
+      size: "body",
+      bold: true,
+      color: style?.color ?? ctx.colors.accent,
+      maxLines: 2,
+      valign: "middle",
+      field: "bottomLine"
     }
-  };
-  return ctx;
+  );
 }
 
 // src/engine/decor.ts
@@ -209878,7 +210669,9 @@ var COMMON_KEYS = /* @__PURE__ */ new Set([
   "source",
   "notes",
   "status",
-  "ghost"
+  "ghost",
+  "frame",
+  "bottomLine"
 ]);
 function slideContent(slide) {
   const out = {};
@@ -210047,7 +210840,7 @@ function buildMasters(theme, format, fonts, footer) {
         nodes.push(staticText(ft, format.footer, textStyle(fonts.body, small, c.muted), "footer"));
     }
     const m = { id, background: bg, nodes };
-    if (theme.chrome.pageNumbers && (id === "content" || id === "divider")) {
+    if (theme.chrome.pageNumbers && !theme.chrome.pageBadge && (id === "content" || id === "divider")) {
       m.slideNumber = {
         box: format.pageNumber,
         style: textStyle(fonts.body, small, c.muted, { align: "right" })
@@ -210072,7 +210865,10 @@ function composeDeck(loaded) {
   slides.forEach((slide, index) => {
     const def = getLayout(slide.layout);
     const variant = slide.variant ?? def.variants[0];
-    const body = slide.lead ? format.body : format.bodyNoLead;
+    const frame = slide.frame ?? (def.master === "canvas" ? theme.chrome.canvasFrame ?? def.frame : def.frame);
+    const fullBody = slide.lead ? format.body : format.bodyNoLead;
+    const takeawayHeight = slide.bottomLine ? (theme.chrome.takeaway?.height ?? 0.65) + 0.12 : 0;
+    const body = { ...fullBody, h: fullBody.h - takeawayHeight };
     const ctx = createContext({
       theme,
       format,
@@ -210085,80 +210881,12 @@ function composeDeck(loaded) {
       slide: { title: slide.title, ...slide.lead ? { lead: slide.lead } : {} }
     });
     const isGhost = slide.status === "ghost" || slide.status === void 0 && deck.status === "ghost";
-    if (def.frame === "standard") {
-      if (theme.chrome.tracker && slide.tracker) {
-        ctx.text(slide.tracker.toUpperCase(), format.tracker, {
-          role: "tracker",
-          size: "small",
-          bold: true,
-          color: c.accent,
-          fixed: true,
-          maxLines: 1,
-          field: "tracker"
-        });
-      }
-      if (theme.chrome.accentBar && !(theme.chrome.tracker && slide.tracker))
-        ctx.rect(
-          { x: format.title.x, y: format.title.y - 0.1, w: 0.55, h: 0.05 },
-          { fill: c.accent, role: "accent-bar" }
-        );
-      const t = theme.type.title;
-      const fitDiags = ctx.diagnostics.length;
-      const titleNode = ctx.text(slide.title, format.title, {
-        role: "title",
-        font: "heading",
-        sizes: [t, t - 2],
-        bold: theme.type.titleWeight === "bold",
-        color: c.titleInk ?? c.ink,
-        maxLines: 2,
-        lineHeight: 1.12,
-        field: "title"
-      });
-      const added = ctx.diagnostics.splice(fitDiags);
-      if (added.some((d) => d.code === "SC-FIT-001" || d.code === "SC-FIT-003")) {
-        ctx.diagnostics.push(
-          diag(
-            "SC-TITLE-001",
-            `Title needs ${titleNode.lines.length} lines at ${titleNode.style.size}pt`,
-            {
-              slide: slide.id,
-              pointer: ctx.ptr("title"),
-              measured: `${slide.title.length} chars`,
-              limit: "2 lines (~90 chars)"
-            }
-          )
-        );
-      }
-      if (theme.chrome.titleRule) {
-        const yRule = format.title.y + format.title.h + 0.04;
-        ctx.line(format.title.x, yRule, format.title.x + format.title.w, yRule, {
-          color: c.rule,
-          width: 0.75
-        });
-      }
-      if (slide.lead)
-        ctx.text(slide.lead, format.lead, {
-          role: "lead",
-          size: "subtitle",
-          color: c.muted,
-          maxLines: 1,
-          field: "lead"
-        });
-      const words = slide.title.trim().split(/\s+/).length;
-      if (words < 5)
-        ctx.issue(
-          diag(
-            "SC-TITLE-002",
-            `Title "${slide.title}" has ${words} words \u2014 likely a topic, not a claim`,
-            { pointer: ctx.ptr("title") }
-          )
-        );
-      if (/[.]$/.test(slide.title.trim()))
-        ctx.issue(diag("SC-TITLE-003", "Title ends with a period", { pointer: ctx.ptr("title") }));
+    if (frame === "standard") {
+      composeHeader(ctx, slide, index);
     }
     if (isGhost) {
       const g = slide.ghost;
-      const box2 = def.frame === "standard" ? body : { x: 1, y: 3.2, w: format.w - 2, h: 2.6 };
+      const box2 = frame === "standard" ? body : { x: 1, y: 3.2, w: format.w - 2, h: 2.6 };
       ctx.rect(box2, {
         fill: mix(c.surface, c.background, 0.3),
         stroke: { color: c.muted, width: 1, dash: "dash" },
@@ -210175,7 +210903,7 @@ function composeDeck(loaded) {
         { x: box2.x + 0.4, y: box2.y + 0.35, w: box2.w - 0.8, h: box2.h - 0.7 },
         { role: "ghost-note", size: "body", color: c.muted, valign: "middle", align: "center" }
       );
-      if (def.frame === "none")
+      if (frame === "none")
         ctx.text(
           slide.title,
           { x: 1, y: 1.6, w: format.w - 2, h: 1.4 },
@@ -210185,6 +210913,12 @@ function composeDeck(loaded) {
       const content = def.schema.parse(slideContent(slide));
       def.compose(ctx, content);
     }
+    if (slide.bottomLine && !isGhost)
+      composeTakeaway(
+        ctx,
+        slide.bottomLine,
+        fullBody.y + fullBody.h - (theme.chrome.takeaway?.height ?? 0.65)
+      );
     const srcTitles = (slide.sources ?? []).map((ref) => {
       const r = parseSourceRef(ref);
       const src = sourceMap.get(r.id);
@@ -210197,9 +210931,9 @@ function composeDeck(loaded) {
     const srcText = [
       illustrative ? "Illustrative data." : "",
       srcTitles.length ? `Source: ${srcTitles.map((s2) => s2.title + (s2.date ? ` (${s2.date})` : "")).join("; ")}` : "",
-      slide.source ? srcTitles.length ? slide.source : `Source: ${slide.source}` : ""
+      slide.source ? srcTitles.length ? slide.source : `${theme.chrome.sources?.prefix ?? "Source:"} ${slide.source}` : ""
     ].filter(Boolean).join(" ");
-    if (srcText && def.frame === "standard") {
+    if (srcText && frame === "standard") {
       const runs = [];
       const add2 = (text4, link) => {
         if (text4) runs.push(link ? { text: text4, link } : { text: text4 });
@@ -210207,7 +210941,7 @@ function composeDeck(loaded) {
       if (illustrative)
         add2(srcTitles.length || slide.source ? "Illustrative data. " : "Illustrative data.");
       if (srcTitles.length) {
-        add2("Source: ");
+        add2(`${theme.chrome.sources?.prefix ?? "Source:"} `);
         srcTitles.forEach((s2, k) => {
           add2(s2.title, s2.url);
           add2(`${s2.date ? ` (${s2.date})` : ""}${k < srcTitles.length - 1 ? "; " : ""}`);
@@ -210215,18 +210949,11 @@ function composeDeck(loaded) {
       }
       if (slide.source)
         add2(
-          `${srcTitles.length ? " " : ""}${srcTitles.length ? slide.source : `Source: ${slide.source}`}`
+          `${srcTitles.length ? " " : ""}${srcTitles.length ? slide.source : `${theme.chrome.sources?.prefix ?? "Source:"} ${slide.source}`}`
         );
-      ctx.text([{ runs }], format.source, {
-        role: "source",
-        size: "source",
-        color: c.muted,
-        maxLines: 2,
-        valign: "bottom",
-        field: "sources"
-      });
+      composeSource(ctx, runs);
     }
-    if (!isGhost && def.frame === "standard" && !srcText && !PLAN_LAYOUTS.has(def.id) && hasNumbers(
+    if (!isGhost && frame === "standard" && !srcText && !PLAN_LAYOUTS.has(def.id) && hasNumbers(
       def.id === "freeform" ? (
         // visible text only: numbers in tags, attributes and CSS are not data
         {
@@ -210251,7 +210978,7 @@ function composeDeck(loaded) {
       index,
       layout: def.id,
       variant,
-      master: isGhost && def.frame === "none" ? "content" : def.master,
+      master: isGhost && frame === "none" || frame === "standard" && def.master === "canvas" ? "content" : def.master,
       nodes: ctx.nodes,
       title: slide.title
     };
@@ -210606,8 +211333,8 @@ async function buildDeck(path2, opts = {}) {
     return { ...checked, files, engines: engines2 };
   }
   const deck = loaded.deck;
-  const outDir = resolve9(opts.outDir ?? join14(loaded.baseDir, "dist"));
-  mkdirSync10(outDir, { recursive: true });
+  const outDir = resolve9(opts.outDir ?? join15(loaded.baseDir, "dist"));
+  mkdirSync11(outDir, { recursive: true });
   const theme = getTheme(deck.theme);
   const formats = opts.formats ?? deck.output?.formats ?? ["pptx", "pdf", "png"];
   const epoch = epochDate();
@@ -210628,7 +211355,7 @@ async function buildDeck(path2, opts = {}) {
     diagnostics.push(...f.diagnostics);
   }
   for (const kind of order.filter((k) => formats.includes(k))) {
-    const requested = kind === "pptx" ? opts.pptxEngine ?? deck.output?.engines.pptx : kind === "pdf" ? opts.pdfEngine ?? deck.output?.engines.pdf : void 0;
+    const requested = kind === "pptx" ? opts.pptxEngine ?? deck.output?.engines.pptx : kind === "pdf" ? opts.pdfEngine ?? deck.output?.engines.pdf : kind === "png" ? opts.pngEngine ?? deck.output?.engines.png : void 0;
     const { engine, reason } = await resolveEngine(kind, requested, theme);
     if (!engine) {
       diagnostics.push(diag("SC-ENGINE-001", `${kind}: ${reason}`));
@@ -210711,10 +211438,104 @@ async function buildDeck(path2, opts = {}) {
       title: s2.title
     }))
   };
-  const manifestPath = join14(outDir, "manifest.json");
+  const manifestPath = join15(outDir, "manifest.json");
   writeFileSync8(manifestPath, `${JSON.stringify(manifest, null, 2)}
 `);
   return { loaded, scene, diagnostics: sorted, files, manifestPath, engines: engines2 };
+}
+
+// src/library/exhibits.ts
+var EXHIBITS = [
+  {
+    id: "comparison",
+    question: "How do items compare on the same basis?",
+    layouts: ["chart-takeaway", "options-comparison", "data-table", "before-after"],
+    guard: "Use the same criteria, units and period."
+  },
+  {
+    id: "trend",
+    question: "What changes over time?",
+    layouts: ["chart-takeaway", "timeline"],
+    guard: "Use a shared time axis; do not imply causation from correlation."
+  },
+  {
+    id: "bridge",
+    question: "Which drivers connect a starting value to an ending value?",
+    layouts: ["waterfall"],
+    guard: "The signed drivers must reconcile the start and end totals."
+  },
+  {
+    id: "composition",
+    question: "What makes up the whole?",
+    layouts: ["chart-takeaway", "marimekko", "funnel"],
+    guard: "Use meaningful parts, consistent bases and a complete total."
+  },
+  {
+    id: "headline-evidence",
+    question: "Which headline observation supports distinct parallel explanations?",
+    layouts: ["kpi-tiles", "big-statement", "evidence-panorama"],
+    guard: "Card area does not encode magnitude; a metric with four categories is not a ranking."
+  },
+  {
+    id: "parallel-points",
+    question: "Which independent points support the message?",
+    layouts: ["key-points", "text", "exec-summary"],
+    guard: "Do not draw arrows between points that have no sequential relationship."
+  },
+  {
+    id: "process",
+    question: "What happens in sequence and what changes?",
+    layouts: ["process-steps", "process-compare", "timeline", "gate-matrix", "cadence"],
+    guard: "Distinguish steps, dates, hand-offs and decision gates."
+  },
+  {
+    id: "architecture",
+    question: "Which components connect, and across which boundaries?",
+    layouts: ["architecture", "coverage-map", "callout"],
+    guard: "Connections and identifiers must retain their meaning and endpoints."
+  },
+  {
+    id: "causes-and-evidence",
+    question: "What drives a result or supports an answer?",
+    layouts: ["issue-tree", "evidence-chain", "tornado"],
+    guard: "Distinguish a hypothesis, a measured contribution and verified evidence."
+  },
+  {
+    id: "prioritisation",
+    question: "Where should attention or investment go?",
+    layouts: ["matrix-2x2", "bubble-chart", "risk-matrix", "maturity-model", "football-field"],
+    guard: "Define axes and scoring; label uncertainty and range assumptions."
+  },
+  {
+    id: "ownership",
+    question: "Who performs, decides or is accountable?",
+    layouts: ["raci", "org-chart", "team-cards", "next-steps"],
+    guard: "Reporting lines are not decision rights."
+  },
+  {
+    id: "strategic-framework",
+    question: "Which factors shape a strategic choice?",
+    layouts: ["swot", "pestel", "five-forces", "business-model-canvas"],
+    guard: "Use evidence and implications, not boxes filled for completeness."
+  }
+];
+function exhibitRoutes(id) {
+  return EXHIBITS.filter((entry2) => !id || entry2.id === id).map((entry2) => ({
+    ...entry2,
+    reference: "library/references/exhibit-selection.md",
+    layouts: entry2.layouts.map((id2) => {
+      const layout = getLayout(id2);
+      if (!layout) throw new Error(`Semantic route references missing layout ${id2}`);
+      return {
+        id: id2,
+        variants: layout.variants,
+        purpose: layout.purpose,
+        useWhen: layout.useWhen,
+        avoidWhen: layout.avoidWhen,
+        contractCommand: `slidecraft layouts ${id2} --json`
+      };
+    })
+  }));
 }
 
 // src/cli/commands.ts
@@ -210728,6 +211549,7 @@ function layoutContract(l) {
     avoidWhen: l.avoidWhen,
     variants: l.variants,
     frame: l.frame,
+    composable: isComposable(l),
     schema: external_exports.toJSONSchema(l.schema, { unrepresentable: "any" }),
     example: l.examples[0]
   };
@@ -210761,6 +211583,24 @@ function slugFrom(text4) {
 }
 function registerCommands(program3) {
   program3.version(VERSION2, "-v, --version");
+  program3.command("components").description("List reusable native body exhibits and their existing content contracts").argument("[id]", "optional existing layout id").option("--json", "machine-readable contracts").action((id, o) => {
+    const list = LAYOUTS.filter((l) => isComposable(l) && (!id || l.id === id));
+    if (!list.length) throw new Error(`Unknown or non-composable component: ${id}`);
+    if (wantsJson(o.json)) printJson(list.map(layoutContract));
+    else list.forEach((l) => console.log(`${l.id}: ${l.purpose}`));
+  });
+  program3.command("exhibits").description("Route an intended visual relationship to existing layout contracts").argument("[relationship]", "e.g. comparison, process, architecture, bridge").option("--json", "machine-readable output").action((relationship, o) => {
+    const routes = exhibitRoutes(relationship);
+    if (!routes.length) throw new Error(`Unknown visual relationship: ${relationship}`);
+    if (wantsJson(o.json)) printJson(routes);
+    else
+      for (const route of routes)
+        console.log(
+          `${route.id}: ${route.question}
+  ${route.layouts.map((l) => l.id).join(", ")}
+  ${route.guard}`
+        );
+  });
   program3.command("validate").description("Validate deck.yaml against the schema and layout contracts").argument("<deck>", "path to deck.yaml").option("--json", "machine-readable output").action((deck, o) => {
     const r = checkDeck(deck);
     const spec = r.diagnostics.filter((d) => d.code.startsWith("SC-SPEC"));
@@ -210792,13 +211632,17 @@ ${summary(r.diagnostics)} \xB7 ${r.scene?.slides.length ?? 0} slides`);
     }
     process.exitCode = errors ? EXIT.deckErrors : EXIT.ok;
   });
-  program3.command("build").description("Build the deck into PPTX / PDF / PNG / HTML").argument("<deck>", "path to deck.yaml").option("-f, --format <list>", "comma-separated: pptx,pdf,png,html,onepager,docx").option("--pptx-engine <id>", "auto | pptxgenjs | artifact-tool").option("--pdf-engine <id>", "auto | native | html | pptx-convert").option("-o, --out <dir>", "output directory (default: <deck dir>/dist)").option("--preview-width <px>", "PNG preview width", (v) => Number.parseInt(v, 10)).option("--json", "machine-readable output").action(
+  program3.command("build").description("Build the deck into PPTX / PDF / PNG / HTML").argument("<deck>", "path to deck.yaml").option("-f, --format <list>", "comma-separated: pptx,pdf,png,html,onepager,docx").option("--pptx-engine <id>", "auto | pptxgenjs | artifact-tool").option("--pdf-engine <id>", "auto | native | html | pptx-convert").option(
+    "--png-engine <id>",
+    "auto | resvg (Scene preview) | pptx-convert (actual Office render)"
+  ).option("-o, --out <dir>", "output directory (default: <deck dir>/dist)").option("--preview-width <px>", "PNG preview width", (v) => Number.parseInt(v, 10)).option("--json", "machine-readable output").action(
     async (deck, o) => {
       const formats = o.format ? o.format.split(",").map((s2) => s2.trim()) : void 0;
       const r = await buildDeck(deck, {
         ...formats ? { formats } : {},
         ...o.pptxEngine ? { pptxEngine: o.pptxEngine } : {},
         ...o.pdfEngine ? { pdfEngine: o.pdfEngine } : {},
+        ...o.pngEngine ? { pngEngine: o.pngEngine } : {},
         ...o.out ? { outDir: o.out } : {},
         ...o.previewWidth ? { previewWidth: o.previewWidth } : {}
       });
@@ -210822,7 +211666,7 @@ ${summary(r.diagnostics)}`);
         r.files.filter((f) => f.kind !== "png").forEach((f) => console.log(`  ${green("\u2714")} ${relative4(cwd, f.path)}`));
         if (pngs.length)
           console.log(
-            `  ${green("\u2714")} ${relative4(cwd, join15(pngs[0].path, ".."))}/ (${pngs.length} previews)`
+            `  ${green("\u2714")} ${relative4(cwd, join16(pngs[0].path, ".."))}/ (${pngs.length} previews)`
           );
         if (r.manifestPath) console.log(`  ${green("\u2714")} ${relative4(cwd, r.manifestPath)}`);
       }
@@ -210867,7 +211711,7 @@ ${dim(`${" ".repeat(27)}${x2.arc}`)}`)
   });
   program3.command("schema").description("Write JSON Schemas (deck, brief, theme, storyline) for editors and agents").option("-o, --out <dir>", "output directory (default: <slidecraft>/schemas)").action((o) => {
     const out = o.out ?? SCHEMAS_DIR;
-    mkdirSync11(out, { recursive: true });
+    mkdirSync12(out, { recursive: true });
     const opts = { target: "draft-2020-12", unrepresentable: "any" };
     const files = {
       "deck.v1.json": deckJsonSchema(),
@@ -210875,10 +211719,10 @@ ${dim(`${" ".repeat(27)}${x2.arc}`)}`)
       "theme.v1.json": external_exports.toJSONSchema(Theme, opts),
       "storyline.v1.json": external_exports.toJSONSchema(Storyline, opts)
     };
-    for (const [name, schema42] of Object.entries(files)) {
-      writeFileSync9(join15(out, name), `${JSON.stringify(schema42, null, 2)}
+    for (const [name, schema44] of Object.entries(files)) {
+      writeFileSync9(join16(out, name), `${JSON.stringify(schema44, null, 2)}
 `);
-      console.log(`${green("\u2714")} ${relative4(process.cwd(), join15(out, name))}`);
+      console.log(`${green("\u2714")} ${relative4(process.cwd(), join16(out, name))}`);
     }
   });
   program3.command("doctor").description("Show available output engines, versions and install hints").option("--json", "machine-readable output").action(async (o) => {
@@ -210927,12 +211771,12 @@ ${dim(`${" ".repeat(27)}${x2.arc}`)}`)
         o.goal ??= goal;
       }
       const dir = resolve10(o.dir, slug2);
-      if (existsSync13(join15(dir, "brief.yaml"))) {
+      if (existsSync13(join16(dir, "brief.yaml"))) {
         console.error(`${relative4(process.cwd(), dir)}/brief.yaml already exists`);
         process.exitCode = EXIT.usage;
         return;
       }
-      mkdirSync11(join15(dir, "sections"), { recursive: true });
+      mkdirSync12(join16(dir, "sections"), { recursive: true });
       const brief = {
         schemaVersion: 1,
         id: slug2,
@@ -210950,7 +211794,7 @@ ${dim(`${" ".repeat(27)}${x2.arc}`)}`)
         usage: ["edit-together"]
       };
       writeFileSync9(
-        join15(dir, "brief.yaml"),
+        join16(dir, "brief.yaml"),
         `${SCHEMA_LINE("brief")}# SlideCraft brief \u2014 fill the TODOs or let your assistant ask you
 ${import_yaml2.default.stringify(brief)}`
       );
@@ -210978,7 +211822,7 @@ ${import_yaml2.default.stringify(brief)}`
         ]
       };
       writeFileSync9(
-        join15(dir, "deck.yaml"),
+        join16(dir, "deck.yaml"),
         `${SCHEMA_LINE("deck")}# SlideCraft deck
 ${import_yaml2.default.stringify(deck)}`
       );
@@ -210986,8 +211830,8 @@ ${import_yaml2.default.stringify(deck)}`
         printJson({
           ok: true,
           dir,
-          brief: join15(dir, "brief.yaml"),
-          deck: join15(dir, "deck.yaml")
+          brief: join16(dir, "brief.yaml"),
+          deck: join16(dir, "deck.yaml")
         });
         return;
       }
@@ -211000,33 +211844,33 @@ ${green("\u2714")} ${relative4(process.cwd(), dir)}/deck.yaml`
 }
 
 // src/cli/install.ts
-import { spawnSync as spawnSync3 } from "node:child_process";
-import { copyFileSync as copyFileSync3, existsSync as existsSync15, mkdirSync as mkdirSync13, readFileSync as readFileSync20, writeFileSync as writeFileSync11 } from "node:fs";
+import { spawnSync as spawnSync4 } from "node:child_process";
+import { copyFileSync as copyFileSync4, existsSync as existsSync15, mkdirSync as mkdirSync14, readFileSync as readFileSync20, writeFileSync as writeFileSync11 } from "node:fs";
 import { homedir as homedir5 } from "node:os";
-import { dirname as dirname4, join as join17 } from "node:path";
+import { dirname as dirname4, join as join18 } from "node:path";
 
 // src/mcp/server.ts
-import { spawnSync as spawnSync2 } from "node:child_process";
+import { spawnSync as spawnSync3 } from "node:child_process";
 import {
   existsSync as existsSync14,
-  mkdirSync as mkdirSync12,
-  mkdtempSync as mkdtempSync4,
-  readdirSync as readdirSync4,
+  mkdirSync as mkdirSync13,
+  mkdtempSync as mkdtempSync5,
+  readdirSync as readdirSync5,
   readFileSync as readFileSync19,
-  rmSync as rmSync6,
+  rmSync as rmSync7,
   writeFileSync as writeFileSync10
 } from "node:fs";
-import { homedir as homedir4, tmpdir as tmpdir4 } from "node:os";
-import { isAbsolute as isAbsolute5, join as join16, resolve as resolve11 } from "node:path";
+import { homedir as homedir4, tmpdir as tmpdir5 } from "node:os";
+import { isAbsolute as isAbsolute5, join as join17, resolve as resolve11 } from "node:path";
 import { createInterface } from "node:readline";
-var workspace = () => resolve11(process.env.SLIDECRAFT_WORKSPACE ?? join16(homedir4(), "SlideCraft"));
+var workspace = () => resolve11(process.env.SLIDECRAFT_WORKSPACE ?? join17(homedir4(), "SlideCraft"));
 function deckPath(deck) {
   const p = isAbsolute5(deck) ? deck : resolve11(workspace(), deck);
-  return /\.ya?ml$/i.test(p) ? p : join16(p, "deck.yaml");
+  return /\.ya?ml$/i.test(p) ? p : join17(p, "deck.yaml");
 }
-var briefPath = (deck) => join16(deckPath(deck), "..", "brief.yaml");
+var briefPath = (deck) => join17(deckPath(deck), "..", "brief.yaml");
 function cli(args) {
-  const r = spawnSync2(process.execPath, [...process.execArgv, process.argv[1], ...args], {
+  const r = spawnSync3(process.execPath, [...process.execArgv, process.argv[1], ...args], {
     encoding: "utf8",
     cwd: workspace(),
     env: { ...process.env, NO_COLOR: "1" },
@@ -211055,6 +211899,18 @@ var obj = (properties, required2 = []) => ({
 });
 var TOOLS = [
   {
+    name: "list_exhibits",
+    description: "Route the intended relationship (comparison, process, architecture, bridge) to existing layout contracts. Storyline and theme are independent choices.",
+    inputSchema: obj({ relationship: s("Optional semantic relationship id") }),
+    run: (a) => text3(cli(["exhibits", ...a.relationship ? [String(a.relationship)] : [], "--json"]).out)
+  },
+  {
+    name: "list_components",
+    description: "Existing native body exhibits with schemas and examples. Assemble complementary exhibits using layout: composition; keep title, sources and page numbering in the shared frame.",
+    inputSchema: obj({ layout: s("Optional component/layout id") }),
+    run: (a) => text3(cli(["components", ...a.layout ? [String(a.layout)] : [], "--json"]).out)
+  },
+  {
     name: "guide",
     description: "How to make a deck with SlideCraft: the steps, the four checkpoints and the rules. Call this first.",
     inputSchema: obj({}),
@@ -211068,7 +211924,7 @@ Workspace: ${workspace()}`)
     inputSchema: obj({}),
     run: () => {
       const ws = workspace();
-      const decks = existsSync14(ws) ? readdirSync4(ws).filter((d) => existsSync14(join16(ws, d, "deck.yaml"))) : [];
+      const decks = existsSync14(ws) ? readdirSync5(ws).filter((d) => existsSync14(join17(ws, d, "deck.yaml"))) : [];
       return text3(decks.length ? decks.join("\n") : "No decks yet \u2014 use new_deck.");
     }
   },
@@ -211083,7 +211939,7 @@ Workspace: ${workspace()}`)
       ["goal"]
     ),
     run: (a) => {
-      mkdirSync12(workspace(), { recursive: true });
+      mkdirSync13(workspace(), { recursive: true });
       return text3(
         cli([
           "new",
@@ -211182,38 +212038,50 @@ Workspace: ${workspace()}`)
       ["deck", "fixes"]
     ),
     run: (a) => {
-      const dir = mkdtempSync4(join16(tmpdir4(), "sc-mcp-"));
-      const f = join16(dir, "fixes.json");
+      const dir = mkdtempSync5(join17(tmpdir5(), "sc-mcp-"));
+      const f = join17(dir, "fixes.json");
       writeFileSync10(f, JSON.stringify(a.fixes));
       try {
         return text3(cli(["fix", deckPath(String(a.deck)), "--apply", f, "--json"]).out);
       } finally {
-        rmSync6(dir, { recursive: true, force: true });
+        rmSync7(dir, { recursive: true, force: true });
       }
     }
   },
   {
     name: "preview_slide",
-    description: "Render one slide as an image to look at it (slide id or 1-based number)",
-    inputSchema: obj({ deck: s("Deck folder name or path"), slide: s("slide id or number") }, [
-      "deck",
-      "slide"
-    ]),
+    description: "Inspect a slide: resvg previews the Scene; pptx-convert renders the actual PPTX through installed Office. Scene previews do not certify PowerPoint fidelity.",
+    inputSchema: obj(
+      {
+        deck: s("Deck folder name or path"),
+        slide: s("slide id or number"),
+        renderer: {
+          type: "string",
+          enum: ["resvg", "pptx-convert"],
+          description: "Default resvg; pptx-convert requires Office and Poppler"
+        }
+      },
+      ["deck", "slide"]
+    ),
     run: (a) => {
-      const dir = mkdtempSync4(join16(tmpdir4(), "sc-mcp-preview-"));
+      const dir = mkdtempSync5(join17(tmpdir5(), "sc-mcp-preview-"));
+      const renderer = a.renderer === "pptx-convert" ? "pptx-convert" : "resvg";
+      const previewDir = join17(dir, renderer === "pptx-convert" ? "previews-office" : "previews");
       try {
         const r = cli([
           "build",
           deckPath(String(a.deck)),
           "-f",
-          "png",
+          renderer === "pptx-convert" ? "pptx,png" : "png",
           "-o",
           dir,
           "--preview-width",
           "1280",
+          "--png-engine",
+          renderer,
           "--json"
         ]);
-        const files = existsSync14(join16(dir, "previews")) ? readdirSync4(join16(dir, "previews")).sort() : [];
+        const files = existsSync14(previewDir) ? readdirSync5(previewDir).sort() : [];
         const want = String(a.slide);
         const file2 = /^\d+$/.test(want) ? files[Number(want) - 1] : files.find((f) => f.replace(/^\d+-/, "").replace(/\.png$/, "") === want);
         if (!file2)
@@ -211221,13 +212089,16 @@ Workspace: ${workspace()}`)
         return [
           {
             type: "image",
-            data: readFileSync19(join16(dir, "previews", file2)).toString("base64"),
+            data: readFileSync19(join17(previewDir, file2)).toString("base64"),
             mimeType: "image/png"
           },
-          { type: "text", text: file2 }
+          {
+            type: "text",
+            text: `${file2} \xB7 renderer: ${renderer}${renderer === "resvg" ? " (Scene preview, not PowerPoint)" : " (actual exported PPTX)"}`
+          }
         ];
       } finally {
-        rmSync6(dir, { recursive: true, force: true });
+        rmSync7(dir, { recursive: true, force: true });
       }
     }
   },
@@ -211279,7 +212150,7 @@ Workspace: ${workspace()}`)
         "import",
         String(a.file),
         "--out",
-        join16(
+        join17(
           workspace(),
           String(a.file).split(/[\\/]/).pop().replace(/\.pptx$/i, "").toLowerCase().replace(/[^a-z0-9]+/g, "-")
         ),
@@ -211391,65 +212262,65 @@ function serve() {
 
 // src/cli/install.ts
 var home = () => homedir5();
-var userConfig = (...p) => process.platform === "darwin" ? join17(home(), "Library", "Application Support", ...p) : process.platform === "win32" ? join17(process.env.APPDATA ?? join17(home(), "AppData", "Roaming"), ...p) : join17(home(), ".config", ...p);
+var userConfig = (...p) => process.platform === "darwin" ? join18(home(), "Library", "Application Support", ...p) : process.platform === "win32" ? join18(process.env.APPDATA ?? join18(home(), "AppData", "Roaming"), ...p) : join18(home(), ".config", ...p);
 var win = process.platform === "win32";
 function mcpTargets() {
   return [
     {
       id: "claude-desktop",
       name: "Claude Desktop",
-      file: join17(userConfig("Claude"), "claude_desktop_config.json"),
+      file: join18(userConfig("Claude"), "claude_desktop_config.json"),
       detect: userConfig("Claude"),
       key: "mcpServers"
     },
     {
       id: "cursor",
       name: "Cursor",
-      file: join17(home(), ".cursor", "mcp.json"),
-      detect: join17(home(), ".cursor"),
+      file: join18(home(), ".cursor", "mcp.json"),
+      detect: join18(home(), ".cursor"),
       key: "mcpServers"
     },
     {
       id: "vscode",
       name: "VS Code (Copilot)",
-      file: join17(userConfig("Code", "User"), "mcp.json"),
+      file: join18(userConfig("Code", "User"), "mcp.json"),
       detect: userConfig("Code", "User"),
       key: "servers"
     },
     {
       id: "windsurf",
       name: "Windsurf",
-      file: join17(home(), ".codeium", "windsurf", "mcp_config.json"),
-      detect: join17(home(), ".codeium", "windsurf"),
+      file: join18(home(), ".codeium", "windsurf", "mcp_config.json"),
+      detect: join18(home(), ".codeium", "windsurf"),
       key: "mcpServers"
     },
     {
       id: "gemini",
       name: "Gemini CLI",
-      file: join17(home(), ".gemini", "settings.json"),
-      detect: join17(home(), ".gemini"),
+      file: join18(home(), ".gemini", "settings.json"),
+      detect: join18(home(), ".gemini"),
       key: "mcpServers"
     }
   ];
 }
 function serverCommand() {
-  const script = join17(ROOT, "dist", "slidecraft.mjs");
+  const script = join18(ROOT, "dist", "slidecraft.mjs");
   if (/[\\/]_npx[\\/]/.test(ROOT)) {
-    const npx = join17(dirname4(process.execPath), win ? "npx.cmd" : "npx");
+    const npx = join18(dirname4(process.execPath), win ? "npx.cmd" : "npx");
     return { command: existsSync15(npx) ? npx : "npx", args: ["-y", "@eiler2005/slidecraft", "mcp"] };
   }
   return { command: process.execPath, args: [script, "mcp"] };
 }
 function editJson(file2, edit) {
   const j = existsSync15(file2) ? JSON.parse(readFileSync20(file2, "utf8") || "{}") : {};
-  if (existsSync15(file2)) copyFileSync3(file2, `${file2}.bak`);
+  if (existsSync15(file2)) copyFileSync4(file2, `${file2}.bak`);
   edit(j);
-  mkdirSync13(dirname4(file2), { recursive: true });
+  mkdirSync14(dirname4(file2), { recursive: true });
   writeFileSync11(file2, `${JSON.stringify(j, null, 2)}
 `);
 }
 function hasClaudeCli() {
-  return spawnSync3(win ? "where" : "which", ["claude"], { encoding: "utf8" }).status === 0;
+  return spawnSync4(win ? "where" : "which", ["claude"], { encoding: "utf8" }).status === 0;
 }
 function install(opts = {}) {
   const steps = [];
@@ -211463,7 +212334,7 @@ function install(opts = {}) {
     let ok = true;
     if (!opts.dryRun)
       for (const c of cmds)
-        ok = spawnSync3("claude", c, { encoding: "utf8", shell: win }).status === 0 && ok;
+        ok = spawnSync4("claude", c, { encoding: "utf8", shell: win }).status === 0 && ok;
     steps.push({
       target: "Claude Code",
       action: opts.uninstall ? "remove plugin" : "plugin",
@@ -211471,9 +212342,9 @@ function install(opts = {}) {
       detail: cmds.map((c) => `claude ${c.join(" ")}`).join(" && ")
     });
   }
-  const codexHome = process.env.CODEX_HOME ?? join17(home(), ".codex");
+  const codexHome = process.env.CODEX_HOME ?? join18(home(), ".codex");
   if (want("codex") && existsSync15(codexHome)) {
-    const dir = join17(codexHome, "skills");
+    const dir = join18(codexHome, "skills");
     if (!opts.dryRun) {
       if (opts.uninstall) uninstallCodex(dir);
       else installCodex(dir);
@@ -211536,12 +212407,12 @@ function registerInstallCommands(program3) {
 // src/cli/workflow.ts
 var import_yaml9 = __toESM(require_dist(), 1);
 import { spawn as spawn3 } from "node:child_process";
-import { existsSync as existsSync20, mkdirSync as mkdirSync22, readFileSync as readFileSync29, writeFileSync as writeFileSync21 } from "node:fs";
-import { dirname as dirname10, join as join25, relative as relative9, resolve as resolve19 } from "node:path";
+import { existsSync as existsSync20, mkdirSync as mkdirSync23, readFileSync as readFileSync29, writeFileSync as writeFileSync21 } from "node:fs";
+import { dirname as dirname10, join as join26, relative as relative9, resolve as resolve19 } from "node:path";
 
 // src/gallery.ts
-import { existsSync as existsSync16, mkdirSync as mkdirSync14, readFileSync as readFileSync21, writeFileSync as writeFileSync12 } from "node:fs";
-import { dirname as dirname5, join as join18, resolve as resolve12 } from "node:path";
+import { existsSync as existsSync16, mkdirSync as mkdirSync15, readFileSync as readFileSync21, writeFileSync as writeFileSync12 } from "node:fs";
+import { dirname as dirname5, join as join19, resolve as resolve12 } from "node:path";
 async function flat(scene) {
   if (!scene.slides.some((sl) => sl.nodes.some((n) => n.kind === "html"))) return scene;
   return (await flattenFreeform(scene, 0)).scene;
@@ -211566,7 +212437,7 @@ async function contactSheetPng(scene, width = 2e3, cols2 = 4, max = 12) {
   return rasterize(contactSheetSvg(scene, cols2, max), width);
 }
 function previewDeck(storyline, themeId) {
-  const example = join18(ROOT, "examples", storyline.id, "deck.yaml");
+  const example = join19(ROOT, "examples", storyline.id, "deck.yaml");
   if (existsSync16(example)) {
     const l = loadDeck(example);
     l.deck = { ...l.deck, theme: themeId };
@@ -211610,19 +212481,19 @@ function previewDeck(storyline, themeId) {
   return {
     deck,
     slides: raws.map((r) => Slide2.parse(r)),
-    path: join18(ROOT, "examples", `${storyline.id}.yaml`),
+    path: join19(ROOT, "examples", `${storyline.id}.yaml`),
     baseDir: ROOT,
     diagnostics: []
   };
 }
 async function buildGallery(opts) {
-  const out = resolve12(opts.out ?? join18(DOCS_DIR, "gallery"));
-  mkdirSync14(join18(out, "layouts"), { recursive: true });
+  const out = resolve12(opts.out ?? join19(DOCS_DIR, "gallery"));
+  mkdirSync15(join19(out, "layouts"), { recursive: true });
   const files = [];
   for (const s2 of opts.storylines) {
     for (const t of opts.themes ?? s2.themes) {
       const scene = await flat(composeDeck(previewDeck(s2, t)).scene);
-      const p = join18(out, `${s2.id}--${t}.png`);
+      const p = join19(out, `${s2.id}--${t}.png`);
       writeFileSync12(p, await contactSheetPng(scene, opts.width ?? 1400));
       files.push(p);
     }
@@ -211656,7 +212527,7 @@ async function buildGallery(opts) {
         baseDir: ROOT,
         diagnostics: []
       });
-      const p = join18(out, "layouts", `${def.id}--${ex.variant ?? def.variants[0]}.png`);
+      const p = join19(out, "layouts", `${def.id}--${ex.variant ?? def.variants[0]}.png`);
       const shown = await flat(scene);
       writeFileSync12(p, await rasterize(slideSvg(shown, shown.slides[0]), 800));
       files.push(p);
@@ -211665,16 +212536,16 @@ async function buildGallery(opts) {
   return { files };
 }
 async function writePicker(options, outPath, briefGoal) {
-  mkdirSync14(dirname5(outPath), { recursive: true });
+  mkdirSync15(dirname5(outPath), { recursive: true });
   const cards = [];
   for (const o of options) {
     const s2 = getStoryline(o.storyline);
     const t = getTheme(o.theme);
     if (!s2 || !t) continue;
-    const cached2 = join18(DOCS_DIR, "gallery", `${o.storyline}--${o.theme}.png`);
+    const cached2 = join19(DOCS_DIR, "gallery", `${o.storyline}--${o.theme}.png`);
     const png = existsSync16(cached2) ? readFileSync21(cached2) : await contactSheetPng(await flat(composeDeck(previewDeck(s2, o.theme)).scene), 1800);
     const img = `data:image/png;base64,${png.toString("base64")}`;
-    const sheet = join18(dirname5(outPath), `option-${o.option}.png`);
+    const sheet = join19(dirname5(outPath), `option-${o.option}.png`);
     writeFileSync12(sheet, png);
     o.preview = sheet;
     cards.push(`<article class="card"><header><span class="badge">${o.option}</span><div><h2>${esc(o.storylineName)}</h2><p class="theme">${esc(o.themeName)} theme</p></div></header>
@@ -211699,8 +212570,8 @@ footer{margin-top:24px;color:var(--muted)}
   writeFileSync12(outPath, html);
   return outPath;
 }
-async function buildHero(out = join18(DOCS_DIR, "media", "hero.png")) {
-  mkdirSync14(dirname5(out), { recursive: true });
+async function buildHero(out = join19(DOCS_DIR, "media", "hero.png")) {
+  mkdirSync15(dirname5(out), { recursive: true });
   const picks = [
     ["strategy-recommendation", "consulting-classic", 1],
     ["narrative-story", "midnight", 1],
@@ -211779,8 +212650,8 @@ function libraryCheck() {
 }
 
 // src/library/docs.ts
-import { mkdirSync as mkdirSync15, writeFileSync as writeFileSync13 } from "node:fs";
-import { join as join19 } from "node:path";
+import { mkdirSync as mkdirSync16, writeFileSync as writeFileSync13 } from "node:fs";
+import { join as join20 } from "node:path";
 var import_yaml3 = __toESM(require_dist(), 1);
 var HEADER = (title2, what) => `<!-- Generated by \`slidecraft gen\` \u2014 do not edit by hand. -->
 # ${title2}
@@ -211806,10 +212677,10 @@ function limits(s2) {
   if (s2.items?.maxLength !== void 0) out.push(`each \u2264 ${s2.items.maxLength} chars`);
   return out.join(", ");
 }
-function fieldRows(schema42, prefix = "") {
+function fieldRows(schema44, prefix = "") {
   const rows2 = [];
-  const req = new Set(schema42.required ?? []);
-  for (const [k, v] of Object.entries(schema42.properties ?? {})) {
+  const req = new Set(schema44.required ?? []);
+  for (const [k, v] of Object.entries(schema44.properties ?? {})) {
     const name = `${prefix}${k}`;
     rows2.push(
       `| \`${name}\` | ${typeOf2(v)} | ${req.has(k) ? "yes" : ""} | ${limits(v)} | ${esc3(v.description ?? "")} |`
@@ -211943,7 +212814,7 @@ async function enginesDoc() {
 ## How \`auto\` resolves
 
 0. **Preference** \u2014 \`SLIDECRAFT_PPTX_ENGINE\` / \`SLIDECRAFT_PDF_ENGINE\` when set and available.
-1. **PPTX** \u2014 \`artifact-tool\` when running inside Codex and the runtime is installed; otherwise \`pptxgenjs\`.
+1. **PPTX** \u2014 \`pptxgenjs\` in every agent, including Codex; \`artifact-tool\` requires an explicit local evaluation choice. Default: \`pptxgenjs\`.
 2. **PDF** \u2014 \`html\` when the theme prefers HTML (\`prefers: html\`) and Chrome is installed; otherwise \`native\`.
 3. **PNG** \u2014 \`resvg\`. **HTML** \u2014 \`html\`.
 
@@ -212026,26 +212897,26 @@ function catalog() {
   };
 }
 async function generateDocs() {
-  const ref = join19(DOCS_DIR, "reference");
-  mkdirSync15(ref, { recursive: true });
-  mkdirSync15(SCHEMAS_DIR, { recursive: true });
+  const ref = join20(DOCS_DIR, "reference");
+  mkdirSync16(ref, { recursive: true });
+  mkdirSync16(SCHEMAS_DIR, { recursive: true });
   const opts = { target: "draft-2020-12", unrepresentable: "any" };
   const files = {
-    [join19(ref, "layouts.gen.md")]: layoutsDoc(),
-    [join19(ref, "themes.gen.md")]: themesDoc(),
-    [join19(ref, "storylines.gen.md")]: storylinesDoc(),
-    [join19(ref, "engines.gen.md")]: await enginesDoc(),
-    [join19(ref, "error-codes.gen.md")]: codesDoc(),
-    [join19(ref, "cli.gen.md")]: cliDoc(),
-    [join19(SCHEMAS_DIR, "deck.v1.json")]: `${JSON.stringify(deckJsonSchema(), null, 2)}
+    [join20(ref, "layouts.gen.md")]: layoutsDoc(),
+    [join20(ref, "themes.gen.md")]: themesDoc(),
+    [join20(ref, "storylines.gen.md")]: storylinesDoc(),
+    [join20(ref, "engines.gen.md")]: await enginesDoc(),
+    [join20(ref, "error-codes.gen.md")]: codesDoc(),
+    [join20(ref, "cli.gen.md")]: cliDoc(),
+    [join20(SCHEMAS_DIR, "deck.v1.json")]: `${JSON.stringify(deckJsonSchema(), null, 2)}
 `,
-    [join19(SCHEMAS_DIR, "brief.v1.json")]: `${JSON.stringify(external_exports.toJSONSchema(Brief, opts), null, 2)}
+    [join20(SCHEMAS_DIR, "brief.v1.json")]: `${JSON.stringify(external_exports.toJSONSchema(Brief, opts), null, 2)}
 `,
-    [join19(SCHEMAS_DIR, "theme.v1.json")]: `${JSON.stringify(external_exports.toJSONSchema(Theme, opts), null, 2)}
+    [join20(SCHEMAS_DIR, "theme.v1.json")]: `${JSON.stringify(external_exports.toJSONSchema(Theme, opts), null, 2)}
 `,
-    [join19(SCHEMAS_DIR, "storyline.v1.json")]: `${JSON.stringify(external_exports.toJSONSchema(Storyline, opts), null, 2)}
+    [join20(SCHEMAS_DIR, "storyline.v1.json")]: `${JSON.stringify(external_exports.toJSONSchema(Storyline, opts), null, 2)}
 `,
-    [join19(LIBRARY_DIR, "catalog.json")]: `${JSON.stringify(catalog(), null, 2)}
+    [join20(LIBRARY_DIR, "catalog.json")]: `${JSON.stringify(catalog(), null, 2)}
 `
   };
   for (const [p, c] of Object.entries(files)) writeFileSync13(p, c);
@@ -212305,7 +213176,7 @@ function applyFixes(deckPath2, fixes) {
 
 // src/library/images.ts
 var import_yaml6 = __toESM(require_dist(), 1);
-import { existsSync as existsSync17, mkdirSync as mkdirSync16, readFileSync as readFileSync23, writeFileSync as writeFileSync15 } from "node:fs";
+import { existsSync as existsSync17, mkdirSync as mkdirSync17, readFileSync as readFileSync23, writeFileSync as writeFileSync15 } from "node:fs";
 import { dirname as dirname7, relative as relative5, resolve as resolve14 } from "node:path";
 var IMAGE_STYLE = "Photographic, natural light, calm and uncluttered, generous negative space so it can be cropped to a slide panel. No text, no captions, no logos, no watermarks.";
 function slideMaps(file2) {
@@ -212372,7 +213243,7 @@ async function generateImages(jobs, provider) {
       const png = await provider.generate(`${job.prompt}
 
 ${IMAGE_STYLE}`);
-      mkdirSync16(dirname7(job.file), { recursive: true });
+      mkdirSync17(dirname7(job.file), { recursive: true });
       writeFileSync15(job.file, png);
       out.generated.push(job);
     } catch (e) {
@@ -212403,13 +213274,13 @@ function describeJob(j, cwd = process.cwd()) {
 // src/library/ingest.ts
 var import_yaml7 = __toESM(require_dist(), 1);
 import { createHash as createHash3 } from "node:crypto";
-import { existsSync as existsSync18, mkdirSync as mkdirSync17, readdirSync as readdirSync5, readFileSync as readFileSync24, writeFileSync as writeFileSync16 } from "node:fs";
-import { basename as basename2, dirname as dirname8, extname as extname4, join as join20, relative as relative6, resolve as resolve15 } from "node:path";
+import { existsSync as existsSync18, mkdirSync as mkdirSync18, readdirSync as readdirSync6, readFileSync as readFileSync24, writeFileSync as writeFileSync16 } from "node:fs";
+import { basename as basename2, dirname as dirname8, extname as extname4, join as join21, relative as relative6, resolve as resolve15 } from "node:path";
 import { pathToFileURL as pathToFileURL4 } from "node:url";
 var decode4 = (s2) => s2.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
 var slug = (s2) => s2.toLowerCase().replace(/\.[a-z0-9]+$/, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "source";
 async function loadPdf() {
-  const bundled = join20(ROOT, "dist", "pdf-text.mjs");
+  const bundled = join21(ROOT, "dist", "pdf-text.mjs");
   const mod2 = import.meta.url.includes("/dist/") && existsSync18(bundled) ? await import(pathToFileURL4(bundled).href) : await import([".", "pdf-text.ts"].join("/"));
   return mod2.pdfPages;
 }
@@ -212481,8 +213352,8 @@ async function sectionsOf(path2) {
 async function ingest(files, opts) {
   const deckPath2 = resolve15(opts.deck);
   const deckDir = dirname8(deckPath2);
-  const outDir = resolve15(opts.dir ?? join20(deckDir, "materials"));
-  mkdirSync17(outDir, { recursive: true });
+  const outDir = resolve15(opts.dir ?? join21(deckDir, "materials"));
+  mkdirSync18(outDir, { recursive: true });
   const doc = import_yaml7.default.parseDocument(readFileSync24(deckPath2, "utf8"));
   const sources = doc.get("sources", true);
   const existing = (0, import_yaml7.isSeq)(sources) ? sources.items : [];
@@ -212505,7 +213376,7 @@ async function ingest(files, opts) {
       "",
       ...r.sections.flatMap((s2) => [`## ${s2.label} {#${s2.ref}}`, "", s2.text, ""])
     ].join("\n");
-    const mdPath = join20(outDir, `${id}.md`);
+    const mdPath = join21(outDir, `${id}.md`);
     writeFileSync16(mdPath, md);
     const added = !have.has(id);
     if (added) {
@@ -212536,9 +213407,9 @@ function findInMaterials(query, dir, limit = 20) {
   if (!existsSync18(dir)) return [];
   const words = query.toLowerCase().split(/\s+/).filter(Boolean);
   const hits = [];
-  for (const f of readdirSync5(dir).filter((n) => n.endsWith(".md"))) {
+  for (const f of readdirSync6(dir).filter((n) => n.endsWith(".md"))) {
     const id = f.replace(/\.md$/, "");
-    const text4 = readFileSync24(join20(dir, f), "utf8");
+    const text4 = readFileSync24(join21(dir, f), "utf8");
     for (const part of text4.split(/^## /m).slice(1)) {
       const head = part.split("\n")[0] ?? "";
       const ref = /\{#([^}]+)\}/.exec(head)?.[1] ?? "";
@@ -212563,8 +213434,8 @@ function findInMaterials(query, dir, limit = 20) {
 // src/library/pptx-import.ts
 var import_jszip6 = __toESM(require_lib3(), 1);
 var import_yaml8 = __toESM(require_dist(), 1);
-import { mkdirSync as mkdirSync18, readFileSync as readFileSync25, writeFileSync as writeFileSync17 } from "node:fs";
-import { basename as basename3, extname as extname5, join as join21, posix as posix2, resolve as resolve16 } from "node:path";
+import { mkdirSync as mkdirSync19, readFileSync as readFileSync25, writeFileSync as writeFileSync17 } from "node:fs";
+import { basename as basename3, extname as extname5, join as join22, posix as posix3, resolve as resolve16 } from "node:path";
 var decode5 = (s2) => s2.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
 function validImportedTitle(title2, fallback, slideNumber) {
   const clean4 = title2.trim();
@@ -212587,21 +213458,21 @@ function paragraphs2(xml) {
   return out;
 }
 async function rels2(zip, part) {
-  const dir = posix2.dirname(part);
-  const relPath = `${dir}/_rels/${posix2.basename(part)}.rels`;
+  const dir = posix3.dirname(part);
+  const relPath = `${dir}/_rels/${posix3.basename(part)}.rels`;
   const xml = await zip.file(relPath)?.async("string") ?? "";
   const map2 = /* @__PURE__ */ new Map();
   for (const m of xml.matchAll(/<Relationship [^>]*Id="([^"]+)"[^>]*Target="([^"]+)"/g)) {
     map2.set(
       m[1],
-      m[2].startsWith("/") ? m[2].slice(1) : posix2.normalize(posix2.join(dir, m[2]))
+      m[2].startsWith("/") ? m[2].slice(1) : posix3.normalize(posix3.join(dir, m[2]))
     );
   }
   for (const m of xml.matchAll(/<Relationship [^>]*Target="([^"]+)"[^>]*Id="([^"]+)"/g)) {
     if (!map2.has(m[2]))
       map2.set(
         m[2],
-        m[1].startsWith("/") ? m[1].slice(1) : posix2.normalize(posix2.join(dir, m[1]))
+        m[1].startsWith("/") ? m[1].slice(1) : posix3.normalize(posix3.join(dir, m[1]))
       );
   }
   return map2;
@@ -212635,8 +213506,8 @@ async function importPptx(file2, opts = {}) {
   const presRels = await rels2(zip, "ppt/presentation.xml");
   const order = [...pres.matchAll(/<p:sldId [^>]*r:id="([^"]+)"/g)].map((m) => presRels.get(m[1])).filter((p) => !!p);
   const id = opts.id ?? (basename3(file2, extname5(file2)).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "imported");
-  const outDir = resolve16(opts.out ?? join21("slidecraft", id));
-  mkdirSync18(join21(outDir, "assets"), { recursive: true });
+  const outDir = resolve16(opts.out ?? join22("slidecraft", id));
+  mkdirSync19(join22(outDir, "assets"), { recursive: true });
   let shortened = 0;
   const notesExtra = [];
   const clip = (s2, max) => {
@@ -212719,7 +213590,7 @@ async function importPptx(file2, opts = {}) {
       const data = await zip.file(media)?.async("uint8array");
       if (data && /\.(png|jpe?g)$/i.test(media)) {
         const name = `${slide.id}${extname5(media).toLowerCase()}`;
-        writeFileSync17(join21(outDir, "assets", name), data);
+        writeFileSync17(join22(outDir, "assets", name), data);
         slide.image = `assets/${name}`;
       }
       slide.layout = "text-image";
@@ -212751,7 +213622,7 @@ ${notesExtra.join("\n")}` : "",
     sources: [],
     slides
   };
-  const deckPath2 = join21(outDir, "deck.yaml");
+  const deckPath2 = join22(outDir, "deck.yaml");
   writeFileSync17(
     deckPath2,
     `# SlideCraft deck imported from ${basename3(file2)} \u2014 a draft to restyle.
@@ -212856,16 +213727,13 @@ async function has(kind, id) {
 async function recommendOutput(usage, theme) {
   const u = new Set(usage.length ? usage : ["edit-together"]);
   const formats = /* @__PURE__ */ new Set(["pptx", "pdf", "png"]);
-  let pptx = "pptxgenjs";
+  const pptx = "pptxgenjs";
   let pdf = "native";
   const why = [];
   if (u.has("codex") || inCodex()) {
-    if (await has("pptx", "artifact-tool")) {
-      pptx = "artifact-tool";
-      why.push(
-        "Inside Codex: use its local artifact-tool runtime for PPTX (proprietary license \u2014 internal use only)."
-      );
-    } else why.push("Codex runtime not found; using the open pptxgenjs engine.");
+    why.push(
+      "Codex uses the same portable themes, components and pptxgenjs engine as other agents. The optional local artifact-tool adapter must be selected explicitly for internal evaluation/testing only, not production, commercial use or benchmarking."
+    );
   }
   if (u.has("send-pdf")) {
     if (await has("pdf", "pptx-convert")) {
@@ -213074,6 +213942,20 @@ function syncPptx(deckPath2, pptxPath, opts = {}) {
           );
         continue;
       }
+      const alternative = /^\/ppt\/([a-z][a-z0-9-]*)$/.exec(m[2] ?? "");
+      if (alternative) {
+        const html = ref.nodes.find((n) => n.kind === "html" && n.ppt?.length);
+        const items = html?.kind === "html" ? html.ppt : void 0;
+        const at = items?.findIndex((item3) => item3.id === alternative[1]) ?? -1;
+        const item2 = items?.[at];
+        if (item2?.kind === "text" && !same([item2.text], sh.paragraphs)) {
+          write(es.id, `/slides/${i}/ppt/${at}/text`, item2.text, sh.paragraphs);
+          report.notes.push(
+            `Slide "${es.id}": PPT alternative text changed; review its HTML reference separately.`
+          );
+        }
+        continue;
+      }
       const pointer = `/slides/${i}${m[2]}`;
       named.add(pointer);
       const node2 = rendered(ref, pointer);
@@ -213139,18 +214021,18 @@ function syncPptx(deckPath2, pptxPath, opts = {}) {
 
 // src/library/theme-import.ts
 import {
-  copyFileSync as copyFileSync4,
+  copyFileSync as copyFileSync5,
   existsSync as existsSync19,
-  mkdirSync as mkdirSync19,
-  readdirSync as readdirSync6,
+  mkdirSync as mkdirSync20,
+  readdirSync as readdirSync7,
   readFileSync as readFileSync27,
   writeFileSync as writeFileSync18
 } from "node:fs";
-import { basename as basename4, dirname as dirname9, extname as extname6, join as join22, relative as relative7, resolve as resolve17 } from "node:path";
+import { basename as basename4, dirname as dirname9, extname as extname6, join as join23, relative as relative7, resolve as resolve17 } from "node:path";
 var import_jszip7 = __toESM(require_lib3(), 1);
 
 // src/library/template-geometry.ts
-import { posix as posix3 } from "node:path";
+import { posix as posix4 } from "node:path";
 var EMU3 = 914400;
 var SCHEME = { tx1: "dk1", bg1: "lt1", tx2: "dk2", bg2: "lt2" };
 function colorOf(xml, colors) {
@@ -213193,13 +214075,13 @@ var xfrm = (xml) => {
   return { x: +off[1] / EMU3, y: +off[2] / EMU3, w: +ext2[1] / EMU3, h: +ext2[2] / EMU3 };
 };
 async function rels3(zip, part) {
-  const dir = posix3.dirname(part);
-  const xml = await zip.file(`${dir}/_rels/${posix3.basename(part)}.rels`)?.async("string") ?? "";
+  const dir = posix4.dirname(part);
+  const xml = await zip.file(`${dir}/_rels/${posix4.basename(part)}.rels`)?.async("string") ?? "";
   const out = /* @__PURE__ */ new Map();
   for (const m of xml.matchAll(/<Relationship ([^>]*)\/?>/g)) {
     const id = /Id="([^"]+)"/.exec(m[1])?.[1];
     const t = /Target="([^"]+)"/.exec(m[1])?.[1];
-    if (id && t) out.set(id, t.startsWith("/") ? t.slice(1) : posix3.normalize(posix3.join(dir, t)));
+    if (id && t) out.set(id, t.startsWith("/") ? t.slice(1) : posix4.normalize(posix4.join(dir, t)));
   }
   return out;
 }
@@ -213300,14 +214182,14 @@ function mapFont(name, fontDir, themeId, role, notes) {
     return { family: "Times New Roman", measure: "liberation-serif" };
   if (fontDir && existsSync19(fontDir)) {
     const files = {};
-    for (const f of readdirSync6(fontDir)) {
+    for (const f of readdirSync7(fontDir)) {
       if (!/\.(ttf|otf)$/i.test(f)) continue;
       try {
-        const fk = $b422b1e013cd6010$export$fa5499edb1ab414a(join22(fontDir, f));
+        const fk = $b422b1e013cd6010$export$fa5499edb1ab414a(join23(fontDir, f));
         if (fk.familyName.toLowerCase() !== name.toLowerCase()) continue;
         const sub = fk.subfamilyName.toLowerCase();
         const face = /bold/.test(sub) && /italic|oblique/.test(sub) ? "boldItalic" : /bold/.test(sub) ? "bold" : /italic|oblique/.test(sub) ? "italic" : /regular|book|normal|roman/.test(sub) ? "regular" : void 0;
-        if (face && !files[face]) files[face] = join22(fontDir, f);
+        if (face && !files[face]) files[face] = join23(fontDir, f);
       } catch {
       }
     }
@@ -213363,8 +214245,8 @@ async function importTheme(file2, opts) {
   const c = readColors(xml);
   const fonts = readFonts(xml);
   const notes = [];
-  const outDir = resolve17(opts.out ?? join22(dirname9(resolve17(file2)), "slidecraft-theme"));
-  mkdirSync19(outDir, { recursive: true });
+  const outDir = resolve17(opts.out ?? join23(dirname9(resolve17(file2)), "slidecraft-theme"));
+  mkdirSync20(outDir, { recursive: true });
   const bg = c.lt1 ?? "#FFFFFF";
   const dark = luminance(bg) < 0.25;
   const ink = c.dk1 ?? "#111111";
@@ -213397,7 +214279,7 @@ async function importTheme(file2, opts) {
       const data = await zip.file(part)?.async("uint8array");
       if (!data) return void 0;
       const name = `${opts.id}-art-${saved.size + 1}${extname6(part).toLowerCase()}`;
-      writeFileSync18(join22(outDir, name), data);
+      writeFileSync18(join23(outDir, name), data);
       saved.set(part, `./${name}`);
     }
     return saved.get(part);
@@ -213456,7 +214338,7 @@ async function importTheme(file2, opts) {
       },
       source: `title placeholder of ${basename4(file2)}`
     };
-    formatPath = join22(outDir, `${opts.id}.format.json`);
+    formatPath = join23(outDir, `${opts.id}.format.json`);
     writeFileSync18(formatPath, `${JSON.stringify(fmt3, null, 2)}
 `);
     notes.push(
@@ -213467,7 +214349,7 @@ async function importTheme(file2, opts) {
   let logoRel;
   if (logo) {
     const name = `${opts.id}-logo${extname6(logo.name).toLowerCase()}`;
-    writeFileSync18(join22(outDir, name), logo.data);
+    writeFileSync18(join23(outDir, name), logo.data);
     logoRel = `./${name}`;
   } else if (!(hasArt && smallPic))
     notes.push(
@@ -213476,8 +214358,8 @@ async function importTheme(file2, opts) {
   for (const spec of [heading, body]) {
     if (!spec.files) continue;
     for (const [face, p] of Object.entries(spec.files)) {
-      const dest = join22(outDir, basename4(p));
-      if (resolve17(p) !== dest) copyFileSync4(p, dest);
+      const dest = join23(outDir, basename4(p));
+      if (resolve17(p) !== dest) copyFileSync5(p, dest);
       spec.files[face] = `./${basename4(p)}`;
     }
   }
@@ -213548,15 +214430,15 @@ async function importTheme(file2, opts) {
     officeTheme: `${opts.id}.theme.xml`,
     template: `${opts.id}.template${extname6(file2).toLowerCase() === ".potx" ? ".potx" : ".pptx"}`
   };
-  copyFileSync4(
+  copyFileSync5(
     file2,
-    join22(
+    join23(
       outDir,
       `${opts.id}.template${extname6(file2).toLowerCase() === ".potx" ? ".potx" : ".pptx"}`
     )
   );
-  writeFileSync18(join22(outDir, `${opts.id}.theme.xml`), xml);
-  const themePath = join22(outDir, `${opts.id}.json`);
+  writeFileSync18(join23(outDir, `${opts.id}.theme.xml`), xml);
+  const themePath = join23(outDir, `${opts.id}.json`);
   writeFileSync18(themePath, `${JSON.stringify(theme, null, 2)}
 `);
   if (contrast(accent, bg) < 3)
@@ -213566,16 +214448,16 @@ async function importTheme(file2, opts) {
   return {
     theme,
     themePath,
-    ...logoRel ? { logo: join22(outDir, logoRel) } : {},
+    ...logoRel ? { logo: join23(outDir, logoRel) } : {},
     ...formatPath ? { formatPath } : {},
     notes
   };
 }
 
 // src/qa/calibrate.ts
-import { execFileSync as execFileSync3 } from "node:child_process";
-import { mkdirSync as mkdirSync20, readFileSync as readFileSync28, writeFileSync as writeFileSync19 } from "node:fs";
-import { join as join23 } from "node:path";
+import { execFileSync as execFileSync4 } from "node:child_process";
+import { mkdirSync as mkdirSync21, readFileSync as readFileSync28, writeFileSync as writeFileSync19 } from "node:fs";
+import { join as join24 } from "node:path";
 var CALIBRATION_STRINGS = [
   "Enterprise and mid-market hold 78% of profit on 41% of revenue",
   "Two well-funded competitors are preparing German launches in 2027, and switching costs make early share sticky.",
@@ -213658,7 +214540,7 @@ function buildCalibrationScene(fonts, strings = CALIBRATION_STRINGS) {
   return { scene, cases };
 }
 function compareCalibration(cases, pdf) {
-  const html = execFileSync3("pdftotext", ["-bbox-layout", pdf, "-"], {
+  const html = execFileSync4("pdftotext", ["-bbox-layout", pdf, "-"], {
     encoding: "utf8",
     maxBuffer: 64 << 20
   });
@@ -213696,11 +214578,11 @@ function compareCalibration(cases, pdf) {
   };
 }
 async function runCalibration(fonts, outDir) {
-  mkdirSync20(outDir, { recursive: true });
+  mkdirSync21(outDir, { recursive: true });
   const { scene, cases } = buildCalibrationScene(fonts);
-  const pptx = join23(outDir, "calibration.pptx");
+  const pptx = join24(outDir, "calibration.pptx");
   writeFileSync19(pptx, await renderPptx(scene, new Date(Date.UTC(2026, 0, 1))));
-  writeFileSync19(join23(outDir, "expected.json"), JSON.stringify(cases, null, 2));
+  writeFileSync19(join24(outDir, "expected.json"), JSON.stringify(cases, null, 2));
   const d = await pptxConvertEngine.detect();
   if (!d.available)
     return {
@@ -213714,7 +214596,7 @@ async function runCalibration(fonts, outDir) {
       skipped: `no converter: ${d.detail}`
     };
   try {
-    execFileSync3("pdftotext", ["-v"], { stdio: "ignore" });
+    execFileSync4("pdftotext", ["-v"], { stdio: "ignore" });
   } catch {
     return {
       total: cases.length,
@@ -213734,43 +214616,43 @@ async function runCalibration(fonts, outDir) {
     epoch: /* @__PURE__ */ new Date(),
     pptxPath: pptx
   });
-  const pdf = join23(outDir, "calibration.pdf");
+  const pdf = join24(outDir, "calibration.pdf");
   const r = compareCalibration(cases, pdf);
   const report = { ...r, pptx, pdf };
-  writeFileSync19(join23(outDir, "report.json"), JSON.stringify(report, null, 2));
+  writeFileSync19(join24(outDir, "report.json"), JSON.stringify(report, null, 2));
   return report;
 }
 
 // src/site.ts
-import { copyFileSync as copyFileSync5, mkdirSync as mkdirSync21, readdirSync as readdirSync7, rmSync as rmSync7, writeFileSync as writeFileSync20 } from "node:fs";
-import { basename as basename5, join as join24, relative as relative8, resolve as resolve18 } from "node:path";
+import { copyFileSync as copyFileSync6, mkdirSync as mkdirSync22, readdirSync as readdirSync8, rmSync as rmSync8, writeFileSync as writeFileSync20 } from "node:fs";
+import { basename as basename5, join as join25, relative as relative8, resolve as resolve18 } from "node:path";
 var REPO = "https://github.com/eiler2005/slidecraft";
 var esc4 = (s2) => s2.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 async function buildSite(outDir = "site") {
   const out = resolve18(outDir);
-  mkdirSync21(out, { recursive: true });
+  mkdirSync22(out, { recursive: true });
   const storylines = loadStorylines();
   const themes = loadThemes();
   const g = await buildGallery({
-    out: join24(out, "gallery"),
+    out: join25(out, "gallery"),
     storylines,
     themes: themes.map((t) => t.id),
     width: 1200
   });
-  const hero = await buildHero(join24(out, "gallery", "hero.png"));
+  const hero = await buildHero(join25(out, "gallery", "hero.png"));
   const examples = [];
-  const dirs = readdirSync7(join24(ROOT, "examples")).sort(
+  const dirs = readdirSync8(join25(ROOT, "examples")).sort(
     (a, b) => a === "slidecraft-overview" ? -1 : b === "slidecraft-overview" ? 1 : a.localeCompare(b)
   );
   for (const dir of dirs) {
-    const deck = join24(ROOT, "examples", dir, "deck.yaml");
+    const deck = join25(ROOT, "examples", dir, "deck.yaml");
     const r = await buildDeck(deck, {
-      outDir: join24(out, "examples", dir),
+      outDir: join25(out, "examples", dir),
       formats: ["pptx", "pdf", "html", "onepager", "docx", "png"]
     });
     const cover = r.files.find((f) => f.kind === "png");
-    if (cover) copyFileSync5(cover.path, join24(out, "examples", dir, "cover.png"));
-    rmSync7(join24(out, "examples", dir, "previews"), { recursive: true, force: true });
+    if (cover) copyFileSync6(cover.path, join25(out, "examples", dir, "cover.png"));
+    rmSync8(join25(out, "examples", dir, "previews"), { recursive: true, force: true });
     examples.push({
       id: dir,
       title: r.scene?.title ?? dir,
@@ -213778,10 +214660,10 @@ async function buildSite(outDir = "site") {
     });
   }
   writeFileSync20(
-    join24(out, "index.html"),
+    join25(out, "index.html"),
     page({ storylines, themes, examples, hero: relative8(out, hero) })
   );
-  writeFileSync20(join24(out, ".nojekyll"), "");
+  writeFileSync20(join25(out, ".nojekyll"), "");
   return { out, pages: 1, images: g.files.length + 1, examples: examples.length };
 }
 var KIND_LABEL = {
@@ -213955,7 +214837,7 @@ ${bold("Outputs")}: ${output2.formats.join(", ")}  (pptx \u2190 ${output2.engine
   program3.command("pick").description("Render options A/B/C as contact sheets and open the picker page").requiredOption("-b, --brief <path>", "brief.yaml").option("--no-open", "do not open the page").option("--json", "machine-readable output").action(async (o) => {
     const brief = requireBrief(o.brief);
     const options = templateOptions(brief);
-    const out = join25(dirname10(resolve19(o.brief)), ".slidecraft", "picker.html");
+    const out = join26(dirname10(resolve19(o.brief)), ".slidecraft", "picker.html");
     await writePicker(options, out, brief.goal);
     if (o.open && process.stdout.isTTY) openFile(out);
     if (wantsJson(o.json)) printJson({ picker: out, options });
@@ -213993,7 +214875,7 @@ ${bold("Outputs")}: ${output2.formats.join(", ")}  (pptx \u2190 ${output2.engine
   program3.command("scaffold").description("Create a ghost deck.yaml from the chosen storyline (one slide per slot)").requiredOption("-b, --brief <path>", "brief.yaml").option("-o, --out <path>", "deck.yaml path (default: next to the brief)").option("--force", "overwrite an existing deck.yaml").action(async (o) => {
     const brief = requireBrief(o.brief);
     if (!brief.choice) throw new Error("brief has no choice yet \u2014 run `slidecraft choose` first");
-    const out = resolve19(o.out ?? join25(dirname10(resolve19(o.brief)), "deck.yaml"));
+    const out = resolve19(o.out ?? join26(dirname10(resolve19(o.brief)), "deck.yaml"));
     if (existsSync20(out) && !o.force)
       throw new Error(`${relative9(process.cwd(), out)} exists (use --force)`);
     const deck = scaffoldDeck(brief, brief.choice.storyline, brief.choice.theme);
@@ -214001,7 +214883,7 @@ ${bold("Outputs")}: ${output2.formats.join(", ")}  (pptx \u2190 ${output2.engine
       const plan = await recommendOutput(brief.usage, getTheme(brief.choice.theme));
       deck.output = { formats: plan.formats, engines: plan.engines };
     }
-    mkdirSync22(dirname10(out), { recursive: true });
+    mkdirSync23(dirname10(out), { recursive: true });
     writeFileSync21(
       out,
       `${SCHEMA_LINE("deck")}# Ghost deck: write the action titles first, review the title chain, then fill content.
@@ -214097,7 +214979,7 @@ Use it: theme: ${relative9(process.cwd(), r.themePath)}   (path relative to deck
         theme: o.theme
       });
       if (o.render) {
-        const pdf = join25(dirname10(r.deckPath), "original.pdf");
+        const pdf = join26(dirname10(r.deckPath), "original.pdf");
         convertToPdf(file2, pdf);
         r.original = pdf;
       }
@@ -214134,7 +215016,7 @@ Use it: theme: ${relative9(process.cwd(), r.themePath)}   (path relative to deck
       );
   });
   program3.command("find").description("Find a phrase in ingested material; each hit comes with the citation to use").argument("<query>", "words to look for").option("--deck <deck>", "deck.yaml whose materials/ to search", "deck.yaml").option("--dir <dir>", "materials directory (overrides --deck)").option("--json", "machine-readable output").action((query, o) => {
-    const dir = resolve19(o.dir ?? join25(dirname10(resolve19(o.deck)), "materials"));
+    const dir = resolve19(o.dir ?? join26(dirname10(resolve19(o.deck)), "materials"));
     const hits = findInMaterials(query, dir);
     if (wantsJson(o.json)) printJson({ hits });
     else if (!hits.length) console.log("No matches.");

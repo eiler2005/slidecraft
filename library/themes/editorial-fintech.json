@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "id": "editorial-fintech",
+  "name": "Editorial Fintech",
+  "description": "Quiet analytical pages with ink panels, crisp blue rails, numbered section headers and an independent source and conclusion layer.",
+  "bestFor": ["research-readout", "strategy-recommendation", "executive-update"],
+  "mood": ["editorial", "precise", "contemporary"],
+  "dark": false,
+  "prefers": "pptx",
+  "colors": {
+    "background": "#F5F7FA",
+    "surface": "#FFFFFF",
+    "ink": "#0A2033",
+    "muted": "#596E7C",
+    "accent": "#0960D5",
+    "accentText": "#FFFFFF",
+    "accentSoft": "#DFEAFC",
+    "rule": "#DCE3EB",
+    "positive": "#00978D",
+    "negative": "#C94A53",
+    "titleInk": "#0A2033"
+  },
+  "chart": ["#0960D5", "#7055AD", "#00978D", "#DB880F", "#0A2033", "#92A5B5"],
+  "fonts": {
+    "heading": { "family": "Arial", "measure": "liberation-sans" },
+    "body": { "family": "Arial", "measure": "liberation-sans" }
+  },
+  "type": {
+    "cover": 42,
+    "title": 24,
+    "subtitle": 16,
+    "heading": 16,
+    "body": 14,
+    "minBody": 11,
+    "small": 10,
+    "source": 8,
+    "lineHeight": 1.2,
+    "titleWeight": "bold"
+  },
+  "decor": { "kind": "none", "colors": [], "intensity": 0, "onContent": false },
+  "chrome": {
+    "titleRule": true,
+    "accentBar": true,
+    "pageNumbers": true,
+    "tracker": true,
+    "markerWithTracker": true,
+    "canvasFrame": "standard",
+    "sideRail": { "width": 0.12, "radius": 0.06 },
+    "pageBadge": { "minDigits": 2 },
+    "sources": { "visible": true, "prefix": "Source:", "size": 8 },
+    "takeaway": { "height": 0.65, "radius": 0.06 }
+  }
+}

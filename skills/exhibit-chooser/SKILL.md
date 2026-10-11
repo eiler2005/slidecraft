@@ -5,6 +5,10 @@ description: Choose the right exhibit (SlideCraft layout and variant) for a slid
 
 # Exhibit chooser
 
+Storyline chooses the deck's argument; theme chooses its look. They are independent: a storyline's recommended themes are not an allowlist. For a preserved client deck, keep its approved argument and wording.
+
+Start with `sc exhibits --json`: semantic relationships route to the existing library. Use `sc components --json` for composable native body exhibits and their real schemas. Prefer a single complete layout; when one message needs several complementary exhibits, use `layout: composition` and `components: [{id, layout, variant, box: {x, y, w, h}, content}]`. Boxes are fractions of the available body. The shared frame owns title, sources, page number and `bottomLine`; components must not duplicate them. Extend the existing library with native primitives and tests when no contract fits.
+
 Pick the exhibit from the **relationship** the title claims, not from the data you happen to have. Full guide with mistakes to avoid: `${CLAUDE_PLUGIN_ROOT}/library/references/exhibit-selection.md`. Contracts: `sc layouts --json` (`sc` = `node "${CLAUDE_PLUGIN_ROOT}/dist/slidecraft.mjs"`).
 
 | The title claims… | Layout · variant |
@@ -51,7 +55,9 @@ Pick the exhibit from the **relationship** the title claims, not from the data y
 | Industry attractiveness | `five-forces` |
 | Macro trends with their impact | `pestel` |
 | The business model on one page | `business-model-canvas` |
-| A bespoke visual no layout covers (story decks; a picture in PPTX) | `freeform` |
+| One metric motivating four parallel explanations | `evidence-panorama` |
+| Complementary existing exhibits supporting one message | `composition` |
+| A bespoke visual no layout covers, with a native PPT equivalent | `freeform` (editable bridge required for unsupported CSS) |
 | Text that is genuinely text (definitions, scope in/out) | `text` · bullets / paragraphs / two-column |
 
 Rules: one message per slide; highlight only the insight (`highlight`); every number sourced; if the data cannot prove the title, change the title or flag the gap — never stretch the chart.

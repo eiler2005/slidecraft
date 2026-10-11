@@ -1,5 +1,5 @@
 {
-  "version": "0.5.1",
+  "version": "0.5.3",
   "layouts": [
     {
       "id": "title",
@@ -44,6 +44,16 @@
         "list"
       ],
       "purpose": "Use for two to four parallel points that together prove the title, each with a short heading, support and an optional proof number.",
+      "frame": "standard"
+    },
+    {
+      "id": "composition",
+      "name": "Component composition",
+      "group": "message",
+      "variants": [
+        "regions"
+      ],
+      "purpose": "Assemble several existing native exhibits in explicit body regions, keeping one shared frame and theme.",
       "frame": "standard"
     },
     {
@@ -130,6 +140,16 @@
         "strip"
       ],
       "purpose": "Use for 2–4 headline numbers that prove the title at a glance, each with its label, change and context.",
+      "frame": "standard"
+    },
+    {
+      "id": "evidence-panorama",
+      "name": "Evidence panorama",
+      "group": "numbers",
+      "variants": [
+        "metric-and-cards"
+      ],
+      "purpose": "Connect one sourced headline metric to four parallel models, implications or use cases; equal cards express categories, not relative magnitude.",
       "frame": "standard"
     },
     {
@@ -472,6 +492,17 @@
         "product-overview",
         "research-readout",
         "client-proposal"
+      ],
+      "dark": false,
+      "prefers": "pptx"
+    },
+    {
+      "id": "editorial-fintech",
+      "name": "Editorial Fintech",
+      "bestFor": [
+        "research-readout",
+        "strategy-recommendation",
+        "executive-update"
       ],
       "dark": false,
       "prefers": "pptx"
@@ -1111,6 +1142,20 @@
         "speakerNotes": false,
         "fidelity": "identical",
         "install": "Microsoft PowerPoint (macOS) or LibreOffice",
+        "ci": false
+      }
+    },
+    {
+      "kind": "png",
+      "id": "pptx-convert",
+      "license": "uses your installed office suite and Poppler",
+      "proprietary": false,
+      "capabilities": {
+        "editable": false,
+        "nativeCharts": true,
+        "speakerNotes": false,
+        "fidelity": "identical",
+        "install": "PowerPoint or LibreOffice, plus Poppler (pdftoppm)",
         "ci": false
       }
     },

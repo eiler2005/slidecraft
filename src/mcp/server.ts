@@ -77,6 +77,21 @@ const obj = (properties: Json, required: string[] = []) => ({
 
 export const TOOLS: Tool[] = [
   {
+    name: 'list_exhibits',
+    description:
+      'Route the intended relationship (comparison, process, architecture, bridge) to existing layout contracts. Storyline and theme are independent choices.',
+    inputSchema: obj({ relationship: s('Optional semantic relationship id') }),
+    run: (a) =>
+      text(cli(['exhibits', ...(a.relationship ? [String(a.relationship)] : []), '--json']).out),
+  },
+  {
+    name: 'list_components',
+    description:
+      'Existing native body exhibits with schemas and examples. Assemble complementary exhibits using layout: composition; keep title, sources and page numbering in the shared frame.',
+    inputSchema: obj({ layout: s('Optional component/layout id') }),
+    run: (a) => text(cli(['components', ...(a.layout ? [String(a.layout)] : []), '--json']).out),
+  },
+  {
     name: 'guide',
     description:
       'How to make a deck with SlideCraft: the steps, the four checkpoints and the rules. Call this first.',
@@ -222,28 +237,39 @@ export const TOOLS: Tool[] = [
   },
   {
     name: 'preview_slide',
-    description: 'Render one slide as an image to look at it (slide id or 1-based number)',
-    inputSchema: obj({ deck: s('Deck folder name or path'), slide: s('slide id or number') }, [
-      'deck',
-      'slide',
-    ]),
+    description:
+      'Inspect a slide: resvg previews the Scene; pptx-convert renders the actual PPTX through installed Office. Scene previews do not certify PowerPoint fidelity.',
+    inputSchema: obj(
+      {
+        deck: s('Deck folder name or path'),
+        slide: s('slide id or number'),
+        renderer: {
+          type: 'string',
+          enum: ['resvg', 'pptx-convert'],
+          description: 'Default resvg; pptx-convert requires Office and Poppler',
+        },
+      },
+      ['deck', 'slide'],
+    ),
     run: (a) => {
       const dir = mkdtempSync(join(tmpdir(), 'sc-mcp-preview-'));
+      const renderer = a.renderer === 'pptx-convert' ? 'pptx-convert' : 'resvg';
+      const previewDir = join(dir, renderer === 'pptx-convert' ? 'previews-office' : 'previews');
       try {
         const r = cli([
           'build',
           deckPath(String(a.deck)),
           '-f',
-          'png',
+          renderer === 'pptx-convert' ? 'pptx,png' : 'png',
           '-o',
           dir,
           '--preview-width',
           '1280',
+          '--png-engine',
+          renderer,
           '--json',
         ]);
-        const files = existsSync(join(dir, 'previews'))
-          ? readdirSync(join(dir, 'previews')).sort()
-          : [];
+        const files = existsSync(previewDir) ? readdirSync(previewDir).sort() : [];
         const want = String(a.slide);
         const file = /^\d+$/.test(want)
           ? files[Number(want) - 1]
@@ -253,10 +279,13 @@ export const TOOLS: Tool[] = [
         return [
           {
             type: 'image',
-            data: readFileSync(join(dir, 'previews', file)).toString('base64'),
+            data: readFileSync(join(previewDir, file)).toString('base64'),
             mimeType: 'image/png',
           },
-          { type: 'text', text: file },
+          {
+            type: 'text',
+            text: `${file} · renderer: ${renderer}${renderer === 'resvg' ? ' (Scene preview, not PowerPoint)' : ' (actual exported PPTX)'}`,
+          },
         ];
       } finally {
         rmSync(dir, { recursive: true, force: true });

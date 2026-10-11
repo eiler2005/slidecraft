@@ -454,6 +454,140 @@
           "description": "Small section label top-left",
           "type": "boolean"
         },
+        "canvasFrame": {
+          "description": "Opt canvas layouts into the shared theme frame; standard preserves title, sources and numbering",
+          "type": "string",
+          "enum": [
+            "none",
+            "standard"
+          ]
+        },
+        "sideRail": {
+          "description": "Editable full-height accent rail, inches",
+          "type": "object",
+          "properties": {
+            "width": {
+              "default": 0.12,
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 0.5
+            },
+            "radius": {
+              "default": 0.06,
+              "type": "number",
+              "minimum": 0,
+              "maximum": 0.25
+            },
+            "color": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Hex color, #RRGGBB"
+            }
+          },
+          "required": [
+            "width",
+            "radius"
+          ],
+          "additionalProperties": false
+        },
+        "markerWithTracker": {
+          "description": "Keep the accent marker beside the section label",
+          "type": "boolean"
+        },
+        "pageBadge": {
+          "description": "Header page number in an editable rounded badge instead of the footer field",
+          "type": "object",
+          "properties": {
+            "fill": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Hex color, #RRGGBB"
+            },
+            "color": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Hex color, #RRGGBB"
+            },
+            "minDigits": {
+              "default": 2,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 4
+            }
+          },
+          "required": [
+            "minDigits"
+          ],
+          "additionalProperties": false
+        },
+        "sources": {
+          "description": "Shared source-line styling; citation text and links remain slide data",
+          "type": "object",
+          "properties": {
+            "visible": {
+              "default": true,
+              "type": "boolean"
+            },
+            "prefix": {
+              "default": "Source:",
+              "type": "string",
+              "maxLength": 32
+            },
+            "color": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Hex color, #RRGGBB"
+            },
+            "size": {
+              "type": "number",
+              "minimum": 7,
+              "maximum": 14
+            }
+          },
+          "required": [
+            "visible",
+            "prefix"
+          ],
+          "additionalProperties": false
+        },
+        "takeaway": {
+          "description": "Shared editable takeaway band; its text is the slide bottomLine field",
+          "type": "object",
+          "properties": {
+            "fill": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Hex color, #RRGGBB"
+            },
+            "color": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Hex color, #RRGGBB"
+            },
+            "accent": {
+              "type": "string",
+              "pattern": "^#[0-9A-Fa-f]{6}$",
+              "description": "Hex color, #RRGGBB"
+            },
+            "height": {
+              "default": 0.65,
+              "type": "number",
+              "minimum": 0.35,
+              "maximum": 1.5
+            },
+            "radius": {
+              "default": 0.06,
+              "type": "number",
+              "minimum": 0,
+              "maximum": 0.3
+            }
+          },
+          "required": [
+            "height",
+            "radius"
+          ],
+          "additionalProperties": false
+        },
         "logo": {
           "description": "PNG/JPEG logo, relative to the theme file; top-right on content slides, bottom-right on covers",
           "type": "string"

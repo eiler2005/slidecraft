@@ -132,7 +132,7 @@ export const resvgEngine: Engine = {
       files,
       diagnostics: [],
       limitations: [
-        'Previews use bundled metric-compatible fonts; PowerPoint renders with Arial/Georgia.',
+        'Scene previews rendered by resvg, not by PowerPoint. Font support and text rendering may differ; use --png-engine pptx-convert for actual Office previews.',
       ],
     };
   },

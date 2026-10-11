@@ -104,7 +104,9 @@ A template is **a storyline (the shape of the argument for a task) × a theme (t
   </tr>
 </table>
 
-<p align="center"><a href="docs/reference/storylines.gen.md">All 14 storylines →</a> · <a href="docs/reference/themes.gen.md">All 6 themes →</a> · <a href="docs/reference/layouts.gen.md">All 40 layouts →</a></p>
+<p align="center"><a href="docs/reference/storylines.gen.md">All storylines →</a> · <a href="docs/reference/themes.gen.md">All themes →</a> · <a href="docs/reference/layouts.gen.md">All layouts →</a></p>
+
+Storyline is the task, theme is the look: **14 storylines × 7 themes**, independently selectable. Within each slide, route the message through `slidecraft exhibits`, reuse native library components with `slidecraft components`, and combine them using `layout: composition`. Shared design elements and content feed HTML and editable PowerPoint engines through one Scene IR. [Constructor guide](docs/how-to/compose-components.md) · [Architecture diagrams and verification limits](docs/explanation/architecture.md).
 
 Also included: **business case**, **product overview**, **case study**, **project kickoff**, **post-mortem**, **training / workshop**, **sales / customer QBR**, **investment memo**. Bring your own outline and SlideCraft maps it onto layouts.
 
@@ -124,11 +126,11 @@ One spec, several engines — you choose, SlideCraft recommends based on what yo
 | `native` *(default)* | PDF | — | Vector PDF with selectable text; CI and automation | bundled | MIT |
 | `pptx-convert` | PDF | — | PDF goes to readers — rendered by PowerPoint/LibreOffice itself, pixel-identical | your office suite | — |
 | `html` | HTML + PDF | in browser | Present from a browser, share a link, storytelling with rich decor | Chrome for PDF | MIT |
-| `artifact-tool` | PPTX | ✅ | You work inside Codex and want its runtime | Codex runtime | proprietary, internal use only — never bundled |
+| `artifact-tool` | PPTX | ✅ | Explicit local evaluation of the OpenAI adapter | Codex runtime | proprietary, evaluation/testing only — never bundled |
 | `onepager` | PDF (A4) | — | The argument on one page: every slide as a thumbnail with its action title | bundled | MIT |
 | `docx` | DOCX | ✅ | Pre-reads and memos: titles as headings, editable text and tables, exhibits as images | bundled | MIT |
 
-**Recommended:** `pptxgenjs` for anything that leaves your team; `artifact-tool` for internal drafts when you live in Codex (`export SLIDECRAFT_PPTX_ENGINE=artifact-tool` — falls back automatically); always a PDF — `native` for speed, `pptx-convert` when the PDF is the deliverable; HTML when you present from a browser.
+**Recommended:** `pptxgenjs` for anything that leaves your team; `artifact-tool` only for explicit internal evaluation/testing in Codex (not production, commercial use or benchmarking); always a PDF — `native` for speed, `pptx-convert` when the PDF is the deliverable; HTML when you present from a browser.
 
 `slidecraft doctor` shows what is available on your machine. Pros and cons of every engine: [engines compared](docs/explanation/engines-compared.md) · [choose an output engine](docs/how-to/choose-output-engine.md) · [engine reference](docs/reference/engines.gen.md).
 

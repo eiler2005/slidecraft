@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
-export const HexColor = z
-  .string()
-  .regex(/^#[0-9A-Fa-f]{6}$/, 'Use a #RRGGBB hex color')
-  .describe('Hex color, #RRGGBB');
+import { ThemeChrome } from './chrome.ts';
+import { HexColor } from './color.ts';
+
+export { HexColor } from './color.ts';
 
 /** Fonts we can measure exactly. Each stands in for a system font written into PPTX. */
 /**
@@ -35,32 +35,6 @@ export const FontSpec = z
 export type FontSpec = z.infer<typeof FontSpec>;
 
 export const DecorKind = z.enum(['none', 'rule', 'wave', 'glow', 'geo', 'gradient', 'paper']);
-
-const ArtItem = z
-  .object({
-    image: z.string().describe('PNG/JPEG relative to the theme file'),
-    x: z.number(),
-    y: z.number(),
-    w: z.number().positive(),
-    h: z.number().positive(),
-  })
-  .strict();
-
-const ArtShape = z
-  .object({
-    kind: z.enum(['rect', 'ellipse', 'line']),
-    x: z.number(),
-    y: z.number(),
-    w: z.number().min(0),
-    h: z.number().min(0),
-    fill: HexColor.optional(),
-    stroke: z
-      .object({ color: HexColor, width: z.number().min(0) })
-      .strict()
-      .optional(),
-    radius: z.number().min(0).optional(),
-  })
-  .strict();
 
 export const Theme = z
   .object({
@@ -125,43 +99,7 @@ export const Theme = z
         onContent: z.boolean().default(false).describe('Also draw decor on content slides'),
       })
       .strict(),
-    chrome: z
-      .object({
-        titleRule: z.boolean().default(false).describe('Hairline under action titles'),
-        accentBar: z.boolean().default(false).describe('Short accent bar above titles'),
-        pageNumbers: z.boolean().default(true),
-        footer: z.string().optional().describe('Default footer text; decks can override'),
-        tracker: z.boolean().default(true).describe('Small section label top-left'),
-        logo: z
-          .string()
-          .optional()
-          .describe(
-            'PNG/JPEG logo, relative to the theme file; top-right on content slides, bottom-right on covers',
-          ),
-        art: z
-          .object({
-            size: z
-              .object({ w: z.number().positive(), h: z.number().positive() })
-              .strict()
-              .describe('Slide size the positions refer to (inches); scaled to the deck format'),
-            cover: z.array(ArtItem).default([]),
-            content: z.array(ArtItem).default([]),
-            shapes: z
-              .object({
-                cover: z.array(ArtShape).default([]),
-                content: z.array(ArtShape).default([]),
-              })
-              .strict()
-              .optional()
-              .describe('Vector decoration from the template masters, drawn under the pictures'),
-          })
-          .strict()
-          .optional()
-          .describe(
-            'Background art from a brand template, drawn under everything on SlideCraft masters',
-          ),
-      })
-      .strict(),
+    chrome: ThemeChrome,
     source: z
       .string()
       .optional()

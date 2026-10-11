@@ -2,6 +2,24 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.5.3] — 2026-10-11
+
+### Added
+- **Component constructor:** `composition` reuses existing native layout contracts inside bounded body regions; nested text pointers support diagnostics and sync. `components` / `exhibits` CLI commands and `list_components` / `list_exhibits` MCP tools expose contracts and semantic routing to any model.
+- **Independent design layer:** shared chrome schema/composer for side rails, section markers, page badges, styled citations and a `bottomLine` band; `editorial-fintech` theme and native `evidence-panorama` exhibit.
+- **Actual Office PNG previews:** `--png-engine pptx-convert` and MCP `preview_slide(renderer: "pptx-convert")`, distinct from Scene/resvg thumbnails.
+- **No-loss checks:** named native/chrome elements, inherited master text and speaker notes checked after PPTX export. Architecture diagrams, constructor guide, and coverage for all 14 storyline × 7 theme pairs.
+- **Authored HTML bridge:** named editable text/rect/ellipse/line alternatives and sync by stable object ID.
+
+### Fixed
+- Native rounded-rectangle radius units, CSS circle geometry, positioned pseudo-elements and border triangles; wait for browser fonts and avoid applying alignment/translation twice.
+- Brand templates without a footer placeholder retain the generated editable footer instead of losing it.
+- Default PPTX engine stays portable inside Codex. OpenAI's proprietary adapter is explicitly selected and limited by its local internal-evaluation licence; it is never bundled.
+- Package lock version is synchronized with the package version.
+
+### Verification limits
+- Structural tests and actual Office previews do **not** certify 95% visual fidelity for arbitrary HTML or the complete private Digital Ruble corpus. That remains a measured acceptance target, not a release guarantee.
+
 ## [0.5.2] — 2026-10-11
 
 ### Added

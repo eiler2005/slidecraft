@@ -20,7 +20,7 @@ SlideCraft turns a goal into a consulting-grade deck: brief → template → sto
 
 ## Engines
 
-`auto` picks `pptxgenjs` for PPTX and the native vector PDF. Inside Codex, `auto` uses the local `@oai/artifact-tool` runtime for PPTX when present (proprietary, internal-evaluation license — tell the user). For a PowerPoint-identical PDF use `--pdf-engine pptx-convert`; for browser decks `-f html`. `sc doctor` lists availability. Guide: `docs/how-to/choose-output-engine.md`.
+`auto` picks `pptxgenjs` for PPTX and the native vector PDF, including inside Codex. All agents use the same themes, components and Scene IR. Codex may additionally use an available OpenAI presentation skill; the local `@oai/artifact-tool` adapter is an explicit option (`--pptx-engine artifact-tool`) for internal evaluation/testing only, never production, commercial use or benchmarking. Do not bundle OpenAI skills or runtime. For an Office-rendered PDF use `--pdf-engine pptx-convert`; for browser decks `-f html`. `resvg` previews are not proof of PowerPoint fidelity. `sc doctor` lists availability. Guide: `docs/how-to/choose-output-engine.md`.
 
 ## Hard rules
 

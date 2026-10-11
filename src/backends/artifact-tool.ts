@@ -144,6 +144,7 @@ function pathShape(
   close: boolean,
   fill: string | undefined,
   stroke?: Stroke,
+  name?: string,
 ) {
   const xs = pts.map((p) => p[0]);
   const ys = pts.map((p) => p[1]);
@@ -159,6 +160,7 @@ function pathShape(
   if (close) commands.push({ close: {} });
   slide.shapes.add({
     geometry: 'custom',
+    ...(name ? { name } : {}),
     position: { left: px(x), top: px(y), width: px(w), height: px(h) },
     fill: fill ?? 'none',
     line: line(stroke),
@@ -167,12 +169,14 @@ function pathShape(
 }
 
 async function addNode(slide: Any, n: SceneNode, slideId?: string): Promise<void> {
+  const name = shapeName(n, slideId);
   switch (n.kind) {
     case 'text':
       return addText(slide, n, slideId);
     case 'rect': {
       const cfg: Any = {
         geometry: n.radius ? 'roundRect' : 'rect',
+        ...(name ? { name } : {}),
         position: { left: px(n.box.x), top: px(n.box.y), width: px(n.box.w), height: px(n.box.h) },
         fill: n.fill ?? 'none',
         line: line(n.stroke),
@@ -184,13 +188,14 @@ async function addNode(slide: Any, n: SceneNode, slideId?: string): Promise<void
     case 'ellipse':
       slide.shapes.add({
         geometry: 'ellipse',
+        ...(name ? { name } : {}),
         position: { left: px(n.box.x), top: px(n.box.y), width: px(n.box.w), height: px(n.box.h) },
         fill: n.fill ?? 'none',
         line: line(n.stroke),
       });
       return;
     case 'polygon':
-      return pathShape(slide, n.points, true, n.fill, n.stroke);
+      return pathShape(slide, n.points, true, n.fill, n.stroke, name);
     case 'line': {
       pathShape(
         slide,
@@ -201,6 +206,7 @@ async function addNode(slide: Any, n: SceneNode, slideId?: string): Promise<void
         false,
         undefined,
         n.stroke,
+        name,
       );
       if (n.arrowEnd) {
         const ang = Math.atan2(n.y2 - n.y1, n.x2 - n.x1);

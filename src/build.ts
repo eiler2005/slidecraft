@@ -18,6 +18,7 @@ export interface BuildOptions {
   formats?: OutputKind[];
   pptxEngine?: string;
   pdfEngine?: string;
+  pngEngine?: string;
   outDir?: string;
   previewWidth?: number;
 }
@@ -77,7 +78,7 @@ export async function buildDeck(path: string, opts: BuildOptions = {}): Promise<
   const hasFreeform = scene.slides.some((s) => s.nodes.some((n) => n.kind === 'html'));
   const order: OutputKind[] = ['pptx', 'png', 'html', 'pdf', 'onepager', 'docx'];
   let pptxPath: string | undefined;
-  // Freeform HTML: browsers draw it live; every other engine gets a Chrome-rendered picture
+  // HTML stays live; editable PPTX uses native primitives, raster export is explicit.
   let flat = scene;
   if (hasFreeform && formats.includes('pptx') && deck.output?.editablePptx !== false) {
     const f = await nativeFreeform(scene);
@@ -98,7 +99,9 @@ export async function buildDeck(path: string, opts: BuildOptions = {}): Promise<
         ? (opts.pptxEngine ?? deck.output?.engines.pptx)
         : kind === 'pdf'
           ? (opts.pdfEngine ?? deck.output?.engines.pdf)
-          : undefined;
+          : kind === 'png'
+            ? (opts.pngEngine ?? deck.output?.engines.png)
+            : undefined;
     const { engine, reason } = await resolveEngine(kind, requested, theme);
     if (!engine) {
       diagnostics.push(diag('SC-ENGINE-001', `${kind}: ${reason}`));

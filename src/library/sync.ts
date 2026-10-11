@@ -266,6 +266,20 @@ export function syncPptx(
           );
         continue;
       }
+      const alternative = /^\/ppt\/([a-z][a-z0-9-]*)$/.exec(m[2] ?? '');
+      if (alternative) {
+        const html = ref.nodes.find((n) => n.kind === 'html' && n.ppt?.length);
+        const items = html?.kind === 'html' ? html.ppt : undefined;
+        const at = items?.findIndex((item) => item.id === alternative[1]) ?? -1;
+        const item = items?.[at];
+        if (item?.kind === 'text' && !same([item.text], sh.paragraphs)) {
+          write(es.id, `/slides/${i}/ppt/${at}/text`, item.text, sh.paragraphs);
+          report.notes.push(
+            `Slide "${es.id}": PPT alternative text changed; review its HTML reference separately.`,
+          );
+        }
+        continue;
+      }
       const pointer = `/slides/${i}${m[2]}`;
       named.add(pointer);
       const node = rendered(ref, pointer);

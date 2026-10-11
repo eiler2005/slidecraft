@@ -169,6 +169,12 @@ export const CODES = {
     why: 'A string from the scene was not found in the written presentation XML.',
     fix: 'This is an engine bug — report it with the deck that triggers it.',
   },
+  'SC-PPTX-002': {
+    severity: 'error',
+    title: 'Slide element missing after export',
+    why: 'A named chrome/bridge object, master text or speaker note did not survive the selected renderer.',
+    fix: 'Repair the engine mapping or provide an editable equivalent; do not remove the element from the reference to pass verification.',
+  },
   'SC-IMG-001': {
     severity: 'warning',
     title: 'Image resolution too low',

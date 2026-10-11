@@ -242,6 +242,14 @@
                 "html",
                 "pptx-convert"
               ]
+            },
+            "png": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "resvg",
+                "pptx-convert"
+              ]
             }
           },
           "required": [
@@ -293,6 +301,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -419,6 +440,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -550,6 +584,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -695,6 +742,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -825,6 +885,198 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
+                    "const": "composition"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "regions"
+                    ]
+                  },
+                  "components": {
+                    "minItems": 1,
+                    "maxItems": 12,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[a-z][a-z0-9-]*$"
+                        },
+                        "layout": {
+                          "type": "string"
+                        },
+                        "variant": {
+                          "type": "string"
+                        },
+                        "box": {
+                          "type": "object",
+                          "properties": {
+                            "x": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            },
+                            "y": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 1
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 1
+                            }
+                          },
+                          "required": [
+                            "x",
+                            "y",
+                            "w",
+                            "h"
+                          ],
+                          "additionalProperties": false,
+                          "description": "Fractions of the available body, not page coordinates"
+                        },
+                        "content": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string"
+                          },
+                          "additionalProperties": {}
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "layout",
+                        "box",
+                        "content"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "components"
+                ],
+                "additionalProperties": false,
+                "description": "Component composition — Assemble several existing native exhibits in explicit body regions, keeping one shared frame and theme."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -961,6 +1213,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -1096,6 +1361,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -1252,6 +1530,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -1437,6 +1728,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -1512,6 +1816,225 @@
                     "type": "string",
                     "maxLength": 6000
                   },
+                  "ppt": {
+                    "description": "Editable PowerPoint equivalent, with stable ids and coordinates in inches relative to the HTML canvas. This is used for PPTX while html remains the visual reference.",
+                    "minItems": 1,
+                    "maxItems": 250,
+                    "type": "array",
+                    "items": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "pattern": "^[a-z][a-z0-9-]*$"
+                            },
+                            "kind": {
+                              "type": "string",
+                              "const": "text"
+                            },
+                            "x": {
+                              "type": "number"
+                            },
+                            "y": {
+                              "type": "number"
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            },
+                            "text": {
+                              "type": "string"
+                            },
+                            "size": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            },
+                            "color": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-fA-F]{6}$"
+                            },
+                            "bold": {
+                              "type": "boolean"
+                            },
+                            "italic": {
+                              "type": "boolean"
+                            },
+                            "align": {
+                              "type": "string",
+                              "enum": [
+                                "left",
+                                "center",
+                                "right"
+                              ]
+                            },
+                            "lineHeight": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "kind",
+                            "x",
+                            "y",
+                            "w",
+                            "h",
+                            "text",
+                            "size"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "pattern": "^[a-z][a-z0-9-]*$"
+                            },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "rect",
+                                "ellipse"
+                              ]
+                            },
+                            "x": {
+                              "type": "number"
+                            },
+                            "y": {
+                              "type": "number"
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            },
+                            "fill": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-fA-F]{6}$"
+                            },
+                            "fillOpacity": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            },
+                            "stroke": {
+                              "type": "object",
+                              "properties": {
+                                "color": {
+                                  "type": "string",
+                                  "pattern": "^#[0-9a-fA-F]{6}$"
+                                },
+                                "width": {
+                                  "type": "number",
+                                  "exclusiveMinimum": 0
+                                },
+                                "dash": {
+                                  "type": "string",
+                                  "enum": [
+                                    "solid",
+                                    "dash",
+                                    "dot"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "color",
+                                "width"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "radius": {
+                              "type": "number",
+                              "minimum": 0
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "kind",
+                            "x",
+                            "y",
+                            "w",
+                            "h"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "pattern": "^[a-z][a-z0-9-]*$"
+                            },
+                            "kind": {
+                              "type": "string",
+                              "const": "line"
+                            },
+                            "x1": {
+                              "type": "number"
+                            },
+                            "y1": {
+                              "type": "number"
+                            },
+                            "x2": {
+                              "type": "number"
+                            },
+                            "y2": {
+                              "type": "number"
+                            },
+                            "stroke": {
+                              "type": "object",
+                              "properties": {
+                                "color": {
+                                  "type": "string",
+                                  "pattern": "^#[0-9a-fA-F]{6}$"
+                                },
+                                "width": {
+                                  "type": "number",
+                                  "exclusiveMinimum": 0
+                                },
+                                "dash": {
+                                  "type": "string",
+                                  "enum": [
+                                    "solid",
+                                    "dash",
+                                    "dot"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "color",
+                                "width"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "arrowEnd": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "kind",
+                            "x1",
+                            "y1",
+                            "x2",
+                            "y2",
+                            "stroke"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  },
                   "alt": {
                     "type": "string",
                     "minLength": 10,
@@ -1552,6 +2075,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -1628,6 +2164,225 @@
                     "type": "string",
                     "maxLength": 6000
                   },
+                  "ppt": {
+                    "description": "Editable PowerPoint equivalent, with stable ids and coordinates in inches relative to the HTML canvas. This is used for PPTX while html remains the visual reference.",
+                    "minItems": 1,
+                    "maxItems": 250,
+                    "type": "array",
+                    "items": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "pattern": "^[a-z][a-z0-9-]*$"
+                            },
+                            "kind": {
+                              "type": "string",
+                              "const": "text"
+                            },
+                            "x": {
+                              "type": "number"
+                            },
+                            "y": {
+                              "type": "number"
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            },
+                            "text": {
+                              "type": "string"
+                            },
+                            "size": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            },
+                            "color": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-fA-F]{6}$"
+                            },
+                            "bold": {
+                              "type": "boolean"
+                            },
+                            "italic": {
+                              "type": "boolean"
+                            },
+                            "align": {
+                              "type": "string",
+                              "enum": [
+                                "left",
+                                "center",
+                                "right"
+                              ]
+                            },
+                            "lineHeight": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "kind",
+                            "x",
+                            "y",
+                            "w",
+                            "h",
+                            "text",
+                            "size"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "pattern": "^[a-z][a-z0-9-]*$"
+                            },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "rect",
+                                "ellipse"
+                              ]
+                            },
+                            "x": {
+                              "type": "number"
+                            },
+                            "y": {
+                              "type": "number"
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            },
+                            "fill": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-fA-F]{6}$"
+                            },
+                            "fillOpacity": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            },
+                            "stroke": {
+                              "type": "object",
+                              "properties": {
+                                "color": {
+                                  "type": "string",
+                                  "pattern": "^#[0-9a-fA-F]{6}$"
+                                },
+                                "width": {
+                                  "type": "number",
+                                  "exclusiveMinimum": 0
+                                },
+                                "dash": {
+                                  "type": "string",
+                                  "enum": [
+                                    "solid",
+                                    "dash",
+                                    "dot"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "color",
+                                "width"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "radius": {
+                              "type": "number",
+                              "minimum": 0
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "kind",
+                            "x",
+                            "y",
+                            "w",
+                            "h"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "pattern": "^[a-z][a-z0-9-]*$"
+                            },
+                            "kind": {
+                              "type": "string",
+                              "const": "line"
+                            },
+                            "x1": {
+                              "type": "number"
+                            },
+                            "y1": {
+                              "type": "number"
+                            },
+                            "x2": {
+                              "type": "number"
+                            },
+                            "y2": {
+                              "type": "number"
+                            },
+                            "stroke": {
+                              "type": "object",
+                              "properties": {
+                                "color": {
+                                  "type": "string",
+                                  "pattern": "^#[0-9a-fA-F]{6}$"
+                                },
+                                "width": {
+                                  "type": "number",
+                                  "exclusiveMinimum": 0
+                                },
+                                "dash": {
+                                  "type": "string",
+                                  "enum": [
+                                    "solid",
+                                    "dash",
+                                    "dot"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "color",
+                                "width"
+                              ],
+                              "additionalProperties": false
+                            },
+                            "arrowEnd": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "kind",
+                            "x1",
+                            "y1",
+                            "x2",
+                            "y2",
+                            "stroke"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  },
                   "alt": {
                     "type": "string",
                     "minLength": 10,
@@ -1668,6 +2423,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -2040,6 +2808,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -2191,6 +2972,193 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
+                    "const": "evidence-panorama"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "metric-and-cards"
+                    ]
+                  },
+                  "metric": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 12
+                      },
+                      "label": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 70
+                      },
+                      "context": {
+                        "type": "string",
+                        "maxLength": 120
+                      },
+                      "implication": {
+                        "type": "string",
+                        "maxLength": 120
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "label",
+                      "context",
+                      "implication"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "cards": {
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "label": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 70
+                        },
+                        "title": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 90
+                        },
+                        "body": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 240
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "title",
+                        "body"
+                      ],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "metric",
+                  "cards"
+                ],
+                "additionalProperties": false,
+                "description": "Evidence panorama — Connect one sourced headline metric to four parallel models, implications or use cases; equal cards express categories, not relative magnitude."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -2394,6 +3362,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -2571,6 +3552,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -2796,6 +3790,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -2965,6 +3972,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -3133,6 +4153,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -3306,6 +4339,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -3451,6 +4497,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -3640,6 +4699,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -3819,6 +4891,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -4029,6 +5114,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -4186,6 +5284,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -4445,6 +5556,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -4594,6 +5718,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -4792,6 +5929,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -4980,6 +6130,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -5153,6 +6316,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -5328,6 +6504,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -5545,6 +6734,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -5718,6 +6920,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -5863,6 +7078,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -5996,6 +7224,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -6197,6 +7438,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -6360,6 +7614,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -6556,6 +7823,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -6732,6 +8012,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -6882,6 +8175,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -7016,6 +8322,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
@@ -7173,6 +8492,19 @@
                     "type": "string",
                     "maxLength": 40
                   },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
@@ -7315,6 +8647,19 @@
                     "description": "Section label shown above the title",
                     "type": "string",
                     "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
                   },
                   "sources": {
                     "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",

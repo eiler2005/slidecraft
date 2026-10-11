@@ -22,7 +22,7 @@ Grouped by what you are trying to get done. Each item says what it means for you
 
 | You want to | SlideCraft does | Ask for it |
 |---|---|---|
-| A professional look straight away | 6 themes, from the consulting classic to a dark keynote style | Pick at checkpoint 2 |
+| A professional look straight away | 7 independently selectable themes, including Editorial Fintech | Pick at checkpoint 2 |
 | Your company's look | Imports your PowerPoint template: colours, fonts, logo, background art and layouts. PowerPoint files are built inside your template | "Use our brand template" |
 | A deck people can still edit | Native PowerPoint text, tables and charts — no pictures of text | Built in |
 | Text that fits | Every line is measured as PowerPoint will show it; nothing overflows or shrinks into unreadable type | Built in |

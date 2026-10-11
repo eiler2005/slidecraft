@@ -17,7 +17,13 @@ Codex has no sub-agents here: run the stages yourself, in order, and **stop at e
 
 ## Engines in Codex
 
-Inside Codex prefer the local artifact-tool runtime for PPTX: prefix builds with `SLIDECRAFT_IN_CODEX=1` (falls back to the open `pptxgenjs` engine if the runtime is missing). Tell the user once: artifact-tool is proprietary, licensed for internal evaluation and testing only — for client deliverables rebuild with `--pptx-engine pptxgenjs`. PDF: `native`, or `--pdf-engine pptx-convert` when the PDF goes to readers. HTML with `-f html` for presenting; `-f onepager` and `-f docx` for pre-reads. For `text-image` slides with `imagePrompt` and no `image`, generate the picture with your image tool, save it to `assets/<slide-id>.png` next to the deck and set `image:`. To restyle an existing deck: `sc import <file.pptx> --render --json`, look at `original.pdf`, then redesign slide by slide. Details: `{{SLIDECRAFT_ROOT}}/docs/explanation/engines-compared.md`.
+Use the same SlideCraft themes, layout contracts, `deck.yaml` and Scene IR as other agents. `auto` selects the portable `pptxgenjs` engine even inside Codex. Do not fork the deck or introduce a Codex-only theme.
+
+When the session provides OpenAI's presentation skill, read it and its relevant references for template fidelity and visual review. Its availability is separate from the runtime's availability: do not invent a skill path or claim it ran when absent. Keep the user's reference and selected SlideCraft theme; do not replace them with a skill's default style. Never copy the proprietary skill or runtime into SlideCraft's package.
+
+For **internal evaluation/testing only**, `--pptx-engine artifact-tool` calls an already installed OpenAI runtime. Explain its proprietary licence first: no production, commercial use, benchmarking or redistribution. A missing explicitly selected engine is an error, not a silent switch. The portable export remains available with `--pptx-engine pptxgenjs`; do not use the evaluation engine for client deliverables.
+
+PDF: `native` for quick previews, `--pdf-engine pptx-convert` to inspect the actual Office rendering. HTML with `-f html` for presenting; `-f onepager` and `-f docx` for pre-reads. For `text-image` slides with `imagePrompt` and no `image`, generate the picture with your image tool, save it to `assets/<slide-id>.png` next to the deck and set `image:`. To restyle an existing deck: `sc import <file.pptx> --render --json`, look at `original.pdf`, then redesign slide by slide. Details: `{{SLIDECRAFT_ROOT}}/docs/explanation/engines-compared.md`.
 
 ## 1 · Brief ✅
 
@@ -37,13 +43,17 @@ Follow `slidecraft-storyline-architect`: write `storyline.md` (question, governi
 
 ## 5 · Build
 
-For each slide: `sc layouts <layout> --json` for the contract, write the content fields, keep id and title, remove `status: ghost` (or set the deck `status: draft`). Client numbers go in `facts:` (or `from: { file, sheet, range }` for charts and tables) and are written as `{{id}}` — never retyped. Rules: `slidecraft-deck-spec`. Then `sc validate <deck>` and `SLIDECRAFT_IN_CODEX=1 sc build <deck> --json`.
+Keep the layers separate: storyline → slide relationship → existing components → theme/chrome → Scene → engines. `sc exhibits --json` routes relationships to real layouts; `sc components --json` exposes composable contracts. Use `layout: composition` only when one message needs complementary exhibits; component boxes are body-relative fractions. Sources, page badges, footer and `bottomLine` belong to the common frame, not a pasted component. Extend the shared native library when a needed visual is missing. Any installed theme can pair with a storyline; recommendations do not restrict compatibility.
+
+For each slide: `sc layouts <layout> --json` for the contract, write the content fields, keep id and title, remove `status: ghost` (or set the deck `status: draft`). Client numbers go in `facts:` (or `from: { file, sheet, range }` for charts and tables) and are written as `{{id}}` — never retyped. Rules: `slidecraft-deck-spec`. Then `sc validate <deck>` and `sc build <deck> --json`.
 
 ## 6 · Review ✅
 
 `sc check <deck> --json`: `sc fix <deck> --json` lists too-long fields with a character budget; rewrite within it (keep numbers, never truncate), save `[{pointer, text}]` to fixes.json and run `sc fix <deck> --apply fixes.json` until nothing remains, fix titles, add real sources for `SC-SRC-*`, make `SC-CONSIST-001` metrics agree (one fact). Open every `dist/previews/*.png`. Apply `slidecraft-partner-review-checklist`; fix blockers and majors; rebuild. Present the verdict, the fixes and the files.
 
 ## 7 · Deliver
+
+`resvg` PNGs and native PDFs are Scene previews, not PowerPoint renders. For PPTX visual fidelity, render the built PPTX through Office (`--pdf-engine pptx-convert`), inspect every page, and compare it with the unchanged HTML/reference at matching dimensions. Report the renderer and any unverified limitations; XML editability tests alone do not establish visual similarity.
 
 Paths to PPTX / PDF / HTML / previews / `manifest.json`. `visual_review` stays false until the user has looked at every slide. Never send or publish anything.
 

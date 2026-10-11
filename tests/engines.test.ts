@@ -1,9 +1,9 @@
 import { existsSync, mkdtempSync, readFileSync, statSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import '../src/backends/extra.ts';
-import { detect, findEngine } from '../src/backends/registry.ts';
+import { detect, findEngine, resolveEngine } from '../src/backends/registry.ts';
 import { buildDeck } from '../src/build.ts';
 import { scaffoldDeck } from '../src/cli/workflow.ts';
 import { loadBrief } from '../src/library/load.ts';
@@ -58,14 +58,35 @@ describe('optional engines', async () => {
     const out = mkdtempSync(join(tmpdir(), 'sc-conv-'));
     const r = await buildDeck(FIXTURE, {
       outDir: out,
-      formats: ['pptx', 'pdf'],
+      formats: ['pptx', 'pdf', 'png'],
       pdfEngine: 'pptx-convert',
+      pngEngine: 'pptx-convert',
     });
     expect(existsSync(r.files.find((x) => x.kind === 'pdf')!.path)).toBe(true);
+    const images = r.files.filter((x) => x.kind === 'png');
+    expect(images).toHaveLength(r.scene!.slides.length);
+    expect(
+      images.every((x) => x.engine === 'pptx-convert' && x.path.includes('previews-office')),
+    ).toBe(true);
   });
 });
 
 describe('workflow helpers', () => {
+  afterEach(() => vi.unstubAllEnvs());
+
+  it('keeps automatic export portable in Codex and uses the same recommendation', async () => {
+    vi.stubEnv('SLIDECRAFT_IN_CODEX', '1');
+    vi.stubEnv('SLIDECRAFT_PPTX_ENGINE', 'auto');
+    expect((await resolveEngine('pptx', 'auto')).engine?.id).toBe('pptxgenjs');
+    expect((await recommendOutput(['codex'])).engines.pptx).toBe('pptxgenjs');
+  });
+
+  it('does not replace an explicitly requested unknown engine with another renderer', async () => {
+    vi.stubEnv('SLIDECRAFT_PPTX_ENGINE', 'pptxgenjs');
+    const result = await resolveEngine('pptx', 'missing-evaluation-engine');
+    expect(result.engine).toBeUndefined();
+    expect(result.reason).toContain('unknown');
+  });
   it('ranks the strategy storyline first for a strategy brief and offers three distinct options', () => {
     const { brief } = loadBrief(EXAMPLE_BRIEF);
     const opts = templateOptions(brief!);
@@ -104,11 +125,9 @@ describe('workflow helpers', () => {
   });
 
   it('honours SLIDECRAFT_PPTX_ENGINE for auto and falls back when unavailable', async () => {
-    const { resolveEngine } = await import('../src/backends/registry.ts');
-    process.env.SLIDECRAFT_PPTX_ENGINE = 'does-not-exist';
+    vi.stubEnv('SLIDECRAFT_PPTX_ENGINE', 'does-not-exist');
     expect((await resolveEngine('pptx', 'auto')).engine?.id).toBe('pptxgenjs');
-    process.env.SLIDECRAFT_PPTX_ENGINE = 'pptxgenjs';
+    vi.stubEnv('SLIDECRAFT_PPTX_ENGINE', 'pptxgenjs');
     expect((await resolveEngine('pptx', 'auto')).reason).toContain('SLIDECRAFT_PPTX_ENGINE');
-    delete process.env.SLIDECRAFT_PPTX_ENGINE;
   });
 });

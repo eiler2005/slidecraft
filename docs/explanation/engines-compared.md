@@ -21,13 +21,13 @@ Every engine draws the same Scene IR, so layout, line breaks and content are ide
 
 | Pros | Cons |
 |---|---|
-| Already on your machine if you use Codex; `auto` selects it inside Codex | **Proprietary (OpenAI): internal evaluation and testing only** — no distribution, no production or commercial use, license revocable. Check before using it for client work |
+| Optional installed OpenAI runtime; explicitly selected for evaluation | **Proprietary (OpenAI): internal evaluation and testing only** — no distribution, no production or commercial use, license revocable. Check before using it for client work |
 | Rich API with its own renderer (PNG, montage), table and chart facades; can import and edit existing PPTX — the most promising base for future "edit my deck" features | Not on npm: unavailable in CI, for collaborators without Codex, and on servers |
 | Good native output for text, shapes, tables and charts | The runtime ignores some settings (plot area, chart fonts, paragraph units); SlideCraft fixes them in the exported XML, so the adapter depends on that post-processing |
 | | Geometry is rounded to whole pixels; not byte-reproducible (the runtime writes random relationship ids) |
 | | API and behaviour can change with Codex updates (version ≥ 2.7.3 is checked) |
 
-**Bottom line.** Use `pptxgenjs` for anything that leaves your team. Use `artifact-tool` when you are working inside Codex on internal drafts and prefer its runtime — switching is one flag, the deck spec is the same.
+**Bottom line.** Use `pptxgenjs` for anything that leaves your team. Use `artifact-tool` only for internal evaluation/testing, not production, commercial work or benchmarking — switching is one flag, the deck spec is the same.
 
 ## PDF engines
 
@@ -69,7 +69,7 @@ Always on; used for review, contact sheets and the gallery. Bundled WebAssembly,
 
 | Profile | `output.formats` | Engines | How |
 |---|---|---|---|
-| **Consultant who also works in Codex** *(the author's setup)* | `pptx, pdf, png` (+ `html` when presenting) | PPTX: `artifact-tool` for internal drafts, `pptxgenjs` for client deliverables · PDF: `native`, `pptx-convert` for decks sent as PDF | `export SLIDECRAFT_PPTX_ENGINE=artifact-tool` in your shell profile (falls back to pptxgenjs when the runtime is missing); for client builds `--pptx-engine pptxgenjs --pdf-engine pptx-convert` |
+| **Consultant who also works in Codex** *(the author's setup)* | `pptx, pdf, png` (+ `html` when presenting) | PPTX: `pptxgenjs` by default, `artifact-tool` only for explicit internal evaluation · PDF: `native`, `pptx-convert` for decks sent as PDF | `--pptx-engine artifact-tool` for a local evaluation build; for client builds `--pptx-engine pptxgenjs --pdf-engine pptx-convert` |
 | Team editing together | `pptx, pdf, png` | `pptxgenjs` + `native` | defaults |
 | Board / client PDF | `pptx, pdf` | `pptxgenjs` + `pptx-convert` | `usage: [send-pdf]` in the brief |
 | Keynote or story talk | `html, pdf, pptx` | `html` PDF; PPTX as a backup | `usage: [present-live]`, theme `midnight` or `editorial` |
@@ -81,6 +81,6 @@ Always on; used for review, contact sheets and the gallery. Bundled WebAssembly,
 
 ```sh
 # ~/.zshrc
-export SLIDECRAFT_PPTX_ENGINE=artifact-tool   # use the Codex runtime when present
+export SLIDECRAFT_PPTX_ENGINE=pptxgenjs       # same portable default inside and outside Codex
 export SLIDECRAFT_PDF_ENGINE=native
 ```

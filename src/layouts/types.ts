@@ -86,6 +86,7 @@ export interface ComposeContext {
   /** Resolved fonts (Cyrillic override applied). */
   fonts: { heading: FontSpec; body: FontSpec };
   slideId: string;
+  slideIndex: number;
   variant: string;
   /** Common slide fields (title is the action title / cover title). */
   slide: { title: string; lead?: string };

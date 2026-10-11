@@ -5,7 +5,9 @@
  *  - accessibility: a title placeholder read first, alt text or a decorative mark on pictures and charts.
  */
 import { readFileSync } from 'node:fs';
+import { posix } from 'node:path';
 import JSZip from 'jszip';
+import { shapeName } from '../backends/pptx-a11y.ts';
 import type { Scene, SceneNode } from '../engine/scene.ts';
 import { type Diagnostic, diag } from './codes.ts';
 
@@ -51,6 +53,24 @@ export async function verifyPptx(
 ): Promise<{ diagnostics: Diagnostic[]; checked: number }> {
   const zip = await JSZip.loadAsync(readFileSync(path));
   const out: Diagnostic[] = [];
+  const xmlOf = async (part: string) => (await zip.file(part)?.async('string')) ?? '';
+  const linkedPart = async (part: string, type: string): Promise<string | undefined> => {
+    const rels = await xmlOf(
+      posix.join(posix.dirname(part), '_rels', `${posix.basename(part)}.rels`),
+    );
+    for (const relationship of rels.matchAll(/<Relationship\b[^>]*\/>/g)) {
+      const tag = relationship[0];
+      if (!new RegExp(`Type="[^"]*/${type}"`).test(tag)) continue;
+      const target = /Target="([^"]+)"/.exec(tag)?.[1];
+      if (target)
+        return target.startsWith('/')
+          ? target.slice(1)
+          : posix.normalize(posix.join(posix.dirname(part), target));
+    }
+    return undefined;
+  };
+  const visibleText = (xml: string) =>
+    norm([...xml.matchAll(/<a:t>([^<]*)<\/a:t>/g)].map((m) => m[1]).join(''));
   let checked = 0;
   for (const s of scene.slides) {
     const xml = await zip.file(`ppt/slides/slide${s.index + 1}.xml`)?.async('string');
@@ -59,6 +79,36 @@ export async function verifyPptx(
       continue;
     }
     const hay = norm([...xml.matchAll(/<a:t>([^<]*)<\/a:t>/g)].map((m) => m[1]).join(''));
+    const part = `ppt/slides/slide${s.index + 1}.xml`;
+    // Check engine-independent chrome and explicitly authored bridge objects by identity.
+    for (const node of s.nodes) {
+      if (!node.role?.startsWith('chrome-') && !node.role?.startsWith('ppt:')) continue;
+      const name = shapeName(node, s.id);
+      if (name && !xml.includes(`name="${name}"`))
+        out.push(diag('SC-PPTX-002', `Named editable element missing: ${name}`, { slide: s.id }));
+    }
+    const layoutPart = await linkedPart(part, 'slideLayout');
+    const masterPart = layoutPart ? await linkedPart(layoutPart, 'slideMaster') : undefined;
+    const inherited = `${layoutPart ? await xmlOf(layoutPart) : ''}${masterPart ? await xmlOf(masterPart) : ''}`;
+    const masterText: string[] = [];
+    const master = scene.masters[s.master];
+    master?.nodes.forEach((node) => texts(node, masterText));
+    for (const value of masterText)
+      if (norm(value) && !visibleText(xml + inherited).includes(norm(value)))
+        out.push(
+          diag('SC-PPTX-002', `Master text missing: ${value.slice(0, 60)}`, { slide: s.id }),
+        );
+    if (master?.slideNumber && !/type="slidenum"/.test(xml + inherited))
+      out.push(
+        diag('SC-PPTX-002', 'Page-number field missing from slide/layout/master', { slide: s.id }),
+      );
+    if (s.notes) {
+      const notesPart = await linkedPart(part, 'notesSlide');
+      if (!notesPart || !visibleText(await xmlOf(notesPart)).includes(norm(s.notes)))
+        out.push(
+          diag('SC-PPTX-002', 'Speaker notes missing or incomplete after export', { slide: s.id }),
+        );
+    }
     const want: string[] = [];
     s.nodes.forEach((n) => texts(n, want));
     for (const w of want) {

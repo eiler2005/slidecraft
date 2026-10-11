@@ -21,17 +21,14 @@ async function has(kind: OutputKind, id: string): Promise<boolean> {
 export async function recommendOutput(usage: Usage[], theme?: Theme): Promise<OutputPlan> {
   const u = new Set(usage.length ? usage : ['edit-together']);
   const formats = new Set<OutputKind>(['pptx', 'pdf', 'png']);
-  let pptx = 'pptxgenjs';
+  const pptx = 'pptxgenjs';
   let pdf = 'native';
   const why: string[] = [];
 
   if (u.has('codex') || inCodex()) {
-    if (await has('pptx', 'artifact-tool')) {
-      pptx = 'artifact-tool';
-      why.push(
-        'Inside Codex: use its local artifact-tool runtime for PPTX (proprietary license — internal use only).',
-      );
-    } else why.push('Codex runtime not found; using the open pptxgenjs engine.');
+    why.push(
+      'Codex uses the same portable themes, components and pptxgenjs engine as other agents. The optional local artifact-tool adapter must be selected explicitly for internal evaluation/testing only, not production, commercial use or benchmarking.',
+    );
   }
   if (u.has('send-pdf')) {
     if (await has('pdf', 'pptx-convert')) {

@@ -5,9 +5,11 @@
 import { artifactToolEngine } from './artifact-tool.ts';
 import { htmlEngine, htmlPdfEngine } from './html.ts';
 import { pptxConvertEngine } from './pptx-convert.ts';
+import { pptxPreviewEngine } from './pptx-preview.ts';
 import { registerEngine } from './registry.ts';
 
 registerEngine(htmlEngine);
 registerEngine(htmlPdfEngine);
 registerEngine(pptxConvertEngine);
+registerEngine(pptxPreviewEngine);
 registerEngine(artifactToolEngine);

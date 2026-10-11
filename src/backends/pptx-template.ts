@@ -274,13 +274,21 @@ export async function applyTemplate(
     // the layout's slide number and footer placeholders
     const tLayoutXml = await out.file(layout)!.async('string');
     const slideXml = await out.file(dest)!.async('string');
-    out.file(
-      dest,
-      slideXml.replace(
-        '</p:spTree>',
-        `${placeholderShapes(tLayoutXml, i + 1, role === 'cover' ? undefined : opts.footer, 9000)}</p:spTree>`,
-      ),
-    );
+    const footer = role === 'cover' ? undefined : opts.footer;
+    let placeholders = placeholderShapes(tLayoutXml, i + 1, footer, 9000);
+    // Some brand layouts have no footer placeholder. Retain the generated
+    // editable footer shape instead of losing it when we replace the master.
+    if (footer && !placeholders.includes('name="Footer"')) {
+      const escaped = footer.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const shape = [...layoutXml.matchAll(/<p:sp>[\s\S]*?<\/p:sp>/g)]
+        .map((m) => m[0])
+        .find(
+          (sp) => [...sp.matchAll(/<a:t>([^<]*)<\/a:t>/g)].map((m) => m[1]).join('') === escaped,
+        );
+      if (shape)
+        placeholders += shape.replace(/(<p:cNvPr\s+id=")\d+("[^>]*name=")[^"]*/, '$19001$2Footer');
+    }
+    out.file(dest, slideXml.replace('</p:spTree>', `${placeholders}</p:spTree>`));
     const rid = nextRid();
     presRels.push({ id: rid, type: T_SLIDE, target: `slides/slide${i + 1}.xml`, external: false });
     sldIds.push(`<p:sldId id="${256 + i}" r:id="${rid}"/>`);

@@ -1,0 +1,35 @@
+schemaVersion: 1
+id: shared-chrome
+title: Shared presentation design
+language: en-US
+theme: editorial-fintech
+footer: Illustrative example
+sources:
+  - { id: survey, title: Illustrative service survey, illustrative: true, url: "https://example.com/survey" }
+slides:
+  - id: panorama
+    layout: evidence-panorama
+    tracker: 1. Service models
+    title: Strong adoption supports four distinct service models
+    metric:
+      value: 72%
+      label: of surveyed teams
+      context: use at least one shared service
+      implication: Adoption alone does not determine the operating model
+    cards:
+      - { label: SELF-SERVICE, title: Routine requests, body: A guided catalogue makes repeatable work accessible. }
+      - { label: SPECIALIST SUPPORT, title: Complex decisions, body: Expert teams handle ambiguity and exceptions. }
+      - { label: SHARED PLATFORM, title: Common capabilities, body: Reusable infrastructure supports several service lines. }
+      - { label: PARTNERSHIPS, title: External capabilities, body: Partners provide skills that are needed selectively. }
+    bottomLine: The operating model must fit the need, not merely the level of adoption.
+    sources: [survey]
+    notes: This is an illustrative regression example, not client evidence.
+  - id: canvas
+    layout: freeform-canvas
+    tracker: 2. Shared frame
+    title: Canvas content retains the independent theme frame
+    html: <div>Independent exhibit content</div>
+    alt: A text exhibit inside shared chrome.
+    css: "font-size:24px;line-height:1.3"
+    sources: [survey]
+    bottomLine: A change of renderer must not silently remove the frame.

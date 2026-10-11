@@ -21,6 +21,25 @@ const replaceIn = async (zip: JSZip, part: string, from: string, to: string) => 
 };
 
 describe('edits flow back from PowerPoint', () => {
+  it('maps a stable authored PPT object id to its text field, not an array key', async () => {
+    const dir = mkdtempSync(join(tmpdir(), 'sc-sync-bridge-'));
+    const deck = join(dir, 'deck.yaml');
+    cpSync(join(ROOT, 'tests/fixtures/freeform/editable-authored.yaml'), deck);
+    const result = await buildDeck(deck, { formats: ['pptx'], outDir: join(dir, 'dist') });
+    const pptx = result.files.find((file) => file.kind === 'pptx')!.path;
+    const edited = join(dir, 'edited.pptx');
+    await edit(pptx, edited, (zip) =>
+      replaceIn(zip, 'ppt/slides/slide1.xml', 'Редактируемая подпись', 'Новая подпись'),
+    );
+    const report = syncPptx(deck, edited);
+    expect(report.changes).toContainEqual(
+      expect.objectContaining({
+        pointer: '/slides/0/ppt/1/text',
+        after: 'Новая подпись',
+      }),
+    );
+    expect(report.notes.some((note) => note.includes('HTML reference'))).toBe(true);
+  });
   it('maps edited text to its field, keeps comments and reports what it cannot carry', async () => {
     const dir = mkdtempSync(join(tmpdir(), 'sc-sync-'));
     cpSync(join(ROOT, 'examples/pitch-deck/deck.yaml'), join(dir, 'deck.yaml'));

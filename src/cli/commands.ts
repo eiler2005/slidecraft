@@ -6,7 +6,9 @@ import { z } from 'zod';
 import { detect, engines } from '../backends/registry.ts';
 import type { OutputKind } from '../backends/types.ts';
 import { buildDeck, checkDeck } from '../build.ts';
+import { isComposable } from '../layouts/composition.ts';
 import { LAYOUTS } from '../layouts/index.ts';
+import { exhibitRoutes } from '../library/exhibits.ts';
 import { loadStorylines, loadThemes } from '../library/load.ts';
 import { SCHEMAS_DIR, VERSION } from '../paths.ts';
 import { Brief } from '../spec/brief.ts';
@@ -35,6 +37,7 @@ function layoutContract(l: (typeof LAYOUTS)[number]) {
     avoidWhen: l.avoidWhen,
     variants: l.variants,
     frame: l.frame,
+    composable: isComposable(l),
     schema: z.toJSONSchema(l.schema, { unrepresentable: 'any' }),
     example: l.examples[0],
   };
@@ -91,6 +94,32 @@ export function slugFrom(text: string): string {
 
 export function registerCommands(program: Command): void {
   program.version(VERSION, '-v, --version');
+  program
+    .command('components')
+    .description('List reusable native body exhibits and their existing content contracts')
+    .argument('[id]', 'optional existing layout id')
+    .option('--json', 'machine-readable contracts')
+    .action((id: string | undefined, o: { json?: boolean }) => {
+      const list = LAYOUTS.filter((l) => isComposable(l) && (!id || l.id === id));
+      if (!list.length) throw new Error(`Unknown or non-composable component: ${id}`);
+      if (wantsJson(o.json)) printJson(list.map(layoutContract));
+      else list.forEach((l) => console.log(`${l.id}: ${l.purpose}`));
+    });
+  program
+    .command('exhibits')
+    .description('Route an intended visual relationship to existing layout contracts')
+    .argument('[relationship]', 'e.g. comparison, process, architecture, bridge')
+    .option('--json', 'machine-readable output')
+    .action((relationship: string | undefined, o: { json?: boolean }) => {
+      const routes = exhibitRoutes(relationship);
+      if (!routes.length) throw new Error(`Unknown visual relationship: ${relationship}`);
+      if (wantsJson(o.json)) printJson(routes);
+      else
+        for (const route of routes)
+          console.log(
+            `${route.id}: ${route.question}\n  ${route.layouts.map((l) => l.id).join(', ')}\n  ${route.guard}`,
+          );
+    });
 
   program
     .command('validate')
@@ -143,6 +172,10 @@ export function registerCommands(program: Command): void {
     .option('-f, --format <list>', 'comma-separated: pptx,pdf,png,html,onepager,docx')
     .option('--pptx-engine <id>', 'auto | pptxgenjs | artifact-tool')
     .option('--pdf-engine <id>', 'auto | native | html | pptx-convert')
+    .option(
+      '--png-engine <id>',
+      'auto | resvg (Scene preview) | pptx-convert (actual Office render)',
+    )
     .option('-o, --out <dir>', 'output directory (default: <deck dir>/dist)')
     .option('--preview-width <px>', 'PNG preview width', (v) => Number.parseInt(v, 10))
     .option('--json', 'machine-readable output')
@@ -153,6 +186,7 @@ export function registerCommands(program: Command): void {
           format?: string;
           pptxEngine?: string;
           pdfEngine?: string;
+          pngEngine?: string;
           out?: string;
           previewWidth?: number;
           json?: boolean;
@@ -165,6 +199,7 @@ export function registerCommands(program: Command): void {
           ...(formats ? { formats } : {}),
           ...(o.pptxEngine ? { pptxEngine: o.pptxEngine } : {}),
           ...(o.pdfEngine ? { pdfEngine: o.pdfEngine } : {}),
+          ...(o.pngEngine ? { pngEngine: o.pngEngine } : {}),
           ...(o.out ? { outDir: o.out } : {}),
           ...(o.previewWidth ? { previewWidth: o.previewWidth } : {}),
         });

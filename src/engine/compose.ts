@@ -6,6 +6,7 @@ import { type Diagnostic, diag } from '../qa/codes.ts';
 import { pngSize } from '../qa/pptx-verify.ts';
 import { parseSourceRef, type Slide } from '../spec/deck.ts';
 import type { FontSpec, Theme } from '../spec/theme.ts';
+import { composeHeader, composeSource, composeTakeaway } from './chrome.ts';
 import { mix } from './color.ts';
 import { createContext } from './context.ts';
 import { decorSvg } from './decor.ts';
@@ -26,6 +27,8 @@ const COMMON_KEYS = new Set([
   'notes',
   'status',
   'ghost',
+  'frame',
+  'bottomLine',
 ]);
 
 export function slideContent(slide: Slide): Record<string, unknown> {
@@ -230,7 +233,11 @@ function buildMasters(
         nodes.push(staticText(ft, format.footer, textStyle(fonts.body, small, c.muted), 'footer'));
     }
     const m: Master = { id, background: bg, nodes };
-    if (theme.chrome.pageNumbers && (id === 'content' || id === 'divider')) {
+    if (
+      theme.chrome.pageNumbers &&
+      !theme.chrome.pageBadge &&
+      (id === 'content' || id === 'divider')
+    ) {
       m.slideNumber = {
         box: format.pageNumber,
         style: textStyle(fonts.body, small, c.muted, { align: 'right' }),
@@ -262,7 +269,12 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
   slides.forEach((slide, index) => {
     const def = getLayout(slide.layout)!;
     const variant = (slide.variant as string | undefined) ?? def.variants[0];
-    const body = slide.lead ? format.body : format.bodyNoLead;
+    const frame =
+      slide.frame ??
+      (def.master === 'canvas' ? (theme.chrome.canvasFrame ?? def.frame) : def.frame);
+    const fullBody = slide.lead ? format.body : format.bodyNoLead;
+    const takeawayHeight = slide.bottomLine ? (theme.chrome.takeaway?.height ?? 0.65) + 0.12 : 0;
+    const body = { ...fullBody, h: fullBody.h - takeawayHeight };
     const ctx = createContext({
       theme,
       format,
@@ -277,83 +289,13 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
     const isGhost =
       slide.status === 'ghost' || (slide.status === undefined && deck.status === 'ghost');
 
-    if (def.frame === 'standard') {
-      if (theme.chrome.tracker && slide.tracker) {
-        ctx.text(slide.tracker.toUpperCase(), format.tracker, {
-          role: 'tracker',
-          size: 'small',
-          bold: true,
-          color: c.accent,
-          fixed: true,
-          maxLines: 1,
-          field: 'tracker',
-        });
-      }
-      if (theme.chrome.accentBar && !(theme.chrome.tracker && slide.tracker))
-        ctx.rect(
-          { x: format.title.x, y: format.title.y - 0.1, w: 0.55, h: 0.05 },
-          { fill: c.accent, role: 'accent-bar' },
-        );
-      const t = theme.type.title;
-      const fitDiags = ctx.diagnostics.length;
-      const titleNode = ctx.text(slide.title, format.title, {
-        role: 'title',
-        font: 'heading',
-        sizes: [t, t - 2],
-        bold: theme.type.titleWeight === 'bold',
-        color: c.titleInk ?? c.ink,
-        maxLines: 2,
-        lineHeight: 1.12,
-        field: 'title',
-      });
-      // Replace generic fit errors on titles with the title-specific code.
-      const added = ctx.diagnostics.splice(fitDiags);
-      if (added.some((d) => d.code === 'SC-FIT-001' || d.code === 'SC-FIT-003')) {
-        ctx.diagnostics.push(
-          diag(
-            'SC-TITLE-001',
-            `Title needs ${titleNode.lines.length} lines at ${titleNode.style.size}pt`,
-            {
-              slide: slide.id,
-              pointer: ctx.ptr('title'),
-              measured: `${slide.title.length} chars`,
-              limit: '2 lines (~90 chars)',
-            },
-          ),
-        );
-      }
-      if (theme.chrome.titleRule) {
-        const yRule = format.title.y + format.title.h + 0.04;
-        ctx.line(format.title.x, yRule, format.title.x + format.title.w, yRule, {
-          color: c.rule,
-          width: 0.75,
-        });
-      }
-      if (slide.lead)
-        ctx.text(slide.lead, format.lead, {
-          role: 'lead',
-          size: 'subtitle',
-          color: c.muted,
-          maxLines: 1,
-          field: 'lead',
-        });
-
-      const words = slide.title.trim().split(/\s+/).length;
-      if (words < 5)
-        ctx.issue(
-          diag(
-            'SC-TITLE-002',
-            `Title "${slide.title}" has ${words} words — likely a topic, not a claim`,
-            { pointer: ctx.ptr('title') },
-          ),
-        );
-      if (/[.]$/.test(slide.title.trim()))
-        ctx.issue(diag('SC-TITLE-003', 'Title ends with a period', { pointer: ctx.ptr('title') }));
+    if (frame === 'standard') {
+      composeHeader(ctx, slide, index);
     }
 
     if (isGhost) {
       const g = slide.ghost;
-      const box = def.frame === 'standard' ? body : { x: 1, y: 3.2, w: format.w - 2, h: 2.6 };
+      const box = frame === 'standard' ? body : { x: 1, y: 3.2, w: format.w - 2, h: 2.6 };
       ctx.rect(box, {
         fill: mix(c.surface, c.background, 0.3),
         stroke: { color: c.muted, width: 1, dash: 'dash' },
@@ -370,7 +312,7 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
         { x: box.x + 0.4, y: box.y + 0.35, w: box.w - 0.8, h: box.h - 0.7 },
         { role: 'ghost-note', size: 'body', color: c.muted, valign: 'middle', align: 'center' },
       );
-      if (def.frame === 'none')
+      if (frame === 'none')
         ctx.text(
           slide.title,
           { x: 1, y: 1.6, w: format.w - 2, h: 1.4 },
@@ -380,6 +322,13 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
       const content = def.schema.parse(slideContent(slide));
       def.compose(ctx, content);
     }
+
+    if (slide.bottomLine && !isGhost)
+      composeTakeaway(
+        ctx,
+        slide.bottomLine,
+        fullBody.y + fullBody.h - (theme.chrome.takeaway?.height ?? 0.65),
+      );
 
     // Source line
     // "annual-report#p14": the source plus where in it
@@ -401,11 +350,15 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
       srcTitles.length
         ? `Source: ${srcTitles.map((s) => s!.title + (s!.date ? ` (${s!.date})` : '')).join('; ')}`
         : '',
-      slide.source ? (srcTitles.length ? slide.source : `Source: ${slide.source}`) : '',
+      slide.source
+        ? srcTitles.length
+          ? slide.source
+          : `${theme.chrome.sources?.prefix ?? 'Source:'} ${slide.source}`
+        : '',
     ]
       .filter(Boolean)
       .join(' ');
-    if (srcText && def.frame === 'standard') {
+    if (srcText && frame === 'standard') {
       // Same text as srcText, split into runs so registry titles with a URL become links.
       const runs: Run[] = [];
       const add = (text: string, link?: string) => {
@@ -414,7 +367,7 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
       if (illustrative)
         add(srcTitles.length || slide.source ? 'Illustrative data. ' : 'Illustrative data.');
       if (srcTitles.length) {
-        add('Source: ');
+        add(`${theme.chrome.sources?.prefix ?? 'Source:'} `);
         srcTitles.forEach((s, k) => {
           add(s!.title, s!.url);
           add(`${s!.date ? ` (${s!.date})` : ''}${k < srcTitles.length - 1 ? '; ' : ''}`);
@@ -422,20 +375,13 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
       }
       if (slide.source)
         add(
-          `${srcTitles.length ? ' ' : ''}${srcTitles.length ? slide.source : `Source: ${slide.source}`}`,
+          `${srcTitles.length ? ' ' : ''}${srcTitles.length ? slide.source : `${theme.chrome.sources?.prefix ?? 'Source:'} ${slide.source}`}`,
         );
-      ctx.text([{ runs }], format.source, {
-        role: 'source',
-        size: 'source',
-        color: c.muted,
-        maxLines: 2,
-        valign: 'bottom',
-        field: 'sources',
-      });
+      composeSource(ctx, runs);
     }
     if (
       !isGhost &&
-      def.frame === 'standard' &&
+      frame === 'standard' &&
       !srcText &&
       !PLAN_LAYOUTS.has(def.id) &&
       hasNumbers(
@@ -467,7 +413,10 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
       index,
       layout: def.id,
       variant,
-      master: isGhost && def.frame === 'none' ? 'content' : def.master,
+      master:
+        (isGhost && frame === 'none') || (frame === 'standard' && def.master === 'canvas')
+          ? 'content'
+          : def.master,
       nodes: ctx.nodes,
       title: slide.title,
     };

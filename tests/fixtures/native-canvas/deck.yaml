@@ -1,0 +1,13 @@
+schemaVersion: 1
+id: native-canvas
+title: Native canvas
+theme: consulting-classic
+slides:
+  - id: editable
+    layout: native-canvas
+    title: Every body element on this slide remains editable in PowerPoint
+    elements:
+      - { kind: rect, x: 0, y: 0, w: 45, h: 75, fill: "#E4EFFF", radius: 5 }
+      - { kind: text, x: 5, y: 12, w: 35, h: 20, text: "91%", font: heading, size: 42, bold: true, color: "#1F5EFF" }
+      - { kind: line, x1: 52, y1: 38, x2: 92, y2: 38, color: "#182238", width: 1 }
+      - { kind: ellipse, x: 60, y: 12, w: 18, h: 18, fill: "#DDF5F1" }

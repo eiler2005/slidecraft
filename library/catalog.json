@@ -1,5 +1,5 @@
 {
-  "version": "0.5.0",
+  "version": "0.5.1",
   "layouts": [
     {
       "id": "title",
@@ -98,7 +98,17 @@
       "variants": [
         "body"
       ],
-      "purpose": "Use for a creative, story-led exhibit no layout covers: HTML and CSS inside the standard frame, checked for overflow and text size like every other slide.",
+      "purpose": "Use for a browser-first creative exhibit no layout covers: HTML and CSS inside the standard frame, checked for overflow and text size like every other slide.",
+      "frame": "standard"
+    },
+    {
+      "id": "native-canvas",
+      "name": "Native canvas",
+      "group": "message",
+      "variants": [
+        "body"
+      ],
+      "purpose": "Use for bespoke compositions that must remain editable in PowerPoint: every rectangle, line and text block is a native PPTX object.",
       "frame": "standard"
     },
     {

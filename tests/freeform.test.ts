@@ -8,8 +8,29 @@ import { buildDeck } from '../src/build.ts';
 import { sanitizeCss, sanitizeHtml } from '../src/engine/freeform.ts';
 
 const DECK = join(import.meta.dirname, 'fixtures/freeform/deck.yaml');
+const EDITABLE_DEFAULT = join(import.meta.dirname, 'fixtures/freeform/editable-default.yaml');
+const NATIVE_CANVAS = join(import.meta.dirname, 'fixtures/native-canvas/deck.yaml');
 
 describe('freeform HTML', () => {
+  it('rejects raster freeform for editable PPTX by default', async () => {
+    const out = mkdtempSync(join(tmpdir(), 'sc-ff-editable-'));
+    const r = await buildDeck(EDITABLE_DEFAULT, { outDir: out, formats: ['pptx'] });
+    expect(r.files).toEqual([]);
+    expect(r.diagnostics.map((d) => d.code)).toContain('SC-EDIT-001');
+  });
+
+  it('writes native-canvas as editable PowerPoint text and shapes, not a body PNG', async () => {
+    const out = mkdtempSync(join(tmpdir(), 'sc-native-canvas-'));
+    const r = await buildDeck(NATIVE_CANVAS, { outDir: out, formats: ['pptx'] });
+    expect(r.diagnostics.filter((d) => d.severity === 'error')).toEqual([]);
+    const zip = await JSZip.loadAsync(readFileSync(r.files.find((f) => f.kind === 'pptx')!.path));
+    const xml = await zip.file('ppt/slides/slide1.xml')!.async('string');
+    expect(xml).toContain('91%');
+    expect(xml).toContain('<p:sp>');
+    const rels = await zip.file('ppt/slides/_rels/slide1.xml.rels')!.async('string');
+    expect(rels).not.toContain('/image');
+  });
+
   it('strips scripts, handlers, frames and remote URLs; inlines local images', () => {
     const r = sanitizeHtml(
       '<div onclick="x()">a</div><script>alert(1)</script><iframe src="https://x.test"></iframe><img src="https://x.test/a.png"><img src="assets/reconciliation.png"><a href="javascript:alert(1)">b</a>',

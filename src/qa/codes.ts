@@ -73,6 +73,12 @@ export const CODES = {
     why: 'Scripts, event handlers, frames and remote URLs are stripped so decks render offline, deterministically and without leaking data.',
     fix: 'Use inline SVG, CSS and images next to the deck (relative paths) instead.',
   },
+  'SC-EDIT-001': {
+    severity: 'error',
+    title: 'PPTX would contain a flattened picture',
+    why: 'Freeform HTML needs a browser renderer and cannot be represented as separately editable PowerPoint objects.',
+    fix: 'Use native-canvas or another native layout. Set output.editablePptx: false only when a rasterised freeform slide is explicitly acceptable.',
+  },
   'SC-TITLE-001': {
     severity: 'error',
     title: 'Action title runs past two lines',

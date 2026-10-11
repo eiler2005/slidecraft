@@ -26,7 +26,7 @@ export const freeform: LayoutDef<typeof schema> = {
   name: 'Freeform HTML',
   group: 'message',
   purpose:
-    'Use for a creative, story-led exhibit no layout covers: HTML and CSS inside the standard frame, checked for overflow and text size like every other slide.',
+    'Use for a browser-first creative exhibit no layout covers: HTML and CSS inside the standard frame, checked for overflow and text size like every other slide.',
   useWhen: [
     'Keynotes and story decks that need a bespoke visual',
     'A one-off diagram or composition that would take too long to build from layouts',
@@ -34,7 +34,7 @@ export const freeform: LayoutDef<typeof schema> = {
   ],
   avoidWhen: [
     'Any exhibit a layout already covers — layouts stay editable in PowerPoint',
-    'Decks the audience will edit: in PPTX this slide is a picture',
+    'Decks the audience will edit: editable PPTX is the default and this layout is rejected unless output.editablePptx is explicitly false',
   ],
   variants: ['body'],
   frame: 'standard',

@@ -28,6 +28,16 @@ interface Para {
   size: number;
 }
 
+/** SlideCraft action titles have a minimum length. Preserve a short visual title
+ * such as `₽`, but pair it with context so the imported draft is immediately valid. */
+function validImportedTitle(title: string, fallback: string, slideNumber: number): string {
+  const clean = title.trim();
+  if (clean.length >= 3) return clean;
+  const context = fallback.trim();
+  if (context.length >= 3) return clean ? `${context} · ${clean}` : context;
+  return clean ? `Slide ${slideNumber} · ${clean}` : `Slide ${slideNumber}`;
+}
+
 function paragraphs(xml: string): Para[] {
   const out: Para[] = [];
   for (const m of xml.matchAll(/<a:p>([\s\S]*?)<\/a:p>|<a:p ([^>]*)>([\s\S]*?)<\/a:p>/g)) {
@@ -166,9 +176,10 @@ export async function importPptx(
         .filter((t) => !/^\d+$/.test(t))
         .join('\n');
     }
+    const importedFallback = texts.find((p) => p.text.trim().length >= 3)?.text ?? '';
     const slide: Record<string, unknown> = {
       id: `s${String(i + 1).padStart(2, '0')}`,
-      title: clip(title || `Slide ${i + 1}`, 140),
+      title: clip(validImportedTitle(title, importedFallback, i + 1), 140),
     };
     const cover = i === 0 && (/ctrTitle/.test(xml) || (!table && !chartRid && texts.length <= 2));
     if (cover) {

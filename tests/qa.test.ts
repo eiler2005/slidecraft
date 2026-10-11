@@ -49,6 +49,15 @@ describe('new: a goal sentence becomes the deck id', () => {
 });
 
 describe('cross-slide consistency (SC-CONSIST-001)', () => {
+  it('does not mistake freeform CSS percentages for business metrics', async () => {
+    const { checkConsistency } = await import('../src/qa/consistency.ts');
+    const d = checkConsistency([
+      { id: 'one', html: '<style>.card{width:20%}</style><div>Revenue is 10%</div>' },
+      { id: 'two', html: '<style>.card{width:10%}</style><div>Revenue is 10%</div>' },
+    ]);
+    expect(d).toEqual([]);
+  });
+
   it('flags one metric shown with two values, and accepts rounding', async () => {
     const { checkConsistency } = await import('../src/qa/consistency.ts');
     const slides = [

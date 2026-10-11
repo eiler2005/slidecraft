@@ -74,11 +74,21 @@ export async function buildDeck(path: string, opts: BuildOptions = {}): Promise<
   const formats = opts.formats ?? deck.output?.formats ?? ['pptx', 'pdf', 'png'];
   const epoch = epochDate();
   const limitations = new Set<string>();
+  const hasFreeform = scene.slides.some((s) => s.nodes.some((n) => n.kind === 'html'));
+  if (hasFreeform && formats.includes('pptx') && deck.output?.editablePptx !== false) {
+    diagnostics.push(
+      diag(
+        'SC-EDIT-001',
+        'PPTX output must be editable by default, but layout freeform is HTML/CSS and would become a picture. Use native-canvas or an existing native layout; set output.editablePptx: false only to opt in to rasterisation.',
+      ),
+    );
+    return { ...checked, diagnostics: sortDiagnostics(diagnostics), files, engines };
+  }
   const order: OutputKind[] = ['pptx', 'png', 'html', 'pdf', 'onepager', 'docx'];
   let pptxPath: string | undefined;
   // Freeform HTML: browsers draw it live; every other engine gets a Chrome-rendered picture
   let flat = scene;
-  if (scene.slides.some((s) => s.nodes.some((n) => n.kind === 'html'))) {
+  if (hasFreeform) {
     // labels may use the theme's small size; anything smaller is flagged
     const f = await flattenFreeform(scene, theme?.type.small ?? 9);
     flat = f.scene;

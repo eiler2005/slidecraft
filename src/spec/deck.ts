@@ -150,6 +150,12 @@ export const Deck = z
           })
           .strict()
           .default({ pptx: 'auto', pdf: 'auto' }),
+        editablePptx: z
+          .boolean()
+          .default(true)
+          .describe(
+            'Require editable PowerPoint objects. Set false only to deliberately rasterise freeform HTML into a PPTX picture.',
+          ),
       })
       .strict()
       .optional(),

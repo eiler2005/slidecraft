@@ -22,6 +22,7 @@ import { kpiTiles } from './kpi-tiles.ts';
 import { marimekko } from './marimekko.ts';
 import { matrix2x2 } from './matrix-2x2.ts';
 import { maturityModel } from './maturity-model.ts';
+import { nativeCanvas } from './native-canvas.ts';
 import { nextSteps } from './next-steps.ts';
 import { optionsComparison } from './options-comparison.ts';
 import { orgChart } from './org-chart.ts';
@@ -54,6 +55,7 @@ export const LAYOUTS: LayoutDef[] = [
   text,
   beforeAfter,
   freeform,
+  nativeCanvas,
   kpiTiles,
   chartTakeaway,
   waterfall,

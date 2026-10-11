@@ -2,6 +2,16 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.5.1] — 2026-10-11
+
+### Added
+- **`native-canvas` layout:** bespoke compositions can now use native rectangles, ellipses, lines and text boxes, each editable in PowerPoint.
+
+### Changed
+- PPTX is editable by default. A deck containing `freeform` HTML now fails with `SC-EDIT-001` instead of silently embedding its body as a raster picture. Set `output.editablePptx: false` only for an explicit raster opt-out.
+- PowerPoint import now turns one- and two-character visual titles into valid contextual titles, preserving the original short text.
+- The consistency check ignores CSS and markup in freeform HTML, avoiding false metric conflicts from style percentages.
+
 ## [0.5.0] — 2026-10-11
 
 ### Added

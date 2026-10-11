@@ -249,11 +249,17 @@
             "pdf"
           ],
           "additionalProperties": false
+        },
+        "editablePptx": {
+          "default": true,
+          "description": "Require editable PowerPoint objects. Set false only to deliberately rasterise freeform HTML into a PPTX picture.",
+          "type": "boolean"
         }
       },
       "required": [
         "formats",
-        "engines"
+        "engines",
+        "editablePptx"
       ],
       "additionalProperties": false
     },
@@ -1521,7 +1527,378 @@
                   "alt"
                 ],
                 "additionalProperties": false,
-                "description": "Freeform HTML — Use for a creative, story-led exhibit no layout covers: HTML and CSS inside the standard frame, checked for overflow and text size like every other slide."
+                "description": "Freeform HTML — Use for a browser-first creative exhibit no layout covers: HTML and CSS inside the standard frame, checked for overflow and text size like every other slide."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
+                    "const": "native-canvas"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "body"
+                    ]
+                  },
+                  "elements": {
+                    "minItems": 1,
+                    "maxItems": 120,
+                    "type": "array",
+                    "items": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "rect"
+                            },
+                            "x": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 100
+                            },
+                            "y": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 100
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 100
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 100
+                            },
+                            "fill": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-fA-F]{6}$"
+                            },
+                            "opacity": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            },
+                            "stroke": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-fA-F]{6}$"
+                            },
+                            "strokeWidth": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 12
+                            },
+                            "radius": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 50
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "x",
+                            "y",
+                            "w",
+                            "h",
+                            "fill"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "ellipse"
+                            },
+                            "x": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 100
+                            },
+                            "y": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 100
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 100
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 100
+                            },
+                            "fill": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-fA-F]{6}$"
+                            },
+                            "opacity": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1
+                            },
+                            "stroke": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-fA-F]{6}$"
+                            },
+                            "strokeWidth": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 12
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "x",
+                            "y",
+                            "w",
+                            "h",
+                            "fill"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "text"
+                            },
+                            "x": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 100
+                            },
+                            "y": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 100
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 100
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 100
+                            },
+                            "text": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 800
+                            },
+                            "font": {
+                              "default": "body",
+                              "type": "string",
+                              "enum": [
+                                "heading",
+                                "body"
+                              ]
+                            },
+                            "size": {
+                              "type": "number",
+                              "minimum": 6,
+                              "maximum": 100
+                            },
+                            "color": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-fA-F]{6}$"
+                            },
+                            "bold": {
+                              "type": "boolean"
+                            },
+                            "italic": {
+                              "type": "boolean"
+                            },
+                            "align": {
+                              "type": "string",
+                              "enum": [
+                                "left",
+                                "center",
+                                "right"
+                              ]
+                            },
+                            "valign": {
+                              "type": "string",
+                              "enum": [
+                                "top",
+                                "middle",
+                                "bottom"
+                              ]
+                            },
+                            "lineHeight": {
+                              "type": "number",
+                              "minimum": 0.8,
+                              "maximum": 2
+                            },
+                            "maxLines": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 20
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "x",
+                            "y",
+                            "w",
+                            "h",
+                            "text",
+                            "font",
+                            "size"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "const": "line"
+                            },
+                            "x1": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 100
+                            },
+                            "y1": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 100
+                            },
+                            "x2": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 100
+                            },
+                            "y2": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 100
+                            },
+                            "color": {
+                              "type": "string",
+                              "pattern": "^#[0-9a-fA-F]{6}$"
+                            },
+                            "width": {
+                              "default": 1,
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 12
+                            },
+                            "arrowEnd": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "x1",
+                            "y1",
+                            "x2",
+                            "y2",
+                            "color",
+                            "width"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "elements"
+                ],
+                "additionalProperties": false,
+                "description": "Native canvas — Use for bespoke compositions that must remain editable in PowerPoint: every rectangle, line and text block is a native PPTX object."
               },
               {
                 "type": "object",

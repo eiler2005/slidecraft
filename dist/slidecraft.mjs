@@ -134,11 +134,11 @@ var require_safe_buffer = __commonJS({
       }
       return Buffer2(arg, encodingOrOffset, length);
     };
-    SafeBuffer.alloc = function(size, fill, encoding) {
-      if (typeof size !== "number") {
+    SafeBuffer.alloc = function(size2, fill, encoding) {
+      if (typeof size2 !== "number") {
         throw new TypeError("Argument must be a number");
       }
-      var buf = Buffer2(size);
+      var buf = Buffer2(size2);
       if (fill !== void 0) {
         if (typeof encoding === "string") {
           buf.fill(fill, encoding);
@@ -150,17 +150,17 @@ var require_safe_buffer = __commonJS({
       }
       return buf;
     };
-    SafeBuffer.allocUnsafe = function(size) {
-      if (typeof size !== "number") {
+    SafeBuffer.allocUnsafe = function(size2) {
+      if (typeof size2 !== "number") {
         throw new TypeError("Argument must be a number");
       }
-      return Buffer2(size);
+      return Buffer2(size2);
     };
-    SafeBuffer.allocUnsafeSlow = function(size) {
-      if (typeof size !== "number") {
+    SafeBuffer.allocUnsafeSlow = function(size2) {
+      if (typeof size2 !== "number") {
         throw new TypeError("Argument must be a number");
       }
-      return buffer.SlowBuffer(size);
+      return buffer.SlowBuffer(size2);
     };
   }
 });
@@ -2169,11 +2169,11 @@ var require_nodejsUtils = __commonJS({
        * @param {Integer} size the size of the buffer.
        * @return {Buffer} a new Buffer.
        */
-      allocBuffer: function(size) {
+      allocBuffer: function(size2) {
         if (Buffer.alloc) {
-          return Buffer.alloc(size);
+          return Buffer.alloc(size2);
         } else {
-          var buf = new Buffer(size);
+          var buf = new Buffer(size2);
           buf.fill(0);
           return buf;
         }
@@ -3738,8 +3738,8 @@ var require_DataWorker = __commonJS({
       if (this.isPaused || this.isFinished) {
         return false;
       }
-      var size = DEFAULT_BLOCK_SIZE;
-      var data = null, nextIndex = Math.min(this.max, this.index + size);
+      var size2 = DEFAULT_BLOCK_SIZE;
+      var data = null, nextIndex = Math.min(this.max, this.index + size2);
       if (this.index >= this.max) {
         return this.end();
       } else {
@@ -4046,14 +4046,14 @@ var require_common = __commonJS({
       }
       return obj2;
     };
-    exports.shrinkBuf = function(buf, size) {
-      if (buf.length === size) {
+    exports.shrinkBuf = function(buf, size2) {
+      if (buf.length === size2) {
         return buf;
       }
       if (buf.subarray) {
-        return buf.subarray(0, size);
+        return buf.subarray(0, size2);
       }
-      buf.length = size;
+      buf.length = size2;
       return buf;
     };
     var fnTyped = {
@@ -4927,10 +4927,10 @@ var require_deflate = __commonJS({
       s2.pending_buf[s2.pending++] = b >>> 8 & 255;
       s2.pending_buf[s2.pending++] = b & 255;
     }
-    function read_buf(strm, buf, start, size) {
+    function read_buf(strm, buf, start, size2) {
       var len = strm.avail_in;
-      if (len > size) {
-        len = size;
+      if (len > size2) {
+        len = size2;
       }
       if (len === 0) {
         return 0;
@@ -9049,13 +9049,13 @@ var require_DataReader = __commonJS({
        * @param {number} size the number of bytes to read.
        * @return {number} the corresponding number.
        */
-      readInt: function(size) {
+      readInt: function(size2) {
         var result = 0, i;
-        this.checkOffset(size);
-        for (i = this.index + size - 1; i >= this.index; i--) {
+        this.checkOffset(size2);
+        for (i = this.index + size2 - 1; i >= this.index; i--) {
           result = (result << 8) + this.byteAt(i);
         }
-        this.index += size;
+        this.index += size2;
         return result;
       },
       /**
@@ -9063,8 +9063,8 @@ var require_DataReader = __commonJS({
        * @param {number} size the number of bytes to read.
        * @return {string} the corresponding string.
        */
-      readString: function(size) {
-        return utils.transformTo("string", this.readData(size));
+      readString: function(size2) {
+        return utils.transformTo("string", this.readData(size2));
       },
       /**
        * Get raw data without conversion, <size> bytes.
@@ -9141,13 +9141,13 @@ var require_ArrayReader = __commonJS({
       var sig0 = sig.charCodeAt(0), sig1 = sig.charCodeAt(1), sig2 = sig.charCodeAt(2), sig3 = sig.charCodeAt(3), data = this.readData(4);
       return sig0 === data[0] && sig1 === data[1] && sig2 === data[2] && sig3 === data[3];
     };
-    ArrayReader.prototype.readData = function(size) {
-      this.checkOffset(size);
-      if (size === 0) {
+    ArrayReader.prototype.readData = function(size2) {
+      this.checkOffset(size2);
+      if (size2 === 0) {
         return [];
       }
-      var result = this.data.slice(this.zero + this.index, this.zero + this.index + size);
-      this.index += size;
+      var result = this.data.slice(this.zero + this.index, this.zero + this.index + size2);
+      this.index += size2;
       return result;
     };
     module.exports = ArrayReader;
@@ -9174,10 +9174,10 @@ var require_StringReader = __commonJS({
       var data = this.readData(4);
       return sig === data;
     };
-    StringReader.prototype.readData = function(size) {
-      this.checkOffset(size);
-      var result = this.data.slice(this.zero + this.index, this.zero + this.index + size);
-      this.index += size;
+    StringReader.prototype.readData = function(size2) {
+      this.checkOffset(size2);
+      var result = this.data.slice(this.zero + this.index, this.zero + this.index + size2);
+      this.index += size2;
       return result;
     };
     module.exports = StringReader;
@@ -9194,13 +9194,13 @@ var require_Uint8ArrayReader = __commonJS({
       ArrayReader.call(this, data);
     }
     utils.inherits(Uint8ArrayReader, ArrayReader);
-    Uint8ArrayReader.prototype.readData = function(size) {
-      this.checkOffset(size);
-      if (size === 0) {
+    Uint8ArrayReader.prototype.readData = function(size2) {
+      this.checkOffset(size2);
+      if (size2 === 0) {
         return new Uint8Array(0);
       }
-      var result = this.data.subarray(this.zero + this.index, this.zero + this.index + size);
-      this.index += size;
+      var result = this.data.subarray(this.zero + this.index, this.zero + this.index + size2);
+      this.index += size2;
       return result;
     };
     module.exports = Uint8ArrayReader;
@@ -9217,10 +9217,10 @@ var require_NodeBufferReader = __commonJS({
       Uint8ArrayReader.call(this, data);
     }
     utils.inherits(NodeBufferReader, Uint8ArrayReader);
-    NodeBufferReader.prototype.readData = function(size) {
-      this.checkOffset(size);
-      var result = this.data.slice(this.zero + this.index, this.zero + this.index + size);
-      this.index += size;
+    NodeBufferReader.prototype.readData = function(size2) {
+      this.checkOffset(size2);
+      var result = this.data.slice(this.zero + this.index, this.zero + this.index + size2);
+      this.index += size2;
       return result;
     };
     module.exports = NodeBufferReader;
@@ -136997,13 +136997,13 @@ var require_directives = __commonJS({
        * @param onError - May be called even if the action was successful
        * @returns `true` on success
        */
-      add(line2, onError) {
+      add(line3, onError) {
         if (this.atNextDocument) {
           this.yaml = { explicit: _Directives.defaultYaml.explicit, version: "1.1" };
           this.tags = Object.assign({}, _Directives.defaultTags);
           this.atNextDocument = false;
         }
-        const parts = line2.trim().split(/[ \t]+/);
+        const parts = line3.trim().split(/[ \t]+/);
         const name = parts.shift();
         switch (name) {
           case "%TAG": {
@@ -137486,7 +137486,7 @@ var require_createNode = __commonJS({
       if (value instanceof String || value instanceof Number || value instanceof Boolean || typeof BigInt !== "undefined" && value instanceof BigInt) {
         value = value.valueOf();
       }
-      const { aliasDuplicateObjects, onAnchor, onTagObj, schema: schema41, sourceObjects } = ctx;
+      const { aliasDuplicateObjects, onAnchor, onTagObj, schema: schema42, sourceObjects } = ctx;
       let ref = void 0;
       if (aliasDuplicateObjects && value && typeof value === "object") {
         ref = sourceObjects.get(value);
@@ -137500,7 +137500,7 @@ var require_createNode = __commonJS({
       }
       if (tagName?.startsWith("!!"))
         tagName = defaultTagPrefix + tagName.slice(2);
-      let tagObj = findTagObject(value, tagName, schema41.tags);
+      let tagObj = findTagObject(value, tagName, schema42.tags);
       if (!tagObj) {
         if (value && typeof value.toJSON === "function") {
           value = value.toJSON();
@@ -137511,7 +137511,7 @@ var require_createNode = __commonJS({
             ref.node = node3;
           return node3;
         }
-        tagObj = value instanceof Map ? schema41[identity.MAP] : Symbol.iterator in Object(value) ? schema41[identity.SEQ] : schema41[identity.MAP];
+        tagObj = value instanceof Map ? schema42[identity.MAP] : Symbol.iterator in Object(value) ? schema42[identity.SEQ] : schema42[identity.MAP];
       }
       if (onTagObj) {
         onTagObj(tagObj);
@@ -137537,7 +137537,7 @@ var require_Collection = __commonJS({
     var createNode = require_createNode();
     var identity = require_identity();
     var Node = require_Node();
-    function collectionFromPath(schema41, path2, value) {
+    function collectionFromPath(schema42, path2, value) {
       let v = value;
       for (let i = path2.length - 1; i >= 0; --i) {
         const k = path2[i];
@@ -137555,16 +137555,16 @@ var require_Collection = __commonJS({
         onAnchor: () => {
           throw new Error("This should not happen, please report a bug.");
         },
-        schema: schema41,
+        schema: schema42,
         sourceObjects: /* @__PURE__ */ new Map()
       });
     }
     var isEmptyPath = (path2) => path2 == null || typeof path2 === "object" && !!path2[Symbol.iterator]().next().done;
     var Collection = class extends Node.NodeBase {
-      constructor(type, schema41) {
+      constructor(type, schema42) {
         super(type);
         Object.defineProperty(this, "schema", {
-          value: schema41,
+          value: schema42,
           configurable: true,
           enumerable: false,
           writable: true
@@ -137575,11 +137575,11 @@ var require_Collection = __commonJS({
        *
        * @param schema - If defined, overwrites the original's schema
        */
-      clone(schema41) {
+      clone(schema42) {
         const copy = Object.create(Object.getPrototypeOf(this), Object.getOwnPropertyDescriptors(this));
-        if (schema41)
-          copy.schema = schema41;
-        copy.items = copy.items.map((it) => identity.isNode(it) || identity.isPair(it) ? it.clone(schema41) : it);
+        if (schema42)
+          copy.schema = schema42;
+        copy.items = copy.items.map((it) => identity.isNode(it) || identity.isPair(it) ? it.clone(schema42) : it);
         if (this.range)
           copy.range = this.range.slice();
         return copy;
@@ -137697,14 +137697,14 @@ var require_foldFlowLines = __commonJS({
     var FOLD_FLOW = "flow";
     var FOLD_BLOCK = "block";
     var FOLD_QUOTED = "quoted";
-    function foldFlowLines(text3, indent, mode = "flow", { indentAtStart, lineWidth = 80, minContentWidth = 20, onFold, onOverflow } = {}) {
+    function foldFlowLines(text4, indent, mode = "flow", { indentAtStart, lineWidth = 80, minContentWidth = 20, onFold, onOverflow } = {}) {
       if (!lineWidth || lineWidth < 0)
-        return text3;
+        return text4;
       if (lineWidth < minContentWidth)
         minContentWidth = 0;
       const endStep = Math.max(1 + minContentWidth, 1 + lineWidth - indent.length);
-      if (text3.length <= endStep)
-        return text3;
+      if (text4.length <= endStep)
+        return text4;
       const folds = [];
       const escapedFolds = {};
       let end = lineWidth - indent.length;
@@ -137721,14 +137721,14 @@ var require_foldFlowLines = __commonJS({
       let escStart = -1;
       let escEnd = -1;
       if (mode === FOLD_BLOCK) {
-        i = consumeMoreIndentedLines(text3, i, indent.length);
+        i = consumeMoreIndentedLines(text4, i, indent.length);
         if (i !== -1)
           end = i + endStep;
       }
-      for (let ch; ch = text3[i += 1]; ) {
+      for (let ch; ch = text4[i += 1]; ) {
         if (mode === FOLD_QUOTED && ch === "\\") {
           escStart = i;
-          switch (text3[i + 1]) {
+          switch (text4[i + 1]) {
             case "x":
               i += 3;
               break;
@@ -137745,12 +137745,12 @@ var require_foldFlowLines = __commonJS({
         }
         if (ch === "\n") {
           if (mode === FOLD_BLOCK)
-            i = consumeMoreIndentedLines(text3, i, indent.length);
+            i = consumeMoreIndentedLines(text4, i, indent.length);
           end = i + indent.length + endStep;
           split2 = void 0;
         } else {
           if (ch === " " && prev && prev !== " " && prev !== "\n" && prev !== "	") {
-            const next = text3[i + 1];
+            const next = text4[i + 1];
             if (next && next !== " " && next !== "\n" && next !== "	")
               split2 = i;
           }
@@ -137762,12 +137762,12 @@ var require_foldFlowLines = __commonJS({
             } else if (mode === FOLD_QUOTED) {
               while (prev === " " || prev === "	") {
                 prev = ch;
-                ch = text3[i += 1];
+                ch = text4[i += 1];
                 overflow = true;
               }
               const j = i > escEnd + 1 ? i - 2 : escStart - 1;
               if (escapedFolds[j])
-                return text3;
+                return text4;
               folds.push(j);
               escapedFolds[j] = true;
               end = j + endStep;
@@ -137782,39 +137782,39 @@ var require_foldFlowLines = __commonJS({
       if (overflow && onOverflow)
         onOverflow();
       if (folds.length === 0)
-        return text3;
+        return text4;
       if (onFold)
         onFold();
-      let res = text3.slice(0, folds[0]);
+      let res = text4.slice(0, folds[0]);
       for (let i2 = 0; i2 < folds.length; ++i2) {
         const fold = folds[i2];
-        const end2 = folds[i2 + 1] || text3.length;
+        const end2 = folds[i2 + 1] || text4.length;
         if (fold === 0)
           res = `
-${indent}${text3.slice(0, end2)}`;
+${indent}${text4.slice(0, end2)}`;
         else {
           if (mode === FOLD_QUOTED && escapedFolds[fold])
-            res += `${text3[fold]}\\`;
+            res += `${text4[fold]}\\`;
           res += `
-${indent}${text3.slice(fold + 1, end2)}`;
+${indent}${text4.slice(fold + 1, end2)}`;
         }
       }
       return res;
     }
-    function consumeMoreIndentedLines(text3, i, indent) {
+    function consumeMoreIndentedLines(text4, i, indent) {
       let end = i;
       let start = i + 1;
-      let ch = text3[start];
+      let ch = text4[start];
       while (ch === " " || ch === "	") {
         if (i < start + indent) {
-          ch = text3[++i];
+          ch = text4[++i];
         } else {
           do {
-            ch = text3[++i];
+            ch = text4[++i];
           } while (ch && ch !== "\n");
           end = i;
           start = i + 1;
-          ch = text3[start];
+          ch = text4[start];
         }
       }
       return end;
@@ -138531,12 +138531,12 @@ var require_Pair = __commonJS({
         this.key = key;
         this.value = value;
       }
-      clone(schema41) {
+      clone(schema42) {
         let { key, value } = this;
         if (identity.isNode(key))
-          key = key.clone(schema41);
+          key = key.clone(schema42);
         if (identity.isNode(value))
-          value = value.clone(schema41);
+          value = value.clone(schema42);
         return new _Pair(key, value);
       }
       toJSON(_, ctx) {
@@ -138600,9 +138600,9 @@ var require_stringifyCollection = __commonJS({
       } else {
         str = lines[0];
         for (let i = 1; i < lines.length; ++i) {
-          const line2 = lines[i];
-          str += line2 ? `
-${indent}${line2}` : "\n";
+          const line3 = lines[i];
+          str += line3 ? `
+${indent}${line3}` : "\n";
         }
       }
       if (comment) {
@@ -138660,7 +138660,7 @@ ${indent}${line2}` : "\n";
           str += ",";
         } else if (ctx.options.trailingComma) {
           if (ctx.options.lineWidth > 0) {
-            reqNewline || (reqNewline = lines.reduce((sum, line2) => sum + line2.length + 2, 2) + (str.length + 2) > ctx.options.lineWidth);
+            reqNewline || (reqNewline = lines.reduce((sum, line3) => sum + line3.length + 2, 2) + (str.length + 2) > ctx.options.lineWidth);
           }
           if (reqNewline) {
             str += ",";
@@ -138676,14 +138676,14 @@ ${indent}${line2}` : "\n";
         return start + end;
       } else {
         if (!reqNewline) {
-          const len = lines.reduce((sum, line2) => sum + line2.length + 2, 2);
+          const len = lines.reduce((sum, line3) => sum + line3.length + 2, 2);
           reqNewline = ctx.options.lineWidth > 0 && len > ctx.options.lineWidth;
         }
         if (reqNewline) {
           let str = start;
-          for (const line2 of lines)
-            str += line2 ? `
-${indentStep}${indent}${line2}` : "\n";
+          for (const line3 of lines)
+            str += line3 ? `
+${indentStep}${indent}${line3}` : "\n";
           return `${str}
 ${indent}${end}`;
         } else {
@@ -138729,17 +138729,17 @@ var require_YAMLMap = __commonJS({
       static get tagName() {
         return "tag:yaml.org,2002:map";
       }
-      constructor(schema41) {
-        super(identity.MAP, schema41);
+      constructor(schema42) {
+        super(identity.MAP, schema42);
         this.items = [];
       }
       /**
        * A generic collection parsing method that can be extended
        * to other node classes that inherit from YAMLMap
        */
-      static from(schema41, obj2, ctx) {
+      static from(schema42, obj2, ctx) {
         const { keepUndefined, replacer } = ctx;
-        const map2 = new this(schema41);
+        const map2 = new this(schema42);
         const add2 = (key, value) => {
           if (typeof replacer === "function")
             value = replacer.call(obj2, key, value);
@@ -138755,8 +138755,8 @@ var require_YAMLMap = __commonJS({
           for (const key of Object.keys(obj2))
             add2(key, obj2[key]);
         }
-        if (typeof schema41.sortMapEntries === "function") {
-          map2.items.sort(schema41.sortMapEntries);
+        if (typeof schema42.sortMapEntries === "function") {
+          map2.items.sort(schema42.sortMapEntries);
         }
         return map2;
       }
@@ -138863,7 +138863,7 @@ var require_map = __commonJS({
           onError("Expected a mapping for this tag");
         return map3;
       },
-      createNode: (schema41, obj2, ctx) => YAMLMap.YAMLMap.from(schema41, obj2, ctx)
+      createNode: (schema42, obj2, ctx) => YAMLMap.YAMLMap.from(schema42, obj2, ctx)
     };
     exports.map = map2;
   }
@@ -138883,8 +138883,8 @@ var require_YAMLSeq = __commonJS({
       static get tagName() {
         return "tag:yaml.org,2002:seq";
       }
-      constructor(schema41) {
-        super(identity.SEQ, schema41);
+      constructor(schema42) {
+        super(identity.SEQ, schema42);
         this.items = [];
       }
       add(value) {
@@ -138959,9 +138959,9 @@ var require_YAMLSeq = __commonJS({
           onComment
         });
       }
-      static from(schema41, obj2, ctx) {
+      static from(schema42, obj2, ctx) {
         const { replacer } = ctx;
-        const seq = new this(schema41);
+        const seq = new this(schema42);
         if (obj2 && Symbol.iterator in Object(obj2)) {
           let i = 0;
           for (let it of obj2) {
@@ -139001,7 +139001,7 @@ var require_seq = __commonJS({
           onError("Expected a sequence for this tag");
         return seq2;
       },
-      createNode: (schema41, obj2, ctx) => YAMLSeq.YAMLSeq.from(schema41, obj2, ctx)
+      createNode: (schema42, obj2, ctx) => YAMLSeq.YAMLSeq.from(schema42, obj2, ctx)
     };
     exports.seq = seq;
   }
@@ -139197,7 +139197,7 @@ var require_schema = __commonJS({
     var bool = require_bool();
     var float = require_float();
     var int2 = require_int();
-    var schema41 = [
+    var schema42 = [
       map2.map,
       seq.seq,
       string4.string,
@@ -139210,7 +139210,7 @@ var require_schema = __commonJS({
       float.floatExp,
       float.float
     ];
-    exports.schema = schema41;
+    exports.schema = schema42;
   }
 });
 
@@ -139276,8 +139276,8 @@ var require_schema2 = __commonJS({
         return str;
       }
     };
-    var schema41 = [map2.map, seq.seq].concat(jsonScalars, jsonError);
-    exports.schema = schema41;
+    var schema42 = [map2.map, seq.seq].concat(jsonScalars, jsonError);
+    exports.schema = schema42;
   }
 });
 
@@ -139381,9 +139381,9 @@ ${cn.comment}` : item2.comment;
         onError("Expected a sequence for this tag");
       return seq;
     }
-    function createPairs(schema41, iterable, ctx) {
+    function createPairs(schema42, iterable, ctx) {
       const { replacer } = ctx;
-      const pairs2 = new YAMLSeq.YAMLSeq(schema41);
+      const pairs2 = new YAMLSeq.YAMLSeq(schema42);
       pairs2.tag = "tag:yaml.org,2002:pairs";
       let i = 0;
       if (iterable && Symbol.iterator in Object(iterable))
@@ -139468,8 +139468,8 @@ var require_omap = __commonJS({
         }
         return map2;
       }
-      static from(schema41, iterable, ctx) {
-        const pairs$1 = pairs.createPairs(schema41, iterable, ctx);
+      static from(schema42, iterable, ctx) {
+        const pairs$1 = pairs.createPairs(schema42, iterable, ctx);
         const omap2 = new this();
         omap2.items = pairs$1.items;
         return omap2;
@@ -139496,7 +139496,7 @@ var require_omap = __commonJS({
         }
         return Object.assign(new YAMLOMap(), pairs$1);
       },
-      createNode: (schema41, iterable, ctx) => YAMLOMap.from(schema41, iterable, ctx)
+      createNode: (schema42, iterable, ctx) => YAMLOMap.from(schema42, iterable, ctx)
     };
     exports.YAMLOMap = YAMLOMap;
     exports.omap = omap;
@@ -139671,8 +139671,8 @@ var require_set = __commonJS({
     var Pair = require_Pair();
     var YAMLMap = require_YAMLMap();
     var YAMLSet = class _YAMLSet extends YAMLMap.YAMLMap {
-      constructor(schema41) {
-        super(schema41);
+      constructor(schema42) {
+        super(schema42);
         this.tag = _YAMLSet.tag;
       }
       add(key) {
@@ -139716,9 +139716,9 @@ var require_set = __commonJS({
         else
           throw new Error("Set items must all have null values");
       }
-      static from(schema41, iterable, ctx) {
+      static from(schema42, iterable, ctx) {
         const { replacer } = ctx;
-        const set3 = new this(schema41);
+        const set3 = new this(schema42);
         if (iterable && Symbol.iterator in Object(iterable))
           for (let value of iterable) {
             if (typeof replacer === "function")
@@ -139735,7 +139735,7 @@ var require_set = __commonJS({
       nodeClass: YAMLSet,
       default: false,
       tag: "tag:yaml.org,2002:set",
-      createNode: (schema41, iterable, ctx) => YAMLSet.from(schema41, iterable, ctx),
+      createNode: (schema42, iterable, ctx) => YAMLSet.from(schema42, iterable, ctx),
       resolve(map2, onError) {
         if (identity.isMap(map2)) {
           if (map2.hasAllNullValues(true))
@@ -139857,7 +139857,7 @@ var require_schema3 = __commonJS({
     var pairs = require_pairs();
     var set2 = require_set();
     var timestamp = require_timestamp();
-    var schema41 = [
+    var schema42 = [
       map2.map,
       seq.seq,
       string4.string,
@@ -139880,7 +139880,7 @@ var require_schema3 = __commonJS({
       timestamp.floatTime,
       timestamp.timestamp
     ];
-    exports.schema = schema41;
+    exports.schema = schema42;
   }
 });
 
@@ -139895,7 +139895,7 @@ var require_tags = __commonJS({
     var bool = require_bool();
     var float = require_float();
     var int2 = require_int();
-    var schema41 = require_schema();
+    var schema42 = require_schema();
     var schema$1 = require_schema2();
     var binary = require_binary();
     var merge2 = require_merge();
@@ -139905,7 +139905,7 @@ var require_tags = __commonJS({
     var set2 = require_set();
     var timestamp = require_timestamp();
     var schemas = /* @__PURE__ */ new Map([
-      ["core", schema41.schema],
+      ["core", schema42.schema],
       ["failsafe", [map2.map, seq.seq, string4.string]],
       ["json", schema$1.schema],
       ["yaml11", schema$2.schema],
@@ -139989,9 +139989,9 @@ var require_Schema = __commonJS({
     var tags = require_tags();
     var sortMapEntriesByKey = (a, b) => a.key < b.key ? -1 : a.key > b.key ? 1 : 0;
     var Schema = class _Schema {
-      constructor({ compat, customTags, merge: merge2, resolveKnownTags, schema: schema41, sortMapEntries, toStringDefaults }) {
+      constructor({ compat, customTags, merge: merge2, resolveKnownTags, schema: schema42, sortMapEntries, toStringDefaults }) {
         this.compat = Array.isArray(compat) ? tags.getTags(compat, "compat") : compat ? tags.getTags(null, compat) : null;
-        this.name = typeof schema41 === "string" && schema41 || "core";
+        this.name = typeof schema42 === "string" && schema42 || "core";
         this.knownTags = resolveKnownTags ? tags.coreKnownTags : {};
         this.tags = tags.getTags(customTags, this.name, merge2);
         this.toStringOptions = toStringDefaults ?? null;
@@ -140426,10 +140426,10 @@ var require_errors = __commonJS({
       if (error62.pos[0] === -1)
         return;
       error62.linePos = error62.pos.map((pos) => lc.linePos(pos));
-      const { line: line2, col: col2 } = error62.linePos[0];
-      error62.message += ` at line ${line2}, column ${col2}`;
+      const { line: line3, col: col2 } = error62.linePos[0];
+      error62.message += ` at line ${line3}, column ${col2}`;
       let ci = col2 - 1;
-      let lineStr = src.substring(lc.lineStarts[line2 - 1], lc.lineStarts[line2]).replace(/[\n\r]+$/, "");
+      let lineStr = src.substring(lc.lineStarts[line3 - 1], lc.lineStarts[line3]).replace(/[\n\r]+$/, "");
       if (ci >= 60 && lineStr.length > 80) {
         const trimStart = Math.min(ci - 39, lineStr.length - 79);
         lineStr = "\u2026" + lineStr.substring(trimStart);
@@ -140437,8 +140437,8 @@ var require_errors = __commonJS({
       }
       if (lineStr.length > 80)
         lineStr = lineStr.substring(0, 79) + "\u2026";
-      if (line2 > 1 && /^ *$/.test(lineStr.substring(0, ci))) {
-        let prev = src.substring(lc.lineStarts[line2 - 2], lc.lineStarts[line2 - 1]);
+      if (line3 > 1 && /^ *$/.test(lineStr.substring(0, ci))) {
+        let prev = src.substring(lc.lineStarts[line3 - 2], lc.lineStarts[line3 - 1]);
         if (prev.length > 80)
           prev = prev.substring(0, 79) + "\u2026\n";
         lineStr = prev + lineStr;
@@ -140446,7 +140446,7 @@ var require_errors = __commonJS({
       if (/[^ ]/.test(lineStr)) {
         let count = 1;
         const end = error62.linePos[1];
-        if (end?.line === line2 && end.col > col2) {
+        if (end?.line === line3 && end.col > col2) {
           count = Math.max(1, Math.min(end.col - col2, 80 - ci));
         }
         const pointer = " ".repeat(ci) + "^".repeat(count);
@@ -141395,8 +141395,8 @@ var require_resolve_flow_scalar = __commonJS({
       return unfoldLines(source.slice(1, -1)).replace(/''/g, "'");
     }
     function unfoldLines(source) {
-      const line2 = /(.*?)\r?\n/sy;
-      let match = line2.exec(source);
+      const line3 = /(.*?)\r?\n/sy;
+      let match = line3.exec(source);
       if (!match)
         return source;
       let trimEnd, trimBoth;
@@ -141409,8 +141409,8 @@ var require_resolve_flow_scalar = __commonJS({
       }
       let res = match[1].replace(trimEnd, "");
       let sep = " ";
-      let pos = line2.lastIndex;
-      while (match = line2.exec(source)) {
+      let pos = line3.lastIndex;
+      while (match = line3.exec(source)) {
         const lm = match[1].replace(trimBoth, "");
         if (lm === "") {
           if (sep === "\n")
@@ -141421,7 +141421,7 @@ var require_resolve_flow_scalar = __commonJS({
           res += sep + lm;
           sep = " ";
         }
-        pos = line2.lastIndex;
+        pos = line3.lastIndex;
       }
       const last2 = /[ \t]*(.*)/sy;
       last2.lastIndex = pos;
@@ -141580,11 +141580,11 @@ var require_compose_scalar = __commonJS({
         scalar2.comment = comment;
       return scalar2;
     }
-    function findScalarTagByName(schema41, value, tagName, tagToken, onError) {
+    function findScalarTagByName(schema42, value, tagName, tagToken, onError) {
       if (tagName === "!")
-        return schema41[identity.SCALAR];
+        return schema42[identity.SCALAR];
       const matchWithTest = [];
-      for (const tag of schema41.tags) {
+      for (const tag of schema42.tags) {
         if (!tag.collection && tag.tag === tagName) {
           if (tag.default && tag.test)
             matchWithTest.push(tag);
@@ -141595,18 +141595,18 @@ var require_compose_scalar = __commonJS({
       for (const tag of matchWithTest)
         if (tag.test?.test(value))
           return tag;
-      const kt = schema41.knownTags[tagName];
+      const kt = schema42.knownTags[tagName];
       if (kt && !kt.collection) {
-        schema41.tags.push(Object.assign({}, kt, { default: false, test: void 0 }));
+        schema42.tags.push(Object.assign({}, kt, { default: false, test: void 0 }));
         return kt;
       }
       onError(tagToken, "TAG_RESOLVE_FAILED", `Unresolved tag: ${tagName}`, tagName !== "tag:yaml.org,2002:str");
-      return schema41[identity.SCALAR];
+      return schema42[identity.SCALAR];
     }
-    function findScalarTagByTest({ atKey, directives, schema: schema41 }, value, token, onError) {
-      const tag = schema41.tags.find((tag2) => (tag2.default === true || atKey && tag2.default === "key") && tag2.test?.test(value)) || schema41[identity.SCALAR];
-      if (schema41.compat) {
-        const compat = schema41.compat.find((tag2) => tag2.default && tag2.test?.test(value)) ?? schema41[identity.SCALAR];
+    function findScalarTagByTest({ atKey, directives, schema: schema42 }, value, token, onError) {
+      const tag = schema42.tags.find((tag2) => (tag2.default === true || atKey && tag2.default === "key") && tag2.test?.test(value)) || schema42[identity.SCALAR];
+      if (schema42.compat) {
+        const compat = schema42.compat.find((tag2) => tag2.default && tag2.test?.test(value)) ?? schema42[identity.SCALAR];
         if (tag.tag !== compat.tag) {
           const ts = directives.tagString(tag.tag);
           const cs = directives.tagString(compat.tag);
@@ -142551,40 +142551,40 @@ var require_lexer = __commonJS({
         }
       }
       *parseStream() {
-        let line2 = this.getLine();
-        if (line2 === null)
+        let line3 = this.getLine();
+        if (line3 === null)
           return this.setNext("stream");
-        if (line2[0] === cst.BOM) {
+        if (line3[0] === cst.BOM) {
           yield* this.pushCount(1);
-          line2 = line2.substring(1);
+          line3 = line3.substring(1);
         }
-        if (line2[0] === "%") {
-          let dirEnd = line2.length;
-          let cs = line2.indexOf("#");
+        if (line3[0] === "%") {
+          let dirEnd = line3.length;
+          let cs = line3.indexOf("#");
           while (cs !== -1) {
-            const ch = line2[cs - 1];
+            const ch = line3[cs - 1];
             if (ch === " " || ch === "	") {
               dirEnd = cs - 1;
               break;
             } else {
-              cs = line2.indexOf("#", cs + 1);
+              cs = line3.indexOf("#", cs + 1);
             }
           }
           while (true) {
-            const ch = line2[dirEnd - 1];
+            const ch = line3[dirEnd - 1];
             if (ch === " " || ch === "	")
               dirEnd -= 1;
             else
               break;
           }
           const n = (yield* this.pushCount(dirEnd)) + (yield* this.pushSpaces(true));
-          yield* this.pushCount(line2.length - n);
+          yield* this.pushCount(line3.length - n);
           this.pushNewline();
           return "stream";
         }
         if (this.atLineEnd()) {
           const sp = yield* this.pushSpaces(true);
-          yield* this.pushCount(line2.length - sp);
+          yield* this.pushCount(line3.length - sp);
           yield* this.pushNewline();
           return "stream";
         }
@@ -142625,13 +142625,13 @@ var require_lexer = __commonJS({
       }
       *parseDocument() {
         yield* this.pushSpaces(true);
-        const line2 = this.getLine();
-        if (line2 === null)
+        const line3 = this.getLine();
+        if (line3 === null)
           return this.setNext("doc");
         let n = yield* this.pushIndicators();
-        switch (line2[n]) {
+        switch (line3[n]) {
           case "#":
-            yield* this.pushCount(line2.length - n);
+            yield* this.pushCount(line3.length - n);
           // fallthrough
           case void 0:
             yield* this.pushNewline();
@@ -142656,7 +142656,7 @@ var require_lexer = __commonJS({
           case ">":
             n += yield* this.parseBlockScalarHeader();
             n += yield* this.pushSpaces(true);
-            yield* this.pushCount(line2.length - n);
+            yield* this.pushCount(line3.length - n);
             yield* this.pushNewline();
             return yield* this.parseBlockScalar();
           default:
@@ -142676,11 +142676,11 @@ var require_lexer = __commonJS({
           }
           sp += yield* this.pushSpaces(true);
         } while (nl + sp > 0);
-        const line2 = this.getLine();
-        if (line2 === null)
+        const line3 = this.getLine();
+        if (line3 === null)
           return this.setNext("flow");
-        if (indent !== -1 && indent < this.indentNext && line2[0] !== "#" || indent === 0 && (line2.startsWith("---") || line2.startsWith("...")) && isEmpty(line2[3])) {
-          const atFlowEndMarker = indent === this.indentNext - 1 && this.flowLevel === 1 && (line2[0] === "]" || line2[0] === "}");
+        if (indent !== -1 && indent < this.indentNext && line3[0] !== "#" || indent === 0 && (line3.startsWith("---") || line3.startsWith("...")) && isEmpty(line3[3])) {
+          const atFlowEndMarker = indent === this.indentNext - 1 && this.flowLevel === 1 && (line3[0] === "]" || line3[0] === "}");
           if (!atFlowEndMarker) {
             this.flowLevel = 0;
             yield cst.FLOW_END;
@@ -142688,17 +142688,17 @@ var require_lexer = __commonJS({
           }
         }
         let n = 0;
-        while (line2[n] === ",") {
+        while (line3[n] === ",") {
           n += yield* this.pushCount(1);
           n += yield* this.pushSpaces(true);
           this.flowKey = false;
         }
         n += yield* this.pushIndicators();
-        switch (line2[n]) {
+        switch (line3[n]) {
           case void 0:
             return "flow";
           case "#":
-            yield* this.pushCount(line2.length - n);
+            yield* this.pushCount(line3.length - n);
             return "flow";
           case "{":
           case "[":
@@ -144784,8 +144784,8 @@ ${itemIndentStr}`);
     const rawLines = str.split(/\r\n|\n/);
     const chunkPattern = /[\s]*[^\s]+/g;
     const wrappedLines = [];
-    rawLines.forEach((line2) => {
-      const chunks = line2.match(chunkPattern);
+    rawLines.forEach((line3) => {
+      const chunks = line3.match(chunkPattern);
       if (chunks === null) {
         wrappedLines.push("");
         return;
@@ -147190,9 +147190,9 @@ Expecting one of '${allowedValues.join("', '")}'`);
       helpWidth: context.helpWidth,
       outputHasColors: context.hasColors
     });
-    const text3 = helper.formatHelp(this, helper);
-    if (context.hasColors) return text3;
-    return this._outputConfiguration.stripColor(text3);
+    const text4 = helper.formatHelp(this, helper);
+    if (context.hasColors) return text4;
+    return this._outputConfiguration.stripColor(text4);
   }
   /**
    * @typedef HelpContext
@@ -147352,19 +147352,19 @@ Expecting one of '${allowedValues.join("', '")}'`);
    * @param {(string | Function)} text - string to add, or a function returning a string
    * @return {Command} `this` command for chaining
    */
-  addHelpText(position, text3) {
+  addHelpText(position2, text4) {
     const allowedValues = ["beforeAll", "before", "after", "afterAll"];
-    if (!allowedValues.includes(position)) {
+    if (!allowedValues.includes(position2)) {
       throw new Error(`Unexpected value for position to addHelpText.
 Expecting one of '${allowedValues.join("', '")}'`);
     }
-    const helpEvent = `${position}Help`;
+    const helpEvent = `${position2}Help`;
     this.on(helpEvent, (context) => {
       let helpStr;
-      if (typeof text3 === "function") {
-        helpStr = text3({ error: context.error, command: context.command });
+      if (typeof text4 === "function") {
+        helpStr = text4({ error: context.error, command: context.command });
       } else {
-        helpStr = text3;
+        helpStr = text4;
       }
       if (helpStr) {
         context.write(`${helpStr}
@@ -148106,19 +148106,19 @@ var BULLET_TYPES;
 })(BULLET_TYPES || (BULLET_TYPES = {}));
 var IMG_BROKEN = "data:image/png;base64,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";
 var IMG_PLAYBTN = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB4AAAAVnCAYAAACzfHDVAAAAYHpUWHRSYXcgcHJvZmlsZSB0eXBlIGV4aWYAAHjaVcjJDYAwDEXBu6ughBfH+YnLQSwSHVA+Yrkwx7HtPHabHuEWrQ+lBBAZ6TMweBWoCwUH8quZH6VWFXVT696zxp12ARkVFEqn8wB8AAAACXBIWXMAAC4jAAAuIwF4pT92AADZLklEQVR42uzdd5hV9Z0/8M+dmcsUZmDovYOhKCiKYhR7JJuoSTCWGFI0WUxijBoTTXazVlyza4maYm9rTRSJigVsqCDNQhHBAogKCEgRMjMMU+7vj93sL8kqClLmnPt6PY+PeXZM9vP9vO8jZ+Y955xMfJLjorBrRMuSgmiViyjN1Ee2oSCyucbIBAAAAAAAAADbXaYgcoWNUZcrirpMbdRsysa69wbF+rggGrf439vSF7seF12aFUTnxvoosGIAAAAAAACAXacgoqEgF++/VRgr4r5o+Kh/pvD//F8uiII+LaPrum/EXzqui2b1ddHGKgEAAAAAAAB2rVxEQWMmWrQtjHZlA6N2w2tR84//zP8pgHu3ib6NBdG+zdqorK6KVUXZaB85j3sGAAAAAAAAaAoaG6OwIBdtyneP2PBabPzbr/1dAdx3VHRtyESHiIhcYzQrLo7WmVzkcjmPgAYAAAAAAABoSgpy0eIfS+D/LYD7fy3abC6Inn/7X2hsjELlLwAAAAAAAEDT9D8lcM1fHwddFBFxyAVR9M686PVp/gfqayKiJiLqLBMAAAAAAABgh8hGRGlEUekn/6PFEb3ikNgQk6O+KCJi6dzoksv83/cB/1X9xoiaJdmoWxlRV1dk2QAAAAAAAAA7QTZbH9muERX96v7n9t7/q6Exinq3i86LI94pjOOisHUu+uYykfmof7h+Y8Sa6aVRt74gGhs9DRoAAAAAAABgZ2lsLIi69QWxeUUmSjs0/vedwR8hk4uydSfE+wVd6qOyMfMx7/mtj9jwUtbjngEAAAAAAAB2obrqolg7IxtR/9Ffb4wo7P5GtCwobRaVH/c/UvNmNuqqPfIZAAAAAAAAYFerqy6KmjezH/v1ktpoVZBr/PgCeMN7yl8AAAAAAACApmJLHW5jUVQWNDSP+Q3ZeLco4i9/+8X6teHRzwAAAAAAAABNSd3/dLn/oLAoqqIuVhXFxhhSGB/xqGjlLwAAAAAAAECTU1eTjaK/KXSLIv7SWB+bc5ko9YxnAAAAAAAAgATJFv393bz1EeV//c8F1gMAAAAAAACQDgpgAAAAAAAAgJRQAAMAAAAAAACkhAIYAAAAAAAAICUUwAAAAAAAAAApoQAGAAAAAAAASAkFMAAAAAAAAEBKKIABAAAAAAAAUkIBDAAAAAAAAJASCmAAAAAAAACAlFAAAwAAAAAAAKSEAhgAAAAAAAAgJRTAAAAAAAAAACmhAAYAAAAAAABICQUwAAAAAAAAQEoogAEAAAAAAABSQgEMAAAAAAAAkBIKYAAAAAAAAICUUAADAAAAAAAApIQCGAAAAAAAACAlFMAAAAAAAAAAKaEABgAAAAAAAEgJBTAAAAAAAABASiiAAQAAAAAAAFJCAQwAAAAAAACQEgpgAAAAAAAAgJRQAAMAAAAAAACkhAIYAAAAAAAAICUUwAAAAAAAAAApoQAGAAAAAAAASAkFMAAAAAAAAEBKKIABAAAAAAAAUkIBDAAAAAAAAJASCmAAAAAAAACAlFAAAwAAAAAAAKSEAhgAAAAAAAAgJRTAAAAAAAAAACmhAAYAAAAAAABICQUwAAAAAAAAQEoogAEAAAAAAABSQgEMAAAAAAAAkBIKYAAAAAAAAICUUAADAAAAAAAApIQCGAAAAAAAACAlFMAAAAAAAAAAKaEABgAAAAAAAEgJBTAAAAAAAABASiiAAQAAAAAAAFJCAQwAAAAAAACQEgpgAAAAAAAAgJRQAAMAAAAAAACkhAIYAAAAAAAAICUUwAAAAAAAAAApoQAGAAAAAAAASAkFMAAAAAAAAEBKKIABAAAAAAAAUkIBDAAAAAAAAJASCmAAAAAAAACAlFAAAwAAAAAAAKSEAhgAAAAAAAAgJRTAAAAAAAAAACmhAAYAAAAAAABICQUwAAAAAAAAQEoogAEAAAAAAABSQgEMAAAAAAAAkBIKYAAAAAAAAICUUAADAAAAAAAApIQCGAAAAAAAACAlFMAAAAAAAAAAKaEABgAAAAAAAEgJBTAAAAAAAABASiiAAQAAAAAAAFJCAQwAAAAAAACQEgpgAAAAAAAAgJRQAAMAAAAAAACkhAIYAAAAAAAAICUUwAAAAAAAAAApoQAGAAAAAAAASAkFMAAAAAAAAEBKKIABAAAAAAAAUkIBDAAAAAAAAJASCmAAAAAAAACAlFAAAwAAAAAAAKSEAhgAAAAAAAAgJRTAAAAAAAAAACmhAAYAAAAAAABICQUwAAAAAAAAQEoogAEAAAAAAABSQgEMAAAAAAAAkBIKYAAAAAAAAICUUAADAAAAAAAApIQCGAAAAAAAACAlFMAAAAAAAAAAKaEABgAAAAAAAEgJBTAAAAAAAABASiiAAQAAAAAAAFJCAQwAAAAAAACQEgpgAAAAAAAAgJRQAAMAAAAAAACkhAIYAAAAAAAAICUUwAAAAAAAAAApoQAGAAAAAAAASAkFMAAAAAAAAEBKKIABAAAAAAAAUkIBDAAAAAAAAJASCmAAAAAAAACAlFAAAwAAAAAAAKSEAhgAAAAAAAAgJRTAAAAAAAAAACmhAAYAAAAAAABICQUwAAAAAAAAQEoogAEAAAAAAABSQgEMAAAAAAAAkBIKYAAAAAAAAICUUAADAAAAAAAApIQCGAAAAAAAACAlFMAAAAAAAAAAKaEABgAAAAAAAEgJBTAAAAAAAABASiiAAQAAAAAAAFJCAQwAAAAAAACQEgpgAAAAAAAAgJRQAAMAAAAAAACkhAIYAAAAAAAAICUUwAAAAAAAAAApoQAGAAAAAAAASAkFMAAAAAAAAEBKKIABAAAAAAAAUkIBDAAAAAAAAJASCmAAAAAAAACAlFAAAwAAAAAAAKSEAhgAAAAAAAAgJRTAAAAAAAAAACmhAAYAAAAAAABICQUwAAAAAAAAQEoogAEAAAAAAABSQgEMAAAAAAAAkBIKYAAAAAAAAICUUAADAAAAAAAApIQCGAAAAAAAACAlFMAAAAAAAAAAKaEABgAAAAAAAEgJBTAAAAAAAABASiiAAQAAAAAAAFJCAQwAAAAAAACQEgpgAAAAAAAAgJRQAAMAAAAAAACkhAIYAAAAAAAAICUUwAAAAAAAAAApoQAGAAAAAAAASAkFMAAAAAAAAEBKKIABAAAAAAAAUkIBDAAAAAAAAJASCmAAAAAAAACAlFAAAwAAAAAAAKSEAhgAAAAAAAAgJRTAAAAAAAAAACmhAAYAAAAAAABICQUwAAAAAAAAQEoogAEAAAAAAABSQgEMAAAAAAAAkBIKYAAAAAAAAICUUAADAAAAAAAApIQCGAAAAAAAACAlFMAAAAAAAAAAKaEABgAAAAAAAEgJBTAAAAAAAABASiiAAQAAAAAAAFJCAQwAAAAAAACQEgpgAAAAAAAAgJRQAAMAAAAAAACkhAIYAAAAAAAAICUUwAAAAAAAAAApoQAGAAAAAAAASAkFMAAAAAAAAEBKKIABAAAAAAAAUkIBDAAAAAAAAJASCmAAAAAAAACAlFAAAwAAAAAAAKSEAhgAAAAAAAAgJRTAAAAAAAAAACmhAAYAAAAAAABICQUwAAAAAAAAQEoogAEAAAAAAABSQgEMAAAAAAAAkBIKYAAAAAAAAICUUAADAAAAAAAApIQCGAAAAAAAACAlFMAAAAAAAAAAKaEABgAAAAAAAEgJBTAAAAAAAABASiiAAQAAAAAAAFJCAQwAAAAAAACQEgpgAAAAAAAAgJRQAAMAAAAAAACkhAIYAAAAAAAAICUUwAAAAAAAAAApoQAGAAAAAAAASAkFMAAAAAAAAEBKKIABAAAAAAAAUkIBDAAAAAAAAJASCmAAAAAAAACAlFAAAwAAAAAAAKSEAhgAAAAAAAAgJRTAAAAAAAAAACmhAAYAAAAAAABICQUwAAAAAAAAQEoogAEAAAAAAABSQgEMAAAAAAAAkBIKYAAAAAAAAICUUAADAAAAAAAApIQCGAAAAAAAACAlFMAAAAAAAAAAKaEABgAAAAAAAEgJBTAAAAAAAABASiiAAQAAAAAAAFJCAQwAAAAAAACQEgpgAAAAAAAAgJRQAAMAAAAAAACkhAIYAAAAAAAAICUUwAAAAAAAAAApoQAGAAAAAAAASAkFMAAAAAAAAEBKKIABAAAAAAAAUkIBDAAAAAAAAJASCmAAAAAAAACAlFAAAwAAAAAAAKSEAhgAAAAAAAAgJRTAAAAAAAAAACmhAAYAAAAAAABICQUwAAAAAAAAQEoogAEAAAAAAABSQgEMAAAAAAAAkBIKYAAAAAAAAICUUAADAAAAAAAApIQCGAAAAAAAACAlFMAAAAAAAAAAKaEABgAAAAAAAEgJBTAAAAAAAABASiiAAQAAAAAAAFJCAQwAAAAAAACQEgpgAAAAAAAAgJRQAAMAAAAAAACkhAIYAAAAAAAAICUUwAAAAAAAAAApoQAGAAAAAAAASAkFMAAAAAAAAEBKKIABAAAAAAAAUkIBDAAAAAAAAJASCmAAAAAAAACAlFAAAwAAAAAAAKSEAhgAAAAAAAAgJRTAAAAAAAAAACmhAAYAAAAAAABICQUwAAAAAAAAQEoogAEAAAAAAABSQgEMAAAAAAAAkBIKYAAAAAAAAICUUAADAAAAAAAApIQCGAAAAAAAACAlFMAAAAAAAAAAKaEABgAAAAAAAEgJBTAAAAAAAABASiiAAQAAAAAAAFJCAQwAAAAAAACQEgpgAAAAAAAAgJRQAAMAAAAAAACkhAIYAAAAAAAAICUUwAAAAAAAAAApoQAGAAAAAAAASAkFMAAAAAAAAEBKKIABAAAAAAAAUkIBDAAAAAAAAJASCmAAAAAAAACAlFAAAwAAAAAAAKSEAhgAAAAAAAAgJRTAAAAAAAAAACmhAAYAAAAAAABICQUwAAAAAAAAQEoogAEAAAAAAABSQgEMAAAAAAAAkBIKYAAAAAAAAICUUAADAAAAAAAApIQCGAAAAAAAACAlFMAAAAAAAAAAKaEABgAAAAAAAEgJBTAAAAAAAABASiiAAQAAAAAAAFJCAQwAAAAAAACQEgpgAAAAAAAAgJRQAAMAAAAAAACkhAIYAAAAAAAAICUUwAAAAAAAAAApoQAGAAAAAAAASAkFMAAAAAAAAEBKKIABAAAAAAAAUkIBDAAAAAAAAJASCmAAAAAAAACAlFAAAwAAAAAAAKREkRUAAACwrUpLSwuGDRvWfMCAAS26du3avKysrLiioqKkZcuWzZs1a1bcvHnz0tLS0rJsNtusuLi4ebNmzUoLCgo+8/eijY2N9Zs3b66pra2tqqur21xTU1NdVVVVs2nTptqNGzdWbdiwoeYvf/nL5hUrVlQtWLBgw6xZs6pqamoaJQYAAEDaKYABAACIiIghQ4aUHnTQQW379u3bql27dq3at2/fpkWLFq2bN29eWVpa2qpZs2bNCwsLm2ez2fLCwsLyoqKi8sLCwtKknK+hoaG6vr6+qqGh4S91dXV/aWhoqNq8eXNVTU3NuqqqqvUbNmxYu2rVqjWrV69e99Zbb6177rnnPpgzZ06NTwYAAABJogAGAADIA8OGDWt+xBFHdBwwYECnLl26dGjdunXHFi1adCgtLe1YUlLSvlmzZq0KCgqK07yDwsLCssLCwrKIaPdp/zuNjY21mzdvXrdp06ZVNTU172/YsGHl2rVr31+2bNnKBQsWrHjyySffnzVrVpVPGAAAAE1Fpuexsd9HfaF+ZcSal0ptCAAAIAE6deqUPf744zvtueeeXbp3796lbdu2XSorKzuXlpZ2KS0t7VBYWFhhSztGQ0PDxpqampU1NTXL169fv+yDDz5Y9s477yybPXv2sj/96U8rVqxYUWdLAAAAbE9t9q6Jog4f/TUFMAAAQEJks9nMt7/97Y4jRozo1bdv397t2rXrXl5e3rWsrKxzcXFx+4gosKUmp7G2tnZVTU3Nso0bNy5btWrV0tdff/2tJ598cvG999672noAAADYFgpgAACAhPne977X6a9Fb/v27Xu1bNmyV1lZWa8kvXOXLauvr9/wl7/8ZdG6desWL1u2bNHChQsX/fGPf1w8derUjbYDAADAliiAAQAAmqhsNps59dRTuxx66KH9+/Tp87n27dv3Ly8v719UVOSRzXlq06ZNKzZu3Pj6+++//8abb775xqOPPvrG3XffvcpmAAAA+CsFMAAAQBNx6qmndvniF784qHfv3v3btWv3uYqKis8VFhaW2wxbUl9fv37Dhg1vfPDBB68vXrz4jccee2z+jTfeuNxmAAAA8pMCGAAAYBc45phjWn/rW9/aq3///kPatGnTv6Kiop9HOLO9NDQ0VG/cuPGtNWvWLFy4cOGcO+6445WHHnporc0AAACknwIYAABgJzjjjDO6f+lLX9qrV69eg1u3bj2orKysR0RkbIadJFddXb103bp18xcvXjz30UcffeXqq69+x1oAAADSRwEMAACwnZWWlhb86le/2u3QQw8d1r17931btmw5qLCwsMxmaEoaGhqqP/zww/nvvPPOzGeeeWbW2LFj36ipqWm0GQAAgGRTAAMAAGwHP/7xj7t+9atf3bdXr15D27Ztu1c2m21jKyRJXV3dmg8++OCVRYsWvfznP/95xh/+8IdltgIAAJA8CmAAAIBtcOKJJ7Y75ZRTDujXr9+w1q1bD81ms61shTSpq6tbt3bt2pfffPPNWbfccsvUe++9d7WtAAAANH0KYAAAgE+hoqKi4IILLhg0YsSI/bp27bpfy5YtB2YymUKbIR/kcrmGDz/8cP6777474/nnn59x4YUXvrZx40aPiwYAAGiCFMAAAAAf4/jjj2/7/e9//8D+/fsf2Lp1630KCgpKbAUiGhsbN61fv37eW2+9NeWGG2545u67715lKwAAAE2DAhgAAOB/ZLPZzAUXXPC5I4888sDu3bsfWFFRsVtEFNgMbFl1dfWSd999d8qsWbNmnnvuuS+vW7euwVYAAAB2DQUwAACQ10pLSwsuvfTSQYcccsjBXbt2HVFWVtbDVmDb1dbWrnr//fdfmDp16uRf/vKXL65evbreVgAAAHYeBTAAAJB3Bg0aVHrBBRd8fs899zywQ4cOBxQVFbWwFdj+Ghsba9euXTtrzpw5T59//vmTX3755WpbAQAA2LEUwAAAQF4YNmxY8/POO+/gIUOGHOZ9vrDz/W0ZfNFFFz07a9asKlsBAADY/hTAAABAarVq1arwyiuv3HfEiBEjO3TocFBhYWGZrcCu19DQUP3+++8/O2XKlIk/+clPZm7cuLHRVgAAALYPBTAAAJAqrVq1Kvztb3+7/3777Xd4x44dRxQWFpbbCjRdDQ0NG99///0pM2bMeOqHP/zhC8pgAACAz0YBDAAApMJZZ53V45vf/OaRvXr1GllaWtrVRiB5ampq3l28ePHEO++8c9LVV1/9jo0AAABsPQUwAACQWMOHDy+/6KKLvjB48OCjW7RoMdBGID0+/PDDV+fNmzfhvPPOe3L69Ol/sREAAIBPRwEMAAAkSqtWrQpvuOGGQ/bbb79/atOmzX6ZTCZrK5BeuVyubs2aNTNmzJjx2JgxYyavW7euwVYAAAA+ngIYAABIhB//+Mddv/e9732lZ8+e/1RcXNzWRiD/1NbWfvD2228/dssttzz029/+9l0bAQAA+L8UwAAAQJNVUVFRcO21137+4IMPPrZ169b7ZTKZAlsBIqJxzZo1M59//vnxp5122hR3BQMAAPx/CmAAAKDJOeWUUzqefvrpx/bu3ftL2Wy2jY0AH6e+vn7j0qVLH/vd7373x+uvv36ZjQAAAPlOAQwAADQJ2Ww2c+uttx5wyCGHnNC6deu9I8LdvsDWaFy7du1L06ZN+/OPfvSjZ1evXl1vJQAAQD5SAAMAALtU//79S6655pp/2nPPPY8tLy/vayPAZ1VTU7NswYIF488999wHp06dutFGAACAfKIABgAAdomf//znPU855ZQTu3btemRhYWGZjQDbW2NjY92KFSuevOWWW+689NJLF9kIAACQDxTAAADATuMxz8Cusn79+rlPP/30f5188slT6+rqcjYCAACklQIYAADY4fr27Vv8hz/84a+Pee5nI8CuUlNT8+68efPu/8EPfvDgwoULN9kIAACQNgpgAABghxkyZEjpNddc89XBgwefWFxc3MFGgKaitrZ21dy5c+/5yU9+8uc5c+bU2AgAAJAWWyqAPYoNAADYJqNHj+4wb968n06ZMuXRYcOGnaH8BZqa4uLi9sOGDTtjypQpj86bN++nJ510UntbAQAA0s4dwAAAwFY599xze33/+9//dufOnY/IZDJZGwGSIpfL1S1fvvzJG2644fbLLrvsbRsBAACSyiOgAQCAz+y8887r+53vfOfbHTt2PDyTyRTaCJBUuVyuYcWKFU/cdNNN//XrX/96sY0AAABJowAGAAC22WWXXTboG9/4xg9at249zDaAtFm7du2su++++9pzzjnnNdsAAACSQgEMAABsNcUvkE8UwQAAQJIogAEAgE9N8Qvks7Vr18665557rvv5z38+3zYAAICmaksFcGHlwOj6UV9orIqoWZG1PQAAyBO/+MUvet9xxx3nHHrooT8pLS3tYiNAPiotLe2y7777HvP973+/X1lZ2ZIpU6assxUAAKCpKetcHwXlH/01BTAAAOS5M844o/u99957zpe//OWflZeX94qIjK0AeS5TXl7e8+CDDx71/e9/v3dEvDVjxowPrQUAAGgqFMAAAMD/ceKJJ7a77777fjJq1Kh/KS8v7xOKX4B/lCkvL+99+OGHj/rWt77VfvXq1Qvnz59fbS0AAMCutqUC2DuAAQAgzwwdOrTs+uuvP6l///4nFRYWltkI20NjY2Ns2rQpqquro6amJurr62PTpk2xefPmqK+vj+rq6qivr4/NmzfHpk2boqGhYZv/fxUWFkZJSUk0a9YsioqKoqysLIqKiqJZs2ZRUlISRUVFUVpa+r9/FRQUCIjtoqGhoeq11167a8yYMffMmTOnxkYAAIBdZUvvAFYAAwBAnujUqVP2nnvuGbXXXnudnM1mK22Ej9PQ0BAbN26MDRs2/J+/Nm7cGBs3boyamprYtGlTbNq0KWpqaqK2trbJnqe4uDhKSkqitLT0f/9eUVERFRUV0aJFi//zV0VFRRQWFvog8LHq6urWvvjii7eceOKJf169enW9jQAAADubAhgAAPLcXXfdddAXv/jF00tLS7vZRn7L5XKxYcOGWLt2baxbty7Wrl37d3+tW7cuNmzYkPd7atGiRbRu3TpatWoVrVu3jjZt2vzvf27dunW0aNHCh4morq5e+sgjj1zzne98Z6ptAAAAO5MCGAAA8tTVV189+MQTTzyzoqJioG3kj8bGxli5cmUsX748Pvjgg1i9evX//n3t2rXR2NhoSZ9RYWFhtGrVKtq1axdt27b937937tw5OnTo4LHTeWbDhg3z77333qvOPPPMebYBAADsDApgAADIM1/72tfaXHrppad27979qIjQRKVUQ0NDrFq1KlasWBHvv//+//595cqVTfqRzGlXXFwcHTp0iI4dO0bnzp2jY8eO0alTp2jXrp1HS6dYLpdrfOeddx76+c9/fv2ECRPW2QgAALAjKYABACBP9OrVq9ldd931jT322OM7hYWFZTaSHh9++GG88847sXTp0njvvfdixYoVsXr16mhoaLCchCgsLIz27dtHp06dolu3btG9e/fo3r27x0mnTENDQ9W8efNu++Y3v/nHJUuWbLYRAABgR1AAAwBAHrjrrrtG/NM//dOZJSUlXWwj2davXx9Lly6Nd955539L3w8//NBiUqqysvJ/y+C//tWqVSuLSbiamppljz322G9Gjx49xTYAAIDtTQEMAAAp9qtf/arPD3/4w5+1atVqL9tIno0bN8aSJUvirbfeikWLFsV7770XmzZtspg8V1JSEl27do0+ffpE3759o3fv3lFeXm4xCbRu3bqXr7322ivGjh27yDYAAIDtRQEMAAApNGjQoNI77rjju7vttttJBQUFWRtJhtWrV8ebb74ZixcvjiVLlsTy5cujsbHRYtiigoKC6Ny5c/Tu3Tt69+4d/fr1i7Zt21pMQjQ2Nta98cYbd33rW9+6ff78+TU2AgAAfFYKYAAASJHS0tKCBx988Jj99tvvn7PZbBsbaboaGhri7bffjrfeeisWLFgQS5YscXcv201FRUX06tUr+vbtG3379o2ePXtGYWGhxTRhdXV1a2bMmHHjV77ylYdqamr85gcAALDNFMAAAJASp59+erdf/vKX51ZWVu5jG03T6tWr47XXXouFCxfGm2++GRs3brQUdooWLVpE3759Y8CAATFw4EB3CDdh69evf/E//uM//vPqq69+xzYAAIBtoQAGAICEGzRoUOm99977w969ex+byWTc4teErF+/PubNmxcLFiyIN954Q+FLk9GiRYvo169fDBgwIPbYY4+orKy0lCYkl8s1LF68eNyJJ554rcdCAwAAW0sBDAAACXbNNdcMOemkk35RVlbWyzZ2vVwuF++++27MnTs3XnvttViyZIl3+NLkFRQURK9evWLQoEExePDg6Natm6U0EdXV1UvuvvvuX//kJz+ZYxsAAMCnpQAGAIAEOuqoo1r99re//VmHDh0Ot41da9OmTTF79uyYO3duLFy4MKqqqiyFRGvevHn0798/Bg8eHHvuuWeUlJRYyi62cuXKp04//fTLJ0yYsM42AACAT6IABgCAhBk3btwRRxxxxFnZbLaNbewaVVVVMXfu3Jg7d27Mnz8/amtrLYVUKi4ujoEDB8bgwYNj8ODBUV5ebim7SF1d3ZqnnnrqqlGjRj1hGwAAwJYogAEAICFOOeWUjhdddNEvW7duvZ9t7HwrV66MWbNmxdy5c+Odd96JXC5nKeSdzp07x9577x3Dhg2LDh06WMgusHbt2hnnnXfepbfccsv7tgEAAHwUBTAAADRxpaWlBU899dQ3Bw8e/L2CggLPYt2JVqxYES+99FK89NJLsXz5cguBv/HXMnjvvfeOTp06WchO1NjYuGnu3Lk3H3744XfV1NR40TgAAPB3FMAAANCEjR49usOll176yzZt2gy3jZ1j/fr18eKLL8bMmTNj6dKlFgKfQs+ePWPfffeNYcOGRYsWLSxkJ1mzZs0L55577q/vvvvuVbYBAAD8lQIYAACaoIqKioKJEyd+c/Dgwd8vKCgotpEda8OGDfHiiy/G9OnTlb7wGfXo0SOGDx8ew4YNi4qKCgvZwdwNDAAA/CMFMAAANDGnnHJKx7Fjx/5rZWXlMNvYcerr6+PVV1+NGTNmxLx586Kurs5SYDvKZrMxZMiQ2HfffWP33XePwsJCS9mB1q5dO+MXv/jFv995550rbQMAAPKbAhgAAJqIbDabeeKJJ47fZ599fuSu3x0jl8vFwoULY/r06TF79uzYtGmTpcBOUFpaGkOGDInhw4fHgAEDLGQHaWhoqJ42bdo1Rx555J9tAwAA8pcCGAAAmoDjjz++7ZVXXvmr1q1be9fvDrBmzZqYNm1azJw5M1audHMc7EodO3aMz3/+87H//vt7X/CO+3fetDPPPPOScePGfWAbAACQfxTAAACwi9100037HXvssf9WXFzc1ja2n1wuF6+99lo8//zzMW/evKivr7cUaEKKiopizz33jBEjRsTnPve5yGQylrId1dbWrvrjH/948Q9+8INZtgEAAPlFAQwAALvIkCFDSu+///5zunTp8k+2sf2sXbs2Jk+eHNOnT48PP/zQQiABKisrY8SIEXHIIYdEeXm5hWxHy5Yte+zrX//6f86ZM6fGNgAAID9sqQAurBwYXT/qC41VETUrsrYHAADb6IILLtjt97///VVt2rQZZhvbx+LFi2P8+PFx9913xxtvvBG1tbWWAgmxadOmeOONN+LZZ5+NtWvXRps2bTweejtp0aJFv5NOOumg0tLSuc8+++xaGwEAgPQr61wfBR/zu7XuAAYAgO0sm81mJk2a9PVhw4b9pKCgwG9VfkZ1dXUxY8aMeOaZZ+K9996zEEiRfv36xSGHHBJDhw6NgoICC/mMGhsbN8+YMeOaL37xi+Pq6upyNgIAAOnlEdAAALCTHH/88W2vuuqqCyorK/exjc9mzZo18dRTT8XUqVNj06ZNFgIpVlFREZ///OfjsMMOi8rKSgv5jNavXz/r9NNPv3DcuHEf2AYAAKSTAhgAAHaC22677fNf+9rXzstms5W2se0WLVoUjz/+eMybNy9yOTewQT4pKiqKIUOGxBFHHBG9e/e2kM+grq5u3QMPPHDRySefPM02AAAgfRTAAACwA1VUVBQ8/fTTpwwcOPCUTCbjGabbIJfLxauvvhpPPvlkLFy40EIgz2UymRgwYEAcccQRMWjQIAvZ9n+3Ns6fP/+Www8//JaNGzc22ggAAKTHlgrgwsqB0fWjvtBYFVGzwuvKAABgS0488cR2EyZMuLx79+5fzmQyGRvZOo2NjTFr1qy49dZb48knn4wPPvC0UuC/rV69OmbMmBFz5syJ0tLS6NSpU/jX7NbJZDKZ9u3bD/3+978/dPny5TNfffXValsBAIB0KOtcHwXlH/O9gDuAAQBg29x66637H3vssRcWFRW1sI2tU1NTE0899VQ8++yzsWHDBgsBPlGLFi3i4IMPjsMPPzxKS/28YmvV19d/OG7cuPNPPvnk6bYBAADJ5xHQAACwHWWz2cyzzz77rSFDhvzAI5+3zqZNm2Ly5Mnx1FNPKX6BbdKiRYs47LDD4pBDDlEEb6VcLtfwyiuvXHfooYfeWVdX5yXrAACQYApgAADYTo455pjW11133cWVlZV728ant2HDhnj88cdjypQpUVtbayHAZ1ZcXBwHHnhgfPGLX4wWLTyIYWusWbNm2re//e3zn3nmGb+JAwAACeUdwAAAsB1cfvnlu1900UW/LS8v72cbn05VVVVMmDAhbrnllnjzzTejoaHBUoDtoqGhIZYsWRLPPfdc1NTURI8ePSKb9XOMT6OsrKzb17/+9SPbtm0774knnlhtIwAAkMDreu8ABgCAz+bhhx/+8qGHHnpOQUFBsW18sk2bNsUzzzwTTzzxRFRVVVkIsMOVl5fHkUceGYccckgUF/tX9afR2Ni46emnn/71Mccc87htAABAsngENAAAbKN27doVTZ48+YxevXodZxufrK6uLp5++umYOHGi4hfYJSoqKuKLX/xiHHzwwe4I/pQWLVr0x4MOOuiadevWeUwDAAAkhEdAAwDANjj22GPbPvzww7/p2LHjobaxZXV1dfHkk0/GddddF3Pnzo26ujpLAXaJzZs3x2uvvRbPPfdcRET06NEjCgsLLWYLWrduvfv3vve9fd9+++1pCxYsqLYRAABo+rb0CGgFMAAAfITLL7989wsuuOB3zZs372UbH6+xsTGmTJkS119/fbzyyiuKX6DJ2Lx5cyxYsCCmT58excXF0a1bt8hkMhbzMUpKSjp8+ctfPrJt27ZzvBcYAACaPu8ABgCArTB+/Pgjv/CFL/xLQUFBiW18vAULFsT48eNj6dKllgE0eT169IivfOUrMWjQIMvYgsbGxpqJEydecuyxxz5pGwAA0HR5BzAAAHwK7dq1K3ruued+1qNHj6/axsdbtGhR3H///bF48WLLABKnV69ecdxxx0WfPn0sYwuWLl3654MOOujy1atX19sGAAA0Pd4BDAAAn2DYsGHNn3766V936tTpC7bx0TZs2BD33Xdf/PGPf4y1a9daCJBI69evj2nTpsW6deuiZ8+eUVLiYQ8fpbKysv+3v/3t/lOmTJmyfPlyz/cHAIAmxjuAAQBgC372s5/1uP76669t0aKF54J+hJqamhg/fnzcfPPN8fbbb0cul7MUINFyuVy888478cwzz0RVVVX07t07slk/A/lHZWVl3U488cTD6+rqZkyfPv1DGwEAgCZ0va4ABgCAj3bFFVfscdZZZ11dXFzcwTb+Xi6XixkzZsR1110XCxYsiMbGRksBUqWxsTGWLFkSM2bMiPLy8ujSpUtkMhmL+RvZbLbFQQcddHibNm1mP/HEE6ttBAAAmoYtFcDeAQwAQN6aNGnSqAMOOODsTCZTaBt/b9GiRXHPPffEu+++axlA3ujWrVucdNJJ0bt3b8v4B7lcrm7y5Mm//vKXv/yIbQAAwK63pXcAK4ABAMg7paWlBTNnzjyzT58+x9vG39uwYUOMGzcuZsyY4VHPQF7KZDKx3377xde//vWoqKiwkH+waNGiP+27775X1dTUeCwEAADsQgpgAAD4H926dctOnjz5V506dRppG/9fLpeLqVOnxp///OfYuHGjhQB5r6KiIkaNGhX777+/x0L/g+XLlz9+6KGHXvLuu+/W2QYAAOwaWyqAvQMYAIC8MXz48PInnnjiynbt2o2wjf/vnXfeiWuvvTaee+652Lx5s4UARMTmzZtjzpw58dprr0XPnj2jRYsWlvI/Kioq+n7rW98aMnXq1Ofee+89f3AAAMAusKV3ACuAAQDIC9/+9rc73n777X9o0aLFANv4b1VVVXHXXXfFvffeG+vXr7cQgI+wbt26eP7552P9+vWx2267RVFRkaVERElJSefjjjvuoA8++GDKK6+88hcbAQCAnUsBDABAXjv//PP7XXzxxX8oKSnpbBv/bfr06XHttdfGokWLLAPgU3jnnXdi2rRp0bp16+jc2R8nERHZbLbyC1/4whElJSUvTp48eY2NAADAzqMABgAgb/3ud7/b60c/+tFVRUVFrWwjYs2aNXHzzTfHpEmTora21kIAtkJtbW289NJL8c4770Tfvn2jtLQ073dSWFhYNnz48C/26dNn4UMPPbTMpwQAAHYOBTAAAHnp1ltv3f+b3/zmfxYWFjbP913kcrl4/vnn4/rrr4/ly5f7cAB8BitXroxp06ZFRUVFdOvWLTKZTF7vo6CgIDto0KBDBw0atOiBBx54xycEAAB2vC0VwJmex8Z+H/WF+pURa17ym6wAACTTww8//KXDDjvsXzKZTN6/rPGDDz6I22+/Pd544w0fDIDtbMCAAfGtb30r2rRpk/e7yOVyjVOmTPn1yJEjH/LJAACAHavN3jVR1OGjv6YABgAgdV555ZXTPve5z30r3/fQ0NAQjz32WDz++ONRV1fngwGwg2Sz2Tj66KPjC1/4QhQUFOT9Pl5//fU79tprr9/7ZAAAwI6jAAYAIC9ks9nMyy+/fFafPn2Oz/ddvPvuu3HbbbfFe++954MBsJN069YtvvOd70S3bt3yfhdLliy5f5999rmypqam0ScDAAC2PwUwAACpV1paWjBr1qyzevfufVw+7yGXy8WTTz4ZDz74oLt+AXaBbDYbxxxzTBxxxBF5fzfw0qVLHxg6dOjlSmAAANj+FMAAAKRar169mk2ePHlsu3btDsrnPaxcuTJuueWWePvtt30oAHaxnj17ximnnBIdOnTI6z2sXr16yiGHHPIvS5Ys2exTAQAA28+WCuDCyoHR9aO+0FgVUbMia3sAADRpQ4cOLXvqqacub9Omzf75uoNcLhfPPPNMXH/99bF27VofCoAmYP369TFlypQoKSmJnj17RiaTycs9NG/evPtJJ500ZPLkyc+sWLHCoykAAGA7KetcHwXlH/01BTAAAIk1ZMiQ0kceeeSKVq1a7Z2vO6iuro7bb789nnjiiWhs9IRNgKaksbEx5s+fH++//34MGDAgstn8/DlLaWlpp6997WuDn3rqqadXrlxZ75MBAACfnQIYAIDUOfTQQ1s8+OCDv2/ZsuUe+bqDOXPmxNVXX+2RzwBN3PLly+OFF16Ijh075u0joUtLSzudcMIJ+7/00ktPv/3227U+FQAA8NkogAEASJVhw4Y1v++++37TsmXLQfl4/vr6+hg/fnz88Y9/jNpaP0MHSILNmzfHiy++GJs3b47ddtstCgoK8m4HxcXFbY866qg9n3vuuaeXL1/ucdAAAPAZKIABAEiNI488snLcuHG/b9GixcB8PP97770XV111VcyZM8eHASCBFi1aFC+//HL069cvWrRokXfnLykp6XDcccftP2fOnGcWLVq0yScCAAC2jQIYAIBUOPLIIyvvvPPO35aXl++Wj+d/+umn48Ybb4wPP/zQhwEgwf7yl7/ECy+8ECUlJdGrV6+8O3+zZs3aHHXUUfspgQEAYNspgAEASLxjjz227W233faH5s2b98m3s1dVVcXNN98cTz31VDQ2NvowAKRAY2NjzJ8/P5YtWxYDBgyIZs2a5dX5mzVr1uaYY4458M0333xm4cKFNT4RAACwdRTAAAAk2qGHHtritttuuzofy9+33347rrnmmli8eLEPAkAKvf/++/HKK69Enz59orKyMq/Ons1mK4888sh9Zs6c+dTSpUs3+zQAAMCnpwAGACCxjjjiiJb33nvvteXl5f3y6dy5XC4mTZoUN998c1RVVfkgAKRYVVVVTJ06NbLZbPTp0ycymUzenL24uLjtV7/61c+/8sorTy1evLjWpwEAAD4dBTAAAIl06KGHtrj33nt/l2/lb3V1ddx0000xefLkyOVyPggAeSCXy8WCBQvi3Xffjd133z2y2fz5mUyzZs1aH3300fvNmDHjSXcCAwDAp6MABgAgcYYOHVo2fvz4qysqKgbk07mXLVsWV111lUc+A+SplStXxiuvvBKf+9znoqKiIm/O3axZszZHH3300GeeeebJFStW1PkkAADAlimAAQBIlCFDhpQ++uij17Rs2XL3fDr31KlT49prr42NGzf6EADksaqqqpg+fXq0bds2unTpkjfnLikpaT9q1KihTz755JMrV66s90kAAICPt6UCuMB6AABoSjp16pSdMGHCv1dWVu6RL2dubGyMcePGxR133BF1dW56AiCitrY2br755hg/fnw0NjbmzbkrKyv3mDBhwr9369bNXQkAALCNFMAAADQZrVq1Kpw+ffolbdq02T9fzlxdXR2/+93vYtKkSd73C8DfyeVy8fjjj8fvf//7qK6uzptzt2nTZv8pU6Zc0qpVq0KfAgAA2HoKYAAAmoSKioqC2bNnX9KuXbuD8uXMS5cujYsuuijmz5/vAwDAx3r11VfjoosuiqVLl+bNmdu1a3fQ7Nmz/72iosLPrgAAYCu5iAYAoEmYOXPmz9q1a3dIvpz35ZdfjiuuuCLWrVsnfAA+0bp16+KKK66Il19+OW/O3K5du4Nnzpz5M+kDAMDWUQADALDLvfjii2N69OgxKh/Omsvl4oEHHogbbrghamtrhQ/Ap1ZbWxs33HBDPPDAA3nz2oAePXqMevHFF8dIHwAAPj0FMAAAu9SkSZO+NnDgwFPy4ax1dXVx8803x8SJE73vF4BtksvlYuLEiXHLLbdEXV1dXpx54MCBJ0+aNOlr0gcAgE9HAQwAwC7z6KOPHnXggQeekw9nXbduXfz617+OWbNmCR6Az2zmzJnx61//Ol9eJZA58MADz3n00UePkjwAAHyywsqB0fWjvtBYFVGzImtDAADsEDfeeOO+Rx999EWZTKYw7Wddvnx5XHXVVbFy5UrBA7DdbNiwIWbPnh0DBw6MioqKtB8307179/179uz56sMPP7xc+gAA5LuyzvVRUP7RX1MAAwCw011xxRV7fPe7372qoKCgWdrPOmfOnPjtb38bGzduFDwA2111dXVMmzYtOnfuHB07dkz1WTOZTOHuu+9+eJs2bV6aNGnSKukDAJDPFMAAADQZZ5xxRvef/exnvy0sLCxP+1knTJgQd999d9TX1wsegB2moaEhXnrppchms9G3b99UnzWTyRTttddeB/3lL395dubMmRukDwBAvlIAAwDQJBx00EEVf/jDH64pLi7ulOZz5nK5eOCBB+Kxxx4TOgA77c+eBQsWRF1dXfTv3z8ymUxqz1pQUFBywAEHDJs+ffqkpUuXbpY+AAD5aEsFcIH1AACwMwwaNKj0vvvuu7qsrKxXms9ZV1cX1113XUyaNEnoAOx0EydOjOuvvz7q6upSfc6ysrJef/rTn67u379/idQBAODvKYABANjhKioqCh577LGLKyoqBqb5nNXV1XHNNdfE7NmzhQ7ALvPKK6/ElVdeGVVVVak+Z4sWLQZOnDhxbEVFhZ9vAQDA33CBDADADjdz5syftW3b9sA0n3HdunVx2WWXxRtvvCFwAHa5xYsXx2WXXRZr165N9TnbtWt34MyZM38mcQAA+P8UwAAA7FBPPvnkqB49eoxK8xlXrVoVV1xxRSxfvlzgADQZK1asiCuuuCJWrlyZ6nP26NFj1KRJk0ZJHAAA/lth5cDo+lFfaKyKqFmRtSEAALbZjTfeuO+XvvSlCzOZTGp/8fDdd9+NK6+8MtatWydwAJqc6urqmDVrVvTv3z8qKytTe85u3boN79mz57yHH37Yb2MBAJAXyjrXR0H5R39NAQwAwA5x3nnn9T311FOvLigoKE7rGV977bW45pprorq6WuAANFmbN2+OGTNmRI8ePaJ9+/apPGMmkykYNGjQIYWFhVOee+45v5UFAEDqKYABANipjjrqqFb/8R//8YdmzZq1SusZX3755bj++uujrq5O4AA0eQ0NDfHSSy9Fp06dolOnTqk8Y0FBQXbYsGGfnz9//qQ33nhjk9QBAEizLRXA3gEMAMB21a1bt+wNN9zwnyUlJR3TesYpU6bEjTfeGPX19QIHIDHq6+vjxhtvjKlTp6b2jCUlJZ1uuOGG/+jWrZu7GgAAyFsKYAAAtqunn376XyorK/dI6/kmTZoUd955ZzQ2NgobgMRpbGyMO+64I5588snUnrGysnLw008//UtpAwCQrxTAAABsN88///w3unTp8k9pPd/EiRNj3LhxkcvlhA1AYuVyubj//vtTXQJ36dLlS88+++yJ0gYAIB95BzAAANvFTTfdNPzII488L5PJZNJ4vsceeyzGjx8vaABS47XXXotmzZpF3759U3m+zp0779urV695Dz/88DJpAwCQNlt6B7ACGACAz+wXv/hF7x/+8IdXFxQUNEvj+R544IF45JFHBA1A6ixYsCDq6upiwIABqTtbJpPJDBo06ODGxsbnpk6dul7aAACkiQIYAIAd5oADDqj43e9+99tmzZq1TeP5xo0bF5MmTRI0AKm1aNGi2Lx5cwwcODB1ZysoKMjut99+w5577rnH33vvvc3SBgAgLbZUAHsHMAAA2yybzWbuvPPOfyktLe2exvNNmDBB+QtAXpg0aVI89NBDqTxbaWlpj3vuuedfstlsRtIAAOQDBTAAANvs+eef/06HDh0OTePZHn744Xj44YeFDEDeeOSRR+LPf/5zKs/WoUOHw5599tlvSxkAgHygAAYAYJvcd999hw8ePPjUNJ7t/vvvjwkTJggZgLzz2GOPxX333ZfKs+25554/+NOf/nSYlAEASDvvAAYAYKudccYZ3ceMGXN5QUFBcdrONnHixHjkkUeEDEDeWrx4cWSz2ejbt2/ajpbp06fPvn/5y18mz5w5c4OkAQBIsi29A1gBDADAVhk2bFjzG2+88Q/NmjVrl7azPfroo6l99CUAbI2FCxdGUVFR9OvXL1XnKigoKD7wwAP3e/LJJx9dsWJFnaQBAEiqLRXAHgENAMBWuffee39ZWlraPW3nevzxx+PBBx8UMAD8jz//+c8xceLE1J2rtLS0x3333fdLCQMAkFYKYAAAPrVJkyaN6tSp0xEpPFeMHz9ewADwD8aPHx+TJ09O3bk6der0hUmTJn1VwgAApJFHQAMA8Kmcd955fU888cR/z2QyRWk618yZM+Puu+8WMAB8jNdeey06duwYnTt3TtW5unbtuk9BQcHzzz333DopAwCQNN4BDADAZ3LEEUe0vOKKK67NZrOVaTrXyy+/HDfffHPkcjkhA8DHyOVyMXv27OjSpUt06tQpNefKZDJF++yzz/CpU6c+9u67726WNAAASeIdwAAAbLNsNpu55ZZb/q2kpKRjms61YMGCuPnmm6OxsVHIAPAJGhsb4+abb44333wzVecqLS3tcvfdd5+fzWYzUgYAIC0UwAAAbNGkSZO+3rZt2wPTdKZly5bFDTfcEPX19QIGgE+prq4urr322li+fHmqztWuXbsDH3/88VESBgAgLTwCGgCAj3XZZZcN+upXvzo2k8mk5hcH33///bjyyiujqqpKwACwlerq6uLll1+OIUOGRHl5eWrO1aVLl31LS0unPvPMM2ukDABAEngENAAAW61///4lJ5988q8ymUxRWs60YcOG+P3vfx8bN24UMABso40bN8bvfve7VP15WlBQkP3hD394ft++fYslDABA4q9vrQAAgI/y4IMPnl1WVtYrLeeprq6O3/zmN7Fq1SrhAsBntGrVqrjyyiujuro6NWcqKyvr8/DDD58lXQAAkk4BDADA/zF+/Pgju3XrdnRazlNfX5/KdxYCwK60fPnyuO6666K+vj41Z+rRo8dXx40bd4R0AQBIMgUwAAB/53vf+16nI4444py0nCeXy8Vtt90Wb7zxhnABYDt7/fXX47bbbotcLpeaMx155JHnfvvb3+4oXQAAkkoBDADA/6qoqCi4+OKLLywsLCxPy5nGjx8fs2bNEi4A7CCzZs2Khx56KDXnKSwsrPj1r399QUVFhZ+bAQCQSC5kAQD4XxMnThxdWVk5OC3nef7552PixImCBYAd7LHHHosXXnghNeeprKzc89FHHz1RsgAAJFFh5cDo+lFfaKyKqFmRtSEAgDxxwQUX7DZq1KgLM5lMYRrO8+qrr8Ytt9ySqkdSAkBT/7O3d+/e0a5du1Scp2PHjkNzudxzU6ZMWSddAACamrLO9VHwMc/wcwcwAADRt2/f4h//+McXZzKZVPwG4HvvvRc33HBDNDY2ChcAdpKGhoa47rrrYtmyZak4T0FBQfbss88e27dv32LpAgCQqGtZKwAAYPz48T8qKyvrkYazbNiwIX7/+99HbW2tYAFgJ9u0aVP8/ve/j40bN6biPGVlZb3GjRs3RrIAACSJAhgAIM/ddNNNw/v06XN8Gs5SX18f1157baxdu1awALCLrFmzJq699tqor69PxXn69ev3jd///vdDJQsAQFIogAEA8thBBx1Uceyxx/5rRGTScJ477rgjFi9eLFgA2MUWLVoUd955Z1qOU/CNb3zj34YNG9ZcsgAAJOIC1goAAPLXzTfffFZxcXG7NJxl4sSJMX36dKECQBMxbdq0mDRpUirOUlJS0unOO+88Q6oAACSBAhgAIE/913/914FdunT5UhrO8tprr8Wf//xnoQJAEzN+/PhYsGBBKs7SrVu3o2+66abhUgUAoKlTAAMA5KEvfelLlV/5yld+lYazrFixIq6//vpobGwULAA0MY2NjXHdddfFihUr0nCczHHHHfergw46qEKyAAA0ZQpgAIA8dPXVV5+ezWYrk36OmpqauPbaa2PTpk1CBYAmatOmTXHttddGTU1N4s+SzWbb3njjjT+RKgAATZkCGAAgz9x6663Du3Tp8uWknyOXy8Utt9wSK1euFCoANHErV66MW2+9NXK5XOLP4lHQAAA0dQpgAIA8MnTo0LKvfvWrv0jDWSZMmBBz584VKgAkxJw5c+Kxxx5LxVlGjRr1i6FDh5ZJFQCApkgBDACQR+64444fFRcXd0z6OV5++eV45JFHBAoACfPQQw+l4he4SkpKOt5xxx0/lCgAAE2RAhgAIE9cfvnlu/fs2XNU0s/xwQcfxB133JGKR0gCQL7J5XJx2223xZo1axJ/lp49ex57+eWX7y5VAACaGgUwAEAe6NatW/a73/3uv2YymURf/9XX18cNN9wQ1dXVQgWAhKqqqoobb7wx6uvrE32OTCZT8N3vfvdX3bp1y0oVAICmRAEMAJAHxo8ff0pZWVmvpJ/jnnvuiaVLlwoUABJuyZIlcd999yX+HGVlZT3Hjx9/ikQBAGhKFMAAACn385//vOeAAQNGJ/0c06dPjylTpggUAFJi8uTJMWPGjMSfY8CAAaN//vOf95QoAABNhQIYACDFstls5qyzzjo3k8kk+tGEK1asiLvvvlugAJAyd911V6xYsSLRZ8hkMtmzzjrr3Gw2m5EoAABNgQIYACDFxo0b98XKysq9knyG2trauOGGG6K2tlagAJAyf/1zfvPmzYk+R2Vl5V7jxo0bKVEAAJoCBTAAQEoNHz68/OCDDz4t6ee4//77Y/ny5QIFgJRavnx5jBs3LvHnGDFixI+HDRvWXKIAAOxqCmAAgJS69dZbT8tms22TfIYZM2bEc889J0wASLnJkyfHzJkzE32G4uLitrfffvtp0gQAYFdTAAMApNBVV121R48ePb6S5DOsXLky7rrrLmECQJ64++6744MPPkj0GXr27PnVK664Yg9pAgCwKymAAQBSprS0tOAb3/jGT5N8rdfY2Bi333679/4CQB6pqamJ2267LRobG5N8jIJvfvObZ5aWlvqZGwAAu+6i1AoAANJlwoQJX6uoqBiQ5DOMHz8+Fi1aJEwAyDNvvvlmPPjgg4k+Q4sWLQY9+OCDx0gTAIBdRQEMAJAiRx55ZOWwYcN+kOQzzJ07N5544glhAkCemjhxYixYsCDRZxg+fPiPjjjiiJbSBABgV1AAAwCkyBVXXHFyUVFRRVLnr6qqijvvvDNyuZwwASBP5XK5uP3226O6ujqxZygqKmrxm9/85mRpAgCwKyiAAQBS4vzzz+/Xu3fv45J8httvvz0+/PBDYQJAnlu3bl3cfvvtiT5D7969jz///PP7SRMAgJ1NAQwAkALZbDZz6qmn/jyTyST2+m769OkxZ84cYQIAERExe/bsmDFjRmLnz2QyBaeeeurPs9lsRpoAAOxMCmAAgBT44x//eERlZeXgpM6/du3auPfeewUJAPyde+65J9atW5fY+SsrKwf/6U9/+oIkAQDYmRTAAAAJ17dv3+JDDjnkR0k+w9133x01NTXCBAD+Tk1NTdx9992JPsPBBx/8o759+xZLEwCAnUUBDACQcHfdddc3S0pKOiV1/smTJ8e8efMECQB8pLlz58azzz6b2PlLSko63nPPPd+SJAAAO4sCGAAgwb70pS9VDhw48KSkzr9mzZoYP368IAGALXrggQdizZo1iZ2/f//+Jx111FGtJAkAwM6gAAYASLArrrji1MLCwvIkzp7L5eK2226LTZs2CRIA2KJNmzbFbbfdFrlcLpHzFxYWll1++eU/kCQAADuDAhgAIKF+8Ytf9O7evftXkjr/s88+G2+88YYgAYBP5Y033ojnn38+sfN369bt6F/96ld9JAkAwI6mAAYASKgf/vCHP8pkMom8nvvggw/igQceECIAsFXGjRsX69atS+TsmUym4NRTT/2xFAEA2NEUwAAACXTdddcNa9eu3YFJnD2Xy8Udd9wRtbW1ggQAtsqmTZvizjvvTOz8bdq02f+mm27aT5IAAOxICmAAgIQpLS0t+NrXvnZ6Uud/4YUXYuHChYIEALbJq6++GjNmzEjs/Mccc8zpFRUVfiYHAMAO42ITACBhbr/99oMrKip2S+LsGzZsiHHjxgkRAPhM7r///qiqqkrk7OXl5X3/67/+6wgpAgCwoyiAAQASpKKiouCwww47Nanz33vvvYn9YS0A0HRs2LAh7r///sTOf9BBB/1zq1atCiUJAMCOoAAGAEiQ+++//+iysrKeSZx9zpw58dJLLwkRANguXnjhhViwYEEiZy8tLe32xz/+8StSBABgR1AAAwAkRN++fYv33Xfff07i7LW1tXHvvfcKEQDYru6+++6oq6tL5Oz77bffKf379y+RIgAA25sCGAAgIW6++eZRxcXFbZM4+yOPPBJr164VIgCwXa1atSoee+yxRM6ezWbb3njjjV+TIgAA25sCGAAgAYYOHVq21157fSeJs7/33nvxxBNPCBEA2CEmTpwYK1asSOTsQ4YM+c7QoUPLpAgAwPakAAYASIBrr732xKKiosqkzZ3L5eKee+6JxsZGIQIAO0R9fX3cddddkcvlEjd7UVFR5bXXXnuCFAEA2J4UwAAATdwBBxxQMWDAgG8kcfYZM2bEW2+9JUQAYId6880348UXX0zk7AMGDPjG8OHDy6UIAMD2ogAGAGjirrrqqhOKiooqkjb3pk2b4oEHHhAgALBT3H///VFbW5u4uYuKilpcffXV7gIGAGC7UQADADRhBx10UEX//v0Teffvww8/HB9++KEQAYCdYv369TFhwoREzj5w4MBvHHDAARVSBABge1AAAwA0Yf/5n/95bGFhYfOkzb1q1aqYPHmyAAGAnerpp5+O1atXJ27uwsLC8ssuu2yUBAEA2B4UwAAATdQBBxxQMWjQoNFJnP3uu++O+vp6IQIAO1V9fX3cddddiZx99913/+bQoUPLpAgAwGelAAYAaKIuv/zyYwsLC8uTNvfcuXNjwYIFAgQAdokFCxbE3LlzEzd3UVFRi9/97ndflyAAAJ+VAhgAoAkaOnRo2aBBgxL37t+6urr405/+JEAAYJf605/+FHV1dYmbe/fdd//mkCFDSiUIAMBnoQAGAGiCfvOb33ylqKioZdLmfu655xL53j0AIF1Wr14dzz33XOLmLioqann11VcfLUEAAD4LBTAAQBPTq1evZoMHD/5m0uaurq6ORx55RIAAQJPwyCOPRHV1deLmHjJkyLe6deuWlSAAANtKAQwA0MTcdNNNxxQXF7dN2twTJkyIqqoqAQIATUJVVVUifzmtuLi43a233uouYAAAtpkCGACgCWnVqlXhXnvtdVLS5l61alU8++yzAgQAmpTJkyfHqlWrEjf30KFDR7dq1apQggAAbAsFMABAE3LLLbccXlJS0jlpcz/44INRX18vQACgSamvr48HH3wwcXOXlJR0vummmw6VIAAA20IBDADQRGSz2cwBBxzw7aTNvWjRonjppZcECAA0SS+99FIsXrw4cXOPGDHiO9lsNiNBAAC2lgIYAKCJuOaaa/YuLy/vm7S5H3roocjlcgIEAJqkXC6XyLuAy8vL+1111VV7SRAAgK2lAAYAaCK+8pWvfDdpM8+bNy8WLlwoPACgSVu4cGG8+uqrrg8BAMgLCmAAgCbgsssuG1RZWblPkmbO5XIxfvx44QEAifDAAw8k7qklrVu33veSSy7pLz0AALaGAhgAoAkYNWrUCUmbefbs2bFs2TLhAQCJsGzZsnjllVcSN/cJJ5xwovQAANgaCmAAgF3sn//5nzt37NjxiCTN3NjYGA888IDwAIBEGT9+fDQ0NCRq5k6dOn1h9OjRHaQHAMCnpQAGANjFfvSjH30tk8kk6rps2rRpsWrVKuEBAImyatWqeOGFFxI1cyaTKfzpT386SnoAAHxaCmAAgF1o0KBBpX369Plqkmaur6+PCRMmCA8ASKQJEyZEXV1dombu27fvV/r27VssPQAAPg0FMADALnTZZZcdXlRUVJGkmadOnRpr164VHgCQSOvXr48pU6YkauaioqLK3/zmN0dIDwCAT0MBDACwi2Sz2cy+++57UpJmrqurc/cvAJB4jz76aOLuAt5///1PymazGekBAPBJFMAAALvI1VdfPbSsrKx3kmaeMmVKbNiwQXgAQKJt2LAhnn/++UTNXFZW1ueqq67aS3oAAHwSBTAAwC7y5S9/+bgkzVtfXx8TJ04UHACQCo8//nji7gL+0pe+dLzkAAD4JApgAIBdYPTo0R3atm07IkkzT5s2LdatWyc8ACAVPvzww5g+fXqiZm7fvv2I0aNHd5AeAABbogAGANgFfvrTn47KZDKFSZm3vr4+HnnkEcEBAKnyyCOPRH19fWLmzWQyhT/96U+/JjkAALZEAQwAsJN16tQp26dPn6OTNLO7fwGANFq3bl1MmzYtUTP36dPnmE6dOmWlBwDAx1EAAwDsZFddddUB2Wy2dVLmbWxsjEmTJgmOVOvYsWN06OCJmgD5aNKkSdHY2JiYebPZbOurrrrqAMkBAPBxFMAAADvZiBEjvp6keV988cVYtWqV4Ei1Ll26xIUXXhinnXZadO3a1UIA8siqVavipZdecj0JAEBqKIABAHaiM844o3tlZeXeSZk3l8vFxIkTBUdeyGQyMXjw4PjVr34VY8aMcUcwQB55/PHHI5fLJWbeysrKvc8444zukgMA4KMogAEAdqJTTjnlqxGRScq8CxYsiPfee09w5JVMJhN77713XHjhhTFmzJho3769pQCk3HvvvRcLFy5M1B9X/3NdCQAA/4cCGABgJ+nVq1ezXr16fTlJM3v3L/nsr0XwBRdcECeffHK0bdvWUgBSLGnXPb169fpyr169mkkOAIB/pAAGANhJrrjiioOLiopaJmXeBN4JAztEYWFhDB8+PC688MIYPXp0VFZWWgpACi1YsCCWLVuWmHmLiopaXnnllYdIDgCAf6QABgDYSYYPH/6VJM2btHfhwY5WVFQUI0aMiEsuuSRGjx4dLVu2tBSAFMnlcvH4448naub99tvvK5IDAOAfKYABAHaC0aNHd6isrByalHnXrl0bL7/8suDgI/y1CL744ovjhBNOiBYtWlgKQEq89NJLsW7dusTMW1lZudfo0aM7SA4AgL+lAAYA2AlOP/30o5J07fXMM89EQ0OD4GALiouL47DDDouxY8fGqFGjoqyszFIAEq6hoSGeeeaZJI1c8D/XmQAA8P8vEq0AAGDHymazmX79+n05KfPW1tbGlClTBAefUnFxcYwcOTIuvfTSGDVqVJSWlloKQII9//zzUVtbm5h5+/Xr9+VsNpuRHAAAf6UABgDYwX7zm9/sWVJS0jkp886YMSOqq6sFB1uppKQkRo4cGZdcckkcffTRUVJSYikACVRdXR0zZ85M0p8/na+44orBkgMA4K8UwAAAO9gXvvCFLyVl1lwuF08//bTQ4DNo3rx5HHXUUXHJJZfEyJEjI5vNWgpAwjz11FORy+USM++RRx75ZakBAPBXCmAAgB1oyJAhpZ07dz4iKfO+/vrrsWLFCsHBdlBeXh6jRo2KSy+9VBEMkDArVqyI119/PTHzdunS5fD+/ft79AQAABGhAAYA2KHGjh17aGFhYWJeCOruX9j+KioqYtSoUXHxxRfH4YcfHkVFRZYC4LpouyosLGz+H//xHwdLDQCACAUwAMAOteeeex6ZlFnXrl0b8+bNExrsIK1atYrjjz8+LrroohgxYkQUFPh2DKApmzdvXqxZsyYx8+61115HSg0AgAgFMADADnPMMce0bt269b5Jmfe5556LxsZGwcEO1qZNmxg9enRcfPHFimCAJqyxsTGee+65JP35MvyYY45pLTkAAPykAQBgBznzzDMPz2Qyibje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FpafffbZvaQFAJA+CmAAgE9p//3375+EOV9//XVhAXmjvLw8Ro0aFf/+7/8eI0eOjGw2aymA67FP6fOf//xAaQEApI8CGADgU+rRo8fuTX3G2traePvtt4UF5J2KiooYNWpUXHzxxXH44Yc3+XdvAum2ePHiRLySo1evXoOkBQCQPgpgAIBPqXXr1k3+DoklS5ZEQ0ODsIC81apVqzj++OPj4osvjhEjRkRBgW97gZ2voaEhlixZ0uTnbNOmjQIYACCFfCcMAPApDBkypLR58+a9m/qcb775prAAIqJ169YxevToGDt2rCIYcF32MZo3b95n0KBBpdICAEgX3wEDAHwKp556av9MJtPkr53eeustYQH8jTZt2sTo0aPjvPPOi+HDhyuCAddlfyOTyRT84Ac/+Jy0AADSxXe+AACfwuDBg5v84/Hq6+tj0aJFwgL4CJ06dYqTTz45/u3f/i323nvvyGQylgLsUIsXL07Eqzn23HPPgdICAEgXBTAAwKfQpUuXAU19xnfeeSfq6uqEBbAFnTt3jjFjxiiCgR2utrY23n333SRc53oPMABAyiiAAQA+hZYtW/Zv6jN6/DPAp9elS5cYM2ZMnHvuuTF48GALAfL2+iwJ17kAAGwdBTAAwCcYPnx4eUlJSeemPqfHPwNsvV69esVpp50W55xzTvTvrwMB8u/6rLS0tPPw4cPLpQUAkB4KYACAT/Ctb31rt4ho8s8IXbx4sbAAtlGfPn3irLPOinPOOSd22203CwG2i4T8gl7m29/+dj9pAQCkhwIYAOAT7L777k2+CVi7dm1s2LBBWACfUZ8+feLss8+OM888M3r27GkhwGfy4Ycfxrp165r8nAMHDlQAAwCkSJEVAABsWadOnZr8D8TefvttQQFsRwMGDIgBAwbEggULYvz48bF06VJLAbb5Oq1Vq1audwEA2GkUwAAAn6CyslIBDJCnBgwYEP3794958+bFQw89FO+++66lAFtlyZIlsddeezX1613PvgcASBEFMADAFnTq1CnbvHnzXk19ziVLlggLYAfJZDIxePDg2GOPPeLll1+OBx98MFauXGkxQGqu05o3b967Xbt2RatXr66XGABA8nkHMADAFowZM6ZnJpPJNuUZGxsbPZoUYCfIZDKx9957x4UXXhhjxoyJ9u3bWwrwiZYuXRqNjY1NesaCgoLsqaee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k8nE7NmzY+LEibFmzRoNAXif/VNSzJo161kTAwBongTAAAC70O233/7KOeecszU/P78022sdMGBAtG/f3tWu0My9+uqrMWnSpFi1apVmALyPjh07xgEHHJCIWhsbG6u/8Y1v/NXUAACaJwEwAMAutHLlyob169fP6tat2+hsrzWVSsXhhx8ekyZNMjhohubMmROTJ0+OJUuWaAbAh3D44YdHKpVKRK3r16+fVVFR0WhqAADNU54WAADsWq+++mpirts77LDDDAyamTfffDP+/d//PX7yk58IfwE+pFQqFSNGjEhMva+88sozpgYA0Hw5AQwAsIvddNNNz5166qnV+fn5rbO91m7dukX//v1j4cKFBgc5btmyZfHYY4/F/PnzNQPgIzrggAOic+fOiai1sbFxy4033jjL1AAAmi8BMADALrZy5cqG8vLyGT179vx0Euo9+uijBcCQw5YvXx7jxo0T/AJ8wv1SUpSXlz9TXl7eYGoAAM2XABgAYDeYMWPGUxdccEEiAuAhQ4ZE69ato7q62uAgh6xcuTImTJgQc+fOjUwmoyEAH1ObNm3i0EMPTUy9zz777FOmBgDQvPkGMADAbvDVr371lYaGhk1JqLWgoCCOOOIIQ4McsW7duvj5z38ed955Z8yZM0f4C/AJjRw5MvLz8xNRa0NDw8abbrrpVVMDAGjenAAGANgNKisrm1atWjW9T58+5ySh3qOPPjqefPJJQREk2Pr16+Oxxx6L2bNn+3cZYBdJpVIxatSoxNS7cuXKadXV1WmTAwBo3pwABgDYTaZNm5aY6/c6duwYAwYMMDRIoA0bNsSvf/3r+Nd//dd49dVXhb8Au9CAAQOiY8eOian36aefftLUAAAQAAMA7CZf+9rX5tTX11ckpd6jjjrK0CBBqqqq4v77749vf/vb8eKLL0ZTU5OmAOxiRx55ZGJqra+vX/eNb3zjdVMDAMAV0AAAu0ltbW16xYoVT++///6fT0K9hx56aLRt2zaqqqoMD7LYli1bYsqUKfHcc8/F9u3bNQRgN2nbtm0MGTIkMfUuX778qdraWtc/AwDgBDAAwO70xz/+cUJSas3Pz4/jjjvO0CBL1dTUxKOPPhq33XZb/OUvfxH+Auxmxx57bOTn5yel3Myvf/3rCaYGAECEABgAYLe66667llZXV89PSr1HH310tGjRwuAgi7wd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qATAAABZ4umnn968fPnyxF3xN3r06GjXrp0BAgBZqUOHDnH88ccnru5ly5ZNmD59+hYTBADgoxIAAwBkkbvvvvtPmUymKUk1FxYWxumnn254AEBWOvPMMxP3yYpMJtN41113/dH0AAD4OATAAABZ5Be/+MWatWvXTkta3UcccUT06tXLAAGArNK7d+847LDDEld3eXn5X+6///51JggAwMchAAYAyDIPP/zwn5JWcyqVijPPPNPwAICsMmbMmEilUomr+8EHH/yT6QEA8HEJgAEAsszXv/71NzZs2DAraXUPHDgwDj74YAMEALLCoEGDYsCAAYmru6KiYuatt966wAQBAPi4BMAAAFlo3Lhxv01i3WPGjIm8PFtMAGDvysvLizFjxiSy9j//+c+/NUEAAD7RflgLAACyz/XXXz+nqqrqr0mru1evXnHUUUcZIACwVx1zzDHRvXv3xNW9adOmV2666aa5JggAwCchAAYAyFJ/+tOf7k1i3WPGjInS0lIDBAD2ijZt2sRZZ52VyNofeOCBe00QAIBPSgAMAJClbrrpprlJPAVcXFwcZ555pgECAHvFWWedFS1btkxc3Zs2bXrl5ptvnmeCAAB8UgJgAIAsNm7cuF8lse5Ro0ZF7969DRAA2KP69OkTI0eOTGTtjz322K9MEACAXUEADACQxcaOHTu7qqrqb0mrO5VKxfnnnx+pVMoQAYA9tv/4/Oc/n8j9R2Vl5d+uueaav5kiAAC7ggAYACDLTZ069bdJrLtv374xZMgQAwQA9ojDDjsssTeQTJ48+TcmCADAriIABgDIcpdeeumLVVVVryax9s9//vNRXFxsiADAblVaWhrnn39+Imuvqqr66+WXX/6SKQIAsKsIgAEAEuChhx76WRLrLisri9NPP90AAYDd6qyzzoqSkpIklp753e9+91MTBABgVxIAAwAkwA033DB3w4YNs5JY+3HHHRd9+vQxRABgt+jbt28cddRRiay9oqJi1te//vU3TBEAgF1JAAwAkBA///nPfxoR6aTVnUql4vOf/3zk5dl6AgC7Vn5+flx00UWRSqWSWH76F7/4xX+bIgAAu5q3cAAACXHHHXe8tW7duulJrL13795xzDHHGCIAsEudcMIJ0b1790TWXl5e/pc77rjjLVMEAGBXEwADACTI3XfffW8mk2lKYu1nnXVWtG3b1hAB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onv37vEv//IvccABBzSrdWcymaYnnnji9s997nPPeAoAAODDEQADAJBYDz/88NJjjjlmY+/evY+KiGZzFKq0tDSGDx8eq1evjvXr13sQAHLcwIED45prrol27do1t6VnZsyY8YOzzjprqqcAAAA+PAEwAACJdv/99795zDHHVO6zzz5HRDMKgVu0aBGHHXZYtGzZMhYuXBjpdNrDAJBjCgoK4pxzzonzzz8/WrRo0dyWn37uuefuOuWUUyZ4EgAA4KMRAAMAkHi///3v5w8bNmxF3759j2lO10GnUqno27dvDB06NBYvXhxbtmzxMADkiJ49e8YNN9wQgwcPblbf+434x7XPU6ZM+fbpp58+2ZMAAAAfnQAYAICc8OCDDy4ZNmzYin79+jWrEDgionXr1nHEEUdEfX19LF261MMAkGCpVCpOOOGEuOKKK6JNmzbNbv07wt9vnXPOOX/xNAAAwMcjAAYAIGc89NBDS4YNG7a8X79+xza3EDg/Pz8OPvjg6NWrV8yfPz8aGho8EAAJU1JSEpdffnmccMIJkZ+f3+zWn8lkGp944olvffazn53maQAAgI9PAAwAQE556KGHlo4cOXJdnz59RqWa252ZEdG1a9cYNmxYLFu2LCorKz0QAAnRt2/fuO6662K//fZrluvPZDLpp59++rvnnHPO054GAAD4ZATAAADknD/96U+LDj300KX7779/s7sOOiKiuLg4jjzyyCgpKYk333wz0um0hwIgSxUUFMRnP/vZuPDCC6OkpKRZ9iCdTjc88sgjt5x//vnTPREAAPDJCYABAMhJDz/88NId3wQelUqlmt09mqlUKvr06RMHH3xwLFy4MLZt2+ahAMgynTt3jrFjx8bQoUOjGV5aERH/CH+feOKJ2y+88MLnPBEAALBrCIABAMhZDz300JIePXq8NmjQoGPz8vJaNMcetG3bNkaNGhVNTU2xZMkSDwVAFkilUjF69Oi48soro0OHDs22D01NTdt++9vf/stll132oqcCAAB2HQEwAAA5bdKkSeXdu3efM3jw4GYbAufn58eAAQOiV69esWDBgti+fbsHA2Avad26dVx66aVx/PHHR35+frPtQ2NjY/WvfvWrf7nuuute81QAAMCuJQAGACDnTZ48eW1jY+OMI4444uiCgoKS5tqHrl27xqhRo2Lbtm2xcuVKDwbAHpRKpWLUqFExduzY6NWrV7PuRX19/fo77rjjK9/61rcWejIAAGDXEwADANAsPP/881UbNmx45rjjjjuqsLCwrLn2obCwMAYNGhT77bdfLF68OGpraz0cALtZ+/bt44orrogTTzwxCgub9/uU2tralTfffPPVP/nJT1Z7MgAAYPcQAAMA0Gz87W9/27p27doZJ5xwwsjCwsK2zbkXnTp1ipEjR0Z1dbXTwAC70ciRI+Pqq6+OHj16NPte1NTULL/hhhuu/e1vf7vOkwEAALuPABgAgGbltdde2zpv3rynTznllKFFRUWdmnMvCgsL49BDD4399tsvFi1a5DQwwC709qnfk08+udmf+o2I2Lx587yLL774unHjxm30dAAAwO71fgFwat9zYsTOftC4LmLjq610DwCAxOrVq1fhs88++69du3Y9QTciGhoaYurUqTF58uRobGzUEICPqaCgIE499dQYPXq04HeH8vLyp4499tjvrly5skE3AABg9+swrDYKuuz8ZwJgAAByWuvWrfNeeumlm/fdd9+zdeMfVq9eHffff38sWbJEMwA+ov322y8uuugi1z2/w8KFC38/fPjwnzY0NGR0AwAA9gwBMAAAzd7zzz9/8aGHHnp1RKR0IyKTycTMmTPjz3/+c9TV1WkIwAcoKSmJ8847L0aMGBGplL9Kdki//PLL9xx77LEPagUAAOxZ7xcA+wYwAADNwn333Tfn+OOP39yrV6/DQwgcqVQqevfuHcOHD49169ZFRUWFhwTgPRxyyCExduzY6N+/v/B3h0wm0/jMM8/828knnzxONwAAYM97v28AC4ABAGg2fve7370xePDgJf369Ts6lUrl60hEcXFxjBgxInr06BFLly6N2tpaTQHYoUOHDvGFL3whzjzzzCguLtaQHZqammoeeOCBWz73uc9N1w0AANg7BMAAALDDww8/vKygoOC54cOHH1FQUFCqI//QrVu3OO6446K0tDQWL14cTU1NmgI0Wy1btoxzzjknLr300ujevbuGvENtbe2K22677arbbrvtDd0AAIC9RwAMAADv8Oyzz25avHjx0yeddNKQoqKiTjryD3l5edGnT58YOXJkbN26NVatWqUpQLNz+OGHx1e+8pUYMGBA5OXlacg7VFVV/e3CCy+8/oEHHvDdAAAA2MsEwAAA8C7z58+vefbZZ58+44wz+hcX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OigOOOCAKCoq0pQs0djYuGXmzJk/PvPMMyc2NDS4XgAAAPjQBMAAAJADjjzyyNY/+9nPrujbt++5EZGnI9mluro6Fi5cGPPnz4958+ZFZWWlprBXtGvXLg455JAYMGBA9O/fP1q39nsjWSj91ltv/fmqq676xaxZs6q1AwAA+KgEwAAAkEN++ctfjhgzZsyNrVq16q0b2SmdTsfKlStj0aJFsXDhwli8eHFs27ZNY9gtSkpKol+/ftG/f//Yf//9o1evXpGX53dEslVNTc3yRx999EdXXnnlK7oBAAB8XAJgAADIMd26dSt8+OGHPzd48ODL8vPzbdyzXCaTiTVr1sTChQtj0aJFsWjRotiyZYvG8LGUlZVF//79/xn6du/ePVKplMZkuaampprXXnvtV2PGjHmgoqKiUUcAAIBPQgAMAAA56rjjjiv7r//6r8tdC508mzdvjuXLl8eKFSti+fLlsXjx4qipqdEY/pfi4uLo169f9O7dO/bZZ5/Yd999o6ysTGMSJJPJpJcsWfLn66677pfTp0/3mx8AAMAuIQAGAIAc99Of/nTIueeee3NpaWlf3UimxsbGWLlyZSxdujSWLVsWy5cvj3Xr1kUmk9GcZiKVSkWXLl1in332iT59+kSfPn2iV69eUVBQoDkJtXXr1sUPPvjgj6699tq/6wYAALArCYABAKAZaNeuXf64cePOGTp06BUFBQWtdST56uvrY+XKlf88KbxixYpYu3ZtpNNpzUm4vLy86Nq1a+yzzz7//KdXr17RsmVLzckBjY2NW/7617/+4pxzznm0srKySUcAAIBdTQAMAADNyIknntjmnnvuuXzfffcdk0qlHB3MMdu3b481a9bEmjVrYu3atbF27dooLy+PDRs2CIazUF5eXnTs2DG6desWXbt2jW7dukW3bt2iR48eUVhYqEE5JpPJNC5ZsuRR1z0DAAC7mwAYAACaoa9+9av7Xnfdddd16NDhCN3IfY2Njf8MhNetWxfr1q2LioqKWLduXWzbtk2DdrPS0tLo3LnzP//p0qVLdO3aNbp27eoK52Ziw4YNM//rv/7rxz/60Y+W6wYAALC7CYABAKAZ++UvfznirLPOuq64uNj3gZupmpqaWL9+/T//qaioiMrKyqisrIxNmzZFY2OjJn2AgoKCaN++fbRr1y7at28fHTt2jC5dukSnTp2ic+fOUVxcrEnN1NatW98aP378PVdcccXLugEAAOwpAmAAAGjm2rVrl//ggw+eOWLEiCsLCwvb6gjvtHnz5n+GwZs2bYrKysqorq6OLVu2xJYtW6K6ujqqq6sjk8nk3NpTqVS0bt06WrduHWVlZdGmTZsoLS39X2Fvu3btok2bNh4U/peGhobKl1566efnnHPO+OrqavevAwAAe5QAGAAAiIiIoUOHFt97770XHHjggRfk5+c7ssiHlk6n/xkEV1dXR01Nzfv+k8lkora2NtLpdNTX10dTU1PU1dXt0u8U5+XlRcuWLSM/Pz+KiooiLy8vWrVqFalUKoqLi3f6T0lJSbRq1eqfgW9paWnk5eUZMB9aU1NTzYIFC/745S9/+Y+zZ8+u0REAAGBvEAADAAD/y2mnndb2rrvuurRPnz5n5+XlFeoIe9LbgfDbtm/f/r7XUBcUFESLFi3++b/fDnxhT8pkMg1LliwZd8stt/xq0qRJVToCAADsTQJgAABgp0477bS2d95554X777//5wTBAP9XJpNpWLhw4QO33nrrHwS/AABAtni/ADi/7UHRc2c/SG+LqC33/gcAAHLZokWL6u69995X0un0swcddFCnkpKS3roC8A8VFRUz/7//7/+77aKLLpq6aNGiOh0BAACyRXH3xsgr3fnPBMAAAEDMnDmz8u67736qqalpWr9+/Ypbt27dN5VKpXQGaG4ymUx6zZo1U+65555/Peeccx6cOXNmpa4AAADZRgAMAAB8KDNnzqz88Y9//Gw6nZ4uCAaak7eD37vvvvtfzz///McEvwAAQDYTAAMAAB+JIBhoLgS/AABAEgmAAQCAj+XtILisrOyFvn37diwuLu4VEYJgIBdkKioqnrv33nu/PWbMmEcEvwAAQJK8XwCc2vecGLGzHzSui9j4aivdAwAA/unqq6/u8ZWvfOX8Pn36nJWXl9dCR4CkSafT9UuXLh3/X//1Xw/84he/WKMjAABAEnUYVhsFXXb+MwEwAADwkZ1xxhntb7/99rMPPPDA8/Pz81vrCJDtmpqaqhcsWPDgd77znUcmTpzotC8AAJBoAmAAAGC3GD58eMkPf/jDzwwePPjioqKijjoCZJv6+voNr7322u9vvPHGx2fPnl2jIwAAQC4QAAMAALvV0KFDi++5556zDjnkkPOKioq66giwt9XV1a19/fXXH7z++uvHC34BAIBcIwAGAAD2iFatWuXdc889w0455ZTzO3bseJSOAHtYZsOGDbOmTJny4PXXX/9qbW1tWksAAIBcJAAGAAD2uH/913/tf/7555/dq1ev0/Ly8lroCLC7pNPp+pUrV05+4IEHHvnOd76zSEcAAIBcJwAGAAD2mjPOOKP97bfffvYBBxzw2YKCgjY6AuwqjY2NVW+++eafv/e97z06YcKETToCAAA0FwJgAABgrxs+fHjJ97///dGDBg0aU1paur+OAB9XdXX1wtdee+3Rr371q1Nfe+21Wh0BAACaGwEwAACQVb761a/ue8EFF3y6b9++ZxUUFLTWEeCDNDY2bnnrrbfG/+EPf5j4ox/9aLmOAAAAzZkAGAAAyEpDhw4t/sEPfnDy4MGDz27dunV/HQHerbq6+s2XX375weuuu+7ppUuXbtcRAAAAATAAAJDlCgsLU3ffffeQ0aNHn9G1a9fj8vLyinQFmq90Ol1XXl4+bcqUKROuvfbav+sIAADA/yYABgAAEqNPnz4t/v3f/33UyJEjz2rfvv2nIiKlK9AsZDZt2vTXF1544bGvfe1rzzntCwAA8N4EwAAAQCJddNFFXa6++uqTDzzwwLNbtmzZTUcg99TV1a1ZsGDBuJ/+9KdP3n///et0BAAA4IMJgAEAgETr1q1b4d13333k4YcffmqHDh2OyMvLK9QVSK50Ot2wcePGWbNmzZp8/fXXz6qoqGjUFQAAgA9PAAwAAOSMo48+uvWtt956/CGHHHJKu3btBkdEnq5AIqQrKytfmzdv3uQ777xz+owZM6q1BAAA4OMRAAMAADnpuOOOK/vGN75x/CGHHHJa27ZtB4bvBUO2yVRVVc2dN2/epO9///vTpk+fvkVLAAAAPjkBMAAAkPNuu+22vmedddZJffr0Oa5Vq1a9dQT2ntra2uXLly+f/uijjz51xx13vKUjAAAAu5YAGAAAaFa+9KUvdbv44ouP7t+//wlOBsMekamqqpq7cOHCv/z+97+fcd9995VrCQAAwO4jAAYAAJqtSy65pOtll112jDAYdrl0VVXVvIULF/7lV7/61bO/+93v1moJAADAniEABgAAiIirr766x/nnnz9q//33P7JNmzZDUqlUga7Ah5fJZBoqKyv/vnjx4uf+9Kc/zbr33ntX6woAAMCeJwAGAAB4l379+hV97WtfGzRy5MhRPXv2PLaoqKizrsD/VV9fv37VqlXPvPDCC8/9+7//+5zFixfX6woAAMDeJQAGAAB4H61bt8678847Bx599NFHde/efURpaen+4apomq/M1q1bF69Zs+bF5557btY3v/nNOdXV1WltAQAAyB4CYAAAgI9g8ODBrcaOHXvI8OHDD+vevfvw1q1bHxACYXJXprq6+s01a9a88sorr7z8k5/8ZN5rr71Wqy0AAADZSwAMAADwCVx//fX7nHHGGYf169dvePv27Yfm5+e31hWSrLGxsXrjxo2vvvXWWy+PHz/+lR//+McrdQUAACA5BMAAAAC70Je//OUe55xzzvA+ffoM7tix45CioqKuukI2q6+vX7t27doXFy9ePGfixImv3Xvvvat1BQAAILkEwAAAALvRl7/85R6f+cxnBvfr129Qly5dDm/ZsqVAmL2qrq5u7bp16wS+AAAAOUoADAAAsIe0atUq75prrtnn2GOPPXi//fY7uH379oeUlpb2TaVS+brDbpKuqalZtnHjxnlvvfXW3GeffXbef/3Xfy2vra1Naw0AAEBuEgADAADsRQceeGDLq6+++oAhQ4Yc3LNnz4Pbtm17sGuj+biampqqq6qqXi8vL583Z86ceb/85S/nvfjii1t1BgAAoPkQAAMAAGSZoUOHFn/xi1/cf9CgQQf26NHjwHbt2h3YqlWr3qlUKk932CFdU1OzvLKycsHq1asXzJkzZ8Gf//znJTNmzKjWGgAAgOZNAAwAAJAAxx13XNkFF1xw4MEHH3xA165dDywtLd23pKRkn1QqVag7uS2TyTRs27ZtRXV19dJ169YtfOONNxZOmDBh4YQJEzbpDgAAAO8mAAYAAEiw8847r+OJJ57Yp3///vt16dKlT5s2bfZr3bp1v/z8/GLdSZampqaa6urqxZs3b16ybt26pQsXLlzy9NNPL33ooYc26A4AAAAflgAYAAAgx7Rr1y7/kksu6TFkyJCe++67b89OnTr1Kisr61VcXNyzZcuW3VKpVL4u7R2ZTKaprq6uvKamZtWWLVtWVlRUrFy6dOnK2bNnr7r//vvXVFZWNukSAAAAn4QAGAAAoBnp1KlTwec+97luQ4cO7bnPPvv0aNeuXafWrVt3Li4u7tqyZcvORUVFnfLy8lro1MeTTqe319fXr6+rq6uoqalZW11dvb6y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AACAEgIwAAAAAAAAQAkBGAAAAAAAAKCEAAwAAAAAAABQQgAGAAAAAAAAKCEAAwAAAAAAAJQQgAEAAAAAAABKCMAAAAAAAAAAJQRgAAAAAAAAgBICMAAAAAAAAEAJARgAAAAAAACghAAMAAAAAAAAUEIABgAAAAAAACghAAMAAAAAAACUEIABAAAAAAAASgjAAAAAAAAAACUEYAAAAAAAAIASAjAAAAAAAABACQEYAAAAAAAAoIQADAAAAAAAAFBCAAYAAAAAAAAoIQADAAAAAAAAlBCAAQAAAAAAAEoIwAAAAAAAAAAlBGAAAAAAAACAEgIwAAAAAAAAQAkBGAAAAAAAAKCEAAwAAAAAAABQQgAGAAAAAAAAKCEAAwAAAAAAAJQQgAEAAAAAAABKCMAAAAAAAAAAJQRgAAAAAAAAgBICMAAAAAAAAEAJARgAAAAAAACghAAMAAAAAAAAUEIABgAAAAAAACghAAMAAAAAAACUEIABAAAAAAAASgjAAAAAAAAAACUEYAAAAAAAAIASAjAAAAAAAABACQEYAAAAAAAAoIQADAAAAAAAAFBCAAYAAAAAAAAoIQADAAAAAAAAlBCAAQAAAAAAAEoIwAAAAAAAAAAlBGAAAAAAAACAEgIwAAAAAAAAQAkBGAAAAAAAAKCEAAwAAAAAAABQQgAGAAAAAAAAKCEAAwAAAAAAAJQQgAEAAAAAAABKCMAAAAAAAAAAJQRgAAAAAAAAgBICMAAAAAAAAEAJARgAAAAAAACghAAMAAAAAAAAUEIABgAAAAAAACghAAMAAAAAAACUEIABAAAAAAAASgjAAAAAAAAAACUEYAAAAAAAAIASAjAAAAAAAABACQEYAAAAAAAAoIQADAAAAAAAAFBCAAYAAAAAAAAoIQADAAAAAAAAlBCAAQAAAAAAAEoIwAAAAAAAAAAlBGAAAAAAAACAEgIwAAAAAAAAQAkBGAAAAAAAAKCEAAwAAAAAAABQQgAGAAAAAAAAKCEAAwAAAAAAAJQQgAEAAAAAAABKCMAAAAAAAAAAJQRgAAAAAAAAgBICMAAAAAAAAEAJARgAAAAAAACghAAMAAAAAAAAUEIABgAAAAAAACghAAMAAAAAAACUEIABAAAAAAAASgjAAAAAAAAAACUEYAAAAAAAAIASAjAAAAAAAABACQEYAAAAAAAAoIQADAAAAAAAAFBCAAYAAAAAAAAoIQADAAAAAAAAlBCAAQAAAAAAAEoIwAAAAAAAAAAlBGAAAAAAAACAEgIwAAAAAAAAQAkBGAAAAAAAAKCEAAwAAAAAAABQQgAGAAAAAAAAKCEAAwAAAAAAAJQQgAEAAAAAAABKCMAAAAAAAAAAJQRgAAAAAAAAgBICMAAAAAAAAEAJARgAAAAAAACghAAMAAAAAAAAUEIABgAAAAAAACghAAMAAAAAAACUEIABAAAAAAAASgjAAAAAAAAAACUEYAAAAAAAAIASAjAAAAAAAABACQEYAAAAAAAAoIQADAAAAAAAAFBCAAYAAAAAAAAoIQADAAAAAAAAlBCAAQAAAAAAAEoIwAAAAAAAAAAlBGAAAAAAAACAEgIwAAAAAAAAQAkBGAAAAAAAAKCEAAwAAAAAAABQQgAGAAAAAAAAKCEAAwAAAAAAAJQQgAEAAAAAAABKCMAAAAAAAAAAJQRgAAAAAAAAgBICMAAAAAAAAEAJARgAAAAAAACghAAMAAAAAAAAUEIABgAAAAAAACghAAMAAAAAAACUEIABAAAAAAAASgjAAAAAAAAAACUEYAAAAAAAAIASAjAAAAAAAABACQEYAAAAAAAAoIQADAAAAAAAAFBCAAYAAAAAAAAoIQADAAAAAAAAlBCAAQAAAAAAAEoIwAAAAAAAAAAlBGAAAAAAAACAEgIwAAAAAAAAQAkBGAAAAAAAAKCEAAwAAAAAAABQQgAGAAAAAAAAKCEAAwAAAAAAAJQQgAEAAAAAAABKCMAAAAAAAAAAJQRgAAAAAAAAgBICMAAAAAAAAEAJARgAAAAAAACghAAMAAAAAAAAUEIABgAAAAAAACghAAMAAAAAAACUEIABAAAAAAAASgjAAAAAAAAAACUEYAAAAAAAAIASAjAAAAAAAABACQEYAAAAAAAAoIQADAAAAAAAAFBCAAYAAAAAAAAoIQADAAAAAAAAlBCAAQAAAAAAAEoIwAAAAAAAAAAlBGAAAAAAAACAEgIwAAAAAAAAQAkBGAAAAAAAAKCEAAwAAAAAAABQQgAGAAAAAAAAKCEAAwAAAAAAAJQQgAEAAAAAAABKCMAAAAAAAAAAJQRgAAAAAAAAgBICMAAAAAAAAEAJARgAAAAAAACghAAMAAAAAAAAUEIABgAAAAAAACghAAMAAAAAAACUEIABAAAAAAAASgjAAAAAAAAAACUEYAAAAAAAAIASAjAAAAAAAABACQEYAAAAAAAAoIQADAAAAAAAAFBCAAYAAAAAAAAoIQADAAAAAAAAlBCAAQAAAAAAAEoIwAAAAAAAAAAlBGAAAAAAAACAEgIwAAAAAAAAQAkBGAAAAAAAAKCEAAwAAAAAAABQQgAGAAAAAAAAKCEAAwAAAAAAAJQQgAEAAAAAAABKCMAAAAAAAAAAJQRgAAAAAAAAgBICMAAAAAAAAEAJARgAAAAAAACghAAMAAAAAAAAUEIABgAAAAAAACghAAMAAAAAAACUEIABAAAAAAAASgjAAAAAAAAAACUEYAAAAAAAAIASAjAAAAAAAABACQEYAAAAAAAAoIQADAAAAAAAAFBCAAYAAAAAAAAoMY3JP//9K8My551lzpAk293a7QAAAAAAAAD8iIw3r+SL7TpPxuSt4/ibJJuz20QDBgAAAAAAAHhzrJPp6NvHYcyyjLl7dJTPbl/Jp6sPLufSsM+5ec7q5YOrF0OeP/SVaAAAAAAAAIA3weH7u6zfm79dWDIMSw6225w785vsx3XyzasOby5ssz69c4sAAAAAAAAAr9n69C6bC9sT93a7rKdnORin5Otxynzi1JQcfiwCAwAAAAAAALxO69O7HH68TaaT98cp85R8vbp3Nfszv8q0LHn7xMF1sjk/ZzUPmZ/MmWefhAYAAAAAAAD4oayPdjn7223Gn7x6ZrXPnetX8mBKkpv3cufDd/Pufn5FL56SzcVtNheT3dNt8tQlAwAAAAAAAHyv1sm0ySv/9XtsNWZ3I/lHkgzHi7/4XY7WYz5yiwAAAAAAAAA/Ivtcv/3nPEyS1fHa42t5+vNLyX7JoRsCAAAAAAAAePPt1/nbV3/KvePn1Xc371/NYxEYAAAAAAAA4M0yTHk2rvNo2WdzvHZqzN9v/SF3vju3evng/at5fPDLPDu1yuGyZHSVAAAAAAAAAK/XOGe4ueSvZ4e8M8xZbVe5ceuPufvy3Oqkw4+v5emDX+fuuTlLhhwsEYIBAAAAAAAAXpclGR8OuXP0TR4cPM/9z/+SRyfNDf/1TZezOp/87KdjzizJZkhO7edMy/w/nAUAAAAAAADg/zaMWcZkP8/ZLsmLacr2/MV8+cnvs/tP5/4FmLjAq1ifcioAAAAASUVORK5CYII=";
-function getSmartParseNumber(size, xyDir, layout) {
-  if (typeof size === "string" && !isNaN(Number(size)))
-    size = Number(size);
-  if (typeof size === "number" && size < 100)
-    return inch2Emu(size);
-  if (typeof size === "number" && size >= 100)
-    return size;
-  if (typeof size === "string" && size.includes("%")) {
+function getSmartParseNumber(size2, xyDir, layout) {
+  if (typeof size2 === "string" && !isNaN(Number(size2)))
+    size2 = Number(size2);
+  if (typeof size2 === "number" && size2 < 100)
+    return inch2Emu(size2);
+  if (typeof size2 === "number" && size2 >= 100)
+    return size2;
+  if (typeof size2 === "string" && size2.includes("%")) {
     if (xyDir && xyDir === "X")
-      return Math.round(parseFloat(size) / 100 * layout.width);
+      return Math.round(parseFloat(size2) / 100 * layout.width);
     if (xyDir && xyDir === "Y")
-      return Math.round(parseFloat(size) / 100 * layout.height);
-    return Math.round(parseFloat(size) / 100 * layout.width);
+      return Math.round(parseFloat(size2) / 100 * layout.height);
+    return Math.round(parseFloat(size2) / 100 * layout.width);
   }
   return 0;
 }
@@ -148169,11 +148169,11 @@ function createColorElement(colorStr, innerElements) {
 function createGlowElement(options, defaults) {
   let strXml = "";
   const opts = Object.assign(Object.assign({}, defaults), options);
-  const size = Math.round(opts.size * ONEPT);
-  const color2 = opts.color;
+  const size2 = Math.round(opts.size * ONEPT);
+  const color3 = opts.color;
   const opacity = Math.round(opts.opacity * 1e5);
-  strXml += `<a:glow rad="${size}">`;
-  strXml += createColorElement(color2, `<a:alpha val="${opacity}"/>`);
+  strXml += `<a:glow rad="${size2}">`;
+  strXml += createColorElement(color3, `<a:alpha val="${opacity}"/>`);
   strXml += "</a:glow>";
   return strXml;
 }
@@ -148283,8 +148283,8 @@ function parseTextToLines(cell, colWidth, verbose) {
       newLine = [];
     }
   });
-  inputLines1.forEach((line2) => {
-    line2.forEach((cell2) => {
+  inputLines1.forEach((line3) => {
+    line3.forEach((cell2) => {
       const lineCells = [];
       const cellTextStr = String(cell2.text);
       const lineWords = cellTextStr.split(" ");
@@ -148297,10 +148297,10 @@ function parseTextToLines(cell, colWidth, verbose) {
       inputLines2.push(lineCells);
     });
   });
-  inputLines2.forEach((line2) => {
+  inputLines2.forEach((line3) => {
     let lineCells = [];
     let strCurrLine = "";
-    line2.forEach((word) => {
+    line3.forEach((word) => {
       if (strCurrLine.length + word.text.length > CPL) {
         parsedLines.push(lineCells);
         lineCells = [];
@@ -149379,11 +149379,11 @@ function addTableDefinition(target, tableRows, options, slideLayout, presLayout,
   }
   return newAutoPagedSlides;
 }
-function addTextDefinition(target, text3, opts, isPlaceholder) {
+function addTextDefinition(target, text4, opts, isPlaceholder) {
   const newObject = {
     _type: isPlaceholder ? SLIDE_OBJECT_TYPES.placeholder : SLIDE_OBJECT_TYPES.text,
     shape: (opts === null || opts === void 0 ? void 0 : opts.shape) || SHAPE_TYPE.RECTANGLE,
-    text: !text3 || text3.length === 0 ? [{ text: "", options: null }] : text3,
+    text: !text4 || text4.length === 0 ? [{ text: "", options: null }] : text4,
     options: opts || {}
   };
   function cleanOpts(itemOpts) {
@@ -149513,49 +149513,49 @@ function addBackgroundDefinition(props, target) {
     target._bkgdImgRid = intRels;
   }
 }
-function createHyperlinkRels(target, text3, options) {
+function createHyperlinkRels(target, text4, options) {
   let textObjs = [];
-  if (typeof text3 === "string" || typeof text3 === "number")
+  if (typeof text4 === "string" || typeof text4 === "number")
     return;
-  else if (Array.isArray(text3))
-    textObjs = text3;
-  else if (typeof text3 === "object")
-    textObjs = [text3];
-  textObjs.forEach((text4, idx) => {
+  else if (Array.isArray(text4))
+    textObjs = text4;
+  else if (typeof text4 === "object")
+    textObjs = [text4];
+  textObjs.forEach((text5, idx) => {
     if (options && options[idx] && options[idx].hyperlink)
-      text4.options = Object.assign(Object.assign({}, text4.options), options[idx]);
-    if (Array.isArray(text4)) {
+      text5.options = Object.assign(Object.assign({}, text5.options), options[idx]);
+    if (Array.isArray(text5)) {
       const cellOpts = [];
-      text4.forEach((tablecell) => {
+      text5.forEach((tablecell) => {
         if (tablecell.options && !tablecell.text.options) {
           cellOpts.push(tablecell.options);
         }
       });
-      createHyperlinkRels(target, text4, cellOpts);
-    } else if (Array.isArray(text4.text)) {
-      createHyperlinkRels(target, text4.text, options && options[idx] ? [options[idx]] : void 0);
-    } else if (text4 && typeof text4 === "object" && text4.options && text4.options.hyperlink && !text4.options.hyperlink._rId) {
-      if (typeof text4.options.hyperlink !== "object") {
+      createHyperlinkRels(target, text5, cellOpts);
+    } else if (Array.isArray(text5.text)) {
+      createHyperlinkRels(target, text5.text, options && options[idx] ? [options[idx]] : void 0);
+    } else if (text5 && typeof text5 === "object" && text5.options && text5.options.hyperlink && !text5.options.hyperlink._rId) {
+      if (typeof text5.options.hyperlink !== "object") {
         console.log("ERROR: text `hyperlink` option should be an object. Ex: `hyperlink: {url:'https://github.com'}` ");
-      } else if (!text4.options.hyperlink.url && !text4.options.hyperlink.slide) {
+      } else if (!text5.options.hyperlink.url && !text5.options.hyperlink.slide) {
         console.log("ERROR: 'hyperlink requires either: `url` or `slide`'");
       } else {
         const relId = getNewRelId(target);
         target._rels.push({
           type: SLIDE_OBJECT_TYPES.hyperlink,
-          data: text4.options.hyperlink.slide ? "slide" : "dummy",
+          data: text5.options.hyperlink.slide ? "slide" : "dummy",
           rId: relId,
-          Target: encodeXmlEntities(text4.options.hyperlink.url) || text4.options.hyperlink.slide.toString()
+          Target: encodeXmlEntities(text5.options.hyperlink.url) || text5.options.hyperlink.slide.toString()
         });
-        text4.options.hyperlink._rId = relId;
+        text5.options.hyperlink._rId = relId;
       }
-    } else if (text4 && typeof text4 === "object" && text4.options && text4.options.hyperlink && text4.options.hyperlink._rId) {
-      if (target._rels.filter((rel) => rel.rId === text4.options.hyperlink._rId).length === 0) {
+    } else if (text5 && typeof text5 === "object" && text5.options && text5.options.hyperlink && text5.options.hyperlink._rId) {
+      if (target._rels.filter((rel) => rel.rId === text5.options.hyperlink._rId).length === 0) {
         target._rels.push({
           type: SLIDE_OBJECT_TYPES.hyperlink,
-          data: text4.options.hyperlink.slide ? "slide" : "dummy",
-          rId: text4.options.hyperlink._rId,
-          Target: encodeXmlEntities(text4.options.hyperlink.url) || text4.options.hyperlink.slide.toString()
+          data: text5.options.hyperlink.slide ? "slide" : "dummy",
+          rId: text5.options.hyperlink._rId,
+          Target: encodeXmlEntities(text5.options.hyperlink.url) || text5.options.hyperlink.slide.toString()
         });
       }
     }
@@ -149691,8 +149691,8 @@ var Slide = class {
    * @param {TextPropsOptions} options - text options
    * @return {Slide} this Slide
    */
-  addText(text3, options) {
-    const textParam = typeof text3 === "string" || typeof text3 === "number" ? [{ text: text3, options }] : text3;
+  addText(text4, options) {
+    const textParam = typeof text4 === "string" || typeof text4 === "number" ? [{ text: text4, options }] : text4;
     addTextDefinition(this, textParam, options, false);
     return this;
   }
@@ -151041,11 +151041,11 @@ function createShadowElement(options, defaults) {
   const blur = valToPts(opts.blur);
   const offset = valToPts(opts.offset);
   const angle = Math.round(opts.angle * 6e4);
-  const color2 = opts.color;
+  const color3 = opts.color;
   const opacity = Math.round(opts.opacity * 1e5);
   const rotShape = opts.rotateWithShape ? 1 : 0;
   strXml += `<a:${type}Shdw sx="100000" sy="100000" kx="0" ky="0"  algn="bl" blurRad="${blur}" rotWithShape="${rotShape}" dist="${offset}" dir="${angle}">`;
-  strXml += `<a:srgbClr val="${color2}">`;
+  strXml += `<a:srgbClr val="${color3}">`;
   strXml += `<a:alpha val="${opacity}"/></a:srgbClr>`;
   strXml += `</a:${type}Shdw>`;
   strXml += "</a:effectLst>";
@@ -152009,9 +152009,9 @@ function genXmlTextBody(slideObj) {
       itext.text = itext.text.toString().replace(/\r*\n/g, CRLF);
     }
     if (itext.text.includes(CRLF) && itext.text.match(/\n$/g) === null) {
-      itext.text.split(CRLF).forEach((line2) => {
+      itext.text.split(CRLF).forEach((line3) => {
         itext.options.breakLine = true;
-        arrTextObjects.push({ text: line2, options: itext.options });
+        arrTextObjects.push({ text: line3, options: itext.options });
       });
     } else {
       arrTextObjects.push(itext);
@@ -152040,12 +152040,12 @@ function genXmlTextBody(slideObj) {
     if (idx + 1 === arrTextObjects.length)
       arrLines.push(arrTexts);
   });
-  arrLines.forEach((line2) => {
+  arrLines.forEach((line3) => {
     var _a3;
     let reqsClosingFontSize = false;
     strSlideXml += "<a:p>";
-    let paragraphPropXml = `<a:pPr ${((_a3 = line2[0].options) === null || _a3 === void 0 ? void 0 : _a3.rtlMode) ? ' rtl="1" ' : ""}`;
-    line2.forEach((textObj, idx) => {
+    let paragraphPropXml = `<a:pPr ${((_a3 = line3[0].options) === null || _a3 === void 0 ? void 0 : _a3.rtlMode) ? ' rtl="1" ' : ""}`;
+    line3.forEach((textObj, idx) => {
       textObj.options._lineIdx = idx;
       if (idx > 0 && textObj.options.softBreakBefore) {
         strSlideXml += "<a:br/>";
@@ -153882,8 +153882,8 @@ var Base = class {
     return this.decode(stream2);
   }
   toBuffer(value) {
-    let size = this.size(value);
-    let buffer = new Uint8Array(size);
+    let size2 = this.size(value);
+    let buffer = new Uint8Array(size2);
     let stream2 = new EncodeStream(buffer);
     this.encode(stream2, value);
     return buffer;
@@ -153935,8 +153935,8 @@ var floatle = new NumberT("Float", "LE");
 var doublebe = new NumberT("Double", "BE");
 var doublele = new NumberT("Double", "LE");
 var Fixed = class extends NumberT {
-  constructor(size, endian, fracBits = size >> 1) {
-    super(`Int${size}`, endian);
+  constructor(size2, endian, fracBits = size2 >> 1) {
+    super(`Int${size2}`, endian);
     this._point = 1 << fracBits;
   }
   decode(stream2) {
@@ -154022,18 +154022,18 @@ var ArrayT = class extends Base {
     if (!array2) {
       return this.type.size(null, ctx) * resolveLength(this.length, null, ctx);
     }
-    let size = 0;
+    let size2 = 0;
     if (this.length instanceof NumberT) {
-      size += this.length.size();
+      size2 += this.length.size();
       ctx = { parent: ctx, pointerSize: 0 };
     }
     for (let item2 of array2) {
-      size += this.type.size(item2, ctx);
+      size2 += this.type.size(item2, ctx);
     }
     if (ctx && includePointers && this.length instanceof NumberT) {
-      size += ctx.pointerSize;
+      size2 += ctx.pointerSize;
     }
-    return size;
+    return size2;
   }
   encode(stream2, array2, parent) {
     let ctx = parent;
@@ -154281,14 +154281,14 @@ var StringT = class extends Base {
     if (encoding === "utf16be") {
       encoding = "utf16le";
     }
-    let size = byteLength(val, encoding);
+    let size2 = byteLength(val, encoding);
     if (this.length instanceof NumberT) {
-      size += this.length.size();
+      size2 += this.length.size();
     }
     if (this.length == null) {
-      size += encodingWidth(encoding);
+      size2 += encodingWidth(encoding);
     }
-    return size;
+    return size2;
   }
   encode(stream2, val, parent) {
     let { encoding } = this;
@@ -154414,17 +154414,17 @@ var Struct = class extends Base {
     if (this.preEncode != null) {
       this.preEncode.call(val);
     }
-    let size = 0;
+    let size2 = 0;
     for (let key in this.fields) {
       const type = this.fields[key];
       if (type.size != null) {
-        size += type.size(val[key], ctx);
+        size2 += type.size(val[key], ctx);
       }
     }
     if (includePointers) {
-      size += ctx.pointerSize;
+      size2 += ctx.pointerSize;
     }
-    return size;
+    return size2;
   }
   encode(stream2, val, parent) {
     let type;
@@ -154502,15 +154502,15 @@ var VersionedStruct = class _VersionedStruct extends Struct {
       val,
       pointerSize: 0
     };
-    let size = 0;
+    let size2 = 0;
     if (typeof this.type !== "string") {
-      size += this.type.size(val.version, ctx);
+      size2 += this.type.size(val.version, ctx);
     }
     if (this.versions.header) {
       for (key in this.versions.header) {
         type = this.versions.header[key];
         if (type.size != null) {
-          size += type.size(val[key], ctx);
+          size2 += type.size(val[key], ctx);
         }
       }
     }
@@ -154521,13 +154521,13 @@ var VersionedStruct = class _VersionedStruct extends Struct {
     for (key in fields) {
       type = fields[key];
       if (type.size != null) {
-        size += type.size(val[key], ctx);
+        size2 += type.size(val[key], ctx);
       }
     }
     if (includePointers) {
-      size += ctx.pointerSize;
+      size2 += ctx.pointerSize;
     }
-    return size;
+    return size2;
   }
   encode(stream2, val, parent) {
     let key, type;
@@ -154669,8 +154669,8 @@ var Pointer = class extends Base {
       val = val.value;
     }
     if (val && ctx) {
-      let size = type.size(val, parent);
-      ctx.pointerSize += size;
+      let size2 = type.size(val, parent);
+      ctx.pointerSize += size2;
     }
     return this.offsetType.size();
   }
@@ -155825,8 +155825,8 @@ var $43e9821ef3717eec$export$2e2bcd8739ae039 = class {
     return ret;
   }
   size(arr, parent) {
-    let size = 2;
-    if (arr.length === 0) return size;
+    let size2 = 2;
+    if (arr.length === 0) return size2;
     let type = this.type || new BufferT();
     let offset = 1;
     for (let i = 0; i < arr.length; i++) {
@@ -155839,9 +155839,9 @@ var $43e9821ef3717eec$export$2e2bcd8739ae039 = class {
     else if (offset <= 16777215) offsetType = uint24;
     else if (offset <= 4294967295) offsetType = uint32;
     else throw new Error("Bad offset in CFFIndex");
-    size += 1 + offsetType.size() * (arr.length + 1);
-    size += offset - 1;
-    return size;
+    size2 += 1 + offsetType.size() * (arr.length + 1);
+    size2 += offset - 1;
+    return size2;
   }
   encode(stream2, arr, parent) {
     stream2.writeUInt16BE(arr.length);
@@ -155863,8 +155863,8 @@ var $43e9821ef3717eec$export$2e2bcd8739ae039 = class {
     stream2.writeUInt8(offsetType.size());
     offset = 1;
     offsetType.encode(stream2, offset);
-    for (let size of sizes) {
-      offset += size;
+    for (let size2 of sizes) {
+      offset += size2;
       offsetType.encode(stream2, offset);
     }
     for (let item2 of arr) type.encode(stream2, item2, parent);
@@ -159174,8 +159174,8 @@ var $d059a6bd2d3b5b63$var$VariableSizeNumber = class {
   size(val, parent) {
     return (0, resolveLength)(this._size, null, parent);
   }
-  constructor(size) {
-    this._size = size;
+  constructor(size2) {
+    this._size = size2;
   }
 };
 var $d059a6bd2d3b5b63$var$MapDataEntry = new Struct({
@@ -160234,27 +160234,27 @@ var $0a4bdfeb6dfd6f5e$export$2e2bcd8739ae039 = class {
     for (let index = clusterStart + 1; index <= clusterEnd; index++) {
       let mark = glyphs[index];
       let markBox = mark.cbox;
-      let position = positions[index];
+      let position2 = positions[index];
       let combiningClass = this.getCombiningClass(mark.codePoints[0]);
       if (combiningClass !== "Not_Reordered") {
-        position.xOffset = position.yOffset = 0;
+        position2.xOffset = position2.yOffset = 0;
         switch (combiningClass) {
           case "Double_Above":
           case "Double_Below":
-            position.xOffset += baseBox.minX - markBox.width / 2 - markBox.minX;
+            position2.xOffset += baseBox.minX - markBox.width / 2 - markBox.minX;
             break;
           case "Attached_Below_Left":
           case "Below_Left":
           case "Above_Left":
-            position.xOffset += baseBox.minX - markBox.minX;
+            position2.xOffset += baseBox.minX - markBox.minX;
             break;
           case "Attached_Above_Right":
           case "Below_Right":
           case "Above_Right":
-            position.xOffset += baseBox.maxX - markBox.width - markBox.minX;
+            position2.xOffset += baseBox.maxX - markBox.width - markBox.minX;
             break;
           default:
-            position.xOffset += baseBox.minX + (baseBox.width - markBox.width) / 2 - markBox.minX;
+            position2.xOffset += baseBox.minX + (baseBox.width - markBox.width) / 2 - markBox.minX;
         }
         switch (combiningClass) {
           case "Double_Below":
@@ -160264,7 +160264,7 @@ var $0a4bdfeb6dfd6f5e$export$2e2bcd8739ae039 = class {
           case "Attached_Below_Left":
           case "Attached_Below":
             if (combiningClass === "Attached_Below_Left" || combiningClass === "Attached_Below") baseBox.minY += yGap;
-            position.yOffset = -baseBox.minY - markBox.maxY;
+            position2.yOffset = -baseBox.minY - markBox.maxY;
             baseBox.minY += markBox.height;
             break;
           case "Double_Above":
@@ -160274,16 +160274,16 @@ var $0a4bdfeb6dfd6f5e$export$2e2bcd8739ae039 = class {
           case "Attached_Above":
           case "Attached_Above_Right":
             if (combiningClass === "Attached_Above" || combiningClass === "Attached_Above_Right") baseBox.maxY += yGap;
-            position.yOffset = baseBox.maxY - markBox.minY;
+            position2.yOffset = baseBox.maxY - markBox.minY;
             baseBox.maxY += markBox.height;
             break;
         }
-        position.xAdvance = position.yAdvance = 0;
-        position.xOffset += xOffset;
-        position.yOffset += yOffset;
+        position2.xAdvance = position2.yAdvance = 0;
+        position2.xOffset += xOffset;
+        position2.yOffset += yOffset;
       } else {
-        xOffset -= position.xAdvance;
-        yOffset -= position.yAdvance;
+        xOffset -= position2.xAdvance;
+        yOffset -= position2.yAdvance;
       }
     }
     return;
@@ -160645,7 +160645,7 @@ var $be07b3e97a42687a$export$2e2bcd8739ae039 = class {
   */
   get advanceWidth() {
     let width = 0;
-    for (let position of this.positions) width += position.xAdvance;
+    for (let position2 of this.positions) width += position2.xAdvance;
     return width;
   }
   /**
@@ -160654,7 +160654,7 @@ var $be07b3e97a42687a$export$2e2bcd8739ae039 = class {
   */
   get advanceHeight() {
     let height = 0;
-    for (let position of this.positions) height += position.yAdvance;
+    for (let position2 of this.positions) height += position2.yAdvance;
     return height;
   }
   /**
@@ -163090,9 +163090,9 @@ function $7826f90f6f0cecc9$var$indicPosition(glyph) {
   return 1 << ($7826f90f6f0cecc9$var$trie.get(glyph.codePoints[0]) & 255);
 }
 var $7826f90f6f0cecc9$var$IndicInfo = class {
-  constructor(category, position, syllableType, syllable) {
+  constructor(category, position2, syllableType, syllable) {
     this.category = category;
-    this.position = position;
+    this.position = position2;
     this.syllableType = syllableType;
     this.syllable = syllable;
   }
@@ -163765,18 +163765,18 @@ var $0a876c45f1f7c41c$export$2e2bcd8739ae039 = class extends (0, $a83b9c36aaa94f
 };
 var $c96c93587d49c14d$export$2e2bcd8739ae039 = class extends (0, $a83b9c36aaa94fd3$export$2e2bcd8739ae039) {
   applyPositionValue(sequenceIndex, value) {
-    let position = this.positions[this.glyphIterator.peekIndex(sequenceIndex)];
-    if (value.xAdvance != null) position.xAdvance += value.xAdvance;
-    if (value.yAdvance != null) position.yAdvance += value.yAdvance;
-    if (value.xPlacement != null) position.xOffset += value.xPlacement;
-    if (value.yPlacement != null) position.yOffset += value.yPlacement;
+    let position2 = this.positions[this.glyphIterator.peekIndex(sequenceIndex)];
+    if (value.xAdvance != null) position2.xAdvance += value.xAdvance;
+    if (value.yAdvance != null) position2.yAdvance += value.yAdvance;
+    if (value.xPlacement != null) position2.xOffset += value.xPlacement;
+    if (value.yPlacement != null) position2.yOffset += value.yPlacement;
     let variationProcessor = this.font._variationProcessor;
     let variationStore = this.font.GDEF && this.font.GDEF.itemVariationStore;
     if (variationProcessor && variationStore) {
-      if (value.xPlaDevice) position.xOffset += variationProcessor.getDelta(variationStore, value.xPlaDevice.a, value.xPlaDevice.b);
-      if (value.yPlaDevice) position.yOffset += variationProcessor.getDelta(variationStore, value.yPlaDevice.a, value.yPlaDevice.b);
-      if (value.xAdvDevice) position.xAdvance += variationProcessor.getDelta(variationStore, value.xAdvDevice.a, value.xAdvDevice.b);
-      if (value.yAdvDevice) position.yAdvance += variationProcessor.getDelta(variationStore, value.yAdvDevice.a, value.yAdvDevice.b);
+      if (value.xPlaDevice) position2.xOffset += variationProcessor.getDelta(variationStore, value.xPlaDevice.a, value.xPlaDevice.b);
+      if (value.yPlaDevice) position2.yOffset += variationProcessor.getDelta(variationStore, value.yPlaDevice.a, value.yPlaDevice.b);
+      if (value.xAdvDevice) position2.xAdvance += variationProcessor.getDelta(variationStore, value.xAdvDevice.a, value.xAdvDevice.b);
+      if (value.yAdvDevice) position2.yAdvance += variationProcessor.getDelta(variationStore, value.yAdvDevice.a, value.yAdvDevice.b);
     }
   }
   applyLookup(lookupType, table) {
@@ -164672,8 +164672,8 @@ var $f92906be28e61769$export$2e2bcd8739ae039 = class {
   * @param {number} size
   * @return {Path}
   */
-  getScaledPath(size) {
-    let scale = 1 / this._font.unitsPerEm * size;
+  getScaledPath(size2) {
+    let scale = 1 / this._font.unitsPerEm * size2;
     return this.path.scale(scale);
   }
   /**
@@ -164720,9 +164720,9 @@ var $f92906be28e61769$export$2e2bcd8739ae039 = class {
   * @param {CanvasRenderingContext2d} ctx
   * @param {number} size
   */
-  render(ctx, size) {
+  render(ctx, size2) {
     ctx.save();
-    let scale = 1 / this._font.head.unitsPerEm * size;
+    let scale = 1 / this._font.head.unitsPerEm * size2;
     ctx.scale(scale, scale);
     let fn = this.path.toFunction();
     fn(ctx);
@@ -165479,10 +165479,10 @@ var $25d8f049c222084c$export$2e2bcd8739ae039 = class extends (0, $69aac160299686
   * @param {number} size
   * @return {object}
   */
-  getImageForSize(size) {
+  getImageForSize(size2) {
     for (let i = 0; i < this._font.sbix.imageTables.length; i++) {
       var table = this._font.sbix.imageTables[i];
-      if (table.ppem >= size) break;
+      if (table.ppem >= size2) break;
     }
     let offsets = table.imageOffsets;
     let start = offsets[this.id];
@@ -165493,17 +165493,17 @@ var $25d8f049c222084c$export$2e2bcd8739ae039 = class extends (0, $69aac160299686
       buflen: end - start
     });
   }
-  render(ctx, size) {
-    let img = this.getImageForSize(size);
+  render(ctx, size2) {
+    let img = this.getImageForSize(size2);
     if (img != null) {
-      let scale = size / this._font.unitsPerEm;
+      let scale = size2 / this._font.unitsPerEm;
       ctx.image(img.data, {
-        height: size,
+        height: size2,
         x: img.originX,
         y: (this.bbox.minY - img.originY) * scale
       });
     }
-    if (this._font.sbix.flags.renderOutlines) super.render(ctx, size);
+    if (this._font.sbix.flags.renderOutlines) super.render(ctx, size2);
   }
   constructor(...args) {
     super(...args);
@@ -165511,9 +165511,9 @@ var $25d8f049c222084c$export$2e2bcd8739ae039 = class extends (0, $69aac160299686
   }
 };
 var $0d411f0165859681$var$COLRLayer = class {
-  constructor(glyph, color2) {
+  constructor(glyph, color3) {
     this.glyph = glyph;
-    this.color = color2;
+    this.color = color3;
   }
 };
 var $0d411f0165859681$export$2e2bcd8739ae039 = class extends (0, $f92906be28e61769$export$2e2bcd8739ae039) {
@@ -165549,33 +165549,33 @@ var $0d411f0165859681$export$2e2bcd8739ae039 = class extends (0, $f92906be28e617
     }
     if (baseLayer == null) {
       var g = this._font._getBaseGlyph(this.id);
-      var color2 = {
+      var color3 = {
         red: 0,
         green: 0,
         blue: 0,
         alpha: 255
       };
       return [
-        new $0d411f0165859681$var$COLRLayer(g, color2)
+        new $0d411f0165859681$var$COLRLayer(g, color3)
       ];
     }
     let layers = [];
     for (let i = baseLayer.firstLayerIndex; i < baseLayer.firstLayerIndex + baseLayer.numLayers; i++) {
       var rec = colr.layerRecords[i];
-      var color2 = cpal.colorRecords[rec.paletteIndex];
+      var color3 = cpal.colorRecords[rec.paletteIndex];
       var g = this._font._getBaseGlyph(rec.gid);
-      layers.push(new $0d411f0165859681$var$COLRLayer(g, color2));
+      layers.push(new $0d411f0165859681$var$COLRLayer(g, color3));
     }
     return layers;
   }
-  render(ctx, size) {
-    for (let { glyph, color: color2 } of this.layers) {
+  render(ctx, size2) {
+    for (let { glyph, color: color3 } of this.layers) {
       ctx.fillColor([
-        color2.red,
-        color2.green,
-        color2.blue
-      ], color2.alpha / 255 * 100);
-      glyph.render(ctx, size);
+        color3.red,
+        color3.green,
+        color3.blue
+      ], color3.alpha / 255 * 100);
+      glyph.render(ctx, size2);
     }
     return;
   }
@@ -165973,9 +165973,9 @@ var $807e58506be70005$export$2e2bcd8739ae039 = class {
       xPoints,
       yPoints
     };
-    let size = $807e58506be70005$var$Glyf.size(glyf);
-    let tail = 4 - size % 4;
-    let stream2 = new EncodeStream(size + tail);
+    let size2 = $807e58506be70005$var$Glyf.size(glyf);
+    let tail = 4 - size2 % 4;
+    let stream2 = new EncodeStream(size2 + tail);
     $807e58506be70005$var$Glyf.encode(stream2, glyf);
     if (tail !== 0) stream2.fill(0, tail);
     return stream2.buffer;
@@ -167226,27 +167226,27 @@ function load(font, face) {
   return f;
 }
 var widthCache = /* @__PURE__ */ new Map();
-function unitWidth(font, face, text3) {
-  const key = `${font}:${face}:${text3}`;
+function unitWidth(font, face, text4) {
+  const key = `${font}:${face}:${text4}`;
   const hit = widthCache.get(key);
   if (hit !== void 0) return hit;
   const f = load(font, face);
-  const run = f.font.layout(text3, { kern: false, liga: false, clig: false });
+  const run = f.font.layout(text4, { kern: false, liga: false, clig: false });
   const w = run.advanceWidth / f.upm;
   widthCache.set(key, w);
   return w;
 }
-function textWidthPt(font, face, size, text3) {
-  return unitWidth(font, face, text3) * size;
+function textWidthPt(font, face, size2, text4) {
+  return unitWidth(font, face, text4) * size2;
 }
 function vmetrics(font, face = "regular") {
   const f = load(font, face);
   return { asc: f.ascent / f.upm, desc: f.descent / f.upm };
 }
-function missingGlyphs(font, text3) {
+function missingGlyphs(font, text4) {
   const f = load(font, "regular");
   const miss = /* @__PURE__ */ new Set();
-  for (const ch of text3) {
+  for (const ch of text4) {
     const cp = ch.codePointAt(0);
     if (cp <= 32) continue;
     if (!f.font.hasGlyphForCodePoint(cp)) miss.add(ch);
@@ -167372,16 +167372,16 @@ function dataUri(path2) {
 }
 function textSvg(t) {
   const fam = vectorFamily(t.style.measure);
-  const size = ptpx(t.style.size);
+  const size2 = ptpx(t.style.size);
   let out = "";
-  for (const line2 of t.lines) {
-    const y = px(t.box.y + line2.baseline);
-    if (line2.bulletX !== void 0) {
-      out += `<text x="${px(t.box.x + line2.bulletX)}" y="${y}" font-family="${fam}" font-size="${size}" fill="${line2.segments[0]?.color ?? t.style.color}">\u2022</text>`;
+  for (const line3 of t.lines) {
+    const y = px(t.box.y + line3.baseline);
+    if (line3.bulletX !== void 0) {
+      out += `<text x="${px(t.box.x + line3.bulletX)}" y="${y}" font-family="${fam}" font-size="${size2}" fill="${line3.segments[0]?.color ?? t.style.color}">\u2022</text>`;
     }
-    for (const s2 of line2.segments) {
+    for (const s2 of line3.segments) {
       if (s2.link) out += `<a href="${esc(s2.link)}" target="_blank">`;
-      out += `<text x="${px(t.box.x + s2.x)}" y="${y}" font-family="${fam}" font-size="${size}"${s2.bold ? ' font-weight="bold"' : ""}${s2.italic ? ' font-style="italic"' : ""} fill="${s2.color}" xml:space="preserve">${esc(s2.text)}</text>`;
+      out += `<text x="${px(t.box.x + s2.x)}" y="${y}" font-family="${fam}" font-size="${size2}"${s2.bold ? ' font-weight="bold"' : ""}${s2.italic ? ' font-style="italic"' : ""} fill="${s2.color}" xml:space="preserve">${esc(s2.text)}</text>`;
       if (s2.link) out += "</a>";
     }
   }
@@ -168233,7 +168233,7 @@ async function addNode2(slide, n, slideId) {
       return;
     }
     case "image": {
-      const position = {
+      const position2 = {
         left: px2(n.box.x),
         top: px2(n.box.y),
         width: px2(n.box.w),
@@ -168252,7 +168252,7 @@ async function addNode2(slide, n, slideId) {
       if (!bytes) {
         const ph = slide.shapes.add({
           geometry: "rect",
-          position,
+          position: position2,
           fill: "#E9ECF0",
           line: { style: "dashed", fill: "#AEB6C1", width: 1 }
         });
@@ -168266,7 +168266,7 @@ async function addNode2(slide, n, slideId) {
         return;
       }
       const blob = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
-      slide.images.add({ blob, contentType, alt: n.alt, fit: n.fit, position });
+      slide.images.add({ blob, contentType, alt: n.alt, fit: n.fit, position: position2 });
       return;
     }
     case "table": {
@@ -168935,9 +168935,9 @@ function runChrome(bin, args, timeoutMs, pdfPath) {
     });
     const poll = setInterval(() => {
       if (!pdfPath || !existsSync4(pdfPath)) return;
-      const size = statSync(pdfPath).size;
-      if (size > 0 && size === lastSize) finish();
-      lastSize = size;
+      const size2 = statSync(pdfPath).size;
+      if (size2 > 0 && size2 === lastSize) finish();
+      lastSize = size2;
     }, 400);
     const timer = setTimeout(
       () => finish(new Error(`Chrome timed out after ${Math.round(timeoutMs / 1e3)}s`)),
@@ -169209,8 +169209,8 @@ var Doc = class {
       `<w:p><w:pPr><w:pStyle w:val="${style}"/>${keepNext ? "<w:keepNext/>" : ""}</w:pPr>${content}</w:p>`
     );
   }
-  plain(style, text3) {
-    this.para(style, `<w:r><w:t xml:space="preserve">${x(text3)}</w:t></w:r>`);
+  plain(style, text4) {
+    this.para(style, `<w:r><w:t xml:space="preserve">${x(text4)}</w:t></w:r>`);
   }
   text(t) {
     for (const p of t.paragraphs) {
@@ -169301,7 +169301,7 @@ async function renderDocx(scene, epoch) {
       if (n.kind === "text" && n.role === "source")
         for (const p of n.paragraphs) d.para("Source", d.runs(p));
     if (s2.notes)
-      for (const line2 of s2.notes.split(/\n+/).filter((l) => l.trim())) d.plain("Notes", line2);
+      for (const line3 of s2.notes.split(/\n+/).filter((l) => l.trim())) d.plain("Notes", line3);
   }
   const iso = epoch.toISOString().replace(/\.\d{3}Z$/, "Z");
   const W = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
@@ -169725,15 +169725,15 @@ var sbox = /* @__PURE__ */ (() => {
   const t = new Uint8Array(256);
   for (let i = 0, x2 = 1; i < 256; i++, x2 ^= mul2(x2))
     t[i] = x2;
-  const box = new Uint8Array(256);
-  box[0] = 99;
+  const box2 = new Uint8Array(256);
+  box2[0] = 99;
   for (let i = 0; i < 255; i++) {
     let x2 = t[255 - i];
     x2 |= x2 << 8;
-    box[t[i]] = (x2 ^ x2 >> 4 ^ x2 >> 5 ^ x2 >> 6 ^ x2 >> 7 ^ 99) & 255;
+    box2[t[i]] = (x2 ^ x2 >> 4 ^ x2 >> 5 ^ x2 >> 6 ^ x2 >> 7 ^ 99) & 255;
   }
   clean(t);
-  return box;
+  return box2;
 })();
 var invSbox = /* @__PURE__ */ sbox.map((_, j) => sbox.indexOf(j));
 var rotr32_8 = (n) => n << 24 | n >>> 8;
@@ -171210,8 +171210,8 @@ var $557adaaeb0c7885f$var$mapFirst = function(c) {
   }
 };
 var $557adaaeb0c7885f$var$Break = class {
-  constructor(position, required2 = false) {
-    this.position = position;
+  constructor(position2, required2 = false) {
+    this.position = position2;
     this.required = required2;
   }
 };
@@ -171392,12 +171392,12 @@ var PNG = class _PNG {
           }
           break;
         case "tEXt":
-          var text3 = this.read(chunkSize);
-          var index = text3.indexOf(0);
-          var key = String.fromCharCode.apply(String, text3.slice(0, index));
+          var text4 = this.read(chunkSize);
+          var index = text4.indexOf(0);
+          var key = String.fromCharCode.apply(String, text4.slice(0, index));
           this.text[key] = String.fromCharCode.apply(
             String,
-            text3.slice(index + 1)
+            text4.slice(index + 1)
           );
           break;
         case "IEND":
@@ -172091,8 +172091,8 @@ var PDFPage = class {
     this._setTabOrder();
     this.dictionary.end();
     this.resources.data.ColorSpace = this.resources.data.ColorSpace || {};
-    for (let color2 of Object.values(this.document.spotColors)) {
-      this.resources.data.ColorSpace[color2.id] = color2;
+    for (let color3 of Object.values(this.document.spotColors)) {
+      this.resources.data.ColorSpace[color3.id] = color3;
     }
     this.resources.end();
     return this.content.end();
@@ -172997,10 +172997,10 @@ var first = (x2) => x2[0];
 var last = (x2) => x2[x2.length - 1];
 function toCodePoints(input2) {
   const codepoints = [];
-  const size = input2.length;
-  for (let i = 0; i < size; i += 1) {
+  const size2 = input2.length;
+  for (let i = 0; i < size2; i += 1) {
     const before = input2.charCodeAt(i);
-    if (before >= 55296 && before <= 56319 && size > i + 1) {
+    if (before >= 55296 && before <= 56319 && size2 > i + 1) {
       const next = input2.charCodeAt(i + 1);
       if (next >= 56320 && next <= 57343) {
         codepoints.push((before - 55296) * 1024 + next - 56320 + 65536);
@@ -173387,26 +173387,26 @@ var PDFGradient$1 = class PDFGradient {
     this.embedded = false;
     this.transform = [1, 0, 0, 1, 0, 0];
   }
-  stop(pos, color2, opacity) {
+  stop(pos, color3, opacity) {
     if (opacity == null) {
       opacity = 1;
     }
-    color2 = this.doc._normalizeColor(color2);
+    color3 = this.doc._normalizeColor(color3);
     if (this.stops.length === 0) {
-      if (color2.length === 3) {
+      if (color3.length === 3) {
         this._colorSpace = "DeviceRGB";
-      } else if (color2.length === 4) {
+      } else if (color3.length === 4) {
         this._colorSpace = "DeviceCMYK";
-      } else if (color2.length === 1) {
+      } else if (color3.length === 1) {
         this._colorSpace = "DeviceGray";
       } else {
         throw new Error("Unknown color space");
       }
-    } else if (this._colorSpace === "DeviceRGB" && color2.length !== 3 || this._colorSpace === "DeviceCMYK" && color2.length !== 4 || this._colorSpace === "DeviceGray" && color2.length !== 1) {
+    } else if (this._colorSpace === "DeviceRGB" && color3.length !== 3 || this._colorSpace === "DeviceCMYK" && color3.length !== 4 || this._colorSpace === "DeviceGray" && color3.length !== 1) {
       throw new Error("All gradient stops must use the same color space");
     }
     opacity = Math.max(0, Math.min(1, opacity));
-    this.stops.push([pos, color2, opacity]);
+    this.stops.push([pos, color3, opacity]);
     return this;
   }
   setTransform(m11, m12, m21, m22, dx, dy) {
@@ -173670,53 +173670,53 @@ var ColorMixin = {
     this._patternCount = 0;
     this._gradCount = 0;
   },
-  _normalizeColor(color2) {
-    if (typeof color2 === "string") {
-      if (color2.charAt(0) === "#") {
-        if (color2.length === 4) {
-          color2 = color2.replace(/#([0-9A-F])([0-9A-F])([0-9A-F])/i, "#$1$1$2$2$3$3");
+  _normalizeColor(color3) {
+    if (typeof color3 === "string") {
+      if (color3.charAt(0) === "#") {
+        if (color3.length === 4) {
+          color3 = color3.replace(/#([0-9A-F])([0-9A-F])([0-9A-F])/i, "#$1$1$2$2$3$3");
         }
-        const hex5 = parseInt(color2.slice(1), 16);
-        color2 = [hex5 >> 16, hex5 >> 8 & 255, hex5 & 255];
-      } else if (namedColors[color2.toLowerCase()]) {
-        color2 = namedColors[color2.toLowerCase()];
-      } else if (this.spotColors[color2]) {
-        return this.spotColors[color2];
+        const hex5 = parseInt(color3.slice(1), 16);
+        color3 = [hex5 >> 16, hex5 >> 8 & 255, hex5 & 255];
+      } else if (namedColors[color3.toLowerCase()]) {
+        color3 = namedColors[color3.toLowerCase()];
+      } else if (this.spotColors[color3]) {
+        return this.spotColors[color3];
       }
     }
-    if (Array.isArray(color2)) {
-      if (color2.length === 3) {
-        color2 = color2.map((part) => part / 255);
-      } else if (color2.length === 4) {
-        color2 = color2.map((part) => part / 100);
+    if (Array.isArray(color3)) {
+      if (color3.length === 3) {
+        color3 = color3.map((part) => part / 255);
+      } else if (color3.length === 4) {
+        color3 = color3.map((part) => part / 100);
       }
-      return color2;
+      return color3;
     }
     return null;
   },
-  _setColor(color2, stroke) {
-    if (color2 instanceof PDFGradient2) {
-      color2.apply(stroke);
+  _setColor(color3, stroke) {
+    if (color3 instanceof PDFGradient2) {
+      color3.apply(stroke);
       return true;
-    } else if (Array.isArray(color2) && color2[0] instanceof PDFTilingPattern2) {
-      color2[0].apply(stroke, color2[1]);
+    } else if (Array.isArray(color3) && color3[0] instanceof PDFTilingPattern2) {
+      color3[0].apply(stroke, color3[1]);
       return true;
     }
-    return this._setColorCore(color2, stroke);
+    return this._setColorCore(color3, stroke);
   },
-  _setColorCore(color2, stroke) {
-    color2 = this._normalizeColor(color2);
-    if (!color2) {
+  _setColorCore(color3, stroke) {
+    color3 = this._normalizeColor(color3);
+    if (!color3) {
       return false;
     }
     const op = stroke ? "SCN" : "scn";
-    const space = this._getColorSpace(color2);
+    const space = this._getColorSpace(color3);
     this._setColorSpace(space, stroke);
-    if (color2 instanceof SpotColor) {
-      this.page.colorSpaces[color2.id] = color2.ref;
+    if (color3 instanceof SpotColor) {
+      this.page.colorSpaces[color3.id] = color3.ref;
       this.addContent(`1 ${op}`);
     } else {
-      this.addContent(`${color2.join(" ")} ${op}`);
+      this.addContent(`${color3.join(" ")} ${op}`);
     }
     return true;
   },
@@ -173724,22 +173724,22 @@ var ColorMixin = {
     const op = stroke ? "CS" : "cs";
     return this.addContent(`/${space} ${op}`);
   },
-  _getColorSpace(color2) {
-    if (color2 instanceof SpotColor) {
-      return color2.id;
+  _getColorSpace(color3) {
+    if (color3 instanceof SpotColor) {
+      return color3.id;
     }
-    return color2.length === 4 ? "DeviceCMYK" : "DeviceRGB";
+    return color3.length === 4 ? "DeviceCMYK" : "DeviceRGB";
   },
-  fillColor(color2, opacity) {
-    const set2 = this._setColor(color2, false);
+  fillColor(color3, opacity) {
+    const set2 = this._setColor(color3, false);
     if (set2) {
       this.fillOpacity(opacity);
     }
-    this._fillColor = [color2, opacity];
+    this._fillColor = [color3, opacity];
     return this;
   },
-  strokeColor(color2, opacity) {
-    const set2 = this._setColor(color2, true);
+  strokeColor(color3, opacity) {
+    const set2 = this._setColor(color3, true);
     if (set2) {
       this.strokeOpacity(opacity);
     }
@@ -173800,8 +173800,8 @@ var ColorMixin = {
     return new PDFTilingPattern2(this, bbox, xStep, yStep, stream2);
   },
   addSpotColor(name, C, M2, Y, K2) {
-    const color2 = new SpotColor(this, name, C, M2, Y, K2);
-    this.spotColors[name] = color2;
+    const color3 = new SpotColor(this, name, C, M2, Y, K2);
+    this.spotColors[name] = color3;
     return this;
   }
 };
@@ -174104,16 +174104,16 @@ var parse = function(path2) {
     let newCursor = i;
     let number5 = null;
     if (command === "A" || command === "a") {
-      const position = args.length;
-      if (position === 0 || position === 1) {
+      const position2 = args.length;
+      if (position2 === 0 || position2 === 1) {
         if (c !== "+" && c !== "-") {
           [newCursor, number5] = readNumber(path2, i);
         }
       }
-      if (position === 2 || position === 5 || position === 6) {
+      if (position2 === 2 || position2 === 5 || position2 === 6) {
         [newCursor, number5] = readNumber(path2, i);
       }
-      if (position === 3 || position === 4) {
+      if (position2 === 3 || position2 === 4) {
         if (c === "0") {
           number5 = 0;
         }
@@ -174574,19 +174574,19 @@ var VectorMixin = {
     }
     return "";
   },
-  fill(color2, rule) {
-    if (/(even-?odd)|(non-?zero)/.test(color2)) {
-      rule = color2;
-      color2 = null;
+  fill(color3, rule) {
+    if (/(even-?odd)|(non-?zero)/.test(color3)) {
+      rule = color3;
+      color3 = null;
     }
-    if (color2) {
-      this.fillColor(color2);
+    if (color3) {
+      this.fillColor(color3);
     }
     return this.addContent(`f${this._windingRule(rule)}`);
   },
-  stroke(color2) {
-    if (color2) {
-      this.strokeColor(color2);
+  stroke(color3) {
+    if (color3) {
+      this.strokeColor(color3);
     }
     return this.addContent("S");
   },
@@ -174809,10 +174809,10 @@ var AFMFont = class {
       }
     }
   }
-  encodeText(text3) {
+  encodeText(text4) {
     const res = [];
-    for (let i = 0, len = text3.length; i < len; i++) {
-      let char = text3.charCodeAt(i);
+    for (let i = 0, len = text4.length; i < len; i++) {
+      let char = text4.charCodeAt(i);
       char = WIN_ANSI_MAP[char] || char;
       res.push(char.toString(16));
     }
@@ -174867,9 +174867,9 @@ var PDFFont = class {
   embed() {
     throw new Error("Must be implemented by subclasses");
   }
-  lineHeight(size, includeGap = false) {
+  lineHeight(size2, includeGap = false) {
     const gap = includeGap ? this.lineGap : 0;
-    return (this.ascender + gap - this.descender) / 1e3 * size;
+    return (this.ascender + gap - this.descender) / 1e3 * size2;
   }
 };
 var StandardFont = class extends PDFFont {
@@ -174897,9 +174897,9 @@ var StandardFont = class extends PDFFont {
     };
     return this.dictionary.end();
   }
-  encode(text3) {
-    const encoded = this.font.encodeText(text3);
-    const glyphs = this.font.glyphsForString(`${text3}`);
+  encode(text4) {
+    const encoded = this.font.encodeText(text4);
+    const glyphs = this.font.glyphsForString(`${text4}`);
     const advances = this.font.advancesForGlyphs(glyphs);
     const positions = [];
     for (let i = 0; i < glyphs.length; i++) {
@@ -174914,14 +174914,14 @@ var StandardFont = class extends PDFFont {
     }
     return [encoded, positions];
   }
-  widthOfString(string4, size) {
+  widthOfString(string4, size2) {
     const glyphs = this.font.glyphsForString(`${string4}`);
     const advances = this.font.advancesForGlyphs(glyphs);
     let width = 0;
     for (let advance of advances) {
       width += advance;
     }
-    const scale = size / 1e3;
+    const scale = size2 / 1e3;
     return width * scale;
   }
 };
@@ -174949,42 +174949,42 @@ var EmbeddedFont = class extends PDFFont {
       this.layoutCache = /* @__PURE__ */ Object.create(null);
     }
   }
-  layoutRun(text3, features) {
-    const run = this.font.layout(text3, features);
+  layoutRun(text4, features) {
+    const run = this.font.layout(text4, features);
     for (let i = 0; i < run.positions.length; i++) {
-      const position = run.positions[i];
-      for (let key in position) {
-        position[key] *= this.scale;
+      const position2 = run.positions[i];
+      for (let key in position2) {
+        position2[key] *= this.scale;
       }
-      position.advanceWidth = run.glyphs[i].advanceWidth * this.scale;
+      position2.advanceWidth = run.glyphs[i].advanceWidth * this.scale;
     }
     return run;
   }
-  layoutCached(text3) {
+  layoutCached(text4) {
     if (!this.layoutCache) {
-      return this.layoutRun(text3);
+      return this.layoutRun(text4);
     }
     let cached2;
-    if (cached2 = this.layoutCache[text3]) {
+    if (cached2 = this.layoutCache[text4]) {
       return cached2;
     }
-    const run = this.layoutRun(text3);
-    this.layoutCache[text3] = run;
+    const run = this.layoutRun(text4);
+    this.layoutCache[text4] = run;
     return run;
   }
-  layout(text3, features, onlyWidth) {
+  layout(text4, features, onlyWidth) {
     if (features) {
-      return this.layoutRun(text3, features);
+      return this.layoutRun(text4, features);
     }
     let glyphs = onlyWidth ? null : [];
     let positions = onlyWidth ? null : [];
     let advanceWidth = 0;
     let last2 = 0;
     let index = 0;
-    while (index <= text3.length) {
+    while (index <= text4.length) {
       var needle;
-      if (index === text3.length && last2 < index || (needle = text3.charAt(index), [" ", "	"].includes(needle))) {
-        const run = this.layoutCached(text3.slice(last2, ++index));
+      if (index === text4.length && last2 < index || (needle = text4.charAt(index), [" ", "	"].includes(needle))) {
+        const run = this.layoutCached(text4.slice(last2, ++index));
         if (!onlyWidth) {
           glyphs = glyphs.concat(run.glyphs);
           positions = positions.concat(run.positions);
@@ -175001,11 +175001,11 @@ var EmbeddedFont = class extends PDFFont {
       advanceWidth
     };
   }
-  encode(text3, features) {
+  encode(text4, features) {
     const {
       glyphs,
       positions
-    } = this.layout(text3, features);
+    } = this.layout(text4, features);
     const res = [];
     for (let i = 0; i < glyphs.length; i++) {
       const glyph = glyphs[i];
@@ -175020,9 +175020,9 @@ var EmbeddedFont = class extends PDFFont {
     }
     return [res, positions];
   }
-  widthOfString(string4, size, features) {
+  widthOfString(string4, size2, features) {
     const width = this.layout(string4, features, true).advanceWidth;
-    const scale = size / 1e3;
+    const scale = size2 / 1e3;
     return width * scale;
   }
   embed() {
@@ -175235,10 +175235,10 @@ var FontsMixin = {
       this.font(defaultFont, defaultFontFamily);
     }
   },
-  font(src, family, size) {
+  font(src, family, size2) {
     let cacheKey, font;
     if (typeof family === "number") {
-      size = family;
+      size2 = family;
       family = null;
     }
     if (typeof src === "string" && this._registeredFonts[src]) {
@@ -175255,8 +175255,8 @@ var FontsMixin = {
     }
     this._fontSource = src;
     this._fontFamily = family;
-    if (size != null) {
-      this.fontSize(size);
+    if (size2 != null) {
+      this.fontSize(size2);
     }
     if (font = this._fontFamilies[cacheKey]) {
       this._font = font;
@@ -175293,14 +175293,14 @@ var FontsMixin = {
     };
     return this;
   },
-  sizeToPoint(size, defaultValue = 0, page2 = this.page, percentageWidth = void 0) {
+  sizeToPoint(size2, defaultValue = 0, page2 = this.page, percentageWidth = void 0) {
     if (!percentageWidth) percentageWidth = this._fontSize;
     if (typeof defaultValue !== "number") defaultValue = this.sizeToPoint(defaultValue);
-    if (size === void 0) return defaultValue;
-    if (typeof size === "number") return size;
-    if (typeof size === "boolean") return Number(size);
-    const match = String(size).match(/((\d+)?(\.\d+)?)(em|in|px|cm|mm|pc|ex|ch|rem|vw|vh|vmin|vmax|%|pt)?/);
-    if (!match) throw new Error(`Unsupported size '${size}'`);
+    if (size2 === void 0) return defaultValue;
+    if (typeof size2 === "number") return size2;
+    if (typeof size2 === "boolean") return Number(size2);
+    const match = String(size2).match(/((\d+)?(\.\d+)?)(em|in|px|cm|mm|pc|ex|ch|rem|vw|vh|vmin|vmax|%|pt)?/);
+    if (!match) throw new Error(`Unsupported size '${size2}'`);
     let multiplier;
     switch (match[4]) {
       case "em":
@@ -175463,14 +175463,14 @@ var LineWrapper = class extends EventEmitter2 {
     }
     return w + this.wordWidth(HYPHEN) <= this.spaceLeft;
   }
-  eachWord(text3, fn) {
+  eachWord(text4, fn) {
     let bk;
-    const breaker2 = new $557adaaeb0c7885f$exports(text3);
+    const breaker2 = new $557adaaeb0c7885f$exports(text4);
     let last2 = null;
     const wordWidths = /* @__PURE__ */ Object.create(null);
     while (bk = breaker2.nextBreak()) {
       var shouldContinue;
-      let word = text3.slice((last2 != null ? last2.position : void 0) || 0, bk.position);
+      let word = text4.slice((last2 != null ? last2.position : void 0) || 0, bk.position);
       let w = wordWidths[word] != null ? wordWidths[word] : wordWidths[word] = this.wordWidth(word);
       if (w > this.lineWidth + this.continuedX) {
         let lbk = last2;
@@ -175518,7 +175518,7 @@ var LineWrapper = class extends EventEmitter2 {
       last2 = bk;
     }
   }
-  wrap(text3, options) {
+  wrap(text4, options) {
     const {
       document: document2
     } = this;
@@ -175553,7 +175553,7 @@ var LineWrapper = class extends EventEmitter2 {
       return lc++;
     };
     this.emit("sectionStart", options, this);
-    this.eachWord(text3, (word, w, bk, last2) => {
+    this.eachWord(text4, (word, w, bk, last2) => {
       if (last2 == null || last2.required) {
         this.emit("firstLine", options, this);
         this.spaceLeft = this.lineWidth;
@@ -175671,8 +175671,8 @@ function formatListLabel(n, listType) {
   }
   var letter = String.fromCharCode((n - 1) % 26 + 65);
   var times = Math.floor((n - 1) / 26 + 1);
-  var text3 = Array(times + 1).join(letter);
-  return `${text3}.`;
+  var text4 = Array(times + 1).join(letter);
+  return `${text4}.`;
 }
 var TextMixin = {
   initText() {
@@ -175699,11 +175699,11 @@ var TextMixin = {
     this.y -= this.currentLineHeight(true) * lines + this._lineGap;
     return this;
   },
-  _text(text3, x2, y, options, lineCallback) {
+  _text(text4, x2, y, options, lineCallback) {
     options = this._initOptions(x2, y, options);
-    text3 = text3 == null ? "" : `${text3}`;
+    text4 = text4 == null ? "" : `${text4}`;
     if (options.wordSpacing) {
-      text3 = text3.replace(/\s{2,}/g, " ");
+      text4 = text4.replace(/\s{2,}/g, " ");
     }
     const addStructure = () => {
       if (options.structParent) {
@@ -175725,18 +175725,18 @@ var TextMixin = {
       }
       this._wrapper = options.continued ? wrapper : null;
       this._textOptions = options.continued ? options : null;
-      wrapper.wrap(text3, options);
+      wrapper.wrap(text4, options);
     } else {
-      for (let line2 of text3.split("\n")) {
+      for (let line3 of text4.split("\n")) {
         addStructure();
-        lineCallback(line2, options);
+        lineCallback(line3, options);
       }
     }
     if (options.rotation !== 0) this.restore();
     return this;
   },
-  text(text3, x2, y, options) {
-    return this._text(text3, x2, y, options, this._line);
+  text(text4, x2, y, options) {
+    return this._text(text4, x2, y, options, this._line);
   },
   widthOfString(string4, options = {}) {
     const horizontalScaling = options.horizontalScaling || 100;
@@ -175757,25 +175757,25 @@ var TextMixin = {
     }
     if (options.width) {
       let wrapper = new LineWrapper(this, options);
-      wrapper.on("line", (text3, options2) => {
+      wrapper.on("line", (text4, options2) => {
         this.y += lineHeight;
-        text3 = text3.replace(/\n/g, "");
-        if (text3.length) {
+        text4 = text4.replace(/\n/g, "");
+        if (text4.length) {
           let wordSpacing = options2.wordSpacing ?? 0;
           const characterSpacing = options2.characterSpacing ?? 0;
           if (options2.width && options2.align === "justify") {
-            const words = text3.trim().split(/\s+/);
-            const textWidth = this.widthOfString(text3.replace(/\s+/g, ""), options2);
+            const words = text4.trim().split(/\s+/);
+            const textWidth = this.widthOfString(text4.replace(/\s+/g, ""), options2);
             const spaceWidth = this.widthOfString(" ") + characterSpacing;
             wordSpacing = Math.max(0, (options2.lineWidth - textWidth) / Math.max(1, words.length - 1) - spaceWidth);
           }
-          contentWidth = Math.max(contentWidth, options2.textWidth + wordSpacing * (options2.wordCount - 1) + characterSpacing * (text3.length - 1));
+          contentWidth = Math.max(contentWidth, options2.textWidth + wordSpacing * (options2.wordCount - 1) + characterSpacing * (text4.length - 1));
         }
       });
       wrapper.wrap(string4, options);
     } else {
-      for (let line2 of string4.split("\n")) {
-        const lineWidth = this.widthOfString(line2, options);
+      for (let line3 of string4.split("\n")) {
+        const lineWidth = this.widthOfString(line3, options);
         this.y += lineHeight;
         contentWidth = Math.max(contentWidth, lineWidth);
       }
@@ -175834,7 +175834,7 @@ var TextMixin = {
       height: yMax - yMin
     };
   },
-  heightOfString(text3, options) {
+  heightOfString(text4, options) {
     const {
       x: x2,
       y
@@ -175842,7 +175842,7 @@ var TextMixin = {
     options = this._initOptions(options);
     options.height = Infinity;
     const lineGap = options.lineGap || this._lineGap || 0;
-    this._text(text3, this.x, this.y, options, () => {
+    this._text(text4, this.x, this.y, options, () => {
       this.y += this.currentLineHeight(true) + lineGap;
     });
     const height = this.y - y;
@@ -175916,8 +175916,8 @@ var TextMixin = {
             break;
           case "numbered":
           case "lettered":
-            var text3 = formatListLabel(numbers[i - 1], listType);
-            this._fragment(text3, this.x - indent, this.y, options);
+            var text4 = formatListLabel(numbers[i - 1], listType);
+            this._fragment(text4, this.x - indent, this.y, options);
             break;
         }
         if (item2 && labelType && bodyType) {
@@ -175982,19 +175982,19 @@ var TextMixin = {
     if (result.rotation < 0) result.rotation += 360;
     return result;
   },
-  _line(text3, options = {}, wrapper) {
-    this._fragment(text3, this.x, this.y, options);
+  _line(text4, options = {}, wrapper) {
+    this._fragment(text4, this.x, this.y, options);
     if (wrapper) {
       const lineGap = options.lineGap || this._lineGap || 0;
       this.y += this.currentLineHeight(true) + lineGap;
     } else {
-      this.x += this.widthOfString(text3, options);
+      this.x += this.widthOfString(text4, options);
     }
   },
-  _fragment(text3, x2, y, options) {
+  _fragment(text4, x2, y, options) {
     let dy, encoded, i, positions, textWidth, words;
-    text3 = `${text3}`.replace(/\n/g, "");
-    if (text3.length === 0) {
+    text4 = `${text4}`.replace(/\n/g, "");
+    if (text4.length === 0) {
       return;
     }
     const align = options.align || "left";
@@ -176004,15 +176004,15 @@ var TextMixin = {
     if (options.width) {
       switch (align) {
         case "right":
-          textWidth = this.widthOfString(text3.replace(/\s+$/, ""), options);
+          textWidth = this.widthOfString(text4.replace(/\s+$/, ""), options);
           x2 += options.lineWidth - textWidth;
           break;
         case "center":
           x2 += options.lineWidth / 2 - options.textWidth / 2;
           break;
         case "justify":
-          words = text3.trim().split(/\s+/);
-          textWidth = this.widthOfString(text3.replace(/\s+/g, ""), options);
+          words = text4.trim().split(/\s+/);
+          textWidth = this.widthOfString(text4.replace(/\s+/g, ""), options);
           var spaceWidth = this.widthOfString(" ") + characterSpacing;
           wordSpacing = Math.max(0, (options.lineWidth - textWidth) / Math.max(1, words.length - 1) - spaceWidth);
           break;
@@ -176050,9 +176050,9 @@ var TextMixin = {
       }
       dy = dy / 1e3 * this._fontSize;
     }
-    const measuredWidth = options.textWidth ?? this.widthOfString(text3, options) - characterSpacing * (text3.length - 1);
-    const measuredWordCount = options.wordCount ?? (text3.trim() ? text3.trim().split(/\s+/).length : 0);
-    const renderedWidth = measuredWidth + wordSpacing * (measuredWordCount - 1) + characterSpacing * (text3.length - 1);
+    const measuredWidth = options.textWidth ?? this.widthOfString(text4, options) - characterSpacing * (text4.length - 1);
+    const measuredWordCount = options.wordCount ?? (text4.trim() ? text4.trim().split(/\s+/).length : 0);
+    const renderedWidth = measuredWidth + wordSpacing * (measuredWordCount - 1) + characterSpacing * (text4.length - 1);
     if (options.link != null) {
       const linkOptions = {};
       if (this._currentStructureElement && this._currentStructureElement.dictionary.data.S === "Link") {
@@ -176123,7 +176123,7 @@ var TextMixin = {
       this.addContent(`${horizontalScaling} Tz`);
     }
     if (wordSpacing) {
-      words = text3.trim().split(/\s+/);
+      words = text4.trim().split(/\s+/);
       wordSpacing += this.widthOfString(" ") + characterSpacing;
       wordSpacing *= 1e3 / this._fontSize;
       encoded = [];
@@ -176142,7 +176142,7 @@ var TextMixin = {
         positions[positions.length - 1] = space;
       }
     } else {
-      [encoded, positions] = this._font.encode(text3, options.features);
+      [encoded, positions] = this._font.encode(text4, options.features);
     }
     const scale = this._fontSize / 1e3;
     const commands = [];
@@ -176645,7 +176645,7 @@ var AnnotationsMixin = {
   annotate(x2, y, w, h, options) {
     const {
       structParent,
-      color: color2,
+      color: color3,
       ...annotations
     } = options;
     annotations.Type = "Annot";
@@ -176656,7 +176656,7 @@ var AnnotationsMixin = {
     }
     if (annotations.Subtype !== "Link") {
       if (annotations.C == null) {
-        annotations.C = this._normalizeColor(color2 || [0, 0, 0]);
+        annotations.C = this._normalizeColor(color3 || [0, 0, 0]);
       }
     }
     if (typeof annotations.Dest === "string") {
@@ -176782,11 +176782,11 @@ var AnnotationsMixin = {
     };
     return this.annotate(x2, y, w, h, annotationOptions);
   },
-  textAnnotation(x2, y, w, h, text3, options) {
+  textAnnotation(x2, y, w, h, text4, options) {
     const annotationOptions = {
       ...options,
       Subtype: "FreeText",
-      Contents: new String(text3),
+      Contents: new String(text4),
       DA: new String()
     };
     return this.annotate(x2, y, w, h, annotationOptions);
@@ -177529,17 +177529,17 @@ var AcroFormMixin = {
     return pdfObject;
   },
   _mapColors(options, pdfObject) {
-    let color2 = this._normalizeColor(options.backgroundColor);
-    if (color2) {
+    let color3 = this._normalizeColor(options.backgroundColor);
+    if (color3) {
       pdfObject.MK = pdfObject.MK ? pdfObject.MK : {};
-      pdfObject.MK.BG = color2;
+      pdfObject.MK.BG = color3;
     }
-    color2 = this._normalizeColor(options.borderColor);
-    if (color2) {
+    color3 = this._normalizeColor(options.borderColor);
+    if (color3) {
       if (!pdfObject.MK) {
         pdfObject.MK = {};
       }
-      pdfObject.MK.BC = color2;
+      pdfObject.MK.BC = color3;
     }
   },
   _mapFont(options, pdfObject) {
@@ -177894,9 +177894,9 @@ function normalizeTable() {
   if (!rowStyle) rowStyle = () => ({});
   this._rowStyle = normalizedRowStyle.bind(this, defaultRowStyle, rowStyle);
 }
-function normalizeText(text3) {
-  if (text3 != null) text3 = `${text3}`;
-  return text3;
+function normalizeText(text4) {
+  if (text4 != null) text4 = `${text4}`;
+  return text4;
 }
 function normalizeCell(cell, rowIndex, colIndex) {
   const colStyle = this._colStyle(colIndex);
@@ -178804,13 +178804,13 @@ function applyStroke(doc, s2) {
   else doc.undash();
 }
 function drawText(doc, t) {
-  for (const line2 of t.lines) {
-    const y = (t.box.y + line2.baseline) * P;
-    if (line2.bulletX !== void 0) {
-      doc.font(fontName(t.style.measure, "regular")).fontSize(t.style.size).fillColor(line2.segments[0]?.color ?? t.style.color);
-      doc.text("\u2022", (t.box.x + line2.bulletX) * P, y, { lineBreak: false, baseline: "alphabetic" });
+  for (const line3 of t.lines) {
+    const y = (t.box.y + line3.baseline) * P;
+    if (line3.bulletX !== void 0) {
+      doc.font(fontName(t.style.measure, "regular")).fontSize(t.style.size).fillColor(line3.segments[0]?.color ?? t.style.color);
+      doc.text("\u2022", (t.box.x + line3.bulletX) * P, y, { lineBreak: false, baseline: "alphabetic" });
     }
-    for (const s2 of line2.segments) {
+    for (const s2 of line3.segments) {
       doc.font(fontName(t.style.measure, faceOf(s2.bold, s2.italic))).fontSize(t.style.size).fillColor(s2.color);
       doc.text(s2.text, (t.box.x + s2.x) * P, y, {
         lineBreak: false,
@@ -180139,7 +180139,7 @@ function assertNotEqual(val) {
   return val;
 }
 function toZod() {
-  return (schema41) => schema41;
+  return (schema42) => schema42;
 }
 function assertIs(_arg) {
 }
@@ -180232,8 +180232,8 @@ function rawShape(def) {
   const desc = Object.getOwnPropertyDescriptor(def, "shape");
   return desc?.get ? desc.get.raw : desc?.value;
 }
-function sourceShape(schema41) {
-  return rawShape(schema41._zod.def) ?? schema41._zod.def.shape;
+function sourceShape(schema42) {
+  return rawShape(schema42._zod.def) ?? schema42._zod.def.shape;
 }
 function deferProp(target, key, getter) {
   Object.defineProperty(target, key, {
@@ -180286,8 +180286,8 @@ function mergeDefs(...defs) {
   }
   return Object.defineProperties({}, mergedDescriptors);
 }
-function cloneDef(schema41) {
-  return mergeDefs(schema41._zod.def);
+function cloneDef(schema42) {
+  return mergeDefs(schema42._zod.def);
 }
 function getElementAtPath(obj2, path2) {
   if (!path2)
@@ -180509,19 +180509,19 @@ var BIGINT_FORMAT_RANGES = {
   int64: [/* @__PURE__ */ BigInt("-9223372036854775808"), /* @__PURE__ */ BigInt("9223372036854775807")],
   uint64: [/* @__PURE__ */ BigInt(0), /* @__PURE__ */ BigInt("18446744073709551615")]
 };
-function pick(schema41, mask) {
-  const currDef = schema41._zod.def;
+function pick(schema42, mask) {
+  const currDef = schema42._zod.def;
   const checks = currDef.checks;
   const hasChecks = checks && checks.length > 0;
   if (hasChecks) {
     throw new Error(".pick() cannot be used on object schemas containing refinements");
   }
   const newShape = {};
-  mirrorShape(newShape, schema41, maskedKeys(schema41, mask));
-  return clone(schema41, mergeDefs(currDef, { shape: newShape, checks: [] }));
+  mirrorShape(newShape, schema42, maskedKeys(schema42, mask));
+  return clone(schema42, mergeDefs(currDef, { shape: newShape, checks: [] }));
 }
-function maskedKeys(schema41, mask) {
-  const raw = sourceShape(schema41);
+function maskedKeys(schema42, mask) {
+  const raw = sourceShape(schema42);
   const keys = [];
   for (const key of Reflect.ownKeys(mask)) {
     if (!Object.getOwnPropertyDescriptor(raw, key)?.enumerable) {
@@ -180532,45 +180532,45 @@ function maskedKeys(schema41, mask) {
   }
   return keys;
 }
-function omit(schema41, mask) {
-  const currDef = schema41._zod.def;
+function omit(schema42, mask) {
+  const currDef = schema42._zod.def;
   const checks = currDef.checks;
   const hasChecks = checks && checks.length > 0;
   if (hasChecks) {
     throw new Error(".omit() cannot be used on object schemas containing refinements");
   }
-  const omitted = new Set(maskedKeys(schema41, mask));
+  const omitted = new Set(maskedKeys(schema42, mask));
   const newShape = {};
-  mirrorShape(newShape, schema41, Reflect.ownKeys(sourceShape(schema41)).filter((key) => !omitted.has(key)));
-  return clone(schema41, mergeDefs(currDef, { shape: newShape, checks: [] }));
+  mirrorShape(newShape, schema42, Reflect.ownKeys(sourceShape(schema42)).filter((key) => !omitted.has(key)));
+  return clone(schema42, mergeDefs(currDef, { shape: newShape, checks: [] }));
 }
-function extend(schema41, shape) {
+function extend(schema42, shape) {
   if (!isPlainObject(shape)) {
     throw new Error("Invalid input to extend: expected a plain object");
   }
-  const checks = schema41._zod.def.checks;
+  const checks = schema42._zod.def.checks;
   const hasChecks = checks && checks.length > 0;
   if (hasChecks) {
-    const existingShape = sourceShape(schema41);
+    const existingShape = sourceShape(schema42);
     for (const key of Reflect.ownKeys(shape)) {
       if (Object.getOwnPropertyDescriptor(existingShape, key) !== void 0) {
         throw new Error("Cannot overwrite keys on object schemas containing refinements. Use `.safeExtend()` instead.");
       }
     }
   }
-  return clone(schema41, mergeDefs(schema41._zod.def, { shape: extended(schema41, shape) }));
+  return clone(schema42, mergeDefs(schema42._zod.def, { shape: extended(schema42, shape) }));
 }
-function extended(schema41, shape) {
+function extended(schema42, shape) {
   const newShape = {};
-  mirrorShape(newShape, schema41, Reflect.ownKeys(sourceShape(schema41)));
+  mirrorShape(newShape, schema42, Reflect.ownKeys(sourceShape(schema42)));
   mirrorProps(newShape, shape);
   return newShape;
 }
-function safeExtend(schema41, shape) {
+function safeExtend(schema42, shape) {
   if (!isPlainObject(shape)) {
     throw new Error("Invalid input to safeExtend: expected a plain object");
   }
-  return clone(schema41, mergeDefs(schema41._zod.def, { shape: extended(schema41, shape) }));
+  return clone(schema42, mergeDefs(schema42._zod.def, { shape: extended(schema42, shape) }));
 }
 function merge(a, b) {
   if (!b?._zod?.def) {
@@ -180591,26 +180591,26 @@ function merge(a, b) {
   });
   return clone(a, def);
 }
-function partial(Class2, schema41, mask, name = "partial") {
-  const currDef = schema41._zod.def;
+function partial(Class2, schema42, mask, name = "partial") {
+  const currDef = schema42._zod.def;
   const checks = currDef.checks;
   const hasChecks = checks && checks.length > 0;
   if (hasChecks) {
     throw new Error(`.${name}() cannot be used on object schemas containing refinements`);
   }
-  const selected = mask ? new Set(maskedKeys(schema41, mask)) : void 0;
+  const selected = mask ? new Set(maskedKeys(schema42, mask)) : void 0;
   const newShape = {};
-  mirrorShape(newShape, schema41, Reflect.ownKeys(sourceShape(schema41)), Class2 && ((value, key) => selected && !selected.has(key) ? value : new Class2({ type: "optional", innerType: value })));
-  return clone(schema41, mergeDefs(schema41._zod.def, { shape: newShape, checks: [] }));
+  mirrorShape(newShape, schema42, Reflect.ownKeys(sourceShape(schema42)), Class2 && ((value, key) => selected && !selected.has(key) ? value : new Class2({ type: "optional", innerType: value })));
+  return clone(schema42, mergeDefs(schema42._zod.def, { shape: newShape, checks: [] }));
 }
-function required(Class2, schema41, mask) {
-  const selected = mask ? new Set(maskedKeys(schema41, mask)) : void 0;
+function required(Class2, schema42, mask) {
+  const selected = mask ? new Set(maskedKeys(schema42, mask)) : void 0;
   const newShape = {};
-  mirrorShape(newShape, schema41, Reflect.ownKeys(sourceShape(schema41)), (value, key) => (
+  mirrorShape(newShape, schema42, Reflect.ownKeys(sourceShape(schema42)), (value, key) => (
     // overwrite with non-optional
     selected && !selected.has(key) ? value : new Class2({ type: "nonoptional", innerType: value })
   ));
-  return clone(schema41, mergeDefs(schema41._zod.def, { shape: newShape }));
+  return clone(schema42, mergeDefs(schema42._zod.def, { shape: newShape }));
 }
 function aborted(x2, startIndex = 0) {
   if (x2.aborted === true)
@@ -181215,9 +181215,9 @@ function finalizeParams(callee, params) {
   return { callee: params?.callee ?? callee, Err: params?.Err };
 }
 var _parse = (_Err) => {
-  const fn = (schema41, value, _ctx, _params) => {
+  const fn = (schema42, value, _ctx, _params) => {
     const ctx = _ctx ? { ..._ctx, async: false } : { async: false };
-    const result = schema41._zod.run({ value, issues: [] }, ctx);
+    const result = schema42._zod.run({ value, issues: [] }, ctx);
     if (result instanceof Promise) {
       throw new $ZodAsyncError();
     }
@@ -181232,9 +181232,9 @@ var _parse = (_Err) => {
 };
 var parse2 = /* @__PURE__ */ _parse($ZodRealError);
 var _parseAsync = (_Err) => {
-  const fn = async (schema41, value, _ctx, params) => {
+  const fn = async (schema42, value, _ctx, params) => {
     const ctx = _ctx ? { ..._ctx, async: true } : { async: true };
-    let result = schema41._zod.run({ value, issues: [] }, ctx);
+    let result = schema42._zod.run({ value, issues: [] }, ctx);
     if (result instanceof Promise)
       result = await result;
     if (result.issues.length) {
@@ -181247,9 +181247,9 @@ var _parseAsync = (_Err) => {
   return fn;
 };
 var parseAsync = /* @__PURE__ */ _parseAsync($ZodRealError);
-var _safeParse = (_Err) => (schema41, value, _ctx) => {
+var _safeParse = (_Err) => (schema42, value, _ctx) => {
   const ctx = _ctx ? { ..._ctx, async: false } : { async: false };
-  const result = schema41._zod.run({ value, issues: [] }, ctx);
+  const result = schema42._zod.run({ value, issues: [] }, ctx);
   if (result instanceof Promise) {
     throw new $ZodAsyncError();
   }
@@ -181275,9 +181275,9 @@ function failure(Err, issues, ctx) {
     }
   };
 }
-var _safeParseAsync = (_Err) => async (schema41, value, _ctx) => {
+var _safeParseAsync = (_Err) => async (schema42, value, _ctx) => {
   const ctx = _ctx ? { ..._ctx, async: true } : { async: true };
-  let result = schema41._zod.run({ value, issues: [] }, ctx);
+  let result = schema42._zod.run({ value, issues: [] }, ctx);
   if (result instanceof Promise)
     result = await result;
   return result.issues.length ? failure(_Err, result.issues, ctx) : { success: true, data: result.value };
@@ -181285,88 +181285,88 @@ var _safeParseAsync = (_Err) => async (schema41, value, _ctx) => {
 var safeParseAsync = /* @__PURE__ */ _safeParseAsync($ZodRealError);
 var COMPILE_INVALID = /* @__PURE__ */ Symbol.for("zod.compile.invalid");
 var COMPILE_FALLBACK = /* @__PURE__ */ Symbol.for("zod.compile.fallback");
-var validate = ((schema41, value, _ctx) => {
-  const validator = schema41._zod.bag.validator;
+var validate = ((schema42, value, _ctx) => {
+  const validator = schema42._zod.bag.validator;
   if (validator !== void 0) {
     if (validator(value) !== COMPILE_INVALID)
       return true;
     if (validator.definite === true && _ctx === void 0)
       return false;
   }
-  return validateFallback(schema41, value, _ctx);
+  return validateFallback(schema42, value, _ctx);
 });
-function validateFallback(schema41, value, _ctx) {
+function validateFallback(schema42, value, _ctx) {
   const ctx = _ctx ? { ..._ctx, async: false, abortEarly: true } : { async: false, abortEarly: true };
-  const fallbackRun = schema41._zod.bag.fallbackRun;
+  const fallbackRun = schema42._zod.bag.fallbackRun;
   let result;
   if (fallbackRun) {
     ctx[COMPILE_FALLBACK] = true;
     result = fallbackRun({ value, issues: [] }, ctx);
   } else {
-    result = schema41._zod.run({ value, issues: [] }, ctx);
+    result = schema42._zod.run({ value, issues: [] }, ctx);
   }
   if (result instanceof Promise) {
     throw new $ZodAsyncError();
   }
   return result.issues.length === 0;
 }
-var validateAsync = async (schema41, value, _ctx) => {
+var validateAsync = async (schema42, value, _ctx) => {
   const ctx = _ctx ? { ..._ctx, async: true, abortEarly: true } : { async: true, abortEarly: true };
-  let result = schema41._zod.run({ value, issues: [] }, ctx);
+  let result = schema42._zod.run({ value, issues: [] }, ctx);
   if (result instanceof Promise)
     result = await result;
   return result.issues.length === 0;
 };
 var _encode = (_Err) => {
   const parse4 = _parse(_Err);
-  const fn = (schema41, value, _ctx, _params) => {
+  const fn = (schema42, value, _ctx, _params) => {
     const ctx = _ctx ? { ..._ctx, direction: "backward" } : { direction: "backward" };
-    return parse4(schema41, value, ctx, finalizeParams(fn, _params));
+    return parse4(schema42, value, ctx, finalizeParams(fn, _params));
   };
   return fn;
 };
 var encode = /* @__PURE__ */ _encode($ZodRealError);
 var _decode = (_Err) => {
   const parse4 = _parse(_Err);
-  const fn = (schema41, value, _ctx, _params) => {
-    return parse4(schema41, value, _ctx, finalizeParams(fn, _params));
+  const fn = (schema42, value, _ctx, _params) => {
+    return parse4(schema42, value, _ctx, finalizeParams(fn, _params));
   };
   return fn;
 };
 var decode = /* @__PURE__ */ _decode($ZodRealError);
 var _encodeAsync = (_Err) => {
   const parseAsync3 = _parseAsync(_Err);
-  const fn = async (schema41, value, _ctx, _params) => {
+  const fn = async (schema42, value, _ctx, _params) => {
     const ctx = _ctx ? { ..._ctx, direction: "backward" } : { direction: "backward" };
-    return await parseAsync3(schema41, value, ctx, finalizeParams(fn, _params));
+    return await parseAsync3(schema42, value, ctx, finalizeParams(fn, _params));
   };
   return fn;
 };
 var encodeAsync = /* @__PURE__ */ _encodeAsync($ZodRealError);
 var _decodeAsync = (_Err) => {
   const parseAsync3 = _parseAsync(_Err);
-  const fn = async (schema41, value, _ctx, _params) => {
-    return await parseAsync3(schema41, value, _ctx, finalizeParams(fn, _params));
+  const fn = async (schema42, value, _ctx, _params) => {
+    return await parseAsync3(schema42, value, _ctx, finalizeParams(fn, _params));
   };
   return fn;
 };
 var decodeAsync = /* @__PURE__ */ _decodeAsync($ZodRealError);
-var _safeEncode = (_Err) => (schema41, value, _ctx) => {
+var _safeEncode = (_Err) => (schema42, value, _ctx) => {
   const ctx = _ctx ? { ..._ctx, direction: "backward" } : { direction: "backward" };
-  return _safeParse(_Err)(schema41, value, ctx);
+  return _safeParse(_Err)(schema42, value, ctx);
 };
 var safeEncode = /* @__PURE__ */ _safeEncode($ZodRealError);
-var _safeDecode = (_Err) => (schema41, value, _ctx) => {
-  return _safeParse(_Err)(schema41, value, _ctx);
+var _safeDecode = (_Err) => (schema42, value, _ctx) => {
+  return _safeParse(_Err)(schema42, value, _ctx);
 };
 var safeDecode = /* @__PURE__ */ _safeDecode($ZodRealError);
-var _safeEncodeAsync = (_Err) => async (schema41, value, _ctx) => {
+var _safeEncodeAsync = (_Err) => async (schema42, value, _ctx) => {
   const ctx = _ctx ? { ..._ctx, direction: "backward" } : { direction: "backward" };
-  return _safeParseAsync(_Err)(schema41, value, ctx);
+  return _safeParseAsync(_Err)(schema42, value, ctx);
 };
 var safeEncodeAsync = /* @__PURE__ */ _safeEncodeAsync($ZodRealError);
-var _safeDecodeAsync = (_Err) => async (schema41, value, _ctx) => {
-  return _safeParseAsync(_Err)(schema41, value, _ctx);
+var _safeDecodeAsync = (_Err) => async (schema42, value, _ctx) => {
+  return _safeParseAsync(_Err)(schema42, value, _ctx);
 };
 var safeDecodeAsync = /* @__PURE__ */ _safeDecodeAsync($ZodRealError);
 
@@ -181725,8 +181725,8 @@ var $ZodCheckMaxSize = /* @__PURE__ */ $constructor("$ZodCheckMaxSize", (inst, d
   (_a3 = inst._zod.def).when ?? (_a3.when = _whenHasSize);
   inst._zod.check = (payload) => {
     const input2 = payload.value;
-    const size = input2.size;
-    if (size <= def.maximum)
+    const size2 = input2.size;
+    if (size2 <= def.maximum)
       return;
     payload.issues.push({
       origin: getSizableOrigin(input2),
@@ -181745,8 +181745,8 @@ var $ZodCheckMinSize = /* @__PURE__ */ $constructor("$ZodCheckMinSize", (inst, d
   (_a3 = inst._zod.def).when ?? (_a3.when = _whenHasSize);
   inst._zod.check = (payload) => {
     const input2 = payload.value;
-    const size = input2.size;
-    if (size >= def.minimum)
+    const size2 = input2.size;
+    if (size2 >= def.minimum)
       return;
     payload.issues.push({
       origin: getSizableOrigin(input2),
@@ -181765,10 +181765,10 @@ var $ZodCheckSizeEquals = /* @__PURE__ */ $constructor("$ZodCheckSizeEquals", (i
   (_a3 = inst._zod.def).when ?? (_a3.when = _whenHasSize);
   inst._zod.check = (payload) => {
     const input2 = payload.value;
-    const size = input2.size;
-    if (size === def.size)
+    const size2 = input2.size;
+    if (size2 === def.size)
       return;
-    const tooBig = size > def.size;
+    const tooBig = size2 > def.size;
     payload.issues.push({
       origin: getSizableOrigin(input2),
       ...tooBig ? { code: "too_big", maximum: def.size } : { code: "too_small", minimum: def.size },
@@ -181982,8 +181982,8 @@ var $ZodCheckProperties = /* @__PURE__ */ $constructor("$ZodCheckProperties", (i
     entries ?? (entries = Reflect.ownKeys(def.shape).map((key) => [key, def.shape[key]]));
     const input2 = payload.value;
     let proms;
-    for (const [key, schema41] of entries) {
-      const result = schema41._zod.run({ value: input2[key], issues: [] }, {});
+    for (const [key, schema42] of entries) {
+      const result = schema42._zod.run({ value: input2[key], issues: [] }, {});
       if (result instanceof Promise) {
         proms ?? (proms = []);
         proms.push(result.then((result2) => handleCheckPropertyResult(result2, payload, key)));
@@ -182045,8 +182045,8 @@ var Doc2 = class {
     const lines = content.split("\n").filter((x2) => x2);
     const minIndent = Math.min(...lines.map((x2) => x2.length - x2.trimStart().length));
     const dedented = lines.map((x2) => x2.slice(minIndent)).map((x2) => " ".repeat(this.indent * 2) + x2);
-    for (const line2 of dedented) {
-      this.content.push(line2);
+    for (const line3 of dedented) {
+      this.content.push(line3);
     }
   }
   compile() {
@@ -183077,10 +183077,10 @@ var $ZodObjectJIT = /* @__PURE__ */ $constructor("$ZodObjectJIT", (inst, def) =>
       const id = ids[key];
       const k = typeof key === "symbol" ? `syms[${syms.indexOf(key)}]` : esc2(key);
       const isPresent = `${k} in input`;
-      const schema41 = shape[key];
-      const optin = schema41?._zod?.optin;
+      const schema42 = shape[key];
+      const optin = schema42?._zod?.optin;
       const isOptionalIn = optin !== void 0;
-      const isOptionalOut = schema41?._zod?.optout === "optional";
+      const isOptionalOut = schema42?._zod?.optout === "optional";
       doc.write(`const ${id} = ${parseStr(k)};`);
       if (isOptionalIn && isOptionalOut) {
         const assign = optin === "optional" ? `${id}_present` : `${id}.value !== undefined || ${id}_present`;
@@ -184259,8 +184259,8 @@ function handleReadonlyResult(payload) {
     payload.value = Object.freeze(payload.value);
   return payload;
 }
-function leafPattern(schema41) {
-  const def = schema41._zod.def;
+function leafPattern(schema42) {
+  const def = schema42._zod.def;
   let pattern2 = def.pattern;
   let isInt = !!def.format?.includes("int");
   let minimum;
@@ -184283,13 +184283,13 @@ function leafPattern(schema41) {
     return "(?!)";
   if (minimum !== void 0 || maximum !== void 0)
     return string({ minimum, maximum }).source;
-  const own2 = schema41._zod.pattern;
+  const own2 = schema42._zod.pattern;
   return (isInt && own2 === number2 ? integer : own2)?.source;
 }
-function partPattern(schema41) {
-  const def = schema41._zod.def;
-  const own2 = schema41._zod.pattern?.source;
-  const inner = def.innerType ?? schema41._zod.innerType;
+function partPattern(schema42) {
+  const def = schema42._zod.def;
+  const own2 = schema42._zod.pattern?.source;
+  const inner = def.innerType ?? schema42._zod.innerType;
   if (inner) {
     const before = inner._zod.pattern?.source;
     const after = partPattern(inner);
@@ -184303,7 +184303,7 @@ function partPattern(schema41) {
     if (sources.every(Boolean))
       return `^(${sources.map((s2) => cleanRegex(s2)).join("|")})$`;
   }
-  return leafPattern(schema41);
+  return leafPattern(schema42);
 }
 var $ZodTemplateLiteral = /* @__PURE__ */ $constructor("$ZodTemplateLiteral", (inst, def) => {
   $ZodType.init(inst, def);
@@ -188782,8 +188782,8 @@ function ko_default() {
 }
 
 // node_modules/zod/v4/locales/lt.js
-var capitalizeFirstCharacter = (text3) => {
-  return text3.charAt(0).toUpperCase() + text3.slice(1);
+var capitalizeFirstCharacter = (text4) => {
+  return text4.charAt(0).toUpperCase() + text4.slice(1);
 };
 function getUnitTypeFromNumber(number5) {
   const abs = Math.abs(number5);
@@ -192333,11 +192333,11 @@ var $ZodRegistry = class {
     this._map = /* @__PURE__ */ new WeakMap();
     this._idmap = /* @__PURE__ */ new Map();
   }
-  add(schema41, ..._meta) {
+  add(schema42, ..._meta) {
     const meta3 = _meta[0];
-    this._map.set(schema41, meta3);
+    this._map.set(schema42, meta3);
     if (meta3 && typeof meta3 === "object" && "id" in meta3) {
-      this._idmap.set(meta3.id, schema41);
+      this._idmap.set(meta3.id, schema42);
     }
     return this;
   }
@@ -192346,26 +192346,26 @@ var $ZodRegistry = class {
     this._idmap = /* @__PURE__ */ new Map();
     return this;
   }
-  remove(schema41) {
-    const meta3 = this._map.get(schema41);
+  remove(schema42) {
+    const meta3 = this._map.get(schema42);
     if (meta3 && typeof meta3 === "object" && "id" in meta3) {
       this._idmap.delete(meta3.id);
     }
-    this._map.delete(schema41);
+    this._map.delete(schema42);
     return this;
   }
-  get(schema41) {
-    const p = schema41._zod.parent;
+  get(schema42) {
+    const p = schema42._zod.parent;
     if (p) {
       const pm = { ...this.get(p) ?? {} };
       delete pm.id;
-      const f = { ...pm, ...this._map.get(schema41) };
+      const f = { ...pm, ...this._map.get(schema42) };
       return Object.keys(f).length ? f : void 0;
     }
-    return this._map.get(schema41);
+    return this._map.get(schema42);
   }
-  has(schema41) {
-    return this._map.has(schema41);
+  has(schema42) {
+    return this._map.has(schema42);
   }
 };
 function registry() {
@@ -192390,31 +192390,31 @@ var ZodCompileUnsupportedError = class extends Error {
     this.islandable = islandable;
   }
 };
-function compileValidator(schema41, parser) {
+function compileValidator(schema42, parser) {
   try {
-    return compileFn(schema41, { assertOnly: true });
+    return compileFn(schema42, { assertOnly: true });
   } catch {
     return parser;
   }
 }
-function compile(schema41, options) {
+function compile(schema42, options) {
   try {
-    const parser = compileFn(schema41);
-    const clone2 = withParser(schema41, parser);
-    clone2._zod.bag.validator = compileValidator(schema41, parser);
+    const parser = compileFn(schema42);
+    const clone2 = withParser(schema42, parser);
+    clone2._zod.bag.validator = compileValidator(schema42, parser);
     return clone2;
   } catch (err) {
     if (options?.strict)
       throw err;
-    return schema41;
+    return schema42;
   }
 }
-function withParser(schema41, parser) {
-  if (isRecursiveSchema(schema41)) {
+function withParser(schema42, parser) {
+  if (isRecursiveSchema(schema42)) {
     throw new ZodCompileUnsupportedError("a schema whose subtree contains a reference cycle");
   }
-  const clone2 = clone(schema41);
-  const liveRun = schema41._zod.run;
+  const clone2 = clone(schema42);
+  const liveRun = schema42._zod.run;
   const originalRun = liveRun.__originalRun ?? liveRun;
   const wrapped = (payload, ctx) => {
     if (ctx?.async || ctx?.direction === "backward" || ctx?.skipChecks || ctx?.[FALLBACK_FLAG]) {
@@ -192437,7 +192437,7 @@ function withParser(schema41, parser) {
   clone2._zod.bag.validator = parser;
   clone2._zod.run = wrapped;
   if (!liveRun.__originalRun)
-    installCompiledUserMethods(clone2, schema41, parser);
+    installCompiledUserMethods(clone2, schema42, parser);
   return clone2;
 }
 function installCompiledUserMethods(target, source, parser) {
@@ -192464,10 +192464,10 @@ function installCompiledUserMethods(target, source, parser) {
     };
   }
 }
-function compileFn(schema41, options) {
+function compileFn(schema42, options) {
   let recursive2 = true;
   try {
-    recursive2 = isRecursiveSchema(schema41);
+    recursive2 = isRecursiveSchema(schema42);
   } catch {
   }
   if (recursive2) {
@@ -192480,7 +192480,7 @@ function compileFn(schema41, options) {
     definite: true
   };
   const doc = new Doc2(["input"]);
-  const outputAccessor = generateCheck(doc, ctx, schema41, "input", !options?.assertOnly);
+  const outputAccessor = generateCheck(doc, ctx, schema42, "input", !options?.assertOnly);
   doc.write(outputAccessor === null ? `return true;` : `return ${outputAccessor};`);
   const constantNames = ["INVALID", ...ctx.constants.keys()];
   const constantValues = [INVALID, ...ctx.constants.values()];
@@ -192520,20 +192520,20 @@ function addUserConstant(ctx, fn) {
 function newVar(ctx) {
   return `v${ctx.varCounter++}`;
 }
-function runtimeRun(schema41, value) {
-  const result = schema41._zod.run({ value, issues: [] }, {});
+function runtimeRun(schema42, value) {
+  const result = schema42._zod.run({ value, issues: [] }, {});
   if (result && typeof result.then === "function")
     return INVALID;
   const r = result;
   return r.issues.length === 0 ? r.value : INVALID;
 }
-function compileChild(doc, ctx, schema41, accessor, needsValue = true) {
+function compileChild(doc, ctx, schema42, accessor, needsValue = true) {
   const contentLen = doc.content.length;
   const constantCount = ctx.constants.size;
   const constantCounter = ctx.constantCounter;
   const varCounter = ctx.varCounter;
   try {
-    return generateCheck(doc, ctx, schema41, accessor, needsValue);
+    return generateCheck(doc, ctx, schema42, accessor, needsValue);
   } catch (err) {
     if (!(err instanceof ZodCompileUnsupportedError) || !err.islandable)
       throw err;
@@ -192545,12 +192545,12 @@ function compileChild(doc, ctx, schema41, accessor, needsValue = true) {
     }
     ctx.constantCounter = constantCounter;
     ctx.varCounter = varCounter;
-    return emitRuntimeIsland(doc, ctx, schema41, accessor);
+    return emitRuntimeIsland(doc, ctx, schema42, accessor);
   }
 }
-function emitRuntimeIsland(doc, ctx, schema41, accessor) {
+function emitRuntimeIsland(doc, ctx, schema42, accessor) {
   ctx.definite = false;
-  const schemaConst = addConstant(ctx, schema41);
+  const schemaConst = addConstant(ctx, schema42);
   const runConst = addConstant(ctx, runtimeRun);
   const outVar = newVar(ctx);
   doc.write(`const ${outVar} = ${runConst}(${schemaConst}, ${accessor});`);
@@ -192565,8 +192565,8 @@ var WHEN_DEFAULTED_CHECKS = /* @__PURE__ */ new Set([
   "min_length",
   "length_equals"
 ]);
-function generateChecks(doc, ctx, schema41, accessor) {
-  const schemaChecks = schema41._zod.def.checks;
+function generateChecks(doc, ctx, schema42, accessor) {
+  const schemaChecks = schema42._zod.def.checks;
   if (!schemaChecks || schemaChecks.length === 0)
     return accessor;
   let currentAccessor = accessor;
@@ -192941,8 +192941,8 @@ function generateStringFormatCheck(doc, ctx, def, accessor, needsValue = true) {
   }
   return accessor;
 }
-function generateCheck(doc, ctx, schema41, accessor, needsValue = true) {
-  const def = schema41._zod.def;
+function generateCheck(doc, ctx, schema42, accessor, needsValue = true) {
+  const def = schema42._zod.def;
   const type = def.type;
   if (def.coerce) {
     throw new ZodCompileUnsupportedError(`coercion (z.coerce.${type}())`);
@@ -192951,16 +192951,16 @@ function generateCheck(doc, ctx, schema41, accessor, needsValue = true) {
   let typeAccessor;
   switch (type) {
     case "string":
-      typeAccessor = generateStringCheck(doc, ctx, schema41, accessor, buildsValue);
+      typeAccessor = generateStringCheck(doc, ctx, schema42, accessor, buildsValue);
       break;
     case "number":
-      typeAccessor = generateNumberCheck(doc, schema41, accessor);
+      typeAccessor = generateNumberCheck(doc, schema42, accessor);
       break;
     case "boolean":
       typeAccessor = generateBooleanCheck(doc, accessor);
       break;
     case "bigint":
-      typeAccessor = generateBigIntCheck(doc, schema41, accessor);
+      typeAccessor = generateBigIntCheck(doc, schema42, accessor);
       break;
     case "symbol":
       typeAccessor = generateSymbolCheck(doc, accessor);
@@ -192989,79 +192989,79 @@ function generateCheck(doc, ctx, schema41, accessor, needsValue = true) {
       typeAccessor = generateDateCheck(doc, accessor);
       break;
     case "object":
-      typeAccessor = generateObjectCheck(doc, ctx, schema41, accessor, buildsValue);
+      typeAccessor = generateObjectCheck(doc, ctx, schema42, accessor, buildsValue);
       break;
     case "optional":
-      typeAccessor = generateOptionalCheck(doc, ctx, schema41, accessor, buildsValue);
+      typeAccessor = generateOptionalCheck(doc, ctx, schema42, accessor, buildsValue);
       break;
     case "nullable":
-      typeAccessor = generateNullableCheck(doc, ctx, schema41, accessor, buildsValue);
+      typeAccessor = generateNullableCheck(doc, ctx, schema42, accessor, buildsValue);
       break;
     case "array":
-      typeAccessor = generateArrayCheck(doc, ctx, schema41, accessor, buildsValue);
+      typeAccessor = generateArrayCheck(doc, ctx, schema42, accessor, buildsValue);
       break;
     case "literal":
-      typeAccessor = generateLiteralCheck(doc, ctx, schema41, accessor);
+      typeAccessor = generateLiteralCheck(doc, ctx, schema42, accessor);
       break;
     case "enum":
-      typeAccessor = generateEnumCheck(doc, ctx, schema41, accessor);
+      typeAccessor = generateEnumCheck(doc, ctx, schema42, accessor);
       break;
     case "readonly": {
-      const innerOut = generateWrapperCheck(doc, ctx, schema41, accessor);
+      const innerOut = generateWrapperCheck(doc, ctx, schema42, accessor);
       const frozenVar = newVar(ctx);
       doc.write(`const ${frozenVar} = Object.freeze(${innerOut});`);
       typeAccessor = frozenVar;
       break;
     }
     case "success":
-      generateWrapperCheck(doc, ctx, schema41, accessor);
+      generateWrapperCheck(doc, ctx, schema42, accessor);
       typeAccessor = "true";
       break;
     case "default":
     case "prefault":
-      typeAccessor = generateDefaultCheck(doc, ctx, schema41, accessor);
+      typeAccessor = generateDefaultCheck(doc, ctx, schema42, accessor);
       break;
     case "nonoptional":
-      typeAccessor = generateNonOptionalCheck(doc, ctx, schema41, accessor);
+      typeAccessor = generateNonOptionalCheck(doc, ctx, schema42, accessor);
       break;
     case "tuple":
-      typeAccessor = generateTupleCheck(doc, ctx, schema41, accessor);
+      typeAccessor = generateTupleCheck(doc, ctx, schema42, accessor);
       break;
     case "union":
-      typeAccessor = generateUnionCheck(doc, ctx, schema41, accessor);
+      typeAccessor = generateUnionCheck(doc, ctx, schema42, accessor);
       break;
     case "intersection":
-      typeAccessor = generateIntersectionCheck(doc, ctx, schema41, accessor);
+      typeAccessor = generateIntersectionCheck(doc, ctx, schema42, accessor);
       break;
     case "record":
-      typeAccessor = generateRecordCheck(doc, ctx, schema41, accessor);
+      typeAccessor = generateRecordCheck(doc, ctx, schema42, accessor);
       break;
     case "map":
-      typeAccessor = generateMapCheck(doc, ctx, schema41, accessor);
+      typeAccessor = generateMapCheck(doc, ctx, schema42, accessor);
       break;
     case "set":
-      typeAccessor = generateSetCheck(doc, ctx, schema41, accessor);
+      typeAccessor = generateSetCheck(doc, ctx, schema42, accessor);
       break;
     case "file":
       typeAccessor = generateFileCheck(doc, accessor);
       break;
     case "template_literal":
-      typeAccessor = generateTemplateLiteralCheck(doc, ctx, schema41, accessor);
+      typeAccessor = generateTemplateLiteralCheck(doc, ctx, schema42, accessor);
       break;
     case "lazy":
-      typeAccessor = generateLazyCheck(doc, ctx, schema41, accessor);
+      typeAccessor = generateLazyCheck(doc, ctx, schema42, accessor);
       break;
     case "pipe":
-      typeAccessor = generatePipeCheck(doc, ctx, schema41, accessor);
+      typeAccessor = generatePipeCheck(doc, ctx, schema42, accessor);
       break;
     case "custom":
-      typeAccessor = generateCustomCheck(doc, ctx, schema41, accessor);
+      typeAccessor = generateCustomCheck(doc, ctx, schema42, accessor);
       break;
     case "transform":
-      typeAccessor = generateTransformCheck(doc, ctx, schema41, accessor);
+      typeAccessor = generateTransformCheck(doc, ctx, schema42, accessor);
       break;
     case "catch":
-      typeAccessor = generateCatchCheck(doc, ctx, schema41, accessor);
+      typeAccessor = generateCatchCheck(doc, ctx, schema42, accessor);
       break;
     default: {
       void type;
@@ -193070,18 +193070,18 @@ function generateCheck(doc, ctx, schema41, accessor, needsValue = true) {
   }
   if (typeAccessor === null)
     return null;
-  return generateChecks(doc, ctx, schema41, typeAccessor);
+  return generateChecks(doc, ctx, schema42, typeAccessor);
 }
-function generateStringCheck(doc, ctx, schema41, accessor, needsValue = true) {
+function generateStringCheck(doc, ctx, schema42, accessor, needsValue = true) {
   doc.write(`if (typeof ${accessor} !== "string") return INVALID;`);
-  const def = schema41._zod.def;
+  const def = schema42._zod.def;
   if (def.format === void 0)
     return accessor;
   return generateStringFormatCheck(doc, ctx, def, accessor, needsValue);
 }
-function generateNumberCheck(doc, schema41, accessor) {
+function generateNumberCheck(doc, schema42, accessor) {
   doc.write(`if (typeof ${accessor} !== "number" || !Number.isFinite(${accessor})) return INVALID;`);
-  const def = schema41._zod.def;
+  const def = schema42._zod.def;
   if (def.check === "number_format" && def.format) {
     generateNumberFormatCheck(doc, { format: def.format }, accessor);
   }
@@ -193091,9 +193091,9 @@ function generateBooleanCheck(doc, accessor) {
   doc.write(`if (typeof ${accessor} !== "boolean") return INVALID;`);
   return accessor;
 }
-function generateBigIntCheck(doc, schema41, accessor) {
+function generateBigIntCheck(doc, schema42, accessor) {
   doc.write(`if (typeof ${accessor} !== "bigint") return INVALID;`);
-  const def = schema41._zod.def;
+  const def = schema42._zod.def;
   if (def.format) {
     switch (def.format) {
       case "int64":
@@ -193130,8 +193130,8 @@ function generateDateCheck(doc, accessor) {
   doc.write(`if (!(${accessor} instanceof Date) || Number.isNaN(${accessor}.getTime())) return INVALID;`);
   return accessor;
 }
-function generateObjectCheck(doc, ctx, schema41, accessor, buildsValue = true) {
-  const def = schema41._zod.def;
+function generateObjectCheck(doc, ctx, schema42, accessor, buildsValue = true) {
+  const def = schema42._zod.def;
   doc.write(`if (typeof ${accessor} !== "object" || ${accessor} === null || Array.isArray(${accessor})) return INVALID;`);
   const shape = def.shape;
   const keys = Object.keys(shape);
@@ -193249,9 +193249,9 @@ function generateObjectCheck(doc, ctx, schema41, accessor, buildsValue = true) {
   }
   return outputVar;
 }
-function generateOptionalCheck(doc, ctx, schema41, accessor, buildsValue = true) {
-  const def = schema41._zod.def;
-  if (isExactOptional(schema41)) {
+function generateOptionalCheck(doc, ctx, schema42, accessor, buildsValue = true) {
+  const def = schema42._zod.def;
+  if (isExactOptional(schema42)) {
     return generateCheck(doc, ctx, def.innerType, accessor, buildsValue);
   }
   if (def.innerType._zod.optin === "defaulted") {
@@ -193288,16 +193288,16 @@ function generateOptionalCheck(doc, ctx, schema41, accessor, buildsValue = true)
   doc.write(`}`);
   return outputVar;
 }
-function isExactOptional(schema41) {
-  return schema41._zod.traits?.has("$ZodExactOptional") === true;
+function isExactOptional(schema42) {
+  return schema42._zod.traits?.has("$ZodExactOptional") === true;
 }
-function requiresPresenceCheck(schema41) {
-  return schema41._zod.optin === void 0 && fastPathAcceptsAbsence(schema41);
+function requiresPresenceCheck(schema42) {
+  return schema42._zod.optin === void 0 && fastPathAcceptsAbsence(schema42);
 }
-function fastPathAcceptsAbsence(schema41) {
-  if (schema41._zod.def.coerce)
+function fastPathAcceptsAbsence(schema42) {
+  if (schema42._zod.def.coerce)
     return true;
-  const def = schema41._zod.def;
+  const def = schema42._zod.def;
   switch (def.type) {
     case "any":
     case "unknown":
@@ -193332,7 +193332,7 @@ function fastPathAcceptsAbsence(schema41) {
     case "literal":
       return !!def.values?.includes(void 0);
     case "enum":
-      return !!schema41._zod.values?.has(void 0);
+      return !!schema42._zod.values?.has(void 0);
     case "optional":
     case "nullable":
     case "readonly":
@@ -193352,14 +193352,14 @@ function fastPathAcceptsAbsence(schema41) {
       return true;
   }
 }
-function dropsWhenAbsent(schema41) {
-  return schema41._zod.optin === "optional" && schema41._zod.optout === "optional";
+function dropsWhenAbsent(schema42) {
+  return schema42._zod.optin === "optional" && schema42._zod.optout === "optional";
 }
-function mayOmitUndefined(schema41) {
-  return (schema41._zod.optin !== "defaulted" || schema41._zod.optout === "optional") && mayOutputUndefined(schema41);
+function mayOmitUndefined(schema42) {
+  return (schema42._zod.optin !== "defaulted" || schema42._zod.optout === "optional") && mayOutputUndefined(schema42);
 }
-function mayOutputUndefined(schema41) {
-  const def = schema41._zod.def;
+function mayOutputUndefined(schema42) {
+  const def = schema42._zod.def;
   switch (def.type) {
     case "string":
     case "number":
@@ -193383,7 +193383,7 @@ function mayOutputUndefined(schema41) {
     case "literal":
       return !!def.values?.includes(void 0);
     case "enum":
-      return !!schema41._zod.values?.has(void 0);
+      return !!schema42._zod.values?.has(void 0);
     case "optional":
       return true;
     case "nullable":
@@ -193400,8 +193400,8 @@ function mayOutputUndefined(schema41) {
       return true;
   }
 }
-function generateNullableCheck(doc, ctx, schema41, accessor, buildsValue = true) {
-  const def = schema41._zod.def;
+function generateNullableCheck(doc, ctx, schema42, accessor, buildsValue = true) {
+  const def = schema42._zod.def;
   const outputVar = buildsValue ? newVar(ctx) : null;
   if (outputVar)
     doc.write(`let ${outputVar} = null;`);
@@ -193414,8 +193414,8 @@ function generateNullableCheck(doc, ctx, schema41, accessor, buildsValue = true)
   doc.write(`}`);
   return outputVar;
 }
-function generateArrayCheck(doc, ctx, schema41, accessor, buildsValue = true) {
-  const def = schema41._zod.def;
+function generateArrayCheck(doc, ctx, schema42, accessor, buildsValue = true) {
+  const def = schema42._zod.def;
   doc.write(`if (!Array.isArray(${accessor})) return INVALID;`);
   const outputVar = buildsValue ? newVar(ctx) : null;
   const iVar = newVar(ctx);
@@ -193432,8 +193432,8 @@ function generateArrayCheck(doc, ctx, schema41, accessor, buildsValue = true) {
   doc.write(`}`);
   return outputVar;
 }
-function generateLiteralCheck(doc, ctx, schema41, accessor) {
-  const def = schema41._zod.def;
+function generateLiteralCheck(doc, ctx, schema42, accessor) {
+  const def = schema42._zod.def;
   const values = def.values;
   if (values.length !== 1) {
     const literalSet = addConstant(ctx, new Set(values));
@@ -193461,8 +193461,8 @@ function generateLiteralCheck(doc, ctx, schema41, accessor) {
   }
   return accessor;
 }
-function generateEnumCheck(doc, ctx, schema41, accessor) {
-  const values = schema41._zod.values;
+function generateEnumCheck(doc, ctx, schema42, accessor) {
+  const values = schema42._zod.values;
   if (!values) {
     throw new ZodCompileUnsupportedError("enum schema without enumerated values");
   }
@@ -193470,15 +193470,15 @@ function generateEnumCheck(doc, ctx, schema41, accessor) {
   doc.write(`if (!${enumSet}.has(${accessor})) return INVALID;`);
   return accessor;
 }
-function generateWrapperCheck(doc, ctx, schema41, accessor) {
-  const def = schema41._zod.def;
+function generateWrapperCheck(doc, ctx, schema42, accessor) {
+  const def = schema42._zod.def;
   return generateCheck(doc, ctx, def.innerType, accessor);
 }
-function generateDefaultCheck(doc, ctx, schema41, accessor) {
-  const def = schema41._zod.def;
-  const descriptor = Object.getOwnPropertyDescriptor(schema41._zod.def, "defaultValue");
-  const defaultGetter = descriptor ? () => schema41._zod.def.defaultValue : void 0;
-  if (schema41._zod.def.type === "prefault") {
+function generateDefaultCheck(doc, ctx, schema42, accessor) {
+  const def = schema42._zod.def;
+  const descriptor = Object.getOwnPropertyDescriptor(schema42._zod.def, "defaultValue");
+  const defaultGetter = descriptor ? () => schema42._zod.def.defaultValue : void 0;
+  if (schema42._zod.def.type === "prefault") {
     if (!defaultGetter) {
       return generateCheck(doc, ctx, def.innerType, accessor);
     }
@@ -193514,16 +193514,16 @@ function generateDefaultCheck(doc, ctx, schema41, accessor) {
   }
   return outputVar;
 }
-function generateNonOptionalCheck(doc, ctx, schema41, accessor) {
-  const def = schema41._zod.def;
+function generateNonOptionalCheck(doc, ctx, schema42, accessor) {
+  const def = schema42._zod.def;
   const innerOutput = generateCheck(doc, ctx, def.innerType, accessor);
   const outputVar = newVar(ctx);
   doc.write(`const ${outputVar} = ${innerOutput};`);
   doc.write(`if (${outputVar} === undefined) return INVALID;`);
   return outputVar;
 }
-function generateTupleCheck(doc, ctx, schema41, accessor) {
-  const def = schema41._zod.def;
+function generateTupleCheck(doc, ctx, schema42, accessor) {
+  const def = schema42._zod.def;
   const items = def.items;
   const rest = def.rest;
   doc.write(`if (!Array.isArray(${accessor})) return INVALID;`);
@@ -193597,8 +193597,8 @@ function getTupleOptStart2(items, key) {
   }
   return 0;
 }
-function generateUnionCheck(doc, ctx, schema41, accessor) {
-  const def = schema41._zod.def;
+function generateUnionCheck(doc, ctx, schema42, accessor) {
+  const def = schema42._zod.def;
   const options = def.options;
   if (def.discriminator) {
     return generateDiscriminatedUnionCheck(doc, ctx, def, accessor);
@@ -193698,8 +193698,8 @@ function literalEquality(ctx, accessor, value) {
   }
   throw new ZodCompileUnsupportedError(`literal discriminator value ${String(value)}`);
 }
-function generateIntersectionCheck(doc, ctx, schema41, accessor) {
-  const def = schema41._zod.def;
+function generateIntersectionCheck(doc, ctx, schema42, accessor) {
+  const def = schema42._zod.def;
   ctx.definite = false;
   const leftOutput = compileChild(doc, ctx, def.left, accessor);
   const rightOutput = compileChild(doc, ctx, def.right, accessor);
@@ -193709,8 +193709,8 @@ function generateIntersectionCheck(doc, ctx, schema41, accessor) {
   doc.write(`if (!${mergedVar}.valid) return INVALID;`);
   return `${mergedVar}.data`;
 }
-function generateRecordCheck(doc, ctx, schema41, accessor) {
-  const def = schema41._zod.def;
+function generateRecordCheck(doc, ctx, schema42, accessor) {
+  const def = schema42._zod.def;
   const isPlainObjectConst = addConstant(ctx, isPlainObject);
   doc.write(`if (!${isPlainObjectConst}(${accessor})) return INVALID;`);
   const outputVar = newVar(ctx);
@@ -193813,8 +193813,8 @@ function literalPropertyKey(ctx, key) {
     return esc2(key);
   return addConstant(ctx, key);
 }
-function generateMapCheck(doc, ctx, schema41, accessor) {
-  const def = schema41._zod.def;
+function generateMapCheck(doc, ctx, schema42, accessor) {
+  const def = schema42._zod.def;
   doc.write(`if (!(${accessor} instanceof Map)) return INVALID;`);
   const outputVar = newVar(ctx);
   const kVar = newVar(ctx);
@@ -193829,8 +193829,8 @@ function generateMapCheck(doc, ctx, schema41, accessor) {
   doc.write(`}`);
   return outputVar;
 }
-function generateSetCheck(doc, ctx, schema41, accessor) {
-  const def = schema41._zod.def;
+function generateSetCheck(doc, ctx, schema42, accessor) {
+  const def = schema42._zod.def;
   doc.write(`if (!(${accessor} instanceof Set)) return INVALID;`);
   const outputVar = newVar(ctx);
   const valVar = newVar(ctx);
@@ -193847,9 +193847,9 @@ function generateFileCheck(doc, accessor) {
   doc.write(`if (!(${accessor} instanceof File)) return INVALID;`);
   return accessor;
 }
-function generateTemplateLiteralCheck(doc, ctx, schema41, accessor) {
+function generateTemplateLiteralCheck(doc, ctx, schema42, accessor) {
   doc.write(`if (typeof ${accessor} !== "string") return INVALID;`);
-  const pattern2 = schema41._zod.pattern;
+  const pattern2 = schema42._zod.pattern;
   if (pattern2) {
     const patternConst = addConstant(ctx, pattern2);
     doc.write(`${patternConst}.lastIndex = 0;`);
@@ -193857,8 +193857,8 @@ function generateTemplateLiteralCheck(doc, ctx, schema41, accessor) {
   }
   return accessor;
 }
-function generateLazyCheck(doc, ctx, schema41, accessor) {
-  const def = schema41._zod.def;
+function generateLazyCheck(doc, ctx, schema42, accessor) {
+  const def = schema42._zod.def;
   const getterConst = addUserConstant(ctx, def.getter);
   const cacheConst = addConstant(ctx, { parser: null });
   doc.write(`if (!${cacheConst}.parser) {`);
@@ -193877,8 +193877,8 @@ function generateLazyCheck(doc, ctx, schema41, accessor) {
   doc.write(`if (${outputVar} === INVALID) return INVALID;`);
   return outputVar;
 }
-function generatePipeCheck(doc, ctx, schema41, accessor) {
-  const def = schema41._zod.def;
+function generatePipeCheck(doc, ctx, schema42, accessor) {
+  const def = schema42._zod.def;
   const inputOutput = generateCheck(doc, ctx, def.in, accessor);
   if (def.transform) {
     if (isAsyncFunction(def.transform)) {
@@ -193904,8 +193904,8 @@ function generatePipeCheck(doc, ctx, schema41, accessor) {
 function isAsyncFunction(fn) {
   return typeof fn === "function" && (fn.constructor.name === "AsyncFunction" || fn[Symbol.toStringTag] === "AsyncFunction");
 }
-function generateCustomCheck(doc, ctx, schema41, accessor) {
-  const def = schema41._zod.def;
+function generateCustomCheck(doc, ctx, schema42, accessor) {
+  const def = schema42._zod.def;
   if (def.fn) {
     if (isAsyncFunction(def.fn)) {
       throw new ZodCompileAsyncError("z.compile: async custom predicates are not supported");
@@ -193930,8 +193930,8 @@ function runtimeCatch(innerSchema, catchValue, value) {
     return r.value;
   return catchValue();
 }
-function generateCatchCheck(doc, ctx, schema41, accessor) {
-  const def = schema41._zod.def;
+function generateCatchCheck(doc, ctx, schema42, accessor) {
+  const def = schema42._zod.def;
   if (!def.catchValue[CONSTANT_CATCH]) {
     throw new ZodCompileUnsupportedError("catch with a callback (only a constant catch value compiles)", false);
   }
@@ -193953,8 +193953,8 @@ function generateCatchCheck(doc, ctx, schema41, accessor) {
   doc.write(`}`);
   return outputVar;
 }
-function generateTransformCheck(doc, ctx, schema41, accessor) {
-  const def = schema41._zod.def;
+function generateTransformCheck(doc, ctx, schema42, accessor) {
+  const def = schema42._zod.def;
   if (def.transform) {
     if (isAsyncFunction(def.transform)) {
       throw new ZodCompileAsyncError("z.compile: async transforms are not supported");
@@ -194544,11 +194544,11 @@ function _minSize(minimum, params) {
   });
 }
 // @__NO_SIDE_EFFECTS__
-function _size(size, params) {
+function _size(size2, params) {
   return new $ZodCheckSizeEquals({
     check: "size_equals",
     ...normalizeParams(params),
-    size
+    size: size2
   });
 }
 // @__NO_SIDE_EFFECTS__
@@ -194629,11 +194629,11 @@ function _endsWith(suffix, params) {
   });
 }
 // @__NO_SIDE_EFFECTS__
-function _property(property, schema41, params) {
+function _property(property, schema42, params) {
   return new $ZodCheckProperty({
     check: "property",
     property,
-    schema: schema41,
+    schema: schema42,
     ...normalizeParams(params)
   });
 }
@@ -194889,23 +194889,23 @@ function _promise(Class2, innerType) {
 function _custom(Class2, fn, _params) {
   const norm3 = normalizeParams(_params);
   norm3.abort ?? (norm3.abort = true);
-  const schema41 = new Class2({
+  const schema42 = new Class2({
     type: "custom",
     check: "custom",
     fn,
     ...norm3
   });
-  return schema41;
+  return schema42;
 }
 // @__NO_SIDE_EFFECTS__
 function _refine(Class2, fn, _params) {
-  const schema41 = new Class2({
+  const schema42 = new Class2({
     type: "custom",
     check: "custom",
     fn,
     ...normalizeParams(_params)
   });
-  return schema41;
+  return schema42;
 }
 // @__NO_SIDE_EFFECTS__
 function _superRefine(fn, params) {
@@ -195071,8 +195071,8 @@ function initializeContext(params) {
     external: params?.external ?? void 0
   };
 }
-function handleUnrepresentable(schema41, ctx, json2, params, message) {
-  const result = typeof ctx.unrepresentable === "function" ? ctx.unrepresentable({ zodSchema: schema41, path: params.path, message }) : ctx.unrepresentable;
+function handleUnrepresentable(schema42, ctx, json2, params, message) {
+  const result = typeof ctx.unrepresentable === "function" ? ctx.unrepresentable({ zodSchema: schema42, path: params.path, message }) : ctx.unrepresentable;
   if (result === "any")
     return false;
   if (result === void 0 || result === "throw")
@@ -195080,42 +195080,42 @@ function handleUnrepresentable(schema41, ctx, json2, params, message) {
   Object.assign(json2, result);
   return true;
 }
-function processSchema(schema41, ctx, _params = { path: [], schemaPath: [] }) {
+function processSchema(schema42, ctx, _params = { path: [], schemaPath: [] }) {
   var _a3;
-  const def = schema41._zod.def;
-  const seen = ctx.seen.get(schema41);
+  const def = schema42._zod.def;
+  const seen = ctx.seen.get(schema42);
   if (seen) {
     seen.count++;
-    const isCycle = _params.schemaPath.includes(schema41);
+    const isCycle = _params.schemaPath.includes(schema42);
     if (isCycle) {
       seen.cycle = _params.path;
     }
     return seen.schema;
   }
   const result = { schema: {}, count: 1, cycle: void 0, path: _params.path };
-  ctx.seen.set(schema41, result);
+  ctx.seen.set(schema42, result);
   ctx.sharedDefsExtractedFor = void 0;
   ctx.sharedEmitDoneFor = void 0;
-  const overrideSchema = schema41._zod.toJSONSchema?.();
+  const overrideSchema = schema42._zod.toJSONSchema?.();
   if (overrideSchema) {
     result.schema = overrideSchema;
   } else {
     const params = {
       ..._params,
-      schemaPath: [..._params.schemaPath, schema41],
+      schemaPath: [..._params.schemaPath, schema42],
       path: _params.path
     };
-    if (schema41._zod.processJSONSchema) {
-      schema41._zod.processJSONSchema(ctx, result.schema, params);
+    if (schema42._zod.processJSONSchema) {
+      schema42._zod.processJSONSchema(ctx, result.schema, params);
     } else {
       const _json = result.schema;
       const processor = ctx.processors[def.type];
       if (!processor) {
         throw new Error(`[toJSONSchema]: Non-representable type encountered: ${def.type}`);
       }
-      processor(schema41, ctx, _json, params);
+      processor(schema42, ctx, _json, params);
     }
-    const parent = schema41._zod.parent;
+    const parent = schema42._zod.parent;
     if (parent) {
       if (!result.ref)
         result.ref = parent;
@@ -195123,24 +195123,24 @@ function processSchema(schema41, ctx, _params = { path: [], schemaPath: [] }) {
       ctx.seen.get(parent).isParent = true;
     }
   }
-  const meta3 = ctx.metadataRegistry.get(schema41);
+  const meta3 = ctx.metadataRegistry.get(schema42);
   if (meta3)
     assignProps(result.schema, meta3);
-  if (ctx.io === "input" && isTransforming(schema41)) {
+  if (ctx.io === "input" && isTransforming(schema42)) {
     delete result.schema.examples;
     delete result.schema.default;
   }
   if (ctx.io === "input" && "_prefault" in result.schema)
     (_a3 = result.schema).default ?? (_a3.default = result.schema._prefault);
   delete result.schema._prefault;
-  const _result = ctx.seen.get(schema41);
+  const _result = ctx.seen.get(schema42);
   return _result.schema;
 }
 function encodeJSONPointerSegment(segment) {
   return segment.replace(/~/g, "~0").replace(/\//g, "~1");
 }
-function extractDefs(ctx, schema41) {
-  const root = ctx.seen.get(schema41);
+function extractDefs(ctx, schema42) {
+  const root = ctx.seen.get(schema42);
   if (!root)
     throw new Error("Unprocessed schema. This is a bug in Zod.");
   if (ctx.external && ctx.sharedDefsExtractedFor === ctx.external)
@@ -195185,11 +195185,11 @@ function extractDefs(ctx, schema41) {
     seen.def = { ...seen.schema };
     if (defId)
       seen.defId = defId;
-    const schema42 = seen.schema;
-    for (const key in schema42) {
-      delete schema42[key];
+    const schema43 = seen.schema;
+    for (const key in schema43) {
+      delete schema43[key];
     }
-    schema42.$ref = ref;
+    schema43.$ref = ref;
   };
   if (ctx.cycles === "throw") {
     for (const entry2 of ctx.seen.entries()) {
@@ -195203,13 +195203,13 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
   }
   for (const entry2 of ctx.seen.entries()) {
     const seen = entry2[1];
-    if (schema41 === entry2[0]) {
+    if (schema42 === entry2[0]) {
       extractToDef(entry2);
       continue;
     }
     if (ctx.external) {
       const ext2 = ctx.external.registry.get(entry2[0])?.id;
-      if (schema41 !== entry2[0] && ext2) {
+      if (schema42 !== entry2[0] && ext2) {
         extractToDef(entry2);
         continue;
       }
@@ -195232,9 +195232,9 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
   if (ctx.external)
     ctx.sharedDefsExtractedFor = ctx.external;
 }
-function compactTypeUnion(schema41) {
-  const options = schema41.anyOf;
-  if (!Array.isArray(options) || options.length === 0 || schema41.type !== void 0)
+function compactTypeUnion(schema42) {
+  const options = schema42.anyOf;
+  if (!Array.isArray(options) || options.length === 0 || schema42.type !== void 0)
     return;
   const types = [];
   for (const option of options) {
@@ -195252,8 +195252,8 @@ function compactTypeUnion(schema41) {
         types.push(member);
     }
   }
-  delete schema41.anyOf;
-  schema41.type = types.length === 1 ? types[0] : types;
+  delete schema42.anyOf;
+  schema42.type = types.length === 1 ? types[0] : types;
 }
 var FOLDABLE_KEYS = /* @__PURE__ */ new Set(["type", "properties", "required", "additionalProperties"]);
 var UNION_KEYS = ["oneOf", "anyOf"];
@@ -195340,16 +195340,16 @@ function foldIntersection(json2) {
   delete json2.allOf;
   assignProps(json2, folded);
 }
-function finalize(ctx, schema41) {
-  const root = ctx.seen.get(schema41);
+function finalize(ctx, schema42) {
+  const root = ctx.seen.get(schema42);
   if (!root)
     throw new Error("Unprocessed schema. This is a bug in Zod.");
   const flattenRef = (zodSchema) => {
     const seen = ctx.seen.get(zodSchema);
     if (seen.ref === null)
       return;
-    const schema42 = seen.def ?? seen.schema;
-    const _cached = { ...schema42 };
+    const schema43 = seen.def ?? seen.schema;
+    const _cached = { ...schema43 };
     const ref = seen.ref;
     seen.ref = null;
     if (ref) {
@@ -195357,28 +195357,28 @@ function finalize(ctx, schema41) {
       const refSeen = ctx.seen.get(ref);
       const refSchema = refSeen.schema;
       if (refSchema.$ref && (ctx.target === "draft-07" || ctx.target === "draft-04" || ctx.target === "openapi-3.0")) {
-        schema42.allOf = schema42.allOf ?? [];
-        schema42.allOf.push(refSchema);
+        schema43.allOf = schema43.allOf ?? [];
+        schema43.allOf.push(refSchema);
       } else {
-        assignProps(schema42, refSchema);
+        assignProps(schema43, refSchema);
       }
-      assignProps(schema42, _cached);
+      assignProps(schema43, _cached);
       const isParentRef = zodSchema._zod.parent === ref;
       if (isParentRef) {
-        for (const key in schema42) {
+        for (const key in schema43) {
           if (key === "$ref" || key === "allOf")
             continue;
           if (!(key in _cached)) {
-            delete schema42[key];
+            delete schema43[key];
           }
         }
       }
       if (refSchema.$ref && refSeen.def) {
-        for (const key in schema42) {
+        for (const key in schema43) {
           if (key === "$ref" || key === "allOf")
             continue;
-          if (key in refSeen.def && JSON.stringify(schema42[key]) === JSON.stringify(refSeen.def[key])) {
-            delete schema42[key];
+          if (key in refSeen.def && JSON.stringify(schema43[key]) === JSON.stringify(refSeen.def[key])) {
+            delete schema43[key];
           }
         }
       }
@@ -195388,13 +195388,13 @@ function finalize(ctx, schema41) {
       flattenRef(parent);
       const parentSeen = ctx.seen.get(parent);
       if (parentSeen?.schema.$ref) {
-        schema42.$ref = parentSeen.schema.$ref;
+        schema43.$ref = parentSeen.schema.$ref;
         if (parentSeen.def) {
-          for (const key in schema42) {
+          for (const key in schema43) {
             if (key === "$ref" || key === "allOf")
               continue;
-            if (key in parentSeen.def && JSON.stringify(schema42[key]) === JSON.stringify(parentSeen.def[key])) {
-              delete schema42[key];
+            if (key in parentSeen.def && JSON.stringify(schema43[key]) === JSON.stringify(parentSeen.def[key])) {
+              delete schema43[key];
             }
           }
         }
@@ -195402,7 +195402,7 @@ function finalize(ctx, schema41) {
     }
     ctx.override({
       zodSchema,
-      jsonSchema: schema42,
+      jsonSchema: schema43,
       path: seen.path ?? []
     });
   };
@@ -195448,13 +195448,13 @@ function finalize(ctx, schema41) {
   } else {
   }
   if (ctx.external?.uri) {
-    const id = ctx.external.registry.get(schema41)?.id;
+    const id = ctx.external.registry.get(schema42)?.id;
     if (!id)
       throw new Error("Schema is missing an `id` property");
     result.$id = ctx.external.uri(id);
   }
   assignProps(result, root.defId ? root.schema : root.def ?? root.schema);
-  const rootMetaId = ctx.metadataRegistry.get(schema41)?.id;
+  const rootMetaId = ctx.metadataRegistry.get(schema42)?.id;
   if (rootMetaId !== void 0 && result.id === rootMetaId)
     delete result.id;
   const defs = ctx.external?.defs ?? {};
@@ -195484,10 +195484,10 @@ function finalize(ctx, schema41) {
     const finalized = JSON.parse(JSON.stringify(result));
     Object.defineProperty(finalized, "~standard", {
       value: {
-        ...schema41["~standard"],
+        ...schema42["~standard"],
         jsonSchema: {
-          input: createStandardJSONSchemaMethod(schema41, "input", ctx.processors),
-          output: createStandardJSONSchemaMethod(schema41, "output", ctx.processors)
+          input: createStandardJSONSchemaMethod(schema42, "input", ctx.processors),
+          output: createStandardJSONSchemaMethod(schema42, "output", ctx.processors)
         }
       },
       enumerable: false,
@@ -195551,18 +195551,18 @@ function isTransforming(_schema, _ctx) {
   }
   return false;
 }
-var createToJSONSchemaMethod = (schema41, processors = {}) => (params) => {
+var createToJSONSchemaMethod = (schema42, processors = {}) => (params) => {
   const ctx = initializeContext({ ...params, processors });
-  processSchema(schema41, ctx);
-  extractDefs(ctx, schema41);
-  return finalize(ctx, schema41);
+  processSchema(schema42, ctx);
+  extractDefs(ctx, schema42);
+  return finalize(ctx, schema42);
 };
-var createStandardJSONSchemaMethod = (schema41, io, processors = {}) => (params) => {
+var createStandardJSONSchemaMethod = (schema42, io, processors = {}) => (params) => {
   const { libraryOptions, target } = params ?? {};
   const ctx = initializeContext({ ...libraryOptions ?? {}, target, io, processors });
-  processSchema(schema41, ctx);
-  extractDefs(ctx, schema41);
-  return finalize(ctx, schema41);
+  processSchema(schema42, ctx);
+  extractDefs(ctx, schema42);
+  return finalize(ctx, schema42);
 };
 
 // node_modules/zod/v4/core/json-schema-processors.js
@@ -195626,13 +195626,13 @@ var contributors = {
   },
   mime_type: (agg, def) => intersectMime(agg, def.mime)
 };
-function aggregateChecks(schema41) {
+function aggregateChecks(schema42) {
   const agg = {};
-  const def = schema41._zod.def;
-  const list = schema41._zod.traits.has("$ZodCheck") ? [schema41, ...def.checks ?? []] : def.checks ?? [];
+  const def = schema42._zod.def;
+  const list = schema42._zod.traits.has("$ZodCheck") ? [schema42, ...def.checks ?? []] : def.checks ?? [];
   for (const ch of list)
     contributors[ch._zod.def.check]?.(agg, ch._zod.def);
-  const bag = schema41._zod.bag;
+  const bag = schema42._zod.bag;
   if (bag.minimum !== void 0)
     narrowMin(agg, "minimum", bag.minimum);
   if (bag.exclusiveMinimum !== void 0)
@@ -195667,10 +195667,10 @@ var exactPatterns = /* @__PURE__ */ new Map([
   [base64urlCharset, base64url]
 ]);
 var exactPattern = (p) => exactPatterns.get(p) ?? p;
-var stringProcessor = (schema41, ctx, _json, _params) => {
+var stringProcessor = (schema42, ctx, _json, _params) => {
   const json2 = _json;
   json2.type = "string";
-  const { minimum, maximum, format, patterns, contentEncoding, laxFormat } = aggregateChecks(schema41);
+  const { minimum, maximum, format, patterns, contentEncoding, laxFormat } = aggregateChecks(schema42);
   if (typeof minimum === "number")
     json2.minLength = minimum;
   if (typeof maximum === "number")
@@ -195699,9 +195699,9 @@ var stringProcessor = (schema41, ctx, _json, _params) => {
     }
   }
 };
-var numberProcessor = (schema41, ctx, _json, params) => {
+var numberProcessor = (schema42, ctx, _json, params) => {
   const json2 = _json;
-  const { minimum, maximum, multipleOf, exclusiveMaximum, exclusiveMinimum, isInt } = aggregateChecks(schema41);
+  const { minimum, maximum, multipleOf, exclusiveMaximum, exclusiveMinimum, isInt } = aggregateChecks(schema42);
   json2.type = isInt ? "integer" : "number";
   const exMin = typeof exclusiveMinimum === "number" && exclusiveMinimum >= (minimum ?? Number.NEGATIVE_INFINITY);
   const exMax = typeof exclusiveMaximum === "number" && exclusiveMaximum <= (maximum ?? Number.POSITIVE_INFINITY);
@@ -195732,7 +195732,7 @@ var numberProcessor = (schema41, ctx, _json, params) => {
       if (Number.isFinite(divisor) && divisor !== 0)
         divisors.add(Math.abs(divisor));
       else
-        handleUnrepresentable(schema41, ctx, json2, params, `A multipleOf divisor of ${divisor} cannot be represented in JSON Schema`);
+        handleUnrepresentable(schema42, ctx, json2, params, `A multipleOf divisor of ${divisor} cannot be represented in JSON Schema`);
     }
     const [first2, ...rest] = divisors;
     if (first2 !== void 0)
@@ -195744,11 +195744,11 @@ var numberProcessor = (schema41, ctx, _json, params) => {
 var booleanProcessor = (_schema, _ctx, json2, _params) => {
   json2.type = "boolean";
 };
-var bigintProcessor = (schema41, ctx, json2, params) => {
-  handleUnrepresentable(schema41, ctx, json2, params, "BigInt cannot be represented in JSON Schema");
+var bigintProcessor = (schema42, ctx, json2, params) => {
+  handleUnrepresentable(schema42, ctx, json2, params, "BigInt cannot be represented in JSON Schema");
 };
-var symbolProcessor = (schema41, ctx, json2, params) => {
-  handleUnrepresentable(schema41, ctx, json2, params, "Symbols cannot be represented in JSON Schema");
+var symbolProcessor = (schema42, ctx, json2, params) => {
+  handleUnrepresentable(schema42, ctx, json2, params, "Symbols cannot be represented in JSON Schema");
 };
 var nullProcessor = (_schema, ctx, json2, _params) => {
   if (ctx.target === "openapi-3.0") {
@@ -195759,11 +195759,11 @@ var nullProcessor = (_schema, ctx, json2, _params) => {
     json2.type = "null";
   }
 };
-var undefinedProcessor = (schema41, ctx, json2, params) => {
-  handleUnrepresentable(schema41, ctx, json2, params, "Undefined cannot be represented in JSON Schema");
+var undefinedProcessor = (schema42, ctx, json2, params) => {
+  handleUnrepresentable(schema42, ctx, json2, params, "Undefined cannot be represented in JSON Schema");
 };
-var voidProcessor = (schema41, ctx, json2, params) => {
-  handleUnrepresentable(schema41, ctx, json2, params, "Void cannot be represented in JSON Schema");
+var voidProcessor = (schema42, ctx, json2, params) => {
+  handleUnrepresentable(schema42, ctx, json2, params, "Void cannot be represented in JSON Schema");
 };
 var neverProcessor = (_schema, _ctx, json2, _params) => {
   json2.not = {};
@@ -195772,11 +195772,11 @@ var anyProcessor = (_schema, _ctx, _json, _params) => {
 };
 var unknownProcessor = (_schema, _ctx, _json, _params) => {
 };
-var dateProcessor = (schema41, ctx, json2, params) => {
-  handleUnrepresentable(schema41, ctx, json2, params, "Date cannot be represented in JSON Schema");
+var dateProcessor = (schema42, ctx, json2, params) => {
+  handleUnrepresentable(schema42, ctx, json2, params, "Date cannot be represented in JSON Schema");
 };
-var enumProcessor = (schema41, _ctx, json2, _params) => {
-  const def = schema41._zod.def;
+var enumProcessor = (schema42, _ctx, json2, _params) => {
+  const def = schema42._zod.def;
   const values = getEnumValues(def.entries);
   if (values.length === 0) {
     json2.not = {};
@@ -195788,8 +195788,8 @@ var enumProcessor = (schema41, _ctx, json2, _params) => {
     json2.type = "string";
   json2.enum = values;
 };
-var literalProcessor = (schema41, ctx, json2, params) => {
-  const def = schema41._zod.def;
+var literalProcessor = (schema42, ctx, json2, params) => {
+  const def = schema42._zod.def;
   if (def.values.length === 0) {
     json2.not = {};
     return;
@@ -195797,10 +195797,10 @@ var literalProcessor = (schema41, ctx, json2, params) => {
   const vals = [];
   for (const val of def.values) {
     if (val === void 0) {
-      if (handleUnrepresentable(schema41, ctx, json2, params, "Literal `undefined` cannot be represented in JSON Schema"))
+      if (handleUnrepresentable(schema42, ctx, json2, params, "Literal `undefined` cannot be represented in JSON Schema"))
         return;
     } else if (typeof val === "bigint") {
-      if (handleUnrepresentable(schema41, ctx, json2, params, "BigInt literals cannot be represented in JSON Schema"))
+      if (handleUnrepresentable(schema42, ctx, json2, params, "BigInt literals cannot be represented in JSON Schema"))
         return;
       vals.push(Number(val));
     } else {
@@ -195828,23 +195828,23 @@ var literalProcessor = (schema41, ctx, json2, params) => {
     json2.enum = vals;
   }
 };
-var nanProcessor = (schema41, ctx, json2, params) => {
-  handleUnrepresentable(schema41, ctx, json2, params, "NaN cannot be represented in JSON Schema");
+var nanProcessor = (schema42, ctx, json2, params) => {
+  handleUnrepresentable(schema42, ctx, json2, params, "NaN cannot be represented in JSON Schema");
 };
-var templateLiteralProcessor = (schema41, _ctx, json2, _params) => {
+var templateLiteralProcessor = (schema42, _ctx, json2, _params) => {
   const _json = json2;
-  const pattern2 = schema41._zod.pattern;
+  const pattern2 = schema42._zod.pattern;
   if (!pattern2)
     throw new Error("Pattern not found in template literal");
   _json.type = "string";
   _json.pattern = pattern2.source;
 };
-var fileProcessor = (schema41, _ctx, json2, _params) => {
+var fileProcessor = (schema42, _ctx, json2, _params) => {
   const _json = json2;
   _json.type = "string";
   _json.format = "binary";
   _json.contentEncoding = "binary";
-  const { minimum, maximum, mime } = aggregateChecks(schema41);
+  const { minimum, maximum, mime } = aggregateChecks(schema42);
   if (minimum !== void 0)
     _json.minLength = minimum;
   if (maximum !== void 0)
@@ -195861,25 +195861,25 @@ var fileProcessor = (schema41, _ctx, json2, _params) => {
 var successProcessor = (_schema, _ctx, json2, _params) => {
   json2.type = "boolean";
 };
-var customProcessor = (schema41, ctx, json2, params) => {
-  handleUnrepresentable(schema41, ctx, json2, params, "Custom types cannot be represented in JSON Schema");
+var customProcessor = (schema42, ctx, json2, params) => {
+  handleUnrepresentable(schema42, ctx, json2, params, "Custom types cannot be represented in JSON Schema");
 };
-var functionProcessor = (schema41, ctx, json2, params) => {
-  handleUnrepresentable(schema41, ctx, json2, params, "Function types cannot be represented in JSON Schema");
+var functionProcessor = (schema42, ctx, json2, params) => {
+  handleUnrepresentable(schema42, ctx, json2, params, "Function types cannot be represented in JSON Schema");
 };
-var transformProcessor = (schema41, ctx, json2, params) => {
-  handleUnrepresentable(schema41, ctx, json2, params, "Transforms cannot be represented in JSON Schema");
+var transformProcessor = (schema42, ctx, json2, params) => {
+  handleUnrepresentable(schema42, ctx, json2, params, "Transforms cannot be represented in JSON Schema");
 };
-var mapProcessor = (schema41, ctx, json2, params) => {
-  handleUnrepresentable(schema41, ctx, json2, params, "Map cannot be represented in JSON Schema");
+var mapProcessor = (schema42, ctx, json2, params) => {
+  handleUnrepresentable(schema42, ctx, json2, params, "Map cannot be represented in JSON Schema");
 };
-var setProcessor = (schema41, ctx, json2, params) => {
-  handleUnrepresentable(schema41, ctx, json2, params, "Set cannot be represented in JSON Schema");
+var setProcessor = (schema42, ctx, json2, params) => {
+  handleUnrepresentable(schema42, ctx, json2, params, "Set cannot be represented in JSON Schema");
 };
-var arrayProcessor = (schema41, ctx, _json, params) => {
+var arrayProcessor = (schema42, ctx, _json, params) => {
   const json2 = _json;
-  const def = schema41._zod.def;
-  const { minimum, maximum } = aggregateChecks(schema41);
+  const def = schema42._zod.def;
+  const { minimum, maximum } = aggregateChecks(schema42);
   if (typeof minimum === "number")
     json2.minItems = minimum;
   if (typeof maximum === "number")
@@ -195890,22 +195890,22 @@ var arrayProcessor = (schema41, ctx, _json, params) => {
     path: [...params.path, "items"]
   });
 };
-function inputOptin(schema41) {
-  const def = schema41._zod.def;
+function inputOptin(schema42) {
+  const def = schema42._zod.def;
   if (def.type === "pipe" && def.in._zod.traits.has("$ZodTransform")) {
     return inputOptin(def.out);
   }
   if (def.type === "catch") {
     return inputOptin(def.innerType);
   }
-  return schema41._zod.optin;
+  return schema42._zod.optin;
 }
-var objectProcessor = (schema41, ctx, _json, params) => {
+var objectProcessor = (schema42, ctx, _json, params) => {
   const json2 = _json;
-  const def = schema41._zod.def;
+  const def = schema42._zod.def;
   const shape = def.shape;
   const symbolKeys = Object.getOwnPropertySymbols(shape);
-  if (symbolKeys.length && handleUnrepresentable(schema41, ctx, json2, params, "Symbol keys cannot be represented in JSON Schema")) {
+  if (symbolKeys.length && handleUnrepresentable(schema42, ctx, json2, params, "Symbol keys cannot be represented in JSON Schema")) {
     return;
   }
   json2.type = "object";
@@ -195938,8 +195938,8 @@ var objectProcessor = (schema41, ctx, _json, params) => {
     });
   }
 };
-var unionProcessor = (schema41, ctx, json2, params) => {
-  const def = schema41._zod.def;
+var unionProcessor = (schema42, ctx, json2, params) => {
+  const def = schema42._zod.def;
   const isExclusive = def.inclusive === false;
   const options = def.options.map((x2, i) => processSchema(x2, ctx, {
     ...params,
@@ -195951,8 +195951,8 @@ var unionProcessor = (schema41, ctx, json2, params) => {
     json2.anyOf = options;
   }
 };
-var intersectionProcessor = (schema41, ctx, json2, params) => {
-  const def = schema41._zod.def;
+var intersectionProcessor = (schema42, ctx, json2, params) => {
+  const def = schema42._zod.def;
   const a = processSchema(def.left, ctx, {
     ...params,
     path: [...params.path, "allOf", 0]
@@ -195969,9 +195969,9 @@ var intersectionProcessor = (schema41, ctx, json2, params) => {
   json2.allOf = allOf;
   ctx.intersections.push(allOf);
 };
-var tupleProcessor = (schema41, ctx, _json, params) => {
+var tupleProcessor = (schema42, ctx, _json, params) => {
   const json2 = _json;
-  const def = schema41._zod.def;
+  const def = schema42._zod.def;
   json2.type = "array";
   const prefixPath = ctx.target === "draft-2020-12" ? "prefixItems" : "items";
   const restPath = ctx.target === "draft-2020-12" ? "items" : ctx.target === "openapi-3.0" ? "items" : "additionalItems";
@@ -196027,7 +196027,7 @@ var tupleProcessor = (schema41, ctx, _json, params) => {
     if (isClosed)
       json2.maxItems = maxItems;
   }
-  const { minimum, maximum } = aggregateChecks(schema41);
+  const { minimum, maximum } = aggregateChecks(schema42);
   if (typeof minimum === "number")
     json2.minItems = minimum;
   if (typeof maximum === "number")
@@ -196096,9 +196096,9 @@ function rewriteKeyNames(ctx) {
     }
   }
 }
-var recordProcessor = (schema41, ctx, _json, params) => {
+var recordProcessor = (schema42, ctx, _json, params) => {
   const json2 = _json;
-  const def = schema41._zod.def;
+  const def = schema42._zod.def;
   json2.type = "object";
   const keyType = def.keyType;
   const patterns = aggregateChecks(keyType).patterns;
@@ -196123,7 +196123,7 @@ var recordProcessor = (schema41, ctx, _json, params) => {
         pendingRecords.set(ctx, pending);
         ctx.deferred.push(() => rewriteKeyNames(ctx));
       }
-      pending.push(schema41);
+      pending.push(schema42);
     }
     json2.additionalProperties = processSchema(def.valueType, ctx, {
       ...params,
@@ -196139,10 +196139,10 @@ var recordProcessor = (schema41, ctx, _json, params) => {
     }
   }
 };
-var nullableProcessor = (schema41, ctx, json2, params) => {
-  const def = schema41._zod.def;
+var nullableProcessor = (schema42, ctx, json2, params) => {
+  const def = schema42._zod.def;
   const inner = processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema41);
+  const seen = ctx.seen.get(schema42);
   if (ctx.target === "openapi-3.0") {
     seen.ref = def.innerType;
     json2.nullable = true;
@@ -196150,14 +196150,14 @@ var nullableProcessor = (schema41, ctx, json2, params) => {
     json2.anyOf = [inner, { type: "null" }];
   }
 };
-var nonoptionalProcessor = (schema41, ctx, _json, params) => {
-  const def = schema41._zod.def;
+var nonoptionalProcessor = (schema42, ctx, _json, params) => {
+  const def = schema42._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema41);
+  const seen = ctx.seen.get(schema42);
   seen.ref = def.innerType;
 };
 var UNREPRESENTABLE_DEFAULT = /* @__PURE__ */ Symbol();
-function serializeDefaultValue(value, schema41, ctx, json2, params) {
+function serializeDefaultValue(value, schema42, ctx, json2, params) {
   let unrepresentable = false;
   const serialized = JSON.stringify(value, (_, val) => {
     if (typeof val !== "bigint")
@@ -196167,74 +196167,74 @@ function serializeDefaultValue(value, schema41, ctx, json2, params) {
   });
   if (!unrepresentable)
     return JSON.parse(serialized);
-  handleUnrepresentable(schema41, ctx, json2, params, "BigInt defaults cannot be represented in JSON Schema");
+  handleUnrepresentable(schema42, ctx, json2, params, "BigInt defaults cannot be represented in JSON Schema");
   return UNREPRESENTABLE_DEFAULT;
 }
-var defaultProcessor = (schema41, ctx, json2, params) => {
-  const def = schema41._zod.def;
+var defaultProcessor = (schema42, ctx, json2, params) => {
+  const def = schema42._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema41);
+  const seen = ctx.seen.get(schema42);
   seen.ref = def.innerType;
-  const value = serializeDefaultValue(def.defaultValue, schema41, ctx, json2, params);
+  const value = serializeDefaultValue(def.defaultValue, schema42, ctx, json2, params);
   if (value !== UNREPRESENTABLE_DEFAULT)
     json2.default = value;
 };
-var prefaultProcessor = (schema41, ctx, json2, params) => {
-  const def = schema41._zod.def;
+var prefaultProcessor = (schema42, ctx, json2, params) => {
+  const def = schema42._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema41);
+  const seen = ctx.seen.get(schema42);
   seen.ref = def.innerType;
   if (ctx.io !== "input")
     return;
-  const value = serializeDefaultValue(def.defaultValue, schema41, ctx, json2, params);
+  const value = serializeDefaultValue(def.defaultValue, schema42, ctx, json2, params);
   if (value !== UNREPRESENTABLE_DEFAULT)
     json2._prefault = value;
 };
-var catchProcessor = (schema41, ctx, json2, params) => {
-  const def = schema41._zod.def;
+var catchProcessor = (schema42, ctx, json2, params) => {
+  const def = schema42._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema41);
+  const seen = ctx.seen.get(schema42);
   seen.ref = def.innerType;
   let catchValue;
   try {
     catchValue = def.catchValue(void 0);
   } catch {
-    handleUnrepresentable(schema41, ctx, json2, params, "Dynamic catch values are not supported in JSON Schema");
+    handleUnrepresentable(schema42, ctx, json2, params, "Dynamic catch values are not supported in JSON Schema");
     return;
   }
   json2.default = catchValue;
 };
-var pipeProcessor = (schema41, ctx, _json, params) => {
-  const def = schema41._zod.def;
+var pipeProcessor = (schema42, ctx, _json, params) => {
+  const def = schema42._zod.def;
   const inIsTransform = def.in._zod.traits.has("$ZodTransform");
   const innerType = ctx.io === "input" ? inIsTransform ? def.out : def.in : def.out;
   processSchema(innerType, ctx, params);
-  const seen = ctx.seen.get(schema41);
+  const seen = ctx.seen.get(schema42);
   seen.ref = innerType;
 };
-var readonlyProcessor = (schema41, ctx, json2, params) => {
-  const def = schema41._zod.def;
+var readonlyProcessor = (schema42, ctx, json2, params) => {
+  const def = schema42._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema41);
+  const seen = ctx.seen.get(schema42);
   seen.ref = def.innerType;
   json2.readOnly = true;
 };
-var promiseProcessor = (schema41, ctx, _json, params) => {
-  const def = schema41._zod.def;
+var promiseProcessor = (schema42, ctx, _json, params) => {
+  const def = schema42._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema41);
+  const seen = ctx.seen.get(schema42);
   seen.ref = def.innerType;
 };
-var optionalProcessor = (schema41, ctx, _json, params) => {
-  const def = schema41._zod.def;
+var optionalProcessor = (schema42, ctx, _json, params) => {
+  const def = schema42._zod.def;
   processSchema(def.innerType, ctx, params);
-  const seen = ctx.seen.get(schema41);
+  const seen = ctx.seen.get(schema42);
   seen.ref = def.innerType;
 };
-var lazyProcessor = (schema41, ctx, _json, params) => {
-  const innerType = schema41._zod.innerType;
+var lazyProcessor = (schema42, ctx, _json, params) => {
+  const innerType = schema42._zod.innerType;
   processSchema(innerType, ctx, params);
-  const seen = ctx.seen.get(schema41);
+  const seen = ctx.seen.get(schema42);
   seen.ref = innerType;
 };
 var allProcessors = {
@@ -196284,8 +196284,8 @@ function toJSONSchema(input2, params) {
     const ctx2 = initializeContext({ ...params, processors: allProcessors });
     const defs = {};
     for (const entry2 of registry2._idmap.entries()) {
-      const [_, schema41] = entry2;
-      processSchema(schema41, ctx2);
+      const [_, schema42] = entry2;
+      processSchema(schema42, ctx2);
     }
     const schemas = {};
     const external = {
@@ -196295,9 +196295,9 @@ function toJSONSchema(input2, params) {
     };
     ctx2.external = external;
     for (const entry2 of registry2._idmap.entries()) {
-      const [key, schema41] = entry2;
-      extractDefs(ctx2, schema41);
-      assignProp(schemas, key, finalize(ctx2, schema41));
+      const [key, schema42] = entry2;
+      extractDefs(ctx2, schema42);
+      assignProp(schemas, key, finalize(ctx2, schema42));
     }
     if (Object.keys(defs).length > 0) {
       const defsSegment = ctx2.target === "draft-2020-12" ? "$defs" : "definitions";
@@ -196366,14 +196366,14 @@ var JSONSchemaGenerator = class {
    * Process a schema to prepare it for JSON Schema generation.
    * This must be called before emit().
    */
-  process(schema41, _params = { path: [], schemaPath: [] }) {
-    return processSchema(schema41, this.ctx, _params);
+  process(schema42, _params = { path: [], schemaPath: [] }) {
+    return processSchema(schema42, this.ctx, _params);
   }
   /**
    * Emit the final JSON Schema after processing.
    * Must call process() first.
    */
-  emit(schema41, _params) {
+  emit(schema42, _params) {
     if (_params) {
       if (_params.cycles)
         this.ctx.cycles = _params.cycles;
@@ -196384,8 +196384,8 @@ var JSONSchemaGenerator = class {
     }
     this.ctx.sharedDefsExtractedFor = void 0;
     this.ctx.sharedEmitDoneFor = void 0;
-    extractDefs(this.ctx, schema41);
-    const result = finalize(this.ctx, schema41);
+    extractDefs(this.ctx, schema42);
+    const result = finalize(this.ctx, schema42);
     const { "~standard": _, ...plainResult } = result;
     return plainResult;
   }
@@ -197478,8 +197478,8 @@ var ZodArray = /* @__PURE__ */ $constructor("ZodArray", (inst, def) => {
 function array(element, params) {
   return _array(ZodArray, element, params);
 }
-function keyof(schema41) {
-  const shape = schema41._zod.def.shape;
+function keyof(schema42) {
+  const shape = schema42._zod.def.shape;
   return _enum2(Object.keys(shape));
 }
 var ZodObject = /* @__PURE__ */ $constructor("ZodObject", (inst, def) => {
@@ -197797,8 +197797,8 @@ var ZodFile = /* @__PURE__ */ $constructor("ZodFile", (inst, def) => {
   $ZodFile.init(inst, def);
   ZodType.init(inst, def);
   inst._zod.processJSONSchema = (ctx, json2, params) => fileProcessor(inst, ctx, json2, params);
-  inst.min = (size, params) => inst.check(_minSize(size, params));
-  inst.max = (size, params) => inst.check(_maxSize(size, params));
+  inst.min = (size2, params) => inst.check(_minSize(size2, params));
+  inst.max = (size2, params) => inst.check(_maxSize(size2, params));
   inst.mime = (types, params) => inst.check(_mime(Array.isArray(types) ? types : [types], params));
 });
 function file(params) {
@@ -198127,11 +198127,11 @@ function json(params) {
   });
   return jsonSchema;
 }
-function preprocess(fn, schema41) {
+function preprocess(fn, schema42) {
   return new ZodPreprocess({
     type: "pipe",
     in: transform2(fn),
-    out: schema41
+    out: schema42
   });
 }
 
@@ -198263,8 +198263,8 @@ var RECOGNIZED_KEYS = /* @__PURE__ */ new Set([
   "nullable",
   "readOnly"
 ]);
-function detectVersion(schema41, defaultTarget) {
-  const $schema = schema41.$schema;
+function detectVersion(schema42, defaultTarget) {
+  const $schema = schema42.$schema;
   if ($schema === "https://json-schema.org/draft/2020-12/schema") {
     return "draft-2020-12";
   }
@@ -198492,27 +198492,27 @@ function getTupleRest(restSchema, ctx) {
   return convertSchema(restSchema, ctx);
 }
 var fullTime = /^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d+)?(?:Z|[+-](?:[01]\d|2[0-3]):[0-5]\d)$/;
-function convertBaseSchema(schema41, ctx) {
-  if (schema41.not !== void 0) {
-    if (typeof schema41.not === "object" && Object.keys(schema41.not).length === 0) {
+function convertBaseSchema(schema42, ctx) {
+  if (schema42.not !== void 0) {
+    if (typeof schema42.not === "object" && Object.keys(schema42.not).length === 0) {
       return z.never();
     }
     throw new Error("not is not supported in Zod (except { not: {} } for never)");
   }
-  if (schema41.unevaluatedItems !== void 0) {
+  if (schema42.unevaluatedItems !== void 0) {
     throw new Error("unevaluatedItems is not supported");
   }
-  if (schema41.unevaluatedProperties !== void 0) {
+  if (schema42.unevaluatedProperties !== void 0) {
     throw new Error("unevaluatedProperties is not supported");
   }
-  if (schema41.if !== void 0 || schema41.then !== void 0 || schema41.else !== void 0) {
+  if (schema42.if !== void 0 || schema42.then !== void 0 || schema42.else !== void 0) {
     throw new Error("Conditional schemas (if/then/else) are not supported");
   }
-  if (schema41.dependentSchemas !== void 0 || schema41.dependentRequired !== void 0) {
+  if (schema42.dependentSchemas !== void 0 || schema42.dependentRequired !== void 0) {
     throw new Error("dependentSchemas and dependentRequired are not supported");
   }
-  if (schema41.$ref) {
-    const refPath = schema41.$ref;
+  if (schema42.$ref) {
+    const refPath = schema42.$ref;
     if (ctx.refs.has(refPath)) {
       return ctx.refs.get(refPath);
     }
@@ -198531,9 +198531,9 @@ function convertBaseSchema(schema41, ctx) {
     ctx.processing.delete(refPath);
     return zodSchema2;
   }
-  if (schema41.enum !== void 0) {
-    const enumValues = schema41.enum;
-    if (ctx.version === "openapi-3.0" && schema41.nullable === true && enumValues.length === 1 && enumValues[0] === null) {
+  if (schema42.enum !== void 0) {
+    const enumValues = schema42.enum;
+    if (ctx.version === "openapi-3.0" && schema42.nullable === true && enumValues.length === 1 && enumValues[0] === null) {
       return z.null();
     }
     if (enumValues.length === 0) {
@@ -198551,13 +198551,13 @@ function convertBaseSchema(schema41, ctx) {
     }
     return z.union([literalSchemas[0], literalSchemas[1], ...literalSchemas.slice(2)]);
   }
-  if (schema41.const !== void 0) {
-    return z.literal(schema41.const);
+  if (schema42.const !== void 0) {
+    return z.literal(schema42.const);
   }
-  const type = schema41.type;
+  const type = schema42.type;
   if (Array.isArray(type)) {
     const typeSchemas = type.map((t) => {
-      const typeSchema = { ...schema41, type: t };
+      const typeSchema = { ...schema42, type: t };
       return convertBaseSchema(typeSchema, ctx);
     });
     if (typeSchemas.length === 0) {
@@ -198575,8 +198575,8 @@ function convertBaseSchema(schema41, ctx) {
   switch (type) {
     case "string": {
       let stringSchema = z.string();
-      if (schema41.format) {
-        const format = schema41.format;
+      if (schema42.format) {
+        const format = schema42.format;
         if (format === "email") {
           stringSchema = stringSchema.check(z.email());
         } else if (format === "uri" || format === "uri-reference") {
@@ -198631,14 +198631,14 @@ function convertBaseSchema(schema41, ctx) {
           stringSchema = stringSchema.check(z.ksuid());
         }
       }
-      if (typeof schema41.minLength === "number") {
-        stringSchema = stringSchema.min(schema41.minLength);
+      if (typeof schema42.minLength === "number") {
+        stringSchema = stringSchema.min(schema42.minLength);
       }
-      if (typeof schema41.maxLength === "number") {
-        stringSchema = stringSchema.max(schema41.maxLength);
+      if (typeof schema42.maxLength === "number") {
+        stringSchema = stringSchema.max(schema42.maxLength);
       }
-      if (schema41.pattern) {
-        stringSchema = stringSchema.regex(new RegExp(schema41.pattern));
+      if (schema42.pattern) {
+        stringSchema = stringSchema.regex(new RegExp(schema42.pattern));
       }
       zodSchema = stringSchema;
       break;
@@ -198646,24 +198646,24 @@ function convertBaseSchema(schema41, ctx) {
     case "number":
     case "integer": {
       let numberSchema = type === "integer" ? z.number().int() : z.number();
-      if (typeof schema41.minimum === "number" && schema41.exclusiveMinimum !== true) {
-        numberSchema = numberSchema.min(schema41.minimum);
+      if (typeof schema42.minimum === "number" && schema42.exclusiveMinimum !== true) {
+        numberSchema = numberSchema.min(schema42.minimum);
       }
-      if (typeof schema41.maximum === "number" && schema41.exclusiveMaximum !== true) {
-        numberSchema = numberSchema.max(schema41.maximum);
+      if (typeof schema42.maximum === "number" && schema42.exclusiveMaximum !== true) {
+        numberSchema = numberSchema.max(schema42.maximum);
       }
-      if (typeof schema41.exclusiveMinimum === "number") {
-        numberSchema = numberSchema.gt(schema41.exclusiveMinimum);
-      } else if (schema41.exclusiveMinimum === true && typeof schema41.minimum === "number") {
-        numberSchema = numberSchema.gt(schema41.minimum);
+      if (typeof schema42.exclusiveMinimum === "number") {
+        numberSchema = numberSchema.gt(schema42.exclusiveMinimum);
+      } else if (schema42.exclusiveMinimum === true && typeof schema42.minimum === "number") {
+        numberSchema = numberSchema.gt(schema42.minimum);
       }
-      if (typeof schema41.exclusiveMaximum === "number") {
-        numberSchema = numberSchema.lt(schema41.exclusiveMaximum);
-      } else if (schema41.exclusiveMaximum === true && typeof schema41.maximum === "number") {
-        numberSchema = numberSchema.lt(schema41.maximum);
+      if (typeof schema42.exclusiveMaximum === "number") {
+        numberSchema = numberSchema.lt(schema42.exclusiveMaximum);
+      } else if (schema42.exclusiveMaximum === true && typeof schema42.maximum === "number") {
+        numberSchema = numberSchema.lt(schema42.maximum);
       }
-      if (typeof schema41.multipleOf === "number") {
-        numberSchema = numberSchema.multipleOf(schema41.multipleOf);
+      if (typeof schema42.multipleOf === "number") {
+        numberSchema = numberSchema.multipleOf(schema42.multipleOf);
       }
       zodSchema = numberSchema;
       break;
@@ -198678,15 +198678,15 @@ function convertBaseSchema(schema41, ctx) {
     }
     case "object": {
       const shape = {};
-      const properties = schema41.properties || {};
-      const requiredSet = new Set(schema41.required || []);
-      const additionalSchema = typeof schema41.additionalProperties === "object" ? convertSchema(schema41.additionalProperties, ctx) : void 0;
+      const properties = schema42.properties || {};
+      const requiredSet = new Set(schema42.required || []);
+      const additionalSchema = typeof schema42.additionalProperties === "object" ? convertSchema(schema42.additionalProperties, ctx) : void 0;
       for (const [key, propSchema] of Object.entries(properties)) {
         const propZodSchema = convertSchema(propSchema, ctx);
         assignProp(shape, key, requiredSet.has(key) ? propZodSchema : propZodSchema.optional());
       }
-      if (schema41.patternProperties) {
-        const patternProps = schema41.patternProperties;
+      if (schema42.patternProperties) {
+        const patternProps = schema42.patternProperties;
         const patternKeys = Object.keys(patternProps);
         const looseRecords = [];
         for (const pattern2 of patternKeys) {
@@ -198710,7 +198710,7 @@ function convertBaseSchema(schema41, ctx) {
           }
           zodSchema = result;
         }
-        if (schema41.additionalProperties === false) {
+        if (schema42.additionalProperties === false) {
           const propertyKeys = Object.keys(shape);
           const patterns = patternKeys.map((p) => new RegExp(p));
           const basePatternSchema = zodSchema;
@@ -198737,7 +198737,7 @@ function convertBaseSchema(schema41, ctx) {
         }
       } else {
         const objectSchema = z.object(shape);
-        if (schema41.additionalProperties === false) {
+        if (schema42.additionalProperties === false) {
           zodSchema = objectSchema.strict();
         } else if (additionalSchema) {
           zodSchema = objectSchema.catchall(additionalSchema);
@@ -198745,13 +198745,13 @@ function convertBaseSchema(schema41, ctx) {
           zodSchema = objectSchema.passthrough();
         }
       }
-      const hasKeyGuard = schema41.propertyNames !== void 0 && schema41.propertyNames !== true;
-      const minProperties = typeof schema41.minProperties === "number" ? schema41.minProperties : void 0;
-      const maxProperties = typeof schema41.maxProperties === "number" ? schema41.maxProperties : void 0;
+      const hasKeyGuard = schema42.propertyNames !== void 0 && schema42.propertyNames !== true;
+      const minProperties = typeof schema42.minProperties === "number" ? schema42.minProperties : void 0;
+      const maxProperties = typeof schema42.maxProperties === "number" ? schema42.maxProperties : void 0;
       if (hasKeyGuard || minProperties !== void 0 || maxProperties !== void 0) {
         let keySchema;
         if (hasKeyGuard) {
-          const keyJSONSchema = typeof schema41.propertyNames === "object" && schema41.propertyNames.type === void 0 ? { type: "string", ...schema41.propertyNames } : schema41.propertyNames;
+          const keyJSONSchema = typeof schema42.propertyNames === "object" && schema42.propertyNames.type === void 0 ? { type: "string", ...schema42.propertyNames } : schema42.propertyNames;
           keySchema = convertSchema(keyJSONSchema, ctx);
         }
         zodSchema = checkObjectGuards(zodSchema, { keySchema, minProperties, maxProperties });
@@ -198759,53 +198759,53 @@ function convertBaseSchema(schema41, ctx) {
       break;
     }
     case "array": {
-      const prefixItems = schema41.prefixItems;
-      const items = schema41.items;
+      const prefixItems = schema42.prefixItems;
+      const items = schema42.items;
       if (prefixItems && Array.isArray(prefixItems)) {
-        const minItems = typeof schema41.minItems === "number" ? schema41.minItems : 0;
+        const minItems = typeof schema42.minItems === "number" ? schema42.minItems : 0;
         const tupleItems = prefixItems.map((item2) => convertSchema(item2, ctx));
         const positionalItems = applyMinItems(tupleItems, minItems);
         const rest = !Array.isArray(items) ? getTupleRest(items, ctx) : void 0;
         const tupleSchema = z.tuple(positionalItems);
         zodSchema = rest ? tupleSchema.rest(rest) : tupleSchema;
-        if (typeof schema41.minItems === "number") {
-          zodSchema = zodSchema.check(z.minLength(schema41.minItems));
+        if (typeof schema42.minItems === "number") {
+          zodSchema = zodSchema.check(z.minLength(schema42.minItems));
         }
-        if (typeof schema41.maxItems === "number") {
-          zodSchema = zodSchema.check(z.maxLength(schema41.maxItems));
+        if (typeof schema42.maxItems === "number") {
+          zodSchema = zodSchema.check(z.maxLength(schema42.maxItems));
         }
       } else if (Array.isArray(items)) {
-        const minItems = typeof schema41.minItems === "number" ? schema41.minItems : 0;
+        const minItems = typeof schema42.minItems === "number" ? schema42.minItems : 0;
         const tupleItems = items.map((item2) => convertSchema(item2, ctx));
         const positionalItems = applyMinItems(tupleItems, minItems);
-        const rest = getTupleRest(schema41.additionalItems, ctx);
+        const rest = getTupleRest(schema42.additionalItems, ctx);
         const tupleSchema = z.tuple(positionalItems);
         zodSchema = rest ? tupleSchema.rest(rest) : tupleSchema;
-        if (typeof schema41.minItems === "number") {
-          zodSchema = zodSchema.check(z.minLength(schema41.minItems));
+        if (typeof schema42.minItems === "number") {
+          zodSchema = zodSchema.check(z.minLength(schema42.minItems));
         }
-        if (typeof schema41.maxItems === "number") {
-          zodSchema = zodSchema.check(z.maxLength(schema41.maxItems));
+        if (typeof schema42.maxItems === "number") {
+          zodSchema = zodSchema.check(z.maxLength(schema42.maxItems));
         }
       } else if (items !== void 0) {
         const element = convertSchema(items, ctx);
         let arraySchema = z.array(element);
-        if (typeof schema41.minItems === "number") {
-          arraySchema = arraySchema.min(schema41.minItems);
+        if (typeof schema42.minItems === "number") {
+          arraySchema = arraySchema.min(schema42.minItems);
         }
-        if (typeof schema41.maxItems === "number") {
-          arraySchema = arraySchema.max(schema41.maxItems);
+        if (typeof schema42.maxItems === "number") {
+          arraySchema = arraySchema.max(schema42.maxItems);
         }
         zodSchema = arraySchema;
       } else {
         zodSchema = z.array(z.any());
       }
-      if (schema41.uniqueItems === true || schema41.contains !== void 0) {
+      if (schema42.uniqueItems === true || schema42.contains !== void 0) {
         zodSchema = checkArrayGuards(zodSchema, {
-          uniqueItems: schema41.uniqueItems === true,
-          containsSchema: schema41.contains !== void 0 ? convertSchema(schema41.contains, ctx) : void 0,
-          minContains: typeof schema41.minContains === "number" ? schema41.minContains : void 0,
-          maxContains: typeof schema41.maxContains === "number" ? schema41.maxContains : void 0
+          uniqueItems: schema42.uniqueItems === true,
+          containsSchema: schema42.contains !== void 0 ? convertSchema(schema42.contains, ctx) : void 0,
+          minContains: typeof schema42.minContains === "number" ? schema42.minContains : void 0,
+          maxContains: typeof schema42.maxContains === "number" ? schema42.maxContains : void 0
         });
       }
       break;
@@ -198815,94 +198815,94 @@ function convertBaseSchema(schema41, ctx) {
   }
   return zodSchema;
 }
-function convertSchema(schema41, ctx) {
-  if (typeof schema41 === "boolean") {
-    return schema41 ? z.any() : z.never();
+function convertSchema(schema42, ctx) {
+  if (typeof schema42 === "boolean") {
+    return schema42 ? z.any() : z.never();
   }
-  let baseSchema = convertBaseSchema(schema41, ctx);
-  const hasExplicitType = schema41.type || schema41.enum !== void 0 || schema41.const !== void 0;
-  if (schema41.anyOf && Array.isArray(schema41.anyOf)) {
-    const options = schema41.anyOf.map((s2) => convertSchema(s2, ctx));
+  let baseSchema = convertBaseSchema(schema42, ctx);
+  const hasExplicitType = schema42.type || schema42.enum !== void 0 || schema42.const !== void 0;
+  if (schema42.anyOf && Array.isArray(schema42.anyOf)) {
+    const options = schema42.anyOf.map((s2) => convertSchema(s2, ctx));
     const anyOfUnion = z.union(options);
     baseSchema = hasExplicitType ? z.intersection(baseSchema, anyOfUnion) : anyOfUnion;
   }
-  if (schema41.oneOf && Array.isArray(schema41.oneOf)) {
-    const options = schema41.oneOf.map((s2) => convertSchema(s2, ctx));
+  if (schema42.oneOf && Array.isArray(schema42.oneOf)) {
+    const options = schema42.oneOf.map((s2) => convertSchema(s2, ctx));
     const oneOfUnion = z.xor(options);
     baseSchema = hasExplicitType ? z.intersection(baseSchema, oneOfUnion) : oneOfUnion;
   }
-  if (schema41.allOf && Array.isArray(schema41.allOf)) {
-    if (schema41.allOf.length === 0) {
+  if (schema42.allOf && Array.isArray(schema42.allOf)) {
+    if (schema42.allOf.length === 0) {
       baseSchema = hasExplicitType ? baseSchema : z.any();
     } else {
-      let result = hasExplicitType ? baseSchema : convertSchema(schema41.allOf[0], ctx);
+      let result = hasExplicitType ? baseSchema : convertSchema(schema42.allOf[0], ctx);
       const startIdx = hasExplicitType ? 0 : 1;
-      for (let i = startIdx; i < schema41.allOf.length; i++) {
-        result = z.intersection(result, convertSchema(schema41.allOf[i], ctx));
+      for (let i = startIdx; i < schema42.allOf.length; i++) {
+        result = z.intersection(result, convertSchema(schema42.allOf[i], ctx));
       }
       baseSchema = result;
     }
   }
-  if (schema41.nullable === true && ctx.version === "openapi-3.0") {
+  if (schema42.nullable === true && ctx.version === "openapi-3.0") {
     baseSchema = z.nullable(baseSchema);
   }
-  if (schema41.readOnly === true) {
+  if (schema42.readOnly === true) {
     baseSchema = z.readonly(baseSchema);
   }
-  if (schema41.default !== void 0) {
-    baseSchema = baseSchema.default(schema41.default);
+  if (schema42.default !== void 0) {
+    baseSchema = baseSchema.default(schema42.default);
   }
   const extraMeta = {};
   const coreMetadataKeys = ["$id", "id", "$comment", "$anchor", "$vocabulary", "$dynamicRef", "$dynamicAnchor"];
   for (const key of coreMetadataKeys) {
-    if (key in schema41) {
-      extraMeta[key] = schema41[key];
+    if (key in schema42) {
+      extraMeta[key] = schema42[key];
     }
   }
   const contentMetadataKeys = ["contentEncoding", "contentMediaType", "contentSchema"];
   for (const key of contentMetadataKeys) {
-    if (key in schema41) {
-      extraMeta[key] = schema41[key];
+    if (key in schema42) {
+      extraMeta[key] = schema42[key];
     }
   }
-  if (schema41.type === "object" && schema41.$ref === void 0) {
-    if (schema41.propertyNames !== void 0 && !containsRef(schema41.propertyNames)) {
-      extraMeta.propertyNames = schema41.propertyNames;
+  if (schema42.type === "object" && schema42.$ref === void 0) {
+    if (schema42.propertyNames !== void 0 && !containsRef(schema42.propertyNames)) {
+      extraMeta.propertyNames = schema42.propertyNames;
     }
     for (const key of ["minProperties", "maxProperties"]) {
-      if (schema41[key] !== void 0)
-        extraMeta[key] = schema41[key];
+      if (schema42[key] !== void 0)
+        extraMeta[key] = schema42[key];
     }
   }
-  if (schema41.type === "array" && schema41.$ref === void 0) {
-    if (schema41.contains !== void 0 && !containsRef(schema41.contains)) {
-      extraMeta.contains = schema41.contains;
+  if (schema42.type === "array" && schema42.$ref === void 0) {
+    if (schema42.contains !== void 0 && !containsRef(schema42.contains)) {
+      extraMeta.contains = schema42.contains;
     }
     for (const key of ["uniqueItems", "minContains", "maxContains"]) {
-      if (schema41[key] !== void 0)
-        extraMeta[key] = schema41[key];
+      if (schema42[key] !== void 0)
+        extraMeta[key] = schema42[key];
     }
   }
-  for (const key of Object.keys(schema41)) {
+  for (const key of Object.keys(schema42)) {
     if (!RECOGNIZED_KEYS.has(key)) {
-      assignProp(extraMeta, key, schema41[key]);
+      assignProp(extraMeta, key, schema42[key]);
     }
   }
   if (Object.keys(extraMeta).length > 0) {
     ctx.registry.add(baseSchema, extraMeta);
   }
-  if (schema41.description) {
-    baseSchema = baseSchema.describe(schema41.description);
+  if (schema42.description) {
+    baseSchema = baseSchema.describe(schema42.description);
   }
   return baseSchema;
 }
-function fromJSONSchema(schema41, params) {
-  if (typeof schema41 === "boolean") {
-    return schema41 ? z.any() : z.never();
+function fromJSONSchema(schema42, params) {
+  if (typeof schema42 === "boolean") {
+    return schema42 ? z.any() : z.never();
   }
   let normalized;
   try {
-    normalized = JSON.parse(JSON.stringify(schema41));
+    normalized = JSON.parse(JSON.stringify(schema42));
   } catch {
     throw new Error("fromJSONSchema input is not valid JSON (possibly cyclic); use $defs/$ref for recursive schemas");
   }
@@ -198921,7 +198921,7 @@ function fromJSONSchema(schema41, params) {
 
 // node_modules/zod/v4/core/visit.js
 var RESOLVING = /* @__PURE__ */ Symbol("z.visit/resolving");
-function visit(schema41, fnOrHandlers) {
+function visit(schema42, fnOrHandlers) {
   const fn = typeof fnOrHandlers === "function" ? fnOrHandlers : (node2, rewritten) => {
     const h = fnOrHandlers[node2._zod.def.type];
     return h ? h(node2, rewritten) : node2;
@@ -199071,12 +199071,12 @@ function visit(schema41, fnOrHandlers) {
       }
     }
   }
-  return run(schema41);
+  return run(schema42);
 }
 
 // node_modules/zod/v4/classic/deep-partial.js
-function deepPartial(schema41) {
-  return visit(schema41, {
+function deepPartial(schema42) {
+  return visit(schema42, {
     object: (s2) => s2.partial(),
     // Every partialed option now admits `undefined`, which the constructor rejects as a duplicate.
     union: (s2) => {
@@ -199099,8 +199099,8 @@ function outSide(def) {
 function inSide(def) {
   return def.in._zod.traits.has("$ZodTransform") ? outSide(def) : def.in;
 }
-function input(schema41) {
-  return visit(schema41, {
+function input(schema42) {
+  return visit(schema42, {
     pipe: (s2) => inSide(s2._zod.def),
     // A default value belongs to the output side, so a rewritten inner type leaves it stranded. `.default()` widens the declared input type with `undefined`, and `optional` is what carries that across.
     default: (s2, rewritten) => rewritten ? optional(s2._zod.def.innerType) : s2,
@@ -199108,8 +199108,8 @@ function input(schema41) {
     catch: (s2, rewritten) => rewritten ? s2._zod.def.innerType : s2
   });
 }
-function output(schema41) {
-  return visit(schema41, {
+function output(schema42) {
+  return visit(schema42, {
     pipe: (s2) => outSide(s2._zod.def),
     // A prefault value is fed through the schema, which makes it input-side, so a rewritten inner type leaves it stranded.
     prefault: (s2, rewritten) => rewritten ? s2._zod.def.innerType : s2
@@ -199214,6 +199214,12 @@ var CODES = {
     title: "Unsafe or external content removed from freeform HTML",
     why: "Scripts, event handlers, frames and remote URLs are stripped so decks render offline, deterministically and without leaking data.",
     fix: "Use inline SVG, CSS and images next to the deck (relative paths) instead."
+  },
+  "SC-EDIT-001": {
+    severity: "error",
+    title: "PPTX would contain a flattened picture",
+    why: "Freeform HTML needs a browser renderer and cannot be represented as separately editable PowerPoint objects.",
+    fix: "Use native-canvas or another native layout. Set output.editablePptx: false only when a rasterised freeform slide is explicitly acceptable."
   },
   "SC-TITLE-001": {
     severity: "error",
@@ -199879,44 +199885,44 @@ var FORMATS = {
   [WIDE_16X9.id]: WIDE_16X9,
   [A4_LANDSCAPE.id]: A4_LANDSCAPE
 };
-function columns(box, n, gutter) {
-  const w = (box.w - gutter * (n - 1)) / n;
+function columns(box2, n, gutter) {
+  const w = (box2.w - gutter * (n - 1)) / n;
   return Array.from({ length: n }, (_, i) => ({
-    x: box.x + i * (w + gutter),
-    y: box.y,
+    x: box2.x + i * (w + gutter),
+    y: box2.y,
     w,
-    h: box.h
+    h: box2.h
   }));
 }
-function rows(box, weights, gap) {
+function rows(box2, weights, gap) {
   const total = weights.reduce((a, b) => a + b, 0);
-  const free = box.h - gap * (weights.length - 1);
-  let y = box.y;
+  const free = box2.h - gap * (weights.length - 1);
+  let y = box2.y;
   return weights.map((wt) => {
     const h = free * wt / total;
-    const r = { x: box.x, y, w: box.w, h };
+    const r = { x: box2.x, y, w: box2.w, h };
     y += h + gap;
     return r;
   });
 }
-function cols(box, weights, gap) {
+function cols(box2, weights, gap) {
   const total = weights.reduce((a, b) => a + b, 0);
-  const free = box.w - gap * (weights.length - 1);
-  let x2 = box.x;
+  const free = box2.w - gap * (weights.length - 1);
+  let x2 = box2.x;
   return weights.map((wt) => {
     const w = free * wt / total;
-    const r = { x: x2, y: box.y, w, h: box.h };
+    const r = { x: x2, y: box2.y, w, h: box2.h };
     x2 += w + gap;
     return r;
   });
 }
-function inset(box, d) {
+function inset(box2, d) {
   const p = typeof d === "number" ? { l: d, r: d, t: d, b: d } : d;
   const l = p.l ?? 0;
   const r = p.r ?? 0;
   const t = p.t ?? 0;
   const b = p.b ?? 0;
-  return { x: box.x + l, y: box.y + t, w: box.w - l - r, h: box.h - t - b };
+  return { x: box2.x + l, y: box2.y + t, w: box2.w - l - r, h: box2.h - t - b };
 }
 
 // src/layouts/architecture.ts
@@ -200638,9 +200644,9 @@ function parseInline(src, base = {}) {
   if (last2 < src.length) runs.push({ ...base, text: src.slice(last2) });
   return runs.filter((r) => r.text.length > 0);
 }
-function para(text3, opts = {}) {
+function para(text4, opts = {}) {
   const { base, ...rest } = opts;
-  return { runs: parseInline(text3, base), ...rest };
+  return { runs: parseInline(text4, base), ...rest };
 }
 function plainText(paragraphs4) {
   return paragraphs4.map((p) => p.runs.map((r) => r.text).join("")).join("\n");
@@ -200650,12 +200656,12 @@ function tokenize(p, style) {
   for (const r of p.runs) {
     const bold2 = r.bold ?? style.bold ?? false;
     const italic = r.italic ?? style.italic ?? false;
-    const color2 = r.color ?? style.color;
+    const color3 = r.color ?? style.color;
     const link = r.link ? { link: r.link } : {};
     for (const part of r.text.split(/(\n|[ \t]+)/)) {
       if (!part) continue;
       if (part === "\n")
-        out.push({ text: "", space: false, newline: true, bold: bold2, italic, color: color2, ...link });
+        out.push({ text: "", space: false, newline: true, bold: bold2, italic, color: color3, ...link });
       else
         out.push({
           text: part,
@@ -200663,7 +200669,7 @@ function tokenize(p, style) {
           newline: false,
           bold: bold2,
           italic,
-          color: color2,
+          color: color3,
           ...link
         });
     }
@@ -200742,13 +200748,13 @@ function layoutText(paragraphs4, style, width, bulletIndentPt = 14) {
       let x2 = x0;
       for (const { t, w } of ln.toks) {
         const prev = segments[segments.length - 1];
-        const text3 = t.space ? " " : t.text;
+        const text4 = t.space ? " " : t.text;
         if (prev && prev.bold === t.bold && prev.italic === t.italic && prev.color === t.color && prev.link === t.link) {
-          prev.text += text3;
+          prev.text += text4;
           prev.width += w;
         } else {
           const seg = {
-            text: text3,
+            text: text4,
             x: x2,
             width: w,
             bold: t.bold,
@@ -200760,36 +200766,36 @@ function layoutText(paragraphs4, style, width, bulletIndentPt = 14) {
         }
         x2 += w;
       }
-      const line2 = { baseline: y + baseOffset, segments };
-      if (p.bullet && li === 0) line2.bulletX = 0;
-      lines.push(line2);
+      const line3 = { baseline: y + baseOffset, segments };
+      if (p.bullet && li === 0) line3.bulletX = 0;
+      lines.push(line3);
       y += ls;
     });
     perPara.push(built.length);
   });
   return { lines, contentHeight: y, maxLineWidth: maxW, linesPerParagraph: perPara, splitWord };
 }
-function fitText(paragraphs4, box, style, sizes, lineHeight, extra = {}) {
+function fitText(paragraphs4, box2, style, sizes, lineHeight, extra = {}) {
   const tries = sizes.length ? sizes : [style.size ?? 14];
   let result;
-  for (const size of tries) {
+  for (const size2 of tries) {
     const s2 = {
       ...style,
-      size,
-      lineSpacing: +(size * lineHeight).toFixed(2)
+      size: size2,
+      lineSpacing: +(size2 * lineHeight).toFixed(2)
     };
-    const laid = layoutText(paragraphs4, s2, box.w, extra.bulletIndent ?? 14);
+    const laid = layoutText(paragraphs4, s2, box2.w, extra.bulletIndent ?? 14);
     const lineCount = laid.lines.length;
-    const maxLines = Math.max(1, Math.floor((box.h + 1e-6) / pt2in(s2.lineSpacing)));
+    const maxLines = Math.max(1, Math.floor((box2.h + 1e-6) / pt2in(s2.lineSpacing)));
     const tooMany = extra.maxLines !== void 0 && lineCount > extra.maxLines;
-    const overflow = Math.max(0, laid.contentHeight - box.h);
+    const overflow = Math.max(0, laid.contentHeight - box2.h);
     const fits = overflow <= 1e-3 && !tooMany && !laid.splitWord;
-    const node2 = makeTextNode(paragraphs4, box, s2, laid, extra);
+    const node2 = makeTextNode(paragraphs4, box2, s2, laid, extra);
     result = {
       node: node2,
       fits,
       overflow,
-      size,
+      size: size2,
       lines: lineCount,
       maxLines: Math.min(extra.maxLines ?? maxLines, maxLines)
     };
@@ -200797,14 +200803,14 @@ function fitText(paragraphs4, box, style, sizes, lineHeight, extra = {}) {
   }
   return result;
 }
-function makeTextNode(paragraphs4, box, style, laid, extra = {}) {
+function makeTextNode(paragraphs4, box2, style, laid, extra = {}) {
   let dy = 0;
-  if (style.valign === "middle") dy = Math.max(0, (box.h - laid.contentHeight) / 2);
-  if (style.valign === "bottom") dy = Math.max(0, box.h - laid.contentHeight);
+  if (style.valign === "middle") dy = Math.max(0, (box2.h - laid.contentHeight) / 2);
+  if (style.valign === "bottom") dy = Math.max(0, box2.h - laid.contentHeight);
   const lines = dy ? laid.lines.map((l) => ({ ...l, baseline: l.baseline + dy })) : laid.lines;
   const node2 = {
     kind: "text",
-    box,
+    box: box2,
     style,
     paragraphs: paragraphs4,
     lines,
@@ -200849,23 +200855,23 @@ function formatCode(decimals = 0, unit = "") {
   const base = `${pre}#,##0${d}${post}`;
   return `${base};-${base};;`;
 }
-function label(ctx, text3, box, opts) {
-  const size = opts.size ?? ctx.theme.type.small;
+function label(ctx, text4, box2, opts) {
+  const size2 = opts.size ?? ctx.theme.type.small;
   const style = {
     family: ctx.font.family,
     measure: ctx.font.measure,
-    size,
-    lineSpacing: +(size * 1.15).toFixed(2),
+    size: size2,
+    lineSpacing: +(size2 * 1.15).toFixed(2),
     color: opts.color ?? ctx.theme.colors.ink,
     bold: opts.bold ?? false,
     align: opts.align ?? "center",
     valign: opts.valign ?? "top"
   };
-  const ps = [para(text3)];
-  const laid = layoutText(ps, style, box.w);
-  return makeTextNode(ps, box, style, laid, { role: opts.role ?? "chart-label" });
+  const ps = [para(text4)];
+  const laid = layoutText(ps, style, box2.w);
+  return makeTextNode(ps, box2, style, laid, { role: opts.role ?? "chart-label" });
 }
-function buildChart(spec, box, ctx) {
+function buildChart(spec, box2, ctx) {
   const t = ctx.theme;
   const c = t.colors;
   const muted = mix(c.muted, c.background, 0.45);
@@ -200880,12 +200886,12 @@ function buildChart(spec, box, ctx) {
   const legend = multi && spec.type !== "waterfall";
   const legendH = legend ? 0.32 : 0;
   const catLabelH = isBar ? 0 : 0.42;
-  const catLabelW = isBar ? Math.min(2.6, box.w * 0.28) : 0;
+  const catLabelW = isBar ? Math.min(2.6, box2.w * 0.28) : 0;
   const plot = {
-    x: box.x + catLabelW,
-    y: box.y + legendH + 0.05,
-    w: box.w - catLabelW - (isBar ? 0.6 : 0),
-    h: box.h - legendH - catLabelH - 0.05
+    x: box2.x + catLabelW,
+    y: box2.y + legendH + 0.05,
+    w: box2.w - catLabelW - (isBar ? 0.6 : 0),
+    h: box2.h - legendH - catLabelH - 0.05
   };
   let series = [];
   let lo = 0;
@@ -200949,12 +200955,12 @@ function buildChart(spec, box, ctx) {
         dec.push(pos);
         decNeg.push(neg);
       }
-      const color2 = isTot ? c.ink : d >= 0 ? c.positive : c.negative;
+      const color3 = isTot ? c.ink : d >= 0 ? c.positive : c.negative;
       bars.push({
         cat: i,
         lo: l,
         hi: h,
-        color: isTot ? c.accent : color2,
+        color: isTot ? c.accent : color3,
         label: formatNumber(d, decimals, unit, !isTot),
         labelAt: b >= a ? "top" : "bottom"
       });
@@ -201042,7 +201048,7 @@ function buildChart(spec, box, ctx) {
   const thick = slot / (groups + gap / 100);
   if (spec.type === "line") {
     spec.series.forEach((s2, si) => {
-      const color2 = series[si].color;
+      const color3 = series[si].color;
       const pts = s2.values.map((v, i) => ({ x: plot.x + slot * (i + 0.5), y: vy(v), v }));
       for (let i = 1; i < pts.length; i++) {
         prims.push({
@@ -201051,7 +201057,7 @@ function buildChart(spec, box, ctx) {
           y1: pts[i - 1].y,
           x2: pts[i].x,
           y2: pts[i].y,
-          stroke: { color: color2, width: 2.25 },
+          stroke: { color: color3, width: 2.25 },
           role: "chart-mark"
         });
       }
@@ -201059,7 +201065,7 @@ function buildChart(spec, box, ctx) {
         prims.push({
           kind: "ellipse",
           box: { x: p.x - 0.045, y: p.y - 0.045, w: 0.09, h: 0.09 },
-          fill: color2,
+          fill: color3,
           role: "chart-mark"
         });
         const isLast = i === pts.length - 1;
@@ -201191,7 +201197,7 @@ function buildChart(spec, box, ctx) {
   } else {
     spec.series.forEach((s2, si) => {
       s2.values.forEach((v, i) => {
-        const color2 = series[si].color;
+        const color3 = series[si].color;
         if (isBar) {
           const y = plot.y + slot * i + (slot - thick * groups) / 2 + thick * si;
           const x1 = vx(Math.min(0, v));
@@ -201199,7 +201205,7 @@ function buildChart(spec, box, ctx) {
           prims.push({
             kind: "rect",
             box: { x: x1, y, w: Math.max(5e-3, x2 - x1), h: thick * 0.92 },
-            fill: color2,
+            fill: color3,
             role: "chart-mark"
           });
           prims.push(
@@ -201217,7 +201223,7 @@ function buildChart(spec, box, ctx) {
           prims.push({
             kind: "rect",
             box: { x: x2, y: y1, w: thick * 0.92, h: Math.max(5e-3, y2 - y1) },
-            fill: color2,
+            fill: color3,
             role: "chart-mark"
           });
           prims.push(
@@ -201262,7 +201268,7 @@ function buildChart(spec, box, ctx) {
         label(
           ctx,
           cat,
-          { x: box.x, y: y + slot / 2 - 0.17, w: catLabelW - 0.12, h: 0.34 },
+          { x: box2.x, y: y + slot / 2 - 0.17, w: catLabelW - 0.12, h: 0.34 },
           { align: "right", valign: "middle", color: c.ink, size: small, role: "chart-cat" }
         )
       );
@@ -201278,11 +201284,11 @@ function buildChart(spec, box, ctx) {
     }
   });
   if (legend) {
-    let x2 = box.x + catLabelW;
+    let x2 = box2.x + catLabelW;
     series.forEach((s2) => {
       prims.push({
         kind: "rect",
-        box: { x: x2, y: box.y + 0.08, w: 0.14, h: 0.14 },
+        box: { x: x2, y: box2.y + 0.08, w: 0.14, h: 0.14 },
         fill: s2.color,
         role: "chart-legend"
       });
@@ -201291,7 +201297,7 @@ function buildChart(spec, box, ctx) {
         label(
           ctx,
           s2.name,
-          { x: x2 + 0.2, y: box.y + 0.03, w, h: 0.24 },
+          { x: x2 + 0.2, y: box2.y + 0.03, w, h: 0.24 },
           { align: "left", color: c.muted, size: small, role: "chart-legend" }
         )
       );
@@ -201300,7 +201306,7 @@ function buildChart(spec, box, ctx) {
   }
   return {
     kind: "chart",
-    box,
+    box: box2,
     type: spec.type,
     categories: spec.categories,
     series,
@@ -201384,7 +201390,7 @@ function pill(ctx, b, r, field) {
     ...field ? { field } : {}
   });
 }
-function takeawayPanel(ctx, side, text3) {
+function takeawayPanel(ctx, side, text4) {
   const { colors } = ctx;
   ctx.rect(side, { fill: colors.surface, role: "panel" });
   ctx.rect(
@@ -201393,7 +201399,7 @@ function takeawayPanel(ctx, side, text3) {
   );
   const pad3 = Math.min(0.3, side.h * 0.12);
   ctx.text(
-    text3,
+    text4,
     { x: side.x + 0.3, y: side.y + pad3, w: side.w - 0.55, h: side.h - 2 * pad3 },
     { font: "heading", size: "heading", bold: true, field: "takeaway" }
   );
@@ -201427,8 +201433,8 @@ function recedingFills(ctx, n) {
     (_, i) => mix(colors.rule, colors.muted, n <= 1 ? 0.4 : i / (n - 1) * 0.8)
   );
 }
-function labelWidth(ctx, text3, size, bold2 = false) {
-  return textWidthPt(ctx.fonts.body.measure, bold2 ? "bold" : "regular", size, text3) / 72 * 1.04;
+function labelWidth(ctx, text4, size2, bold2 = false) {
+  return textWidthPt(ctx.fonts.body.measure, bold2 ? "bold" : "regular", size2, text4) / 72 * 1.04;
 }
 function xAxis(ctx, s2, plot, o = {}) {
   const { colors } = ctx;
@@ -201658,7 +201664,7 @@ var bubbleChart = {
     }
     const maxSize = Math.max(...c.items.map((i) => i.size ?? 1));
     const rMax = Math.min(plot.h, plot.w) * 0.11;
-    const size = theme.type.small;
+    const size2 = theme.type.small;
     const grey = mix(colors.rule, colors.muted, 0.45);
     const dots = c.items.map((it) => ({
       x: sx2.at(it.x),
@@ -201688,7 +201694,7 @@ var bubbleChart = {
     });
     for (const { it, i } of order) {
       const { x: x2, y, r } = dots[i];
-      const w = labelWidth(ctx, it.label, size, !!it.highlight) + 0.06;
+      const w = labelWidth(ctx, it.label, size2, !!it.highlight) + 0.06;
       const h = 0.24;
       const spots = [
         [{ x: x2 + r + 0.04, y: y - h / 2, w, h }, "left"],
@@ -201696,10 +201702,10 @@ var bubbleChart = {
         [{ x: x2 - w / 2, y: y - r - h - 0.02, w, h }, "center"],
         [{ x: x2 - w / 2, y: y + r + 0.02, w, h }, "center"]
       ];
-      const [box, align] = spots.find(([b]) => !hits(b)) ?? spots[0];
-      placed.push(box);
-      ctx.text(it.label, box, {
-        size,
+      const [box2, align] = spots.find(([b]) => !hits(b)) ?? spots[0];
+      placed.push(box2);
+      ctx.text(it.label, box2, {
+        size: size2,
         bold: !!it.highlight,
         color: it.highlight ? ensureContrast(colors.accent, colors.background) : colors.ink,
         align,
@@ -201795,8 +201801,8 @@ var businessModelCanvas = {
         { x: b.x + (b.w + gap) / 2, y: y + topH + gap, w: (b.w - gap) / 2, h: botH }
       ]
     ];
-    for (const [heading, items, field, box, accent] of blocks)
-      card(ctx, box, { heading, items, field, size: "small", tone: accent ? "accent" : "plain" });
+    for (const [heading, items, field, box2, accent] of blocks)
+      card(ctx, box2, { heading, items, field, size: "small", tone: accent ? "accent" : "plain" });
   }
 };
 
@@ -202109,9 +202115,9 @@ async function verifyPptx(path2, scene) {
     }
     for (const n of s2.nodes) {
       if (n.kind !== "image" || !n.path) continue;
-      const size = pngSize(readFileSync12(n.path));
-      if (!size) continue;
-      const ppi = Math.min(size.w / n.box.w, size.h / n.box.h);
+      const size2 = pngSize(readFileSync12(n.path));
+      if (!size2) continue;
+      const ppi = Math.min(size2.w / n.box.w, size2.h / n.box.h);
       if (ppi < 144)
         out.push(
           diag(
@@ -202139,14 +202145,14 @@ var schema8 = external_exports.object({
   ).min(1).max(6),
   check: external_exports.string().max(110).optional().describe("How to verify the result")
 }).strict();
-function contained(box, path2) {
-  if (!path2 || !existsSync8(path2)) return box;
-  const size = pngSize(readFileSync13(path2));
-  if (!size) return box;
-  const k = Math.min(box.w / size.w, box.h / size.h);
-  const w = size.w * k;
-  const h = size.h * k;
-  return { x: box.x + (box.w - w) / 2, y: box.y + (box.h - h) / 2, w, h };
+function contained(box2, path2) {
+  if (!path2 || !existsSync8(path2)) return box2;
+  const size2 = pngSize(readFileSync13(path2));
+  if (!size2) return box2;
+  const k = Math.min(box2.w / size2.w, box2.h / size2.h);
+  const w = size2.w * k;
+  const h = size2.h * k;
+  return { x: box2.x + (box2.w - w) / 2, y: box2.y + (box2.h - h) / 2, w, h };
 }
 var callout = {
   id: "callout",
@@ -203098,7 +203104,7 @@ var execSummary = {
         );
       }
       const bands2 = rows(area, [1, 1, 1.15], 0);
-      parts.forEach(([label2, text3, field], i) => {
+      parts.forEach(([label2, text4, field], i) => {
         const b = bands2[i];
         const [lab, txt] = cols(b, [1.6, 8], 0.3);
         if (i > 0) ctx.line(b.x, b.y, b.x + b.w, b.y, { color: colors.rule, width: 0.75 });
@@ -203116,7 +203122,7 @@ var execSummary = {
           }
         );
         ctx.text(
-          text3 ?? "",
+          text4 ?? "",
           { x: txt.x, y: txt.y + 0.12, w: txt.w, h: txt.h - 0.2 },
           {
             role: isAnswer ? "answer" : "body",
@@ -203368,13 +203374,13 @@ var footballField = {
     const { colors, theme } = ctx;
     const [main, side] = c.takeaway ? cols(ctx.body, [2.6, 1], 0.4) : [ctx.body, void 0];
     const a = main;
-    const size = theme.type.small;
+    const size2 = theme.type.small;
     const labW = Math.min(
       a.w * 0.36,
       Math.max(
         ...c.ranges.map(
           (r) => Math.max(
-            labelWidth(ctx, r.label, size, true),
+            labelWidth(ctx, r.label, size2, true),
             r.note ? labelWidth(ctx, r.note, theme.type.source) : 0
           )
         )
@@ -203404,7 +203410,7 @@ var footballField = {
         r.label,
         { x: a.x, y: hasNote ? y - 0.08 : y, w: labW, h: hasNote ? 0.28 : barH },
         {
-          size,
+          size: size2,
           bold: !!r.highlight,
           color: colors.ink,
           align: "right",
@@ -203493,7 +203499,7 @@ var freeform = {
   id: "freeform",
   name: "Freeform HTML",
   group: "message",
-  purpose: "Use for a creative, story-led exhibit no layout covers: HTML and CSS inside the standard frame, checked for overflow and text size like every other slide.",
+  purpose: "Use for a browser-first creative exhibit no layout covers: HTML and CSS inside the standard frame, checked for overflow and text size like every other slide.",
   useWhen: [
     "Keynotes and story decks that need a bespoke visual",
     "A one-off diagram or composition that would take too long to build from layouts",
@@ -203501,7 +203507,7 @@ var freeform = {
   ],
   avoidWhen: [
     "Any exhibit a layout already covers \u2014 layouts stay editable in PowerPoint",
-    "Decks the audience will edit: in PPTX this slide is a picture"
+    "Decks the audience will edit: editable PPTX is the default and this layout is rejected unless output.editablePptx is explicitly false"
   ],
   variants: ["body"],
   frame: "standard",
@@ -203938,12 +203944,12 @@ var STATUS_LABEL = { confirmed: "Confirmed", rejected: "Rejected", open: "Open" 
 function statusDot(ctx, x2, y, s2) {
   const c = ctx.colors;
   const r = 0.07;
-  const box = { x: x2 - r, y: y - r, w: 2 * r, h: 2 * r };
-  if (s2 === "confirmed") ctx.ellipse(box, { fill: c.positive, role: "status" });
+  const box2 = { x: x2 - r, y: y - r, w: 2 * r, h: 2 * r };
+  if (s2 === "confirmed") ctx.ellipse(box2, { fill: c.positive, role: "status" });
   else if (s2 === "rejected")
-    ctx.ellipse(box, { fill: mix(c.muted, c.background, 0.35), role: "status" });
+    ctx.ellipse(box2, { fill: mix(c.muted, c.background, 0.35), role: "status" });
   else
-    ctx.ellipse(box, {
+    ctx.ellipse(box2, {
       fill: c.background,
       stroke: { color: c.accent, width: 1.25 },
       role: "status"
@@ -204478,7 +204484,7 @@ function delta(ctx, t, at, field) {
   if (!t.delta) return;
   const { colors } = ctx;
   const trend = t.trend ?? "flat";
-  const color2 = trend === "up" ? colors.positive : trend === "down" ? colors.negative : colors.muted;
+  const color3 = trend === "up" ? colors.positive : trend === "down" ? colors.negative : colors.muted;
   const g = 0.15;
   const cy2 = at.y + 0.16;
   if (trend === "up") {
@@ -204488,7 +204494,7 @@ function delta(ctx, t, at, field) {
         [at.x + g, cy2 + g / 2],
         [at.x + g / 2, cy2 - g / 2]
       ],
-      { fill: color2, role: "trend" }
+      { fill: color3, role: "trend" }
     );
   } else if (trend === "down") {
     ctx.polygon(
@@ -204497,10 +204503,10 @@ function delta(ctx, t, at, field) {
         [at.x + g, cy2 - g / 2],
         [at.x + g / 2, cy2 + g / 2]
       ],
-      { fill: color2, role: "trend" }
+      { fill: color3, role: "trend" }
     );
   } else {
-    ctx.rect({ x: at.x, y: cy2 - 0.015, w: g, h: 0.03 }, { fill: color2, role: "trend" });
+    ctx.rect({ x: at.x, y: cy2 - 0.015, w: g, h: 0.03 }, { fill: color3, role: "trend" });
   }
   ctx.text(
     t.delta,
@@ -204509,7 +204515,7 @@ function delta(ctx, t, at, field) {
       role: "delta",
       size: "body",
       bold: true,
-      color: color2,
+      color: color3,
       valign: "middle",
       maxLines: 1,
       fixed: true,
@@ -204761,10 +204767,10 @@ var marimekko = {
     });
     const [main, side] = c.takeaway ? cols(ctx.body, [2.6, 1], 0.4) : [ctx.body, void 0];
     const a = main;
-    const size = theme.type.small;
+    const size2 = theme.type.small;
     const legendW = Math.min(
       2,
-      Math.max(...c.series.map((s2, i) => labelWidth(ctx, s2, size, i === c.highlight))) + 0.2
+      Math.max(...c.series.map((s2, i) => labelWidth(ctx, s2, size2, i === c.highlight))) + 0.2
     );
     const plot = { x: a.x, y: a.y + 0.34, w: a.w - legendW, h: a.h - 0.34 - 0.8 };
     const sum = c.columns.reduce((t, col2) => t + col2.total, 0);
@@ -204832,7 +204838,7 @@ var marimekko = {
         s2,
         { x: plot.x + plot.w + 0.12, y: y - 0.12, w: legendW - 0.12, h: 0.24 },
         {
-          size,
+          size: size2,
           bold: si === c.highlight,
           color: si === c.highlight ? ensureContrast(colors.accent, colors.background) : colors.ink,
           maxLines: 1,
@@ -205055,7 +205061,7 @@ var matrix2x2 = {
       }
     );
     if (ctx.variant === "plot" && c.items) {
-      const size = theme.type.small;
+      const size2 = theme.type.small;
       const placed = c.quadrants.map((q, i) => ({
         x: qBoxes[i].x + 0.15,
         y: qBoxes[i].y + 0.12,
@@ -205075,7 +205081,7 @@ var matrix2x2 = {
           { x: px4 - r, y: py2 - r, w: 2 * r, h: 2 * r },
           { fill: it.highlight ? colors.accent : colors.muted, role: "item" }
         );
-        const lw = textWidthPt(ctx.fonts.body.measure, it.highlight ? "bold" : "regular", size, it.label) / 72 * 1.04 + 0.02;
+        const lw = textWidthPt(ctx.fonts.body.measure, it.highlight ? "bold" : "regular", size2, it.label) / 72 * 1.04 + 0.02;
         const lh = 0.22;
         let lx = px4 + r + 0.06;
         if (lx + lw > mx + mw - 0.05) lx = px4 - r - 0.06 - lw;
@@ -205092,7 +205098,7 @@ var matrix2x2 = {
           it.label,
           { x: lx, y: ly, w: lw + 0.05, h: lh },
           {
-            size,
+            size: size2,
             bold: !!it.highlight,
             color: colors.ink,
             maxLines: 1,
@@ -205375,8 +205381,183 @@ var maturityModel = {
   }
 };
 
-// src/layouts/next-steps.ts
+// src/layouts/native-canvas.ts
+var position = external_exports.number().min(0).max(100);
+var size = external_exports.number().positive().max(100);
+var color2 = external_exports.string().regex(/^#[0-9a-fA-F]{6}$/);
+var rect = external_exports.object({
+  kind: external_exports.literal("rect"),
+  x: position,
+  y: position,
+  w: size,
+  h: size,
+  fill: color2,
+  opacity: external_exports.number().min(0).max(1).optional(),
+  stroke: color2.optional(),
+  strokeWidth: external_exports.number().positive().max(12).optional(),
+  radius: external_exports.number().min(0).max(50).optional()
+}).strict();
+var ellipse = rect.extend({ kind: external_exports.literal("ellipse") }).omit({ radius: true }).strict();
+var text = external_exports.object({
+  kind: external_exports.literal("text"),
+  x: position,
+  y: position,
+  w: size,
+  h: size,
+  text: external_exports.string().min(1).max(800),
+  font: external_exports.enum(["heading", "body"]).default("body"),
+  size: external_exports.number().min(6).max(100),
+  color: color2.optional(),
+  bold: external_exports.boolean().optional(),
+  italic: external_exports.boolean().optional(),
+  align: external_exports.enum(["left", "center", "right"]).optional(),
+  valign: external_exports.enum(["top", "middle", "bottom"]).optional(),
+  lineHeight: external_exports.number().min(0.8).max(2).optional(),
+  maxLines: external_exports.number().int().min(1).max(20).optional()
+}).strict();
+var line2 = external_exports.object({
+  kind: external_exports.literal("line"),
+  x1: position,
+  y1: position,
+  x2: position,
+  y2: position,
+  color: color2,
+  width: external_exports.number().positive().max(12).default(1),
+  arrowEnd: external_exports.boolean().optional()
+}).strict();
 var schema25 = external_exports.object({
+  elements: external_exports.array(external_exports.discriminatedUnion("kind", [rect, ellipse, text, line2])).min(1).max(120)
+}).strict();
+function box(ctx, e) {
+  if (!("w" in e) || !("h" in e)) throw new Error(`${e.kind} does not have a box`);
+  return {
+    x: ctx.body.x + e.x / 100 * ctx.body.w,
+    y: ctx.body.y + e.y / 100 * ctx.body.h,
+    w: e.w / 100 * ctx.body.w,
+    h: e.h / 100 * ctx.body.h
+  };
+}
+var nativeCanvas = {
+  id: "native-canvas",
+  name: "Native canvas",
+  group: "message",
+  purpose: "Use for bespoke compositions that must remain editable in PowerPoint: every rectangle, line and text block is a native PPTX object.",
+  useWhen: [
+    "A standard layout does not fit the message",
+    "The recipient will edit the PowerPoint",
+    "A bespoke visual needs a native PPTX representation"
+  ],
+  avoidWhen: [
+    "A standard exhibit already communicates the point",
+    "A browser-only visual needs arbitrary CSS"
+  ],
+  variants: ["body"],
+  frame: "standard",
+  master: "content",
+  schema: schema25,
+  examples: [
+    {
+      title: "The service reduces onboarding time without changing the approval standard",
+      content: {
+        elements: [
+          { kind: "rect", x: 0, y: 0, w: 47, h: 75, fill: "#F1F5FA", radius: 5 },
+          {
+            kind: "text",
+            x: 4,
+            y: 12,
+            w: 39,
+            h: 16,
+            text: "14 days",
+            font: "heading",
+            size: 38,
+            bold: true,
+            color: "#182238"
+          },
+          {
+            kind: "text",
+            x: 4,
+            y: 32,
+            w: 39,
+            h: 20,
+            text: "manual onboarding before automation",
+            size: 18,
+            color: "#53657C"
+          },
+          {
+            kind: "line",
+            x1: 50,
+            y1: 38,
+            x2: 57,
+            y2: 38,
+            color: "#1F5EFF",
+            width: 2,
+            arrowEnd: true
+          },
+          { kind: "rect", x: 60, y: 0, w: 40, h: 75, fill: "#E1F5F2", radius: 5 },
+          {
+            kind: "text",
+            x: 64,
+            y: 12,
+            w: 32,
+            h: 16,
+            text: "1 day",
+            font: "heading",
+            size: 38,
+            bold: true,
+            color: "#008F83"
+          }
+        ]
+      },
+      sources: ["ops-review"]
+    }
+  ],
+  compose(ctx, c) {
+    for (const [index, e] of c.elements.entries()) {
+      if (e.kind === "rect") {
+        ctx.rect(box(ctx, e), {
+          fill: e.fill,
+          fillOpacity: e.opacity,
+          radius: e.radius ? e.radius / 100 * Math.min(ctx.body.w, ctx.body.h) : void 0,
+          stroke: e.stroke ? { color: e.stroke, width: e.strokeWidth ?? 1 } : void 0,
+          role: "native-canvas-rect"
+        });
+      } else if (e.kind === "ellipse") {
+        ctx.ellipse(box(ctx, e), {
+          fill: e.fill,
+          fillOpacity: e.opacity,
+          stroke: e.stroke ? { color: e.stroke, width: e.strokeWidth ?? 1 } : void 0,
+          role: "native-canvas-ellipse"
+        });
+      } else if (e.kind === "text") {
+        ctx.text(e.text, box(ctx, e), {
+          font: e.font,
+          size: e.size,
+          color: e.color ?? ctx.colors.ink,
+          bold: e.bold,
+          italic: e.italic,
+          align: e.align,
+          valign: e.valign,
+          lineHeight: e.lineHeight,
+          maxLines: e.maxLines,
+          field: `elements/${index}/text`,
+          role: "native-canvas-text"
+        });
+      } else {
+        ctx.line(
+          ctx.body.x + e.x1 / 100 * ctx.body.w,
+          ctx.body.y + e.y1 / 100 * ctx.body.h,
+          ctx.body.x + e.x2 / 100 * ctx.body.w,
+          ctx.body.y + e.y2 / 100 * ctx.body.h,
+          { color: e.color, width: e.width },
+          { arrowEnd: e.arrowEnd, role: "native-canvas-line" }
+        );
+      }
+    }
+  }
+};
+
+// src/layouts/next-steps.ts
+var schema26 = external_exports.object({
   decision: external_exports.string().max(160).optional().describe(
     'The ask, one sentence that starts with a verb: "Approve a \u20AC6M phase-1 budget and the partner shortlist". Required for the decision variant'
   ),
@@ -205406,7 +205587,7 @@ var nextSteps = {
   variants: ["actions", "decision"],
   frame: "standard",
   master: "content",
-  schema: schema25,
+  schema: schema26,
   examples: [
     {
       title: "Six actions in the next 30 days put the German launch on track",
@@ -205620,7 +205801,7 @@ var nextSteps = {
 };
 
 // src/layouts/options-comparison.ts
-var schema26 = external_exports.object({
+var schema27 = external_exports.object({
   options: external_exports.array(
     external_exports.object({
       name: external_exports.string().max(28),
@@ -205637,14 +205818,14 @@ var schema26 = external_exports.object({
   recommended: external_exports.number().int().min(0).optional().describe("Index of the recommended option"),
   verdict: external_exports.string().max(140).optional().describe("One-line conclusion shown under the grid")
 }).strict();
-function harveyBall(ctx, box, quarters, color2) {
-  const r = Math.min(box.w, box.h) / 2;
-  const cx2 = box.x + box.w / 2;
-  const cy2 = box.y + box.h / 2;
+function harveyBall(ctx, box2, quarters, color3) {
+  const r = Math.min(box2.w, box2.h) / 2;
+  const cx2 = box2.x + box2.w / 2;
+  const cy2 = box2.y + box2.h / 2;
   const disk = { x: cx2 - r, y: cy2 - r, w: 2 * r, h: 2 * r };
-  ctx.ellipse(disk, { fill: ctx.colors.background, stroke: { color: color2, width: 1 }, role: "harvey" });
+  ctx.ellipse(disk, { fill: ctx.colors.background, stroke: { color: color3, width: 1 }, role: "harvey" });
   if (quarters >= 4) {
-    ctx.ellipse(disk, { fill: color2, role: "harvey" });
+    ctx.ellipse(disk, { fill: color3, role: "harvey" });
     return;
   }
   if (quarters <= 0) return;
@@ -205655,7 +205836,7 @@ function harveyBall(ctx, box, quarters, color2) {
     const a = -Math.PI / 2 + sweep * i / steps;
     pts.push([cx2 + r * Math.cos(a), cy2 + r * Math.sin(a)]);
   }
-  ctx.polygon(pts, { fill: color2, role: "harvey" });
+  ctx.polygon(pts, { fill: color3, role: "harvey" });
 }
 var optionsComparison = {
   id: "options-comparison",
@@ -205674,7 +205855,7 @@ var optionsComparison = {
   variants: ["text", "rating"],
   frame: "standard",
   master: "content",
-  schema: schema26,
+  schema: schema27,
   examples: [
     {
       title: "A partner-led entry beats direct build and acquisition on speed and risk",
@@ -205909,7 +206090,7 @@ var Unit = Person.extend({
   members: external_exports.array(external_exports.string().max(40)).max(4).optional().describe("Up to four names or sub-teams listed under the unit"),
   highlight: external_exports.boolean().optional().describe("Emphasise this unit (new, changing, the ask)")
 }).strict();
-var schema27 = external_exports.object({
+var schema28 = external_exports.object({
   root: Person.describe("Top of the chart"),
   units: external_exports.array(Unit).min(2).max(5).describe("Direct reports or units")
 }).strict();
@@ -205930,7 +206111,7 @@ var orgChart = {
   variants: ["tree"],
   frame: "standard",
   master: "content",
-  schema: schema27,
+  schema: schema28,
   examples: [
     {
       title: "A small transformation office reports to the COO and owns the four workstreams",
@@ -206059,7 +206240,7 @@ var FACTORS = {
   environmental: "Environmental",
   legal: "Legal"
 };
-var schema28 = external_exports.object({
+var schema29 = external_exports.object({
   factors: external_exports.array(
     external_exports.object({
       factor: external_exports.enum(
@@ -206087,7 +206268,7 @@ var pestel = {
   variants: ["grid"],
   frame: "standard",
   master: "content",
-  schema: schema28,
+  schema: schema29,
   examples: [
     {
       title: "Regulation and labour costs move the German case most; technology works for us",
@@ -206167,7 +206348,7 @@ var Lane = external_exports.object({
   steps: external_exports.array(Step).min(2).max(6),
   metric: external_exports.string().max(14).optional().describe('Outcome of the lane, e.g. "9 days"')
 }).strict();
-var schema29 = external_exports.object({
+var schema30 = external_exports.object({
   current: Lane.describe("The process today"),
   proposed: Lane.describe("The proposed process; mark steps that change with changed: true"),
   metricLabel: external_exports.string().max(36).optional().describe('What the lane metrics measure, e.g. "Order-to-cash time"')
@@ -206281,7 +206462,7 @@ var processCompare = {
   variants: ["lanes"],
   frame: "standard",
   master: "content",
-  schema: schema29,
+  schema: schema30,
   examples: [
     {
       title: "Automating credit checks and invoicing cuts order-to-cash from 9 days to 3",
@@ -206335,7 +206516,7 @@ var processCompare = {
 };
 
 // src/layouts/process-steps.ts
-var schema30 = external_exports.object({
+var schema31 = external_exports.object({
   steps: external_exports.array(
     external_exports.object({
       title: external_exports.string().max(36).describe('Verb-led step name, e.g. "Sign two partners"'),
@@ -206362,7 +206543,7 @@ var processSteps = {
   variants: ["chevrons", "numbered"],
   frame: "standard",
   master: "content",
-  schema: schema30,
+  schema: schema31,
   examples: [
     {
       title: "A four-step partner-led entry limits risk at every stage",
@@ -206550,7 +206731,7 @@ var processSteps = {
 
 // src/layouts/raci.ts
 var CODE = external_exports.enum(["R", "A", "C", "I", "A/R", ""]);
-var schema31 = external_exports.object({
+var schema32 = external_exports.object({
   roles: external_exports.array(external_exports.string().max(18)).min(3).max(7).describe("Columns: roles or teams, short names"),
   activities: external_exports.array(external_exports.string().max(56)).min(3).max(9).describe("Rows: decisions or activities"),
   cells: external_exports.array(external_exports.array(CODE)).describe("One row per activity, one code per role: R, A, C, I, A/R or empty"),
@@ -206573,7 +206754,7 @@ var raci = {
   variants: ["raci"],
   frame: "standard",
   master: "content",
-  schema: schema31,
+  schema: schema32,
   examples: [
     {
       title: "One accountable owner per decision ends the pricing stalemate",
@@ -206658,12 +206839,12 @@ var raci = {
         const d = Math.min(0.42, rowH * 0.72);
         const cx2 = grid2.x + ci * colW + colW / 2;
         const cy2 = y + rowH / 2;
-        const box = { x: cx2 - d / 2, y: cy2 - d / 2, w: d, h: d };
+        const box2 = { x: cx2 - d / 2, y: cy2 - d / 2, w: d, h: d };
         const acc = code.startsWith("A");
-        if (acc) ctx.ellipse(box, { fill: colors.accent, role: "raci" });
-        else if (code === "R") ctx.ellipse(box, { fill: colors.ink, role: "raci" });
+        if (acc) ctx.ellipse(box2, { fill: colors.accent, role: "raci" });
+        else if (code === "R") ctx.ellipse(box2, { fill: colors.ink, role: "raci" });
         else if (code === "C")
-          ctx.ellipse(box, {
+          ctx.ellipse(box2, {
             fill: colors.background,
             stroke: { color: colors.ink, width: 1 },
             role: "raci"
@@ -206671,7 +206852,7 @@ var raci = {
         const ink = acc ? colors.accentText : code === "R" ? colors.background : colors.ink;
         ctx.text(
           code,
-          { x: box.x - 0.1, y: box.y, w: box.w + 0.2, h: box.h },
+          { x: box2.x - 0.1, y: box2.y, w: box2.w + 0.2, h: box2.h },
           {
             size: code.length > 1 ? theme.type.small - 1 : theme.type.small,
             bold: true,
@@ -206694,11 +206875,11 @@ var raci = {
     let lx = area.x;
     const step = Math.min(2.85, area.w / items.length);
     for (const [k, label2] of items) {
-      const box = { x: lx, y: ly, w: 0.26, h: 0.26 };
-      if (k === "A") ctx.ellipse(box, { fill: colors.accent });
-      else if (k === "R") ctx.ellipse(box, { fill: colors.ink });
+      const box2 = { x: lx, y: ly, w: 0.26, h: 0.26 };
+      if (k === "A") ctx.ellipse(box2, { fill: colors.accent });
+      else if (k === "R") ctx.ellipse(box2, { fill: colors.ink });
       else if (k === "C")
-        ctx.ellipse(box, { fill: colors.background, stroke: { color: colors.ink, width: 1 } });
+        ctx.ellipse(box2, { fill: colors.background, stroke: { color: colors.ink, width: 1 } });
       ctx.text(
         k,
         { x: lx - 0.05, y: ly, w: 0.36, h: 0.26 },
@@ -206729,7 +206910,7 @@ var raci = {
 };
 
 // src/layouts/risk-matrix.ts
-var schema32 = external_exports.object({
+var schema33 = external_exports.object({
   risks: external_exports.array(
     external_exports.object({
       id: external_exports.string().max(4).describe('Short id shown in the grid, e.g. "R1"'),
@@ -206758,7 +206939,7 @@ var riskMatrix = {
   variants: ["heatmap"],
   frame: "standard",
   master: "content",
-  schema: schema32,
+  schema: schema33,
   examples: [
     {
       title: "Two high risks need owners this quarter; the rest are monitored",
@@ -206915,7 +207096,7 @@ var riskMatrix = {
 
 // src/layouts/swot.ts
 var Items = (what) => external_exports.array(external_exports.string().max(90)).min(1).max(4).describe(`${what} \u2014 one specific, evidenced point each`);
-var schema33 = external_exports.object({
+var schema34 = external_exports.object({
   strengths: Items("Internal, helpful"),
   weaknesses: Items("Internal, harmful"),
   opportunities: Items("External, helpful"),
@@ -206941,7 +207122,7 @@ var swot = {
   variants: ["grid", "with-implications"],
   frame: "standard",
   master: "content",
-  schema: schema33,
+  schema: schema34,
   examples: [
     {
       title: "Northwind wins on service and data, but must fix cost before low-cost rivals scale",
@@ -207046,7 +207227,7 @@ var swot = {
 };
 
 // src/layouts/team-cards.ts
-var schema34 = external_exports.object({
+var schema35 = external_exports.object({
   people: external_exports.array(
     external_exports.object({
       name: external_exports.string().max(40).describe("Full name"),
@@ -207076,7 +207257,7 @@ var teamCards = {
   variants: ["cards", "compact"],
   frame: "standard",
   master: "content",
-  schema: schema34,
+  schema: schema35,
   examples: [
     {
       title: "A senior team that has run three German launches leads the entry",
@@ -207275,12 +207456,12 @@ var Column = external_exports.object({
   heading: external_exports.string().max(50).optional(),
   items: external_exports.array(external_exports.string().max(220)).min(1).max(6)
 }).strict();
-var schema35 = external_exports.object({
+var schema36 = external_exports.object({
   items: external_exports.array(external_exports.string().max(240)).min(1).max(8).optional().describe("bullets / paragraphs variants"),
   left: Column.optional().describe("two-column variant"),
   right: Column.optional().describe("two-column variant")
 }).strict();
-var text = {
+var text2 = {
   id: "text",
   name: "Text",
   group: "message",
@@ -207297,7 +207478,7 @@ var text = {
   variants: ["bullets", "paragraphs", "two-column"],
   frame: "standard",
   master: "content",
-  schema: schema35,
+  schema: schema36,
   examples: [
     {
       title: "Three principles keep the pilot small, measurable and reversible",
@@ -207351,16 +207532,16 @@ var text = {
         return;
       }
       const [l, r] = cols(body, [1, 1], 0.6);
-      for (const [col2, box, field] of [
+      for (const [col2, box2, field] of [
         [c.left, l, "left"],
         [c.right, r, "right"]
       ]) {
-        let y = box.y;
+        let y = box2.y;
         if (col2.heading) {
-          ctx.rect({ x: box.x, y, w: 0.5, h: 0.05 }, { fill: colors.accent, role: "accent-rule" });
+          ctx.rect({ x: box2.x, y, w: 0.5, h: 0.05 }, { fill: colors.accent, role: "accent-rule" });
           ctx.text(
             col2.heading,
-            { x: box.x, y: y + 0.15, w: box.w, h: 0.4 },
+            { x: box2.x, y: y + 0.15, w: box2.w, h: 0.4 },
             {
               font: "heading",
               size: "heading",
@@ -207373,7 +207554,7 @@ var text = {
         }
         ctx.text(
           ctx.paragraphs(col2.items, { bullet: true, spaceBefore: 8 }),
-          { x: box.x, y, w: box.w, h: box.y + box.h - y },
+          { x: box2.x, y, w: box2.w, h: box2.y + box2.h - y },
           { size: "body", field: `${field}/items` }
         );
       }
@@ -207396,7 +207577,7 @@ var text = {
 };
 
 // src/layouts/text-image.ts
-var schema36 = external_exports.object({
+var schema37 = external_exports.object({
   body: external_exports.array(external_exports.string().max(260)).min(1).max(4).describe("1\u20134 short paragraphs (or bullets) that tell the story next to the image"),
   bullets: external_exports.boolean().default(false).describe("Set true to show the body strings as bullets instead of paragraphs"),
   image: external_exports.string().optional().describe("Image path relative to the deck file; leave empty to show a placeholder"),
@@ -207422,7 +207603,7 @@ var textImage = {
   variants: ["image-right", "image-left"],
   frame: "standard",
   master: "content",
-  schema: schema36,
+  schema: schema37,
   examples: [
     {
       title: "Contoso turned a two-day month-end close into a morning routine",
@@ -207494,7 +207675,7 @@ var textImage = {
 };
 
 // src/layouts/timeline.ts
-var schema37 = external_exports.object({
+var schema38 = external_exports.object({
   milestones: external_exports.array(
     external_exports.object({
       date: external_exports.string().max(16),
@@ -207536,7 +207717,7 @@ var timeline = {
   variants: ["milestones", "gantt"],
   frame: "standard",
   master: "content",
-  schema: schema37,
+  schema: schema38,
   examples: [
     {
       title: "First German revenue lands in Q3 2027, nine months after the decision",
@@ -207755,7 +207936,7 @@ var timeline = {
 };
 
 // src/layouts/title.ts
-var schema38 = external_exports.object({
+var schema39 = external_exports.object({
   kicker: external_exports.string().max(48).optional().describe('Small label above the title, e.g. "Board meeting \xB7 Q3 review"'),
   subtitle: external_exports.string().max(170).optional().describe("One sentence framing the decision or story"),
   presenter: external_exports.string().max(70).optional(),
@@ -207772,7 +207953,7 @@ var title = {
   variants: ["cover", "closing"],
   frame: "none",
   master: "cover",
-  schema: schema38,
+  schema: schema39,
   examples: [
     {
       title: "Entering the German mid-market can add \u20AC40M revenue by 2028",
@@ -207897,7 +208078,7 @@ var title = {
 };
 
 // src/layouts/tornado.ts
-var schema39 = external_exports.object({
+var schema40 = external_exports.object({
   metric: external_exports.string().max(48).describe('What moves, e.g. "NPV, \u20ACM"'),
   base: external_exports.number().describe("Base-case value of the metric"),
   baseLabel: external_exports.string().max(24).optional().describe('Defaults to "Base case"'),
@@ -207930,7 +208111,7 @@ var tornado = {
   variants: ["bars"],
   frame: "standard",
   master: "content",
-  schema: schema39,
+  schema: schema40,
   examples: [
     {
       title: "Price and volume decide the case; cost assumptions barely move it",
@@ -207957,10 +208138,10 @@ var tornado = {
     const { colors, theme } = ctx;
     const [main, side] = c.takeaway ? cols(ctx.body, [2.6, 1], 0.4) : [ctx.body, void 0];
     const a = main;
-    const size = theme.type.small;
+    const size2 = theme.type.small;
     const labW = Math.min(
       a.w * 0.36,
-      Math.max(...c.drivers.map((d2) => labelWidth(ctx, d2.label, size))) + 0.2
+      Math.max(...c.drivers.map((d2) => labelWidth(ctx, d2.label, size2))) + 0.2
     );
     const top = a.y + 0.62;
     const plot = { x: a.x + labW + 0.55, y: top, w: a.w - labW - 1.1, h: a.y + a.h - top - 0.36 };
@@ -207980,7 +208161,7 @@ var tornado = {
         dr.label,
         { x: a.x, y, w: labW, h: barH },
         {
-          size,
+          size: size2,
           color: colors.ink,
           align: "right",
           valign: "middle",
@@ -208070,7 +208251,7 @@ var Step2 = external_exports.object({
   value: external_exports.number().describe("Delta for a driver (negative = decrease); the absolute level when total is true"),
   total: external_exports.boolean().optional().describe("True for start, subtotal and end bars: they stand on the baseline")
 }).strict();
-var schema40 = external_exports.object({
+var schema41 = external_exports.object({
   chart: external_exports.object({
     label: external_exports.string().max(90).optional().describe('What is bridged, with unit and period: "EBITDA bridge FY24 to FY25, \u20ACM"'),
     steps: external_exports.array(Step2).min(3).max(12).describe("Start total, drivers, then end total; the drivers must sum to the end total"),
@@ -208082,14 +208263,14 @@ var schema40 = external_exports.object({
     points: external_exports.array(external_exports.string().max(150)).max(3).default([])
   }).strict().optional().describe("Required for the with-takeaway variant: the interpretation in a side panel")
 }).strict();
-function panel2(ctx, box, takeaway) {
+function panel2(ctx, box2, takeaway) {
   const { colors } = ctx;
-  ctx.rect(box, { fill: colors.surface, role: "panel" });
+  ctx.rect(box2, { fill: colors.surface, role: "panel" });
   ctx.rect(
-    { x: box.x, y: box.y, w: 0.06, h: box.h },
+    { x: box2.x, y: box2.y, w: 0.06, h: box2.h },
     { fill: colors.accent, role: "panel-accent" }
   );
-  const inner = { x: box.x + 0.3, y: box.y + 0.3, w: box.w - 0.55, h: box.h - 0.6 };
+  const inner = { x: box2.x + 0.3, y: box2.y + 0.3, w: box2.w - 0.55, h: box2.h - 0.6 };
   const head = ctx.text(
     takeaway.headline,
     { ...inner, h: 1.1 },
@@ -208130,7 +208311,7 @@ var waterfall = {
   variants: ["full", "with-takeaway"],
   frame: "standard",
   master: "content",
-  schema: schema40,
+  schema: schema41,
   examples: [
     {
       title: "EBITDA grew \u20AC9M in FY25 as price and volume outran cost inflation",
@@ -208250,9 +208431,10 @@ var LAYOUTS = [
   keyPoints,
   bigStatement,
   textImage,
-  text,
+  text2,
   beforeAfter,
   freeform,
+  nativeCanvas,
   kpiTiles,
   chartTakeaway,
   waterfall,
@@ -208357,21 +208539,21 @@ function cellRef(ref) {
   for (const ch of m[1].toUpperCase()) c = c * 26 + (ch.charCodeAt(0) - 64);
   return { r: Number(m[2]) - 1, c: c - 1 };
 }
-function parseCsv(text3) {
+function parseCsv(text4) {
   const rows2 = [];
   let row = [];
   let field = "";
   let quoted = false;
-  const delim = (text3.split("\n")[0] ?? "").split(";").length > (text3.split("\n")[0] ?? "").split(",").length ? ";" : ",";
+  const delim = (text4.split("\n")[0] ?? "").split(";").length > (text4.split("\n")[0] ?? "").split(",").length ? ";" : ",";
   const push = () => {
     const t = field.trim();
     row.push(t === "" ? null : /^-?\d+(\.\d+)?$/.test(t) ? Number(t) : t);
     field = "";
   };
-  for (let i = 0; i < text3.length; i++) {
-    const ch = text3[i];
+  for (let i = 0; i < text4.length; i++) {
+    const ch = text4[i];
     if (quoted) {
-      if (ch === '"' && text3[i + 1] === '"') {
+      if (ch === '"' && text4[i + 1] === '"') {
         field += '"';
         i++;
       } else if (ch === '"') quoted = false;
@@ -208379,7 +208561,7 @@ function parseCsv(text3) {
     } else if (ch === '"') quoted = true;
     else if (ch === delim) push();
     else if (ch === "\n" || ch === "\r") {
-      if (ch === "\r" && text3[i + 1] === "\n") i++;
+      if (ch === "\r" && text4[i + 1] === "\n") i++;
       push();
       rows2.push(row);
       row = [];
@@ -208400,14 +208582,14 @@ function unzip(buf) {
   let p = buf.readUInt32LE(eocd + 16);
   for (let i = 0; i < count; i++) {
     const method = buf.readUInt16LE(p + 10);
-    const size = buf.readUInt32LE(p + 20);
+    const size2 = buf.readUInt32LE(p + 20);
     const nameLen = buf.readUInt16LE(p + 28);
     const extraLen = buf.readUInt16LE(p + 30);
     const commentLen = buf.readUInt16LE(p + 32);
     const local = buf.readUInt32LE(p + 42);
     const name = buf.toString("utf8", p + 46, p + 46 + nameLen);
     const start = local + 30 + buf.readUInt16LE(local + 26) + buf.readUInt16LE(local + 28);
-    const data = buf.subarray(start, start + size);
+    const data = buf.subarray(start, start + size2);
     out.set(name, method === 8 ? inflateRawSync(data) : Buffer.from(data));
     p += 46 + nameLen + extraLen + commentLen;
   }
@@ -208741,7 +208923,10 @@ var Deck = external_exports.object({
     engines: external_exports.object({
       pptx: external_exports.enum(["auto", "pptxgenjs", "artifact-tool"]).default("auto"),
       pdf: external_exports.enum(["auto", "native", "html", "pptx-convert"]).default("auto")
-    }).strict().default({ pptx: "auto", pdf: "auto" })
+    }).strict().default({ pptx: "auto", pdf: "auto" }),
+    editablePptx: external_exports.boolean().default(true).describe(
+      "Require editable PowerPoint objects. Set false only to deliberately rasterise freeform HTML into a PPTX picture."
+    )
   }).strict().optional(),
   slides: external_exports.array(external_exports.unknown()).min(1)
 }).strict();
@@ -209225,7 +209410,7 @@ function createContext(init) {
         return p;
       });
     },
-    text(content, box, opts = {}) {
+    text(content, box2, opts = {}) {
       const paragraphs4 = toParagraphs(content);
       const font = opts.font === "heading" ? fonts.heading : fonts.body;
       const start = semantic(opts.size);
@@ -209246,7 +209431,7 @@ function createContext(init) {
       if (opts.maxLines !== void 0) extra.maxLines = opts.maxLines;
       const r = fitText(
         paragraphs4,
-        box,
+        box2,
         style,
         sizes,
         opts.lineHeight ?? theme.type.lineHeight,
@@ -209254,12 +209439,12 @@ function createContext(init) {
       );
       const txt = plainText(paragraphs4);
       if (!r.fits) {
-        const laid = layoutText(paragraphs4, r.node.style, box.w, opts.bulletIndent ?? 14);
+        const laid = layoutText(paragraphs4, r.node.style, box2.w, opts.bulletIndent ?? 14);
         if (laid.splitWord) {
           diagnostics.push(
             diag(
               "SC-FIT-003",
-              `A word in "${txt.slice(0, 60)}" is wider than its ${box.w.toFixed(2)}in column`,
+              `A word in "${txt.slice(0, 60)}" is wider than its ${box2.w.toFixed(2)}in column`,
               {
                 slide: init.slideId,
                 pointer: ptr(opts.field)
@@ -209299,13 +209484,13 @@ function createContext(init) {
       nodes.push(r.node);
       return r.node;
     },
-    rect(box, opts = {}) {
-      const n = { kind: "rect", box, ...opts };
+    rect(box2, opts = {}) {
+      const n = { kind: "rect", box: box2, ...opts };
       nodes.push(n);
       return n;
     },
-    ellipse(box, opts = {}) {
-      const n = { kind: "ellipse", box, ...opts };
+    ellipse(box2, opts = {}) {
+      const n = { kind: "ellipse", box: box2, ...opts };
       nodes.push(n);
       return n;
     },
@@ -209341,7 +209526,7 @@ function createContext(init) {
       nodes.push(n);
       return n;
     },
-    image(box, src, alt, opts = {}) {
+    image(box2, src, alt, opts = {}) {
       let path2;
       if (src) {
         const p = isAbsolute4(src) ? src : resolve8(init.baseDir, src);
@@ -209358,7 +209543,7 @@ function createContext(init) {
       }
       const n = {
         kind: "image",
-        box,
+        box: box2,
         ...path2 ? { path: path2 } : {},
         alt,
         fit: opts.fit ?? "cover",
@@ -209368,18 +209553,18 @@ function createContext(init) {
       nodes.push(n);
       return n;
     },
-    table(spec, box) {
+    table(spec, box2) {
       const rowsAll = spec.header ? [spec.header, ...spec.rows] : spec.rows;
       const ncol = Math.max(...rowsAll.map((r) => r.length));
       const weights = spec.colWeights ?? Array.from({ length: ncol }, (_, i) => i === 0 ? 1.3 : 1);
       const wsum = weights.reduce((a, b) => a + b, 0);
-      const colW = weights.map((w) => box.w * w / wsum);
+      const colW = weights.map((w) => box2.w * w / wsum);
       const pad3 = { l: 0.08, r: 0.08, t: 0.06, b: 0.06 };
       const start = spec.size ?? theme.type.body - 1;
       const ladder = sizeLadder(start, theme.type.minBody - 1);
       let chosen;
       let fitted = false;
-      for (const size of ladder) {
+      for (const size2 of ladder) {
         const cells2 = [];
         const rowH2 = [];
         rowsAll.forEach((row, ri) => {
@@ -209393,8 +209578,8 @@ function createContext(init) {
             const s2 = {
               family: (isHead ? fonts.heading : fonts.body).family,
               measure: (isHead ? fonts.heading : fonts.body).measure,
-              size: isHead ? Math.max(size - 1, theme.type.small) : size,
-              lineSpacing: +((isHead ? Math.max(size - 1, theme.type.small) : size) * 1.18).toFixed(
+              size: isHead ? Math.max(size2 - 1, theme.type.small) : size2,
+              lineSpacing: +((isHead ? Math.max(size2 - 1, theme.type.small) : size2) * 1.18).toFixed(
                 2
               ),
               color: isHead ? hl ? theme.colors.accent : theme.colors.muted : theme.colors.ink,
@@ -209419,15 +209604,15 @@ function createContext(init) {
           cells2.push(cellRow);
         });
         chosen = { cells: cells2, rowH: rowH2 };
-        if (rowH2.reduce((a, b) => a + b, 0) <= box.h + 1e-3) {
+        if (rowH2.reduce((a, b) => a + b, 0) <= box2.h + 1e-3) {
           fitted = true;
           break;
         }
       }
       const { cells, rowH } = chosen;
-      let y = box.y;
+      let y = box2.y;
       cells.forEach((row, ri) => {
-        let x2 = box.x;
+        let x2 = box2.x;
         row.forEach((cell, ci) => {
           const w = colW[ci];
           cell.text.box = {
@@ -209443,18 +209628,18 @@ function createContext(init) {
       const total = rowH.reduce((a, b) => a + b, 0);
       if (!fitted) {
         diagnostics.push(
-          diag("SC-FIT-001", `Table needs ${total.toFixed(2)}in, box holds ${box.h.toFixed(2)}in`, {
+          diag("SC-FIT-001", `Table needs ${total.toFixed(2)}in, box holds ${box2.h.toFixed(2)}in`, {
             slide: init.slideId,
             pointer: ptr(spec.field),
             measured: `${rowsAll.length} rows`,
-            limit: `${box.h.toFixed(2)}in`,
+            limit: `${box2.h.toFixed(2)}in`,
             hint: "Shorten cell text, drop a row or column, or move detail to backup."
           })
         );
       }
       const node2 = {
         kind: "table",
-        box: { ...box, h: Math.min(total, box.h + 2) },
+        box: { ...box2, h: Math.min(total, box2.h + 2) },
         colW,
         rowH,
         cells,
@@ -209465,8 +209650,8 @@ function createContext(init) {
       nodes.push(node2);
       return node2;
     },
-    chart(spec, box) {
-      const n = buildChart(spec, box, { theme, font: fonts.body });
+    chart(spec, box2) {
+      const n = buildChart(spec, box2, { theme, font: fonts.body });
       if (spec.field) n.pointer = ptr(spec.field);
       nodes.push(n);
       return n;
@@ -209631,21 +209816,21 @@ function resolveFonts(theme, allText, diagnostics) {
   }
   return fonts;
 }
-function textStyle(font, size, color2, extra = {}) {
+function textStyle(font, size2, color3, extra = {}) {
   return {
     family: font.family,
     measure: font.measure,
-    size,
-    lineSpacing: +(size * 1.2).toFixed(2),
-    color: color2,
+    size: size2,
+    lineSpacing: +(size2 * 1.2).toFixed(2),
+    color: color3,
     align: "left",
     valign: "top",
     ...extra
   };
 }
-function staticText(text3, box, style, role) {
-  const ps = [para(text3)];
-  return makeTextNode(ps, box, style, layoutText(ps, style, box.w), { role });
+function staticText(text4, box2, style, role) {
+  const ps = [para(text4)];
+  return makeTextNode(ps, box2, style, layoutText(ps, style, box2.w), { role });
 }
 function buildMasters(theme, format, fonts, footer) {
   const c = theme.colors;
@@ -209659,22 +209844,22 @@ function buildMasters(theme, format, fonts, footer) {
       const sy2 = format.h / art.size.h;
       const shapes2 = art.shapes ? id === "content" ? art.shapes.content : art.shapes.cover.length ? art.shapes.cover : art.shapes.content : [];
       for (const sh of shapes2) {
-        const box = { x: sh.x * sx2, y: sh.y * sy2, w: sh.w * sx2, h: sh.h * sy2 };
+        const box2 = { x: sh.x * sx2, y: sh.y * sy2, w: sh.w * sx2, h: sh.h * sy2 };
         const stroke = sh.stroke ? { color: sh.stroke.color, width: sh.stroke.width } : void 0;
         if (sh.kind === "line")
           nodes.push({
             kind: "line",
-            x1: box.x,
-            y1: box.y,
-            x2: box.x + box.w,
-            y2: box.y + box.h,
+            x1: box2.x,
+            y1: box2.y,
+            x2: box2.x + box2.w,
+            y2: box2.y + box2.h,
             stroke: stroke ?? { color: sh.fill ?? c.rule, width: 1 },
             role: "art"
           });
         else
           nodes.push({
             kind: sh.kind,
-            box,
+            box: box2,
             ...sh.fill ? { fill: sh.fill } : {},
             ...stroke ? { stroke } : {},
             ...sh.kind === "rect" && sh.radius ? { radius: sh.radius * Math.min(sx2, sy2) } : {},
@@ -209708,15 +209893,15 @@ function buildMasters(theme, format, fonts, footer) {
     }
     const bg = c.background;
     if (theme.chrome.logo && existsSync12(theme.chrome.logo)) {
-      const size = pngSize(readFileSync17(theme.chrome.logo));
-      const ratio = size ? size.w / size.h : 3;
+      const size2 = pngSize(readFileSync17(theme.chrome.logo));
+      const ratio = size2 ? size2.w / size2.h : 3;
       const h = id === "cover" ? 0.55 : 0.3;
       const w = Math.min(id === "cover" ? 2.6 : 1.6, h * ratio);
       const hh = w / ratio;
-      const box = id === "cover" ? { x: format.w - format.margin.r - w, y: format.h - 0.95 - hh / 2, w, h: hh } : { x: format.w - format.margin.r - w, y: format.margin.t - 0.04, w, h: hh };
+      const box2 = id === "cover" ? { x: format.w - format.margin.r - w, y: format.h - 0.95 - hh / 2, w, h: hh } : { x: format.w - format.margin.r - w, y: format.margin.t - 0.04, w, h: hh };
       nodes.push({
         kind: "image",
-        box,
+        box: box2,
         path: theme.chrome.logo,
         alt: "Logo",
         fit: "contain",
@@ -209841,8 +210026,8 @@ function composeDeck(loaded) {
     }
     if (isGhost) {
       const g = slide.ghost;
-      const box = def.frame === "standard" ? body : { x: 1, y: 3.2, w: format.w - 2, h: 2.6 };
-      ctx.rect(box, {
+      const box2 = def.frame === "standard" ? body : { x: 1, y: 3.2, w: format.w - 2, h: 2.6 };
+      ctx.rect(box2, {
         fill: mix(c.surface, c.background, 0.3),
         stroke: { color: c.muted, width: 1, dash: "dash" },
         radius: 0.08,
@@ -209855,7 +210040,7 @@ function composeDeck(loaded) {
       ].filter(Boolean);
       ctx.text(
         lines,
-        { x: box.x + 0.4, y: box.y + 0.35, w: box.w - 0.8, h: box.h - 0.7 },
+        { x: box2.x + 0.4, y: box2.y + 0.35, w: box2.w - 0.8, h: box2.h - 0.7 },
         { role: "ghost-note", size: "body", color: c.muted, valign: "middle", align: "center" }
       );
       if (def.frame === "none")
@@ -209884,8 +210069,8 @@ function composeDeck(loaded) {
     ].filter(Boolean).join(" ");
     if (srcText && def.frame === "standard") {
       const runs = [];
-      const add2 = (text3, link) => {
-        if (text3) runs.push(link ? { text: text3, link } : { text: text3 });
+      const add2 = (text4, link) => {
+        if (text4) runs.push(link ? { text: text4, link } : { text: text4 });
       };
       if (illustrative)
         add2(srcTitles.length || slide.source ? "Illustrative data. " : "Illustrative data.");
@@ -210019,12 +210204,12 @@ function sameMetric(a, b) {
   return !(ya && yb && ya !== yb);
 }
 var AMOUNT = /([€$£¥₽₸])\s?(\d[\d,]*(?:\.\d+)?)\s?(k|m|mn|bn|b|million|billion)?\b|(\d[\d,]*(?:\.\d+)?)\s?(%)/gi;
-function textMentions(text3, slide, out) {
-  for (const m of text3.matchAll(AMOUNT)) {
+function textMentions(text4, slide, out) {
+  for (const m of text4.matchAll(AMOUNT)) {
     const shown = m[0].trim();
     const amount = parseAmount(shown);
     if (!amount) continue;
-    const after = text3.slice(m.index + m[0].length, m.index + m[0].length + 60).split(/[.;:,()—–]|[€$£¥₽₸]|\b(?!(?:19|20)\d\d\b)\d/)[0] ?? "";
+    const after = text4.slice(m.index + m[0].length, m.index + m[0].length + 60).split(/[.;:,()—–]|[€$£¥₽₸]|\b(?!(?:19|20)\d\d\b)\d/)[0] ?? "";
     const key = keyOf(after, 3);
     if (key.split(" ").length >= 2)
       out.push({
@@ -210036,6 +210221,9 @@ function textMentions(text3, slide, out) {
         slide
       });
   }
+}
+function htmlText(html) {
+  return html.replace(/<style\b[^>]*>[\s\S]*?<\/style\s*>/gi, " ").replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, " ").replace(/<[^>]+>/g, " ").replace(/&nbsp;/gi, " ").replace(/&amp;/gi, "&").replace(/&lt;/gi, "<").replace(/&gt;/gi, ">").replace(/\s+/g, " ");
 }
 function walk(v, slide, out) {
   if (typeof v === "string") return textMentions(v, slide, out);
@@ -210056,7 +210244,11 @@ function walk(v, slide, out) {
           slide
         });
     }
-    for (const [k, x2] of Object.entries(o)) if (k !== "notes" && k !== "ghost") walk(x2, slide, out);
+    for (const [k, x2] of Object.entries(o)) {
+      if (k === "notes" || k === "ghost" || k === "css") continue;
+      if (k === "html" && typeof x2 === "string") textMentions(htmlText(x2), slide, out);
+      else walk(x2, slide, out);
+    }
   }
 }
 function agree(a, b) {
@@ -210138,13 +210330,13 @@ function checkScene(scene) {
     const bg = s2.background ?? scene.masters[s2.master].background;
     const texts2 = [];
     s2.nodes.forEach((n, i) => {
-      const box = n.kind === "line" ? {
+      const box2 = n.kind === "line" ? {
         x: Math.min(n.x1, n.x2),
         y: Math.min(n.y1, n.y2),
         w: Math.abs(n.x2 - n.x1),
         h: Math.abs(n.y2 - n.y1)
       } : n.box;
-      if (!inside(box, W, H)) {
+      if (!inside(box2, W, H)) {
         out.push(
           diag(
             "SC-GEOM-001",
@@ -210288,10 +210480,20 @@ async function buildDeck(path2, opts = {}) {
   const formats = opts.formats ?? deck.output?.formats ?? ["pptx", "pdf", "png"];
   const epoch = epochDate();
   const limitations = /* @__PURE__ */ new Set();
+  const hasFreeform = scene.slides.some((s2) => s2.nodes.some((n) => n.kind === "html"));
+  if (hasFreeform && formats.includes("pptx") && deck.output?.editablePptx !== false) {
+    diagnostics.push(
+      diag(
+        "SC-EDIT-001",
+        "PPTX output must be editable by default, but layout freeform is HTML/CSS and would become a picture. Use native-canvas or an existing native layout; set output.editablePptx: false only to opt in to rasterisation."
+      )
+    );
+    return { ...checked, diagnostics: sortDiagnostics(diagnostics), files, engines: engines2 };
+  }
   const order = ["pptx", "png", "html", "pdf", "onepager", "docx"];
   let pptxPath;
   let flat2 = scene;
-  if (scene.slides.some((s2) => s2.nodes.some((n) => n.kind === "html"))) {
+  if (hasFreeform) {
     const f = await flattenFreeform(scene, theme?.type.small ?? 9);
     flat2 = f.scene;
     diagnostics.push(...f.diagnostics);
@@ -210425,8 +210627,8 @@ var CYR_STOP = /* @__PURE__ */ new Set([
   "eto",
   "ne"
 ]);
-function slugFrom(text3) {
-  return [...text3.toLowerCase()].map((ch) => CYR[ch] ?? ch).join("").split(/\s+/).filter((w) => !CYR_STOP.has(w)).join(" ").normalize("NFKD").replace(/[^a-z0-9\s-]/g, " ").split(/\s+/).filter((w) => w && !STOP2.has(w)).slice(0, 5).join("-").replace(/-+/g, "-").replace(/^-|-$/g, "").slice(0, 48);
+function slugFrom(text4) {
+  return [...text4.toLowerCase()].map((ch) => CYR[ch] ?? ch).join("").split(/\s+/).filter((w) => !CYR_STOP.has(w)).join(" ").normalize("NFKD").replace(/[^a-z0-9\s-]/g, " ").split(/\s+/).filter((w) => w && !STOP2.has(w)).slice(0, 5).join("-").replace(/-+/g, "-").replace(/^-|-$/g, "").slice(0, 48);
 }
 function registerCommands(program3) {
   program3.version(VERSION2, "-v, --version");
@@ -210544,8 +210746,8 @@ ${dim(`${" ".repeat(27)}${x2.arc}`)}`)
       "theme.v1.json": external_exports.toJSONSchema(Theme, opts),
       "storyline.v1.json": external_exports.toJSONSchema(Storyline, opts)
     };
-    for (const [name, schema41] of Object.entries(files)) {
-      writeFileSync9(join15(out, name), `${JSON.stringify(schema41, null, 2)}
+    for (const [name, schema42] of Object.entries(files)) {
+      writeFileSync9(join15(out, name), `${JSON.stringify(schema42, null, 2)}
 `);
       console.log(`${green("\u2714")} ${relative4(process.cwd(), join15(out, name))}`);
     }
@@ -210705,7 +210907,7 @@ function cli(args) {
 ${r.stderr ?? ""}` : ""}`.trim();
   return { ok: r.status === 0, out: out || (r.status ? `exit ${r.status}` : "done") };
 }
-var text2 = (t) => [{ type: "text", text: t }];
+var text3 = (t) => [{ type: "text", text: t }];
 var GUIDE = `SlideCraft makes consulting-grade decks: answer first, action titles, the right exhibit, sources on every number, a partner-style review.
 
 Work in this order and stop at each \u2705 to ask the user:
@@ -210727,7 +210929,7 @@ var TOOLS = [
     name: "guide",
     description: "How to make a deck with SlideCraft: the steps, the four checkpoints and the rules. Call this first.",
     inputSchema: obj({}),
-    run: () => text2(`${GUIDE}
+    run: () => text3(`${GUIDE}
 
 Workspace: ${workspace()}`)
   },
@@ -210738,7 +210940,7 @@ Workspace: ${workspace()}`)
     run: () => {
       const ws = workspace();
       const decks = existsSync14(ws) ? readdirSync4(ws).filter((d) => existsSync14(join16(ws, d, "deck.yaml"))) : [];
-      return text2(decks.length ? decks.join("\n") : "No decks yet \u2014 use new_deck.");
+      return text3(decks.length ? decks.join("\n") : "No decks yet \u2014 use new_deck.");
     }
   },
   {
@@ -210753,7 +210955,7 @@ Workspace: ${workspace()}`)
     ),
     run: (a) => {
       mkdirSync12(workspace(), { recursive: true });
-      return text2(
+      return text3(
         cli([
           "new",
           String(a.goal),
@@ -210769,7 +210971,7 @@ Workspace: ${workspace()}`)
     name: "suggest_templates",
     description: "Three template options (storyline \xD7 theme) and recommended outputs for the deck brief",
     inputSchema: obj({ deck: s("Deck folder name or path") }, ["deck"]),
-    run: (a) => text2(cli(["templates", "-b", briefPath(String(a.deck)), "--json"]).out)
+    run: (a) => text3(cli(["templates", "-b", briefPath(String(a.deck)), "--json"]).out)
   },
   {
     name: "choose_template",
@@ -210783,7 +210985,7 @@ Workspace: ${workspace()}`)
       },
       ["deck"]
     ),
-    run: (a) => text2(
+    run: (a) => text3(
       cli([
         "choose",
         "-b",
@@ -210798,13 +211000,13 @@ Workspace: ${workspace()}`)
     name: "scaffold",
     description: "Create the ghost deck (one slide per storyline slot) from the chosen template",
     inputSchema: obj({ deck: s("Deck folder name or path") }, ["deck"]),
-    run: (a) => text2(cli(["scaffold", "-b", briefPath(String(a.deck)), "--force"]).out)
+    run: (a) => text3(cli(["scaffold", "-b", briefPath(String(a.deck)), "--force"]).out)
   },
   {
     name: "read_deck",
     description: "The deck.yaml text",
     inputSchema: obj({ deck: s("Deck folder name or path") }, ["deck"]),
-    run: (a) => text2(readFileSync19(deckPath(String(a.deck)), "utf8"))
+    run: (a) => text3(readFileSync19(deckPath(String(a.deck)), "utf8"))
   },
   {
     name: "write_deck",
@@ -210816,26 +211018,26 @@ Workspace: ${workspace()}`)
     run: (a) => {
       const p = deckPath(String(a.deck));
       writeFileSync10(p, String(a.yaml));
-      return text2(cli(["validate", p, "--json"]).out);
+      return text3(cli(["validate", p, "--json"]).out);
     }
   },
   {
     name: "list_layouts",
     description: "Slide layouts and their content contracts (JSON Schema with limits and an example). Pass a layout id for one.",
     inputSchema: obj({ layout: s("layout id, e.g. chart-takeaway") }),
-    run: (a) => text2(cli(["layouts", ...a.layout ? [String(a.layout)] : [], "--json"]).out)
+    run: (a) => text3(cli(["layouts", ...a.layout ? [String(a.layout)] : [], "--json"]).out)
   },
   {
     name: "check",
     description: "Lay out the deck and run every check (fit, titles, sources, consistency, contrast); no files written",
     inputSchema: obj({ deck: s("Deck folder name or path") }, ["deck"]),
-    run: (a) => text2(cli(["check", deckPath(String(a.deck)), "--json"]).out)
+    run: (a) => text3(cli(["check", deckPath(String(a.deck)), "--json"]).out)
   },
   {
     name: "fix_tasks",
     description: "Fields that are too long, each with an exact character budget",
     inputSchema: obj({ deck: s("Deck folder name or path") }, ["deck"]),
-    run: (a) => text2(cli(["fix", deckPath(String(a.deck)), "--json"]).out)
+    run: (a) => text3(cli(["fix", deckPath(String(a.deck)), "--json"]).out)
   },
   {
     name: "apply_fixes",
@@ -210855,7 +211057,7 @@ Workspace: ${workspace()}`)
       const f = join16(dir, "fixes.json");
       writeFileSync10(f, JSON.stringify(a.fixes));
       try {
-        return text2(cli(["fix", deckPath(String(a.deck)), "--apply", f, "--json"]).out);
+        return text3(cli(["fix", deckPath(String(a.deck)), "--apply", f, "--json"]).out);
       } finally {
         rmSync6(dir, { recursive: true, force: true });
       }
@@ -210886,7 +211088,7 @@ Workspace: ${workspace()}`)
         const want = String(a.slide);
         const file2 = /^\d+$/.test(want) ? files[Number(want) - 1] : files.find((f) => f.replace(/^\d+-/, "").replace(/\.png$/, "") === want);
         if (!file2)
-          return text2(`No such slide "${want}". ${r.ok ? `Slides: ${files.join(", ")}` : r.out}`);
+          return text3(`No such slide "${want}". ${r.ok ? `Slides: ${files.join(", ")}` : r.out}`);
         return [
           {
             type: "image",
@@ -210907,7 +211109,7 @@ Workspace: ${workspace()}`)
       { deck: s("Deck folder name or path"), formats: s('comma-separated, e.g. "pptx,pdf"') },
       ["deck"]
     ),
-    run: (a) => text2(
+    run: (a) => text3(
       cli([
         "build",
         deckPath(String(a.deck)),
@@ -210926,7 +211128,7 @@ Workspace: ${workspace()}`)
       },
       ["deck", "files"]
     ),
-    run: (a) => text2(
+    run: (a) => text3(
       cli(["ingest", ...a.files, "--deck", deckPath(String(a.deck)), "--json"]).out
     )
   },
@@ -210937,13 +211139,13 @@ Workspace: ${workspace()}`)
       "deck",
       "query"
     ]),
-    run: (a) => text2(cli(["find", String(a.query), "--deck", deckPath(String(a.deck)), "--json"]).out)
+    run: (a) => text3(cli(["find", String(a.query), "--deck", deckPath(String(a.deck)), "--json"]).out)
   },
   {
     name: "import_pptx",
     description: "Turn an existing PowerPoint into a draft deck in the workspace (to restyle it)",
     inputSchema: obj({ file: s("absolute path to the .pptx") }, ["file"]),
-    run: (a) => text2(
+    run: (a) => text3(
       cli([
         "import",
         String(a.file),
@@ -210967,7 +211169,7 @@ Workspace: ${workspace()}`)
       },
       ["deck", "file"]
     ),
-    run: (a) => text2(
+    run: (a) => text3(
       cli([
         "sync",
         deckPath(String(a.deck)),
@@ -211016,7 +211218,7 @@ async function handle(msg) {
       try {
         return reply({ content: await tool.run(p.arguments ?? {}) });
       } catch (e) {
-        return reply({ content: text2(String(e.message)), isError: true });
+        return reply({ content: text3(String(e.message)), isError: true });
       }
     }
     case "prompts/list":
@@ -211040,11 +211242,11 @@ The deck: ${goal}` } }
 }
 function serve() {
   const rl = createInterface({ input: process.stdin });
-  rl.on("line", async (line2) => {
-    if (!line2.trim()) return;
+  rl.on("line", async (line3) => {
+    if (!line3.trim()) return;
     let msg;
     try {
-      msg = JSON.parse(line2);
+      msg = JSON.parse(line3);
     } catch {
       process.stdout.write(
         `${JSON.stringify({ jsonrpc: "2.0", id: null, error: { code: -32700, message: "Parse error" } })}
@@ -211475,10 +211677,10 @@ function limits(s2) {
   if (s2.items?.maxLength !== void 0) out.push(`each \u2264 ${s2.items.maxLength} chars`);
   return out.join(", ");
 }
-function fieldRows(schema41, prefix = "") {
+function fieldRows(schema42, prefix = "") {
   const rows2 = [];
-  const req = new Set(schema41.required ?? []);
-  for (const [k, v] of Object.entries(schema41.properties ?? {})) {
+  const req = new Set(schema42.required ?? []);
+  for (const [k, v] of Object.entries(schema42.properties ?? {})) {
     const name = `${prefix}${k}`;
     rows2.push(
       `| \`${name}\` | ${typeOf2(v)} | ${req.has(k) ? "yes" : ""} | ${limits(v)} | ${esc3(v.description ?? "")} |`
@@ -211728,7 +211930,7 @@ import { dirname as dirname6, resolve as resolve13 } from "node:path";
 
 // src/library/yaml-edit.ts
 var import_yaml4 = __toESM(require_dist(), 1);
-var col = (text3, at) => at - text3.lastIndexOf("\n", at - 1) - 1;
+var col = (text4, at) => at - text4.lastIndexOf("\n", at - 1) - 1;
 function scalar(v, flow) {
   if (typeof v === "number" || typeof v === "boolean") return String(v);
   const s2 = String(v);
@@ -211758,43 +211960,43 @@ ${pad3}` : ""}${k}:${blockOrInline(x2, indent + 2)}`).join("");
   }
   return scalar(v, false);
 }
-function contentEnd(text3, node2) {
+function contentEnd(text4, node2) {
   let end = node2.range[1];
-  while (end > node2.range[0] && /\s/.test(text3[end - 1])) end--;
+  while (end > node2.range[0] && /\s/.test(text4[end - 1])) end--;
   return end;
 }
-function splice(text3, from, to, s2) {
-  return text3.slice(0, from) + s2 + text3.slice(to);
+function splice(text4, from, to, s2) {
+  return text4.slice(0, from) + s2 + text4.slice(to);
 }
-function inPlace(text3, e) {
-  const doc = import_yaml4.default.parseDocument(text3);
+function inPlace(text4, e) {
+  const doc = import_yaml4.default.parseDocument(text4);
   const node2 = doc.getIn(e.path, true);
   const parent = e.path.length > 1 ? doc.getIn(e.path.slice(0, -1), true) : doc.contents;
   const flowParent = !!(parent && ((0, import_yaml4.isMap)(parent) || (0, import_yaml4.isSeq)(parent)) && parent.flow);
   if (node2?.range) {
     const [from] = node2.range;
-    const to = contentEnd(text3, node2);
+    const to = contentEnd(text4, node2);
     if ((0, import_yaml4.isScalar)(node2) && (e.value === null || typeof e.value !== "object"))
-      return splice(text3, from, to, scalar(e.value, flowParent));
+      return splice(text4, from, to, scalar(e.value, flowParent));
     if ((0, import_yaml4.isSeq)(node2) && Array.isArray(e.value) && e.value.every((x2) => typeof x2 !== "object")) {
       if (node2.flow || flowParent) {
-        const padded = text3[from + 1] === " ";
+        const padded = text4[from + 1] === " ";
         const body = e.value.map((x2) => scalar(x2, true)).join(", ");
-        return splice(text3, from, to, padded && body ? `[ ${body} ]` : `[${body}]`);
+        return splice(text4, from, to, padded && body ? `[ ${body} ]` : `[${body}]`);
       }
       if (!e.value.length) return void 0;
-      const dash = col(text3, from);
-      return splice(text3, from, to, block(e.value, dash).trimStart());
+      const dash = col(text4, from);
+      return splice(text4, from, to, block(e.value, dash).trimStart());
     }
     return void 0;
   }
   if ((0, import_yaml4.isMap)(parent) && !parent.flow && typeof e.path.at(-1) === "string" && parent.items.length) {
     const first2 = parent.items[0];
     const last2 = parent.items.at(-1);
-    const end = last2.value?.range ? contentEnd(text3, last2.value) : contentEnd(text3, last2.key);
-    const indent = col(text3, first2.key.range[0]);
+    const end = last2.value?.range ? contentEnd(text4, last2.value) : contentEnd(text4, last2.key);
+    const indent = col(text4, first2.key.range[0]);
     return splice(
-      text3,
+      text4,
       end,
       end,
       `
@@ -211804,19 +212006,19 @@ ${" ".repeat(indent)}${e.path.at(-1)}:${blockOrInline(e.value, indent + 2)}`
   if ((0, import_yaml4.isSeq)(parent) && e.path.at(-1) === parent.items.length && parent.range) {
     if (!parent.flow && parent.items.length) {
       const lastItem = parent.items.at(-1);
-      const end = contentEnd(text3, lastItem);
-      const dash = text3.lastIndexOf("-", lastItem.range[0]);
-      const indent = col(text3, dash);
-      return splice(text3, end, end, `
+      const end = contentEnd(text4, lastItem);
+      const dash = text4.lastIndexOf("-", lastItem.range[0]);
+      const indent = col(text4, dash);
+      return splice(text4, end, end, `
 ${" ".repeat(indent)}- ${item(e.value, indent + 2)}`);
     }
-    if (parent.flow && !parent.items.length && text3.slice(parent.range[0], parent.range[0] + 2) === "[]") {
-      const lineStart = text3.lastIndexOf("\n", parent.range[0] - 1) + 1;
-      const keyIndent = /^ */.exec(text3.slice(lineStart))[0].length;
+    if (parent.flow && !parent.items.length && text4.slice(parent.range[0], parent.range[0] + 2) === "[]") {
+      const lineStart = text4.lastIndexOf("\n", parent.range[0] - 1) + 1;
+      const keyIndent = /^ */.exec(text4.slice(lineStart))[0].length;
       const at = parent.range[0];
-      const before = text3[at - 1] === " " ? at - 1 : at;
+      const before = text4[at - 1] === " " ? at - 1 : at;
       return splice(
-        text3,
+        text4,
         before,
         at + 2,
         `
@@ -211826,8 +212028,8 @@ ${" ".repeat(keyIndent + 2)}- ${item(e.value, keyIndent + 4)}`
   }
   return void 0;
 }
-function editYaml(text3, edits) {
-  let out = text3;
+function editYaml(text4, edits) {
+  let out = text4;
   for (const e of edits) {
     const next = inPlace(out, e);
     if (next !== void 0) {
@@ -211880,12 +212082,12 @@ function setIn(obj2, path2, v) {
   parent[last2] = v;
 }
 var isFit = (d) => !!d.pointer && (d.code === "SC-FIT-001" || d.code === "SC-FIT-003" || d.code.startsWith("SC-SPEC") && /too big|<=\s*\d+ characters/i.test(d.message));
-function measureBudget(deckPath2, pointer, code, text3) {
+function measureBudget(deckPath2, pointer, code, text4) {
   const loaded = loadDeck(deckPath2);
   const ptr = parsePointer(pointer);
   if (!ptr || !loaded.slides[ptr.slide]) return void 0;
   const clears = (len) => {
-    const cut = text3.slice(0, len).replace(/\s+\S*$/, "") || text3.slice(0, len);
+    const cut = text4.slice(0, len).replace(/\s+\S*$/, "") || text4.slice(0, len);
     const slides = loaded.slides.map((s2, i) => i === ptr.slide ? structuredClone(s2) : s2);
     setIn(slides[ptr.slide], ptr.rest, cut);
     const { scene, diagnostics } = composeDeck({ ...loaded, slides });
@@ -211895,7 +212097,7 @@ function measureBudget(deckPath2, pointer, code, text3) {
   };
   if (!clears(1)) return void 0;
   let lo = 1;
-  let hi = text3.length;
+  let hi = text4.length;
   while (lo < hi) {
     const mid = Math.ceil((lo + hi) / 2);
     if (clears(mid)) lo = mid;
@@ -211915,17 +212117,17 @@ function fitTasks(deckPath2) {
     const loc = ptr ? locs[ptr.slide] : void 0;
     if (!ptr || !loc) continue;
     const raw = getIn(loaded.slides[ptr.slide], ptr.rest) ?? getIn(getIn(import_yaml5.default.parse(readFileSync22(loc.file, "utf8")), loc.path), ptr.rest);
-    const text3 = Array.isArray(raw) ? raw.join("\n") : typeof raw === "string" ? raw : "";
-    if (!text3) continue;
+    const text4 = Array.isArray(raw) ? raw.join("\n") : typeof raw === "string" ? raw : "";
+    if (!text4) continue;
     const contract = /<=\s*(\d+)/.exec(d.message)?.[1];
-    const budget = d.code.startsWith("SC-SPEC") ? Number(contract) : Array.isArray(raw) ? void 0 : measureBudget(deckPath2, d.pointer, d.code, text3);
+    const budget = d.code.startsWith("SC-SPEC") ? Number(contract) : Array.isArray(raw) ? void 0 : measureBudget(deckPath2, d.pointer, d.code, text4);
     tasks.push({
       code: d.code,
       ...d.slide ? { slide: d.slide } : {},
       pointer: d.pointer,
       file: loc.file,
-      text: text3,
-      length: text3.length,
+      text: text4,
+      length: text4.length,
       ...budget !== void 0 ? { budget } : {},
       message: d.message,
       ...d.hint ? { hint: d.hint } : {}
@@ -212094,7 +212296,7 @@ async function sectionsOf(path2) {
       kind: "pdf",
       ...r.title ? { title: r.title } : {},
       ...r.date ? { date: r.date } : {},
-      sections: r.pages.map((text3, i) => ({ ref: `p${i + 1}`, label: `p. ${i + 1}`, text: text3 }))
+      sections: r.pages.map((text4, i) => ({ ref: `p${i + 1}`, label: `p. ${i + 1}`, text: text4 }))
     };
   }
   if (ext2 === ".docx") {
@@ -212104,14 +212306,14 @@ async function sectionsOf(path2) {
     let cur = { ref: "start", label: "Start", text: "" };
     for (const m of xml.matchAll(/<w:p[ >][\s\S]*?<\/w:p>/g)) {
       const p = m[0];
-      const text3 = decode4(
+      const text4 = decode4(
         [...p.matchAll(/<w:t[^>]*>([^<]*)<\/w:t>/g)].map((t) => t[1]).join("")
       ).trim();
-      if (!text3) continue;
+      if (!text4) continue;
       if (/<w:pStyle w:val="(Heading|Title)\w*"/i.test(p)) {
         if (cur.text) sections.push(cur);
-        cur = { ref: `s:${text3.slice(0, 40)}`, label: text3, text: "" };
-      } else cur.text += `${text3}
+        cur = { ref: `s:${text4.slice(0, 40)}`, label: text4, text: "" };
+      } else cur.text += `${text4}
 `;
     }
     if (cur.text) sections.push(cur);
@@ -212125,8 +212327,8 @@ async function sectionsOf(path2) {
     const sections = [];
     for (const [i, n] of names.entries()) {
       const xml = await zip.file(n).async("string");
-      const text3 = [...xml.matchAll(/<a:p>([\s\S]*?)<\/a:p>/g)].map((p) => decode4([...p[1].matchAll(/<a:t>([^<]*)<\/a:t>/g)].map((t) => t[1]).join(""))).filter((t) => t.trim()).join("\n");
-      sections.push({ ref: `slide${i + 1}`, label: `slide ${i + 1}`, text: text3 });
+      const text4 = [...xml.matchAll(/<a:p>([\s\S]*?)<\/a:p>/g)].map((p) => decode4([...p[1].matchAll(/<a:t>([^<]*)<\/a:t>/g)].map((t) => t[1]).join(""))).filter((t) => t.trim()).join("\n");
+      sections.push({ ref: `slide${i + 1}`, label: `slide ${i + 1}`, text: text4 });
     }
     return { kind: "pptx", sections };
   }
@@ -212207,8 +212409,8 @@ function findInMaterials(query, dir, limit = 20) {
   const hits = [];
   for (const f of readdirSync5(dir).filter((n) => n.endsWith(".md"))) {
     const id = f.replace(/\.md$/, "");
-    const text3 = readFileSync24(join20(dir, f), "utf8");
-    for (const part of text3.split(/^## /m).slice(1)) {
+    const text4 = readFileSync24(join20(dir, f), "utf8");
+    for (const part of text4.split(/^## /m).slice(1)) {
       const head = part.split("\n")[0] ?? "";
       const ref = /\{#([^}]+)\}/.exec(head)?.[1] ?? "";
       const where = head.replace(/\s*\{#[^}]+\}\s*$/, "");
@@ -212235,16 +212437,23 @@ var import_yaml8 = __toESM(require_dist(), 1);
 import { mkdirSync as mkdirSync18, readFileSync as readFileSync25, writeFileSync as writeFileSync17 } from "node:fs";
 import { basename as basename3, extname as extname5, join as join21, posix as posix2, resolve as resolve16 } from "node:path";
 var decode5 = (s2) => s2.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
+function validImportedTitle(title2, fallback, slideNumber) {
+  const clean4 = title2.trim();
+  if (clean4.length >= 3) return clean4;
+  const context = fallback.trim();
+  if (context.length >= 3) return clean4 ? `${context} \xB7 ${clean4}` : context;
+  return clean4 ? `Slide ${slideNumber} \xB7 ${clean4}` : `Slide ${slideNumber}`;
+}
 function paragraphs2(xml) {
   const out = [];
   for (const m of xml.matchAll(/<a:p>([\s\S]*?)<\/a:p>|<a:p ([^>]*)>([\s\S]*?)<\/a:p>/g)) {
     const inner = m[1] ?? m[3] ?? "";
     const lvl = Number(/<a:pPr[^>]*lvl="(\d)"/.exec(inner)?.[1] ?? 0);
-    const text3 = decode5(
+    const text4 = decode5(
       [...inner.matchAll(/<a:t>([^<]*)<\/a:t>|<a:t [^>]*>([^<]*)<\/a:t>/g)].map((t) => t[1] ?? t[2] ?? "").join("")
     ).trim();
     const sz = Number(/<a:rPr[^>]*sz="(\d+)"/.exec(inner)?.[1] ?? 0) / 100;
-    if (text3) out.push({ text: text3, level: lvl, size: sz });
+    if (text4) out.push({ text: text4, level: lvl, size: sz });
   }
   return out;
 }
@@ -212339,9 +212548,10 @@ async function importPptx(file2, opts = {}) {
       const nx = await zip.file(notesPart)?.async("string") ?? "";
       notes = paragraphs2(nx).map((p) => p.text).filter((t) => !/^\d+$/.test(t)).join("\n");
     }
+    const importedFallback = texts2.find((p) => p.text.trim().length >= 3)?.text ?? "";
     const slide = {
       id: `s${String(i + 1).padStart(2, "0")}`,
-      title: clip(title2 || `Slide ${i + 1}`, 140)
+      title: clip(validImportedTitle(title2, importedFallback, i + 1), 140)
     };
     const cover = i === 0 && (/ctrTitle/.test(xml) || !table && !chartRid && texts2.length <= 2);
     if (cover) {
@@ -212432,21 +212642,21 @@ function tokens(s2) {
   return s2.toLowerCase().replace(/[^a-z0-9а-яё\s-]/gi, " ").split(/\s+/).filter((w) => w.length > 1 && !STOP3.has(w));
 }
 function rankStorylines(brief, all = loadStorylines()) {
-  const text3 = [
+  const text4 = [
     brief.task ?? "",
     brief.task ?? "",
     brief.goal,
     brief.ask ?? "",
     brief.context ?? ""
   ].join(" ").toLowerCase();
-  const words = new Set(tokens(text3));
+  const words = new Set(tokens(text4));
   const audience = (brief.audience?.who ?? "").toLowerCase();
   return all.map((s2) => {
     let score = 0;
     const matched = [];
     for (const phrase of s2.bestFor) {
       const p = phrase.toLowerCase();
-      if (p.includes(" ") ? text3.includes(p) : words.has(p)) {
+      if (p.includes(" ") ? text4.includes(p) : words.has(p)) {
         score += p.includes(" ") ? 3 : 2;
         matched.push(phrase);
       } else if (tokens(p).some((t) => words.has(t))) {
@@ -212563,8 +212773,8 @@ function paragraphs3(xml) {
   const out = [];
   for (const m of xml.matchAll(/<a:p(?:\s[^>]*)?>([\s\S]*?)<\/a:p>|<a:p\s*\/>/g)) {
     const body = m[1] ?? "";
-    const text3 = [...body.matchAll(/<a:t(?:\s[^>]*)?>([\s\S]*?)<\/a:t>|<a:br\s*\/>/g)].map((t) => t[0].startsWith("<a:br") ? " " : decode3(t[1] ?? "")).join("");
-    out.push(text3);
+    const text4 = [...body.matchAll(/<a:t(?:\s[^>]*)?>([\s\S]*?)<\/a:t>|<a:br\s*\/>/g)].map((t) => t[0].startsWith("<a:br") ? " " : decode3(t[1] ?? "")).join("");
+    out.push(text4);
   }
   return out;
 }
@@ -212581,12 +212791,12 @@ var same = (a, b) => {
 };
 function readPptx(path2) {
   const zip = unzip(readFileSync26(path2));
-  const text3 = (name) => zip.get(name)?.toString("utf8") ?? "";
+  const text4 = (name) => zip.get(name)?.toString("utf8") ?? "";
   const rels4 = (file2) => {
     const dir = file2.slice(0, file2.lastIndexOf("/"));
     const relFile = `${dir}/_rels/${file2.slice(dir.length + 1)}.rels`;
     const map2 = /* @__PURE__ */ new Map();
-    for (const m of text3(relFile).matchAll(/<Relationship\b[^>]*>/g)) {
+    for (const m of text4(relFile).matchAll(/<Relationship\b[^>]*>/g)) {
       const id = /\bId="([^"]+)"/.exec(m[0])?.[1];
       const target = /\bTarget="([^"]+)"/.exec(m[0])?.[1];
       if (id && target) {
@@ -212599,9 +212809,9 @@ function readPptx(path2) {
     return map2;
   };
   const presRels = rels4("ppt/presentation.xml");
-  const order = [...text3("ppt/presentation.xml").matchAll(/<p:sldId\b[^>]*r:id="([^"]+)"/g)].map((m) => presRels.get(m[1])).filter((f) => !!f);
+  const order = [...text4("ppt/presentation.xml").matchAll(/<p:sldId\b[^>]*r:id="([^"]+)"/g)].map((m) => presRels.get(m[1])).filter((f) => !!f);
   return order.map((file2, k) => {
-    const xml = text3(file2);
+    const xml = text4(file2);
     const shapes2 = [];
     for (const m of xml.matchAll(/<p:sp>([\s\S]*?)<\/p:sp>/g)) {
       const name = decode3(/<p:cNvPr\b[^>]*\bname="([^"]*)"/.exec(m[1])?.[1] ?? "");
@@ -212620,7 +212830,7 @@ function readPptx(path2) {
     const notesFile = [...rels4(file2).values()].find((t) => /notesSlides\/[^/]+\.xml$/.test(t));
     let notes;
     if (notesFile) {
-      const nx = text3(notesFile);
+      const nx = text4(notesFile);
       for (const m of nx.matchAll(/<p:sp>([\s\S]*?)<\/p:sp>/g))
         if (/<p:ph\b[^>]*type="body"/.test(m[1])) {
           const body = /<p:txBody>([\s\S]*?)<\/p:txBody>/.exec(m[1])?.[1] ?? "";
@@ -212828,8 +213038,8 @@ async function shapes(zip, part, colors) {
     if (/<p:ph\b/.test(body) || /<a:t>[^<]*\S/.test(body)) continue;
     const geom = /<a:prstGeom prst="(\w+)"/.exec(body)?.[1];
     const kind = geom === "rect" || geom === "roundRect" ? "rect" : geom === "ellipse" ? "ellipse" : geom === "line" || m[1] === "cxnSp" ? "line" : void 0;
-    const box = xfrm(body);
-    if (!kind || !box) continue;
+    const box2 = xfrm(body);
+    if (!kind || !box2) continue;
     const spPr = /<p:spPr>([\s\S]*?)<\/p:spPr>/.exec(body)?.[1] ?? "";
     const fillXml = /<a:solidFill>([\s\S]*?)<\/a:solidFill>/.exec(
       spPr.replace(/<a:ln\b[\s\S]*?<\/a:ln>/, "")
@@ -212838,11 +213048,11 @@ async function shapes(zip, part, colors) {
     const lnColor = ln && !/<a:noFill\s*\/>/.test(ln[2]) ? colorOf(ln[2], colors) : void 0;
     const fill = fillXml ? colorOf(fillXml, colors) : void 0;
     if (!fill && !lnColor) continue;
-    const shape = { kind, ...box };
+    const shape = { kind, ...box2 };
     if (fill && kind !== "line") shape.fill = fill;
     if (lnColor)
       shape.stroke = { color: lnColor, width: +(/w="(\d+)"/.exec(ln[1])?.[1] ?? 12700) / 12700 };
-    if (geom === "roundRect") shape.radius = Math.min(box.w, box.h) * 0.1;
+    if (geom === "roundRect") shape.radius = Math.min(box2.w, box2.h) * 0.1;
     out.push(shape);
   }
   return out;
@@ -212870,9 +213080,9 @@ async function pictures(zip, part) {
   const out = [];
   for (const m of xml.matchAll(/<p:pic>([\s\S]*?)<\/p:pic>/g)) {
     const rid = /r:embed="([^"]+)"/.exec(m[1])?.[1];
-    const box = xfrm(m[1]);
+    const box2 = xfrm(m[1]);
     const target = rid ? r.get(rid) : void 0;
-    if (box && target && /\.(png|jpe?g)$/i.test(target)) out.push({ ...box, part: target });
+    if (box2 && target && /\.(png|jpe?g)$/i.test(target)) out.push({ ...box2, part: target });
   }
   return out;
 }
@@ -212884,7 +213094,7 @@ function placeholder2(xml, type) {
 async function readTemplateGeometry(zip, colors = {}) {
   const pres = await zip.file("ppt/presentation.xml")?.async("string") ?? "";
   const sz = /<p:sldSz cx="(\d+)" cy="(\d+)"/.exec(pres);
-  const size = sz ? { w: +sz[1] / EMU3, h: +sz[2] / EMU3 } : { w: 13.333, h: 7.5 };
+  const size2 = sz ? { w: +sz[1] / EMU3, h: +sz[2] / EMU3 } : { w: 13.333, h: 7.5 };
   const master = "ppt/slideMasters/slideMaster1.xml";
   const masterXml = await zip.file(master)?.async("string") ?? "";
   const layouts = [];
@@ -212907,7 +213117,7 @@ async function readTemplateGeometry(zip, colors = {}) {
     return /showMasterSp="0"/.test(l.xml) ? own2 : [...masterShapes, ...own2];
   };
   const geo = {
-    size,
+    size: size2,
     cover: await forLayout(cover),
     content: await forLayout(content),
     coverShapes: await shapesFor(cover),
@@ -213259,40 +213469,40 @@ function buildCalibrationScene(fonts, strings = CALIBRATION_STRINGS) {
   for (const f of fonts) {
     if (seen.has(f.measure)) continue;
     seen.add(f.measure);
-    for (const size of [11, 14, 20]) {
+    for (const size2 of [11, 14, 20]) {
       for (const bold2 of [false, true]) {
         const nodes = [];
         const yCol = [0.3, 0.3, 0.3];
-        strings.slice(0, size === 11 ? 12 : 6).forEach((text3, ti) => {
+        strings.slice(0, size2 === 11 ? 12 : 6).forEach((text4, ti) => {
           const col2 = ti % 3;
           const w = widths[col2];
           const style = {
             family: f.family,
             measure: f.measure,
-            size,
-            lineSpacing: +(size * 1.2).toFixed(2),
+            size: size2,
+            lineSpacing: +(size2 * 1.2).toFixed(2),
             color: "#111111",
             bold: bold2,
             align: "left",
             valign: "top"
           };
-          const ps = [para(text3)];
+          const ps = [para(text4)];
           const laid = layoutText(ps, style, w);
           const h = laid.contentHeight + 0.05;
           const x2 = [0.3, 3.3, 7.4][col2];
           const y = yCol[col2];
           if (y + h > 7.3) return;
           yCol[col2] = y + h + 0.18;
-          const box = { x: x2, y, w, h };
-          nodes.push(makeTextNode(ps, box, style, laid));
+          const box2 = { x: x2, y, w, h };
+          nodes.push(makeTextNode(ps, box2, style, laid));
           cases.push({
             slide: slides.length,
             family: f.family,
-            size,
+            size: size2,
             bold: bold2,
             w,
-            text: text3,
-            box,
+            text: text4,
+            box: box2,
             lines: laid.lines.length
           });
         });
@@ -213302,7 +213512,7 @@ function buildCalibrationScene(fonts, strings = CALIBRATION_STRINGS) {
           layout: "calibration",
           master: "plain",
           nodes,
-          title: `${f.family} ${size}${bold2 ? " bold" : ""}`
+          title: `${f.family} ${size2}${bold2 ? " bold" : ""}`
         });
       }
     }

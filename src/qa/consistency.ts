@@ -104,6 +104,21 @@ function textMentions(text: string, slide: string, out: Mention[]) {
   }
 }
 
+/** Freeform HTML has visible copy as well as CSS dimensions such as `20%`. Only the
+ * rendered text belongs in a metric-consistency check; parsing the raw markup creates
+ * false positives from selectors and style declarations. */
+function htmlText(html: string): string {
+  return html
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style\s*>/gi, ' ')
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/\s+/g, ' ');
+}
+
 function walk(v: unknown, slide: string, out: Mention[]) {
   if (typeof v === 'string') return textMentions(v, slide, out);
   if (Array.isArray(v)) return v.forEach((x) => walk(x, slide, out));
@@ -125,7 +140,11 @@ function walk(v: unknown, slide: string, out: Mention[]) {
           slide,
         });
     }
-    for (const [k, x] of Object.entries(o)) if (k !== 'notes' && k !== 'ghost') walk(x, slide, out);
+    for (const [k, x] of Object.entries(o)) {
+      if (k === 'notes' || k === 'ghost' || k === 'css') continue;
+      if (k === 'html' && typeof x === 'string') textMentions(htmlText(x), slide, out);
+      else walk(x, slide, out);
+    }
   }
 }
 
@@ -135,7 +154,9 @@ function agree(a: Mention, b: Mention): boolean {
   return Math.abs(a.value - b.value) < step / 2 + 1e-9;
 }
 
-export function checkConsistency(slides: { id: string; notes?: string }[]): Diagnostic[] {
+export function checkConsistency(
+  slides: ({ id: string; notes?: string } & Record<string, unknown>)[],
+): Diagnostic[] {
   const mentions: Mention[] = [];
   for (const s of slides) walk({ ...s, notes: undefined }, s.id, mentions);
   // cluster mentions of the same metric (same unit, overlapping words)

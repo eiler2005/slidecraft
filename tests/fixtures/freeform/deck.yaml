@@ -2,6 +2,8 @@ schemaVersion: 1
 id: freeform
 title: Freeform
 theme: midnight
+output:
+  editablePptx: false
 sources:
   - id: ops
     title: Operations review, Q3 2026

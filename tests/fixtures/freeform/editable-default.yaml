@@ -1,0 +1,10 @@
+schemaVersion: 1
+id: editable-freeform
+title: Editable freeform default
+theme: midnight
+slides:
+  - id: custom
+    layout: freeform
+    title: This browser-first composition must not silently flatten into a PPTX picture
+    alt: A single HTML block
+    html: <div>Custom HTML</div>

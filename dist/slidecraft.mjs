@@ -3785,7 +3785,7 @@ var require_crc32 = __commonJS({
       return table;
     }
     var crcTable = makeTable();
-    function crc32(crc, buf, len, pos) {
+    function crc322(crc, buf, len, pos) {
       var t = crcTable, end = pos + len;
       crc = crc ^ -1;
       for (var i = pos; i < end; i++) {
@@ -3807,7 +3807,7 @@ var require_crc32 = __commonJS({
       }
       var isArray = utils.getTypeOf(input2) !== "string";
       if (isArray) {
-        return crc32(crc | 0, input2, input2.length, 0);
+        return crc322(crc | 0, input2, input2.length, 0);
       } else {
         return crc32str(crc | 0, input2, input2.length, 0);
       }
@@ -3820,7 +3820,7 @@ var require_Crc32Probe = __commonJS({
   "node_modules/jszip/lib/stream/Crc32Probe.js"(exports, module) {
     "use strict";
     var GenericWorker = require_GenericWorker();
-    var crc32 = require_crc32();
+    var crc322 = require_crc32();
     var utils = require_utils();
     function Crc32Probe() {
       GenericWorker.call(this, "Crc32Probe");
@@ -3828,7 +3828,7 @@ var require_Crc32Probe = __commonJS({
     }
     utils.inherits(Crc32Probe, GenericWorker);
     Crc32Probe.prototype.processChunk = function(chunk) {
-      this.streamInfo.crc32 = crc32(chunk.data, this.streamInfo.crc32 || 0);
+      this.streamInfo.crc32 = crc322(chunk.data, this.streamInfo.crc32 || 0);
       this.push(chunk);
     };
     module.exports = Crc32Probe;
@@ -3866,10 +3866,10 @@ var require_compressedObject = __commonJS({
     var DataWorker = require_DataWorker();
     var Crc32Probe = require_Crc32Probe();
     var DataLengthProbe = require_DataLengthProbe();
-    function CompressedObject(compressedSize, uncompressedSize, crc32, compression, data) {
+    function CompressedObject(compressedSize, uncompressedSize, crc322, compression, data) {
       this.compressedSize = compressedSize;
       this.uncompressedSize = uncompressedSize;
-      this.crc32 = crc32;
+      this.crc32 = crc322;
       this.compression = compression;
       this.compressedContent = data;
     }
@@ -4791,7 +4791,7 @@ var require_crc322 = __commonJS({
       return table;
     }
     var crcTable = makeTable();
-    function crc32(crc, buf, len, pos) {
+    function crc322(crc, buf, len, pos) {
       var t = crcTable, end = pos + len;
       crc ^= -1;
       for (var i = pos; i < end; i++) {
@@ -4799,7 +4799,7 @@ var require_crc322 = __commonJS({
       }
       return crc ^ -1;
     }
-    module.exports = crc32;
+    module.exports = crc322;
   }
 });
 
@@ -4837,7 +4837,7 @@ var require_deflate = __commonJS({
     var utils = require_common();
     var trees = require_trees();
     var adler32 = require_adler32();
-    var crc32 = require_crc322();
+    var crc322 = require_crc322();
     var msg = require_messages();
     var Z_NO_FLUSH = 0;
     var Z_PARTIAL_FLUSH = 1;
@@ -4940,7 +4940,7 @@ var require_deflate = __commonJS({
       if (strm.state.wrap === 1) {
         strm.adler = adler32(strm.adler, buf, len, start);
       } else if (strm.state.wrap === 2) {
-        strm.adler = crc32(strm.adler, buf, len, start);
+        strm.adler = crc322(strm.adler, buf, len, start);
       }
       strm.next_in += len;
       strm.total_in += len;
@@ -5582,7 +5582,7 @@ var require_deflate = __commonJS({
               put_byte(s, s.gzhead.extra.length >> 8 & 255);
             }
             if (s.gzhead.hcrc) {
-              strm.adler = crc32(strm.adler, s.pending_buf, s.pending, 0);
+              strm.adler = crc322(strm.adler, s.pending_buf, s.pending, 0);
             }
             s.gzindex = 0;
             s.status = EXTRA_STATE;
@@ -5619,7 +5619,7 @@ var require_deflate = __commonJS({
           while (s.gzindex < (s.gzhead.extra.length & 65535)) {
             if (s.pending === s.pending_buf_size) {
               if (s.gzhead.hcrc && s.pending > beg) {
-                strm.adler = crc32(strm.adler, s.pending_buf, s.pending - beg, beg);
+                strm.adler = crc322(strm.adler, s.pending_buf, s.pending - beg, beg);
               }
               flush_pending(strm);
               beg = s.pending;
@@ -5631,7 +5631,7 @@ var require_deflate = __commonJS({
             s.gzindex++;
           }
           if (s.gzhead.hcrc && s.pending > beg) {
-            strm.adler = crc32(strm.adler, s.pending_buf, s.pending - beg, beg);
+            strm.adler = crc322(strm.adler, s.pending_buf, s.pending - beg, beg);
           }
           if (s.gzindex === s.gzhead.extra.length) {
             s.gzindex = 0;
@@ -5647,7 +5647,7 @@ var require_deflate = __commonJS({
           do {
             if (s.pending === s.pending_buf_size) {
               if (s.gzhead.hcrc && s.pending > beg) {
-                strm.adler = crc32(strm.adler, s.pending_buf, s.pending - beg, beg);
+                strm.adler = crc322(strm.adler, s.pending_buf, s.pending - beg, beg);
               }
               flush_pending(strm);
               beg = s.pending;
@@ -5664,7 +5664,7 @@ var require_deflate = __commonJS({
             put_byte(s, val);
           } while (val !== 0);
           if (s.gzhead.hcrc && s.pending > beg) {
-            strm.adler = crc32(strm.adler, s.pending_buf, s.pending - beg, beg);
+            strm.adler = crc322(strm.adler, s.pending_buf, s.pending - beg, beg);
           }
           if (val === 0) {
             s.gzindex = 0;
@@ -5680,7 +5680,7 @@ var require_deflate = __commonJS({
           do {
             if (s.pending === s.pending_buf_size) {
               if (s.gzhead.hcrc && s.pending > beg) {
-                strm.adler = crc32(strm.adler, s.pending_buf, s.pending - beg, beg);
+                strm.adler = crc322(strm.adler, s.pending_buf, s.pending - beg, beg);
               }
               flush_pending(strm);
               beg = s.pending;
@@ -5697,7 +5697,7 @@ var require_deflate = __commonJS({
             put_byte(s, val);
           } while (val !== 0);
           if (s.gzhead.hcrc && s.pending > beg) {
-            strm.adler = crc32(strm.adler, s.pending_buf, s.pending - beg, beg);
+            strm.adler = crc322(strm.adler, s.pending_buf, s.pending - beg, beg);
           }
           if (val === 0) {
             s.status = HCRC_STATE;
@@ -6755,7 +6755,7 @@ var require_inflate = __commonJS({
     "use strict";
     var utils = require_common();
     var adler32 = require_adler32();
-    var crc32 = require_crc322();
+    var crc322 = require_crc322();
     var inflate_fast = require_inffast();
     var inflate_table = require_inftrees();
     var CODES2 = 0;
@@ -7059,7 +7059,7 @@ var require_inflate = __commonJS({
                 state.check = 0;
                 hbuf[0] = hold & 255;
                 hbuf[1] = hold >>> 8 & 255;
-                state.check = crc32(state.check, hbuf, 2, 0);
+                state.check = crc322(state.check, hbuf, 2, 0);
                 hold = 0;
                 bits = 0;
                 state.mode = FLAGS;
@@ -7122,7 +7122,7 @@ var require_inflate = __commonJS({
               if (state.flags & 512) {
                 hbuf[0] = hold & 255;
                 hbuf[1] = hold >>> 8 & 255;
-                state.check = crc32(state.check, hbuf, 2, 0);
+                state.check = crc322(state.check, hbuf, 2, 0);
               }
               hold = 0;
               bits = 0;
@@ -7145,7 +7145,7 @@ var require_inflate = __commonJS({
                 hbuf[1] = hold >>> 8 & 255;
                 hbuf[2] = hold >>> 16 & 255;
                 hbuf[3] = hold >>> 24 & 255;
-                state.check = crc32(state.check, hbuf, 4, 0);
+                state.check = crc322(state.check, hbuf, 4, 0);
               }
               hold = 0;
               bits = 0;
@@ -7167,7 +7167,7 @@ var require_inflate = __commonJS({
               if (state.flags & 512) {
                 hbuf[0] = hold & 255;
                 hbuf[1] = hold >>> 8 & 255;
-                state.check = crc32(state.check, hbuf, 2, 0);
+                state.check = crc322(state.check, hbuf, 2, 0);
               }
               hold = 0;
               bits = 0;
@@ -7190,7 +7190,7 @@ var require_inflate = __commonJS({
                 if (state.flags & 512) {
                   hbuf[0] = hold & 255;
                   hbuf[1] = hold >>> 8 & 255;
-                  state.check = crc32(state.check, hbuf, 2, 0);
+                  state.check = crc322(state.check, hbuf, 2, 0);
                 }
                 hold = 0;
                 bits = 0;
@@ -7223,7 +7223,7 @@ var require_inflate = __commonJS({
                     );
                   }
                   if (state.flags & 512) {
-                    state.check = crc32(state.check, input2, copy, next);
+                    state.check = crc322(state.check, input2, copy, next);
                   }
                   have -= copy;
                   next += copy;
@@ -7249,7 +7249,7 @@ var require_inflate = __commonJS({
                   }
                 } while (len && copy < have);
                 if (state.flags & 512) {
-                  state.check = crc32(state.check, input2, copy, next);
+                  state.check = crc322(state.check, input2, copy, next);
                 }
                 have -= copy;
                 next += copy;
@@ -7275,7 +7275,7 @@ var require_inflate = __commonJS({
                   }
                 } while (len && copy < have);
                 if (state.flags & 512) {
-                  state.check = crc32(state.check, input2, copy, next);
+                  state.check = crc322(state.check, input2, copy, next);
                 }
                 have -= copy;
                 next += copy;
@@ -7850,7 +7850,7 @@ var require_inflate = __commonJS({
                 state.total += _out;
                 if (_out) {
                   strm.adler = state.check = /*UPDATE(state.check, put - _out, _out);*/
-                  state.flags ? crc32(state.check, output2, _out, put - _out) : adler32(state.check, output2, _out, put - _out);
+                  state.flags ? crc322(state.check, output2, _out, put - _out) : adler32(state.check, output2, _out, put - _out);
                 }
                 _out = left;
                 if ((state.flags ? hold : zswap32(hold)) !== state.check) {
@@ -7916,7 +7916,7 @@ var require_inflate = __commonJS({
       state.total += _out;
       if (state.wrap && _out) {
         strm.adler = state.check = /*UPDATE(state.check, strm.next_out - _out, _out);*/
-        state.flags ? crc32(state.check, output2, _out, strm.next_out - _out) : adler32(state.check, output2, _out, strm.next_out - _out);
+        state.flags ? crc322(state.check, output2, _out, strm.next_out - _out) : adler32(state.check, output2, _out, strm.next_out - _out);
       }
       strm.data_type = state.bits + (state.last ? 64 : 0) + (state.mode === TYPE ? 128 : 0) + (state.mode === LEN_ || state.mode === COPY_ ? 256 : 0);
       if ((_in === 0 && _out === 0 || flush === Z_FINISH) && ret === Z_OK) {
@@ -8340,7 +8340,7 @@ var require_ZipFileWorker = __commonJS({
     var utils = require_utils();
     var GenericWorker = require_GenericWorker();
     var utf8 = require_utf8();
-    var crc32 = require_crc32();
+    var crc322 = require_crc32();
     var signature = require_signature();
     var decToHex = function(dec, bytes) {
       var hex5 = "", i;
@@ -8404,7 +8404,7 @@ var require_ZipFileWorker = __commonJS({
       if (useUTF8ForFileName) {
         unicodePathExtraField = // Version
         decToHex(1, 1) + // NameCRC32
-        decToHex(crc32(encodedFileName), 4) + // UnicodeName
+        decToHex(crc322(encodedFileName), 4) + // UnicodeName
         utfEncodedFileName;
         extraFields += // Info-ZIP Unicode Path Extra Field
         "up" + // size
@@ -8414,7 +8414,7 @@ var require_ZipFileWorker = __commonJS({
       if (useUTF8ForComment) {
         unicodeCommentExtraField = // Version
         decToHex(1, 1) + // CommentCRC32
-        decToHex(crc32(encodedComment), 4) + // UnicodeName
+        decToHex(crc322(encodedComment), 4) + // UnicodeName
         utfEncodedComment;
         extraFields += // Info-ZIP Unicode Path Extra Field
         "uc" + // size
@@ -153098,6 +153098,7 @@ async function applyTemplate(deck, template, opts = {}) {
 // src/backends/resvg.ts
 import { mkdirSync, readFileSync as readFileSync5, writeFileSync } from "node:fs";
 import { join as join3 } from "node:path";
+import { deflateSync } from "node:zlib";
 
 // node_modules/@resvg/resvg-wasm/index.mjs
 var wasm;
@@ -167501,6 +167502,59 @@ async function rasterize(svg, width) {
   const png = r.render().asPng();
   return Buffer.from(png);
 }
+function crc32(buf) {
+  let c = ~0;
+  for (const b of buf) {
+    c ^= b;
+    for (let k = 0; k < 8; k++) c = c >>> 1 ^ 3988292384 & -(c & 1);
+  }
+  return ~c >>> 0;
+}
+async function rasterizeOpaque(svg, width) {
+  await ensureResvg();
+  const r = new Resvg2(svg, {
+    fitTo: { mode: "width", value: Math.round(width) },
+    font: {
+      fontBuffers,
+      loadSystemFonts: false,
+      defaultFontFamily: "Liberation Sans"
+    },
+    shapeRendering: 2,
+    textRendering: 1
+  });
+  const img = r.render();
+  const { width: w, height: h, pixels } = img;
+  const raw = Buffer.alloc((w * 3 + 1) * h);
+  for (let y = 0; y < h; y++) {
+    raw[y * (w * 3 + 1)] = 0;
+    for (let x2 = 0; x2 < w; x2++) {
+      const i = (y * w + x2) * 4;
+      const o = y * (w * 3 + 1) + 1 + x2 * 3;
+      raw[o] = pixels[i];
+      raw[o + 1] = pixels[i + 1];
+      raw[o + 2] = pixels[i + 2];
+    }
+  }
+  const chunk = (type, data) => {
+    const len = Buffer.alloc(4);
+    len.writeUInt32BE(data.length);
+    const td = Buffer.concat([Buffer.from(type, "ascii"), data]);
+    const crc = Buffer.alloc(4);
+    crc.writeUInt32BE(crc32(td));
+    return Buffer.concat([len, td, crc]);
+  };
+  const ihdr = Buffer.alloc(13);
+  ihdr.writeUInt32BE(w, 0);
+  ihdr.writeUInt32BE(h, 4);
+  ihdr[8] = 8;
+  ihdr[9] = 2;
+  return Buffer.concat([
+    Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]),
+    chunk("IHDR", ihdr),
+    chunk("IDAT", deflateSync(raw, { level: 6 })),
+    chunk("IEND", Buffer.alloc(0))
+  ]);
+}
 function previewName(i, id) {
   return `${String(i + 1).padStart(2, "0")}-${id}.png`;
 }
@@ -178837,7 +178891,8 @@ async function drawNode(doc, n) {
       let buf = key ? cache.get(key) : void 0;
       if (!buf && key) {
         let bytes;
-        if (n.svg) bytes = await rasterize(n.svg, Math.min(2400, w * 180));
+        if (n.svg)
+          bytes = n.decorative ? await rasterizeOpaque(n.svg, Math.min(2400, w * 180)) : await rasterize(n.svg, Math.min(2400, w * 180));
         else if (n.path) bytes = readFileSync9(n.path);
         else if (n.data) bytes = Buffer.from(n.data.base64, "base64");
         if (bytes) {

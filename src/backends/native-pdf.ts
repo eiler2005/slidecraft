@@ -9,7 +9,7 @@ import { chartAlt } from '../engine/alt.ts';
 import { type Face, faceOf, fontPath, measureFontIds } from '../engine/fonts.ts';
 import type { Master, Scene, SceneNode, Stroke, TextNode } from '../engine/scene.ts';
 import type { MeasureFont } from '../spec/theme.ts';
-import { rasterize } from './resvg.ts';
+import { rasterize, rasterizeOpaque } from './resvg.ts';
 import type { Engine } from './types.ts';
 
 const P = 72; // pt per inch
@@ -153,7 +153,11 @@ async function drawNode(doc: Doc, n: SceneNode): Promise<void> {
       let buf: unknown = key ? cache.get(key) : undefined;
       if (!buf && key) {
         let bytes: Buffer | undefined;
-        if (n.svg) bytes = await rasterize(n.svg, Math.min(2400, w * 180));
+        // decor is flattened onto the background: opaque RGB keeps pdfkit synchronous
+        if (n.svg)
+          bytes = n.decorative
+            ? await rasterizeOpaque(n.svg, Math.min(2400, w * 180))
+            : await rasterize(n.svg, Math.min(2400, w * 180));
         else if (n.path) bytes = readFileSync(n.path);
         else if (n.data) bytes = Buffer.from(n.data.base64, 'base64');
         if (bytes) {

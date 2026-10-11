@@ -14,6 +14,7 @@ All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachang
 
 ### Fixed
 - `kpi-tiles` (tiles variant): labels were drawn under the card background and invisible since 0.1. Cards are now drawn first; the new check prevents a repeat.
+- **Native PDF reproducibility:** theme decor is now embedded as an opaque RGB image. pdfkit splits alpha channels asynchronously, and that occasionally reordered objects between runs (caught by the new showcase check in CI).
 
 ## [0.4.0] — 2026-10-11
 

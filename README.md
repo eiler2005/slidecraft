@@ -4,6 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/eiler2005/slidecraft/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/eiler2005/slidecraft/ci.yml?branch=main&label=CI&style=flat&labelColor=0B1F3A&color=1F5FBF"></a>
+  <a href="https://www.npmjs.com/package/@eiler2005/slidecraft"><img alt="npm" src="https://img.shields.io/npm/v/@eiler2005/slidecraft?style=flat&labelColor=0B1F3A&color=1F5FBF"></a>
   <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-1F5FBF?style=flat&labelColor=0B1F3A"></a>
   <a href="#install"><img alt="Works with Claude Code, Codex and any LLM agent" src="https://img.shields.io/badge/agents-Claude_Code_·_Codex_·_any_LLM-1F5FBF?style=flat&labelColor=0B1F3A"></a>
   <a href="https://eiler2005.github.io/slidecraft/"><img alt="Gallery site" src="https://img.shields.io/badge/gallery-GitHub_Pages-1F5FBF?style=flat&labelColor=0B1F3A"></a>
@@ -137,7 +138,7 @@ Pick your agent. All of them drive the same CLI, the committed bundle `dist/slid
 | **Claude Code** | `/plugin marketplace add eiler2005/slidecraft` then `/plugin install slidecraft@slidecraft` | `/slidecraft:new <what the deck must achieve, for whom>` |
 | **OpenAI Codex** | clone, then `node dist/slidecraft.mjs codex install` (skills in `~/.codex/skills/slidecraft*`) | `codex "Using SlideCraft, make a 5-slide deck that …"` |
 | **Cursor, Gemini CLI, Aider, Copilot agents, any LLM with a shell** | clone; point the agent at [`AGENTS.md`](AGENTS.md) | "Follow AGENTS.md and make a deck that …" — see [use with any agent](docs/how-to/use-with-any-agent.md) |
-| **No agent** | clone | write `deck.yaml` and `node dist/slidecraft.mjs build` |
+| **No agent, or any script** | `npx @eiler2005/slidecraft` — no clone needed ([npm](https://www.npmjs.com/package/@eiler2005/slidecraft)) | `npx @eiler2005/slidecraft build deck.yaml` |
 
 ```sh
 git clone https://github.com/eiler2005/slidecraft && cd slidecraft
@@ -193,7 +194,7 @@ Shipped in 0.4:
 - `callout` — every visual pattern now has a layout (32);
 - freeform HTML, and the `slidecraft fix` loop (0.3).
 
-Next (0.5): npm publish, an MCP server, stock photos, Excel/CSV into charts, icons, live preview. See [ROADMAP.md](ROADMAP.md).
+Next (0.5): an MCP server, stock photos, Excel/CSV into charts, icons, live preview. See [ROADMAP.md](ROADMAP.md).
 
 ## Contributing
 

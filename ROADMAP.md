@@ -44,7 +44,7 @@ SlideCraft ships in milestones. Each one ends with something people can use, tes
 - ✅ Tagged, accessible PDF (headings, alt text, table headers, artifacts); source hyperlinks in every format.
 - ✅ A4 landscape format, one-pager, DOCX memo.
 - ✅ Image generation for `text-image` slots (`slidecraft images`, opt-in; prompt kept as provenance).
-- ✅ npm package `@eiler2005/slidecraft` (zero runtime deps), gallery site on GitHub Pages.
+- ✅ npm package [`@eiler2005/slidecraft`](https://www.npmjs.com/package/@eiler2005/slidecraft) published (zero runtime deps; `npx @eiler2005/slidecraft`), gallery site on GitHub Pages.
 - ✅ Freeform HTML slides with the same overflow and text-size checks.
 - ✅ `slidecraft fix`: fit loop with measured character budgets, applied by JSON pointer.
 - ✅ PPTX accessibility: title placeholders read first, chart alt text in words, decorative marks; `SC-A11Y-*` checks (0.4).
@@ -55,7 +55,6 @@ Reach and inputs. Ordered by value:
 
 | Item | Why | Notes |
 |---|---|---|
-| **npm publish** (`npx @eiler2005/slidecraft`) | Install with one command, no clone | The package is ready (zero runtime dependencies, `files` whitelist, `prepublishOnly` check); needs the maintainer's npm account |
 | **MCP server** (`slidecraft mcp`) | Build decks from Claude Desktop, Cursor, Zed and any MCP client, not only from coding agents | Tools: `new`, `templates`, `scaffold`, `validate`, `fix`, `build`, `layouts`; stdio transport; same JSON as the CLI |
 | **Stock photos** (Pexels, Pixabay) next to generation | Real photos for story decks instead of generated ones, with credit lines | Provider option for `slidecraft images`; attribution goes to the source line and the manifest |
 | **Excel and CSV into charts** | Chart data straight from the client's tables, no retyping | `chart: { from: data.xlsx, sheet, range }`; read at build time; values pinned in the manifest |

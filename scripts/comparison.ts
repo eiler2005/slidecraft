@@ -321,7 +321,7 @@ figcaption{font-size:12px;color:var(--muted);margin-top:4px}
 <table class="sum"><tr><th>Deck</th><th>Reference → result</th><th>Pages ≥ 95 %</th><th>Worst</th><th>Median</th></tr>
 ${summary.map(({ d, min, median, pass }) => `<tr><td>${esc(d.id)}</td><td>${esc(d.reference)} → ${esc(d.result)}</td><td>${pass}/${d.pages.length}</td><td><span class="b ${badge(min)}">${pct(min)}</span></td><td><span class="b ${badge(median)}">${pct(median)}</span></td></tr>`).join('')}
 </table></header>
-<nav>${out.map((d, i) => `<button data-d="${esc(d.id)}"${i ? '' : ' class="on"'}>${esc(d.id)}</button>`).join('')}</nav>
+<nav>${out.map((d, i) => `<button type="button" data-d="${esc(d.id)}"${i ? '' : ' class="on"'}>${esc(d.id)}</button>`).join('')}</nav>
 <main>${out
   .map(
     (d, i) => `<section class="deck${i ? '' : ' on'}" id="${esc(d.id)}">

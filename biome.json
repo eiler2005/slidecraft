@@ -13,7 +13,8 @@
       "!tests/fixtures/digital-ruble/reference.html",
       "!schemas",
       "!library/catalog.json",
-      "!docs/showcase/orchestration-run"
+      "!docs/showcase/orchestration-run",
+      "!comparison"
     ]
   },
   "formatter": {

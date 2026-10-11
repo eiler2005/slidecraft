@@ -23,6 +23,7 @@ export interface Run {
   text: string;
   bold?: boolean;
   italic?: boolean;
+  underline?: boolean;
   color?: Color;
   /** Hyperlink target (source URLs). */
   link?: string;
@@ -43,6 +44,13 @@ export interface TextStyle {
   size: number;
   /** Exact line spacing, pt. */
   lineSpacing: number;
+  /** Preserve proportional Office paragraph spacing on import; lineSpacing remains
+   * the resolved point advance used by the shared vector layout. */
+  lineSpacingMultiple?: number;
+  /** Office automatic spacing is distinct from an explicit 100% paragraph value. */
+  lineSpacingAuto?: boolean;
+  /** All engines must use the same pair-kerning policy. Default false. */
+  kerning?: boolean;
   color: Color;
   bold?: boolean;
   italic?: boolean;
@@ -59,6 +67,7 @@ export interface LineSegment {
   width: number;
   bold: boolean;
   italic: boolean;
+  underline?: boolean;
   color: Color;
   link?: string;
 }
@@ -74,6 +83,14 @@ export interface Line {
 export interface TextNode {
   kind: 'text';
   box: Box;
+  /** Optional authored container, distinct from the measured glyph/content box.
+   * Retains margins, anchoring and overflow semantics when importing Office text. */
+  textFrame?: {
+    box: Box;
+    insets: { l: number; r: number; t: number; b: number };
+    valign: 'top' | 'middle' | 'bottom';
+    isTextBox?: boolean;
+  };
   style: TextStyle;
   paragraphs: Paragraph[];
   lines: Line[];
@@ -315,6 +332,8 @@ export interface SceneSlide {
   notes?: string;
   /** Plain title text, for manifests, outlines and accessibility. */
   title: string;
+  /** Independent composition contract; must survive lowering and export. */
+  requiredRoles?: string[];
 }
 
 export interface Scene {

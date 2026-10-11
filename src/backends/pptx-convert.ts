@@ -6,7 +6,7 @@
  * SLIDECRAFT_CONVERTER=libreoffice|powerpoint forces one.
  */
 import { execFileSync, spawnSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, mkdtempSync, rmSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { basename, dirname, join, resolve } from 'node:path';
 import type { Engine } from './types.ts';
@@ -56,8 +56,9 @@ function viaPowerPoint(inPptx: string, outPdf: string): void {
 tell application "Microsoft PowerPoint"
   open (POSIX file ${asString(inPptx)})
   delay 2
-  save active presentation in (POSIX file ${asString(outPdf)}) as save as PDF
-  close active presentation saving no
+  set exportPresentation to active presentation
+  save exportPresentation in (POSIX file ${asString(outPdf)}) as save as PDF
+  close exportPresentation saving no
 end tell
 end timeout`;
   try {
@@ -107,16 +108,21 @@ export function convertToPdf(inPptx: string, outPdf: string): void {
   if (!c)
     throw new Error('No converter available (PowerPoint or LibreOffice) — run `slidecraft doctor`');
   mkdirSync(dirname(outPdf), { recursive: true });
-  if (c.kind === 'powerpoint') viaPowerPoint(resolve(inPptx), resolve(outPdf));
-  else {
-    const tmp = mkdtempSync(join(tmpdir(), 'sc-conv-'));
-    try {
-      copyFileSync(viaLibreOffice(c.bin, resolve(inPptx), tmp), outPdf);
-    } finally {
-      rmSync(tmp, { recursive: true, force: true });
-    }
+  // Never render onto a previous PDF or open an already-open client file.
+  // PowerPoint can silently retain an existing PDF on save-as, yielding stale QA.
+  const tmp = mkdtempSync(join(tmpdir(), 'sc-conv-'));
+  try {
+    const input = join(tmp, `${basename(tmp)}.pptx`);
+    const output = join(tmp, `${basename(tmp)}.pdf`);
+    copyFileSync(resolve(inPptx), input);
+    if (c.kind === 'powerpoint') viaPowerPoint(input, output);
+    else viaLibreOffice(c.bin, input, tmp);
+    if (!existsSync(output) || !readFileSync(output).subarray(0, 5).equals(Buffer.from('%PDF-')))
+      throw new Error('Converter finished but no fresh valid PDF was written');
+    copyFileSync(output, outPdf);
+  } finally {
+    rmSync(tmp, { recursive: true, force: true });
   }
-  if (!existsSync(outPdf)) throw new Error('Converter finished but no PDF was written');
 }
 
 export const pptxConvertEngine: Engine = {

@@ -48,9 +48,19 @@ slides, or let a large blank background mask missing labels. Automated metrics
 help locate defects; they do not replace inspecting every slide.
 
 The [Digital Ruble regression](../../tests/fixtures/digital-ruble/README.md) applies
-these rules to 22 slides, using `Digital_Ruble_Explainer_RU_v3` as the content
-authority and frozen HTML as the redesigned visual reference. Its initial run is
+these rules to 22 slides, using `Digital_Ruble_Explainer_RU_v3` as the content and
+visual authority. The frozen historical HTML is known to omit chrome and remains
+diagnostic evidence, not the acceptance target. Its initial run is
 a diagnostic baseline, not a declaration that the current export meets 95%.
 
 Project architecture diagrams use English. Presentation language remains a deck
 property; translating documentation must not translate client slide content.
+
+## Promote every correction into the library
+
+A regression deck exposes a defect; it must not own the repair. Implement the
+rule in the shared composition, font/layout, import, renderer or verification
+module. Add a small synthetic test with unrelated content as well as the corpus
+test. Never select a rendering fix by a client name, filename or slide index.
+Keep format-specific mechanisms in adapters but represent their intended behavior
+(for example pair kerning or automatic paragraph spacing) in the shared model.

@@ -15,11 +15,16 @@ import { pathToFileURL } from 'node:url';
 import { findChrome, runChrome } from '../src/backends/html.ts';
 import { convertToPdf, pptxConvertEngine } from '../src/backends/pptx-convert.ts';
 import { buildDeck } from '../src/build.ts';
+import { allFontPaths } from '../src/engine/fonts.ts';
+import { rebuildPptx } from '../src/library/pptx-rebuild.ts';
 import { pptxInventory, readPpm, textDelta, visualMetrics } from './lib/deck-regression.ts';
 
 const fixture = resolve('tests/fixtures/digital-ruble');
 const config = JSON.parse(readFileSync(join(fixture, 'baseline.json'), 'utf8'));
-const out = resolve('tests/.output/digital-ruble');
+const legacy = process.argv.includes('--legacy-html');
+const out = resolve(
+  legacy ? 'tests/.output/digital-ruble/legacy' : 'tests/.output/digital-ruble/fidelity',
+);
 const sha = (path: string) => createHash('sha256').update(readFileSync(path)).digest('hex');
 for (const baseline of [config.original, config.reference])
   if (sha(join(fixture, baseline.file)) !== baseline.sha256)
@@ -39,18 +44,24 @@ if (!office.available)
   );
 mkdirSync(out, { recursive: true });
 console.log('Building editable PPTX and live HTML, plus Chrome PDF…');
-const result = await buildDeck(join(fixture, config.candidate), {
+const original = join(fixture, config.original.file);
+const buildOptions = {
   formats: ['pptx', 'html', 'pdf'],
   pptxEngine: 'pptxgenjs',
   pdfEngine: 'html',
   outDir: join(out, 'candidate'),
-});
+} as const;
+const result = legacy
+  ? await buildDeck(join(fixture, config.candidate), {
+      ...buildOptions,
+      formats: [...buildOptions.formats],
+    })
+  : await rebuildPptx(original, { ...buildOptions, formats: [...buildOptions.formats] });
 const getFile = (kind: string) => {
   const file = result.files.find((f) => f.kind === kind);
   if (!file) throw new Error(`Missing ${kind} output: ${JSON.stringify(result.diagnostics)}`);
   return file.path;
 };
-const original = join(fixture, config.original.file);
 const candidate = getFile('pptx');
 console.log('Rendering original and candidate in Office…');
 const originalPdf = join(out, 'original-office.pdf');
@@ -121,6 +132,7 @@ const slides = expected.map((source, i) => {
   const htmlToPptx = compare('html', 'pptx');
   const historicalToPptx = compare('historical', 'pptx');
   const originalToPptx = compare('original', 'pptx');
+  const originalToHtml = compare('original', 'html');
   return {
     slide: i + 1,
     text,
@@ -130,18 +142,26 @@ const slides = expected.map((source, i) => {
     htmlToPptx,
     historicalToPptx,
     originalToPptx,
+    originalToHtml,
     // Pictures are deliberately conservative: this fixture expects fully native exhibits.
     nativeObjectsPass: output.pictures === 0 && output.shapes > 0,
     textPass: text.missing.length === 0 && text.added.length === 0,
     notesPass: notes.missing.length === 0,
-    // The original owns content; the approved redesign HTML owns the new look.
-    // Original visual distance is informational, not a contradictory second style gate.
-    visualPass: [htmlToPptx, historicalToPptx].every((m) => m.worstRegion >= config.target),
+    // User corrected the reference: historical HTML itself omitted chrome.
+    // Keep it frozen for diagnosis, but require both outputs to match the original.
+    visualPass: (legacy
+      ? [htmlToPptx, historicalToPptx]
+      : [htmlToPptx, originalToPptx, originalToHtml]
+    ).every((m) => m.worstRegion >= config.target),
   };
 });
 const report = {
   schemaVersion: 1,
   fixture: config.id,
+  mode: legacy ? 'legacy-html-diagnostic' : 'original-native-fidelity',
+  referencePolicy: legacy
+    ? 'historical-html'
+    : 'User requested original visual/chrome restoration in both HTML and PPTX; historical HTML retained unchanged as known-defective diagnostic reference.',
   createdAt: new Date().toISOString(),
   baseline: config,
   provenance: {
@@ -151,14 +171,30 @@ const report = {
     office: office.detail,
     poppler: spawnSync('pdftoppm', ['-v'], { encoding: 'utf8' }).stderr.trim(),
     systemFontSha256: sha('/System/Library/Fonts/SFNS.ttf'),
+    fontSha256: Object.fromEntries(allFontPaths().map((f) => [`${f.font}/${f.face}`, sha(f.path)])),
     candidateInputs: Object.fromEntries(
+      (legacy
+        ? [
+            'deck.yaml',
+            'theme/public-tech.json',
+            'sections/core.yaml',
+            'sections/international.yaml',
+            'sections/appendix.yaml',
+          ]
+        : [config.original.file]
+      ).map((file) => [file, sha(join(fixture, file))]),
+    ),
+    implementation: Object.fromEntries(
       [
-        'deck.yaml',
-        'theme/public-tech.json',
-        'sections/core.yaml',
-        'sections/international.yaml',
-        'sections/appendix.yaml',
-      ].map((file) => [file, sha(join(fixture, file))]),
+        'src/library/pptx-scene-import.ts',
+        'src/library/pptx-rebuild.ts',
+        'src/engine/text.ts',
+        'src/backends/svg.ts',
+        'src/backends/html.ts',
+        'src/backends/pptxgenjs.ts',
+        'src/backends/pptx-convert.ts',
+        'scripts/lib/deck-regression.ts',
+      ].map((file) => [file, sha(file)]),
     ),
     originalSha256: sha(original),
     candidateSha256: sha(candidate),
@@ -191,14 +227,14 @@ writeFileSync(
     '',
     report.metric,
     '',
-    '| Slide | Exact text | Notes preserved | Native objects | Worst HTML/PPTX region | Worst historical/PPTX region |',
-    '|---|---|---|---|---|---|',
+    '| Slide | Exact text | Notes preserved | Native objects | HTML/PPTX | Original/PPTX | Original/HTML | Historical/PPTX (diagnostic) |',
+    '|---|---|---|---|---|---|---|---|',
     ...slides.map(
       (s) =>
-        `| ${s.slide} | ${s.textPass ? 'PASS' : 'FAIL'} | ${s.notesPass ? 'PASS' : 'FAIL'} | ${s.nativeObjectsPass ? 'PASS' : 'FAIL'} | ${percent(s.htmlToPptx.worstRegion)} | ${percent(s.historicalToPptx.worstRegion)} |`,
+        `| ${s.slide} | ${s.textPass ? 'PASS' : 'FAIL'} | ${s.notesPass ? 'PASS' : 'FAIL'} | ${s.nativeObjectsPass ? 'PASS' : 'FAIL'} | ${percent(s.htmlToPptx.worstRegion)} | ${percent(s.originalToPptx.worstRegion)} | ${percent(s.originalToHtml.worstRegion)} | ${percent(s.historicalToPptx.worstRegion)} |`,
     ),
     '',
-    'Original PPTX is the content authority; frozen HTML owns the redesigned look. Original visual distance is informational.',
+    report.referencePolicy,
     '',
     'Detailed token deltas, fonts, input hashes, rasters and diagnostics: [report.json](report.json).',
     '',

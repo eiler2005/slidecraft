@@ -44,7 +44,30 @@ Verification has distinct levels:
 3. `--png-engine pptx-convert` renders the **actual PPTX** through PowerPoint or LibreOffice and Poppler into `previews-office/`; the manifest records the renderer. `resvg` previews only Scene IR and cannot certify Office output.
 4. Compare actual Office pages with frozen HTML references at identical dimensions; inspect wrapping, positioning and missing elements, then review each page.
 
-**95%+ fidelity is an acceptance target, not a certified blanket guarantee.** The Digital Ruble integration runner now combines original-text/note checks, native-object counts and 4×4 region RGB/detail differences against both frozen and current HTML. It records fonts and renderer provenance and fails on any damaged slide, not only the deck average. This is an initial diagnostic gate, not a calibrated perceptual 95% score. Manual review and metric calibration remain necessary; a background-dominated pixel score is insufficient.
+**95%+ fidelity is an acceptance target, not a certified blanket guarantee.** The Digital Ruble integration runner combines original-text/note checks, native-object counts and 4×4 region RGB/detail differences. After the owner identified missing design in the historical HTML, the original PPTX became the visual authority too: original ↔ HTML, original ↔ rebuilt PPTX and HTML ↔ rebuilt PPTX are required. The frozen historical HTML remains diagnostic evidence. The runner records fonts and renderer provenance and fails on any damaged slide, not only the deck average. This is an initial diagnostic gate, not a calibrated perceptual 95% score. Manual review and metric calibration remain necessary; a background-dominated pixel score is insufficient.
+
+### Reuse corrections, not deck-specific patches
+
+Frame ownership, text measurement, geometry conversion and renderer verification
+live in common modules. A defect found in a client deck must be reduced to a generic
+unit test and fixed in that layer. Regression fixtures must never be imported by
+production code; a deck ID, title or slide number must not select a rendering fix.
+Font-specific behavior must be named and tested as a font policy, not applied to
+unrelated families.
+
+`slidecraft rebuild input.pptx -f pptx,html` uses the reusable native importer
+(`src/library/pptx-scene-import.ts`) and the standard Scene backends. It retains
+shape identities and source geometry; it does not return a renamed original or
+flatten slides. Native cell shapes and editable text are a supported table
+equivalent. Import diagnostics block a fidelity rebuild until an editable
+equivalent is implemented. Unsupported visuals must not disappear silently.
+
+The composer independently declares required frame roles. HTML/SVG serializers
+retain those identities; serialized HTML and PPTX undergo presence checks, and
+PPTX text boxes are checked for geometry and font-size drift. Canvas layouts use
+the standard frame by default. Explicit `frame: none` means the author owns the
+whole frame and must supply it. Sources cannot be invented: an absent source
+needs author input or a diagnostic, not fabricated footer text.
 
 The owner explicitly authorised the 22-slide Digital Ruble corpus as a public regression fixture. `tests/fixtures/digital-ruble/` contains the immutable original PPTX, a font-externalised historical HTML reference, hash locks and candidate input. `npm run test:digital-ruble` checks content, editability and actual Office output; generated reports stay ignored. This is a specific consent exception, not permission to commit other client content. See [regression instructions](../../tests/fixtures/digital-ruble/README.md) and [generation principles](presentation-generation-principles.md).
 

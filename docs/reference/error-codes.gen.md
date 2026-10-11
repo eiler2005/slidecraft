@@ -7,6 +7,10 @@
 
 | Code | Severity | Meaning | Why | Fix |
 |---|---|---|---|---|
+| `SC-IMPORT-001` | error | Original PowerPoint object needs an editable equivalent | A source object or typography setting cannot yet be represented by the shared Scene importer. | Implement the corresponding editable primitive or source-font mapping before rebuilding; never drop the object or rasterise the slide. |
+| `SC-HTML-002` | error | Required slide element missing from HTML | Serialized HTML did not preserve the shared slide frame contract. | Repair the HTML/SVG renderer. Titles, numbering, sources and visual frame elements must survive in every output. |
+| `SC-CHROME-001` | error | Required slide chrome missing or duplicated | Titles, section labels, source lines, page numbers and theme decoration are part of the slide contract, not optional exporter embellishments. | Restore the shared frame or the required native object. Do not remove the requirement or rasterise the slide to make validation pass. |
+| `SC-PPTX-003` | error | Editable object geometry or typography changed during export | The named PowerPoint shape no longer has the geometry or font size declared by the shared Scene. | Repair the renderer mapping; do not compensate by changing the reference sizes. |
 | `SC-SPEC-001` | error | Deck does not match the schema | A field is missing, misspelled, has the wrong type or exceeds its declared capacity. | Read `slidecraft layouts --json` for the layout contract and correct the field at the pointer. |
 | `SC-SPEC-002` | error | Unknown reference | A theme, storyline, layout, variant or source id does not exist. | Use an id from `slidecraft themes`, `slidecraft storylines`, `slidecraft layouts` or the deck `sources:` list. |
 | `SC-SPEC-003` | error | Duplicate slide id | Slide ids must be unique so reviews and fixes can target one slide. | Give every slide a unique kebab-case `id`. |

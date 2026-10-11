@@ -118,7 +118,7 @@
       "variants": [
         "body"
       ],
-      "purpose": "Use for an imported or reference-matched HTML composition that owns the entire slide canvas and must remain editable in PowerPoint.",
+      "purpose": "Use for custom HTML with shared title, source and page chrome by default. Explicit frame:none is reserved for a verified full-page composition that owns all chrome.",
       "frame": "none"
     },
     {

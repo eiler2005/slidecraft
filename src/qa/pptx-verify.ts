@@ -9,6 +9,7 @@ import { posix } from 'node:path';
 import JSZip from 'jszip';
 import { shapeName } from '../backends/pptx-a11y.ts';
 import type { Scene, SceneNode } from '../engine/scene.ts';
+import { checkChrome } from './chrome.ts';
 import { type Diagnostic, diag } from './codes.ts';
 
 const norm = (s: string) =>
@@ -52,7 +53,7 @@ export async function verifyPptx(
   scene: Scene,
 ): Promise<{ diagnostics: Diagnostic[]; checked: number }> {
   const zip = await JSZip.loadAsync(readFileSync(path));
-  const out: Diagnostic[] = [];
+  const out: Diagnostic[] = checkChrome(scene);
   const xmlOf = async (part: string) => (await zip.file(part)?.async('string')) ?? '';
   const linkedPart = async (part: string, type: string): Promise<string | undefined> => {
     const rels = await xmlOf(
@@ -86,6 +87,46 @@ export async function verifyPptx(
       const name = shapeName(node, s.id);
       if (name && !xml.includes(`name="${name}"`))
         out.push(diag('SC-PPTX-002', `Named editable element missing: ${name}`, { slide: s.id }));
+    }
+    // Verify the physical contract as well as text presence. A named object can
+    // survive export yet be tiny, displaced or rendered at the wrong font size.
+    const shapes = [...xml.matchAll(/<p:sp(?:\s[^>]*)?>[\s\S]*?<\/p:sp>/g)].map((m) => m[0]);
+    for (const node of s.nodes) {
+      const name = shapeName(node, s.id);
+      if (!name || !('box' in node)) continue;
+      const shape = shapes.find((shape) => shape.includes(`name="${name}"`));
+      if (!shape) continue; // object-presence checks report this separately
+      const transform = /<a:xfrm[^>]*>([\s\S]*?)<\/a:xfrm>/.exec(shape)?.[1] ?? '';
+      const off = /<a:off\s[^>]*x="(-?\d+)"[^>]*y="(-?\d+)"/.exec(transform);
+      const ext = /<a:ext\s[^>]*cx="(\d+)"[^>]*cy="(\d+)"/.exec(transform);
+      if (off && ext) {
+        const actual = [Number(off[1]), Number(off[2]), Number(ext[1]), Number(ext[2])].map(
+          (n) => n / 914400,
+        );
+        const box = node.kind === 'text' ? (node.textFrame?.box ?? node.box) : node.box;
+        const expected = [box.x, box.y, box.w, box.h];
+        if (actual.some((n, i) => Math.abs(n - expected[i]!) > 0.002))
+          out.push(
+            diag('SC-PPTX-003', `Geometry changed for ${name}`, {
+              slide: s.id,
+              measured: actual.join(', '),
+              limit: expected.join(', '),
+            }),
+          );
+      }
+      if (node.kind === 'text') {
+        const sizes = [...shape.matchAll(/<a:rPr\s[^>]*\bsz="(\d+)"/g)].map(
+          (m) => Number(m[1]) / 100,
+        );
+        if (sizes.some((size) => Math.abs(size - node.style.size) > 0.02))
+          out.push(
+            diag('SC-PPTX-003', `Font size changed for ${name}`, {
+              slide: s.id,
+              measured: sizes.join(', '),
+              limit: `${node.style.size}pt`,
+            }),
+          );
+      }
     }
     const layoutPart = await linkedPart(part, 'slideLayout');
     const masterPart = layoutPart ? await linkedPart(layoutPart, 'slideMaster') : undefined;

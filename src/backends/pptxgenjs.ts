@@ -52,6 +52,7 @@ export function textRuns(t: TextNode): Any[] {
       const o: Any = {
         bold: r.bold ?? t.style.bold ?? false,
         italic: r.italic ?? t.style.italic ?? false,
+        ...(r.underline !== undefined ? { underline: r.underline } : {}),
         color: hex(r.color ?? t.style.color),
         // pptxgenjs starts a new paragraph whenever `align` changes between runs,
         // so every run carries the same value; `bullet` only on the first run.
@@ -71,21 +72,28 @@ export function textRuns(t: TextNode): Any[] {
 
 function textOpts(t: TextNode, slideId?: string): Any {
   const name = shapeName(t, slideId);
+  const box = t.textFrame?.box ?? t.box;
+  const pad = t.textFrame?.insets;
   return {
-    x: t.box.x,
-    y: t.box.y,
-    w: t.box.w,
-    h: t.box.h,
-    margin: 0,
+    x: box.x,
+    y: box.y,
+    w: box.w,
+    h: box.h,
+    // pptxgenjs shape text uses [left, right, bottom, top], unlike its tables.
+    margin: pad ? [pad.l * 72, pad.r * 72, pad.b * 72, pad.t * 72] : 0,
     fontFace: pptFontFace(t.style.family),
     fontSize: t.style.size,
     color: hex(t.style.color),
-    lineSpacing: t.style.lineSpacing,
-    valign: t.style.valign,
+    ...(t.style.lineSpacingAuto
+      ? {}
+      : t.style.lineSpacingMultiple !== undefined
+        ? { lineSpacingMultiple: t.style.lineSpacingMultiple }
+        : { lineSpacing: t.style.lineSpacing }),
+    valign: t.textFrame?.valign ?? t.style.valign,
     align: t.style.align,
     fit: 'none',
     wrap: true,
-    isTextBox: true,
+    isTextBox: t.textFrame?.isTextBox ?? true,
     // the action title becomes the slide's title placeholder in post-processing;
     // field text boxes are named after their field so `slidecraft sync` can map edits back
     ...(name ? { objectName: name } : {}),
@@ -285,8 +293,8 @@ function addNode(pptx: Pptx, slide: Slide, n: SceneNode, slideId?: string): Prom
       const o: Any = {
         x,
         y,
-        w: Math.max(0.0001, Math.abs(n.x2 - n.x1)),
-        h: Math.max(0.0001, Math.abs(n.y2 - n.y1)),
+        w: Math.abs(n.x2 - n.x1),
+        h: Math.abs(n.y2 - n.y1),
         line: { ...lineProps(n.stroke), ...(n.arrowEnd ? { endArrowType: 'triangle' } : {}) },
       };
       const name = shapeName(n, slideId);
@@ -417,7 +425,7 @@ async function defineMaster(pptx: Pptx, m: Master, scene: Scene) {
 export async function normalizeZip(
   buf: Buffer,
   epoch: Date,
-  opts: { officeTheme?: string } = {},
+  opts: { officeTheme?: string; scene?: Scene } = {},
 ): Promise<Buffer> {
   const zin = await JSZip.loadAsync(buf);
   const zout = new JSZip();
@@ -462,6 +470,25 @@ export async function normalizeZip(
       data = markDecorative(Buffer.from(data).toString('utf8'));
     if (/^ppt\/slides\/slide\d+\.xml$/.test(name)) {
       let xml = Buffer.from(data).toString('utf8');
+      const slideIndex = Number(/slide(\d+)\.xml$/.exec(name)?.[1]) - 1;
+      const sourceSlide = opts.scene?.slides[slideIndex];
+      if (sourceSlide) {
+        const kerned = new Set(
+          sourceSlide.nodes
+            .filter((n): n is TextNode => n.kind === 'text' && n.style.kerning === true)
+            .map((n) => shapeName(n, sourceSlide.id)),
+        );
+        xml = xml.replace(/<p:sp>[\s\S]*?<\/p:sp>/g, (shape) => {
+          const objectName = /<p:cNvPr[^>]* name="([^"]*)"/.exec(shape)?.[1];
+          const threshold = objectName && kerned.has(objectName) ? 100 : 400000;
+          // DrawingML kern is a minimum font-size threshold, NOT a boolean.
+          // Office treats zero specially as disabled. Use 1pt for enabled,
+          // and a high threshold for disabled; never inherit a master default.
+          return shape.replace(/<a:(?:rPr|defRPr|endParaRPr)\b[^>]*>/g, (tag) =>
+            tag.replace(/\s+kern="[^"]*"/g, '').replace(/(\/?>)$/, ` kern="${threshold}"$1`),
+          );
+        });
+      }
       // The action title is the slide's title placeholder, read first; pictures without
       // alt text are decorative (pptxgenjs would otherwise write the file path as descr).
       xml = markDecorative(titleFirst(markTitle(xml)));
@@ -521,9 +548,12 @@ export async function renderPptx(scene: Scene, epoch: Date): Promise<Buffer> {
         scene.template.footer ? { footer: scene.template.footer } : {},
       )
     ).buf;
-    return normalizeZip(raw, epoch);
+    return normalizeZip(raw, epoch, { scene });
   }
-  return normalizeZip(raw, epoch, scene.officeTheme ? { officeTheme: scene.officeTheme } : {});
+  return normalizeZip(raw, epoch, {
+    scene,
+    ...(scene.officeTheme ? { officeTheme: scene.officeTheme } : {}),
+  });
 }
 
 export const pptxgenjsEngine: Engine = {

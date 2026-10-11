@@ -53,7 +53,8 @@ function drawText(doc: Doc, t: TextNode) {
       doc.text(s.text, (t.box.x + s.x) * P, y, {
         lineBreak: false,
         baseline: 'alphabetic',
-        features: [] as never,
+        features: { kern: t.style.kerning === true, liga: false, clig: false } as never,
+        ...(s.underline ? { underline: true } : {}),
       });
       if (s.link)
         doc.link(

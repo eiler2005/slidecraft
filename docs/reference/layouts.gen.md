@@ -17,7 +17,7 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 | [`text`](#text) | message | `bullets`, `paragraphs`, `two-column` | Use for plain text when no exhibit fits — bullets, short paragraphs or two columns. Also where imported slides land. |
 | [`before-after`](#before-after) | message | `panels` | Use for a change told as two states — how things are today and how they will be — with one number on each side. |
 | [`freeform`](#freeform) | message | `body` | Use for a browser-first creative exhibit no layout covers: HTML and CSS inside the standard frame, checked for overflow and text size like every other slide. |
-| [`freeform-canvas`](#freeform-canvas) | message | `body` | Use for an imported or reference-matched HTML composition that owns the entire slide canvas and must remain editable in PowerPoint. |
+| [`freeform-canvas`](#freeform-canvas) | message | `body` | Use for custom HTML with shared title, source and page chrome by default. Explicit frame:none is reserved for a verified full-page composition that owns all chrome. |
 | [`native-canvas`](#native-canvas) | message | `body` | Use for bespoke compositions that must remain editable in PowerPoint: every rectangle, line and text block is a native PPTX object. |
 | [`kpi-tiles`](#kpi-tiles) | numbers | `tiles`, `strip` | Use for 2–4 headline numbers that prove the title at a glance, each with its label, change and context. |
 | [`evidence-panorama`](#evidence-panorama) | numbers | `metric-and-cards` | Connect one sourced headline metric to four parallel models, implications or use cases; equal cards express categories, not relative magnitude. |
@@ -454,7 +454,7 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 
 ## freeform-canvas
 
-**Freeform canvas** — Use for an imported or reference-matched HTML composition that owns the entire slide canvas and must remain editable in PowerPoint.
+**Freeform canvas** — Use for custom HTML with shared title, source and page chrome by default. Explicit frame:none is reserved for a verified full-page composition that owns all chrome.
 
 ![freeform-canvas · body](../gallery/layouts/freeform-canvas--body.png)
 

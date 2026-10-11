@@ -54,11 +54,12 @@ export function textSvg(t: TextNode): string {
     }
     for (const s of line.segments) {
       if (s.link) out += `<a href="${esc(s.link)}" target="_blank">`;
-      out += `<text x="${px(t.box.x + s.x)}" y="${y}" font-family="${fam}" font-size="${size}"${s.bold ? ' font-weight="bold"' : ''}${s.italic ? ' font-style="italic"' : ''} fill="${s.color}" xml:space="preserve">${esc(s.text)}</text>`;
+      out += `<text x="${px(t.box.x + s.x)}" y="${y}" font-family="${fam}" font-size="${size}"${s.bold ? ' font-weight="bold"' : ''}${s.italic ? ' font-style="italic"' : ''}${s.underline ? ' text-decoration="underline"' : ''} fill="${s.color}" xml:space="preserve">${esc(s.text)}</text>`;
       if (s.link) out += '</a>';
     }
   }
-  return out;
+  // Browser defaults must not silently apply different shaping than the measurer.
+  return `<g font-kerning="${t.style.kerning ? 'normal' : 'none'}" font-variant-ligatures="none">${out}</g>`;
 }
 
 function nestedSvg(svg: string, x: number, y: number, w: number, h: number): string {
@@ -69,6 +70,14 @@ function nestedSvg(svg: string, x: number, y: number, w: number, h: number): str
 }
 
 export function nodeSvg(n: SceneNode): string {
+  const markup = nodeBodySvg(n);
+  const pointer = 'pointer' in n && n.pointer ? ` data-sc-pointer="${esc(n.pointer)}"` : '';
+  return n.role || pointer
+    ? `<g${n.role ? ` data-sc-role="${esc(n.role)}"` : ''}${pointer}>${markup}</g>`
+    : markup;
+}
+
+function nodeBodySvg(n: SceneNode): string {
   switch (n.kind) {
     case 'html':
       // native in browsers (HTML deck, Chrome PDF); other engines get a rasterised image
@@ -165,7 +174,7 @@ export function masterSvg(m: Master, slideNo: number): string {
     const fam = vectorFamily(s.style.measure);
     const x = s.style.align === 'right' ? px(s.box.x + s.box.w) : px(s.box.x);
     const anchor = s.style.align === 'right' ? ' text-anchor="end"' : '';
-    out += `<text x="${x}" y="${px(s.box.y + s.box.h * 0.8)}"${anchor} font-family="${fam}" font-size="${ptpx(s.style.size)}" fill="${s.style.color}">${slideNo}</text>`;
+    out += `<text data-sc-role="page-number" x="${x}" y="${px(s.box.y + s.box.h * 0.8)}"${anchor} font-family="${fam}" font-size="${ptpx(s.style.size)}" fill="${s.style.color}">${slideNo}</text>`;
   }
   return out;
 }

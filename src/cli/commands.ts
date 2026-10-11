@@ -10,6 +10,7 @@ import { isComposable } from '../layouts/composition.ts';
 import { LAYOUTS } from '../layouts/index.ts';
 import { exhibitRoutes } from '../library/exhibits.ts';
 import { loadStorylines, loadThemes } from '../library/load.ts';
+import { rebuildPptx } from '../library/pptx-rebuild.ts';
 import { SCHEMAS_DIR, VERSION } from '../paths.ts';
 import { Brief } from '../spec/brief.ts';
 import { deckJsonSchema } from '../spec/deck.ts';
@@ -93,6 +94,42 @@ export function slugFrom(text: string): string {
 }
 
 export function registerCommands(program: Command): void {
+  program
+    .command('rebuild')
+    .description(
+      'Rebuild an original native PPTX through shared geometry into editable PPTX and HTML',
+    )
+    .argument('<pptx>', 'authoritative original PowerPoint')
+    .option('-o, --out <dir>', 'output directory; original is never overwritten')
+    .option('-f, --format <list>', 'comma-separated: pptx,html,pdf,png', 'pptx,html')
+    .option('--pdf-engine <id>', 'native | html | pptx-convert')
+    .option('--png-engine <id>', 'resvg | pptx-convert')
+    .option('--json', 'machine-readable output')
+    .action(
+      async (
+        file: string,
+        o: { out?: string; format: string; pdfEngine?: string; pngEngine?: string },
+      ) => {
+        const formats = o.format.split(',').map((f) => f.trim());
+        if (formats.some((f) => !['pptx', 'html', 'pdf', 'png'].includes(f)))
+          throw new Error('rebuild supports pptx,html,pdf,png');
+        const r = await rebuildPptx(file, {
+          outDir: o.out,
+          formats: formats as OutputKind[],
+          pdfEngine: o.pdfEngine,
+          pngEngine: o.pngEngine,
+        });
+        printJson({
+          ok: !r.diagnostics.some((d) => d.severity === 'error'),
+          files: r.files,
+          manifest: r.manifestPath,
+          diagnostics: r.diagnostics,
+        });
+        process.exitCode = r.diagnostics.some((d) => d.severity === 'error')
+          ? EXIT.deckErrors
+          : EXIT.ok;
+      },
+    );
   program.version(VERSION, '-v, --version');
   program
     .command('components')

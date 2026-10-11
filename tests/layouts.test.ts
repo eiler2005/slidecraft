@@ -11,6 +11,7 @@ import { composeDeck } from '../src/engine/compose.ts';
 import { LAYOUTS } from '../src/layouts/index.ts';
 import type { LoadedDeck } from '../src/library/load.ts';
 import { loadThemes } from '../src/library/load.ts';
+import { checkChrome } from '../src/qa/chrome.ts';
 import { checkScene } from '../src/qa/scene-checks.ts';
 import { Deck, Slide } from '../src/spec/deck.ts';
 
@@ -56,7 +57,7 @@ describe.each(LAYOUTS.map((l) => [l.id, l] as const))('layout %s', (id, def) => 
     def.examples.forEach((ex, i) => {
       it(`example ${i} (${ex.variant ?? def.variants[0]}) composes cleanly in ${theme.id}`, () => {
         const { scene, diagnostics } = composeDeck(deckFor(id, theme.id, i));
-        const all = [...diagnostics, ...checkScene(scene)];
+        const all = [...diagnostics, ...checkScene(scene), ...checkChrome(scene)];
         const errors = all.filter((d) => d.severity === 'error');
         expect(errors, JSON.stringify(errors, null, 2)).toEqual([]);
         if (theme.id === 'consulting-classic') {

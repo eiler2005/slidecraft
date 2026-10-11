@@ -5,6 +5,28 @@
 
 Run from a clone with `node dist/slidecraft.mjs <command>` (zero install) or `npx tsx src/cli/main.ts <command>` during development. When stdout is not a terminal, commands that support `--json` print JSON.
 
+## `rebuild`
+
+Rebuild an original native PPTX through shared geometry into editable PPTX and HTML
+
+```
+Usage: slidecraft slidecraft rebuild [options] <pptx>
+
+Rebuild an original native PPTX through shared geometry into editable PPTX and
+HTML
+
+Arguments:
+  pptx                 authoritative original PowerPoint
+
+Options:
+  -o, --out <dir>      output directory; original is never overwritten
+  -f, --format <list>  comma-separated: pptx,html,pdf,png (default: "pptx,html")
+  --pdf-engine <id>    native | html | pptx-convert
+  --png-engine <id>    resvg | pptx-convert
+  --json               machine-readable output
+  -h, --help           display help for command
+```
+
 ## `components`
 
 List reusable native body exhibits and their existing content contracts

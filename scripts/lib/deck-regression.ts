@@ -16,7 +16,11 @@ const attr = (s: string, name: string) =>
 export function paragraphs(xml: string): string[] {
   return [...xml.matchAll(/<a:p(?:\s[^>]*)?>([\s\S]*?)<\/a:p>/g)]
     .map((p) =>
-      [...p[1]!.matchAll(/<a:t(?:\s[^>]*)?>([\s\S]*?)<\/a:t>|<a:br\s*\/>/g)]
+      [
+        ...p[1]!.matchAll(
+          /<a:t(?:\s[^>]*)?>([\s\S]*?)<\/a:t>|<a:br\b[^>]*(?:\/>|>[\s\S]*?<\/a:br>)/g,
+        ),
+      ]
         .map((t) => (t[1] === undefined ? ' ' : decode(t[1])))
         .join(''),
     )

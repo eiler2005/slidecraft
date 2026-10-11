@@ -41,6 +41,11 @@ describe('Digital Ruble baseline and regression machinery', () => {
     expect(
       paragraphs('<a:p><a:r><a:t>&#x41;&amp;</a:t></a:r><a:br/><a:r><a:t>B</a:t></a:r></a:p>'),
     ).toEqual(['A& B']);
+    expect(
+      paragraphs(
+        '<a:p><a:r><a:t>A</a:t></a:r><a:br><a:rPr lang="ru-RU"/></a:br><a:r><a:t>B</a:t></a:r></a:p>',
+      ),
+    ).toEqual(['A B']);
   });
   it('uses presentation order and relationships, preserving numeric notes and ignoring slide-number placeholders', async () => {
     const zip = new JSZip();

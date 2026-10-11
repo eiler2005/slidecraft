@@ -6,10 +6,54 @@ import { describe, expect, it } from 'vitest';
 import { buildHtml } from '../src/backends/html.ts';
 import { buildDeck, checkDeck } from '../src/build.ts';
 import { exhibitRoutes } from '../src/library/exhibits.ts';
+import { checkChrome } from '../src/qa/chrome.ts';
+import { verifyHtml } from '../src/qa/html-verify.ts';
 import { verifyPptx } from '../src/qa/pptx-verify.ts';
 
 const fixture = join(import.meta.dirname, 'fixtures/chrome/deck.yaml');
 describe('shared semantic exhibits and design chrome', () => {
+  it('verifies chrome in serialized HTML and catches a dropped frame node', () => {
+    const scene = checkDeck(fixture).scene!;
+    const html = buildHtml(scene);
+    expect(verifyHtml(html, scene)).toEqual([]);
+    const broken = html.replace('data-sc-role="chrome-side-rail"', 'data-sc-role="lost"');
+    expect(
+      verifyHtml(broken, scene).some(
+        (d) => d.code === 'SC-HTML-002' && d.message.includes('side-rail'),
+      ),
+    ).toBe(true);
+  });
+  it('rejects missing chrome independently of the composer and keeps a canvas frame by default', () => {
+    const r = checkDeck(fixture);
+    const scene = structuredClone(r.scene!);
+    scene.slides[0]!.nodes = scene.slides[0]!.nodes.filter((n) => n.role !== 'chrome-page-number');
+    expect(
+      checkChrome(scene).some(
+        (d) => d.code === 'SC-CHROME-001' && d.message.includes('page-number'),
+      ),
+    ).toBe(true);
+    scene.slides[0]!.nodes.push(scene.slides[0]!.nodes.find((n) => n.role === 'title')!);
+    expect(checkChrome(scene).some((d) => d.message.includes('title'))).toBe(true);
+  });
+  it('detects a surviving title whose geometry or font size was corrupted', async () => {
+    const dir = mkdtempSync(join(tmpdir(), 'sc-chrome-size-'));
+    const r = await buildDeck(fixture, { formats: ['pptx'], outDir: dir, pptxEngine: 'pptxgenjs' });
+    const zip = await JSZip.loadAsync(readFileSync(r.files[0]!.path));
+    const part = 'ppt/slides/slide1.xml';
+    const xml = await zip.file(part)!.async('string');
+    zip.file(
+      part,
+      xml.replace(/<p:sp>[\s\S]*?<\/p:sp>/g, (shape) =>
+        shape.includes('SlideCraft Title')
+          ? shape.replace(/sz="\d+"/g, 'sz="600"').replace(/cx="\d+"/, 'cx="914400"')
+          : shape,
+      ),
+    );
+    const broken = join(dir, 'broken.pptx');
+    writeFileSync(broken, await zip.generateAsync({ type: 'nodebuffer' }));
+    const checked = await verifyPptx(broken, r.scene!);
+    expect(checked.diagnostics.filter((d) => d.code === 'SC-PPTX-003')).toHaveLength(2);
+  });
   it('links visual relationships to real existing layout contracts', () => {
     const routes = exhibitRoutes();
     expect(routes.length).toBeGreaterThan(8);

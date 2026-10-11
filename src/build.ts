@@ -9,6 +9,7 @@ import { composeDeck } from './engine/compose.ts';
 import type { Scene } from './engine/scene.ts';
 import { getTheme, type LoadedDeck, loadDeck } from './library/load.ts';
 import { VERSION } from './paths.ts';
+import { checkChrome } from './qa/chrome.ts';
 import { type Diagnostic, diag } from './qa/codes.ts';
 import { checkConsistency } from './qa/consistency.ts';
 import { verifyPptx } from './qa/pptx-verify.ts';
@@ -41,7 +42,12 @@ export function checkDeck(path: string): CheckResult {
   if (diagnostics.some((d) => d.severity === 'error' && d.code.startsWith('SC-SPEC')))
     return { loaded, diagnostics };
   const { scene, diagnostics: cd } = composeDeck(loaded);
-  diagnostics.push(...cd, ...checkScene(scene), ...checkConsistency(loaded.slides));
+  diagnostics.push(
+    ...cd,
+    ...checkScene(scene),
+    ...checkChrome(scene),
+    ...checkConsistency(loaded.slides),
+  );
   return { loaded, scene, diagnostics: sortDiagnostics(diagnostics) };
 }
 
@@ -65,7 +71,12 @@ export async function buildDeck(path: string, opts: BuildOptions = {}): Promise<
   const diagnostics = [...checked.diagnostics];
   const files: OutputFile[] = [];
   const engines: BuildResult['engines'] = {};
-  if (!scene || diagnostics.some((d) => d.severity === 'error' && d.code.startsWith('SC-SPEC'))) {
+  if (
+    !scene ||
+    diagnostics.some(
+      (d) => d.severity === 'error' && (d.code.startsWith('SC-SPEC') || d.code === 'SC-CHROME-001'),
+    )
+  ) {
     return { ...checked, files, engines };
   }
   const deck = loaded.deck;
@@ -84,7 +95,12 @@ export async function buildDeck(path: string, opts: BuildOptions = {}): Promise<
     const f = await nativeFreeform(scene);
     flat = f.scene;
     diagnostics.push(...f.diagnostics);
-    if (diagnostics.some((d) => d.severity === 'error' && d.code === 'SC-EDIT-002'))
+    diagnostics.push(...checkChrome(flat));
+    if (
+      diagnostics.some(
+        (d) => d.severity === 'error' && (d.code === 'SC-EDIT-002' || d.code === 'SC-CHROME-001'),
+      )
+    )
       return { ...checked, diagnostics: sortDiagnostics(diagnostics), files, engines };
   } else if (hasFreeform) {
     // labels may use the theme's small size; anything smaller is flagged

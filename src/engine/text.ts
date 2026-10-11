@@ -47,6 +47,7 @@ interface Token {
   newline: boolean;
   bold: boolean;
   italic: boolean;
+  underline?: boolean;
   color: string;
   link?: string;
 }
@@ -57,7 +58,10 @@ function tokenize(p: Paragraph, style: TextStyle): Token[] {
     const bold = r.bold ?? style.bold ?? false;
     const italic = r.italic ?? style.italic ?? false;
     const color = r.color ?? style.color;
-    const link = r.link ? { link: r.link } : {};
+    const link = {
+      ...(r.link ? { link: r.link } : {}),
+      ...(r.underline !== undefined ? { underline: r.underline } : {}),
+    };
     for (const part of r.text.split(/(\n|[ \t]+)/)) {
       if (!part) continue;
       if (part === '\n')
@@ -78,7 +82,9 @@ function tokenize(p: Paragraph, style: TextStyle): Token[] {
 }
 
 const tokW = (t: Token, s: TextStyle) =>
-  pt2in(textWidthPt(s.measure, faceOf(t.bold, t.italic), s.size, t.space ? ' ' : t.text));
+  pt2in(
+    textWidthPt(s.measure, faceOf(t.bold, t.italic), s.size, t.space ? ' ' : t.text, s.kerning),
+  );
 
 export interface LaidText {
   lines: Line[];
@@ -179,6 +185,7 @@ export function layoutText(
           prev &&
           prev.bold === t.bold &&
           prev.italic === t.italic &&
+          prev.underline === t.underline &&
           prev.color === t.color &&
           prev.link === t.link
         ) {
@@ -194,6 +201,7 @@ export function layoutText(
             color: t.color,
           };
           if (t.link) seg.link = t.link;
+          if (t.underline !== undefined) seg.underline = t.underline;
           segments.push(seg);
         }
         x += w;

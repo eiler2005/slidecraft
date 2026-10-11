@@ -271,7 +271,7 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
     const variant = (slide.variant as string | undefined) ?? def.variants[0];
     const frame =
       slide.frame ??
-      (def.master === 'canvas' ? (theme.chrome.canvasFrame ?? def.frame) : def.frame);
+      (def.master === 'canvas' ? (theme.chrome.canvasFrame ?? 'standard') : def.frame);
     const fullBody = slide.lead ? format.body : format.bodyNoLead;
     const takeawayHeight = slide.bottomLine ? (theme.chrome.takeaway?.height ?? 0.65) + 0.12 : 0;
     const body = { ...fullBody, h: fullBody.h - takeawayHeight };
@@ -419,6 +419,25 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
           : def.master,
       nodes: ctx.nodes,
       title: slide.title,
+      requiredRoles:
+        frame === 'standard'
+          ? [
+              'title',
+              ...(theme.chrome.tracker && slide.tracker ? ['tracker'] : []),
+              ...(theme.chrome.titleRule ? ['chrome-title-rule'] : []),
+              ...(theme.chrome.sideRail ? ['chrome-side-rail'] : []),
+              ...(theme.chrome.accentBar && theme.chrome.markerWithTracker && slide.tracker
+                ? ['chrome-section-marker']
+                : []),
+              ...(theme.chrome.pageNumbers ? ['page-number'] : []),
+              ...((deck.footer ?? theme.chrome.footer) ? ['footer'] : []),
+              ...(theme.chrome.pageNumbers && theme.chrome.pageBadge ? ['chrome-page-badge'] : []),
+              ...(srcText && theme.chrome.sources?.visible !== false ? ['source'] : []),
+              ...(slide.bottomLine && !isGhost
+                ? ['chrome-takeaway-band', 'chrome-takeaway-accent', 'chrome-takeaway']
+                : []),
+            ]
+          : [],
     };
     if (slide.notes) sceneSlide.notes = slide.notes;
     sceneSlides.push(sceneSlide);

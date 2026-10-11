@@ -5,14 +5,17 @@ The repository owner explicitly authorised including this corpus in Git on
 material. Test assets are outside the npm package's `files` list.
 
 - `Digital_Ruble_Explainer_RU_v3.pptx`: immutable, authoritative original.
-- `reference.html`: frozen historical HTML redesign; owns the redesigned look.
+- `reference.html`: frozen historical HTML redesign; known to have lost common chrome.
 - `baseline.json`: SHA-256 locks and provenance. Do not update it to accept a failing export.
 - `deck.yaml`, `sections/`, `theme/`: candidate input to improve, not a golden output.
 
-The original PPTX owns text, data and speaker notes. Its visual distance is also
-reported, but not used as a simultaneous pixel-style requirement: the original
-and the approved HTML redesign are different designs. Both current HTML → PPTX
-and historical HTML → PPTX must pass the visual gate.
+The owner corrected the visual reference after identifying missing chrome in the
+historical HTML. The original PPTX now owns **both appearance and content**.
+The default runner imports its native objects into shared Scene IR and independently
+rebuilds HTML and PPTX. Original → HTML, original → PPTX and HTML → PPTX must all
+pass. Historical HTML stays unchanged as diagnostic evidence, not a target.
+`npm run test:digital-ruble -- --legacy-html` retains the old YAML pipeline for
+diagnosis. Never replace either frozen reference with a candidate render.
 
 The historical HTML originally embedded Apple's system SFNS font. The public
 reference replaces **only** those font data URLs with a local font URL; no Apple
@@ -29,7 +32,7 @@ npm run test:digital-ruble
 ```
 
 The fast test runs on CI without Office. The full, opt-in integration run creates
-`tests/.output/digital-ruble/report.json`, original and candidate Office PDFs,
+`tests/.output/digital-ruble/fidelity/report.json`, original and candidate Office PDFs,
 historical/current HTML PDFs and per-page RGB rasters. Outputs remain ignored.
 Exit code **1 means acceptance failed**, even when PPTX generation succeeded.
 Detailed deltas contain deck content; don't publish reports without reviewing them.

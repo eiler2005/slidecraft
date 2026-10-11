@@ -24,6 +24,8 @@ import { delimiter, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { type Face, fontBuffer, measureFontIds, vectorFamily } from '../engine/fonts.ts';
 import type { Scene } from '../engine/scene.ts';
+import { checkChrome } from '../qa/chrome.ts';
+import { verifyHtml } from '../qa/html-verify.ts';
 import type { MeasureFont } from '../spec/theme.ts';
 import { esc, slideSvg } from './svg.ts';
 import type { Detection, Engine } from './types.ts';
@@ -205,10 +207,11 @@ export const htmlEngine: Engine = {
   async render(scene, opts) {
     mkdirSync(opts.outDir, { recursive: true });
     const p = join(opts.outDir, `${opts.baseName}.html`);
-    writeFileSync(p, buildHtml(scene));
+    const html = buildHtml(scene);
+    writeFileSync(p, html);
     return {
       files: [{ path: p, kind: 'html', engine: 'html' }],
-      diagnostics: [],
+      diagnostics: [...checkChrome(scene), ...verifyHtml(html, scene)],
       limitations: [
         'HTML slides are inline SVG drawn with embedded metric-compatible fonts (Liberation/Gelasio), not editable text boxes.',
       ],
@@ -395,12 +398,16 @@ export const htmlPdfEngine: Engine = {
   async render(scene, opts) {
     const bin = findChrome();
     if (!bin) throw new Error('Chrome/Chromium not found; set CHROME_PATH or install Chrome');
+    const html = buildHtml(scene);
+    const diagnostics = [...checkChrome(scene), ...verifyHtml(html, scene)];
+    if (diagnostics.some((d) => d.severity === 'error'))
+      return { files: [], diagnostics, limitations: [] };
     mkdirSync(opts.outDir, { recursive: true });
     const tmp = mkdtempSync(join(tmpdir(), 'slidecraft-chrome-'));
     try {
       const htmlPath = join(tmp, 'deck.html');
       const tmpPdf = join(tmp, 'deck.pdf');
-      writeFileSync(htmlPath, buildHtml(scene));
+      writeFileSync(htmlPath, html);
       await runChrome(
         bin,
         [
@@ -426,7 +433,7 @@ export const htmlPdfEngine: Engine = {
       copyFileSync(tmpPdf, out);
       return {
         files: [{ path: out, kind: 'pdf', engine: 'html' }],
-        diagnostics: [],
+        diagnostics,
         limitations: [
           'PDF was printed by Chrome from the HTML deck: same layout and bundled fonts as the other vector outputs, but timestamps are not reproducible.',
         ],

@@ -170,21 +170,27 @@ function load(font: MeasureFont, face: Face): Loaded {
 
 const widthCache = new Map<string, number>();
 
-/** Advance width of `text` at 1pt, in points. No kerning, no ligatures (PPTX is written with kern=0). */
-export function unitWidth(font: MeasureFont, face: Face, text: string): number {
-  const key = `${font}:${face}:${text}`;
+/** Advance width of `text` at 1pt, in points. Ligatures are off; kerning is explicit. */
+export function unitWidth(font: MeasureFont, face: Face, text: string, kerning = false): number {
+  const key = `${font}:${face}:${kerning}:${text}`;
   const hit = widthCache.get(key);
   if (hit !== undefined) return hit;
   const f = load(font, face);
-  const run = f.font.layout(text, { kern: false, liga: false, clig: false } as never);
+  const run = f.font.layout(text, { kern: kerning, liga: false, clig: false } as never);
   const w = run.advanceWidth / f.upm;
   widthCache.set(key, w);
   return w;
 }
 
 /** Width of text in points at the given size. */
-export function textWidthPt(font: MeasureFont, face: Face, size: number, text: string): number {
-  return unitWidth(font, face, text) * size;
+export function textWidthPt(
+  font: MeasureFont,
+  face: Face,
+  size: number,
+  text: string,
+  kerning = false,
+): number {
+  return unitWidth(font, face, text, kerning) * size;
 }
 
 /** Ascent and descent per em (for baseline placement). */

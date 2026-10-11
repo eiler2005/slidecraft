@@ -33,6 +33,7 @@ SlideCraft turns a goal into a consulting-grade deck: brief → template → sto
 
 ## Developing SlideCraft itself
 
+- Fix presentation defects in reusable modules (composition, theme, text/layout, importer, renderer or QA), not branches keyed to one deck, title or slide number. Add a generic regression test; keep Digital Ruble as integration evidence. Apply every new rendering rule consistently to HTML and editable PPTX, and verify exported artifacts before claiming fidelity.
 - `npm install`, `npm run check` (biome, tsc, vitest), `npm run gen` after library/CLI changes, `npm run build` before committing (CI checks `dist/` drift).
 - Architecture: `docs/explanation/architecture.md`; ADRs in `docs/adr/`; add layouts/themes/storylines via `docs/how-to/`.
 - Stage explicit paths when committing; never `git add .` with client files around.

@@ -141,11 +141,11 @@ function buildMasters(
   const c = theme.colors;
   const masters: Record<string, Master> = {};
   const small = theme.type.source + 0.5;
-  for (const id of ['cover', 'content', 'divider'] as const) {
+  for (const id of ['cover', 'content', 'divider', 'canvas'] as const) {
     const nodes: SceneNode[] = [];
     // brand template art first, scaled from the template's slide size to this format
     const art = theme.chrome.art;
-    if (art) {
+    if (art && id !== 'canvas') {
       const sx = format.w / art.size.w;
       const sy = format.h / art.size.h;
       const shapes = art.shapes
@@ -191,7 +191,7 @@ function buildMasters(
             role: 'art',
           });
     }
-    const svg = decorSvg(theme, id, format.w, format.h);
+    const svg = id === 'canvas' ? undefined : decorSvg(theme, id, format.w, format.h);
     if (svg) {
       nodes.push({
         kind: 'image',
@@ -230,7 +230,7 @@ function buildMasters(
         nodes.push(staticText(ft, format.footer, textStyle(fonts.body, small, c.muted), 'footer'));
     }
     const m: Master = { id, background: bg, nodes };
-    if (theme.chrome.pageNumbers && id !== 'cover') {
+    if (theme.chrome.pageNumbers && (id === 'content' || id === 'divider')) {
       m.slideNumber = {
         box: format.pageNumber,
         style: textStyle(fonts.body, small, c.muted, { align: 'right' }),

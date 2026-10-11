@@ -12,11 +12,13 @@ const EDITABLE_DEFAULT = join(import.meta.dirname, 'fixtures/freeform/editable-d
 const NATIVE_CANVAS = join(import.meta.dirname, 'fixtures/native-canvas/deck.yaml');
 
 describe('freeform HTML', () => {
-  it('rejects raster freeform for editable PPTX by default', async () => {
+  it('converts supported freeform HTML into editable native PPTX by default', async () => {
     const out = mkdtempSync(join(tmpdir(), 'sc-ff-editable-'));
     const r = await buildDeck(EDITABLE_DEFAULT, { outDir: out, formats: ['pptx'] });
-    expect(r.files).toEqual([]);
-    expect(r.diagnostics.map((d) => d.code)).toContain('SC-EDIT-001');
+    expect(r.diagnostics.filter((d) => d.severity === 'error')).toEqual([]);
+    const zip = await JSZip.loadAsync(readFileSync(r.files.find((f) => f.kind === 'pptx')!.path));
+    const rels = await zip.file('ppt/slides/_rels/slide1.xml.rels')!.async('string');
+    expect(rels).not.toContain('/image');
   });
 
   it('writes native-canvas as editable PowerPoint text and shapes, not a body PNG', async () => {

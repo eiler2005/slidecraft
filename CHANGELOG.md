@@ -2,6 +2,16 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.5.2] — 2026-10-11
+
+### Added
+- **Editable freeform conversion:** supported HTML/CSS freeform slides now use Chrome only to resolve grid/flex geometry, then become separate native PowerPoint rectangles, borders, and text boxes. Rasterisation is no longer the editable default.
+- **`freeform-canvas` layout:** a clean full-canvas master for reference-matched compositions that own their title and chrome, without a duplicate SlideCraft frame.
+
+### Changed
+- Editable PPTX conversion fails explicitly with `SC-EDIT-002` when a freeform block uses CSS without a faithful native analogue (for example gradients, shadows, filters or pseudo-elements), rather than silently flattening it.
+- The native conversion retains a semantic title object when its HTML title matches the slide title; it therefore passes PowerPoint accessibility checks without drawing a second title.
+
 ## [0.5.1] — 2026-10-11
 
 ### Added

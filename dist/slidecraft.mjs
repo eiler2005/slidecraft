@@ -199153,6 +199153,199 @@ import { tmpdir as tmpdir3 } from "node:os";
 import { join as join12 } from "node:path";
 import { pathToFileURL as pathToFileURL3 } from "node:url";
 
+// src/engine/text.ts
+function parseInline(src, base = {}) {
+  const runs = [];
+  const re = /(\*\*[^*]+\*\*|\*[^*]+\*)/g;
+  let last2 = 0;
+  for (const m of src.matchAll(re)) {
+    if (m.index > last2) runs.push({ ...base, text: src.slice(last2, m.index) });
+    const tok = m[0];
+    if (tok.startsWith("**")) runs.push({ ...base, text: tok.slice(2, -2), bold: true });
+    else runs.push({ ...base, text: tok.slice(1, -1), italic: true });
+    last2 = m.index + tok.length;
+  }
+  if (last2 < src.length) runs.push({ ...base, text: src.slice(last2) });
+  return runs.filter((r) => r.text.length > 0);
+}
+function para(text4, opts = {}) {
+  const { base, ...rest } = opts;
+  return { runs: parseInline(text4, base), ...rest };
+}
+function plainText(paragraphs4) {
+  return paragraphs4.map((p) => p.runs.map((r) => r.text).join("")).join("\n");
+}
+function tokenize(p, style) {
+  const out = [];
+  for (const r of p.runs) {
+    const bold2 = r.bold ?? style.bold ?? false;
+    const italic = r.italic ?? style.italic ?? false;
+    const color3 = r.color ?? style.color;
+    const link = r.link ? { link: r.link } : {};
+    for (const part of r.text.split(/(\n|[ \t]+)/)) {
+      if (!part) continue;
+      if (part === "\n")
+        out.push({ text: "", space: false, newline: true, bold: bold2, italic, color: color3, ...link });
+      else
+        out.push({
+          text: part,
+          space: /^[ \t]+$/.test(part),
+          newline: false,
+          bold: bold2,
+          italic,
+          color: color3,
+          ...link
+        });
+    }
+  }
+  return out;
+}
+var tokW = (t, s2) => pt2in(textWidthPt(s2.measure, faceOf(t.bold, t.italic), s2.size, t.space ? " " : t.text));
+function layoutText(paragraphs4, style, width, bulletIndentPt = 14) {
+  const ls = pt2in(style.lineSpacing);
+  const { asc, desc } = vmetrics(style.measure, faceOf(style.bold, style.italic));
+  const sizeIn = pt2in(style.size);
+  const baseOffset = (ls - sizeIn * (asc + desc)) / 2 + sizeIn * asc;
+  const lines = [];
+  const perPara = [];
+  let y = 0;
+  let maxW = 0;
+  let splitWord = false;
+  paragraphs4.forEach((p, pi) => {
+    if (pi > 0 && p.spaceBefore) y += pt2in(p.spaceBefore);
+    const indent = p.bullet ? pt2in(bulletIndentPt) : 0;
+    const avail = Math.max(0.1, width - indent);
+    const tokens2 = tokenize(p, style);
+    const built = [];
+    let cur = { toks: [], w: 0 };
+    const push = () => {
+      while (cur.toks.length && cur.toks[cur.toks.length - 1].t.space) {
+        cur.w -= cur.toks.pop().w;
+      }
+      built.push(cur);
+      cur = { toks: [], w: 0 };
+    };
+    for (const t of tokens2) {
+      if (t.newline) {
+        push();
+        continue;
+      }
+      if (t.space && cur.toks.length === 0) continue;
+      const w = tokW(t, style);
+      if (cur.w + w <= avail + 1e-6 || t.space) {
+        cur.toks.push({ t, w });
+        cur.w += w;
+        continue;
+      }
+      if (cur.toks.length > 0) push();
+      if (w <= avail) {
+        cur.toks.push({ t, w });
+        cur.w += w;
+        continue;
+      }
+      splitWord = true;
+      let chunk = "";
+      for (const ch of t.text) {
+        const test = chunk + ch;
+        const tw = tokW({ ...t, text: test }, style);
+        if (tw > avail && chunk) {
+          cur.toks.push({ t: { ...t, text: chunk }, w: tokW({ ...t, text: chunk }, style) });
+          cur.w = cur.toks.reduce((a, b) => a + b.w, 0);
+          push();
+          chunk = ch;
+        } else chunk = test;
+      }
+      if (chunk) {
+        const tw = tokW({ ...t, text: chunk }, style);
+        cur.toks.push({ t: { ...t, text: chunk }, w: tw });
+        cur.w += tw;
+      }
+    }
+    if (cur.toks.length || built.length === 0) push();
+    built.forEach((ln, li) => {
+      const lineW = ln.w;
+      maxW = Math.max(maxW, lineW + indent);
+      let x0 = indent;
+      if (style.align === "center") x0 = indent + (avail - lineW) / 2;
+      if (style.align === "right") x0 = indent + (avail - lineW);
+      const segments = [];
+      let x2 = x0;
+      for (const { t, w } of ln.toks) {
+        const prev = segments[segments.length - 1];
+        const text4 = t.space ? " " : t.text;
+        if (prev && prev.bold === t.bold && prev.italic === t.italic && prev.color === t.color && prev.link === t.link) {
+          prev.text += text4;
+          prev.width += w;
+        } else {
+          const seg = {
+            text: text4,
+            x: x2,
+            width: w,
+            bold: t.bold,
+            italic: t.italic,
+            color: t.color
+          };
+          if (t.link) seg.link = t.link;
+          segments.push(seg);
+        }
+        x2 += w;
+      }
+      const line3 = { baseline: y + baseOffset, segments };
+      if (p.bullet && li === 0) line3.bulletX = 0;
+      lines.push(line3);
+      y += ls;
+    });
+    perPara.push(built.length);
+  });
+  return { lines, contentHeight: y, maxLineWidth: maxW, linesPerParagraph: perPara, splitWord };
+}
+function fitText(paragraphs4, box2, style, sizes, lineHeight, extra = {}) {
+  const tries = sizes.length ? sizes : [style.size ?? 14];
+  let result;
+  for (const size2 of tries) {
+    const s2 = {
+      ...style,
+      size: size2,
+      lineSpacing: +(size2 * lineHeight).toFixed(2)
+    };
+    const laid = layoutText(paragraphs4, s2, box2.w, extra.bulletIndent ?? 14);
+    const lineCount = laid.lines.length;
+    const maxLines = Math.max(1, Math.floor((box2.h + 1e-6) / pt2in(s2.lineSpacing)));
+    const tooMany = extra.maxLines !== void 0 && lineCount > extra.maxLines;
+    const overflow = Math.max(0, laid.contentHeight - box2.h);
+    const fits = overflow <= 1e-3 && !tooMany && !laid.splitWord;
+    const node2 = makeTextNode(paragraphs4, box2, s2, laid, extra);
+    result = {
+      node: node2,
+      fits,
+      overflow,
+      size: size2,
+      lines: lineCount,
+      maxLines: Math.min(extra.maxLines ?? maxLines, maxLines)
+    };
+    if (fits) return result;
+  }
+  return result;
+}
+function makeTextNode(paragraphs4, box2, style, laid, extra = {}) {
+  let dy = 0;
+  if (style.valign === "middle") dy = Math.max(0, (box2.h - laid.contentHeight) / 2);
+  if (style.valign === "bottom") dy = Math.max(0, box2.h - laid.contentHeight);
+  const lines = dy ? laid.lines.map((l) => ({ ...l, baseline: l.baseline + dy })) : laid.lines;
+  const node2 = {
+    kind: "text",
+    box: box2,
+    style,
+    paragraphs: paragraphs4,
+    lines,
+    contentHeight: laid.contentHeight,
+    bulletIndent: extra.bulletIndent ?? 14
+  };
+  if (extra.role) node2.role = extra.role;
+  if (extra.pointer) node2.pointer = extra.pointer;
+  return node2;
+}
+
 // src/qa/codes.ts
 var CODES = {
   "SC-SPEC-001": {
@@ -199220,6 +199413,12 @@ var CODES = {
     title: "PPTX would contain a flattened picture",
     why: "Freeform HTML needs a browser renderer and cannot be represented as separately editable PowerPoint objects.",
     fix: "Use native-canvas or another native layout. Set output.editablePptx: false only when a rasterised freeform slide is explicitly acceptable."
+  },
+  "SC-EDIT-002": {
+    severity: "error",
+    title: "Freeform HTML cannot be reproduced as editable PowerPoint objects",
+    why: "The freeform block uses a CSS feature that has no equivalent in PowerPoint shapes and text boxes, so preserving both fidelity and editability would be misleading.",
+    fix: "Use solid fills, borders, radii, text, flex or grid positioning; or opt in explicitly with output.editablePptx: false for a raster picture."
   },
   "SC-TITLE-001": {
     severity: "error",
@@ -199385,6 +199584,9 @@ function diag(code, message, extra = {}) {
 // src/backends/freeform-raster.ts
 var PX3 = 96;
 var SCALE = 2;
+var NATIVE_SCRIPT = `<script>
+(()=>{const out={items:[],unsupported:[]},rgb=v=>{let m=v.match(/^rgba?\\(([^)]+)\\)/);if(!m)return null;let a=m[1].split(',').map(x=>x.trim());let h=n=>Math.max(0,Math.min(255,Math.round(+n))).toString(16).padStart(2,'0');return {hex:'#'+h(a[0])+h(a[1])+h(a[2]),alpha:a[3]===undefined?1:+a[3]};},add=(o)=>out.items.push(o);for(const root of document.querySelectorAll('.sc-ff')){let rr=root.getBoundingClientRect(), id=root.id;for(const e of [root,...root.querySelectorAll('*')]){let s=getComputedStyle(e),r=e.getBoundingClientRect();if(!r.width||!r.height)continue;if(s.boxShadow!=='none'||s.backgroundImage!=='none'||s.clipPath!=='none'||s.filter!=='none')out.unsupported.push({id,feature:'shadow, gradient/image, clip-path or filter'});let bg=rgb(s.backgroundColor), bs=[s.borderTop,s.borderRight,s.borderBottom,s.borderLeft].map((_,i)=>({w:parseFloat([s.borderTopWidth,s.borderRightWidth,s.borderBottomWidth,s.borderLeftWidth][i]),c:rgb([s.borderTopColor,s.borderRightColor,s.borderBottomColor,s.borderLeftColor][i])}));let same=bs.every(b=>b.w===bs[0].w&&b.c&&bs[0].c&&b.c.hex===bs[0].c.hex&&b.c.alpha===bs[0].c.alpha);if((bg&&bg.alpha>0)||bs.some(b=>b.w>0)){add({kind:'rect',slide:id,x:r.left-rr.left,y:r.top-rr.top,w:r.width,h:r.height,fill:bg&&bg.alpha?bg.hex:undefined,opacity:bg?bg.alpha:undefined,stroke:same&&bs[0].w?bs[0].c.hex:undefined,strokeWidth:same&&bs[0].w?bs[0].w*.75:undefined,radius:parseFloat(s.borderTopLeftRadius)||0});if(!same)bs.forEach((b,i)=>{if(!b.w||!b.c)return;let q=i===0?[r.left,r.top,r.width,b.w]:i===1?[r.right-b.w,r.top,b.w,r.height]:i===2?[r.left,r.bottom-b.w,r.width,b.w]:[r.left,r.top,b.w,r.height];add({kind:'rect',slide:id,x:q[0]-rr.left,y:q[1]-rr.top,w:q[2],h:q[3],fill:b.c.hex,opacity:b.c.alpha});});}}
+let walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);for(let n; n=walker.nextNode();){let raw=n.textContent||'';if(!raw.trim())continue;let p=n.parentElement,s=getComputedStyle(p),col=rgb(s.color)||{hex:'#000000',alpha:1},groups=new Map();for(let i=0;i<raw.length;i++){let range=document.createRange();range.setStart(n,i);range.setEnd(n,i+1);let r=range.getBoundingClientRect();if(!r.width&&!/\\s/.test(raw[i]))continue;let k=Math.round(r.top*2)/2;let g=groups.get(k);if(!g){g={x:r.left,y:r.top,right:r.right,h:r.height,text:''};groups.set(k,g)}g.x=Math.min(g.x,r.left);g.right=Math.max(g.right,r.right);g.h=Math.max(g.h,r.height);g.text+=raw[i];}for(const g of groups.values()){let text=g.text.replace(/\\s+/g,' ').trim();if(!text)continue;add({kind:'text',slide:id,x:g.x-rr.left,y:g.y-rr.top,w:Math.max(2,g.right-g.x+3),h:Math.max(g.h+4,parseFloat(s.fontSize)*1.35),text,color:col.hex,size:parseFloat(s.fontSize)*.75,bold:+s.fontWeight>=600,italic:s.fontStyle.includes('italic'),align:s.textAlign==='center'?'center':s.textAlign==='right'||s.textAlign==='end'?'right':'left',lineHeight:parseFloat(s.lineHeight)/parseFloat(s.fontSize)||1.2});}}if(getComputedStyle(root,'::before').content!=='none'||getComputedStyle(root,'::after').content!=='none')out.unsupported.push({id,feature:'pseudo-element'});}document.body.setAttribute('data-sc-native',JSON.stringify(out));})();</script>`;
 function chromeArgs(tmp) {
   return [
     "--headless=new",
@@ -199547,6 +199749,118 @@ async function flattenFreeform(scene, minPt) {
     }))
   };
   return { scene: flat2, diagnostics };
+}
+async function nativeFreeform(scene) {
+  const placed = [];
+  let top = 0;
+  for (const s2 of scene.slides)
+    for (const n of s2.nodes)
+      if (n.kind === "html") {
+        placed.push({ slide: s2.id, node: n, id: freeformId(n), top });
+        top += Math.ceil(n.box.h * PX3) + 8;
+      }
+  if (!placed.length) return { scene, diagnostics: [] };
+  const diagnostics = [];
+  const bin = findChrome();
+  if (!bin) {
+    diagnostics.push(
+      diag("SC-EDIT-002", "Chrome is required to calculate editable freeform geometry.", {
+        severity: "error"
+      })
+    );
+    return { scene, diagnostics };
+  }
+  const width = Math.ceil(Math.max(...placed.map((p) => p.node.box.w)) * PX3);
+  const height = Math.max(1, top);
+  const blocks = placed.map(
+    (p) => `<div style="position:absolute;left:0;top:${p.top}px">${freeformMarkup(p.node, p.id)}</div>`
+  ).join("");
+  const page2 = `<!doctype html><html><head><meta charset="utf-8"><style>${fontFaceCss(blocks)}html,body{margin:0;padding:0;background:transparent;width:${width}px;height:${height}px;overflow:hidden}</style></head><body>${blocks}${NATIVE_SCRIPT}</body></html>`;
+  const tmp = mkdtempSync3(join12(tmpdir3(), "slidecraft-native-freeform-"));
+  const nodes = /* @__PURE__ */ new Map();
+  try {
+    const file2 = join12(tmp, "native.html");
+    writeFileSync7(file2, page2);
+    const dom = await dumpDom(bin, [
+      ...chromeArgs(tmp),
+      "--virtual-time-budget=3000",
+      "--dump-dom",
+      pathToFileURL3(file2).href
+    ]);
+    const attr = /data-sc-native="([^"]*)"/.exec(dom)?.[1];
+    if (!attr) throw new Error("Chrome did not return editable freeform geometry");
+    const extracted = JSON.parse(attr.replace(/&quot;/g, '"').replace(/&amp;/g, "&"));
+    const unsupported = new Map(extracted.unsupported.map((x2) => [x2.id, x2.feature]));
+    for (const p of placed) {
+      const feature = unsupported.get(p.id);
+      if (feature) {
+        diagnostics.push(
+          diag("SC-EDIT-002", `Freeform ${p.id} uses unsupported editable CSS: ${feature}.`, {
+            slide: p.slide
+          })
+        );
+        continue;
+      }
+      const font = scene.fonts?.body ?? { family: "Arial", measure: "liberation-sans" };
+      const slideTitle = scene.slides.find((s2) => s2.id === p.slide)?.title;
+      const list = [];
+      for (const item2 of extracted.items.filter((x2) => x2.slide === p.id)) {
+        const x2 = p.node.box.x + item2.x / PX3;
+        const y = p.node.box.y + item2.y / PX3;
+        if (item2.kind === "rect") {
+          list.push({
+            kind: "rect",
+            box: { x: x2, y, w: item2.w / PX3, h: item2.h / PX3 },
+            ...item2.fill ? { fill: item2.fill, fillOpacity: item2.opacity } : {},
+            ...item2.stroke ? { stroke: { color: item2.stroke, width: item2.strokeWidth ?? 0.75 } } : {},
+            ...item2.radius ? { radius: item2.radius / PX3 } : {},
+            role: "freeform-native-shape"
+          });
+        } else {
+          const style = {
+            family: font.family,
+            measure: font.measure,
+            size: item2.size,
+            lineSpacing: item2.size * item2.lineHeight,
+            color: item2.color,
+            bold: item2.bold,
+            italic: item2.italic,
+            align: item2.align,
+            valign: "top"
+          };
+          const box2 = { x: x2, y, w: item2.w / PX3, h: item2.h / PX3 };
+          const ps = [para(item2.text)];
+          list.push(
+            makeTextNode(ps, box2, style, layoutText(ps, style, box2.w), {
+              role: item2.text === slideTitle ? "title" : "freeform-native-text"
+            })
+          );
+        }
+      }
+      nodes.set(p.node, list);
+    }
+  } catch (e) {
+    diagnostics.push(
+      diag("SC-EDIT-002", `Editable freeform conversion failed: ${e.message}`, {
+        severity: "error"
+      })
+    );
+  } finally {
+    try {
+      rmSync5(tmp, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+    } catch {
+    }
+  }
+  return {
+    scene: {
+      ...scene,
+      slides: scene.slides.map((s2) => ({
+        ...s2,
+        nodes: s2.nodes.flatMap((n) => n.kind === "html" ? nodes.get(n) ?? [n] : [n])
+      }))
+    },
+    diagnostics
+  };
 }
 
 // src/engine/compose.ts
@@ -200627,199 +200941,6 @@ function ensureContrast(fg, bg, ratio = 4.5) {
     if (contrast(c, bg) >= ratio) return c;
   }
   return target;
-}
-
-// src/engine/text.ts
-function parseInline(src, base = {}) {
-  const runs = [];
-  const re = /(\*\*[^*]+\*\*|\*[^*]+\*)/g;
-  let last2 = 0;
-  for (const m of src.matchAll(re)) {
-    if (m.index > last2) runs.push({ ...base, text: src.slice(last2, m.index) });
-    const tok = m[0];
-    if (tok.startsWith("**")) runs.push({ ...base, text: tok.slice(2, -2), bold: true });
-    else runs.push({ ...base, text: tok.slice(1, -1), italic: true });
-    last2 = m.index + tok.length;
-  }
-  if (last2 < src.length) runs.push({ ...base, text: src.slice(last2) });
-  return runs.filter((r) => r.text.length > 0);
-}
-function para(text4, opts = {}) {
-  const { base, ...rest } = opts;
-  return { runs: parseInline(text4, base), ...rest };
-}
-function plainText(paragraphs4) {
-  return paragraphs4.map((p) => p.runs.map((r) => r.text).join("")).join("\n");
-}
-function tokenize(p, style) {
-  const out = [];
-  for (const r of p.runs) {
-    const bold2 = r.bold ?? style.bold ?? false;
-    const italic = r.italic ?? style.italic ?? false;
-    const color3 = r.color ?? style.color;
-    const link = r.link ? { link: r.link } : {};
-    for (const part of r.text.split(/(\n|[ \t]+)/)) {
-      if (!part) continue;
-      if (part === "\n")
-        out.push({ text: "", space: false, newline: true, bold: bold2, italic, color: color3, ...link });
-      else
-        out.push({
-          text: part,
-          space: /^[ \t]+$/.test(part),
-          newline: false,
-          bold: bold2,
-          italic,
-          color: color3,
-          ...link
-        });
-    }
-  }
-  return out;
-}
-var tokW = (t, s2) => pt2in(textWidthPt(s2.measure, faceOf(t.bold, t.italic), s2.size, t.space ? " " : t.text));
-function layoutText(paragraphs4, style, width, bulletIndentPt = 14) {
-  const ls = pt2in(style.lineSpacing);
-  const { asc, desc } = vmetrics(style.measure, faceOf(style.bold, style.italic));
-  const sizeIn = pt2in(style.size);
-  const baseOffset = (ls - sizeIn * (asc + desc)) / 2 + sizeIn * asc;
-  const lines = [];
-  const perPara = [];
-  let y = 0;
-  let maxW = 0;
-  let splitWord = false;
-  paragraphs4.forEach((p, pi) => {
-    if (pi > 0 && p.spaceBefore) y += pt2in(p.spaceBefore);
-    const indent = p.bullet ? pt2in(bulletIndentPt) : 0;
-    const avail = Math.max(0.1, width - indent);
-    const tokens2 = tokenize(p, style);
-    const built = [];
-    let cur = { toks: [], w: 0 };
-    const push = () => {
-      while (cur.toks.length && cur.toks[cur.toks.length - 1].t.space) {
-        cur.w -= cur.toks.pop().w;
-      }
-      built.push(cur);
-      cur = { toks: [], w: 0 };
-    };
-    for (const t of tokens2) {
-      if (t.newline) {
-        push();
-        continue;
-      }
-      if (t.space && cur.toks.length === 0) continue;
-      const w = tokW(t, style);
-      if (cur.w + w <= avail + 1e-6 || t.space) {
-        cur.toks.push({ t, w });
-        cur.w += w;
-        continue;
-      }
-      if (cur.toks.length > 0) push();
-      if (w <= avail) {
-        cur.toks.push({ t, w });
-        cur.w += w;
-        continue;
-      }
-      splitWord = true;
-      let chunk = "";
-      for (const ch of t.text) {
-        const test = chunk + ch;
-        const tw = tokW({ ...t, text: test }, style);
-        if (tw > avail && chunk) {
-          cur.toks.push({ t: { ...t, text: chunk }, w: tokW({ ...t, text: chunk }, style) });
-          cur.w = cur.toks.reduce((a, b) => a + b.w, 0);
-          push();
-          chunk = ch;
-        } else chunk = test;
-      }
-      if (chunk) {
-        const tw = tokW({ ...t, text: chunk }, style);
-        cur.toks.push({ t: { ...t, text: chunk }, w: tw });
-        cur.w += tw;
-      }
-    }
-    if (cur.toks.length || built.length === 0) push();
-    built.forEach((ln, li) => {
-      const lineW = ln.w;
-      maxW = Math.max(maxW, lineW + indent);
-      let x0 = indent;
-      if (style.align === "center") x0 = indent + (avail - lineW) / 2;
-      if (style.align === "right") x0 = indent + (avail - lineW);
-      const segments = [];
-      let x2 = x0;
-      for (const { t, w } of ln.toks) {
-        const prev = segments[segments.length - 1];
-        const text4 = t.space ? " " : t.text;
-        if (prev && prev.bold === t.bold && prev.italic === t.italic && prev.color === t.color && prev.link === t.link) {
-          prev.text += text4;
-          prev.width += w;
-        } else {
-          const seg = {
-            text: text4,
-            x: x2,
-            width: w,
-            bold: t.bold,
-            italic: t.italic,
-            color: t.color
-          };
-          if (t.link) seg.link = t.link;
-          segments.push(seg);
-        }
-        x2 += w;
-      }
-      const line3 = { baseline: y + baseOffset, segments };
-      if (p.bullet && li === 0) line3.bulletX = 0;
-      lines.push(line3);
-      y += ls;
-    });
-    perPara.push(built.length);
-  });
-  return { lines, contentHeight: y, maxLineWidth: maxW, linesPerParagraph: perPara, splitWord };
-}
-function fitText(paragraphs4, box2, style, sizes, lineHeight, extra = {}) {
-  const tries = sizes.length ? sizes : [style.size ?? 14];
-  let result;
-  for (const size2 of tries) {
-    const s2 = {
-      ...style,
-      size: size2,
-      lineSpacing: +(size2 * lineHeight).toFixed(2)
-    };
-    const laid = layoutText(paragraphs4, s2, box2.w, extra.bulletIndent ?? 14);
-    const lineCount = laid.lines.length;
-    const maxLines = Math.max(1, Math.floor((box2.h + 1e-6) / pt2in(s2.lineSpacing)));
-    const tooMany = extra.maxLines !== void 0 && lineCount > extra.maxLines;
-    const overflow = Math.max(0, laid.contentHeight - box2.h);
-    const fits = overflow <= 1e-3 && !tooMany && !laid.splitWord;
-    const node2 = makeTextNode(paragraphs4, box2, s2, laid, extra);
-    result = {
-      node: node2,
-      fits,
-      overflow,
-      size: size2,
-      lines: lineCount,
-      maxLines: Math.min(extra.maxLines ?? maxLines, maxLines)
-    };
-    if (fits) return result;
-  }
-  return result;
-}
-function makeTextNode(paragraphs4, box2, style, laid, extra = {}) {
-  let dy = 0;
-  if (style.valign === "middle") dy = Math.max(0, (box2.h - laid.contentHeight) / 2);
-  if (style.valign === "bottom") dy = Math.max(0, box2.h - laid.contentHeight);
-  const lines = dy ? laid.lines.map((l) => ({ ...l, baseline: l.baseline + dy })) : laid.lines;
-  const node2 = {
-    kind: "text",
-    box: box2,
-    style,
-    paragraphs: paragraphs4,
-    lines,
-    contentHeight: laid.contentHeight,
-    bulletIndent: extra.bulletIndent ?? 14
-  };
-  if (extra.role) node2.role = extra.role;
-  if (extra.pointer) node2.pointer = extra.pointer;
-  return node2;
 }
 
 // src/engine/charts.ts
@@ -203564,6 +203685,16 @@ var freeform = {
       pointer: ctx.ptr("html")
     });
   }
+};
+
+// src/layouts/freeform-canvas.ts
+var freeformCanvas = {
+  ...freeform,
+  id: "freeform-canvas",
+  name: "Freeform canvas",
+  purpose: "Use for an imported or reference-matched HTML composition that owns the entire slide canvas and must remain editable in PowerPoint.",
+  master: "canvas",
+  frame: "none"
 };
 
 // src/layouts/funnel.ts
@@ -208434,6 +208565,7 @@ var LAYOUTS = [
   text2,
   beforeAfter,
   freeform,
+  freeformCanvas,
   nativeCanvas,
   kpiTiles,
   chartTakeaway,
@@ -209836,10 +209968,10 @@ function buildMasters(theme, format, fonts, footer) {
   const c = theme.colors;
   const masters = {};
   const small = theme.type.source + 0.5;
-  for (const id of ["cover", "content", "divider"]) {
+  for (const id of ["cover", "content", "divider", "canvas"]) {
     const nodes = [];
     const art = theme.chrome.art;
-    if (art) {
+    if (art && id !== "canvas") {
       const sx2 = format.w / art.size.w;
       const sy2 = format.h / art.size.h;
       const shapes2 = art.shapes ? id === "content" ? art.shapes.content : art.shapes.cover.length ? art.shapes.cover : art.shapes.content : [];
@@ -209879,7 +210011,7 @@ function buildMasters(theme, format, fonts, footer) {
             role: "art"
           });
     }
-    const svg = decorSvg(theme, id, format.w, format.h);
+    const svg = id === "canvas" ? void 0 : decorSvg(theme, id, format.w, format.h);
     if (svg) {
       nodes.push({
         kind: "image",
@@ -209915,7 +210047,7 @@ function buildMasters(theme, format, fonts, footer) {
         nodes.push(staticText(ft, format.footer, textStyle(fonts.body, small, c.muted), "footer"));
     }
     const m = { id, background: bg, nodes };
-    if (theme.chrome.pageNumbers && id !== "cover") {
+    if (theme.chrome.pageNumbers && (id === "content" || id === "divider")) {
       m.slideNumber = {
         box: format.pageNumber,
         style: textStyle(fonts.body, small, c.muted, { align: "right" })
@@ -210481,19 +210613,16 @@ async function buildDeck(path2, opts = {}) {
   const epoch = epochDate();
   const limitations = /* @__PURE__ */ new Set();
   const hasFreeform = scene.slides.some((s2) => s2.nodes.some((n) => n.kind === "html"));
-  if (hasFreeform && formats.includes("pptx") && deck.output?.editablePptx !== false) {
-    diagnostics.push(
-      diag(
-        "SC-EDIT-001",
-        "PPTX output must be editable by default, but layout freeform is HTML/CSS and would become a picture. Use native-canvas or an existing native layout; set output.editablePptx: false only to opt in to rasterisation."
-      )
-    );
-    return { ...checked, diagnostics: sortDiagnostics(diagnostics), files, engines: engines2 };
-  }
   const order = ["pptx", "png", "html", "pdf", "onepager", "docx"];
   let pptxPath;
   let flat2 = scene;
-  if (hasFreeform) {
+  if (hasFreeform && formats.includes("pptx") && deck.output?.editablePptx !== false) {
+    const f = await nativeFreeform(scene);
+    flat2 = f.scene;
+    diagnostics.push(...f.diagnostics);
+    if (diagnostics.some((d) => d.severity === "error" && d.code === "SC-EDIT-002"))
+      return { ...checked, diagnostics: sortDiagnostics(diagnostics), files, engines: engines2 };
+  } else if (hasFreeform) {
     const f = await flattenFreeform(scene, theme?.type.small ?? 9);
     flat2 = f.scene;
     diagnostics.push(...f.diagnostics);

@@ -102,6 +102,16 @@
       "frame": "standard"
     },
     {
+      "id": "freeform-canvas",
+      "name": "Freeform canvas",
+      "group": "message",
+      "variants": [
+        "body"
+      ],
+      "purpose": "Use for an imported or reference-matched HTML composition that owns the entire slide canvas and must remain editable in PowerPoint.",
+      "frame": "none"
+    },
+    {
       "id": "native-canvas",
       "name": "Native canvas",
       "group": "message",

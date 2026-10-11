@@ -14,6 +14,7 @@ import { execSummary } from './exec-summary.ts';
 import { fiveForces } from './five-forces.ts';
 import { footballField } from './football-field.ts';
 import { freeform } from './freeform.ts';
+import { freeformCanvas } from './freeform-canvas.ts';
 import { funnel } from './funnel.ts';
 import { gateMatrix } from './gate-matrix.ts';
 import { issueTree } from './issue-tree.ts';
@@ -55,6 +56,7 @@ export const LAYOUTS: LayoutDef[] = [
   text,
   beforeAfter,
   freeform,
+  freeformCanvas,
   nativeCanvas,
   kpiTiles,
   chartTakeaway,

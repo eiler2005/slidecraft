@@ -2,7 +2,7 @@ import './backends/extra.ts';
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
-import { flattenFreeform } from './backends/freeform-raster.ts';
+import { flattenFreeform, nativeFreeform } from './backends/freeform-raster.ts';
 import { detect, resolveEngine } from './backends/registry.ts';
 import type { OutputFile, OutputKind } from './backends/types.ts';
 import { composeDeck } from './engine/compose.ts';
@@ -75,20 +75,17 @@ export async function buildDeck(path: string, opts: BuildOptions = {}): Promise<
   const epoch = epochDate();
   const limitations = new Set<string>();
   const hasFreeform = scene.slides.some((s) => s.nodes.some((n) => n.kind === 'html'));
-  if (hasFreeform && formats.includes('pptx') && deck.output?.editablePptx !== false) {
-    diagnostics.push(
-      diag(
-        'SC-EDIT-001',
-        'PPTX output must be editable by default, but layout freeform is HTML/CSS and would become a picture. Use native-canvas or an existing native layout; set output.editablePptx: false only to opt in to rasterisation.',
-      ),
-    );
-    return { ...checked, diagnostics: sortDiagnostics(diagnostics), files, engines };
-  }
   const order: OutputKind[] = ['pptx', 'png', 'html', 'pdf', 'onepager', 'docx'];
   let pptxPath: string | undefined;
   // Freeform HTML: browsers draw it live; every other engine gets a Chrome-rendered picture
   let flat = scene;
-  if (hasFreeform) {
+  if (hasFreeform && formats.includes('pptx') && deck.output?.editablePptx !== false) {
+    const f = await nativeFreeform(scene);
+    flat = f.scene;
+    diagnostics.push(...f.diagnostics);
+    if (diagnostics.some((d) => d.severity === 'error' && d.code === 'SC-EDIT-002'))
+      return { ...checked, diagnostics: sortDiagnostics(diagnostics), files, engines };
+  } else if (hasFreeform) {
     // labels may use the theme's small size; anything smaller is flagged
     const f = await flattenFreeform(scene, theme?.type.small ?? 9);
     flat = f.scene;

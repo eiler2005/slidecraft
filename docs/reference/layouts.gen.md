@@ -16,6 +16,7 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 | [`text`](#text) | message | `bullets`, `paragraphs`, `two-column` | Use for plain text when no exhibit fits — bullets, short paragraphs or two columns. Also where imported slides land. |
 | [`before-after`](#before-after) | message | `panels` | Use for a change told as two states — how things are today and how they will be — with one number on each side. |
 | [`freeform`](#freeform) | message | `body` | Use for a browser-first creative exhibit no layout covers: HTML and CSS inside the standard frame, checked for overflow and text size like every other slide. |
+| [`freeform-canvas`](#freeform-canvas) | message | `body` | Use for an imported or reference-matched HTML composition that owns the entire slide canvas and must remain editable in PowerPoint. |
 | [`native-canvas`](#native-canvas) | message | `body` | Use for bespoke compositions that must remain editable in PowerPoint: every rectangle, line and text block is a native PPTX object. |
 | [`kpi-tiles`](#kpi-tiles) | numbers | `tiles`, `strip` | Use for 2–4 headline numbers that prove the title at a glance, each with its label, change and context. |
 | [`chart-takeaway`](#chart-takeaway) | numbers | `bar`, `column`, `stacked`, `line` | Use for one chart that proves the title, with the interpretation in a side panel. |
@@ -376,6 +377,37 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 ```yaml
 - id: example
   layout: freeform
+  title: Three numbers tell the story of the first year
+  sources:
+    - ops-review
+  alt: "Three large numbers in a row: 14 days to 1 day onboarding, 80 percent automated checks, 2.1 times more applications"
+  css: .row{display:flex;gap:28px;height:100%;align-items:stretch}.cell{flex:1;background:var(--surface);border-top:6px solid var(--accent);padding:28px}.n{font-family:var(--font-heading);font-weight:700;font-size:64pt;line-height:1;color:var(--accent)}.l{margin-top:16px;font-size:var(--size-body);color:var(--ink)}.s{margin-top:8px;font-size:var(--size-small);color:var(--muted)}
+  html: <div class="row"><div class="cell"><div class="n">1 day</div><div class="l">to onboard a standard client</div><div class="s">down from 14 days</div></div><div class="cell"><div class="n">80%</div><div class="l">of checks run automatically</div><div class="s">the rest go to a specialist</div></div><div class="cell"><div class="n">2.1×</div><div class="l">more applications per adviser</div><div class="s">same team, same hours</div></div></div>
+```
+
+</details>
+
+## freeform-canvas
+
+**Freeform canvas** — Use for an imported or reference-matched HTML composition that owns the entire slide canvas and must remain editable in PowerPoint.
+
+![freeform-canvas · body](../gallery/layouts/freeform-canvas--body.png)
+
+- **Use when:** Keynotes and story decks that need a bespoke visual; A one-off diagram or composition that would take too long to build from layouts; HTML-first decks presented from a browser
+- **Avoid when:** Any exhibit a layout already covers — layouts stay editable in PowerPoint; Decks the audience will edit: editable PPTX is the default and this layout is rejected unless output.editablePptx is explicitly false
+- **Frame:** full-bleed (the layout draws the whole slide)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `html` | string | yes | ≤ 12000 chars | HTML fragment for the slide body. Theme tokens: var(--ink), var(--accent), var(--font-heading)… |
+| `css` | string |  | ≤ 6000 chars | CSS for the fragment; scoped to this slide |
+| `alt` | string | yes | ≤ 300 chars | What the slide shows, in words — for screen readers and the DOCX memo |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: freeform-canvas
   title: Three numbers tell the story of the first year
   sources:
     - ops-review

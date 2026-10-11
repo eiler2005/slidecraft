@@ -79,6 +79,12 @@ export const CODES = {
     why: 'Freeform HTML needs a browser renderer and cannot be represented as separately editable PowerPoint objects.',
     fix: 'Use native-canvas or another native layout. Set output.editablePptx: false only when a rasterised freeform slide is explicitly acceptable.',
   },
+  'SC-EDIT-002': {
+    severity: 'error',
+    title: 'Freeform HTML cannot be reproduced as editable PowerPoint objects',
+    why: 'The freeform block uses a CSS feature that has no equivalent in PowerPoint shapes and text boxes, so preserving both fidelity and editability would be misleading.',
+    fix: 'Use solid fills, borders, radii, text, flex or grid positioning; or opt in explicitly with output.editablePptx: false for a raster picture.',
+  },
   'SC-TITLE-001': {
     severity: 'error',
     title: 'Action title runs past two lines',

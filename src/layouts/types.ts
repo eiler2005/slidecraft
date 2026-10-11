@@ -45,7 +45,7 @@ export interface LayoutDef<S extends z.ZodObject = z.ZodObject> {
    * none: the layout draws the whole slide (covers, dividers, statements).
    */
   frame: 'standard' | 'none';
-  master: 'content' | 'cover' | 'divider';
+  master: 'content' | 'cover' | 'divider' | 'canvas';
   /** Content fields only. Common fields (id, title, lead, sources, notes…) are added by the deck spec. */
   schema: S;
   /** Sample content used for gallery thumbnails, docs and tests. First entry is canonical. */

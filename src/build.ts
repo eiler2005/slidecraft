@@ -10,6 +10,7 @@ import type { Scene } from './engine/scene.ts';
 import { getTheme, type LoadedDeck, loadDeck } from './library/load.ts';
 import { VERSION } from './paths.ts';
 import { type Diagnostic, diag } from './qa/codes.ts';
+import { checkConsistency } from './qa/consistency.ts';
 import { verifyPptx } from './qa/pptx-verify.ts';
 import { checkScene } from './qa/scene-checks.ts';
 
@@ -39,7 +40,7 @@ export function checkDeck(path: string): CheckResult {
   if (diagnostics.some((d) => d.severity === 'error' && d.code.startsWith('SC-SPEC')))
     return { loaded, diagnostics };
   const { scene, diagnostics: cd } = composeDeck(loaded);
-  diagnostics.push(...cd, ...checkScene(scene));
+  diagnostics.push(...cd, ...checkScene(scene), ...checkConsistency(loaded.slides));
   return { loaded, scene, diagnostics: sortDiagnostics(diagnostics) };
 }
 
@@ -141,6 +142,17 @@ export async function buildDeck(path: string, opts: BuildOptions = {}): Promise<
       slides: scene.slides.length,
     },
     input: { path: relative(outDir, loaded.path), sha256: sha256(loaded.path) },
+    ...(loaded.data
+      ? {
+          data: {
+            files: loaded.data.files.map((f) => ({
+              path: relative(outDir, f.path),
+              sha256: f.sha256,
+            })),
+            facts: loaded.data.facts,
+          },
+        }
+      : {}),
     epoch: epoch.toISOString(),
     engines,
     outputs: files.map((f) => ({

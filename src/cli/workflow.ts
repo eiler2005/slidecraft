@@ -10,6 +10,7 @@ import { libraryCheck } from '../library/check.ts';
 import { generateDocs } from '../library/docs.ts';
 import { applyFixes, type Fix, fitTasks } from '../library/fix.ts';
 import { describeJob, generateImages, openAiProvider, planImages } from '../library/images.ts';
+import { findInMaterials, ingest } from '../library/ingest.ts';
 import {
   getStoryline,
   getTheme,
@@ -416,6 +417,41 @@ export function registerBrandCommands(program: Command): void {
         );
       },
     );
+
+  program
+    .command('ingest')
+    .description(
+      'Add client material (PDF, DOCX, PPTX, XLSX, CSV, MD) as sources with page-level references',
+    )
+    .argument('<files...>', 'documents to read')
+    .requiredOption('--deck <deck>', 'deck.yaml that gets the sources')
+    .option('--dir <dir>', 'where the extracted text goes (default: materials/ next to the deck)')
+    .option('--json', 'machine-readable output')
+    .action(async (files: string[], o: { deck: string; dir?: string; json?: boolean }) => {
+      const r = await ingest(files, { deck: o.deck, ...(o.dir ? { dir: o.dir } : {}) });
+      if (wantsJson(o.json)) printJson({ ok: true, sources: r });
+      else
+        r.forEach((x) =>
+          console.log(
+            `${green('✔')} ${x.id} · ${x.kind} · ${x.sections} ${x.kind === 'pdf' ? 'pages' : 'parts'} → ${relative(process.cwd(), x.materials)}${x.added ? '' : dim(' (source already in the deck)')}`,
+          ),
+        );
+    });
+
+  program
+    .command('find')
+    .description('Find a phrase in ingested material; each hit comes with the citation to use')
+    .argument('<query>', 'words to look for')
+    .option('--deck <deck>', 'deck.yaml whose materials/ to search', 'deck.yaml')
+    .option('--dir <dir>', 'materials directory (overrides --deck)')
+    .option('--json', 'machine-readable output')
+    .action((query: string, o: { deck: string; dir?: string; json?: boolean }) => {
+      const dir = resolve(o.dir ?? join(dirname(resolve(o.deck)), 'materials'));
+      const hits = findInMaterials(query, dir);
+      if (wantsJson(o.json)) printJson({ hits });
+      else if (!hits.length) console.log('No matches.');
+      else hits.forEach((h) => console.log(`${h.ref}  ${dim(h.where)}\n    ${h.snippet}`));
+    });
 
   program
     .command('fix')

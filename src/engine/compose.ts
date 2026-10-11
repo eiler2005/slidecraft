@@ -4,7 +4,7 @@ import type { LoadedDeck } from '../library/load.ts';
 import { getTheme } from '../library/load.ts';
 import { type Diagnostic, diag } from '../qa/codes.ts';
 import { pngSize } from '../qa/pptx-verify.ts';
-import type { Slide } from '../spec/deck.ts';
+import { parseSourceRef, type Slide } from '../spec/deck.ts';
 import type { FontSpec, Theme } from '../spec/theme.ts';
 import { mix } from './color.ts';
 import { createContext } from './context.ts';
@@ -382,7 +382,19 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
     }
 
     // Source line
-    const srcTitles = (slide.sources ?? []).map((id) => sourceMap.get(id)).filter((s) => !!s);
+    // "annual-report#p14": the source plus where in it
+    const srcTitles = (slide.sources ?? [])
+      .map((ref) => {
+        const r = parseSourceRef(ref);
+        const src = sourceMap.get(r.id);
+        if (!src) return undefined;
+        const title =
+          src.title + (src.date ? ` (${src.date})` : '') + (r.where ? `, ${r.where}` : '');
+        const url =
+          src.url && r.page && /\.pdf($|\?)/i.test(src.url) ? `${src.url}#page=${r.page}` : src.url;
+        return { ...src, title, ...(url ? { url } : {}), date: undefined };
+      })
+      .filter((s) => !!s);
     const illustrative = srcTitles.some((s) => s!.illustrative);
     const srcText = [
       illustrative ? 'Illustrative data.' : '',

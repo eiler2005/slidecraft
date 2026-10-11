@@ -1,3 +1,4 @@
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { composeDeck } from '../src/engine/compose.ts';
 import { checkScene } from '../src/qa/scene-checks.ts';
@@ -44,5 +45,32 @@ describe('new: a goal sentence becomes the deck id', () => {
     expect(slugFrom('Совет директоров утверждает выход в Германию')).toBe(
       'sovet-direktorov-utverzhdaet-vykhod-germaniyu',
     );
+  });
+});
+
+describe('cross-slide consistency (SC-CONSIST-001)', () => {
+  it('flags one metric shown with two values, and accepts rounding', async () => {
+    const { checkConsistency } = await import('../src/qa/consistency.ts');
+    const slides = [
+      { id: 'summary', title: 'Germany adds €40M revenue by 2028 on a partner-led entry' },
+      { id: 'value', tiles: [{ value: '€42M', label: 'Germany revenue by 2028' }] },
+      { id: 'plan', title: 'The plan delivers €40.2M revenue by 2028 with two partners' },
+      { id: 'speed', title: 'Partners cut time to first revenue from 18 to 7 months' },
+    ];
+    const d = checkConsistency(slides);
+    expect(d).toHaveLength(1);
+    expect(d[0]!.message).toContain('€42M on value');
+    expect(d[0]!.message).toContain('€40M on summary');
+  });
+
+  it('finds no contradictions in the example decks', async () => {
+    const { checkDeck } = await import('../src/build.ts');
+    const { readdirSync } = await import('node:fs');
+    for (const dir of readdirSync(join(import.meta.dirname, '../examples'))) {
+      const r = checkDeck(join(import.meta.dirname, '../examples', dir, 'deck.yaml'));
+      expect(
+        r.diagnostics.filter((x) => x.code === 'SC-CONSIST-001').map((x) => `${dir}: ${x.message}`),
+      ).toEqual([]);
+    }
   });
 });

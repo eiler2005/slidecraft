@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { LAYOUTS } from '../layouts/index.ts';
+import { Fact } from '../library/data.ts';
 
 export const SlideId = z
   .string()
@@ -16,11 +17,34 @@ export const Source = z
     publisher: z.string().max(80).optional(),
     date: z.string().max(32).optional(),
     url: z.string().url().optional(),
+    file: z
+      .string()
+      .optional()
+      .describe('The document this source is, relative to deck.yaml (from `slidecraft ingest`)'),
+    pages: z.number().int().min(1).optional(),
     note: z.string().max(200).optional(),
     illustrative: z.boolean().default(false).describe('Mark sample / illustrative data honestly'),
   })
   .strict();
 export type Source = z.infer<typeof Source>;
+
+/** "annual-report#p14" → { id: "annual-report", where: "p. 14", page: 14 }. */
+export function parseSourceRef(ref: string): { id: string; where?: string; page?: number } {
+  const [id, loc] = ref.split('#') as [string, string | undefined];
+  if (!loc) return { id };
+  const pages = /^p(\d+)(?:-(\d+))?$/i.exec(loc);
+  if (pages)
+    return pages[2]
+      ? { id, where: `pp. ${pages[1]}–${pages[2]}`, page: Number(pages[1]) }
+      : { id, where: `p. ${pages[1]}`, page: Number(pages[1]) };
+  const slide = /^slide(\d+)$/i.exec(loc);
+  if (slide) return { id, where: `slide ${slide[1]}` };
+  const section = /^s:(.+)$/i.exec(loc);
+  if (section) return { id, where: `“${section[1]}”` };
+  const sheet = /^sheet:(.+)$/i.exec(loc);
+  if (sheet) return { id, where: `sheet ${sheet[1]}` };
+  return { id, where: loc };
+}
 
 /** Fields every slide accepts, whatever its layout. */
 export const CommonSlide = z.object({
@@ -32,7 +56,12 @@ export const CommonSlide = z.object({
     .describe('Action title: one full-sentence claim, ideally 8–14 words; the body proves it'),
   lead: z.string().max(160).optional().describe('Optional one-line lead under the title'),
   tracker: z.string().max(40).optional().describe('Section label shown above the title'),
-  sources: z.array(z.string()).optional().describe('Ids from the deck `sources:` list'),
+  sources: z
+    .array(z.string())
+    .optional()
+    .describe(
+      'Ids from the deck `sources:` list, optionally with a place: "annual-report#p14", "#p14-16", "#slide3", "#sheet:Plan"',
+    ),
   source: z.string().max(180).optional().describe('Free-text source line, if not in the registry'),
   notes: z.string().max(3000).optional().describe('Speaker notes'),
   status: z.enum(['ghost', 'draft', 'final']).optional(),
@@ -103,6 +132,12 @@ export const Deck = z
       .optional()
       .describe('Footer text, e.g. "Confidential — for discussion"'),
     sources: z.array(Source).default([]),
+    facts: z
+      .record(z.string().regex(/^[a-z0-9][a-z0-9-]*$/), Fact)
+      .optional()
+      .describe(
+        'Numbers defined once (a value or a spreadsheet cell) and used as {{id}} in any text',
+      ),
     output: z
       .object({
         formats: z

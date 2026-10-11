@@ -8,11 +8,12 @@ import { getLayout } from '../layouts/index.ts';
 import { STORYLINES_DIR, THEMES_DIR } from '../paths.ts';
 import { type Diagnostic, diag } from '../qa/codes.ts';
 import { Brief } from '../spec/brief.ts';
-import { Deck, type DeckDoc, GhostSlide, Slide } from '../spec/deck.ts';
+import { Deck, type DeckDoc, GhostSlide, parseSourceRef, Slide } from '../spec/deck.ts';
 import { FormatFile } from '../spec/format.ts';
 import { Storyline } from '../spec/storyline.ts';
 import type { Theme } from '../spec/theme.ts';
 import { Theme as ThemeSchema } from '../spec/theme.ts';
+import { type DataReport, resolveData } from './data.ts';
 
 /** Parse a theme file; register its brand fonts and resolve its logo relative to the file. */
 export function readThemeFile(path: string): Theme {
@@ -116,6 +117,8 @@ export interface LoadedDeck {
   path: string;
   baseDir: string;
   diagnostics: Diagnostic[];
+  /** Facts and data files the deck read (for the manifest). */
+  data?: DataReport;
 }
 
 /** Load and validate deck.yaml, expanding `- include: file.yaml` entries. */
@@ -212,6 +215,14 @@ export function loadDeck(path: string): LoadedDeck {
   const slides: Slide[] = [];
   const seen = new Set<string>();
   const sourceIds = new Set(deck.sources.map((s) => s.id));
+  // facts and `from:` data ranges, resolved before the slides are validated
+  const data = resolveData(deck.facts, expanded, baseDir);
+  expanded.splice(0, expanded.length, ...data.slides);
+  deck.title = data.text(deck.title);
+  if (deck.subtitle) deck.subtitle = data.text(deck.subtitle);
+  if (deck.footer) deck.footer = data.text(deck.footer);
+  diagnostics.push(...data.diagnostics);
+
   expanded.forEach((s, i) => {
     const st = (s as { status?: string })?.status;
     const ghost = st === 'ghost' || (st === undefined && deck.status === 'ghost');
@@ -263,7 +274,8 @@ export function loadDeck(path: string): LoadedDeck {
         }),
       );
     seen.add(slide.id);
-    for (const sid of slide.sources ?? []) {
+    for (const ref of slide.sources ?? []) {
+      const sid = parseSourceRef(ref).id;
       if (!sourceIds.has(sid))
         diagnostics.push(
           diag('SC-SPEC-002', `Unknown source id "${sid}"`, {
@@ -284,7 +296,16 @@ export function loadDeck(path: string): LoadedDeck {
       }),
     );
   }
-  return { deck, slides, path: abs, baseDir, diagnostics };
+  return {
+    deck,
+    slides,
+    path: abs,
+    baseDir,
+    diagnostics,
+    ...(Object.keys(data.report.facts).length || data.report.files.length
+      ? { data: data.report }
+      : {}),
+  };
 }
 
 export function loadBrief(path: string): { brief?: Brief; diagnostics: Diagnostic[] } {

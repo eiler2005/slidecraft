@@ -2302,8 +2302,8 @@ var require_lib2 = __commonJS({
         return this;
       }
       var p = this.constructor;
-      return this.then(resolve18, reject2);
-      function resolve18(value) {
+      return this.then(resolve19, reject2);
+      function resolve19(value) {
         function yes() {
           return value;
         }
@@ -2456,8 +2456,8 @@ var require_lib2 = __commonJS({
       }
       return out;
     }
-    Promise2.resolve = resolve17;
-    function resolve17(value) {
+    Promise2.resolve = resolve18;
+    function resolve18(value) {
       if (value instanceof this) {
         return value;
       }
@@ -2992,10 +2992,10 @@ var require_utils = __commonJS({
           if (typeof Blob.prototype.arrayBuffer !== "undefined") {
             return data.arrayBuffer();
           } else if (typeof FileReader !== "undefined") {
-            return new external.Promise(function(resolve17, reject) {
+            return new external.Promise(function(resolve18, reject) {
               var reader = new FileReader();
               reader.onload = function(e) {
-                resolve17(e.target.result);
+                resolve18(e.target.result);
               };
               reader.onerror = function(e) {
                 reject(e.target.error);
@@ -3554,7 +3554,7 @@ var require_StreamHelper = __commonJS({
       }
     }
     function accumulate(helper, updateCallback) {
-      return new external.Promise(function(resolve17, reject) {
+      return new external.Promise(function(resolve18, reject) {
         var dataArray = [];
         var chunkType = helper._internalType, resultType = helper._outputType, mimeType = helper._mimeType;
         helper.on("data", function(data, meta3) {
@@ -3568,7 +3568,7 @@ var require_StreamHelper = __commonJS({
         }).on("end", function() {
           try {
             var result = transformZipOutput(resultType, concat2(chunkType, dataArray), mimeType);
-            resolve17(result);
+            resolve18(result);
           } catch (e) {
             reject(e);
           }
@@ -9681,7 +9681,7 @@ var require_load = __commonJS({
     var Crc32Probe = require_Crc32Probe();
     var nodejsUtils = require_nodejsUtils();
     function checkEntryCRC32(zipEntry) {
-      return new external.Promise(function(resolve17, reject) {
+      return new external.Promise(function(resolve18, reject) {
         var worker = zipEntry.decompressed.getContentWorker().pipe(new Crc32Probe());
         worker.on("error", function(e) {
           reject(e);
@@ -9689,7 +9689,7 @@ var require_load = __commonJS({
           if (worker.streamInfo.crc32 !== zipEntry.decompressed.crc32) {
             reject(new Error("Corrupted zip : CRC32 mismatch"));
           } else {
-            resolve17();
+            resolve18();
           }
         }).resume();
       });
@@ -10392,9 +10392,9 @@ var require_clone = __commonJS({
           } else if (_instanceof2(parent2, nativeSet)) {
             child = new nativeSet();
           } else if (_instanceof2(parent2, nativePromise)) {
-            child = new nativePromise(function(resolve17, reject) {
+            child = new nativePromise(function(resolve18, reject) {
               parent2.then(function(value) {
-                resolve17(_clone(value, depth2 - 1));
+                resolve18(_clone(value, depth2 - 1));
               }, function(err) {
                 reject(_clone(err, depth2 - 1));
               });
@@ -136651,7 +136651,7 @@ var require_b64 = __commonJS({
       var UPPER = "A".charCodeAt(0);
       var PLUS_URL_SAFE = "-".charCodeAt(0);
       var SLASH_URL_SAFE = "_".charCodeAt(0);
-      function decode4(elt) {
+      function decode5(elt) {
         var code = elt.charCodeAt(0);
         if (code === PLUS || code === PLUS_URL_SAFE)
           return 62;
@@ -136680,16 +136680,16 @@ var require_b64 = __commonJS({
           arr[L++] = v;
         }
         for (i = 0, j = 0; i < l; i += 4, j += 3) {
-          tmp = decode4(b64.charAt(i)) << 18 | decode4(b64.charAt(i + 1)) << 12 | decode4(b64.charAt(i + 2)) << 6 | decode4(b64.charAt(i + 3));
+          tmp = decode5(b64.charAt(i)) << 18 | decode5(b64.charAt(i + 1)) << 12 | decode5(b64.charAt(i + 2)) << 6 | decode5(b64.charAt(i + 3));
           push((tmp & 16711680) >> 16);
           push((tmp & 65280) >> 8);
           push(tmp & 255);
         }
         if (placeHolders === 2) {
-          tmp = decode4(b64.charAt(i)) << 2 | decode4(b64.charAt(i + 1)) >> 4;
+          tmp = decode5(b64.charAt(i)) << 2 | decode5(b64.charAt(i + 1)) >> 4;
           push(tmp & 255);
         } else if (placeHolders === 1) {
-          tmp = decode4(b64.charAt(i)) << 10 | decode4(b64.charAt(i + 1)) << 4 | decode4(b64.charAt(i + 2)) >> 2;
+          tmp = decode5(b64.charAt(i)) << 10 | decode5(b64.charAt(i + 1)) << 4 | decode5(b64.charAt(i + 2)) >> 2;
           push(tmp >> 8 & 255);
           push(tmp & 255);
         }
@@ -141548,7 +141548,7 @@ var require_compose_scalar = __commonJS({
     var resolveBlockScalar = require_resolve_block_scalar();
     var resolveFlowScalar = require_resolve_flow_scalar();
     function composeScalar(ctx, token, tagToken, onError) {
-      const { value, type, comment, range } = token.type === "block-scalar" ? resolveBlockScalar.resolveBlockScalar(ctx, token, onError) : resolveFlowScalar.resolveFlowScalar(token, ctx.options.strict, onError);
+      const { value, type, comment, range: range2 } = token.type === "block-scalar" ? resolveBlockScalar.resolveBlockScalar(ctx, token, onError) : resolveFlowScalar.resolveFlowScalar(token, ctx.options.strict, onError);
       const tagName = tagToken ? ctx.directives.tagName(tagToken.source, (msg) => onError(tagToken, "TAG_RESOLVE_FAILED", msg)) : null;
       let tag;
       if (ctx.options.stringKeys && ctx.atKey) {
@@ -141568,7 +141568,7 @@ var require_compose_scalar = __commonJS({
         onError(tagToken ?? token, "TAG_RESOLVE_FAILED", msg);
         scalar = new Scalar.Scalar(value);
       }
-      scalar.range = range;
+      scalar.range = range2;
       scalar.source = value;
       if (type)
         scalar.type = type;
@@ -147513,11 +147513,11 @@ import { join as join4 } from "node:path";
 var import_jszip = __toESM(require_lib3());
 function __awaiter(thisArg, _arguments, P3, generator) {
   function adopt(value) {
-    return value instanceof P3 ? value : new P3(function(resolve17) {
-      resolve17(value);
+    return value instanceof P3 ? value : new P3(function(resolve18) {
+      resolve18(value);
     });
   }
-  return new (P3 || (P3 = Promise))(function(resolve17, reject) {
+  return new (P3 || (P3 = Promise))(function(resolve18, reject) {
     function fulfilled(value) {
       try {
         step(generator.next(value));
@@ -147533,7 +147533,7 @@ function __awaiter(thisArg, _arguments, P3, generator) {
       }
     }
     function step(result) {
-      result.done ? resolve17(result.value) : adopt(result.value).then(fulfilled, rejected);
+      result.done ? resolve18(result.value) : adopt(result.value).then(fulfilled, rejected);
     }
     step((generator = generator.apply(thisArg, _arguments || [])).next());
   });
@@ -149694,7 +149694,7 @@ var Slide = class {
 function createExcelWorksheet(chartObject, zip) {
   return __awaiter(this, void 0, void 0, function* () {
     const data = chartObject.data;
-    return yield new Promise((resolve17, reject) => {
+    return yield new Promise((resolve18, reject) => {
       var _a3, _b;
       const zipExcel = new import_jszip.default();
       const intBubbleCols = (data.length - 1) * 2 + 1;
@@ -149904,7 +149904,7 @@ function createExcelWorksheet(chartObject, zip) {
         zip.file(`ppt/embeddings/Microsoft_Excel_Worksheet${chartObject.globalId}.xlsx`, content, { base64: true });
         zip.file("ppt/charts/_rels/" + chartObject.fileName + ".rels", `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/package" Target="../embeddings/Microsoft_Excel_Worksheet${chartObject.globalId}.xlsx"/></Relationships>`);
         zip.file(`ppt/charts/${chartObject.fileName}`, makeXmlCharts(chartObject));
-        resolve17("");
+        resolve18("");
       }).catch((strErr) => {
         reject(strErr);
       });
@@ -151109,7 +151109,7 @@ ${String(ex)}`);
         }
       }
       if (isNode && https && rel.path.startsWith("http")) {
-        return yield new Promise((resolve17, reject) => {
+        return yield new Promise((resolve18, reject) => {
           https.get(rel.path, (res) => {
             let raw = "";
             res.setEncoding("binary");
@@ -151117,7 +151117,7 @@ ${String(ex)}`);
             res.on("end", () => {
               rel.data = Buffer.from(raw, "binary").toString("base64");
               candidateRels.filter((dupe) => dupe.isDuplicate && dupe.path === rel.path).forEach((dupe) => dupe.data = rel.data);
-              resolve17("done");
+              resolve18("done");
             });
             res.on("error", () => {
               rel.data = IMG_BROKEN;
@@ -151127,7 +151127,7 @@ ${String(ex)}`);
           });
         });
       }
-      return yield new Promise((resolve17, reject) => {
+      return yield new Promise((resolve18, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.onload = () => {
           const reader = new FileReader();
@@ -151135,9 +151135,9 @@ ${String(ex)}`);
             rel.data = reader.result;
             candidateRels.filter((dupe) => dupe.isDuplicate && dupe.path === rel.path).forEach((dupe) => dupe.data = rel.data);
             if (!rel.isSvgPng) {
-              resolve17("done");
+              resolve18("done");
             } else {
-              createSvgPngPreview(rel).then(() => resolve17("done")).catch(reject);
+              createSvgPngPreview(rel).then(() => resolve18("done")).catch(reject);
             }
           };
           reader.readAsDataURL(xhr.response);
@@ -151169,7 +151169,7 @@ ${String(ex)}`);
 }
 function createSvgPngPreview(rel) {
   return __awaiter(this, void 0, void 0, function* () {
-    return yield new Promise((resolve17, reject) => {
+    return yield new Promise((resolve18, reject) => {
       const image = new Image();
       image.onload = () => {
         if (image.width + image.height === 0) {
@@ -151182,7 +151182,7 @@ function createSvgPngPreview(rel) {
         ctx.drawImage(image, 0, 0);
         try {
           rel.data = canvas.toDataURL(rel.type);
-          resolve17("done");
+          resolve18("done");
         } catch (ex) {
           image.onerror(ex.toString());
         }
@@ -152918,17 +152918,17 @@ function writeTypes(ct) {
 var ext = (p) => p.slice(p.lastIndexOf(".") + 1).toLowerCase();
 async function reachable(zip) {
   const seen = /* @__PURE__ */ new Set();
-  const walk = async (part, list) => {
+  const walk2 = async (part, list) => {
     for (const r of list) {
       if (r.external) continue;
       const t = resolveTarget(part, r.target);
       if (seen.has(t) || !zip.file(t)) continue;
       seen.add(t);
-      await walk(t, await rels(zip, t));
+      await walk2(t, await rels(zip, t));
     }
   };
   const root = zip.file("_rels/.rels");
-  if (root) await walk("", parseRels(await root.async("string")));
+  if (root) await walk2("", parseRels(await root.async("string")));
   return seen;
 }
 async function templateLayouts(zip) {
@@ -157962,10 +157962,10 @@ var $b84fd3dd9d8eddb2$var$RangeArray = class extends ArrayT {
     let count = 0;
     let res = [];
     while (count < length) {
-      let range = this.type.decode(stream2, parent);
-      range.offset = count;
-      count += range.nLeft + 1;
-      res.push(range);
+      let range2 = this.type.decode(stream2, parent);
+      range2.offset = count;
+      count += range2.nLeft + 1;
+      res.push(range2);
     }
     return res;
   }
@@ -158490,8 +158490,8 @@ var $822ac0d589e4e237$var$CFFFont = class _$822ac0d589e4e237$var$CFFFont {
       case 1:
       case 2:
         for (let i = 0; i < charset.ranges.length; i++) {
-          let range = charset.ranges[i];
-          if (range.offset <= gid && gid <= range.offset + range.nLeft) return this.string(range.first + (gid - range.offset));
+          let range2 = charset.ranges[i];
+          if (range2.offset <= gid && gid <= range2.offset + range2.nLeft) return this.string(range2.first + (gid - range2.offset));
         }
         break;
     }
@@ -159907,9 +159907,9 @@ function $12727730ddfc8bfe$export$2e0ae67339d5f1ac(arr, cmp) {
   return -1;
 }
 function $12727730ddfc8bfe$export$d02631cccf789723(index, end) {
-  let range = [];
-  while (index < end) range.push(index++);
-  return range;
+  let range2 = [];
+  while (index < end) range2.push(index++);
+  return range2;
 }
 var $12727730ddfc8bfe$export$3d28c1996ced1f14 = new TextDecoder("ascii");
 var $12727730ddfc8bfe$var$CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -162376,8 +162376,8 @@ var $a83b9c36aaa94fd3$export$2e2bcd8739ae039 = class {
       case 1:
         return coverage.glyphs.indexOf(glyph);
       case 2:
-        for (let range of coverage.rangeRecords) {
-          if (range.start <= glyph && glyph <= range.end) return range.startCoverageIndex + glyph - range.start;
+        for (let range2 of coverage.rangeRecords) {
+          if (range2.start <= glyph && glyph <= range2.end) return range2.startCoverageIndex + glyph - range2.start;
         }
         break;
     }
@@ -162415,8 +162415,8 @@ var $a83b9c36aaa94fd3$export$2e2bcd8739ae039 = class {
         if (i >= 0 && i < classDef.classValueArray.length) return classDef.classValueArray[i];
         break;
       case 2:
-        for (let range of classDef.classRangeRecord) {
-          if (range.start <= glyph && glyph <= range.end) return range.class;
+        for (let range2 of classDef.classRangeRecord) {
+          if (range2.start <= glyph && glyph <= range2.end) return range2.class;
         }
         break;
     }
@@ -168888,7 +168888,7 @@ function detectChrome() {
   return chromeDetection;
 }
 function runChrome(bin, args, timeoutMs, pdfPath) {
-  return new Promise((resolve17, reject) => {
+  return new Promise((resolve18, reject) => {
     const child = spawn(bin, args, { stdio: ["ignore", "pipe", "pipe"] });
     let stderr = "";
     let done = false;
@@ -168898,7 +168898,7 @@ function runChrome(bin, args, timeoutMs, pdfPath) {
       done = true;
       clearInterval(poll);
       clearTimeout(timer);
-      const settle2 = () => err ? reject(err) : resolve17({ stderr });
+      const settle2 = () => err ? reject(err) : resolve18({ stderr });
       if (child.exitCode !== null) return settle2();
       const force = setTimeout(() => child.kill("SIGKILL"), 3e3);
       child.once("exit", () => {
@@ -179461,8 +179461,8 @@ In Codex: "Using SlideCraft, make a deck that \u2026"`
 
 // src/cli/commands.ts
 var import_yaml2 = __toESM(require_dist(), 1);
-import { existsSync as existsSync12, mkdirSync as mkdirSync11, writeFileSync as writeFileSync9 } from "node:fs";
-import { join as join15, relative as relative4, resolve as resolve9 } from "node:path";
+import { existsSync as existsSync13, mkdirSync as mkdirSync11, writeFileSync as writeFileSync9 } from "node:fs";
+import { join as join15, relative as relative4, resolve as resolve10 } from "node:path";
 
 // node_modules/zod/v4/classic/external.js
 var external_exports = {};
@@ -184490,7 +184490,7 @@ var recursive = /* @__PURE__ */ new WeakMap();
 var NONE = 0;
 var ASSUMED = 1;
 var PROVEN = 2;
-function isRecursive(inst, stack, resolve17) {
+function isRecursive(inst, stack, resolve18) {
   const cached2 = recursive.get(inst);
   if (cached2 !== void 0)
     return cached2 ? PROVEN : NONE;
@@ -184500,7 +184500,7 @@ function isRecursive(inst, stack, resolve17) {
   let result = NONE;
   const check2 = (child) => {
     if (result !== PROVEN && child?._zod) {
-      const answer = isRecursive(child, stack, resolve17);
+      const answer = isRecursive(child, stack, resolve18);
       if (answer > result)
         result = answer;
     }
@@ -184511,7 +184511,7 @@ function isRecursive(inst, stack, resolve17) {
       const desc = Object.getOwnPropertyDescriptor(sh, key);
       if (spread && !desc.enumerable)
         continue;
-      const child = desc.get ? ASSUMED : desc.value?._zod ? isRecursive(desc.value, stack, resolve17) : NONE;
+      const child = desc.get ? ASSUMED : desc.value?._zod ? isRecursive(desc.value, stack, resolve18) : NONE;
       if (child > answer)
         answer = child;
     }
@@ -184575,7 +184575,7 @@ function isRecursive(inst, stack, resolve17) {
       break;
     // `$ZodLazy` caches its inner on the def, so a resolved edge is followed exactly
     case "lazy": {
-      const inner = def._cachedInner ?? (resolve17 ? inst._zod.innerType : void 0);
+      const inner = def._cachedInner ?? (resolve18 ? inst._zod.innerType : void 0);
       merge2(inner ? isRecursive(inner, stack, false) : ASSUMED);
       break;
     }
@@ -199133,9 +199133,9 @@ function date4(params) {
 }
 
 // src/build.ts
-import { createHash } from "node:crypto";
-import { mkdirSync as mkdirSync10, readFileSync as readFileSync16, writeFileSync as writeFileSync8 } from "node:fs";
-import { join as join14, relative as relative3, resolve as resolve8 } from "node:path";
+import { createHash as createHash2 } from "node:crypto";
+import { mkdirSync as mkdirSync10, readFileSync as readFileSync18, writeFileSync as writeFileSync8 } from "node:fs";
+import { join as join14, relative as relative3, resolve as resolve9 } from "node:path";
 
 // src/backends/freeform-raster.ts
 import { spawn as spawn2 } from "node:child_process";
@@ -199320,6 +199320,36 @@ var CODES = {
     why: "Without a title, the slide is unnamed in PowerPoint\u2019s outline, navigation and screen readers.",
     fix: "Every SlideCraft layout writes its action title as the title placeholder; check custom post-processing."
   },
+  "SC-DATA-001": {
+    severity: "error",
+    title: "Data file or sheet not found",
+    why: "A fact, chart or table reads from a spreadsheet that is missing or has no such sheet.",
+    fix: "Check `file` (relative to deck.yaml) and `sheet`; files are read again on every build."
+  },
+  "SC-DATA-002": {
+    severity: "error",
+    title: "Data range does not fit the field",
+    why: "A `from:` reference is incomplete (no cell or range) or the cells are not what the field needs (e.g. text where a number is expected).",
+    fix: "Point `range` at a block with a header row and numbers (charts), or `cell` at one value (facts)."
+  },
+  "SC-DATA-003": {
+    severity: "error",
+    title: "Unknown fact",
+    why: "Text uses {{id}} but the deck `facts:` has no such id.",
+    fix: "Add the fact to `facts:` or correct the id."
+  },
+  "SC-CONSIST-001": {
+    severity: "warning",
+    title: "The same number differs between slides",
+    why: "One metric appears with different values on different slides \u2014 the error a board notices first.",
+    fix: "Use one value everywhere; define it once in `facts:` and write {{id}} in the text."
+  },
+  "SC-SRC-003": {
+    severity: "error",
+    title: "Unknown source page reference",
+    why: "A slide cites `id#p12` but the source id does not exist.",
+    fix: "Use an id from the deck `sources:` list, e.g. `annual-report#p14`."
+  },
   "SC-ENGINE-001": {
     severity: "warning",
     title: "Engine unavailable, skipped",
@@ -199353,13 +199383,13 @@ function chromeArgs(tmp) {
   ];
 }
 function dumpDom(bin, args, timeoutMs = 6e4) {
-  return new Promise((resolve17, reject) => {
+  return new Promise((resolve18, reject) => {
     const child = spawn2(bin, args, { stdio: ["ignore", "pipe", "pipe"] });
     let out = "";
     const done = (err) => {
       clearTimeout(timer);
       if (child.exitCode === null) child.kill("SIGKILL");
-      err ? reject(err) : resolve17(out);
+      err ? reject(err) : resolve18(out);
     };
     child.stdout.on("data", (d) => {
       out += d.toString();
@@ -199505,7 +199535,7 @@ async function flattenFreeform(scene, minPt) {
 }
 
 // src/engine/compose.ts
-import { existsSync as existsSync11, readFileSync as readFileSync15 } from "node:fs";
+import { existsSync as existsSync12, readFileSync as readFileSync17 } from "node:fs";
 
 // src/layouts/agenda.ts
 var schema = external_exports.object({
@@ -206198,8 +206228,8 @@ function getLayout(id) {
 
 // src/library/load.ts
 var import_yaml = __toESM(require_dist(), 1);
-import { existsSync as existsSync9, readdirSync as readdirSync3, readFileSync as readFileSync14 } from "node:fs";
-import { dirname as dirname3, join as join13, resolve as resolve6 } from "node:path";
+import { existsSync as existsSync10, readdirSync as readdirSync3, readFileSync as readFileSync16 } from "node:fs";
+import { dirname as dirname3, join as join13, resolve as resolve7 } from "node:path";
 
 // src/spec/brief.ts
 var Usage = external_exports.enum([
@@ -206246,6 +206276,316 @@ var Brief = external_exports.object({
   }).strict().optional(),
   choice: external_exports.object({ storyline: external_exports.string(), theme: external_exports.string(), option: external_exports.string().optional() }).strict().optional().describe("Filled at checkpoint 2 (pick)")
 }).strict();
+
+// src/library/data.ts
+import { createHash } from "node:crypto";
+import { existsSync as existsSync9, readFileSync as readFileSync15 } from "node:fs";
+import { isAbsolute as isAbsolute3, resolve as resolve6 } from "node:path";
+
+// src/library/sheets.ts
+import { readFileSync as readFileSync14 } from "node:fs";
+import { extname as extname3 } from "node:path";
+import { inflateRawSync } from "node:zlib";
+var decode3 = (s) => s.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
+function cellRef(ref) {
+  const m = /^\$?([A-Z]+)\$?(\d+)$/i.exec(ref.trim());
+  if (!m) throw new Error(`Not a cell reference: ${ref}`);
+  let c = 0;
+  for (const ch of m[1].toUpperCase()) c = c * 26 + (ch.charCodeAt(0) - 64);
+  return { r: Number(m[2]) - 1, c: c - 1 };
+}
+function parseCsv(text2) {
+  const rows2 = [];
+  let row = [];
+  let field = "";
+  let quoted = false;
+  const delim = (text2.split("\n")[0] ?? "").split(";").length > (text2.split("\n")[0] ?? "").split(",").length ? ";" : ",";
+  const push = () => {
+    const t = field.trim();
+    row.push(t === "" ? null : /^-?\d+(\.\d+)?$/.test(t) ? Number(t) : t);
+    field = "";
+  };
+  for (let i = 0; i < text2.length; i++) {
+    const ch = text2[i];
+    if (quoted) {
+      if (ch === '"' && text2[i + 1] === '"') {
+        field += '"';
+        i++;
+      } else if (ch === '"') quoted = false;
+      else field += ch;
+    } else if (ch === '"') quoted = true;
+    else if (ch === delim) push();
+    else if (ch === "\n" || ch === "\r") {
+      if (ch === "\r" && text2[i + 1] === "\n") i++;
+      push();
+      rows2.push(row);
+      row = [];
+    } else field += ch;
+  }
+  if (field || row.length) {
+    push();
+    rows2.push(row);
+  }
+  return rows2;
+}
+function unzip(buf) {
+  const out = /* @__PURE__ */ new Map();
+  let eocd = buf.length - 22;
+  while (eocd >= 0 && buf.readUInt32LE(eocd) !== 101010256) eocd--;
+  if (eocd < 0) throw new Error("Not a zip file");
+  const count = buf.readUInt16LE(eocd + 10);
+  let p = buf.readUInt32LE(eocd + 16);
+  for (let i = 0; i < count; i++) {
+    const method = buf.readUInt16LE(p + 10);
+    const size = buf.readUInt32LE(p + 20);
+    const nameLen = buf.readUInt16LE(p + 28);
+    const extraLen = buf.readUInt16LE(p + 30);
+    const commentLen = buf.readUInt16LE(p + 32);
+    const local = buf.readUInt32LE(p + 42);
+    const name = buf.toString("utf8", p + 46, p + 46 + nameLen);
+    const start = local + 30 + buf.readUInt16LE(local + 26) + buf.readUInt16LE(local + 28);
+    const data = buf.subarray(start, start + size);
+    out.set(name, method === 8 ? inflateRawSync(data) : Buffer.from(data));
+    p += 46 + nameLen + extraLen + commentLen;
+  }
+  return out;
+}
+function parseXlsx(buf) {
+  const files = unzip(buf);
+  const zip = {
+    file: (n) => files.has(n) ? { text: () => files.get(n).toString("utf8") } : void 0
+  };
+  const shared = [];
+  const ss = zip.file("xl/sharedStrings.xml")?.text();
+  if (ss)
+    for (const m of ss.matchAll(/<si>([\s\S]*?)<\/si>/g))
+      shared.push(decode3([...m[1].matchAll(/<t[^>]*>([^<]*)<\/t>/g)].map((t) => t[1]).join("")));
+  const wb = zip.file("xl/workbook.xml")?.text() ?? "";
+  const rels4 = zip.file("xl/_rels/workbook.xml.rels")?.text() ?? "";
+  const relMap = /* @__PURE__ */ new Map();
+  for (const m of rels4.matchAll(/<Relationship\b([^>]*)>/g)) {
+    const id = /\bId="([^"]+)"/.exec(m[1])?.[1];
+    const t = /\bTarget="([^"]+)"/.exec(m[1])?.[1];
+    if (id && t) relMap.set(id, t);
+  }
+  const target = (rid) => relMap.get(rid);
+  const sheets = [];
+  for (const m of wb.matchAll(/<sheet [^>]*name="([^"]+)"[^>]*r:id="([^"]+)"/g)) {
+    const t = target(m[2]);
+    if (!t) continue;
+    const part = t.startsWith("/") ? t.slice(1) : `xl/${t.replace(/^\.\//, "")}`;
+    const xml = zip.file(part)?.text() ?? "";
+    const rows2 = [];
+    for (const c of xml.matchAll(/<c r="([A-Z]+\d+)"([^>]*?)(?:\/>|>([\s\S]*?)<\/c>)/g)) {
+      const { r, c: col } = cellRef(c[1]);
+      const type = /t="(\w+)"/.exec(c[2])?.[1];
+      const inner = c[3] ?? "";
+      const v = /<v>([^<]*)<\/v>/.exec(inner)?.[1];
+      let value = null;
+      if (type === "s" && v !== void 0) value = shared[Number(v)] ?? "";
+      else if (type === "inlineStr")
+        value = decode3([...inner.matchAll(/<t[^>]*>([^<]*)<\/t>/g)].map((t2) => t2[1]).join(""));
+      else if (type === "str" || type === "e") value = v === void 0 ? null : decode3(v);
+      else if (type === "b") value = v === "1" ? "TRUE" : "FALSE";
+      else if (v !== void 0) value = Number(v);
+      (rows2[r] ??= [])[col] = value;
+    }
+    sheets.push({
+      name: decode3(m[1]),
+      rows: Array.from(rows2, (row) => Array.from(row ?? [], (x2) => x2 ?? null))
+    });
+  }
+  return sheets;
+}
+function readSheets(path2) {
+  const buf = readFileSync14(path2);
+  return extname3(path2).toLowerCase() === ".csv" ? [{ name: "csv", rows: parseCsv(buf.toString("utf8")) }] : parseXlsx(buf);
+}
+function pickSheet(sheets, name) {
+  const s = name ? sheets.find((x2) => x2.name === name) : sheets[0];
+  if (!s)
+    throw new Error(
+      name ? `Sheet "${name}" not found (have: ${sheets.map((x2) => x2.name).join(", ")})` : "Workbook has no sheets"
+    );
+  return s;
+}
+function range(sheet, ref) {
+  const [a, b] = ref.split(":");
+  const from = cellRef(a);
+  const to = cellRef(b ?? a);
+  const out = [];
+  for (let r = from.r; r <= to.r; r++) {
+    const row = [];
+    for (let c = from.c; c <= to.c; c++) row.push(sheet.rows[r]?.[c] ?? null);
+    out.push(row);
+  }
+  return out;
+}
+
+// src/library/data.ts
+var From = external_exports.object({
+  file: external_exports.string().describe(".xlsx or .csv, relative to deck.yaml"),
+  sheet: external_exports.string().optional().describe("Worksheet name (default: the first)"),
+  cell: external_exports.string().optional().describe('One cell, e.g. "F12" (facts)'),
+  range: external_exports.string().optional().describe('A range, e.g. "A1:C6" (charts, tables)'),
+  series: external_exports.enum(["columns", "rows"]).optional().describe("Charts: series in columns (default) or rows"),
+  header: external_exports.boolean().optional().describe("Tables: the first row of the range is the header"),
+  format: external_exports.string().optional().describe('Number format for table cells, e.g. "#,##0" or "0.0%"')
+}).strict();
+var Fact = external_exports.object({
+  value: external_exports.union([external_exports.number(), external_exports.string()]).optional(),
+  from: From.optional(),
+  format: external_exports.string().optional().describe('e.g. "\u20AC0.0M", "#,##0", "0%", "0.0x"'),
+  divide: external_exports.number().optional().describe("Divide before formatting, e.g. 1000000 to show millions"),
+  label: external_exports.string().max(80).optional().describe("What the number is, for reviews and the manifest"),
+  source: external_exports.string().optional().describe("Source id from the deck `sources:`")
+}).strict();
+function formatNumber(v, format = "#,##0.##") {
+  const m = /^(.*?)([#0][#0,]*(?:\.[#0]+)?)(.*)$/.exec(format);
+  if (!m) return String(v);
+  const [, pre, pattern2, suf] = m;
+  const value = suf.includes("%") ? v * 100 : v;
+  const [, dec = ""] = pattern2.split(".");
+  const minDec = (dec.match(/0/g) ?? []).length;
+  const maxDec = dec.length;
+  const s = Math.abs(value).toLocaleString("en-US", {
+    minimumFractionDigits: minDec,
+    maximumFractionDigits: maxDec,
+    useGrouping: pattern2.includes(",")
+  });
+  return `${value < 0 ? "\u2212" : ""}${pre}${s}${suf}`;
+}
+function resolveData(facts, slides, baseDir) {
+  const diagnostics = [];
+  const report = { facts: {}, files: [] };
+  const seen = /* @__PURE__ */ new Set();
+  const sheetFor = (f, pointer) => {
+    const path2 = isAbsolute3(f.file) ? f.file : resolve6(baseDir, f.file);
+    if (!existsSync9(path2)) {
+      diagnostics.push(diag("SC-DATA-001", `Data file not found: ${f.file}`, { pointer }));
+      return void 0;
+    }
+    if (!seen.has(path2)) {
+      seen.add(path2);
+      report.files.push({
+        path: path2,
+        sha256: createHash("sha256").update(readFileSync15(path2)).digest("hex")
+      });
+    }
+    try {
+      return pickSheet(readSheets(path2), f.sheet);
+    } catch (e) {
+      diagnostics.push(diag("SC-DATA-001", e.message, { pointer }));
+      return void 0;
+    }
+  };
+  const display = /* @__PURE__ */ new Map();
+  for (const [id, f] of Object.entries(facts ?? {})) {
+    const pointer = `/facts/${id}`;
+    let v = f.value;
+    if (f.from) {
+      const sheet = sheetFor(f.from, pointer);
+      if (!sheet) continue;
+      if (!f.from.cell) {
+        diagnostics.push(diag("SC-DATA-002", `Fact "${id}" needs from.cell`, { pointer }));
+        continue;
+      }
+      v = range(sheet, f.from.cell)[0]?.[0] ?? null;
+    }
+    if (v === void 0 || v === null || v === "") {
+      diagnostics.push(diag("SC-DATA-002", `Fact "${id}" has no value`, { pointer }));
+      continue;
+    }
+    const shown = typeof v === "number" ? formatNumber(f.divide ? v / f.divide : v, f.format) : String(v);
+    display.set(id, shown);
+    report.facts[id] = {
+      value: v,
+      display: shown,
+      ...f.label ? { label: f.label } : {},
+      ...f.from ? { from: `${f.from.file}${f.from.sheet ? `!${f.from.sheet}` : ""}!${f.from.cell}` } : {}
+    };
+  }
+  const cellText = (c, fmt2) => c === null ? "" : typeof c === "number" ? fmt2 ? formatNumber(c, fmt2) : String(c) : c;
+  const num = (c, pointer) => {
+    if (typeof c === "number") return c;
+    const n = Number(String(c ?? "").replace(/[,\s]/g, ""));
+    if (Number.isFinite(n) && c !== null && c !== "") return n;
+    diagnostics.push(
+      diag("SC-DATA-002", `Not a number in the data range: "${c ?? ""}"`, { pointer })
+    );
+    return 0;
+  };
+  const fromValue = (key, f, pointer) => {
+    const sheet = sheetFor(f, pointer);
+    if (!sheet || !f.range) {
+      if (sheet) diagnostics.push(diag("SC-DATA-002", "from.range is required here", { pointer }));
+      return void 0;
+    }
+    let grid2 = range(sheet, f.range);
+    if (key === "chart") {
+      if (f.series === "rows") grid2 = grid2[0].map((_, c) => grid2.map((r) => r[c] ?? null));
+      const [head, ...body] = grid2;
+      return {
+        categories: body.map((r) => cellText(r[0] ?? null)),
+        series: (head ?? []).slice(1).map((name, k) => ({
+          name: cellText(name) || `Series ${k + 1}`,
+          values: body.map((r, i) => num(r[k + 1] ?? null, `${pointer}/${i}`))
+        }))
+      };
+    }
+    if (key === "rows")
+      return (f.header ? grid2.slice(1) : grid2).map((r) => r.map((c) => cellText(c, f.format)));
+    if (key === "header") return (grid2[0] ?? []).map((c) => cellText(c));
+    if (key === "values") return grid2.flat().map((c, i) => num(c, `${pointer}/${i}`));
+    if (key === "categories") return grid2.flat().map((c) => cellText(c));
+    diagnostics.push(diag("SC-DATA-002", `"${key}" cannot be filled from a range`, { pointer }));
+    return void 0;
+  };
+  const walk2 = (v, pointer, key = "") => {
+    if (typeof v === "string")
+      return v.replace(/\{\{\s*([a-z0-9][a-z0-9-]*)\s*\}\}/g, (m, id) => {
+        const d = display.get(id);
+        if (d === void 0) {
+          diagnostics.push(diag("SC-DATA-003", `Unknown fact {{${id}}}`, { pointer }));
+          return m;
+        }
+        return d;
+      });
+    if (Array.isArray(v)) return v.map((x2, i) => walk2(x2, `${pointer}/${i}`));
+    if (v && typeof v === "object") {
+      const o = v;
+      if (o.from && typeof o.from === "object" && Object.keys(o).length === 1) {
+        const p = From.safeParse(o.from);
+        if (!p.success) {
+          diagnostics.push(
+            diag("SC-DATA-002", p.error.issues[0]?.message ?? "Invalid from", {
+              pointer: `${pointer}/from`
+            })
+          );
+          return v;
+        }
+        const filled = fromValue(key, p.data, pointer);
+        if (filled === void 0) return v;
+        return filled;
+      }
+      const out = {};
+      for (const [k, x2] of Object.entries(o)) out[k] = walk2(x2, `${pointer}/${k}`, k);
+      const rowsFrom = o.rows?.from;
+      if (rowsFrom?.header && out.header === void 0 && rowsFrom.range) {
+        const sheet = sheetFor(rowsFrom, `${pointer}/rows`);
+        if (sheet) out.header = (range(sheet, rowsFrom.range)[0] ?? []).map((c) => cellText(c));
+      }
+      return out;
+    }
+    return v;
+  };
+  return {
+    slides: slides.map((s, i) => walk2(s, `/slides/${i}`)),
+    diagnostics,
+    report,
+    text: (s) => walk2(s, "")
+  };
+}
 
 // src/spec/deck.ts
 var SlideId = external_exports.string().regex(/^[a-z0-9][a-z0-9-]*$/, 'kebab-case id, e.g. "exec-summary" or "s04-market"').describe("Stable slide id; reviews and fixes target slides by id");
@@ -206307,6 +206647,9 @@ var Deck = external_exports.object({
   status: external_exports.enum(["ghost", "draft", "review", "final"]).default("draft"),
   footer: external_exports.string().max(80).optional().describe('Footer text, e.g. "Confidential \u2014 for discussion"'),
   sources: external_exports.array(Source).default([]),
+  facts: external_exports.record(external_exports.string().regex(/^[a-z0-9][a-z0-9-]*$/), Fact).optional().describe(
+    "Numbers defined once (a value or a spreadsheet cell) and used as {{id}} in any text"
+  ),
   output: external_exports.object({
     formats: external_exports.array(external_exports.enum(["pptx", "pdf", "png", "html", "onepager", "docx"])).default(["pptx", "pdf", "png"]),
     engines: external_exports.object({
@@ -206480,8 +206823,8 @@ var Theme = external_exports.object({
 
 // src/library/load.ts
 function readThemeFile(path2) {
-  const abs = resolve6(path2);
-  const r = Theme.safeParse(JSON.parse(readFileSync14(abs, "utf8")));
+  const abs = resolve7(path2);
+  const r = Theme.safeParse(JSON.parse(readFileSync16(abs, "utf8")));
   if (!r.success) throw new Error(`Invalid theme ${path2}: ${r.error.message}`);
   const theme = r.data;
   const base = dirname3(abs);
@@ -206494,7 +206837,7 @@ function readThemeFile(path2) {
   for (const f of specs) {
     if (!f?.files) continue;
     const files = Object.fromEntries(
-      Object.entries(f.files).map(([k, v]) => [k, resolve6(base, v)])
+      Object.entries(f.files).map(([k, v]) => [k, resolve7(base, v)])
     );
     registerMeasureFont(f.measure, files);
   }
@@ -206504,12 +206847,12 @@ function readThemeFile(path2) {
         `Theme ${theme.id}: unknown measure font "${f.measure}" \u2014 add "files" with the font's TTF/OTF`
       );
   }
-  if (theme.chrome.logo) theme.chrome.logo = resolve6(base, theme.chrome.logo);
+  if (theme.chrome.logo) theme.chrome.logo = resolve7(base, theme.chrome.logo);
   if (theme.chrome.art)
     for (const list of [theme.chrome.art.cover, theme.chrome.art.content])
-      for (const a of list) a.image = resolve6(base, a.image);
-  if (theme.officeTheme) theme.officeTheme = resolve6(base, theme.officeTheme);
-  if (theme.template) theme.template = resolve6(base, theme.template);
+      for (const a of list) a.image = resolve7(base, a.image);
+  if (theme.officeTheme) theme.officeTheme = resolve7(base, theme.officeTheme);
+  if (theme.template) theme.template = resolve7(base, theme.template);
   return theme;
 }
 var themeCache;
@@ -206530,9 +206873,9 @@ function getTheme(id) {
 var storyCache;
 function loadStorylines() {
   if (storyCache) return storyCache;
-  if (!existsSync9(STORYLINES_DIR)) return [];
+  if (!existsSync10(STORYLINES_DIR)) return [];
   storyCache = readdirSync3(STORYLINES_DIR).filter((f) => f.endsWith(".yaml")).sort().map((f) => {
-    const raw = import_yaml.default.parse(readFileSync14(join13(STORYLINES_DIR, f), "utf8"));
+    const raw = import_yaml.default.parse(readFileSync16(join13(STORYLINES_DIR, f), "utf8"));
     const r = Storyline.safeParse(raw);
     if (!r.success) throw new Error(`Invalid storyline ${f}: ${r.error.message}`);
     return r.data;
@@ -206556,10 +206899,10 @@ function zodDiagnostics(err, prefix = "") {
   );
 }
 function loadDeck(path2) {
-  const abs = resolve6(path2);
+  const abs = resolve7(path2);
   const baseDir = dirname3(abs);
   const diagnostics = [];
-  const raw = import_yaml.default.parse(readFileSync14(abs, "utf8"));
+  const raw = import_yaml.default.parse(readFileSync16(abs, "utf8"));
   const top = Deck.safeParse(raw);
   if (!top.success) {
     return {
@@ -206572,8 +206915,8 @@ function loadDeck(path2) {
   }
   const deck = top.data;
   if (/\.json$/i.test(deck.theme)) {
-    const p = resolve6(baseDir, deck.theme);
-    if (!existsSync9(p)) {
+    const p = resolve7(baseDir, deck.theme);
+    if (!existsSync10(p)) {
       diagnostics.push(
         diag("SC-SPEC-002", `Theme file not found: ${deck.theme}`, { pointer: "/theme" })
       );
@@ -206590,8 +206933,8 @@ function loadDeck(path2) {
     }
   }
   if (/\.json$/i.test(deck.format)) {
-    const p = resolve6(baseDir, deck.format);
-    const r = existsSync9(p) ? FormatFile.safeParse(JSON.parse(readFileSync14(p, "utf8"))) : void 0;
+    const p = resolve7(baseDir, deck.format);
+    const r = existsSync10(p) ? FormatFile.safeParse(JSON.parse(readFileSync16(p, "utf8"))) : void 0;
     if (!r?.success)
       diagnostics.push(
         diag(
@@ -206619,8 +206962,8 @@ function loadDeck(path2) {
   const expanded = [];
   deck.slides.forEach((s, i) => {
     if (s && typeof s === "object" && "include" in s) {
-      const inc = resolve6(baseDir, String(s.include));
-      if (!existsSync9(inc)) {
+      const inc = resolve7(baseDir, String(s.include));
+      if (!existsSync10(inc)) {
         diagnostics.push(
           diag("SC-SPEC-004", `Include not found: ${s.include}`, {
             pointer: `/slides/${i}/include`
@@ -206628,7 +206971,7 @@ function loadDeck(path2) {
         );
         return;
       }
-      const list = import_yaml.default.parse(readFileSync14(inc, "utf8"));
+      const list = import_yaml.default.parse(readFileSync16(inc, "utf8"));
       if (!Array.isArray(list)) {
         diagnostics.push(
           diag("SC-SPEC-004", `Include is not a YAML list: ${s.include}`, {
@@ -206643,6 +206986,12 @@ function loadDeck(path2) {
   const slides = [];
   const seen = /* @__PURE__ */ new Set();
   const sourceIds = new Set(deck.sources.map((s) => s.id));
+  const data = resolveData(deck.facts, expanded, baseDir);
+  expanded.splice(0, expanded.length, ...data.slides);
+  deck.title = data.text(deck.title);
+  if (deck.subtitle) deck.subtitle = data.text(deck.subtitle);
+  if (deck.footer) deck.footer = data.text(deck.footer);
+  diagnostics.push(...data.diagnostics);
   expanded.forEach((s, i) => {
     const st = s?.status;
     const ghost = st === "ghost" || st === void 0 && deck.status === "ghost";
@@ -206715,18 +207064,25 @@ function loadDeck(path2) {
       })
     );
   }
-  return { deck, slides, path: abs, baseDir, diagnostics };
+  return {
+    deck,
+    slides,
+    path: abs,
+    baseDir,
+    diagnostics,
+    ...Object.keys(data.report.facts).length || data.report.files.length ? { data: data.report } : {}
+  };
 }
 function loadBrief(path2) {
-  const raw = import_yaml.default.parse(readFileSync14(resolve6(path2), "utf8"));
+  const raw = import_yaml.default.parse(readFileSync16(resolve7(path2), "utf8"));
   const r = Brief.safeParse(raw);
   if (!r.success) return { diagnostics: zodDiagnostics(r.error) };
   return { brief: r.data, diagnostics: [] };
 }
 
 // src/engine/context.ts
-import { existsSync as existsSync10 } from "node:fs";
-import { isAbsolute as isAbsolute3, resolve as resolve7 } from "node:path";
+import { existsSync as existsSync11 } from "node:fs";
+import { isAbsolute as isAbsolute4, resolve as resolve8 } from "node:path";
 
 // src/engine/text.ts
 function parseInline(src, base = {}) {
@@ -206922,9 +207278,9 @@ function makeTextNode(paragraphs3, box, style, laid, extra = {}) {
 }
 
 // src/engine/charts.ts
-function niceStep(range, targetTicks = 5) {
-  if (range <= 0) return 1;
-  const rough = range / targetTicks;
+function niceStep(range2, targetTicks = 5) {
+  if (range2 <= 0) return 1;
+  const rough = range2 / targetTicks;
   const mag = 10 ** Math.floor(Math.log10(rough));
   const n = rough / mag;
   const nice = n < 1.5 ? 1 : n < 3 ? 2 : n < 7 ? 5 : 10;
@@ -206938,7 +207294,7 @@ function niceAxis(lo, hi) {
   const max = max0 > 0 ? Math.ceil(max0 * 1.12 / step) * step : 0;
   return { min, max: max === min ? min + step : max, major: step };
 }
-function formatNumber(v, decimals = 0, unit = "", signed = false) {
+function formatNumber2(v, decimals = 0, unit = "", signed = false) {
   const abs = Math.abs(v);
   const s = abs.toLocaleString("en-US", {
     minimumFractionDigits: decimals,
@@ -207060,7 +207416,7 @@ function buildChart(spec, box, ctx) {
         lo: l,
         hi: h,
         color: isTot ? c.accent : color2,
-        label: formatNumber(d, decimals, unit, !isTot),
+        label: formatNumber2(d, decimals, unit, !isTot),
         labelAt: b >= a ? "top" : "bottom"
       });
       if (i < deltas.length - 1) connectors.push({ cat: i, v: run });
@@ -207096,7 +207452,7 @@ function buildChart(spec, box, ctx) {
         lo: Math.min(0, v),
         hi: Math.max(0, v),
         color: hl.has(i) ? c.accent : muted,
-        label: formatNumber(v, decimals, unit),
+        label: formatNumber2(v, decimals, unit),
         labelAt: v >= 0 ? "top" : "bottom"
       });
     });
@@ -207121,7 +207477,7 @@ function buildChart(spec, box, ctx) {
             lo: a,
             hi: b,
             color: series[si].color,
-            label: formatNumber(v, decimals, unit),
+            label: formatNumber2(v, decimals, unit),
             labelAt: "inside"
           });
         });
@@ -207172,7 +207528,7 @@ function buildChart(spec, box, ctx) {
           prims.push(
             label(
               ctx,
-              formatNumber(p.v, decimals, unit),
+              formatNumber2(p.v, decimals, unit),
               { x: p.x - 0.5, y: p.y - 0.3, w: 1, h: 0.24 },
               { color: si === 0 ? c.ink : c.muted, size: small, bold: isLast }
             )
@@ -207186,7 +207542,7 @@ function buildChart(spec, box, ctx) {
       lo: Math.min(0, v),
       hi: Math.max(0, v),
       color: series[0].color,
-      label: formatNumber(v, decimals, unit),
+      label: formatNumber2(v, decimals, unit),
       labelAt: v >= 0 ? "top" : "bottom"
     }));
     list.forEach((b) => {
@@ -207262,7 +207618,7 @@ function buildChart(spec, box, ctx) {
           prims.push(
             label(
               ctx,
-              formatNumber(total, decimals, unit),
+              formatNumber2(total, decimals, unit),
               { x: vx(top) + 0.06, y, w: 0.9, h: 0.24 },
               { align: "left", size: small, bold: true, role: "chart-total" }
             )
@@ -207272,7 +207628,7 @@ function buildChart(spec, box, ctx) {
           prims.push(
             label(
               ctx,
-              formatNumber(total, decimals, unit),
+              formatNumber2(total, decimals, unit),
               { x: x2 - 0.2, y: vy(top) - 0.27, w: thick + 0.4, h: 0.24 },
               { size: small, bold: true, role: "chart-total" }
             )
@@ -207310,7 +207666,7 @@ function buildChart(spec, box, ctx) {
           prims.push(
             label(
               ctx,
-              formatNumber(v, decimals, unit),
+              formatNumber2(v, decimals, unit),
               { x: x2 + 0.05, y: y + thick / 2 - 0.12, w: 0.9, h: 0.24 },
               { align: "left", size: small }
             )
@@ -207328,7 +207684,7 @@ function buildChart(spec, box, ctx) {
           prims.push(
             label(
               ctx,
-              formatNumber(v, decimals, unit),
+              formatNumber2(v, decimals, unit),
               { x: x2 - 0.25, y: y1 - 0.27, w: thick + 0.5, h: 0.24 },
               { size: small }
             )
@@ -207596,8 +207952,8 @@ function createContext(init) {
     image(box, src, alt, opts = {}) {
       let path2;
       if (src) {
-        const p = isAbsolute3(src) ? src : resolve7(init.baseDir, src);
-        if (existsSync10(p)) path2 = p;
+        const p = isAbsolute4(src) ? src : resolve8(init.baseDir, src);
+        if (existsSync11(p)) path2 = p;
       }
       if (!path2) {
         diagnostics.push(
@@ -207935,7 +208291,7 @@ function buildMasters(theme, format, fonts, footer) {
       }
       const list = id === "content" ? art.content : art.cover.length ? art.cover : art.content;
       for (const a of list)
-        if (existsSync11(a.image))
+        if (existsSync12(a.image))
           nodes.push({
             kind: "image",
             box: { x: a.x * sx2, y: a.y * sy2, w: a.w * sx2, h: a.h * sy2 },
@@ -207959,8 +208315,8 @@ function buildMasters(theme, format, fonts, footer) {
       });
     }
     const bg = c.background;
-    if (theme.chrome.logo && existsSync11(theme.chrome.logo)) {
-      const size = pngSize(readFileSync15(theme.chrome.logo));
+    if (theme.chrome.logo && existsSync12(theme.chrome.logo)) {
+      const size = pngSize(readFileSync17(theme.chrome.logo));
       const ratio = size ? size.w / size.h : 3;
       const h = id === "cover" ? 0.55 : 0.3;
       const w = Math.min(id === "cover" ? 2.6 : 1.6, h * ratio);
@@ -208214,11 +208570,128 @@ function composeDeck(loaded) {
   };
   if (deck.author) scene.author = deck.author;
   if (theme.officeTheme) scene.officeTheme = theme.officeTheme;
-  if (theme.template && existsSync11(theme.template)) {
+  if (theme.template && existsSync12(theme.template)) {
     const footer = deck.footer ?? theme.chrome.footer;
     scene.template = { path: theme.template, ...footer ? { footer } : {} };
   }
   return { scene, diagnostics };
+}
+
+// src/qa/consistency.ts
+var STOP = new Set(
+  "the a an of for and or to in on at by with from into per vs than our we their its this that these those is are was be been will can could would should has have had more less up down over under about after before new total all each every year years month months week weeks day days time times".split(
+    " "
+  )
+);
+var MAG = {
+  k: 1e3,
+  thousand: 1e3,
+  m: 1e6,
+  mn: 1e6,
+  million: 1e6,
+  b: 1e9,
+  bn: 1e9,
+  billion: 1e9
+};
+function parseAmount(s) {
+  const m = /^\s*([€$£¥₽₸])?\s*(-|−)?(\d[\d,]*(?:\.(\d+))?)\s*(k|m|mn|b|bn|thousand|million|billion)?\s*(%|pts|x)?\s*$/i.exec(
+    s
+  );
+  if (!m) return void 0;
+  const mag = m[5] ? MAG[m[5].toLowerCase()] ?? 1 : 1;
+  const n = Number(m[3].replace(/,/g, "")) * (m[2] ? -1 : 1) * mag;
+  return {
+    unit: m[1] ?? m[6]?.toLowerCase() ?? "",
+    value: n,
+    precision: mag * 10 ** -(m[4]?.length ?? 0)
+  };
+}
+var YEAR = /^(19|20)\d\d$/;
+function keyOf(words, max) {
+  return words.toLowerCase().replace(/[^a-z0-9\s-]/g, " ").split(/\s+/).filter((w) => w && !STOP.has(w) && !/^\d+$/.test(w) || YEAR.test(w)).slice(0, max).join(" ");
+}
+function sameMetric(a, b) {
+  const A2 = new Set(a.split(" "));
+  const B = b.split(" ");
+  const shared = B.filter((w) => A2.has(w));
+  if (shared.length < 2) return false;
+  const ya = [...A2].find((w) => YEAR.test(w));
+  const yb = B.find((w) => YEAR.test(w));
+  return !(ya && yb && ya !== yb);
+}
+var AMOUNT = /([€$£¥₽₸])\s?(\d[\d,]*(?:\.\d+)?)\s?(k|m|mn|bn|b|million|billion)?\b|(\d[\d,]*(?:\.\d+)?)\s?(%)/gi;
+function textMentions(text2, slide, out) {
+  for (const m of text2.matchAll(AMOUNT)) {
+    const shown = m[0].trim();
+    const amount = parseAmount(shown);
+    if (!amount) continue;
+    const after = text2.slice(m.index + m[0].length, m.index + m[0].length + 60).split(/[.;:,()—–]|[€$£¥₽₸]|\b(?!(?:19|20)\d\d\b)\d/)[0] ?? "";
+    const key = keyOf(after, 3);
+    if (key.split(" ").length >= 2)
+      out.push({
+        key,
+        unit: amount.unit,
+        value: amount.value,
+        precision: amount.precision,
+        shown,
+        slide
+      });
+  }
+}
+function walk(v, slide, out) {
+  if (typeof v === "string") return textMentions(v, slide, out);
+  if (Array.isArray(v)) return v.forEach((x2) => walk(x2, slide, out));
+  if (v && typeof v === "object") {
+    const o = v;
+    const val = typeof o.value === "string" ? o.value : typeof o.number === "string" ? o.number : void 0;
+    if (val && typeof o.label === "string") {
+      const amount = parseAmount(val);
+      const key = keyOf(o.label, 4);
+      if (amount && key.split(" ").length >= 2)
+        out.push({
+          key,
+          unit: amount.unit,
+          value: amount.value,
+          precision: amount.precision,
+          shown: val,
+          slide
+        });
+    }
+    for (const [k, x2] of Object.entries(o)) if (k !== "notes" && k !== "ghost") walk(x2, slide, out);
+  }
+}
+function agree(a, b) {
+  const step = Math.max(a.precision, b.precision);
+  return Math.abs(a.value - b.value) < step / 2 + 1e-9;
+}
+function checkConsistency(slides) {
+  const mentions = [];
+  for (const s of slides) walk({ ...s, notes: void 0 }, s.id, mentions);
+  const clusters = [];
+  for (const m of mentions) {
+    const c = clusters.find(
+      (list) => list[0].unit === m.unit && list.some((x2) => sameMetric(x2.key, m.key))
+    );
+    if (c) c.push(m);
+    else clusters.push([m]);
+  }
+  const out = [];
+  for (const list of clusters) {
+    const base = list[0];
+    const differing = list.filter((m) => !agree(m, base));
+    if (!differing.length) continue;
+    const byValue = /* @__PURE__ */ new Map();
+    for (const m of list) byValue.set(m.shown, (byValue.get(m.shown) ?? /* @__PURE__ */ new Set()).add(m.slide));
+    if (byValue.size < 2) continue;
+    const detail = [...byValue].map(([shown, ids]) => `${shown} on ${[...ids].join(", ")}`).join("; ");
+    out.push(
+      diag("SC-CONSIST-001", `"${base.key}" is ${detail}`, {
+        slide: differing[0].slide,
+        hint: "Use one value everywhere \u2014 define it in `facts:` and write {{id}} in the text."
+      })
+    );
+  }
+  return out;
 }
 
 // src/qa/scene-checks.ts
@@ -208391,7 +208864,7 @@ function checkDeck(path2) {
   if (diagnostics.some((d) => d.severity === "error" && d.code.startsWith("SC-SPEC")))
     return { loaded, diagnostics };
   const { scene, diagnostics: cd } = composeDeck(loaded);
-  diagnostics.push(...cd, ...checkScene(scene));
+  diagnostics.push(...cd, ...checkScene(scene), ...checkConsistency(loaded.slides));
   return { loaded, scene, diagnostics: sortDiagnostics(diagnostics) };
 }
 function epochDate() {
@@ -208399,7 +208872,7 @@ function epochDate() {
   if (env && /^\d+$/.test(env)) return new Date(Number(env) * 1e3);
   return new Date(Date.UTC(2026, 0, 1));
 }
-var sha2562 = (p) => createHash("sha256").update(readFileSync16(p)).digest("hex");
+var sha2562 = (p) => createHash2("sha256").update(readFileSync18(p)).digest("hex");
 async function buildDeck(path2, opts = {}) {
   const checked = checkDeck(path2);
   const { loaded, scene } = checked;
@@ -208410,7 +208883,7 @@ async function buildDeck(path2, opts = {}) {
     return { ...checked, files, engines: engines2 };
   }
   const deck = loaded.deck;
-  const outDir = resolve8(opts.outDir ?? join14(loaded.baseDir, "dist"));
+  const outDir = resolve9(opts.outDir ?? join14(loaded.baseDir, "dist"));
   mkdirSync10(outDir, { recursive: true });
   const theme = getTheme(deck.theme);
   const formats = opts.formats ?? deck.output?.formats ?? ["pptx", "pdf", "png"];
@@ -208476,6 +208949,15 @@ async function buildDeck(path2, opts = {}) {
       slides: scene.slides.length
     },
     input: { path: relative3(outDir, loaded.path), sha256: sha2562(loaded.path) },
+    ...loaded.data ? {
+      data: {
+        files: loaded.data.files.map((f) => ({
+          path: relative3(outDir, f.path),
+          sha256: f.sha256
+        })),
+        facts: loaded.data.facts
+      }
+    } : {},
     epoch: epoch.toISOString(),
     engines: engines2,
     outputs: files.map((f) => ({
@@ -208522,7 +209004,7 @@ function layoutContract(l) {
 }
 var SCHEMA_LINE = (kind) => `# yaml-language-server: $schema=https://raw.githubusercontent.com/eiler2005/slidecraft/main/schemas/${kind}.v1.json
 `;
-var STOP = new Set(
+var STOP2 = new Set(
   "the a an to of for and or our we us you your should must will would can need needs that this these it its is are be been at on in into onto with by from about as so than then".split(
     " "
   )
@@ -208545,7 +209027,7 @@ var CYR_STOP = /* @__PURE__ */ new Set([
   "ne"
 ]);
 function slugFrom(text2) {
-  return [...text2.toLowerCase()].map((ch) => CYR[ch] ?? ch).join("").split(/\s+/).filter((w) => !CYR_STOP.has(w)).join(" ").normalize("NFKD").replace(/[^a-z0-9\s-]/g, " ").split(/\s+/).filter((w) => w && !STOP.has(w)).slice(0, 5).join("-").replace(/-+/g, "-").replace(/^-|-$/g, "").slice(0, 48);
+  return [...text2.toLowerCase()].map((ch) => CYR[ch] ?? ch).join("").split(/\s+/).filter((w) => !CYR_STOP.has(w)).join(" ").normalize("NFKD").replace(/[^a-z0-9\s-]/g, " ").split(/\s+/).filter((w) => w && !STOP2.has(w)).slice(0, 5).join("-").replace(/-+/g, "-").replace(/^-|-$/g, "").slice(0, 48);
 }
 function registerCommands(program3) {
   program3.version(VERSION2, "-v, --version");
@@ -208714,8 +209196,8 @@ ${dim(`${" ".repeat(27)}${x2.arc}`)}`)
         }
         o.goal ??= goal;
       }
-      const dir = resolve9(o.dir, slug);
-      if (existsSync12(join15(dir, "brief.yaml"))) {
+      const dir = resolve10(o.dir, slug);
+      if (existsSync13(join15(dir, "brief.yaml"))) {
         console.error(`${relative4(process.cwd(), dir)}/brief.yaml already exists`);
         process.exitCode = EXIT.usage;
         return;
@@ -208790,12 +209272,12 @@ ${green("\u2714")} ${relative4(process.cwd(), dir)}/deck.yaml`
 // src/cli/workflow.ts
 var import_yaml7 = __toESM(require_dist(), 1);
 import { spawn as spawn3 } from "node:child_process";
-import { existsSync as existsSync16, mkdirSync as mkdirSync19, readFileSync as readFileSync23, writeFileSync as writeFileSync18 } from "node:fs";
-import { dirname as dirname8, join as join22, relative as relative8, resolve as resolve16 } from "node:path";
+import { existsSync as existsSync17, mkdirSync as mkdirSync19, readFileSync as readFileSync25, writeFileSync as writeFileSync18 } from "node:fs";
+import { dirname as dirname8, join as join22, relative as relative8, resolve as resolve17 } from "node:path";
 
 // src/gallery.ts
-import { existsSync as existsSync13, mkdirSync as mkdirSync12, readFileSync as readFileSync17, writeFileSync as writeFileSync10 } from "node:fs";
-import { dirname as dirname4, join as join16, resolve as resolve10 } from "node:path";
+import { existsSync as existsSync14, mkdirSync as mkdirSync12, readFileSync as readFileSync19, writeFileSync as writeFileSync10 } from "node:fs";
+import { dirname as dirname4, join as join16, resolve as resolve11 } from "node:path";
 async function flat(scene) {
   if (!scene.slides.some((sl) => sl.nodes.some((n) => n.kind === "html"))) return scene;
   return (await flattenFreeform(scene, 0)).scene;
@@ -208821,7 +209303,7 @@ async function contactSheetPng(scene, width = 2e3, cols2 = 4, max = 12) {
 }
 function previewDeck(storyline, themeId) {
   const example = join16(ROOT, "examples", storyline.id, "deck.yaml");
-  if (existsSync13(example)) {
+  if (existsSync14(example)) {
     const l = loadDeck(example);
     l.deck = { ...l.deck, theme: themeId };
     return l;
@@ -208870,7 +209352,7 @@ function previewDeck(storyline, themeId) {
   };
 }
 async function buildGallery(opts) {
-  const out = resolve10(opts.out ?? join16(DOCS_DIR, "gallery"));
+  const out = resolve11(opts.out ?? join16(DOCS_DIR, "gallery"));
   mkdirSync12(join16(out, "layouts"), { recursive: true });
   const files = [];
   for (const s of opts.storylines) {
@@ -208926,7 +209408,7 @@ async function writePicker(options, outPath, briefGoal) {
     const t = getTheme(o.theme);
     if (!s || !t) continue;
     const cached2 = join16(DOCS_DIR, "gallery", `${o.storyline}--${o.theme}.png`);
-    const png = existsSync13(cached2) ? readFileSync17(cached2) : await contactSheetPng(await flat(composeDeck(previewDeck(s, o.theme)).scene), 1800);
+    const png = existsSync14(cached2) ? readFileSync19(cached2) : await contactSheetPng(await flat(composeDeck(previewDeck(s, o.theme)).scene), 1800);
     const img = `data:image/png;base64,${png.toString("base64")}`;
     const sheet = join16(dirname4(outPath), `option-${o.option}.png`);
     writeFileSync10(sheet, png);
@@ -209223,11 +209705,11 @@ function cliDoc() {
   registerBrandCommands(program3);
   let md = HEADER("CLI reference", "src/cli/*.ts");
   md += "Run from a clone with `node dist/slidecraft.mjs <command>` (zero install) or `npx tsx src/cli/main.ts <command>` during development. When stdout is not a terminal, commands that support `--json` print JSON.\n\n";
-  const walk = (cmd, prefix) => {
+  const walk2 = (cmd, prefix) => {
     for (const c of cmd.commands) {
       const name = `${prefix} ${c.name()}`.trim();
       if (c.commands.length) {
-        walk(c, name);
+        walk2(c, name);
         continue;
       }
       md += `## \`${name}\`
@@ -209241,7 +209723,7 @@ ${c.helpInformation().replace(/^Usage: /, "Usage: slidecraft ").trim()}
 `;
     }
   };
-  walk(program3, "");
+  walk2(program3, "");
   return md;
 }
 function catalog() {
@@ -209308,16 +209790,16 @@ async function generateDocs() {
 
 // src/library/fix.ts
 var import_yaml4 = __toESM(require_dist(), 1);
-import { readFileSync as readFileSync18, writeFileSync as writeFileSync12 } from "node:fs";
-import { dirname as dirname5, resolve as resolve11 } from "node:path";
+import { readFileSync as readFileSync20, writeFileSync as writeFileSync12 } from "node:fs";
+import { dirname as dirname5, resolve as resolve12 } from "node:path";
 function slideLocations(deckPath) {
-  const file2 = resolve11(deckPath);
-  const doc = import_yaml4.default.parse(readFileSync18(file2, "utf8"));
+  const file2 = resolve12(deckPath);
+  const doc = import_yaml4.default.parse(readFileSync20(file2, "utf8"));
   const out = [];
   (doc.slides ?? []).forEach((s, i) => {
     if (s && typeof s === "object" && "include" in s) {
-      const inc = resolve11(dirname5(file2), String(s.include));
-      const list = import_yaml4.default.parse(readFileSync18(inc, "utf8"));
+      const inc = resolve12(dirname5(file2), String(s.include));
+      const list = import_yaml4.default.parse(readFileSync20(inc, "utf8"));
       if (Array.isArray(list)) list.forEach((_, k) => out.push({ file: inc, path: [k] }));
     } else out.push({ file: file2, path: ["slides", i] });
   });
@@ -209375,7 +209857,7 @@ function fitTasks(deckPath) {
     const ptr = parsePointer(d.pointer);
     const loc = ptr ? locs[ptr.slide] : void 0;
     if (!ptr || !loc) continue;
-    const raw = getIn(loaded.slides[ptr.slide], ptr.rest) ?? getIn(getIn(import_yaml4.default.parse(readFileSync18(loc.file, "utf8")), loc.path), ptr.rest);
+    const raw = getIn(loaded.slides[ptr.slide], ptr.rest) ?? getIn(getIn(import_yaml4.default.parse(readFileSync20(loc.file, "utf8")), loc.path), ptr.rest);
     const text2 = Array.isArray(raw) ? raw.join("\n") : typeof raw === "string" ? raw : "";
     if (!text2) continue;
     const contract = /<=\s*(\d+)/.exec(d.message)?.[1];
@@ -209408,7 +209890,7 @@ function applyFixes(deckPath, fixes) {
     }
     let doc = docs.get(loc.file);
     if (!doc) {
-      doc = import_yaml4.default.parseDocument(readFileSync18(loc.file, "utf8"));
+      doc = import_yaml4.default.parseDocument(readFileSync20(loc.file, "utf8"));
       docs.set(loc.file, doc);
     }
     const full = [...loc.path, ...ptr.rest];
@@ -209426,11 +209908,11 @@ function applyFixes(deckPath, fixes) {
 
 // src/library/images.ts
 var import_yaml5 = __toESM(require_dist(), 1);
-import { existsSync as existsSync14, mkdirSync as mkdirSync14, readFileSync as readFileSync19, writeFileSync as writeFileSync13 } from "node:fs";
-import { dirname as dirname6, relative as relative5, resolve as resolve12 } from "node:path";
+import { existsSync as existsSync15, mkdirSync as mkdirSync14, readFileSync as readFileSync21, writeFileSync as writeFileSync13 } from "node:fs";
+import { dirname as dirname6, relative as relative5, resolve as resolve13 } from "node:path";
 var IMAGE_STYLE = "Photographic, natural light, calm and uncluttered, generous negative space so it can be cropped to a slide panel. No text, no captions, no logos, no watermarks.";
 function slideMaps(file2) {
-  const doc = import_yaml5.default.parseDocument(readFileSync19(file2, "utf8"));
+  const doc = import_yaml5.default.parseDocument(readFileSync21(file2, "utf8"));
   const root = doc.contents;
   const seq = (0, import_yaml5.isMap)(root) ? root.get("slides", true) : (0, import_yaml5.isSeq)(root) ? root : void 0;
   const items = [];
@@ -209439,7 +209921,7 @@ function slideMaps(file2) {
     for (const it of seq.items) {
       if (!(0, import_yaml5.isMap)(it)) continue;
       const inc = it.get("include");
-      if (typeof inc === "string") includes.push(resolve12(dirname6(file2), inc));
+      if (typeof inc === "string") includes.push(resolve13(dirname6(file2), inc));
       else items.push(it);
     }
   return { doc, items, includes };
@@ -209454,14 +209936,14 @@ function planImages(deckPath, opts = {}) {
       if (typeof prompt !== "string" || !id) continue;
       const current = m.get("image");
       const base = dirname6(file2);
-      if (!opts.force && typeof current === "string" && existsSync14(resolve12(base, current)))
+      if (!opts.force && typeof current === "string" && existsSync15(resolve13(base, current)))
         continue;
       const image = typeof current === "string" && current ? current : `assets/${id}.png`;
-      jobs.push({ slideId: id, prompt, image, file: resolve12(base, image), yamlFile: file2 });
+      jobs.push({ slideId: id, prompt, image, file: resolve13(base, image), yamlFile: file2 });
     }
     includes.forEach(visit2);
   };
-  visit2(resolve12(deckPath));
+  visit2(resolve13(deckPath));
   return jobs;
 }
 function openAiProvider(env = process.env) {
@@ -209517,15 +209999,15 @@ function describeJob(j, cwd = process.cwd()) {
 // src/library/pptx-import.ts
 var import_jszip6 = __toESM(require_lib3(), 1);
 var import_yaml6 = __toESM(require_dist(), 1);
-import { mkdirSync as mkdirSync15, readFileSync as readFileSync20, writeFileSync as writeFileSync14 } from "node:fs";
-import { basename as basename2, extname as extname3, join as join18, posix as posix2, resolve as resolve13 } from "node:path";
-var decode3 = (s) => s.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
+import { mkdirSync as mkdirSync15, readFileSync as readFileSync22, writeFileSync as writeFileSync14 } from "node:fs";
+import { basename as basename2, extname as extname4, join as join18, posix as posix2, resolve as resolve14 } from "node:path";
+var decode4 = (s) => s.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
 function paragraphs2(xml) {
   const out = [];
   for (const m of xml.matchAll(/<a:p>([\s\S]*?)<\/a:p>|<a:p ([^>]*)>([\s\S]*?)<\/a:p>/g)) {
     const inner = m[1] ?? m[3] ?? "";
     const lvl = Number(/<a:pPr[^>]*lvl="(\d)"/.exec(inner)?.[1] ?? 0);
-    const text2 = decode3(
+    const text2 = decode4(
       [...inner.matchAll(/<a:t>([^<]*)<\/a:t>|<a:t [^>]*>([^<]*)<\/a:t>/g)].map((t) => t[1] ?? t[2] ?? "").join("")
     ).trim();
     const sz = Number(/<a:rPr[^>]*sz="(\d+)"/.exec(inner)?.[1] ?? 0) / 100;
@@ -209560,12 +210042,12 @@ async function chartData(zip, part) {
   let categories = [];
   for (const s of xml.matchAll(/<c:ser>([\s\S]*?)<\/c:ser>/g)) {
     const body = s[1];
-    const name = decode3(
+    const name = decode4(
       /<c:tx>[\s\S]*?<c:v>([^<]*)<\/c:v>/.exec(body)?.[1] ?? `Series ${series.length + 1}`
     );
     const cat = /<c:cat>([\s\S]*?)<\/c:cat>/.exec(body)?.[1] ?? "";
     const cats = [...cat.matchAll(/<c:pt idx="(\d+)">\s*<c:v>([^<]*)<\/c:v>/g)].map(
-      (m) => decode3(m[2])
+      (m) => decode4(m[2])
     );
     if (cats.length > categories.length) categories = cats;
     const val = /<c:val>([\s\S]*?)<\/c:val>/.exec(body)?.[1] ?? "";
@@ -209577,12 +210059,12 @@ async function chartData(zip, part) {
   return { type, categories, series };
 }
 async function importPptx(file2, opts = {}) {
-  const zip = await import_jszip6.default.loadAsync(readFileSync20(file2));
+  const zip = await import_jszip6.default.loadAsync(readFileSync22(file2));
   const pres = await zip.file("ppt/presentation.xml")?.async("string") ?? "";
   const presRels = await rels2(zip, "ppt/presentation.xml");
   const order = [...pres.matchAll(/<p:sldId [^>]*r:id="([^"]+)"/g)].map((m) => presRels.get(m[1])).filter((p) => !!p);
-  const id = opts.id ?? (basename2(file2, extname3(file2)).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "imported");
-  const outDir = resolve13(opts.out ?? join18("slidecraft", id));
+  const id = opts.id ?? (basename2(file2, extname4(file2)).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "imported");
+  const outDir = resolve14(opts.out ?? join18("slidecraft", id));
   mkdirSync15(join18(outDir, "assets"), { recursive: true });
   let shortened = 0;
   const notesExtra = [];
@@ -209664,7 +210146,7 @@ async function importPptx(file2, opts = {}) {
       const media = r.get(picRid);
       const data = await zip.file(media)?.async("uint8array");
       if (data && /\.(png|jpe?g)$/i.test(media)) {
-        const name = `${slide.id}${extname3(media).toLowerCase()}`;
+        const name = `${slide.id}${extname4(media).toLowerCase()}`;
         writeFileSync14(join18(outDir, "assets", name), data);
         slide.image = `assets/${name}`;
       }
@@ -209708,13 +210190,13 @@ ${import_yaml6.default.stringify(deck, { lineWidth: 0 })}`
 }
 
 // src/library/rank.ts
-var STOP2 = new Set(
+var STOP3 = new Set(
   "a an and are as at be by for from has have in is it of on or our that the their this to we with will you your deck slides presentation about need want make".split(
     " "
   )
 );
 function tokens(s) {
-  return s.toLowerCase().replace(/[^a-z0-9а-яё\s-]/gi, " ").split(/\s+/).filter((w) => w.length > 1 && !STOP2.has(w));
+  return s.toLowerCase().replace(/[^a-z0-9а-яё\s-]/gi, " ").split(/\s+/).filter((w) => w.length > 1 && !STOP3.has(w));
 }
 function rankStorylines(brief, all = loadStorylines()) {
   const text2 = [
@@ -209844,13 +210326,13 @@ async function recommendOutput(usage, theme) {
 // src/library/theme-import.ts
 import {
   copyFileSync as copyFileSync3,
-  existsSync as existsSync15,
+  existsSync as existsSync16,
   mkdirSync as mkdirSync16,
   readdirSync as readdirSync4,
-  readFileSync as readFileSync21,
+  readFileSync as readFileSync23,
   writeFileSync as writeFileSync15
 } from "node:fs";
-import { basename as basename3, dirname as dirname7, extname as extname4, join as join19, relative as relative6, resolve as resolve14 } from "node:path";
+import { basename as basename3, dirname as dirname7, extname as extname5, join as join19, relative as relative6, resolve as resolve15 } from "node:path";
 var import_jszip7 = __toESM(require_lib3(), 1);
 
 // src/library/template-geometry.ts
@@ -210002,7 +210484,7 @@ function mapFont(name, fontDir, themeId, role, notes) {
   if (/^georgia$/i.test(name)) return { family: "Georgia", measure: "gelasio" };
   if (/^times( new roman)?$/i.test(name))
     return { family: "Times New Roman", measure: "liberation-serif" };
-  if (fontDir && existsSync15(fontDir)) {
+  if (fontDir && existsSync16(fontDir)) {
     const files = {};
     for (const f of readdirSync4(fontDir)) {
       if (!/\.(ttf|otf)$/i.test(f)) continue;
@@ -210060,14 +210542,14 @@ function softTint(accent, bg, ink, muted) {
   return mix(accent, bg, 0.96);
 }
 async function importTheme(file2, opts) {
-  const zip = await import_jszip7.default.loadAsync(readFileSync21(file2));
+  const zip = await import_jszip7.default.loadAsync(readFileSync23(file2));
   const themeName = Object.keys(zip.files).find((n) => /^ppt\/theme\/theme\d+\.xml$/.test(n)) ?? "ppt/theme/theme1.xml";
   const xml = await zip.file(themeName)?.async("string");
   if (!xml) throw new Error(`${file2} has no Office theme (ppt/theme/theme1.xml)`);
   const c = readColors(xml);
   const fonts = readFonts(xml);
   const notes = [];
-  const outDir = resolve14(opts.out ?? join19(dirname7(resolve14(file2)), "slidecraft-theme"));
+  const outDir = resolve15(opts.out ?? join19(dirname7(resolve15(file2)), "slidecraft-theme"));
   mkdirSync16(outDir, { recursive: true });
   const bg = c.lt1 ?? "#FFFFFF";
   const dark = luminance(bg) < 0.25;
@@ -210100,7 +210582,7 @@ async function importTheme(file2, opts) {
     if (!saved.has(part)) {
       const data = await zip.file(part)?.async("uint8array");
       if (!data) return void 0;
-      const name = `${opts.id}-art-${saved.size + 1}${extname4(part).toLowerCase()}`;
+      const name = `${opts.id}-art-${saved.size + 1}${extname5(part).toLowerCase()}`;
       writeFileSync15(join19(outDir, name), data);
       saved.set(part, `./${name}`);
     }
@@ -210170,7 +210652,7 @@ async function importTheme(file2, opts) {
   const logo = hasArt && smallPic ? void 0 : await findLogo(zip);
   let logoRel;
   if (logo) {
-    const name = `${opts.id}-logo${extname4(logo.name).toLowerCase()}`;
+    const name = `${opts.id}-logo${extname5(logo.name).toLowerCase()}`;
     writeFileSync15(join19(outDir, name), logo.data);
     logoRel = `./${name}`;
   } else if (!(hasArt && smallPic))
@@ -210181,7 +210663,7 @@ async function importTheme(file2, opts) {
     if (!spec.files) continue;
     for (const [face, p] of Object.entries(spec.files)) {
       const dest = join19(outDir, basename3(p));
-      if (resolve14(p) !== dest) copyFileSync3(p, dest);
+      if (resolve15(p) !== dest) copyFileSync3(p, dest);
       spec.files[face] = `./${basename3(p)}`;
     }
   }
@@ -210250,13 +210732,13 @@ async function importTheme(file2, opts) {
     },
     source: `imported from ${basename3(file2)}`,
     officeTheme: `${opts.id}.theme.xml`,
-    template: `${opts.id}.template${extname4(file2).toLowerCase() === ".potx" ? ".potx" : ".pptx"}`
+    template: `${opts.id}.template${extname5(file2).toLowerCase() === ".potx" ? ".potx" : ".pptx"}`
   };
   copyFileSync3(
     file2,
     join19(
       outDir,
-      `${opts.id}.template${extname4(file2).toLowerCase() === ".potx" ? ".potx" : ".pptx"}`
+      `${opts.id}.template${extname5(file2).toLowerCase() === ".potx" ? ".potx" : ".pptx"}`
     )
   );
   writeFileSync15(join19(outDir, `${opts.id}.theme.xml`), xml);
@@ -210278,7 +210760,7 @@ async function importTheme(file2, opts) {
 
 // src/qa/calibrate.ts
 import { execFileSync as execFileSync3 } from "node:child_process";
-import { mkdirSync as mkdirSync17, readFileSync as readFileSync22, writeFileSync as writeFileSync16 } from "node:fs";
+import { mkdirSync as mkdirSync17, readFileSync as readFileSync24, writeFileSync as writeFileSync16 } from "node:fs";
 import { join as join20 } from "node:path";
 var CALIBRATION_STRINGS = [
   "Enterprise and mid-market hold 78% of profit on 41% of revenue",
@@ -210447,11 +210929,11 @@ async function runCalibration(fonts, outDir) {
 
 // src/site.ts
 import { copyFileSync as copyFileSync4, mkdirSync as mkdirSync18, readdirSync as readdirSync5, rmSync as rmSync6, writeFileSync as writeFileSync17 } from "node:fs";
-import { basename as basename4, join as join21, relative as relative7, resolve as resolve15 } from "node:path";
+import { basename as basename4, join as join21, relative as relative7, resolve as resolve16 } from "node:path";
 var REPO = "https://github.com/eiler2005/slidecraft";
 var esc4 = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 async function buildSite(outDir = "site") {
-  const out = resolve15(outDir);
+  const out = resolve16(outDir);
   mkdirSync18(out, { recursive: true });
   const storylines = loadStorylines();
   const themes = loadThemes();
@@ -210659,7 +211141,7 @@ ${bold("Outputs")}: ${output2.formats.join(", ")}  (pptx \u2190 ${output2.engine
   program3.command("pick").description("Render options A/B/C as contact sheets and open the picker page").requiredOption("-b, --brief <path>", "brief.yaml").option("--no-open", "do not open the page").option("--json", "machine-readable output").action(async (o) => {
     const brief = requireBrief(o.brief);
     const options = templateOptions(brief);
-    const out = join22(dirname8(resolve16(o.brief)), ".slidecraft", "picker.html");
+    const out = join22(dirname8(resolve17(o.brief)), ".slidecraft", "picker.html");
     await writePicker(options, out, brief.goal);
     if (o.open && process.stdout.isTTY) openFile(out);
     if (wantsJson(o.json)) printJson({ picker: out, options });
@@ -210685,7 +211167,7 @@ ${bold("Outputs")}: ${output2.formats.join(", ")}  (pptx \u2190 ${output2.engine
     if (!storyline || !getStoryline(storyline))
       throw new Error(`unknown storyline "${storyline ?? ""}"`);
     if (!theme || !getTheme(theme)) throw new Error(`unknown theme "${theme ?? ""}"`);
-    const doc = import_yaml7.default.parseDocument(readFileSync23(o.brief, "utf8"));
+    const doc = import_yaml7.default.parseDocument(readFileSync25(o.brief, "utf8"));
     doc.set("choice", {
       storyline,
       theme,
@@ -210697,8 +211179,8 @@ ${bold("Outputs")}: ${output2.formats.join(", ")}  (pptx \u2190 ${output2.engine
   program3.command("scaffold").description("Create a ghost deck.yaml from the chosen storyline (one slide per slot)").requiredOption("-b, --brief <path>", "brief.yaml").option("-o, --out <path>", "deck.yaml path (default: next to the brief)").option("--force", "overwrite an existing deck.yaml").action(async (o) => {
     const brief = requireBrief(o.brief);
     if (!brief.choice) throw new Error("brief has no choice yet \u2014 run `slidecraft choose` first");
-    const out = resolve16(o.out ?? join22(dirname8(resolve16(o.brief)), "deck.yaml"));
-    if (existsSync16(out) && !o.force)
+    const out = resolve17(o.out ?? join22(dirname8(resolve17(o.brief)), "deck.yaml"));
+    if (existsSync17(out) && !o.force)
       throw new Error(`${relative8(process.cwd(), out)} exists (use --force)`);
     const deck = scaffoldDeck(brief, brief.choice.storyline, brief.choice.theme);
     if (!deck.output) {
@@ -210832,7 +211314,7 @@ Use it: theme: ${relative8(process.cwd(), r.themePath)}   (path relative to deck
     "JSON list of { pointer, text } rewrites to write into the YAML"
   ).option("--json", "machine-readable output").action((deck, o) => {
     if (o.apply) {
-      const fixes = JSON.parse(readFileSync23(o.apply, "utf8"));
+      const fixes = JSON.parse(readFileSync25(o.apply, "utf8"));
       const r = applyFixes(deck, fixes);
       if (wantsJson(o.json)) printJson(r);
       else {
@@ -210890,7 +211372,7 @@ Use it: theme: ${relative8(process.cwd(), r.themePath)}   (path relative to deck
       t.fonts.body,
       ...t.fonts.cyrillic?.heading ? [t.fonts.cyrillic.heading] : []
     ];
-    const r = await runCalibration(fonts, resolve16(o.out));
+    const r = await runCalibration(fonts, resolve17(o.out));
     if (wantsJson(o.json)) {
       printJson(r);
       return;

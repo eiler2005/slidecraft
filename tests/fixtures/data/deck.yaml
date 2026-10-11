@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=../../../schemas/deck.v1.json
+schemaVersion: 1
+id: data-deck
+title: Germany adds {{rev-2028}} by 2028
+status: draft
+sources:
+  - id: model
+    title: Strategy team model, Oct 2026
+    illustrative: true
+facts:
+  rev-2028: { from: { file: model.xlsx, sheet: Plan, cell: B6 }, format: "€0M", divide: 1000000, label: Germany revenue 2028 }
+  churn: { value: 0.05, format: "0%" }
+slides:
+  - id: growth
+    layout: chart-takeaway
+    variant: column
+    title: Germany reaches {{rev-2028}} in 2028 while churn stays at {{churn}}
+    sources: [model]
+    chart: { from: { file: model.xlsx, sheet: Plan, range: "A1:C4" } }
+    takeaway:
+      headline: Germany adds {{rev-2028}}
+      points: [The UK keeps growing at the same time]
+  - id: costs
+    layout: data-table
+    title: Prague is the cheapest city for a short stay
+    sources: [model]
+    rows: { from: { file: rates.csv, range: "A1:D4", header: true } }

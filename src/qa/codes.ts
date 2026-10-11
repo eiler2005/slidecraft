@@ -187,6 +187,36 @@ export const CODES = {
     why: 'Without a title, the slide is unnamed in PowerPoint’s outline, navigation and screen readers.',
     fix: 'Every SlideCraft layout writes its action title as the title placeholder; check custom post-processing.',
   },
+  'SC-DATA-001': {
+    severity: 'error',
+    title: 'Data file or sheet not found',
+    why: 'A fact, chart or table reads from a spreadsheet that is missing or has no such sheet.',
+    fix: 'Check `file` (relative to deck.yaml) and `sheet`; files are read again on every build.',
+  },
+  'SC-DATA-002': {
+    severity: 'error',
+    title: 'Data range does not fit the field',
+    why: 'A `from:` reference is incomplete (no cell or range) or the cells are not what the field needs (e.g. text where a number is expected).',
+    fix: 'Point `range` at a block with a header row and numbers (charts), or `cell` at one value (facts).',
+  },
+  'SC-DATA-003': {
+    severity: 'error',
+    title: 'Unknown fact',
+    why: 'Text uses {{id}} but the deck `facts:` has no such id.',
+    fix: 'Add the fact to `facts:` or correct the id.',
+  },
+  'SC-CONSIST-001': {
+    severity: 'warning',
+    title: 'The same number differs between slides',
+    why: 'One metric appears with different values on different slides — the error a board notices first.',
+    fix: 'Use one value everywhere; define it once in `facts:` and write {{id}} in the text.',
+  },
+  'SC-SRC-003': {
+    severity: 'error',
+    title: 'Unknown source page reference',
+    why: 'A slide cites `id#p12` but the source id does not exist.',
+    fix: 'Use an id from the deck `sources:` list, e.g. `annual-report#p14`.',
+  },
   'SC-ENGINE-001': {
     severity: 'warning',
     title: 'Engine unavailable, skipped',

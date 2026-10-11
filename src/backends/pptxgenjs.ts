@@ -73,8 +73,12 @@ function textOpts(t: TextNode): Any {
     fit: 'none',
     wrap: true,
     isTextBox: true,
+    // the action title becomes the slide's title placeholder in post-processing
+    ...(t.role === 'title' ? { objectName: TITLE_NAME } : {}),
   };
 }
+
+const TITLE_NAME = 'SlideCraft Title';
 
 function addText(slide: Slide, t: TextNode) {
   slide.addText(textRuns(t), textOpts(t));
@@ -408,13 +412,23 @@ export async function normalizeZip(
       data = rename(Buffer.from(data).toString('utf8'));
     if (name.endsWith('.xlsx')) data = await normalizeZip(Buffer.from(data), epoch);
     if (/^ppt\/slides\/slide\d+\.xml$/.test(name)) {
-      const xml = Buffer.from(data).toString('utf8');
+      let xml = Buffer.from(data).toString('utf8');
+      // The action title is the slide title: PowerPoint's outline, accessibility checker,
+      // screen readers and slide sorter read it. Formatting stays explicit on the runs.
+      if (xml.includes(TITLE_NAME))
+        xml = xml.replace(
+          new RegExp(
+            `(<p:cNvPr [^>]*name="${TITLE_NAME}"[^>]*>[\\s\\S]*?</p:cNvPr>|<p:cNvPr [^>]*name="${TITLE_NAME}"[^>]*/>)<p:cNvSpPr[^>]*/>\\s*<p:nvPr>\\s*</p:nvPr>`,
+          ),
+          '$1<p:cNvSpPr><a:spLocks noGrp="1"/></p:cNvSpPr><p:nvPr><p:ph type="title"/></p:nvPr>',
+        );
       // Hyperlinks keep the run's colour (Office 2019+) instead of the theme's blue.
       if (xml.includes('<a:hlinkClick'))
-        data = xml.replace(
+        xml = xml.replace(
           /<a:hlinkClick (r:id="rId\d+"[^>]*?)\/>/g,
           '<a:hlinkClick $1><a:extLst><a:ext uri="{A12FA001-AC4F-418D-AE19-62706E023703}"><ahyp:hlinkClr xmlns:ahyp="http://schemas.microsoft.com/office/drawing/2018/hyperlinkcolor" val="tx"/></a:ext></a:extLst></a:hlinkClick>',
         );
+      data = xml;
     }
     // Brand theme part: Design tab, theme colours and fonts follow the customer's template.
     if (opts.officeTheme && name === 'ppt/theme/theme1.xml') data = readFileSync(opts.officeTheme);

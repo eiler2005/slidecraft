@@ -18,12 +18,16 @@ import { basename, dirname, extname, join, relative, resolve } from 'node:path';
 import * as fontkit from 'fontkit';
 import JSZip from 'jszip';
 import { contrast, luminance, mix, onColor } from '../engine/color.ts';
+import type { FormatFile } from '../spec/format.ts';
 import type { FontSpec, ThemeInput } from '../spec/theme.ts';
+import { readTemplateGeometry } from './template-geometry.ts';
 
 export interface ImportResult {
   theme: ThemeInput;
   themePath: string;
   logo?: string;
+  /** Page format with the template's size and title band (use as `format:` in the deck). */
+  formatPath?: string;
   notes: string[];
 }
 
@@ -146,6 +150,15 @@ async function findLogo(zip: JSZip): Promise<{ name: string; data: Uint8Array } 
   return best;
 }
 
+/** Lightest accent tint on which muted text still reads (4.5:1) and ink stays crisp (7:1). */
+function softTint(accent: string, bg: string, ink: string, muted: string): string {
+  for (const t of [0.86, 0.88, 0.9, 0.92, 0.94, 0.96]) {
+    const c = mix(accent, bg, t);
+    if (contrast(muted, c) >= 4.5 && contrast(ink, c) >= 7) return c;
+  }
+  return mix(accent, bg, 0.96);
+}
+
 export async function importTheme(
   file: string,
   opts: { id: string; name?: string; out?: string; fontDir?: string },
@@ -196,13 +209,85 @@ export async function importTheme(
   const body = mapFont(fonts.minor ?? fonts.major, opts.fontDir, opts.id, 'body', notes);
   const needsCyr = [heading, body].some((f) => f.measure === 'gelasio');
 
-  const logo = await findLogo(zip);
+  // template geometry: background art in place, and the title band as a page format
+  const geo = await readTemplateGeometry(zip);
+  const slideArea = geo.size.w * geo.size.h;
+  const saved = new Map<string, string>();
+  const keep = async (part: string) => {
+    if (!saved.has(part)) {
+      const data = await zip.file(part)?.async('uint8array');
+      if (!data) return undefined;
+      const name = `${opts.id}-art-${saved.size + 1}${extname(part).toLowerCase()}`;
+      writeFileSync(join(outDir, name), data);
+      saved.set(part, `./${name}`);
+    }
+    return saved.get(part);
+  };
+  const toArt = async (pics: typeof geo.content) => {
+    const out: { image: string; x: number; y: number; w: number; h: number }[] = [];
+    for (const p of pics) {
+      const image = await keep(p.part);
+      if (image)
+        out.push({
+          image,
+          x: +p.x.toFixed(4),
+          y: +p.y.toFixed(4),
+          w: +p.w.toFixed(4),
+          h: +p.h.toFixed(4),
+        });
+    }
+    return out;
+  };
+  const artCover = await toArt(geo.cover);
+  const artContent = await toArt(geo.content);
+  const hasArt = artCover.length + artContent.length > 0;
+  // a small picture on the template is its logo; it is already placed by the art
+  const smallPic = [...geo.content, ...geo.cover].some((p) => (p.w * p.h) / slideArea < 0.04);
+  if (hasArt)
+    notes.push(
+      `${saved.size} picture(s) from the template's master and layouts kept as background art in their original positions.`,
+    );
+
+  let formatPath: string | undefined;
+  if (geo.title && geo.title.y < geo.size.h * 0.4) {
+    const t = geo.title;
+    const fmt: FormatFile = {
+      schemaVersion: 1,
+      id: `${opts.id}-frame`,
+      name: `${opts.name ?? opts.id} frame`,
+      w: +geo.size.w.toFixed(3),
+      h: +geo.size.h.toFixed(3),
+      margin: {
+        l: +Math.max(0.3, t.x).toFixed(3),
+        r: +Math.max(0.3, geo.size.w - t.x - t.w).toFixed(3),
+        t: +Math.max(0.25, t.y - 0.28).toFixed(3),
+        b: +Math.max(
+          geo.footer ? Math.max(0.2, geo.size.h - geo.footer.y - geo.footer.h) : 0.38,
+          // a wide band of art along the bottom edge: keep the footer above it
+          ...geo.content
+            .filter(
+              (p) =>
+                p.w > geo.size.w * 0.6 && p.y + p.h >= geo.size.h - 0.05 && p.h < geo.size.h * 0.3,
+            )
+            .map((p) => geo.size.h - p.y + 0.12),
+        ).toFixed(3),
+      },
+      source: `title placeholder of ${basename(file)}`,
+    };
+    formatPath = join(outDir, `${opts.id}.format.json`);
+    writeFileSync(formatPath, `${JSON.stringify(fmt, null, 2)}\n`);
+    notes.push(
+      `Frame: ${fmt.w}×${fmt.h} in, title band where the template has its title — set "format: ${relative(process.cwd(), formatPath)}" (relative to the deck) to use it.`,
+    );
+  }
+
+  const logo = hasArt && smallPic ? undefined : await findLogo(zip);
   let logoRel: string | undefined;
   if (logo) {
     const name = `${opts.id}-logo${extname(logo.name).toLowerCase()}`;
     writeFileSync(join(outDir, name), logo.data);
     logoRel = `./${name}`;
-  } else
+  } else if (!(hasArt && smallPic))
     notes.push(
       'No raster logo found on the slide masters — add "chrome.logo" by hand if you have one.',
     );
@@ -233,7 +318,7 @@ export async function importTheme(
       muted,
       accent,
       accentText: onColor(accent),
-      accentSoft: mix(accent, bg, 0.86),
+      accentSoft: softTint(accent, bg, ink, muted),
       rule: mix(ink, bg, 0.78),
       positive,
       negative,
@@ -276,6 +361,15 @@ export async function importTheme(
       pageNumbers: true,
       tracker: true,
       ...(logoRel ? { logo: logoRel } : {}),
+      ...(hasArt
+        ? {
+            art: {
+              size: { w: +geo.size.w.toFixed(3), h: +geo.size.h.toFixed(3) },
+              cover: artCover,
+              content: artContent,
+            },
+          }
+        : {}),
     },
     source: `imported from ${basename(file)}`,
     officeTheme: `${opts.id}.theme.xml`,
@@ -288,7 +382,13 @@ export async function importTheme(
     notes.push(
       `accent ${accent} has low contrast on ${bg}; consider a darker accent for text highlights.`,
     );
-  return { theme, themePath, ...(logoRel ? { logo: join(outDir, logoRel) } : {}), notes };
+  return {
+    theme,
+    themePath,
+    ...(logoRel ? { logo: join(outDir, logoRel) } : {}),
+    ...(formatPath ? { formatPath } : {}),
+    notes,
+  };
 }
 
 export function relativeTo(from: string, to: string): string {

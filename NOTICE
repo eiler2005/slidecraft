@@ -13,11 +13,7 @@ Runtime libraries inlined into dist/slidecraft.mjs (licenses retained by their a
     zod (MIT), yaml (ISC), commander (MIT)
   - @resvg/resvg-wasm (MPL-2.0) — dist/resvg.wasm is the unmodified upstream binary
 
-Ideas and inspiration (no code, text or assets copied)
-  - Presenton (https://github.com/presenton/presenton, Apache-2.0): the idea of a layout
-    catalogue with content capacity limits, a template gallery, outline → layout → content
-    generation stages and template-from-PPTX. "Presenton" is a trademark of its owners and is
-    not used to name or brand SlideCraft.
+Methodology
   - The consulting methodology generalises the author's earlier internal work (client-ai-agents).
 
 Not included

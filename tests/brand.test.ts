@@ -1,6 +1,7 @@
 import { existsSync, mkdtempSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import pptxgenModule from 'pptxgenjs';
 import { describe, expect, it } from 'vitest';
 import { buildDeck } from '../src/build.ts';
 import { installCodex } from '../src/cli/codex.ts';
@@ -51,6 +52,54 @@ describe('brand import', () => {
     expect(b.diagnostics.filter((d) => d.severity === 'error')).toEqual([]);
     const outZip = await JSZip.loadAsync(readFileSync(b.files[0]!.path));
     expect(await outZip.file('ppt/theme/theme1.xml')!.async('string')).toContain('Contoso Brand');
+  });
+
+  it('reuses a template: art in place, its title band and slide size as a format, title placeholders', async () => {
+    const JSZip = (await import('jszip')).default;
+    const { writeFileSync } = await import('node:fs');
+    const out = mkdtempSync(join(tmpdir(), 'sc-tpl-'));
+    const img = join(import.meta.dirname, '../examples/narrative-story/assets/reconciliation.png');
+    // biome-ignore lint/suspicious/noExplicitAny: pptxgenjs ships CJS/ESM types inconsistently
+    const PptxGenJS: new () => any = (pptxgenModule as any).default ?? pptxgenModule;
+    const p = new PptxGenJS();
+    p.defineLayout({ name: 'FOURTHREE', width: 10, height: 7.5 });
+    p.layout = 'FOURTHREE';
+    p.defineSlideMaster({
+      title: 'BRAND',
+      objects: [
+        { image: { path: img, x: 0, y: 6.9, w: 10, h: 0.6 } },
+        {
+          placeholder: {
+            options: { name: 'title', type: 'title', x: 0.8, y: 0.9, w: 8.4, h: 1 },
+            text: '',
+          },
+        },
+      ],
+    });
+    p.addSlide({ masterName: 'BRAND' }).addText('x', { placeholder: 'title' });
+    const tpl = join(out, 'brand.pptx');
+    await p.writeFile({ fileName: tpl });
+    const r = await importTheme(tpl, { id: 'acme', out: join(out, 'theme') });
+    const fmt = JSON.parse(readFileSync(r.formatPath!, 'utf8'));
+    expect(fmt).toMatchObject({ w: 10, h: 7.5, margin: { l: 0.8, r: 0.8, t: 0.62 } });
+    expect(fmt.margin.b).toBeGreaterThan(0.6); // footer kept above the bottom band
+    expect(readThemeFile(r.themePath).chrome.art?.content).toHaveLength(1);
+    const deck = join(out, 'deck.yaml');
+    writeFileSync(
+      deck,
+      readFileSync(FIXTURE, 'utf8').replace(
+        /^theme: .*$/m,
+        'theme: theme/acme.json\nformat: theme/acme.format.json',
+      ),
+    );
+    const b = await buildDeck(deck, { outDir: join(out, 'dist'), formats: ['pptx'] });
+    expect(b.diagnostics.filter((d) => d.severity === 'error')).toEqual([]);
+    expect(b.scene!.format).toMatchObject({ w: 10, h: 7.5 });
+    const zip = await JSZip.loadAsync(readFileSync(b.files[0]!.path));
+    const pres = await zip.file('ppt/presentation.xml')!.async('string');
+    expect(pres).toContain('cx="9144000" cy="6858000"');
+    const slide2 = await zip.file('ppt/slides/slide2.xml')!.async('string');
+    expect(slide2).toContain('<p:ph type="title"/>');
   });
 
   it('measures a brand font registered from files exactly like the file it points to', () => {

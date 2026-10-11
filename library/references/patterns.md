@@ -28,12 +28,12 @@ Two independent catalogues. A **management pattern (M)** is the decision a mater
 | V03 | Status on a date with a shared calendar | What is the forecast and what needs intervention? | Cut-off, baseline, forecast, risk, decision | Implemented via `timeline` (gantt, `today`) + `kpi-tiles` |
 | V04 | Comparable criteria × options | How do the options differ? | Options, shared criteria, values, unknowns | Implemented via `options-comparison` |
 | V05 | Current vs proposed process | What changes in the work? | Shared outcome, comparable steps, roles, changed action | Implemented via `process-compare` |
-| V06 | Architecture with a linked register | Where is the problem and which control is needed? | Components, boundaries, request/response, ids, actions | Backlog (M4) |
+| V06 | Architecture with a linked register | Where is the problem and which control is needed? | Components, boundaries, request/response, ids, actions | Implemented via `architecture` |
 | V07 | Work and milestones on one time axis | When does the result become available? | Work items, milestones, plan, forecast, result | Implemented via `timeline` |
-| V08 | Evidence chain | What is the answer based on? | Condition, source, check, result, exception | Partly via `process-steps` (numbered); backlog (M4) |
+| V08 | Evidence chain | What is the answer based on? | Condition, source, check, result, exception | Implemented via `evidence-chain` |
 | V09 | Value drivers and metrics | How does an action become measurable value? | Action, result, baseline, metric, measurement | Implemented via `issue-tree` (driver) and `waterfall` |
 | V10 | Hierarchy, meaning and horizon | How do levels of work connect? | Levels, definitions, horizons, results, roles | Implemented via `maturity-model` (staircase), `funnel` (pyramid) and `org-chart` |
-| V11 | Role calendar and cadence | Who takes part when, regularly? | Roles, cycles, scale, events, outputs | Partly via `timeline` (gantt); backlog (M4) |
+| V11 | Role calendar and cadence | Who takes part when, regularly? | Roles, cycles, scale, events, outputs | Implemented via `cadence` |
 | V12 | Two conditions, four actions (2×2) | How do conditions change the preferred approach? | Axis definitions, categories, actions, choice rule | Implemented via `matrix-2x2` |
 | V13 | Coverage map with stable geometry | Where did the state of the same functions change? | Stable objects and ids, snapshots, status definitions, evidence | Implemented via `coverage-map` |
 | V14 | Diagnostic tree and next step | Which step follows from a yes, borderline or unknown answer? | Questions with criteria, labelled branches, actions, stop rule | Implemented via `issue-tree` (issue) |

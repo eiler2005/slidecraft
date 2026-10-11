@@ -59,7 +59,7 @@ You approve four checkpoints; everything between them is automated. Strategy wor
 
 ## Template gallery
 
-A template is **a storyline (the shape of the argument for a task) × a theme (the look)**. Any storyline works in any theme. Fourteen storylines × six themes (or your own brand theme), built from twenty-seven layouts. The [gallery site](https://eiler2005.github.io/slidecraft/) shows every storyline in every theme and the example decks in every format.
+A template is **a storyline (the shape of the argument for a task) × a theme (the look)**. Any storyline works in any theme. Fourteen storylines × six themes (or your own brand theme), built from thirty-one layouts. The [gallery site](https://eiler2005.github.io/slidecraft/) shows every storyline in every theme and the example decks in every format.
 
 <table>
   <tr>
@@ -74,13 +74,13 @@ A template is **a storyline (the shape of the argument for a task) × a theme (t
   </tr>
 </table>
 
-<p align="center"><a href="docs/reference/storylines.gen.md">All 14 storylines →</a> · <a href="docs/reference/themes.gen.md">All 6 themes →</a> · <a href="docs/reference/layouts.gen.md">All 27 layouts →</a></p>
+<p align="center"><a href="docs/reference/storylines.gen.md">All 14 storylines →</a> · <a href="docs/reference/themes.gen.md">All 6 themes →</a> · <a href="docs/reference/layouts.gen.md">All 31 layouts →</a></p>
 
 Also included: **business case**, **product overview**, **case study**, **project kickoff**, **post-mortem**, **training / workshop**, **sales / customer QBR**, **investment memo**. Bring your own outline and SlideCraft maps it onto layouts.
 
 Small and quick: [`examples/europe-first-trip`](examples/europe-first-trip/deck.yaml) — a five-slide travel guide (2×2 value map, Harvey-ball fit by traveller type, budget chart, "who should go where" table), produced in a live end-to-end run with the plugin agents and with Codex, then curated.
 
-**Your brand:** `slidecraft theme import brand.potx --id contoso --font-dir ./fonts` creates a theme with your colours, fonts and logo; `slidecraft calibrate --theme ./slidecraft-theme/contoso.json` checks line breaks against real PowerPoint ([apply your brand](docs/how-to/apply-brand.md)). The brand's Office theme travels into every PPTX.
+**Your brand:** `slidecraft theme import brand.potx --id contoso --font-dir ./fonts` creates a theme with your colours, fonts and logo; `slidecraft calibrate --theme ./slidecraft-theme/contoso.json` checks line breaks against real PowerPoint ([apply your brand](docs/how-to/apply-brand.md)). The template's pictures stay in place, its title band and slide size become the deck's frame (4:3 works too), and its Office theme travels into every PPTX.
 
 **Your old decks:** `slidecraft import old.pptx --render` extracts text, tables, chart data, pictures and notes into a draft `deck.yaml`; `/slidecraft:import` then redesigns it slide by slide from the rendered original ([import a PPTX](docs/how-to/import-pptx.md)).
 
@@ -169,17 +169,24 @@ Methodology: [writing standard](library/references/writing-standard.md) · [visu
 | Group | Layouts |
 |---|---|
 | Frame | `title` (cover, closing) · `agenda` (agenda, section-divider) |
-| Message | `exec-summary` (SCR, key messages) · `key-points` · `big-statement` (statement, quote, hero number) · `text-image` · `text` · `before-after` |
+| Message | `exec-summary` (SCR, key messages) · `key-points` · `big-statement` (statement, quote, hero number) · `text-image` · `text` · `before-after` · `freeform` (HTML/CSS, checked like any slide) |
 | Numbers | `kpi-tiles` · `chart-takeaway` (bar, column, stacked, line) · `waterfall` · `funnel` (funnel, pyramid) · `data-table` |
-| Decide | `options-comparison` (text, Harvey-ball rating, up to 5 options) · `matrix-2x2` · `issue-tree` (issue, driver) · `maturity-model` (grid, staircase) · `coverage-map` · `risk-matrix` |
-| Sequence | `process-steps` (chevrons, numbered) · `timeline` (milestones, gantt) · `gate-matrix` · `process-compare` (current vs proposed) |
+| Decide | `options-comparison` (text, Harvey-ball rating, up to 5 options) · `matrix-2x2` · `issue-tree` (issue, driver) · `maturity-model` (grid, staircase) · `coverage-map` · `architecture` (zones + register) · `evidence-chain` · `risk-matrix` |
+| Sequence | `process-steps` (chevrons, numbered) · `timeline` (milestones, gantt) · `gate-matrix` · `process-compare` (current vs proposed) · `cadence` (role calendar) |
 | People · Close | `team-cards` · `org-chart` · `raci` · `next-steps` (decision, actions) |
 
 Contracts, limits and thumbnails: [layouts reference](docs/reference/layouts.gen.md). Add your own: [add a layout](docs/how-to/add-layout.md).
 
 ## Roadmap
 
-Shipped in 0.2: PPTX import and vision redesign, brand Office theme in output, 27 layouts and 14 storylines, tagged PDF with source links, A4, one-pager, DOCX, image generation, visual regression in CI, the gallery site. Next: the customer's own placeholder layouts, freeform HTML mode, a fit-fix loop. See [ROADMAP.md](ROADMAP.md).
+Shipped in 0.3:
+- brand templates reused (art in place, the template's frame and slide size, title placeholders);
+- freeform HTML slides;
+- the `slidecraft fix` fit loop with exact character budgets;
+- 31 layouts, covering 14 of the 15 visual patterns;
+- `artifact-tool` output verified against PowerPoint.
+
+Next: real placeholder layouts in PPTX output, PPTX reading-order checks, an MCP server. See [ROADMAP.md](ROADMAP.md).
 
 ## Contributing
 
@@ -187,4 +194,4 @@ Issues and PRs welcome — new layouts, themes and storylines especially. Start 
 
 ## License and acknowledgements
 
-[MIT](LICENSE). Bundled fonts are SIL OFL ([fonts/SOURCES.md](fonts/SOURCES.md)). Template ideas were inspired by [Presenton](https://github.com/presenton/presenton) (Apache-2.0) — no code or assets copied. The consulting methodology generalises the author's earlier internal work. See [NOTICE](NOTICE).
+[MIT](LICENSE). Bundled fonts are SIL OFL ([fonts/SOURCES.md](fonts/SOURCES.md)). The consulting methodology generalises the author's earlier internal work. See [NOTICE](NOTICE).

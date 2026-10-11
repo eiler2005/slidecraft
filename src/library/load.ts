@@ -3,11 +3,13 @@ import { dirname, join, resolve } from 'node:path';
 import YAML from 'yaml';
 import type { z } from 'zod';
 import { isMeasureFont, registerMeasureFont } from '../engine/fonts.ts';
+import { FORMATS, makeFormat, registerFormat } from '../engine/format.ts';
 import { getLayout } from '../layouts/index.ts';
 import { STORYLINES_DIR, THEMES_DIR } from '../paths.ts';
 import { type Diagnostic, diag } from '../qa/codes.ts';
 import { Brief } from '../spec/brief.ts';
 import { Deck, type DeckDoc, GhostSlide, Slide } from '../spec/deck.ts';
+import { FormatFile } from '../spec/format.ts';
 import { Storyline } from '../spec/storyline.ts';
 import type { Theme } from '../spec/theme.ts';
 import { Theme as ThemeSchema } from '../spec/theme.ts';
@@ -39,6 +41,9 @@ export function readThemeFile(path: string): Theme {
       );
   }
   if (theme.chrome.logo) theme.chrome.logo = resolve(base, theme.chrome.logo);
+  if (theme.chrome.art)
+    for (const list of [theme.chrome.art.cover, theme.chrome.art.content])
+      for (const a of list) a.image = resolve(base, a.image);
   if (theme.officeTheme) theme.officeTheme = resolve(base, theme.officeTheme);
   return theme;
 }
@@ -148,6 +153,36 @@ export function loadDeck(path: string): LoadedDeck {
       }
     }
   }
+  // `format: ./brand/contoso.format.json` — page size and margins from a brand template
+  if (/\.json$/i.test(deck.format)) {
+    const p = resolve(baseDir, deck.format);
+    const r = existsSync(p) ? FormatFile.safeParse(JSON.parse(readFileSync(p, 'utf8'))) : undefined;
+    if (!r?.success)
+      diagnostics.push(
+        diag(
+          'SC-SPEC-002',
+          r
+            ? `Invalid format file ${deck.format}: ${r.error.message}`
+            : `Format file not found: ${deck.format}`,
+          {
+            pointer: '/format',
+          },
+        ),
+      );
+    else {
+      registerFormat(makeFormat(r.data.id, r.data.w, r.data.h, r.data.margin));
+      deck.format = r.data.id;
+    }
+  } else if (!FORMATS[deck.format])
+    diagnostics.push(
+      diag(
+        'SC-SPEC-001',
+        `Unknown format "${deck.format}" — use ${Object.keys(FORMATS).join(', ')} or a format JSON path`,
+        {
+          pointer: '/format',
+        },
+      ),
+    );
   const expanded: unknown[] = [];
   deck.slides.forEach((s, i) => {
     if (s && typeof s === 'object' && 'include' in (s as object)) {

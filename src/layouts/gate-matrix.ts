@@ -193,8 +193,14 @@ export const gateMatrix: LayoutDef<typeof schema> = {
       );
       ctx.text(
         `**Decides:** ${g.decider}`,
-        { x: tx, y: y0 + body.h - 0.55, w: tw, h: 0.3 },
-        { size: 'small', color: colors.muted, maxLines: 1, field: `gates/${i}/decider` },
+        { x: tx, y: y0 + body.h - 0.7, w: tw, h: 0.46 },
+        {
+          size: 'small',
+          color: colors.muted,
+          maxLines: 2,
+          valign: 'bottom',
+          field: `gates/${i}/decider`,
+        },
       );
     });
   },

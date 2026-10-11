@@ -1,6 +1,34 @@
 # Fix overflow and check errors
 
-> **Audience:** deck authors and agents · **Last reviewed:** 2026-10-10
+> **Audience:** deck authors and agents · **Last reviewed:** 2026-10-11
+
+## The fit-fix loop
+
+```sh
+slidecraft fix deck.yaml --json
+```
+
+The command lists every field that is too long: text that does not fit its box (`SC-FIT-*`) and text over a layout's character limit. For each field you get:
+- `pointer` — the field;
+- `file` — the YAML that holds it, deck.yaml or a section file;
+- `text` and `length`;
+- `budget` — the longest length that fits. It is measured by re-laying-out the slide with shorter text, or taken from the contract.
+
+Rewrite each text within its budget (never truncate), put the rewrites in a file:
+
+```json
+[{ "pointer": "/slides/3/points/0/body", "text": "Both resellers signed and want to start before summer" }]
+```
+
+and apply them:
+
+```sh
+slidecraft fix deck.yaml --apply fixes.json
+```
+
+The rewrites go into the right file, and comments and formatting are kept. The deck is re-checked, and anything still too long is listed again. In the plugin, the review loop does this automatically with the copy-fitter agent.
+
+Every layout is tested so that every field at its contract maximum fits (`tests/fit.test.ts`). In practice, text that passes validation fits; what remains are lists with many long items, and freeform HTML (`SC-FIT-004/005`).
 
 ```sh
 node dist/slidecraft.mjs check deck.yaml          # human-readable

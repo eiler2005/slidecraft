@@ -1,0 +1,32 @@
+schemaVersion: 1
+id: freeform
+title: Freeform
+theme: midnight
+sources:
+  - id: ops
+    title: Operations review, Q3 2026
+    illustrative: true
+slides:
+  - id: numbers
+    layout: freeform
+    title: Three numbers tell the story of the first year
+    sources: [ops]
+    alt: Three large numbers in a row — 1 day onboarding, 80% automated checks, 2.1 times more applications
+    css: |
+      .row { display: flex; gap: 28px; height: 100%; }
+      .cell { flex: 1; background: var(--surface); border-top: 6px solid var(--accent); padding: 28px; }
+      .n { font-family: var(--font-heading); font-weight: 700; font-size: 64pt; line-height: 1; color: var(--accent); }
+      .l { margin-top: 16px; }
+      .s { margin-top: 8px; font-size: var(--size-small); color: var(--muted); }
+    html: |
+      <div class="row">
+        <div class="cell"><div class="n">1 day</div><div class="l">to onboard a standard client</div><div class="s">down from 14 days</div></div>
+        <div class="cell"><div class="n">80%</div><div class="l">of checks run automatically</div><div class="s">the rest go to a specialist</div></div>
+        <div class="cell"><div class="n">2.1×</div><div class="l">more applications per adviser</div><div class="s">same team, same hours</div></div>
+      </div>
+      <script>alert(1)</script>
+  - id: tiny
+    layout: freeform
+    title: Text that is too small or too long is caught like any other slide
+    alt: A tall column of tiny text that does not fit
+    html: <div style="font-size:6pt">tiny</div><div style="height:2000px">tall</div>

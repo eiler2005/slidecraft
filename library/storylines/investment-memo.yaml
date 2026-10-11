@@ -41,7 +41,7 @@ sections:
         inputs: [market data, sources]
       - id: quality
         purpose: Show business quality — retention, margins, unit economics.
-        layouts: [kpi-tiles, chart-takeaway, data-table]
+        layouts: [kpi-tiles, chart-takeaway, data-table, evidence-chain]
         inputs: [cohorts, margins, unit economics]
   - id: numbers
     name: Financials and valuation

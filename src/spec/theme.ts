@@ -36,6 +36,16 @@ export type FontSpec = z.infer<typeof FontSpec>;
 
 export const DecorKind = z.enum(['none', 'rule', 'wave', 'glow', 'geo', 'gradient', 'paper']);
 
+const ArtItem = z
+  .object({
+    image: z.string().describe('PNG/JPEG relative to the theme file'),
+    x: z.number(),
+    y: z.number(),
+    w: z.number().positive(),
+    h: z.number().positive(),
+  })
+  .strict();
+
 export const Theme = z
   .object({
     schemaVersion: z.literal(1),
@@ -111,6 +121,20 @@ export const Theme = z
           .optional()
           .describe(
             'PNG/JPEG logo, relative to the theme file; top-right on content slides, bottom-right on covers',
+          ),
+        art: z
+          .object({
+            size: z
+              .object({ w: z.number().positive(), h: z.number().positive() })
+              .strict()
+              .describe('Slide size the positions refer to (inches); scaled to the deck format'),
+            cover: z.array(ArtItem).default([]),
+            content: z.array(ArtItem).default([]),
+          })
+          .strict()
+          .optional()
+          .describe(
+            'Background art from a brand template, drawn under everything on SlideCraft masters',
           ),
       })
       .strict(),

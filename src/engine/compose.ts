@@ -143,6 +143,24 @@ function buildMasters(
   const small = theme.type.source + 0.5;
   for (const id of ['cover', 'content', 'divider'] as const) {
     const nodes: SceneNode[] = [];
+    // brand template art first, scaled from the template's slide size to this format
+    const art = theme.chrome.art;
+    if (art) {
+      const sx = format.w / art.size.w;
+      const sy = format.h / art.size.h;
+      const list = id === 'content' ? art.content : art.cover.length ? art.cover : art.content;
+      for (const a of list)
+        if (existsSync(a.image))
+          nodes.push({
+            kind: 'image',
+            box: { x: a.x * sx, y: a.y * sy, w: a.w * sx, h: a.h * sy },
+            path: a.image,
+            alt: '',
+            fit: 'cover',
+            decorative: true,
+            role: 'art',
+          });
+    }
     const svg = decorSvg(theme, id, format.w, format.h);
     if (svg) {
       nodes.push({
@@ -378,7 +396,17 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
       def.frame === 'standard' &&
       !srcText &&
       !PLAN_LAYOUTS.has(def.id) &&
-      hasNumbers(slideContent(slide))
+      hasNumbers(
+        def.id === 'freeform'
+          ? // visible text only: numbers in tags, attributes and CSS are not data
+            {
+              text: String((slide as { html?: string }).html ?? '').replace(
+                /<style[\s\S]*?<\/style>|<[^>]*>/g,
+                ' ',
+              ),
+            }
+          : slideContent(slide),
+      )
     ) {
       ctx.issue(
         deck.status === 'final'

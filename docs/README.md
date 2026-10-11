@@ -16,6 +16,7 @@
 | Print, pre-read, memo: A4, one-pager, Word | [Export A4, one-pager and DOCX](how-to/export-documents.md) |
 | Restyle an existing PowerPoint | [Import a PPTX](how-to/import-pptx.md) |
 | Fill image slots with generated pictures | [Generate images](how-to/generate-images.md) |
+| Design a one-off visual in HTML/CSS | [Freeform HTML slides](how-to/freeform-html.md) |
 | Work in Codex | [Use with Codex](how-to/use-with-codex.md) · [Codex engine](how-to/use-codex-engine.md) |
 | Fix a check error | [Fix overflow and check errors](how-to/fix-overflow-and-check-errors.md) |
 | Add sources, images, my outline | [Cite sources](how-to/cite-sources.md) · [Add images](how-to/add-images.md) · [Bring your outline](how-to/bring-your-outline.md) |

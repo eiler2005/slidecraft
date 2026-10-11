@@ -45,12 +45,8 @@
     },
     "format": {
       "default": "wide-16x9",
-      "description": "Page size: PowerPoint widescreen, or A4 landscape for printed / reading decks",
-      "type": "string",
-      "enum": [
-        "wide-16x9",
-        "a4-landscape"
-      ]
+      "description": "Page format: wide-16x9 (default), a4-landscape, or a path to a format JSON (e.g. from `theme import`)",
+      "type": "string"
     },
     "status": {
       "default": "draft",
@@ -1405,6 +1401,122 @@
                   },
                   "layout": {
                     "type": "string",
+                    "const": "freeform"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "body"
+                    ]
+                  },
+                  "html": {
+                    "type": "string",
+                    "maxLength": 12000,
+                    "description": "HTML fragment for the slide body. Theme tokens: var(--ink), var(--accent), var(--font-heading)…"
+                  },
+                  "css": {
+                    "description": "CSS for the fragment; scoped to this slide",
+                    "type": "string",
+                    "maxLength": 6000
+                  },
+                  "alt": {
+                    "type": "string",
+                    "minLength": 10,
+                    "maxLength": 300,
+                    "description": "What the slide shows, in words — for screen readers and the DOCX memo"
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "html",
+                  "alt"
+                ],
+                "additionalProperties": false,
+                "description": "Freeform HTML — Use for a creative, story-led exhibit no layout covers: HTML and CSS inside the standard frame, checked for overflow and text size like every other slide."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
                     "const": "kpi-tiles"
                   },
                   "variant": {
@@ -2294,7 +2406,7 @@
                         "summary": {
                           "description": "One line on what the option is",
                           "type": "string",
-                          "maxLength": 90
+                          "maxLength": 60
                         }
                       },
                       "required": [
@@ -3197,6 +3309,395 @@
                   },
                   "layout": {
                     "type": "string",
+                    "const": "architecture"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "zones"
+                    ]
+                  },
+                  "zones": {
+                    "minItems": 2,
+                    "maxItems": 4,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "maxLength": 24
+                        },
+                        "components": {
+                          "minItems": 1,
+                          "maxItems": 4,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "maxLength": 20,
+                                "pattern": "^[a-z0-9][a-z0-9-]*$",
+                                "description": "Short key used by links"
+                              },
+                              "label": {
+                                "type": "string",
+                                "maxLength": 28
+                              },
+                              "marker": {
+                                "description": "Register number shown on the box",
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 9
+                              },
+                              "highlight": {
+                                "description": "The component the slide is about",
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "label"
+                            ],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "components"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "description": "Columns left to right, e.g. channels → services → data"
+                  },
+                  "links": {
+                    "default": [],
+                    "maxItems": 8,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "from": {
+                          "type": "string"
+                        },
+                        "to": {
+                          "type": "string"
+                        },
+                        "marker": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9
+                        },
+                        "dashed": {
+                          "description": "Response or data returned, as opposed to a request",
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "from",
+                        "to"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "register": {
+                    "minItems": 1,
+                    "maxItems": 6,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "marker": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 9
+                        },
+                        "title": {
+                          "type": "string",
+                          "maxLength": 40
+                        },
+                        "text": {
+                          "type": "string",
+                          "maxLength": 110
+                        }
+                      },
+                      "required": [
+                        "marker",
+                        "title",
+                        "text"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "description": "Numbered findings, risks or controls, linked to the markers on the diagram"
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "zones",
+                  "links",
+                  "register"
+                ],
+                "additionalProperties": false,
+                "description": "Architecture with register — Use for showing where in a system a problem sits and what to do about it: components in zones, requests and responses, and a numbered register linked to markers on the diagram."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
+                    "const": "evidence-chain"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "chain"
+                    ]
+                  },
+                  "steps": {
+                    "minItems": 2,
+                    "maxItems": 5,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "check": {
+                          "type": "string",
+                          "maxLength": 40,
+                          "description": "What was checked"
+                        },
+                        "source": {
+                          "type": "string",
+                          "maxLength": 50,
+                          "description": "Where the evidence comes from"
+                        },
+                        "result": {
+                          "type": "string",
+                          "enum": [
+                            "pass",
+                            "partial",
+                            "fail",
+                            "unknown"
+                          ]
+                        },
+                        "finding": {
+                          "type": "string",
+                          "maxLength": 100,
+                          "description": "What the evidence shows"
+                        }
+                      },
+                      "required": [
+                        "check",
+                        "source",
+                        "result",
+                        "finding"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "conclusion": {
+                    "type": "string",
+                    "maxLength": 130,
+                    "description": "The answer the chain supports"
+                  },
+                  "exception": {
+                    "description": "What would change the answer",
+                    "type": "string",
+                    "maxLength": 130
+                  },
+                  "resultLabels": {
+                    "type": "object",
+                    "properties": {
+                      "pass": {
+                        "type": "string",
+                        "maxLength": 14
+                      },
+                      "partial": {
+                        "type": "string",
+                        "maxLength": 14
+                      },
+                      "fail": {
+                        "type": "string",
+                        "maxLength": 14
+                      },
+                      "unknown": {
+                        "type": "string",
+                        "maxLength": 14
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "steps",
+                  "conclusion"
+                ],
+                "additionalProperties": false,
+                "description": "Evidence chain — Use for showing what an answer rests on: each check, its source and its result in order, ending in the conclusion and what would overturn it."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
                     "const": "risk-matrix"
                   },
                   "variant": {
@@ -3953,6 +4454,182 @@
                 ],
                 "additionalProperties": false,
                 "description": "Current vs proposed process — Use for showing what changes in a process: today’s steps against the proposed ones, with changed steps highlighted."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
+                    "const": "cadence"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "grid"
+                    ]
+                  },
+                  "periods": {
+                    "minItems": 4,
+                    "maxItems": 13,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 10
+                    },
+                    "description": "Columns: weeks, months or sprints"
+                  },
+                  "rows": {
+                    "minItems": 2,
+                    "maxItems": 7,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "maxLength": 28,
+                          "description": "Role, forum or team"
+                        },
+                        "events": {
+                          "maxItems": 13,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "at": {
+                                "type": "integer",
+                                "minimum": 0,
+                                "maximum": 9007199254740991,
+                                "description": "Period index, 0-based"
+                              },
+                              "span": {
+                                "description": "Periods covered (work)",
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 9007199254740991
+                              },
+                              "kind": {
+                                "default": "meeting",
+                                "type": "string",
+                                "enum": [
+                                  "meeting",
+                                  "decision",
+                                  "output",
+                                  "work"
+                                ]
+                              },
+                              "label": {
+                                "type": "string",
+                                "maxLength": 18
+                              }
+                            },
+                            "required": [
+                              "at",
+                              "kind"
+                            ],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "events"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "today": {
+                    "description": "Highlight the current period",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "periods",
+                  "rows"
+                ],
+                "additionalProperties": false,
+                "description": "Role calendar — Use for showing who takes part when: roles or forums against a shared calendar, with recurring meetings, decisions, outputs and work periods."
               },
               {
                 "type": "object",

@@ -4,6 +4,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
+import { flattenFreeform } from './backends/freeform-raster.ts';
 import { rasterize } from './backends/resvg.ts';
 import { esc, PX_PER_IN, slideSvg } from './backends/svg.ts';
 import { composeDeck } from './engine/compose.ts';
@@ -14,6 +15,12 @@ import type { TemplateOption } from './library/rank.ts';
 import { DOCS_DIR, ROOT } from './paths.ts';
 import { Deck, Slide } from './spec/deck.ts';
 import type { Storyline } from './spec/storyline.ts';
+
+/** Freeform slides drawn via Chrome so thumbnails show them (placeholders without Chrome). */
+async function flat(scene: Scene): Promise<Scene> {
+  if (!scene.slides.some((sl) => sl.nodes.some((n) => n.kind === 'html'))) return scene;
+  return (await flattenFreeform(scene, 0)).scene;
+}
 
 /** All slides of a scene on one image, `cols` per row, with a thin frame per slide. */
 export function contactSheetSvg(scene: Scene, cols = 4, max = 12): string {
@@ -112,7 +119,7 @@ export async function buildGallery(opts: {
   const files: string[] = [];
   for (const s of opts.storylines) {
     for (const t of opts.themes ?? s.themes) {
-      const { scene } = composeDeck(previewDeck(s, t));
+      const scene = await flat(composeDeck(previewDeck(s, t)).scene);
       const p = join(out, `${s.id}--${t}.png`);
       writeFileSync(p, await contactSheetPng(scene, opts.width ?? 1400));
       files.push(p);
@@ -149,7 +156,8 @@ export async function buildGallery(opts: {
         diagnostics: [],
       });
       const p = join(out, 'layouts', `${def.id}--${ex.variant ?? def.variants[0]}.png`);
-      writeFileSync(p, await rasterize(slideSvg(scene, scene.slides[0]!), 800));
+      const shown = await flat(scene);
+      writeFileSync(p, await rasterize(slideSvg(shown, shown.slides[0]!), 800));
       files.push(p);
     }
   }
@@ -171,7 +179,7 @@ export async function writePicker(
     const cached = join(DOCS_DIR, 'gallery', `${o.storyline}--${o.theme}.png`);
     const png = existsSync(cached)
       ? readFileSync(cached)
-      : await contactSheetPng(composeDeck(previewDeck(s, o.theme)).scene, 1800);
+      : await contactSheetPng(await flat(composeDeck(previewDeck(s, o.theme)).scene), 1800);
     const img = `data:image/png;base64,${png.toString('base64')}`;
     const sheet = join(dirname(outPath), `option-${o.option}.png`);
     writeFileSync(sheet, png);

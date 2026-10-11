@@ -41,7 +41,7 @@ For each slide: `sc layouts <layout> --json` for the contract, write the content
 
 ## 6 · Review ✅
 
-`sc check <deck> --json`: rewrite fields named by `SC-FIT-*` shorter (keep numbers, never truncate), fix titles, add real sources for `SC-SRC-*`. Open every `dist/previews/*.png`. Apply `slidecraft-partner-review-checklist`; fix blockers and majors; rebuild. Present the verdict, the fixes and the files.
+`sc check <deck> --json`: `sc fix <deck> --json` lists too-long fields with a character budget; rewrite within it (keep numbers, never truncate), save `[{pointer, text}]` to fixes.json and run `sc fix <deck> --apply fixes.json` until nothing remains, fix titles, add real sources for `SC-SRC-*`. Open every `dist/previews/*.png`. Apply `slidecraft-partner-review-checklist`; fix blockers and majors; rebuild. Present the verdict, the fixes and the files.
 
 ## 7 · Deliver
 

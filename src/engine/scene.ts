@@ -213,7 +213,27 @@ export interface ChartNode {
   pointer?: string;
 }
 
+/**
+ * Freeform HTML (layout `freeform`). Rendered natively by the HTML engines; the build
+ * rasterises it with Chrome for every other engine (an ImageNode with the same alt text).
+ */
+export interface HtmlNode {
+  kind: 'html';
+  box: Box;
+  /** Sanitised HTML fragment. */
+  html: string;
+  /** CSS scoped to this node. */
+  css?: string;
+  /** What the slide shows, for screen readers and non-HTML outputs. */
+  alt: string;
+  /** Theme tokens exposed to the fragment as CSS variables. */
+  vars: Record<string, string>;
+  role?: string;
+  pointer?: string;
+}
+
 export type SceneNode =
+  | HtmlNode
   | TextNode
   | RectNode
   | EllipseNode

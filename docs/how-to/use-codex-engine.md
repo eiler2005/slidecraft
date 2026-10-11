@@ -23,8 +23,12 @@ Inside Codex, `auto` picks it automatically when available (detected via `CODEX_
 
 ## Differences from pptxgenjs
 
-- Decor, footer and logo sit on real slide layouts (one per SlideCraft master). Page numbers are per-slide text boxes, because the runtime has no slide-number field.
-- Chart plot areas are pinned to SlideCraft's geometry after export, so stacked totals line up. Waterfall connector lines are omitted, and waterfall labels are per-point overrides.
+- Decor, footer, logo and a real slide-number field sit on slide layouts (one per SlideCraft master), as in the `pptxgenjs` output.
+- After export SlideCraft post-processes the file:
+  - chart plot areas are pinned to SlideCraft geometry, so stacked totals and waterfall connectors line up;
+  - chart text is set to the theme font, and line-chart labels go above the points;
+  - bullet indents and paragraph spacing are written in OOXML units.
+- Verified in PowerPoint: bars, totals, connectors, bullets and slide numbers match the `pptxgenjs` build. Waterfall labels are per-point overrides.
 - Bullet hanging indents are approximate.
 - Geometry is rounded to whole pixels (< 0.5 px).
 

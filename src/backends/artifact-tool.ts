@@ -99,12 +99,14 @@ function paragraphs(t: TextNode, ps: Paragraph[]): Any[] {
       },
     }));
     const out: Any = { runs };
+    // The runtime writes these numbers into the OOXML unchanged: margins in EMU, spacing in
+    // hundredths of a point — convert here, or bullets lose their hanging indent.
     if (p.bullet) {
       out.bulletCharacter = '•';
-      out.marginLeft = ptpx(t.bulletIndent);
-      out.indent = -ptpx(t.bulletIndent);
+      out.marginLeft = Math.round(t.bulletIndent * 12700);
+      out.indent = -Math.round(t.bulletIndent * 12700);
     }
-    if (i > 0 && p.spaceBefore) out.spaceBefore = ptpx(p.spaceBefore);
+    if (i > 0 && p.spaceBefore) out.spaceBefore = Math.round(p.spaceBefore * 100);
     return out;
   });
 }
@@ -317,6 +319,8 @@ function addChart(slide: Any, n: ChartNode) {
     majorGridlines: null,
   };
   const catAxis = {
+    // labels at the bottom of the plot when bars cross zero (waterfalls with negative ends)
+    tickLabelPosition: n.axis.min < 0 ? 'low' : 'nextTo',
     textStyle: { fill: n.catLabels.color, fontSize: ptpx(n.catLabels.size) },
     line: { style: 'solid', fill: '#C9D2DE', width: 1 },
     majorGridlines: null,
@@ -410,23 +414,43 @@ function addChart(slide: Any, n: ChartNode) {
   // export (pinPlotAreas), so overlays computed by the engine line up with the bars.
   const b = n.box;
   plots.push({
+    family: n.font.family,
+    line: n.type === 'line',
     x: (n.plot.x - b.x) / b.w,
     y: (n.plot.y - b.y) / b.h,
     w: n.plot.w / b.w,
     h: n.plot.h / b.h,
   });
-  for (const p of n.primitives)
-    if ((p as { role?: string }).role === 'chart-total') addText(slide, p as TextNode);
+  for (const p of n.primitives) {
+    const role = (p as { role?: string }).role;
+    if (role === 'chart-total') addText(slide, p as TextNode);
+    else if (role === 'chart-connector') void addNode(slide, p);
+  }
 }
 
 /** Inner plot boxes (fractions of the chart frame) in the order charts were added. */
-let plots: { x: number; y: number; w: number; h: number }[] = [];
+let plots: { family: string; line: boolean; x: number; y: number; w: number; h: number }[] = [];
 
 /** Write each chart's manual inner plot layout, matching charts to parts in slide order. */
 async function pinPlotAreas(buf: Buffer, list: typeof plots): Promise<Buffer> {
-  if (!list.length) return buf;
   const JSZip = (await import('jszip')).default;
   const zip = await JSZip.loadAsync(buf);
+  for (const name of Object.keys(zip.files).filter((n) =>
+    /slideLayouts\/slideLayout\d+\.xml$/.test(n),
+  )) {
+    const xml = await zip.file(name)!.async('string');
+    if (!xml.includes(SLIDE_NUMBER_MARK)) continue;
+    zip.file(
+      name,
+      xml.replace(
+        new RegExp(
+          `<a:r>(<a:rPr[^>]*/>|<a:rPr[^>]*>[\\s\\S]*?</a:rPr>)?<a:t>${SLIDE_NUMBER_MARK}</a:t></a:r>`,
+          'g',
+        ),
+        `<a:fld id="{B6F15528-21DE-4FAA-801E-634DDDAF4B2B}" type="slidenum">$1<a:t>${SLIDE_NUMBER_MARK}</a:t></a:fld>`,
+      ),
+    );
+  }
   const pres = (await zip.file('ppt/presentation.xml')!.async('string')) ?? '';
   const presRels = (await zip.file('ppt/_rels/presentation.xml.rels')!.async('string')) ?? '';
   const target = (rels: string, id: string) =>
@@ -451,9 +475,21 @@ async function pinPlotAreas(buf: Buffer, list: typeof plots): Promise<Buffer> {
       const cx = await zip.file(chartPart)?.async('string');
       if (!p || !cx) continue;
       const layout = `<c:layout><c:manualLayout><c:layoutTarget val="inner"/><c:xMode val="edge"/><c:yMode val="edge"/><c:x val="${p.x.toFixed(4)}"/><c:y val="${p.y.toFixed(4)}"/><c:w val="${p.w.toFixed(4)}"/><c:h val="${p.h.toFixed(4)}"/></c:manualLayout></c:layout>`;
+      let fixed = cx
+        // chart text style has no typeface: set the theme family on every run default
+        .replace(
+          /<a:defRPr([^>]*?)\s*\/>/g,
+          `<a:defRPr$1><a:latin typeface="${p.family}"/></a:defRPr>`,
+        )
+        .replace(/<a:defRPr([^>]*)>(?!<a:latin)/g, `<a:defRPr$1><a:latin typeface="${p.family}"/>`);
+      // line charts: labels above the points, not on the line
+      if (p.line)
+        fixed = fixed
+          .replace(/<c:dLblPos val="[^"]*"\s*\/>/g, '')
+          .replace(/<c:showLegendKey/g, '<c:dLblPos val="t"/><c:showLegendKey');
       zip.file(
         chartPart,
-        cx.replace(
+        fixed.replace(
           /<c:plotArea>(\s*<c:layout\s*\/>|\s*<c:layout>[\s\S]*?<\/c:layout>)?/,
           `<c:plotArea>${layout}`,
         ),
@@ -472,13 +508,17 @@ async function buildLayouts(p: Any, scene: Scene): Promise<Record<string, Any>> 
     layout.setParentLayoutId(master.id);
     layout.background.fill = m.background;
     for (const n of m.nodes) await addNode(layout, n);
+    // '‹#›' becomes a slide-number field in post-processing, so every slide shows its own number
+    if (m.slideNumber) drawSlideNumber(layout, m, SLIDE_NUMBER_MARK);
     out[id] = layout;
   }
   return out;
 }
 
-/** Slide number: a per-slide text box (the runtime exposes no slide-number field). */
-function drawSlideNumber(slide: Any, m: Master, slideNo: number) {
+/** Slide number text box (on layouts, with the field mark). */
+const SLIDE_NUMBER_MARK = '‹#›';
+
+function drawSlideNumber(slide: Any, m: Master, slideNo: number | string) {
   if (m.slideNumber) {
     const s = m.slideNumber;
     const t = slide.shapes.add({
@@ -487,14 +527,25 @@ function drawSlideNumber(slide: Any, m: Master, slideNo: number) {
       fill: 'none',
       line: { style: 'solid', fill: 'none', width: 0 },
     });
-    t.text = String(slideNo);
     t.text.style = {
-      typeface: s.style.family,
-      fontSizePt: s.style.size,
-      color: s.style.color,
       alignment: s.style.align,
       insets: { top: 0, right: 0, bottom: 0, left: 0 },
     };
+    // font size is honoured on runs only
+    t.text.set([
+      {
+        runs: [
+          {
+            run: String(slideNo),
+            textStyle: {
+              typeface: s.style.family,
+              fontSize: `${s.style.size}pt`,
+              color: s.style.color,
+            },
+          },
+        ],
+      },
+    ]);
   }
 }
 
@@ -542,7 +593,6 @@ export const artifactToolEngine: Engine = {
     for (const s of scene.slides) {
       const slide = p.slides.add();
       slide.setLayout(layouts[s.master]);
-      drawSlideNumber(slide, scene.masters[s.master]!, s.index + 1);
       if (s.background) slide.background.fill = s.background;
       for (const n of s.nodes) await addNode(slide, n);
       if (s.notes) slide.speakerNotes.textFrame.setText(s.notes);
@@ -568,8 +618,7 @@ export const artifactToolEngine: Engine = {
       diagnostics: [],
       limitations: [
         'Built with the proprietary Codex artifact-tool runtime (internal evaluation and testing only).',
-        'Page numbers are per-slide text boxes (no slide-number field); decor, footer and logo sit on slide layouts.',
-        'Waterfall connectors are omitted.',
+        'Decor, footer, logo and the slide-number field sit on slide layouts; chart plot areas are pinned to SlideCraft geometry.',
       ],
     };
   },

@@ -13,7 +13,7 @@ SlideCraft ships in milestones. Each one ends with something people can use, tes
 - QA with stable diagnostic codes; deterministic builds; manifest; CI; privacy hooks.
 - Docs: tutorials, how-to guides, generated reference, explanation, ADRs.
 
-## v0.2 — shipped
+## v0.2 – v0.3 — shipped
 
 ### M3 — Bring your brand · *shipped*
 
@@ -21,13 +21,15 @@ SlideCraft ships in milestones. Each one ends with something people can use, tes
 - ✅ Brand font files as measure fonts (`fonts.*.files`), embedded in PDF, PNG and HTML.
 - ✅ The template's Office theme part travels into PPTX output (Design tab, colour and font pickers).
 - ✅ `slidecraft calibrate --theme …` — go/no-go report against PowerPoint or LibreOffice.
-- Next: reuse the template's own placeholder layouts and background art (map its placeholders onto the SlideCraft frame).
+- ✅ Template reuse: pictures in place, the template's title band and slide size as the frame, action titles as title placeholders.
+- Next: emit real placeholder layouts in PPTX output so slides inherit the template's "Title and Content" etc.; import vector decoration from masters.
 
 ### M4 — Library growth · *shipped*
 
-- ✅ 27 layouts. Added: issue/driver tree, RACI, gate matrix, current-vs-proposed process, funnel/pyramid, risk heatmap, maturity model, coverage map, before/after, org chart, text.
+- ✅ 31 layouts: adds architecture with register, evidence chain and role calendar to the 27 of 0.2.
+- ✅ Added in 0.2: issue/driver tree, RACI, gate matrix, current-vs-proposed process, funnel/pyramid, risk heatmap, maturity model, coverage map, before/after, org chart, text.
 - ✅ 14 storylines. Added: project kickoff, post-mortem, training/workshop, sales QBR, investment memo.
-- Next: architecture with a linked register (V06), evidence chain (V08), role calendar (V11), and variant-level "when not to use" examples in the reference.
+- Next: V15 (action, callout and result check), variant-level "when not to use" examples in the reference.
 
 ### M5 — From your existing PPTX · *shipped*
 
@@ -42,7 +44,9 @@ SlideCraft ships in milestones. Each one ends with something people can use, tes
 - ✅ A4 landscape format, one-pager, DOCX memo.
 - ✅ Image generation for `text-image` slots (`slidecraft images`, opt-in; prompt kept as provenance).
 - ✅ npm package `@eiler2005/slidecraft` (zero runtime deps), gallery site on GitHub Pages.
-- Next: freeform HTML mode for story-led decks; an automatic fix loop for fit diagnostics; reading-order checks on PPTX.
+- ✅ Freeform HTML slides with the same overflow and text-size checks.
+- ✅ `slidecraft fix`: fit loop with measured character budgets, applied by JSON pointer.
+- Next: reading-order and alt-text checks on PPTX; an MCP server so any MCP client can build decks.
 
 ## Principles for what goes in
 

@@ -5,6 +5,7 @@
 import { readFileSync } from 'node:fs';
 import { extname } from 'node:path';
 import { vectorFamily } from '../engine/fonts.ts';
+import { freeformMarkup } from '../engine/freeform.ts';
 import type { Master, Scene, SceneNode, SceneSlide, Stroke, TextNode } from '../engine/scene.ts';
 
 export const PX_PER_IN = 96;
@@ -69,6 +70,9 @@ function nestedSvg(svg: string, x: number, y: number, w: number, h: number): str
 
 export function nodeSvg(n: SceneNode): string {
   switch (n.kind) {
+    case 'html':
+      // native in browsers (HTML deck, Chrome PDF); other engines get a rasterised image
+      return `<foreignObject x="${px(n.box.x)}" y="${px(n.box.y)}" width="${px(n.box.w)}" height="${px(n.box.h)}">${freeformMarkup(n)}</foreignObject>`;
     case 'text':
       return textSvg(n);
     case 'rect': {

@@ -89,6 +89,8 @@ export interface ComposeContext {
   variant: string;
   /** Common slide fields (title is the action title / cover title). */
   slide: { title: string; lead?: string };
+  /** Folder of the deck file, for assets referenced by relative path. */
+  baseDir: string;
   /** Content region for standard-frame layouts. */
   body: Box;
   /** The full page box. */

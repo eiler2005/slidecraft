@@ -56,7 +56,7 @@ sections:
     slots:
       - id: changes
         purpose: Say what moved since the last meeting, and why.
-        layouts: [key-points, data-table]
+        layouts: [key-points, data-table, coverage-map]
         guidance: Three to five changes ordered by impact, each with cause and consequence. Include good news. Cover scope, budget and schedule changes explicitly, not only incidents.
         inputs: [changes since last review, causes, impacts]
   - id: risk

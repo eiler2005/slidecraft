@@ -58,6 +58,7 @@ export function createContext(
     slideId: init.slideId,
     variant: init.variant,
     slide: init.slide,
+    baseDir: init.baseDir,
     body: init.body,
     page: { x: 0, y: 0, w: format.w, h: format.h },
     colors,

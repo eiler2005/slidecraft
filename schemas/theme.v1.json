@@ -457,6 +457,107 @@
         "logo": {
           "description": "PNG/JPEG logo, relative to the theme file; top-right on content slides, bottom-right on covers",
           "type": "string"
+        },
+        "art": {
+          "description": "Background art from a brand template, drawn under everything on SlideCraft masters",
+          "type": "object",
+          "properties": {
+            "size": {
+              "type": "object",
+              "properties": {
+                "w": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "h": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              },
+              "required": [
+                "w",
+                "h"
+              ],
+              "additionalProperties": false,
+              "description": "Slide size the positions refer to (inches); scaled to the deck format"
+            },
+            "cover": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "description": "PNG/JPEG relative to the theme file"
+                  },
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  },
+                  "w": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "h": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "image",
+                  "x",
+                  "y",
+                  "w",
+                  "h"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "content": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "description": "PNG/JPEG relative to the theme file"
+                  },
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  },
+                  "w": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "h": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  }
+                },
+                "required": [
+                  "image",
+                  "x",
+                  "y",
+                  "w",
+                  "h"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "size",
+            "cover",
+            "content"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [

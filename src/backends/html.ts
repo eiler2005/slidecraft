@@ -36,7 +36,7 @@ const FACE_CSS: Record<Face, { weight: string; style: string }> = {
 };
 
 /** @font-face rules for every bundled family that the slides actually reference. */
-function fontFaceCss(usedMarkup: string): string {
+export function fontFaceCss(usedMarkup: string): string {
   let css = '';
   for (const measure of measureFontIds() as MeasureFont[]) {
     const family = vectorFamily(measure);
@@ -321,7 +321,7 @@ function detectChrome(): Detection {
  * (background services, first-run work), so we stop it ourselves as soon as it reports
  * "bytes written to file" or the PDF size is stable, instead of waiting for exit.
  */
-function runChrome(
+export function runChrome(
   bin: string,
   args: string[],
   timeoutMs: number,

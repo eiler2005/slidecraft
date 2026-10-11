@@ -131,11 +131,17 @@ export const agenda: LayoutDef<typeof schema> = {
         {
           role: 'title',
           font: 'heading',
-          sizes: [theme.type.cover, theme.type.cover - 4, theme.type.cover - 8],
+          sizes: [
+            theme.type.cover,
+            theme.type.cover - 4,
+            theme.type.cover - 8,
+            theme.type.cover - 12,
+            theme.type.cover - 16,
+          ],
           bold,
           color: titleColor,
           lineHeight: 1.08,
-          maxLines: 3,
+          maxLines: 4,
           field: 'title',
         },
       );

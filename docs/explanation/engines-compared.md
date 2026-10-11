@@ -23,8 +23,8 @@ Every engine draws the same Scene IR, so layout, line breaks and content are ide
 |---|---|
 | Already on your machine if you use Codex; `auto` selects it inside Codex | **Proprietary (OpenAI): internal evaluation and testing only** — no distribution, no production or commercial use, license revocable. Check before using it for client work |
 | Rich API with its own renderer (PNG, montage), table and chart facades; can import and edit existing PPTX — the most promising base for future "edit my deck" features | Not on npm: unavailable in CI, for collaborators without Codex, and on servers |
-| Good native output for text, shapes, tables and charts | Decor, footer and logo live on slide layouts; page numbers are per-slide text boxes (no slide-number field in the runtime) |
-| | Plot areas are pinned to our geometry after export (stacked totals line up); waterfall connector lines are omitted; geometry rounded to whole pixels |
+| Good native output for text, shapes, tables and charts | The runtime ignores some settings (plot area, chart fonts, paragraph units); SlideCraft fixes them in the exported XML, so the adapter depends on that post-processing |
+| | Geometry is rounded to whole pixels; not byte-reproducible (the runtime writes random relationship ids) |
 | | API and behaviour can change with Codex updates (version ≥ 2.7.3 is checked) |
 
 **Bottom line.** Use `pptxgenjs` for anything that leaves your team. Use `artifact-tool` when you are working inside Codex on internal drafts and prefer its runtime — switching is one flag, the deck spec is the same.

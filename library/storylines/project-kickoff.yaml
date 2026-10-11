@@ -54,7 +54,7 @@ sections:
         inputs: [workstreams, milestones, dates]
       - id: governance
         purpose: Show who decides what and how the team meets.
-        layouts: [raci, team-cards]
+        layouts: [raci, cadence, team-cards]
         guidance: Exactly one A per decision; add the meeting cadence in notes or a key-points slide.
         inputs: [roles, decisions, cadence]
       - id: risks

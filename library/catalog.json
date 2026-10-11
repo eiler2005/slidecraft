@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "layouts": [
     {
       "id": "title",
@@ -89,6 +89,16 @@
         "panels"
       ],
       "purpose": "Use for a change told as two states — how things are today and how they will be — with one number on each side.",
+      "frame": "standard"
+    },
+    {
+      "id": "freeform",
+      "name": "Freeform HTML",
+      "group": "message",
+      "variants": [
+        "body"
+      ],
+      "purpose": "Use for a creative, story-led exhibit no layout covers: HTML and CSS inside the standard frame, checked for overflow and text size like every other slide.",
       "frame": "standard"
     },
     {
@@ -203,6 +213,26 @@
       "frame": "standard"
     },
     {
+      "id": "architecture",
+      "name": "Architecture with register",
+      "group": "decide",
+      "variants": [
+        "zones"
+      ],
+      "purpose": "Use for showing where in a system a problem sits and what to do about it: components in zones, requests and responses, and a numbered register linked to markers on the diagram.",
+      "frame": "standard"
+    },
+    {
+      "id": "evidence-chain",
+      "name": "Evidence chain",
+      "group": "decide",
+      "variants": [
+        "chain"
+      ],
+      "purpose": "Use for showing what an answer rests on: each check, its source and its result in order, ending in the conclusion and what would overturn it.",
+      "frame": "standard"
+    },
+    {
       "id": "risk-matrix",
       "name": "Risk heatmap",
       "group": "decide",
@@ -252,6 +282,16 @@
         "lanes"
       ],
       "purpose": "Use for showing what changes in a process: today’s steps against the proposed ones, with changed steps highlighted.",
+      "frame": "standard"
+    },
+    {
+      "id": "cadence",
+      "name": "Role calendar",
+      "group": "sequence",
+      "variants": [
+        "grid"
+      ],
+      "purpose": "Use for showing who takes part when: roles or forums against a shared calendar, with recurring meetings, decisions, outputs and work periods.",
       "frame": "standard"
     },
     {

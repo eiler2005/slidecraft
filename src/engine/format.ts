@@ -28,10 +28,10 @@ export interface Format {
   pageNumber: Box;
 }
 
-const M = { l: 0.6, r: 0.6, t: 0.42, b: 0.38 };
+const DEFAULT_MARGIN = { l: 0.6, r: 0.6, t: 0.42, b: 0.38 };
 
 /** Same frame for every page size: fixed bands for tracker, title and footer; the body takes the rest. */
-function makeFormat(id: string, W: number, H: number): Format {
+export function makeFormat(id: string, W: number, H: number, M = DEFAULT_MARGIN): Format {
   const inner = W - M.l - M.r;
   return {
     id,
@@ -49,6 +49,11 @@ function makeFormat(id: string, W: number, H: number): Format {
     footer: { x: M.l, y: H - M.b - 0.14, w: inner - 1.2, h: 0.2 },
     pageNumber: { x: W - M.r - 1.0, y: H - M.b - 0.14, w: 1.0, h: 0.2 },
   };
+}
+
+/** Add a format at runtime (brand formats from `theme import`). */
+export function registerFormat(f: Format): void {
+  FORMATS[f.id] = f;
 }
 
 /** Default: PowerPoint widescreen, 13.333 × 7.5 in. */

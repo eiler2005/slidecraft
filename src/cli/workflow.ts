@@ -8,6 +8,7 @@ import { buildGallery, buildHero, writePicker } from '../gallery.ts';
 import { getLayout } from '../layouts/index.ts';
 import { libraryCheck } from '../library/check.ts';
 import { generateDocs } from '../library/docs.ts';
+import { applyFixes, type Fix, fitTasks } from '../library/fix.ts';
 import { describeJob, generateImages, openAiProvider, planImages } from '../library/images.ts';
 import {
   getStoryline,
@@ -414,6 +415,46 @@ export function registerBrandCommands(program: Command): void {
         );
       },
     );
+
+  program
+    .command('fix')
+    .description(
+      'Fit-fix loop: list texts that do not fit with an exact character budget, or apply rewrites by JSON pointer',
+    )
+    .argument('<deck>', 'path to deck.yaml')
+    .option(
+      '--apply <fixes.json>',
+      'JSON list of { pointer, text } rewrites to write into the YAML',
+    )
+    .option('--json', 'machine-readable output')
+    .action((deck: string, o: { apply?: string; json?: boolean }) => {
+      if (o.apply) {
+        const fixes = JSON.parse(readFileSync(o.apply, 'utf8')) as Fix[];
+        const r = applyFixes(deck, fixes);
+        if (wantsJson(o.json)) printJson(r);
+        else {
+          console.log(`${green('✔')} applied ${r.applied} rewrite(s)`);
+          r.errors.forEach((e) => console.log(`✗ ${e}`));
+          r.remaining.forEach((t) =>
+            console.log(
+              `  still long: ${t.pointer} (${t.length}${t.budget ? ` → ≤ ${t.budget}` : ''})`,
+            ),
+          );
+        }
+        process.exitCode = r.errors.length || r.remaining.length ? 1 : 0;
+        return;
+      }
+      const tasks = fitTasks(deck);
+      if (wantsJson(o.json)) printJson({ ok: tasks.length === 0, tasks });
+      else if (!tasks.length) console.log(`${green('✔')} everything fits`);
+      else
+        tasks.forEach((t) =>
+          console.log(
+            `${t.slide ?? ''} ${t.pointer}  ${t.length} chars${t.budget ? ` → rewrite to ≤ ${t.budget}` : ''}\n    "${t.text.slice(0, 100)}${t.text.length > 100 ? '…' : ''}"`,
+          ),
+        );
+      process.exitCode = tasks.length ? 1 : 0;
+    });
 
   program
     .command('images')

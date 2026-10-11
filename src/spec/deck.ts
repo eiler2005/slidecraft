@@ -91,9 +91,11 @@ export const Deck = z
     storyline: z.string().optional().describe('Storyline id from the library'),
     theme: z.string().default('consulting-classic'),
     format: z
-      .enum(['wide-16x9', 'a4-landscape'])
+      .string()
       .default('wide-16x9')
-      .describe('Page size: PowerPoint widescreen, or A4 landscape for printed / reading decks'),
+      .describe(
+        'Page format: wide-16x9 (default), a4-landscape, or a path to a format JSON (e.g. from `theme import`)',
+      ),
     status: z.enum(['ghost', 'draft', 'review', 'final']).default('draft'),
     footer: z
       .string()

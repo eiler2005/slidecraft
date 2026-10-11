@@ -1,0 +1,18 @@
+schemaVersion: 1
+id: overflow
+title: Overflow
+status: draft
+slides:
+  # kept: comments survive fixes
+  - id: points
+    layout: key-points
+    variant: columns
+    title: Three reasons explain why the pilot should start in the second quarter of next year
+    points:
+      - heading: Partners are ready
+        body: Both resellers have signed letters of intent, trained twelve sales people, built demo environments, agreed pricing, prepared a joint marketing plan, booked events in Munich and Frankfurt and asked for a start date before the summer break so that they can plan their own capacity
+      - heading: The product is localised
+        body: German UI and hosting are live.
+      - heading: Cash is available
+        body: Phase 1 fits this year's budget.
+  - include: sections/more.yaml

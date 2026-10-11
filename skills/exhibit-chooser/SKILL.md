@@ -38,6 +38,10 @@ Pick the exhibit from the **relationship** the title claims, not from the data y
 | The state of many functions on one map | `coverage-map` |
 | A change told as two states | `before-after` · panels |
 | Who reports to whom | `org-chart` · tree |
+| Where in a system a problem sits, with a numbered register | `architecture` · zones |
+| What the answer rests on: checks, sources, results | `evidence-chain` |
+| Who meets or decides when | `cadence` |
+| A bespoke visual no layout covers (story decks; a picture in PPTX) | `freeform` |
 | Text that is genuinely text (definitions, scope in/out) | `text` · bullets / paragraphs / two-column |
 
 Rules: one message per slide; highlight only the insight (`highlight`); every number sourced; if the data cannot prove the title, change the title or flag the gap — never stretch the chart.

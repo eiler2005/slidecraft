@@ -13,7 +13,7 @@ allowed-tools: Read, Write, Edit, Glob, Agent, Bash(node ${CLAUDE_PLUGIN_ROOT}/d
 ## Loop (max 3 rounds)
 
 1. `sc check <deck> --json`.
-2. **Mechanical fixes → copy-fitter (Haiku).** Send it every `SC-FIT-001/002/003`, `SC-TITLE-001/003` diagnostic (pointer, measured, limit, hint). It rewrites only those fields, keeping meaning and numbers.
+2. **Mechanical fixes → copy-fitter (Haiku).** `sc fix <deck> --json` lists every too-long field with an exact character budget. Send copy-fitter the deck path plus any `SC-TITLE-001/003`. It rewrites within budget and applies with `sc fix <deck> --apply fixes.json`, looping until `remaining` is empty.
 3. **Sources.** For `SC-SRC-*` add `sources:` ids that exist in the deck, or ask the user. Never invent a source.
 4. `sc build <deck> -f png,pptx --json` and re-check until 0 errors.
 

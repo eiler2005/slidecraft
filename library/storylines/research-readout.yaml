@@ -49,7 +49,7 @@ sections:
     slots:
       - id: finding
         purpose: Report one finding with the evidence that supports it.
-        layouts: [chart-takeaway, key-points, big-statement, data-table]
+        layouts: [chart-takeaway, key-points, big-statement, data-table, evidence-chain]
         repeat: { min: 3, max: 8 }
         guidance: Title states the finding with a number or a contrast ("62% of admins never open the reports tab"). Show one chart with a takeaway, or one quote and a count. Mark statistical significance and base size. Order by importance, not by survey order.
         inputs: [finding, supporting data, base size, verbatim quotes]

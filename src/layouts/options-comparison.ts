@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { mix } from '../engine/color.ts';
+import { ensureContrast, mix } from '../engine/color.ts';
 import { cols, rows } from '../engine/format.ts';
 import type { Box } from '../engine/scene.ts';
 import { diag } from '../qa/codes.ts';
@@ -12,7 +12,7 @@ const schema = z
         z
           .object({
             name: z.string().max(28),
-            summary: z.string().max(90).optional().describe('One line on what the option is'),
+            summary: z.string().max(60).optional().describe('One line on what the option is'),
           })
           .strict(),
       )
@@ -203,10 +203,11 @@ export const optionsComparison: LayoutDef<typeof schema> = {
       }
     }
     const colBoxes = cols(area, [1.35, ...c.options.map(() => 1)], 0);
-    const headH = c.options.some((o) => o.summary) ? 0.85 : 0.55;
+    const rec = c.recommended !== undefined && c.recommended < nOpt ? c.recommended : undefined;
+    // the RECOMMENDED label sits above the name, so its column needs the same two summary lines
+    const headH = (c.options.some((o) => o.summary) ? 0.85 : 0.55) + (rec !== undefined ? 0.22 : 0);
     const rowH = (area.h - headH) / nCrit;
     const top = area.y;
-    const rec = c.recommended !== undefined && c.recommended < nOpt ? c.recommended : undefined;
 
     if (rec !== undefined) {
       const b = colBoxes[rec + 1]!;
@@ -227,7 +228,7 @@ export const optionsComparison: LayoutDef<typeof schema> = {
           {
             size: theme.type.source + 0.5,
             bold: true,
-            color: colors.accent,
+            color: ensureContrast(colors.accent, colors.accentSoft),
             align: 'center',
             maxLines: 1,
             fixed: true,
@@ -242,7 +243,7 @@ export const optionsComparison: LayoutDef<typeof schema> = {
           font: 'heading',
           size: 'heading',
           bold: true,
-          color: isRec ? colors.accent : colors.ink,
+          color: isRec ? ensureContrast(colors.accent, colors.accentSoft) : colors.ink,
           align: 'center',
           maxLines: 1,
           field: `options/${i}/name`,

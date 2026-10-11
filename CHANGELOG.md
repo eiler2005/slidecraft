@@ -2,6 +2,38 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.3.0] — 2026-10-11
+
+### Added
+- **Brand templates reused (M3):** `theme import` now also reads:
+  - the pictures on the template's master and on its title and content layouts, kept in place as `chrome.art` and drawn by every engine;
+  - the title-placeholder position and slide size, written as `<id>.format.json` and used with `format:` in the deck. The footer stays above a bottom band of art, and 4:3 templates work.
+  - Accent tints are chosen for readable muted text.
+- **Title placeholders:** action titles in PPTX are real title placeholders. Verified in PowerPoint: the outline export lists every title, and rendering is unchanged.
+- **Freeform HTML slides (M6):** layout `freeform` takes HTML/CSS with theme tokens as CSS variables.
+  - The HTML engines show it live; Chrome renders it to a picture for PPTX, PDF, PNG and DOCX.
+  - Checks: overflow (`SC-FIT-004`) and minimum text size (`SC-FIT-005`). Scripts, handlers and remote URLs are stripped (`SC-HTML-001`).
+- **Fit-fix loop (M6):** `slidecraft fix deck.yaml` lists every too-long field with an exact character budget, measured by re-laying-out the slide or taken from the contract. `--apply fixes.json` writes rewrites by JSON pointer into deck.yaml or section files, keeps comments and re-checks. The copy-fitter agent and the review skill use it.
+- **Layouts (M4):** `architecture` (zones, request/response links, numbered register — V06), `evidence-chain` (checks, sources, results, conclusion — V08), `cadence` (role calendar — V11). 31 layouts in total.
+- **Contract capacity test:** every string field of every layout example, at its contract maximum, must fit its box.
+
+### Fixed
+- Contracts that could not hold their own maximum:
+  - `options-comparison` summary is now limited to 60 characters, and the recommended column gets the same summary space;
+  - the `gate-matrix` decider has two lines;
+  - `issue-tree` driver labels: the root shows its value above the label;
+  - the agenda divider and the quote title take longer titles.
+- `artifact-tool` adapter, checked page by page in PowerPoint:
+  - a real slide-number field on layouts;
+  - waterfall connectors drawn;
+  - bullet hanging indents and paragraph spacing written in OOXML units;
+  - the theme font on chart text, and category labels below negative axes;
+  - line-chart labels above the points.
+- Freeform slides no longer trigger `SC-SRC-001` from numbers in markup.
+
+### Removed
+- Third-party inspiration notes from README and NOTICE (no third-party code or assets are used).
+
 ## [0.2.0] — 2026-10-11
 
 ### Added

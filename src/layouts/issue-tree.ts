@@ -210,8 +210,33 @@ export const issueTree: LayoutDef<typeof schema> = {
       });
       const inner = { x: b.x + 0.14, y: b.y + 0.04, w: b.w - 0.28, h: b.h - 0.08 };
       const ink = opts.fill === colors.accent ? colors.accentText : colors.ink;
-      if (value) {
-        const vw = 0.95;
+      if (value && b.h >= 0.9) {
+        // tall node (the root): value on top, label below at full width
+        ctx.text(
+          value,
+          { x: inner.x, y: inner.y + 0.04, w: inner.w, h: 0.36 },
+          {
+            font: 'heading',
+            size: theme.type.body + 3,
+            bold: true,
+            color: opts.fill === colors.accent ? colors.accentText : colors.accent,
+            maxLines: 1,
+            fixed: true,
+            field: `${opts.field}/value`,
+          },
+        );
+        ctx.text(
+          label,
+          { x: inner.x, y: inner.y + 0.42, w: inner.w, h: inner.h - 0.42 },
+          {
+            size: theme.type.body - 1,
+            bold: !!opts.strong,
+            color: ink,
+            field: `${opts.field}/label`,
+          },
+        );
+      } else if (value) {
+        const vw = 0.8;
         ctx.text(
           label,
           { ...inner, w: inner.w - vw - 0.08 },
@@ -220,7 +245,8 @@ export const issueTree: LayoutDef<typeof schema> = {
             bold: !!opts.strong,
             color: ink,
             valign: 'middle',
-            maxLines: 2,
+            maxLines: 3,
+            lineHeight: 1.08,
             field: `${opts.field}/label`,
           },
         );

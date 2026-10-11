@@ -55,6 +55,24 @@ export const CODES = {
     why: 'A single word or token is wider than the column and would be split mid-word.',
     fix: 'Hyphenate, abbreviate, or choose a layout with wider columns.',
   },
+  'SC-FIT-004': {
+    severity: 'error',
+    title: 'Freeform HTML overflows its box',
+    why: 'The content of a freeform slide is taller or wider than the slide body, so part of it would be cut off.',
+    fix: 'Shorten the text, reduce elements or sizes in the HTML/CSS, or split the slide.',
+  },
+  'SC-FIT-005': {
+    severity: 'warning',
+    title: 'Freeform text below the minimum size',
+    why: 'Text in a freeform slide is smaller than the theme minimum and will be hard to read when presented.',
+    fix: 'Raise the font size in the CSS or cut text so it fits at a readable size.',
+  },
+  'SC-HTML-001': {
+    severity: 'warning',
+    title: 'Unsafe or external content removed from freeform HTML',
+    why: 'Scripts, event handlers, frames and remote URLs are stripped so decks render offline, deterministically and without leaking data.',
+    fix: 'Use inline SVG, CSS and images next to the deck (relative paths) instead.',
+  },
   'SC-TITLE-001': {
     severity: 'error',
     title: 'Action title runs past two lines',

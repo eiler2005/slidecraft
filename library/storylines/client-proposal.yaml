@@ -62,7 +62,7 @@ sections:
     slots:
       - id: approach
         purpose: Show how we will reach the objectives, phase by phase.
-        layouts: [process-steps, key-points]
+        layouts: [process-steps, key-points, architecture]
         guidance: Chevrons for three to five phases, each with activities, deliverables and the client decision at its end. Title states the logic ("Three phases take Northwind from diagnosis to a funded roadmap in 12 weeks").
         inputs: [phases, activities, deliverables, decision points]
       - id: method

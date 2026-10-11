@@ -1,10 +1,14 @@
 import { agenda } from './agenda.ts';
+import { architecture } from './architecture.ts';
 import { beforeAfter } from './before-after.ts';
 import { bigStatement } from './big-statement.ts';
+import { cadence } from './cadence.ts';
 import { chartTakeaway } from './chart-takeaway.ts';
 import { coverageMap } from './coverage-map.ts';
 import { dataTable } from './data-table.ts';
+import { evidenceChain } from './evidence-chain.ts';
 import { execSummary } from './exec-summary.ts';
+import { freeform } from './freeform.ts';
 import { funnel } from './funnel.ts';
 import { gateMatrix } from './gate-matrix.ts';
 import { issueTree } from './issue-tree.ts';
@@ -40,6 +44,7 @@ export const LAYOUTS: LayoutDef[] = [
   textImage,
   text,
   beforeAfter,
+  freeform,
   kpiTiles,
   chartTakeaway,
   waterfall,
@@ -50,11 +55,14 @@ export const LAYOUTS: LayoutDef[] = [
   issueTree,
   maturityModel,
   coverageMap,
+  architecture,
+  evidenceChain,
   riskMatrix,
   processSteps,
   timeline,
   gateMatrix,
   processCompare,
+  cadence,
   teamCards,
   orgChart,
   raci,

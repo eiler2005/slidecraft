@@ -38,6 +38,10 @@ Start from the sentence in the title. Identify the **relationship** it claims, t
 | **State of many functions at once** | `coverage-map` | Fewer than six items → `key-points` | Changing the rows between snapshots |
 | **A change as two states** | `before-after` · panels | The change is a sequence → `process-compare` | Before and after measured differently |
 | **Reporting lines** | `org-chart` · tree | Decision rights → `raci` | Charts deeper than two levels |
+| **Where in a system a problem sits** | `architecture` · zones | No components, just steps → `process-steps` | Markers without a register entry |
+| **What an answer rests on** | `evidence-chain` · chain | A process, not checks → `process-steps` | Hiding the open or failed checks |
+| **Who meets or decides when** | `cadence` · grid | Dependencies matter → `timeline` gantt | More than seven rows |
+| **A bespoke visual no layout covers** | `freeform` · body | Any exhibit a layout covers (layouts stay editable) | Text below the theme minimum |
 | **Plain text that really is text** | `text` · bullets / paragraphs / two-column | Parallel points with headings → `key-points` | Using it to avoid choosing an exhibit |
 
 ## Relationship patterns in detail

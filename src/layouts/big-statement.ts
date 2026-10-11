@@ -106,14 +106,14 @@ export const bigStatement: LayoutDef<typeof schema> = {
       }
       ctx.text(
         ctx.slide.title.toUpperCase(),
-        { x: left, y: format.tracker.y, w: width, h: 0.3 },
+        { x: left, y: format.tracker.y, w: width, h: 0.5 },
         {
           role: 'tracker',
           size: 'small',
           bold: true,
           color: colors.accent,
           fixed: true,
-          maxLines: 1,
+          maxLines: 2,
           field: 'title',
         },
       );

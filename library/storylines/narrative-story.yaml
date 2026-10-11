@@ -50,7 +50,7 @@ sections:
         inputs: [key moments, obstacles]
       - id: turning-point
         purpose: Show the moment things changed and what caused it.
-        layouts: [big-statement, chart-takeaway, text-image]
+        layouts: [big-statement, chart-takeaway, text-image, freeform]
         guidance: Quote or hero-number variants work well; this is the emotional peak.
         inputs: [turning point, evidence]
   - id: insight

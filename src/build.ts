@@ -2,6 +2,7 @@ import './backends/extra.ts';
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, relative, resolve } from 'node:path';
+import { flattenFreeform } from './backends/freeform-raster.ts';
 import { detect, resolveEngine } from './backends/registry.ts';
 import type { OutputFile, OutputKind } from './backends/types.ts';
 import { composeDeck } from './engine/compose.ts';
@@ -74,6 +75,14 @@ export async function buildDeck(path: string, opts: BuildOptions = {}): Promise<
   const limitations = new Set<string>();
   const order: OutputKind[] = ['pptx', 'png', 'html', 'pdf', 'onepager', 'docx'];
   let pptxPath: string | undefined;
+  // Freeform HTML: browsers draw it live; every other engine gets a Chrome-rendered picture
+  let flat = scene;
+  if (scene.slides.some((s) => s.nodes.some((n) => n.kind === 'html'))) {
+    // labels may use the theme's small size; anything smaller is flagged
+    const f = await flattenFreeform(scene, theme?.type.small ?? 9);
+    flat = f.scene;
+    diagnostics.push(...f.diagnostics);
+  }
 
   for (const kind of order.filter((k) => formats.includes(k))) {
     const requested =
@@ -97,7 +106,7 @@ export async function buildDeck(path: string, opts: BuildOptions = {}): Promise<
       );
     }
     const d = await detect(engine);
-    const r = await engine.render(scene, {
+    const r = await engine.render(engine.id === 'html' ? scene : flat, {
       outDir,
       baseName: deck.id,
       deckDir: loaded.baseDir,
@@ -113,7 +122,7 @@ export async function buildDeck(path: string, opts: BuildOptions = {}): Promise<
     if (kind === 'pptx') {
       pptxPath = r.files.find((f) => f.kind === 'pptx')?.path;
       if (pptxPath) {
-        const v = await verifyPptx(pptxPath, scene);
+        const v = await verifyPptx(pptxPath, flat);
         diagnostics.push(...v.diagnostics);
       }
     }

@@ -1,0 +1,9 @@
+# section file
+- id: kpis
+  layout: kpi-tiles
+  title: The pilot needs fifteen clients and a cost per client under target
+  tiles:
+    - value: '15'
+      label: Paying mid-market clients by the end of the second quarter after launch in both regions
+    - value: €40k
+      label: Cost per client

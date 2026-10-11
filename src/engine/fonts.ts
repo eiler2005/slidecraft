@@ -3,6 +3,7 @@ import { join } from 'node:path';
 import * as fontkit from 'fontkit';
 import { FONTS_DIR } from '../paths.ts';
 import type { MeasureFont } from '../spec/theme.ts';
+import { OFFICE_RULES } from './office-rules.gen.ts';
 
 export type Face = 'regular' | 'bold' | 'italic' | 'boldItalic';
 
@@ -61,6 +62,36 @@ const REGISTRY = new Map<string, FontEntry>(
   ]),
 );
 
+/**
+ * Installed fonts each bundled family is metric-compatible with, as full/PostScript names
+ * per face. Browsers prefer them via CSS local() so HTML shows the glyph shapes PowerPoint
+ * draws; the bundled file stays the fallback. Nothing licensed is embedded.
+ */
+const LOCAL_EQUIVALENTS: Record<string, Record<Face, string[]>> = {
+  'liberation-sans': {
+    regular: ['Arial', 'ArialMT'],
+    bold: ['Arial Bold', 'Arial-BoldMT'],
+    italic: ['Arial Italic', 'Arial-ItalicMT'],
+    boldItalic: ['Arial Bold Italic', 'Arial-BoldItalicMT'],
+  },
+  'liberation-serif': {
+    regular: ['Times New Roman', 'TimesNewRomanPSMT'],
+    bold: ['Times New Roman Bold', 'TimesNewRomanPS-BoldMT'],
+    italic: ['Times New Roman Italic', 'TimesNewRomanPS-ItalicMT'],
+    boldItalic: ['Times New Roman Bold Italic', 'TimesNewRomanPS-BoldItalicMT'],
+  },
+  gelasio: {
+    regular: ['Georgia'],
+    bold: ['Georgia Bold', 'Georgia-Bold'],
+    italic: ['Georgia Italic', 'Georgia-Italic'],
+    boldItalic: ['Georgia Bold Italic', 'Georgia-BoldItalic'],
+  },
+};
+
+export function localEquivalents(font: MeasureFont, face: Face): string[] {
+  return LOCAL_EQUIVALENTS[font]?.[face] ?? [];
+}
+
 export const BUILTIN_MEASURE_FONTS = Object.keys(BUILTIN);
 let registryVersion = 0;
 export const fontRegistryVersion = () => registryVersion;
@@ -84,6 +115,7 @@ export function registerMeasureFont(
   REGISTRY.set(id, { vector: family, files, builtin: false });
   fontCache.clear();
   widthCache.clear();
+  advanceCache.clear();
   registryVersion++;
 }
 
@@ -182,6 +214,49 @@ export function unitWidth(font: MeasureFont, face: Face, text: string, kerning =
   return w;
 }
 
+/** PowerPoint lays text out in master units (1/576 inch); calibrated in office-rules.gen.ts. */
+export const POWERPOINT_UNITS_PER_INCH = OFFICE_RULES.advance.unitsPerInch;
+
+const advanceCache = new Map<string, number[]>();
+
+/**
+ * Pen advance of every code point, in points. With `grid` (units per inch) each glyph
+ * advance snaps to that grid; pair kerning follows OFFICE_RULES.advance.snapKerning.
+ */
+export function glyphAdvancesPt(
+  font: MeasureFont,
+  face: Face,
+  size: number,
+  text: string,
+  kerning = false,
+  grid?: number,
+): number[] {
+  const key = `${font}:${face}:${size}:${kerning}:${grid ?? 0}:${text}`;
+  const hit = advanceCache.get(key);
+  if (hit) return hit;
+  const f = load(font, face);
+  const opts = { liga: false, clig: false } as const;
+  const plain = f.font.layout(text, { ...opts, kern: false } as never);
+  const run = kerning ? f.font.layout(text, { ...opts, kern: true } as never) : plain;
+  const chars = [...text];
+  const scale = size / f.upm;
+  const snap = (pt: number) => (grid ? Math.round((pt * grid) / 72) * (72 / grid) : pt);
+  let out: number[];
+  if (plain.positions.length === chars.length && run.positions.length === chars.length) {
+    out = plain.positions.map((p, i) => {
+      const base = p.xAdvance * scale;
+      const kern = run.positions[i]!.xAdvance * scale - base;
+      return snap(base) + (OFFICE_RULES.advance.snapKerning ? snap(kern) : kern);
+    });
+  } else {
+    // Clusters that do not map 1:1 to code points keep their total on the first one.
+    const total = snap(run.advanceWidth * scale);
+    out = chars.map((_, i) => (i === 0 ? total : 0));
+  }
+  advanceCache.set(key, out);
+  return out;
+}
+
 /** Width of text in points at the given size. */
 export function textWidthPt(
   font: MeasureFont,
@@ -189,7 +264,10 @@ export function textWidthPt(
   size: number,
   text: string,
   kerning = false,
+  grid?: number,
 ): number {
+  if (grid)
+    return glyphAdvancesPt(font, face, size, text, kerning, grid).reduce((a, b) => a + b, 0);
   return unitWidth(font, face, text, kerning) * size;
 }
 
@@ -197,6 +275,23 @@ export function textWidthPt(
 export function vmetrics(font: MeasureFont, face: Face = 'regular'): { asc: number; desc: number } {
   const f = load(font, face);
   return { asc: f.ascent / f.upm, desc: f.descent / f.upm };
+}
+
+/** Ascent share of the line box: 'hhea' (ascender ÷ ascender+descender of the hhea table,
+ * what PowerPoint uses for automatic spacing) and 'typo' (OS/2 typo metrics, exact spacing). */
+export function ascentRatios(
+  font: MeasureFont,
+  face: Face = 'regular',
+): { hhea: number; typo: number } {
+  const f = load(font, face).font as fontkit.Font & {
+    hhea: { ascent: number; descent: number };
+    'OS/2'?: { typoAscender: number; typoDescender: number };
+  };
+  const hhea = f.hhea.ascent / (f.hhea.ascent - f.hhea.descent);
+  const os2 = f['OS/2'];
+  const typo =
+    os2 && os2.typoAscender > 0 ? os2.typoAscender / (os2.typoAscender - os2.typoDescender) : hhea;
+  return { hhea, typo };
 }
 
 export function hasGlyphs(font: MeasureFont, text: string): boolean {

@@ -74,8 +74,9 @@ describe('cross-slide consistency (SC-CONSIST-001)', () => {
 
   it('finds no contradictions in the example decks', async () => {
     const { checkDeck } = await import('../src/build.ts');
-    const { readdirSync } = await import('node:fs');
-    for (const dir of readdirSync(join(import.meta.dirname, '../examples'))) {
+    const { existsSync, readdirSync } = await import('node:fs');
+    const root = join(import.meta.dirname, '../examples');
+    for (const dir of readdirSync(root).filter((d) => existsSync(join(root, d, 'deck.yaml')))) {
       const r = checkDeck(join(import.meta.dirname, '../examples', dir, 'deck.yaml'));
       expect(
         r.diagnostics.filter((x) => x.code === 'SC-CONSIST-001').map((x) => `${dir}: ${x.message}`),

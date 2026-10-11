@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=../../../schemas/brief.v1.json
+# Stage 1 · Brief (orchestrator, main session) → CP1. Replace every <…>.
+schemaVersion: 1
+id: <deck-id>                       # kebab-case, becomes slidecraft/<deck-id>/
+goal: <The decision or change this deck must achieve, in one sentence.>
+ask: <What exactly you ask the audience to approve or do, and when.>
+audience:
+  who: <Who decides, who influences.>
+  knows: <What they already know — do not repeat it.>
+  cares: <What they worry about; the deck must answer it.>
+task: <strategy recommendation | executive update | pitch | case study | …>
+context: <Why now; constraints; what has been tried.>
+materials: []                       # sc ingest <files> --deck <deck> registers sources with page markers
+length: { slides: 10 }
+language: en                        # client content keeps its own language
+tone: [direct, evidence-led]
+brand: { footer: <Company · Confidential> }
+usage: [edit-together, send-pdf]    # edit-together | send-pdf | present-live | web-link | automation | codex

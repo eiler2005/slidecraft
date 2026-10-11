@@ -48,8 +48,8 @@ Use the `review` skill procedure:
 1. `sc check … --json` → if any `SC-FIT-*`, `SC-TITLE-*`, `SC-SRC-*`: launch **copy-fitter** with the diagnostics (it edits only the pointed fields). Rebuild. Max 3 rounds.
 2. Launch **partner-reviewer** with the deck and PNG previews (`dist/previews/`). It returns Blockers / Majors / Minors.
 3. Fix blockers and majors (yourself or via slide-writer), rebuild, re-check.
-4. Look at every preview PNG yourself before showing the user.
-5. Present: verdict, top fixes made, remaining minors, file list. Ask for approval or changes.
+4. **Visual QA (final LLM stage).** Run the `visual-qa` skill: `sc visual-qa … --json`, the **visual-reviewer** agent judges every PowerPoint/HTML/difference image (parity, template, layout, colour, typography, charts, meaning, readiness), you fix and rebuild (max 3 rounds), and `--record` writes `dist/visual-qa/REPORT.md`.
+5. Look at every image yourself, then present: verdict, top fixes made, the report's **Needs your attention** list, file list. Ask for approval or changes.
 
 ## 7 · Deliver
 

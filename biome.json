@@ -12,7 +12,8 @@
       "!tests/.output",
       "!tests/fixtures/digital-ruble/reference.html",
       "!schemas",
-      "!library/catalog.json"
+      "!library/catalog.json",
+      "!docs/showcase/orchestration-run"
     ]
   },
   "formatter": {

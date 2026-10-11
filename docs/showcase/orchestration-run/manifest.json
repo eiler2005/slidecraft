@@ -1,0 +1,220 @@
+{
+  "tool": "slidecraft",
+  "version": "0.6.0",
+  "deck": {
+    "id": "fabrikam-seed",
+    "title": "Fabrikam turns idle truck space into same-day freight",
+    "status": "review",
+    "theme": "modern-pitch",
+    "storyline": "pitch-deck",
+    "slides": 10
+  },
+  "input": {
+    "path": "../../../examples/orchestration/run/pitch-deck/deck.yaml",
+    "sha256": "4c649312ff0ca4b85d9a48ebd8027153d59c800997629d91cc07f216125dedff"
+  },
+  "epoch": "2026-01-01T00:00:00.000Z",
+  "engines": {
+    "pptx": {
+      "id": "pptxgenjs",
+      "reason": "auto: portable editable PPTX (v4.0.1)",
+      "license": "MIT"
+    },
+    "png": {
+      "id": "resvg",
+      "reason": "auto: default",
+      "license": "MPL-2.0 (resvg), MIT (SlideCraft)"
+    },
+    "html": {
+      "id": "html",
+      "reason": "auto: default",
+      "license": "MIT"
+    },
+    "pdf": {
+      "id": "native",
+      "reason": "auto: default",
+      "license": "MIT"
+    },
+    "onepager": {
+      "id": "onepager",
+      "reason": "auto: default",
+      "license": "MIT"
+    },
+    "docx": {
+      "id": "docx",
+      "reason": "auto: default",
+      "license": "MIT"
+    }
+  },
+  "outputs": [
+    {
+      "path": "fabrikam-seed.pptx",
+      "kind": "pptx",
+      "engine": "pptxgenjs",
+      "sha256": "2c9a575a78be5406e089ffce9c20da6d48b1f9ae3a38cedc477a894c341b28bb"
+    },
+    {
+      "path": "previews/01-cover.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "1aecc390f5cc96a75b22fef199e3e68854d9f07806b462092f3bdafd9efc5cb8"
+    },
+    {
+      "path": "previews/02-problem.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "84da0e870cf20f2a3dfe05877fc9e3a96031a63948def3838f6f00bf4bfed0ce"
+    },
+    {
+      "path": "previews/03-solution.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "ef5408bf2d9054d6aeaa14f95fb5795b46394708dd6cfd8790b648aa32f3d126"
+    },
+    {
+      "path": "previews/04-market.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "eb6d53229204b930a4e7376424baceeac41c9dc6daf50989efc26e0fc25d51e6"
+    },
+    {
+      "path": "previews/05-traction.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "240ab620f42fd786aa1b8eabf4385356e1185cf4e6eed1de52de13bb7eec7f90"
+    },
+    {
+      "path": "previews/06-competition.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "a516b66ad3591acc904877cd4dc12cdcb6382f25e0eb479bb38e4d6a1adc9a67"
+    },
+    {
+      "path": "previews/07-model.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "a805f2c63e9d77c429f0bf53460b3382a93e7527cb7ba809d9d04c3b86d55e67"
+    },
+    {
+      "path": "previews/08-team.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "4d2b21d4f9d30f62ec386aa30b48373c79de8ea8b9dbe0f492943e14522d63fb"
+    },
+    {
+      "path": "previews/09-ask.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "25d1529cafc92abde86b7abb856a9d137612f38fb9747246288e43e8a81d56a9"
+    },
+    {
+      "path": "previews/10-close.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "799656ad573094ac0a53612b030237fd2494864391923b404d4b697d82d27383"
+    },
+    {
+      "path": "fabrikam-seed.html",
+      "kind": "html",
+      "engine": "html",
+      "sha256": "2023f62584e3ef067b64e5441089cf679cd59509f30dba792bfd9a9f776d7ef7"
+    },
+    {
+      "path": "fabrikam-seed.pdf",
+      "kind": "pdf",
+      "engine": "native",
+      "sha256": "f5e0142a54f33a5b8126d20cd45c11aa53046d8c7eddad57ea87770689fbf468"
+    },
+    {
+      "path": "fabrikam-seed-onepager.pdf",
+      "kind": "onepager",
+      "engine": "onepager",
+      "sha256": "1cb59003ce66a39d5fe01d81216935abdc637a65b125151d13d05ce69efbaa73"
+    },
+    {
+      "path": "fabrikam-seed.docx",
+      "kind": "docx",
+      "engine": "docx",
+      "sha256": "b0b35e8f74b3a0bfe08b385e1f6ca7fc0fe5ecb2a13b4a0c5be7a633b1cec5de"
+    }
+  ],
+  "checks": {
+    "errors": 0,
+    "warnings": 1,
+    "info": 0,
+    "codes": [
+      "SC-SRC-001"
+    ]
+  },
+  "visual_review": false,
+  "limitations": [
+    "Waterfall labels and stacked totals are text boxes placed over the native chart; edit them if you change the data.",
+    "Scene previews rendered by resvg, not by PowerPoint. Font support and text rendering may differ; use --png-engine pptx-convert for actual Office previews.",
+    "HTML slides are inline SVG drawn with embedded metric-compatible fonts (Liberation/Gelasio), not editable text boxes.",
+    "Same layout as the PPTX; glyph rendering uses bundled metric-compatible fonts, not Arial/Georgia.",
+    "One-pager captions are clipped with an ellipsis after four lines.",
+    "DOCX: text slides and tables are editable; charts and diagrams are slide images with alt text."
+  ],
+  "slides": [
+    {
+      "id": "cover",
+      "layout": "title",
+      "variant": "cover",
+      "title": "Fabrikam turns idle truck space into same-day freight"
+    },
+    {
+      "id": "problem",
+      "layout": "big-statement",
+      "variant": "hero-number",
+      "title": "Every third truck on the road is driving with empty space"
+    },
+    {
+      "id": "solution",
+      "layout": "process-steps",
+      "variant": "numbered",
+      "title": "Shippers book spare space in minutes and it moves the same day"
+    },
+    {
+      "id": "market",
+      "layout": "kpi-tiles",
+      "variant": "tiles",
+      "title": "Regional part-load freight is a €14B market in our first three countries"
+    },
+    {
+      "id": "traction",
+      "layout": "chart-takeaway",
+      "variant": "column",
+      "title": "Monthly bookings grew eight-fold in nine months with no paid marketing"
+    },
+    {
+      "id": "competition",
+      "layout": "matrix-2x2",
+      "variant": "plot",
+      "title": "We are the only player that is both instant and built for small shippers"
+    },
+    {
+      "id": "model",
+      "layout": "data-table",
+      "variant": "with-takeaway",
+      "title": "Each load earns a 21% take rate and pays back acquisition in two months"
+    },
+    {
+      "id": "team",
+      "layout": "team-cards",
+      "variant": "compact",
+      "title": "A team that has built marketplaces and run fleets"
+    },
+    {
+      "id": "ask",
+      "layout": "next-steps",
+      "variant": "decision",
+      "title": "€3M seed takes us to three countries and break-even in 2028"
+    },
+    {
+      "id": "close",
+      "layout": "title",
+      "variant": "closing",
+      "title": "Let's fill the empty space together"
+    }
+  ]
+}

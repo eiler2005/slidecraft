@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="office-text-rules-title office-text-rules-desc" id="office-text-rules-root" font-family="Arial, Helvetica, sans-serif">
+<title id="office-text-rules-title">How PowerPoint places text, and how SlideCraft reproduces it</title>
+<desc id="office-text-rules-desc">Six measured rules: glyph advances snap to 1/576 inch, glyphs are drawn at whole points, baselines sit on whole points below the text top, generated line spacing is written as a multiple, the paragraph mark carries the run font, and axis lines are freeforms so they stay crisp. A hyphen is a break opportunity and titles are balanced.</desc>
+<rect width="1280" height="720" fill="#F5F7FA"/>
+<text x="48" y="56" font-size="13" letter-spacing="2.4" fill="#596E7C">SLIDECRAFT · OFFICE RENDERING RULES</text>
+<text x="48" y="92" font-size="29" font-weight="700" fill="#0A2033">Text lands where PowerPoint puts it — in every format</text>
+<text x="48" y="118" font-size="15" fill="#596E7C">Measured with calibration, stored in office-rules.gen.ts, applied by measurement, HTML/SVG and PPTX alike.</text>
+
+<g font-size="13">
+  <!-- R1 -->
+  <rect x="48" y="146" width="380" height="250" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+  <text x="68" y="176" font-size="12" font-weight="700" letter-spacing="1.4" fill="#0960D5">R1 · ADVANCES ON A 1/576-IN GRID</text>
+  <g stroke="#E3E9F0">
+    <line x1="68" y1="200" x2="68" y2="290"/><line x1="92" y1="200" x2="92" y2="290"/><line x1="116" y1="200" x2="116" y2="290"/><line x1="140" y1="200" x2="140" y2="290"/>
+    <line x1="164" y1="200" x2="164" y2="290"/><line x1="188" y1="200" x2="188" y2="290"/><line x1="212" y1="200" x2="212" y2="290"/><line x1="236" y1="200" x2="236" y2="290"/>
+    <line x1="260" y1="200" x2="260" y2="290"/><line x1="284" y1="200" x2="284" y2="290"/><line x1="308" y1="200" x2="308" y2="290"/><line x1="332" y1="200" x2="332" y2="290"/>
+    <line x1="356" y1="200" x2="356" y2="290"/><line x1="380" y1="200" x2="380" y2="290"/><line x1="404" y1="200" x2="404" y2="290"/>
+  </g>
+  <text x="68" y="262" font-size="58" font-weight="700" fill="#0A2033" letter-spacing="0">Wave</text>
+  <text x="68" y="318" fill="#596E7C">each glyph advance snaps to 1/8 pt; pair</text>
+  <text x="68" y="336" fill="#596E7C">kerning stays exact; HTML places every glyph</text>
+  <text x="68" y="354" fill="#596E7C">at the measured x</text>
+  <text x="68" y="382" fill="#0A2033" font-weight="700">word positions within 0.09 pt</text>
+
+  <!-- R2/R5 -->
+  <rect x="450" y="146" width="380" height="250" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+  <text x="470" y="176" font-size="12" font-weight="700" letter-spacing="1.4" fill="#0960D5">R2 · R5 · WHOLE POINTS</text>
+  <rect x="470" y="196" width="340" height="104" rx="8" fill="#F1F5F9"/>
+  <line x1="470" y1="196" x2="810" y2="196" stroke="#94A3B8" stroke-dasharray="4 3"/>
+  <text x="478" y="212" font-size="11" fill="#94A3B8">text top</text>
+  <g stroke="#C2410C" stroke-width="1.4"><line x1="470" y1="236" x2="810" y2="236"/><line x1="470" y1="270" x2="810" y2="270"/></g>
+  <text x="482" y="234" font-size="22" font-weight="700" fill="#0A2033">Revenue grew 8×</text>
+  <text x="482" y="268" font-size="22" font-weight="700" fill="#0A2033">in nine months</text>
+  <text x="730" y="232" font-size="11" fill="#C2410C">12 pt</text>
+  <text x="730" y="266" font-size="11" fill="#C2410C">27 pt</text>
+  <text x="470" y="318" fill="#596E7C">pitch 1.2 em; first baseline = pitch × hhea</text>
+  <text x="470" y="336" fill="#596E7C">ascent share; each baseline rounds to a whole</text>
+  <text x="470" y="354" fill="#596E7C">point; glyphs drawn at 13 pt for 12.75 pt</text>
+  <text x="470" y="382" fill="#0A2033" font-weight="700">baselines within 0.07 pt</text>
+
+  <!-- R7 -->
+  <rect x="852" y="146" width="380" height="250" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+  <text x="872" y="176" font-size="12" font-weight="700" letter-spacing="1.4" fill="#0960D5">R6 · R7 · SPACING AS A MULTIPLE</text>
+  <g font-family="Menlo, monospace" font-size="12.5">
+    <rect x="872" y="196" width="340" height="44" rx="8" fill="#FDECEC"/>
+    <text x="886" y="214" fill="#9F1239">&lt;a:spcPts val="2070"/&gt;</text>
+    <text x="886" y="232" fill="#9F1239">“Exactly 20.7 pt” · ±1 pt on 1 in 4 lines</text>
+    <rect x="872" y="252" width="340" height="44" rx="8" fill="#E3F4E8"/>
+    <text x="886" y="270" fill="#1F7A3A">&lt;a:spcPct val="86250"/&gt;</text>
+    <text x="886" y="288" fill="#1F7A3A">“Multiple 0.86” · same pitch, deterministic</text>
+  </g>
+  <text x="872" y="318" fill="#596E7C">generated text is written as the equivalent</text>
+  <text x="872" y="336" fill="#596E7C">multiple; authored “Exactly” in imported decks</text>
+  <text x="872" y="354" fill="#596E7C">stays exact</text>
+  <text x="872" y="382" fill="#0A2033" font-weight="700">0.33 pt → 0.064 pt</text>
+
+  <!-- E1 -->
+  <rect x="48" y="418" width="380" height="250" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+  <text x="68" y="448" font-size="12" font-weight="700" letter-spacing="1.4" fill="#0960D5">E1 · THE PARAGRAPH MARK COUNTS</text>
+  <rect x="68" y="466" width="340" height="70" rx="8" fill="#F1F5F9"/>
+  <text x="82" y="508" font-size="22" font-weight="700" fill="#075BCB">New forms 2027</text>
+  <text x="292" y="508" font-size="22" fill="#94A3B8">¶</text>
+  <text x="318" y="490" font-size="11" fill="#596E7C">mark in the</text>
+  <text x="318" y="506" font-size="11" fill="#596E7C">run's font</text>
+  <text x="68" y="560" fill="#596E7C">PowerPoint sizes a line with its end mark; a</text>
+  <text x="68" y="578" fill="#596E7C">theme-font mark pushed baselines ~1 pt down.</text>
+  <text x="68" y="596" fill="#596E7C">The mark now mirrors the last run.</text>
+  <text x="68" y="650" fill="#0A2033" font-weight="700">endMarkLikeLastRun()</text>
+
+  <!-- E2 -->
+  <rect x="450" y="418" width="380" height="250" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+  <text x="470" y="448" font-size="12" font-weight="700" letter-spacing="1.4" fill="#0960D5">E2 · CRISP AXIS LINES</text>
+  <g>
+    <text x="470" y="484" fill="#596E7C" font-size="12">preset line: 1-EMU slope, anti-aliased</text>
+    <rect x="470" y="494" width="340" height="3" fill="#94A3B8" opacity="0.55"/>
+    <rect x="470" y="495" width="340" height="1.4" fill="#475569"/>
+    <rect x="470" y="497.5" width="340" height="1.6" fill="#94A3B8" opacity="0.55"/>
+    <text x="470" y="534" fill="#596E7C" font-size="12">freeform, same box: 1 device pixel, like tables</text>
+    <rect x="470" y="545" width="340" height="1.5" fill="#0A2033"/>
+  </g>
+  <text x="470" y="590" fill="#596E7C">still an editable vector line in PowerPoint</text>
+  <text x="470" y="650" fill="#0A2033" font-weight="700">crispAxisLines()</text>
+
+  <!-- R4 / E6 -->
+  <rect x="852" y="418" width="380" height="250" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+  <text x="872" y="448" font-size="12" font-weight="700" letter-spacing="1.4" fill="#0960D5">R4 · E6 · BREAKS AND BALANCE</text>
+  <rect x="872" y="462" width="340" height="52" rx="8" fill="#FDECEC"/>
+  <text x="884" y="484" font-size="13.5" font-weight="700" fill="#0A2033">Freight is a €14B market in our first three</text>
+  <text x="884" y="503" font-size="13.5" font-weight="700" fill="#9F1239">countries</text>
+  <rect x="872" y="522" width="340" height="52" rx="8" fill="#E3F4E8"/>
+  <text x="884" y="544" font-size="13.5" font-weight="700" fill="#0A2033">Freight is a €14B market in</text>
+  <text x="884" y="563" font-size="13.5" font-weight="700" fill="#1F7A3A">our first three countries</text>
+  <text x="872" y="594" fill="#596E7C">wraps after "repeat-" like PowerPoint; titles</text>
+  <text x="872" y="611" fill="#596E7C">narrow to the smallest box with the same</text>
+  <text x="872" y="628" fill="#596E7C">line count — no widow, same PPTX box</text>
+  <text x="872" y="656" fill="#0A2033" font-weight="700">BREAKS · balanceLines()</text>
+</g>
+</svg>

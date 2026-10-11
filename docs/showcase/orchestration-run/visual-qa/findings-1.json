@@ -1,0 +1,47 @@
+{
+  "reviewer": "visual-reviewer (Claude Opus 5.5)",
+  "verdict": "not-ready",
+  "summary": "On-template, the argument reads well and PowerPoint matches the HTML; two slides need content changes before showing.",
+  "findings": [
+    {
+      "slide": "competition",
+      "severity": "major",
+      "area": "layout",
+      "issue": "The matrix uses two thirds of the width and leaves the right third empty, so the slide never states its conclusion",
+      "fix": "deck: add the takeaway panel the layout provides",
+      "status": "fixed"
+    },
+    {
+      "slide": "traction",
+      "severity": "minor",
+      "area": "typography",
+      "issue": "Panel heading breaks as 'repeat-' / 'driven' — a one-word second line",
+      "fix": "deck: 'Organic, repeat-driven growth'",
+      "status": "fixed"
+    },
+    {
+      "slide": "traction",
+      "severity": "minor",
+      "area": "chart",
+      "issue": "Native chart axis labels sit about 1 px lower in PowerPoint than in HTML",
+      "fix": "shared: calibrate native chart label placement (engine issue)",
+      "status": "open"
+    },
+    {
+      "slide": "solution, team",
+      "severity": "minor",
+      "area": "layout",
+      "issue": "Content fills only the top half; the lower half is empty",
+      "fix": "Add a result line, logos or proof points — or accept the whitespace",
+      "status": "needs-user"
+    },
+    {
+      "slide": "ask",
+      "severity": "minor",
+      "area": "layout",
+      "issue": "The decision panel repeats the title in five lines and runs down to the source line",
+      "fix": "Shorten the decision to two lines, e.g. 'Commit €3M on 30 October'",
+      "status": "needs-user"
+    }
+  ]
+}

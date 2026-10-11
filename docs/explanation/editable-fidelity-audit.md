@@ -1,6 +1,6 @@
 # Editable-export audit
 
-Reviewed 2026-10-11. This records confirmed defects and remaining acceptance work; it is not a 95% fidelity certificate.
+Reviewed 2026-10-11. This records confirmed defects and remaining acceptance work; it is not a blanket 95% fidelity certificate.
 
 | Finding | Cause | Resolution / evidence |
 |---|---|---|
@@ -17,7 +17,34 @@ Reviewed 2026-10-11. This records confirmed defects and remaining acceptance wor
 | Light accent labels were hard to read | Chart-series colours were reused as text without checking contrast | Contrast-aware text colour in the panorama component |
 | Package metadata versions diverged | Lockfile remained at 0.5.1 while package was 0.5.2 | Both synchronized to 0.5.3 |
 
-## Digital Ruble integration run — 2026-10-11
+## Text and export fidelity, calibrated — 2026-10-11 (later)
+
+Measured against PowerPoint for Mac 16.113.4; details in [Office rendering rules](office-rendering-rules.md),
+[`calibration/RULES.md`](../../calibration/RULES.md) and [`calibration/REPORT.md`](../../calibration/REPORT.md).
+
+| Finding | Cause | Resolution / evidence |
+|---|---|---|
+| HTML words drifted up to 1.4 pt from PowerPoint | PowerPoint snaps each glyph advance to 1/576 in | Snapped advances, per-glyph SVG x; 0.09 pt mean over 8 300 words |
+| Glyphs 1–4 % larger in HTML | PowerPoint draws whole-point sizes | `drawSize` rounds half up; 0 mismatches on 2 196 lines |
+| Baselines alternated ±0.7 pt | Baselines sit on whole points; automatic pitch is 1.2 em for every font | Calibrated ascent-share rule; 0.066 pt mean |
+| Generated "Exactly N pt" lines off by up to 1 pt | PowerPoint quantises exact spacing unpredictably | Generated spacing exported as the equivalent multiple; 0.064 pt mean |
+| Three spaces collapsed to one | Tokeniser merged runs of spaces | Spaces kept and measured |
+| A heading wrapped differently | PowerPoint breaks after a hyphen | Hyphen break opportunity (found by visual QA) |
+| ₽ measured as a missing glyph | System Calibri 5.62 lacks ₽; PowerPoint uses its bundled 6.20 | Font lookup prefers Office's bundled fonts, for any family |
+| Text box baseline ~1 pt low | Paragraph mark used the theme font | End mark mirrors the last run |
+| Table borders 2–3 px blurred | Preset lines get a 1-EMU slope | Axis lines exported as one-segment freeforms |
+| Slide number 3.6 pt low in HTML | Ad-hoc baseline formula | Laid out with the shared rules |
+| Axis arrow reversed in PowerPoint | Line flips ignored direction | flipH/flipV from direction (found by visual QA) |
+| Titles ended on a single word | Greedy wrap | Balanced titles with the same line count and the same PPTX box |
+| PowerPoint asked for folder access each run | Jobs ran in new temp folders outside its sandbox | Jobs run inside PowerPoint's container; optional recovery |
+
+| Corpus (10 decks) | Gate pair | Result |
+|---|---|---|
+| Digital Ruble, rebuilt editable PPTX | original ↔ PPTX (PowerPoint) | **22/22 pages ≥ 95 %** (98.5–99.8 %) |
+| Digital Ruble, HTML | original ↔ HTML | 88.9–97.0 % (was 69–86 %) |
+| Nine generated decks | HTML ↔ PPTX (PowerPoint) | mean 89.2 % per page (first run 78.6 %); visually indistinguishable at viewing size, not yet ≥ 95 % on the strict metric |
+
+## Digital Ruble integration run — 2026-10-11 (first)
 
 The owner-approved corpus is now versioned in `tests/fixtures/digital-ruble/`.
 `npm run test:digital-ruble` exercised the complete 22-slide pipeline with Chrome,
@@ -44,6 +71,9 @@ were not replaced with newly generated output. Diagrams were visually inspected;
 the full presentation has not received a new slide-by-slide manual acceptance.
 
 ## Remaining work
+
+- Generated decks: sub-pixel glyph edges between Chrome and PowerPoint PDF output, native chart label placement (~1 px) and dark backgrounds keep the strict per-page score at 67–93 %; the reviewer-model stage judges these pages visually.
+- Authored exact spacing in imported decks keeps a ±1 pt residual on some lines (typo-ascent model, mean 0.33 pt).
 
 - An initial region-level diagnostic gate is implemented; calibration against human review remains open. Whole-page background similarity is not sufficient.
 - The now-public 22-slide regression presentation has not been fully migrated into semantic native components or certified at 95%+. Its frozen references must not be rewritten to make comparisons pass.

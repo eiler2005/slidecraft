@@ -1,0 +1,15 @@
+{
+  "reviewer": "visual-reviewer (Opus 5.5)",
+  "verdict": "ready-with-notes",
+  "summary": "<One or two sentences: overall quality and what is left.>",
+  "findings": [
+    {
+      "slide": "<slide-id or several, comma-separated>",
+      "severity": "blocker | major | minor",
+      "area": "parity | layout | color | typography | chart | template | meaning | consistency | other",
+      "issue": "<What you saw, concretely>",
+      "fix": "<shared: rule in code> | <deck: field → new value> | <question for the user>",
+      "status": "fixed | open | needs-user"
+    }
+  ]
+}

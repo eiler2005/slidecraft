@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=../../../../schemas/brief.v1.json
+# Illustrative stage-1 output for the fictional Fabrikam Freight example; all figures are invented.
+schemaVersion: 1
+id: fabrikam-seed
+goal: Seed investors commit €3M so Fabrikam can launch in two more countries and reach break-even in 2028.
+ask: Commit to the €3M seed round at the partner meeting on 30 October
+audience:
+  who: Seed and Series A partners at logistics-focused funds
+  knows: Empty running is a known industry problem; marketplaces have failed on liquidity before.
+  cares: Proof of organic demand, unit economics, why this team wins against load boards.
+task: pitch
+context: Nine months of live operations in Germany with no paid marketing.
+materials: []
+length: { slides: 10 }
+language: en
+tone: [confident, evidence-led]
+brand: { footer: Fabrikam Freight · Seed round 2026 }
+usage: [present-live, send-pdf]
+choice: { storyline: pitch-deck, theme: modern-pitch, option: A }

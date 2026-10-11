@@ -1,0 +1,636 @@
+{
+  "dir": "docs/showcase/orchestration-run/visual-qa",
+  "deck": "examples/orchestration/run/pitch-deck/deck.yaml",
+  "theme": "modern-pitch",
+  "renderer": "Microsoft PowerPoint via AppleScript (jobs run in its sandbox container: no access prompts)",
+  "target": 0.95,
+  "slides": [
+    {
+      "slide": 1,
+      "id": "cover",
+      "title": "Fabrikam turns idle truck space into same-day freight",
+      "layout": "title",
+      "images": {
+        "html": "01-cover-html.png",
+        "pptx": "01-cover-pptx.png",
+        "diff": "01-cover-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.961301546997696,
+        "hotspots": []
+      },
+      "diagnostics": [],
+      "contrast": [],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 2,
+      "id": "problem",
+      "title": "Every third truck on the road is driving with empty space",
+      "layout": "big-statement",
+      "images": {
+        "html": "02-problem-html.png",
+        "pptx": "02-problem-pptx.png",
+        "diff": "02-problem-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.9328424554801058,
+        "hotspots": [
+          {
+            "region": "row 3, column 1",
+            "score": 0.933,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "Every third truck on the road is driving with em [title]",
+          "b": "31% [hero-number]",
+          "edge": "left",
+          "deltaPt": 2.9
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 3,
+      "id": "solution",
+      "title": "Shippers book spare space in minutes and it moves the same day",
+      "layout": "process-steps",
+      "images": {
+        "html": "03-solution-html.png",
+        "pptx": "03-solution-pptx.png",
+        "diff": "03-solution-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.94467906820848,
+        "hotspots": [
+          {
+            "region": "row 4, column 4",
+            "score": 0.945,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 4,
+      "id": "market",
+      "title": "Regional part-load freight is a €14B market in our first three countries",
+      "layout": "kpi-tiles",
+      "images": {
+        "html": "04-market-html.png",
+        "pptx": "04-market-pptx.png",
+        "diff": "04-market-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8329145184643906,
+        "hotspots": [
+          {
+            "region": "row 2, column 1",
+            "score": 0.833,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 2",
+            "score": 0.943,
+            "box": {
+              "x": 239.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 3",
+            "score": 0.893,
+            "box": {
+              "x": 479.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 4",
+            "score": 0.894,
+            "box": {
+              "x": 719.98,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 4",
+            "score": 0.94,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 5,
+      "id": "traction",
+      "title": "Monthly bookings grew eight-fold in nine months with no paid marketing",
+      "layout": "chart-takeaway",
+      "images": {
+        "html": "05-traction-html.png",
+        "pptx": "05-traction-pptx.png",
+        "diff": "05-traction-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8867081079006945,
+        "hotspots": [
+          {
+            "region": "row 1, column 3",
+            "score": 0.909,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.899,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 3",
+            "score": 0.887,
+            "box": {
+              "x": 479.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [],
+      "offPalette": [
+        "#A3A4B5"
+      ],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 6,
+      "id": "competition",
+      "title": "We are the only player that is both instant and built for small shippers",
+      "layout": "matrix-2x2",
+      "images": {
+        "html": "06-competition-html.png",
+        "pptx": "06-competition-pptx.png",
+        "diff": "06-competition-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.9146684594832163,
+        "hotspots": [
+          {
+            "region": "row 1, column 2",
+            "score": 0.948,
+            "box": {
+              "x": 239.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 3",
+            "score": 0.928,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 1",
+            "score": 0.943,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 2",
+            "score": 0.934,
+            "box": {
+              "x": 239.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 3",
+            "score": 0.915,
+            "box": {
+              "x": 479.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 4",
+            "score": 0.942,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [
+        {
+          "code": "SC-SRC-001",
+          "severity": "warning",
+          "message": "Slide shows numbers but cites no source",
+          "pointer": "/slides/5/sources"
+        }
+      ],
+      "contrast": [
+        {
+          "text": "OUR SPACE",
+          "ratio": 5.08,
+          "needs": 4.5,
+          "fg": "#4F46E5",
+          "bg": "#E6E5FB"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "ellipse [item]",
+          "b": "Fabrikam",
+          "edge": "top",
+          "deltaPt": 2.2
+        },
+        {
+          "a": "ellipse [item]",
+          "b": "Local brokers",
+          "edge": "top",
+          "deltaPt": 3.2
+        },
+        {
+          "a": "ellipse [item]",
+          "b": "Tailspin Board",
+          "edge": "top",
+          "deltaPt": 2.2
+        },
+        {
+          "a": "ellipse [item]",
+          "b": "Contoso Freight",
+          "edge": "top",
+          "deltaPt": 3.2
+        },
+        {
+          "a": "ellipse [item]",
+          "b": "Large forwarders",
+          "edge": "top",
+          "deltaPt": 3.2
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 7,
+      "id": "model",
+      "title": "Each load earns a 21% take rate and pays back acquisition in two months",
+      "layout": "data-table",
+      "images": {
+        "html": "07-model-html.png",
+        "pptx": "07-model-pptx.png",
+        "diff": "07-model-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.9344048319068464,
+        "hotspots": [
+          {
+            "region": "row 2, column 1",
+            "score": 0.934,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 4",
+            "score": 0.943,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 8,
+      "id": "team",
+      "title": "A team that has built marketplaces and run fleets",
+      "layout": "team-cards",
+      "images": {
+        "html": "08-team-html.png",
+        "pptx": "08-team-pptx.png",
+        "diff": "08-team-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.9307721334575243,
+        "hotspots": [
+          {
+            "region": "row 1, column 2",
+            "score": 0.931,
+            "box": {
+              "x": 239.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 4",
+            "score": 0.938,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 9,
+      "id": "ask",
+      "title": "€3M seed takes us to three countries and break-even in 2028",
+      "layout": "next-steps",
+      "images": {
+        "html": "09-ask-html.png",
+        "pptx": "09-ask-pptx.png",
+        "diff": "09-ask-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.939689936711691,
+        "hotspots": [
+          {
+            "region": "row 1, column 4",
+            "score": 0.94,
+            "box": {
+              "x": 719.98,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 1",
+            "score": 0.94,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 4",
+            "score": 0.94,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Illustrative data.  Source:  Fabrikam platform m [source]",
+          "ratio": 1.06,
+          "needs": 4.5,
+          "fg": "#585A78",
+          "bg": "#4F46E5"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 10,
+      "id": "close",
+      "title": "Let's fill the empty space together",
+      "layout": "title",
+      "images": {
+        "html": "10-close-html.png",
+        "pptx": "10-close-pptx.png",
+        "diff": "10-close-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.7342072722877676,
+        "hotspots": [
+          {
+            "region": "row 2, column 1",
+            "score": 0.817,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 2",
+            "score": 0.814,
+            "box": {
+              "x": 239.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 3",
+            "score": 0.807,
+            "box": {
+              "x": 479.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 4",
+            "score": 0.89,
+            "box": {
+              "x": 719.98,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 1",
+            "score": 0.734,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 2",
+            "score": 0.944,
+            "box": {
+              "x": 239.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 3",
+            "score": 0.919,
+            "box": {
+              "x": 479.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 4",
+            "score": 0.891,
+            "box": {
+              "x": 719.98,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    }
+  ],
+  "deckFacts": {
+    "titleTopSpreadPt": 0,
+    "paletteSize": 8,
+    "pagesBelowTarget": 9
+  }
+}

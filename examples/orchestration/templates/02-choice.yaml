@@ -1,0 +1,6 @@
+# Stage 2 · Pick (orchestrator) → CP2. Written by `sc choose --brief <brief> --option A`.
+# The user picks one of three contact sheets (storyline × theme); any pair is allowed.
+choice:
+  storyline: <strategy-recommendation | pitch-deck | executive-update | …>
+  theme: <consulting-classic | corporate-blue | editorial | editorial-fintech | executive | midnight | modern-pitch>
+  option: A                         # A | B | C, or omit when the user mixed options

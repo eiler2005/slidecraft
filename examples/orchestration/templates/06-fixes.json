@@ -1,0 +1,7 @@
+[
+  {
+    "pointer": "/slides/3/title",
+    "text": "<Same claim, within the character budget from `sc fix --json`>"
+  },
+  { "pointer": "/slides/5/points", "text": ["<point 1, shorter>", "<point 2, shorter>"] }
+]

@@ -1,4 +1,13 @@
-import { faceOf, textWidthPt, vmetrics } from './fonts.ts';
+import {
+  ascentRatios,
+  type Face,
+  faceOf,
+  glyphAdvancesPt,
+  POWERPOINT_UNITS_PER_INCH,
+  textWidthPt,
+  vmetrics,
+} from './fonts.ts';
+import { OFFICE_RULES } from './office-rules.gen.ts';
 import {
   type Box,
   type Line,
@@ -52,6 +61,10 @@ interface Token {
   link?: string;
 }
 
+/** Break opportunities shared by layout and glyph placement: spaces, explicit newlines, and
+ * after a hyphen between letters ("repeat-driven"), where PowerPoint also wraps. */
+const BREAKS = /(\n|[ \t]+)|(?<=\p{L}-)(?=\p{L})/u;
+
 function tokenize(p: Paragraph, style: TextStyle): Token[] {
   const out: Token[] = [];
   for (const r of p.runs) {
@@ -62,7 +75,7 @@ function tokenize(p: Paragraph, style: TextStyle): Token[] {
       ...(r.link ? { link: r.link } : {}),
       ...(r.underline !== undefined ? { underline: r.underline } : {}),
     };
-    for (const part of r.text.split(/(\n|[ \t]+)/)) {
+    for (const part of r.text.split(BREAKS)) {
       if (!part) continue;
       if (part === '\n')
         out.push({ text: '', space: false, newline: true, bold, italic, color, ...link });
@@ -81,9 +94,56 @@ function tokenize(p: Paragraph, style: TextStyle): Token[] {
   return out;
 }
 
+/** Units per inch that glyph advances snap to, or undefined for raw font units. */
+export const advanceGrid = (s: TextStyle) =>
+  s.metrics === 'font' ? undefined : POWERPOINT_UNITS_PER_INCH;
+
+/** Font size glyph outlines are drawn at (PowerPoint: whole points, half up). */
+export const drawSize = (s: TextStyle) =>
+  s.metrics === 'font' || OFFICE_RULES.drawSize === 'nominal' ? s.size : Math.floor(s.size + 0.5);
+
+/** Automatic line pitch in em that PowerPoint uses for a family. */
+export const autoPitchEm = (family: string) =>
+  OFFICE_RULES.autoSpacing.pitchEm[family] ?? OFFICE_RULES.autoSpacing.pitchEm['*'] ?? 1.2;
+
+/**
+ * Line spacing as the multiple PowerPoint receives (1 = automatic), or undefined when it is
+ * written as exact points. Generated point spacing becomes a multiple of the same pitch:
+ * PowerPoint places multiples deterministically but quantises "Exactly N pt" by up to 1 pt.
+ */
+export function spacingMultiple(s: TextStyle): number | undefined {
+  if (s.lineSpacingAuto) return 1;
+  if (s.lineSpacingMultiple !== undefined) return s.lineSpacingMultiple;
+  if (s.lineSpacingExact || OFFICE_RULES.exactSpacing.export !== 'percent') return undefined;
+  return s.lineSpacing / (autoPitchEm(s.family) * s.size);
+}
+
+/** Pen offsets (pt, from the segment start) of every code point, exactly as layout measured
+ * them: words and space runs are measured separately, so kerning never crosses a space. */
+export function glyphOffsetsPt(s: TextStyle, face: Face, text: string): number[] {
+  const out: number[] = [];
+  let x = 0;
+  for (const part of text.split(BREAKS)) {
+    if (!part) continue;
+    const measured = /^[ \t]+$/.test(part) ? part.replace(/\t/g, ' ') : part;
+    for (const a of glyphAdvancesPt(s.measure, face, s.size, measured, s.kerning, advanceGrid(s))) {
+      out.push(x);
+      x += a;
+    }
+  }
+  return out;
+}
+
 const tokW = (t: Token, s: TextStyle) =>
   pt2in(
-    textWidthPt(s.measure, faceOf(t.bold, t.italic), s.size, t.space ? ' ' : t.text, s.kerning),
+    textWidthPt(
+      s.measure,
+      faceOf(t.bold, t.italic),
+      s.size,
+      t.space ? t.text.replace(/\t/g, ' ') : t.text,
+      s.kerning,
+      advanceGrid(s),
+    ),
   );
 
 export interface LaidText {
@@ -95,6 +155,8 @@ export interface LaidText {
   linesPerParagraph: number[];
   /** True when some single word is wider than the available width and had to be split. */
   splitWord: boolean;
+  /** Height used for middle/bottom anchoring (OFFICE_RULES.anchorHeight), inches. */
+  anchorHeight?: number;
 }
 
 /** Break paragraphs into lines for a box width. Positions are relative to the box. */
@@ -104,11 +166,32 @@ export function layoutText(
   width: number,
   bulletIndentPt = 14,
 ): LaidText {
-  const ls = pt2in(style.lineSpacing);
   const { asc, desc } = vmetrics(style.measure, faceOf(style.bold, style.italic));
   const sizeIn = pt2in(style.size);
-  // Baseline inside an exact-spacing line: center the font's ascent+descent box.
-  const baseOffset = (ls - sizeIn * (asc + desc)) / 2 + sizeIn * asc;
+  // Line placement follows the calibrated PowerPoint rules (office-rules.gen.ts).
+  const office = style.metrics !== 'font';
+  const multiple = office ? spacingMultiple(style) : undefined;
+  const proportional = multiple !== undefined;
+  const { autoSpacing, exactSpacing } = OFFICE_RULES;
+  const snapPitch = office && !proportional ? exactSpacing.snapPitchPt : 0;
+  const pitchPt = snapPitch
+    ? Math.floor(style.lineSpacing / snapPitch + 0.5) * snapPitch
+    : style.lineSpacing;
+  const ls = pt2in(pitchPt);
+  const centered = (ls - sizeIn * (asc + desc)) / 2 + sizeIn * asc;
+  const ratios = ascentRatios(style.measure, faceOf(style.bold, style.italic));
+  const autoRatio = autoSpacing.ratioByFamily[style.family] ?? ratios[autoSpacing.ratio];
+  const baseOffset = !office
+    ? centered
+    : proportional
+      ? multiple <= 1
+        ? ls - (1 - autoRatio) * autoPitchEm(style.family) * sizeIn
+        : ls * autoSpacing.aboveOneFraction
+      : exactSpacing.ratio === 'centered'
+        ? centered
+        : ls * (exactSpacing.ratioByFamily[style.family] ?? ratios[exactSpacing.ratio]);
+  const snap = office ? (proportional ? autoSpacing.snapPt : exactSpacing.snapPt) : 0;
+  const baselineAt = (v: number) => (snap ? Math.round((v * 72) / snap + 1e-6) * (snap / 72) : v);
   const lines: Line[] = [];
   const perPara: number[] = [];
   let y = 0;
@@ -180,7 +263,7 @@ export function layoutText(
       let x = x0;
       for (const { t, w } of ln.toks) {
         const prev = segments[segments.length - 1];
-        const text = t.space ? ' ' : t.text;
+        const text = t.text;
         if (
           prev &&
           prev.bold === t.bold &&
@@ -206,7 +289,7 @@ export function layoutText(
         }
         x += w;
       }
-      const line: Line = { baseline: y + baseOffset, segments };
+      const line: Line = { baseline: baselineAt(y + baseOffset), segments };
       if (p.bullet && li === 0) line.bulletX = 0;
       lines.push(line);
       y += ls;
@@ -214,7 +297,19 @@ export function layoutText(
     perPara.push(built.length);
   });
 
-  return { lines, contentHeight: y, maxLineWidth: maxW, linesPerParagraph: perPara, splitWord };
+  const last = lines.at(-1);
+  const anchorHeight =
+    office && OFFICE_RULES.anchorHeight === 'ink' && last
+      ? last.baseline + sizeIn * (OFFICE_RULES.descentEmByFamily[style.family] ?? desc)
+      : y;
+  return {
+    lines,
+    contentHeight: y,
+    maxLineWidth: maxW,
+    linesPerParagraph: perPara,
+    splitWord,
+    anchorHeight,
+  };
 }
 
 export interface FitResult {
@@ -275,9 +370,19 @@ export function makeTextNode(
   extra: { role?: string; pointer?: string; bulletIndent?: number } = {},
 ): TextNode {
   let dy = 0;
-  if (style.valign === 'middle') dy = Math.max(0, (box.h - laid.contentHeight) / 2);
-  if (style.valign === 'bottom') dy = Math.max(0, box.h - laid.contentHeight);
-  const lines = dy ? laid.lines.map((l) => ({ ...l, baseline: l.baseline + dy })) : laid.lines;
+  const h = laid.anchorHeight ?? laid.contentHeight;
+  if (style.valign === 'middle') dy = Math.max(0, (box.h - h) / 2);
+  if (style.valign === 'bottom') dy = Math.max(0, box.h - h);
+  const office = style.metrics !== 'font';
+  const whole = (v: number) => Math.round(v * 72) / 72;
+  const rounding = office ? OFFICE_RULES.anchorRounding : 'none';
+  if (rounding === 'shift') dy = whole(dy);
+  const lines = dy
+    ? laid.lines.map((l) => ({
+        ...l,
+        baseline: rounding === 'total' ? whole(l.baseline + dy) : l.baseline + dy,
+      }))
+    : laid.lines;
   const node: TextNode = {
     kind: 'text',
     box,
@@ -290,6 +395,39 @@ export function makeTextNode(
   if (extra.role) node.role = extra.role;
   if (extra.pointer) node.pointer = extra.pointer;
   return node;
+}
+
+/**
+ * Balanced wrapping for headlines: when the last line is much shorter than the others (a
+ * widow such as one word), narrow the box to the smallest width that keeps the same number
+ * of lines. The box itself changes, so PowerPoint wraps the exported text the same way.
+ */
+export function balanceLines(node: TextNode, threshold = 0.6): TextNode {
+  if (node.lines.length < 2 || node.style.align !== 'left') return node;
+  const width = (l: Line) => l.segments.reduce((w, s) => Math.max(w, s.x + s.width), 0);
+  const widths = node.lines.map(width);
+  const others = widths.slice(0, -1);
+  if (widths.at(-1)! >= threshold * (others.reduce((a, b) => a + b, 0) / others.length))
+    return node;
+  const count = node.lines.length;
+  const lay = (w: number) => layoutText(node.paragraphs, node.style, w, node.bulletIndent);
+  let lo = Math.max(...widths) / count;
+  let hi = node.box.w;
+  for (let i = 0; i < 24; i++) {
+    const mid = (lo + hi) / 2;
+    if (lay(mid).lines.length > count) lo = mid;
+    else hi = mid;
+  }
+  // One point of slack keeps the break stable against sub-point measurement noise.
+  const w = Math.min(node.box.w, hi + 1 / 72);
+  const laid = lay(w);
+  if (laid.lines.length !== count) return node;
+  const balanced = makeTextNode(node.paragraphs, { ...node.box, w }, node.style, laid, {
+    ...(node.role ? { role: node.role } : {}),
+    ...(node.pointer ? { pointer: node.pointer } : {}),
+    bulletIndent: node.bulletIndent,
+  });
+  return node.textFrame ? { ...balanced, textFrame: node.textFrame } : balanced;
 }
 
 /** Height (inches) the paragraphs need at a fixed style and width. */

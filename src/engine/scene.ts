@@ -49,8 +49,15 @@ export interface TextStyle {
   lineSpacingMultiple?: number;
   /** Office automatic spacing is distinct from an explicit 100% paragraph value. */
   lineSpacingAuto?: boolean;
+  /** Source-authored exact point spacing (imported "Exactly N pt"): kept as points in PPTX.
+   * Other spacing is written as a multiple, which PowerPoint places deterministically. */
+  lineSpacingExact?: boolean;
   /** All engines must use the same pair-kerning policy. Default false. */
   kerning?: boolean;
+  /** Shared text metrics. 'powerpoint' (default): glyph advances and kerning snap to
+   * 1/576 in and glyphs draw at the nearest whole point, as PowerPoint renders text,
+   * so HTML/SVG/PDF place glyphs where PowerPoint does. 'font': raw font units. */
+  metrics?: 'powerpoint' | 'font';
   color: Color;
   bold?: boolean;
   italic?: boolean;

@@ -1,0 +1,89 @@
+# SlideCraft orchestration plan — source of truth for orchestration.json and orchestration.md
+# (regenerate: npx tsx examples/orchestration/plan/render.ts).
+# Model tiers resolve to the newest model of the tier; ids are those current on 2026-10-11.
+schemaVersion: 1
+models:
+  opus: { id: claude-opus-5-5, use: "judgement: argument, partner review, visual review" }
+  sonnet: { id: claude-sonnet-5-5, use: "writing against a fixed contract" }
+  haiku: { id: claude-haiku-5-5, use: "mechanical rewrites within a character budget" }
+policy:
+  orchestrator: main session — owns the conversation and every checkpoint; sub-agents never ask the user anything.
+  routing: complex reasoning → opus; contract-bound writing → sonnet; mechanical edits → haiku.
+  parallelism: sections may run in parallel; run them one after another when saving tokens matters (same result).
+  fixes: recurring defects go to shared code with a test; content fixes go to YAML; generated files are never edited.
+  logging: every check-stage change is appended to review-log.jsonl / REVIEW-LOG.md next to deck.yaml.
+stages:
+  - id: brief
+    title: Brief
+    agent: orchestrator
+    model: main
+    commands: ['sc new "<goal>" --audience "<who>"', "sc templates --brief <brief> --json"]
+    inputs: [user goal, audience, usage]
+    outputs: [brief.yaml, output plan]
+    template: templates/01-brief.yaml
+    checkpoint: CP1 — confirm the brief
+  - id: pick
+    title: Pick
+    agent: orchestrator
+    model: main
+    commands: ["sc pick --brief <brief> --json", "sc choose --brief <brief> --option A"]
+    inputs: [brief.yaml]
+    outputs: [picker.html, option-A.png, option-B.png, option-C.png, brief.yaml#choice]
+    template: templates/02-choice.yaml
+    checkpoint: CP2 — choose storyline × theme
+  - id: storyline
+    title: Storyline
+    agent: deck-strategist
+    model: opus
+    commands: []
+    inputs: [brief.yaml, materials/*.md]
+    outputs: [storyline.md]
+    template: templates/03-storyline.md
+    handoff: templates/03-deck-strategist.prompt.md
+  - id: ghost
+    title: Ghost deck
+    agent: deck-strategist
+    model: opus
+    commands: ["sc scaffold --brief <brief> --force", "sc validate <deck>"]
+    inputs: [storyline.md]
+    outputs: [deck.yaml (ghost)]
+    template: templates/04-ghost-deck.yaml
+    checkpoint: CP3 — approve the title chain
+  - id: build
+    title: Build
+    agent: slide-writer
+    model: sonnet
+    commands: ["sc layouts <layout> --json", "sc build <deck> --json"]
+    inputs: [deck.yaml (ghost), layout contracts, materials]
+    outputs: [sections/*.yaml, dist/*.pptx, dist/*.pdf, dist/*.html, dist/previews/*.png, dist/manifest.json]
+    template: templates/05-section.yaml
+    handoff: templates/05-slide-writer.prompt.md
+  - id: review
+    title: Review — checks, fit-fix, partner review
+    agent: [copy-fitter, partner-reviewer]
+    model: [haiku, opus]
+    commands: ["sc check <deck> --json", "sc fix <deck> --json", "sc fix <deck> --apply fixes.json"]
+    inputs: [deck.yaml, dist/previews/*.png]
+    outputs: [fixed YAML, review notes, REVIEW-LOG.md]
+    template: templates/06-fixes.json
+    handoff: templates/06-copy-fitter.prompt.md
+    report: templates/06-partner-review.md
+  - id: visual-qa
+    title: Visual QA — final reviewer model
+    agent: visual-reviewer
+    model: opus
+    commands: ["sc visual-qa <deck> --json", "sc visual-qa <deck> --record findings.json"]
+    inputs: [dist/visual-qa/*-pptx.png, dist/visual-qa/*-html.png, dist/visual-qa/*-diff.png, dist/visual-qa/index.md]
+    outputs: [dist/visual-qa/REPORT.md, dist/visual-qa/record.json, REVIEW-LOG.md]
+    template: templates/06b-visual-qa-findings.json
+    handoff: templates/06b-visual-reviewer.prompt.md
+    rounds: 3
+    checkpoint: CP4 — accept, decide the items in "Needs your attention"
+  - id: deliver
+    title: Deliver
+    agent: orchestrator
+    model: main
+    commands: []
+    inputs: [dist/*, dist/visual-qa/REPORT.md]
+    outputs: [message to the user with file paths]
+    template: templates/07-delivery.md

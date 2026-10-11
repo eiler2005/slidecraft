@@ -4,7 +4,7 @@
  * Generated in CI and never committed, so the gallery can grow without bloating git;
  * the repository keeps only the curated images that README and docs embed.
  */
-import { copyFileSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { copyFileSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { basename, join, relative, resolve } from 'node:path';
 import { buildDeck } from './build.ts';
 import { buildGallery, buildHero } from './gallery.ts';
@@ -38,9 +38,11 @@ export async function buildSite(outDir = 'site'): Promise<SiteResult> {
 
   const examples: { id: string; title: string; files: { kind: string; path: string }[] }[] = [];
   // the deck about SlideCraft first, then the rest alphabetically
-  const dirs = readdirSync(join(ROOT, 'examples')).sort((a, b) =>
-    a === 'slidecraft-overview' ? -1 : b === 'slidecraft-overview' ? 1 : a.localeCompare(b),
-  );
+  const dirs = readdirSync(join(ROOT, 'examples'))
+    .filter((d) => existsSync(join(ROOT, 'examples', d, 'deck.yaml')))
+    .sort((a, b) =>
+      a === 'slidecraft-overview' ? -1 : b === 'slidecraft-overview' ? 1 : a.localeCompare(b),
+    );
   for (const dir of dirs) {
     const deck = join(ROOT, 'examples', dir, 'deck.yaml');
     const r = await buildDeck(deck, {

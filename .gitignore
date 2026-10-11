@@ -14,3 +14,7 @@ node_modules/
 examples/*/dist/
 **/.slidecraft/
 /site/
+
+# Word memo of the orchestration example: rebuilt by examples/orchestration/run/reproduce.sh
+# (the privacy hook keeps .docx out of git)
+docs/showcase/orchestration-run/*.docx

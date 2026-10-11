@@ -22,7 +22,13 @@ import {
 import { homedir, tmpdir } from 'node:os';
 import { delimiter, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { type Face, fontBuffer, measureFontIds, vectorFamily } from '../engine/fonts.ts';
+import {
+  type Face,
+  fontBuffer,
+  localEquivalents,
+  measureFontIds,
+  vectorFamily,
+} from '../engine/fonts.ts';
 import type { Scene } from '../engine/scene.ts';
 import { checkChrome } from '../qa/chrome.ts';
 import { verifyHtml } from '../qa/html-verify.ts';
@@ -47,7 +53,10 @@ export function fontFaceCss(usedMarkup: string): string {
     for (const face of Object.keys(FACE_CSS) as Face[]) {
       const b64 = fontBuffer(measure, face).toString('base64');
       const { weight, style } = FACE_CSS[face];
-      css += `@font-face{font-family:"${family}";font-weight:${weight};font-style:${style};font-display:block;src:url(data:font/ttf;base64,${b64}) format("truetype")}\n`;
+      const local = localEquivalents(measure, face)
+        .map((name) => `local("${name}"),`)
+        .join('');
+      css += `@font-face{font-family:"${family}";font-weight:${weight};font-style:${style};font-display:block;src:${local}url(data:font/ttf;base64,${b64}) format("truetype")}\n`;
     }
   }
   return css;

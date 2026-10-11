@@ -36,7 +36,13 @@ function overlap(a: Box, b: Box): number {
 }
 
 /** Background color under a point: topmost filled rect containing it, else slide background. */
-function bgAt(nodes: SceneNode[], upto: number, x: number, y: number, fallback: string): string {
+export function bgAt(
+  nodes: SceneNode[],
+  upto: number,
+  x: number,
+  y: number,
+  fallback: string,
+): string {
   for (let i = upto - 1; i >= 0; i--) {
     const n = nodes[i]!;
     if (n.kind === 'rect' && n.fill && (n.fillOpacity ?? 1) > 0.6) {

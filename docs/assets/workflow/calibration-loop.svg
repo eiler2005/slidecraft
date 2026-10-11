@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="calibration-loop-title calibration-loop-desc" id="calibration-loop-root" font-family="Arial, Helvetica, sans-serif">
+<title id="calibration-loop-title">Calibration: measure PowerPoint, generate the rules, gate the corpus</title>
+<desc id="calibration-loop-desc">Stage one builds about 730 synthetic text blocks through the normal pipeline, renders them in PowerPoint, reads word positions, baselines and glyph sizes from the PDF, scores candidate models and writes the winning rules to office-rules.gen.ts with an evidence report. Stage two rebuilds and renders a ten-deck corpus and checks every page against the 95 percent target. Calibration runs on demand, not on every change.</desc>
+<defs>
+  <marker id="cl-arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 z" fill="#596E7C"/></marker>
+  <marker id="cl-arrow-cal" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 z" fill="#C2410C"/></marker>
+</defs>
+<rect width="1280" height="720" fill="#F5F7FA"/>
+<text x="48" y="56" font-size="13" letter-spacing="2.4" fill="#596E7C">SLIDECRAFT · CALIBRATION MODE</text>
+<text x="48" y="92" font-size="29" font-weight="700" fill="#0A2033">Rules are measured from PowerPoint, not guessed</text>
+<text x="48" y="118" font-size="15" fill="#596E7C">npm run calibrate — run when rendering changes or Office updates; 10–20 minutes with real PowerPoint, Chrome and Poppler.</text>
+
+<text x="48" y="168" font-size="12" font-weight="700" letter-spacing="1.6" fill="#C2410C">STAGE 1 · PROBE → RULES</text>
+<g font-size="13">
+  <g><rect x="48" y="184" width="262" height="196" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+    <text x="68" y="214" font-size="15" font-weight="700" fill="#0A2033">Synthetic probe</text>
+    <text x="68" y="240" fill="#596E7C">~730 blocks · ~2 200 lines</text>
+    <text x="68" y="260" fill="#596E7C">Arial · Georgia · Times · Calibri</text>
+    <text x="68" y="280" fill="#596E7C">9–54 pt · regular / bold</text>
+    <text x="68" y="300" fill="#596E7C">auto · ×0.85–1.25 · exact</text>
+    <text x="68" y="320" fill="#596E7C">top / middle · kerning on/off</text>
+    <text x="68" y="340" fill="#596E7C">Latin · Cyrillic · digits</text>
+    <text x="68" y="364" fill="#0960D5" font-weight="700">Scene → editable PPTX</text></g>
+  <g><rect x="334" y="184" width="262" height="196" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+    <text x="354" y="214" font-size="15" font-weight="700" fill="#0A2033">PowerPoint renders</text>
+    <text x="354" y="240" fill="#596E7C">sandboxed job, no prompts</text>
+    <text x="354" y="260" fill="#596E7C">PDF → pdf.js + Poppler:</text>
+    <text x="354" y="280" fill="#596E7C">word x, baseline y,</text>
+    <text x="354" y="300" fill="#596E7C">drawn glyph size</text>
+    <text x="354" y="320" fill="#596E7C">±0.12 pt = PDF grid noise</text>
+    <text x="354" y="364" fill="#0960D5" font-weight="700">observations.json</text></g>
+  <g><rect x="620" y="184" width="300" height="196" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+    <text x="640" y="214" font-size="15" font-weight="700" fill="#0A2033">Fit candidate models</text>
+    <g font-size="12.5">
+      <text x="640" y="240" fill="#596E7C">R1 advances</text><text x="900" y="240" text-anchor="end" fill="#0A2033" font-weight="700">1/576 in</text>
+      <text x="640" y="260" fill="#596E7C">R2 drawn size</text><text x="900" y="260" text-anchor="end" fill="#0A2033" font-weight="700">whole point</text>
+      <text x="640" y="280" fill="#596E7C">R5 auto spacing</text><text x="900" y="280" text-anchor="end" fill="#0A2033" font-weight="700">1.2 em · hhea</text>
+      <text x="640" y="300" fill="#596E7C">R6 multiples &gt; 1</text><text x="900" y="300" text-anchor="end" fill="#0A2033" font-weight="700">0.75 × pitch</text>
+      <text x="640" y="320" fill="#596E7C">R7 exact export</text><text x="900" y="320" text-anchor="end" fill="#0A2033" font-weight="700">as multiple</text>
+      <text x="640" y="340" fill="#596E7C">R8 anchoring</text><text x="900" y="340" text-anchor="end" fill="#0A2033" font-weight="700">ink height</text>
+    </g>
+    <text x="640" y="364" fill="#0960D5" font-weight="700">hysteresis keeps reruns stable</text></g>
+  <g><rect x="944" y="184" width="288" height="196" rx="14" fill="#C2410C"/>
+    <text x="964" y="214" font-size="15" font-weight="700" fill="#FFFFFF">Write the rules (--write)</text>
+    <rect x="964" y="232" width="248" height="34" rx="8" fill="#FFFFFF" fill-opacity="0.16" stroke="#FFFFFF" stroke-opacity="0.5"/>
+    <text x="978" y="254" fill="#FFFFFF" font-family="Menlo, monospace" font-size="12.5">office-rules.gen.ts</text>
+    <rect x="964" y="276" width="248" height="34" rx="8" fill="#FFFFFF" fill-opacity="0.16" stroke="#FFFFFF" stroke-opacity="0.5"/>
+    <text x="978" y="298" fill="#FFFFFF" font-family="Menlo, monospace" font-size="12.5">calibration/RULES.md</text>
+    <text x="964" y="336" fill="#FFE4D6">every engine reads the same rules:</text>
+    <text x="964" y="356" fill="#FFE4D6">measurement, HTML/SVG, PPTX, PDF</text></g>
+  <g stroke="#596E7C" stroke-width="1.6" marker-end="url(#cl-arrow)">
+    <line x1="311" y1="282" x2="331" y2="282"/><line x1="597" y1="282" x2="617" y2="282"/><line x1="921" y1="282" x2="941" y2="282"/>
+  </g>
+</g>
+
+<!-- engine check band -->
+<g font-size="13">
+  <rect x="48" y="400" width="1184" height="74" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+  <text x="68" y="428" font-size="12" font-weight="700" letter-spacing="1.4" fill="#596E7C">ENGINE CHECK · RERUN THE PROBE AFTER --write</text>
+  <g font-size="13">
+    <text x="68" y="456" fill="#0A2033">auto spacing <tspan font-weight="700" fill="#1F7A3A">0.77 → 0.066 pt</tspan></text>
+    <text x="330" y="456" fill="#0A2033">generated spacing <tspan font-weight="700" fill="#1F7A3A">1.19 → 0.064 pt</tspan></text>
+    <text x="640" y="456" fill="#0A2033">word positions <tspan font-weight="700" fill="#1F7A3A">0.19 → 0.09 pt</tspan></text>
+    <text x="930" y="456" fill="#0A2033">anchored blocks <tspan font-weight="700" fill="#1F7A3A">0.81 → 0.18 pt</tspan></text>
+  </g>
+</g>
+
+<text x="48" y="520" font-size="12" font-weight="700" letter-spacing="1.6" fill="#0960D5">STAGE 2 · CORPUS → QUALITY GATE</text>
+<g font-size="13">
+  <rect x="48" y="536" width="420" height="150" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+  <text x="68" y="566" font-size="15" font-weight="700" fill="#0A2033">10 decks · calibration/corpus.json</text>
+  <text x="68" y="592" fill="#596E7C">rebuild: original PPTX → editable PPTX + HTML</text>
+  <text x="68" y="612" fill="#596E7C">generated: 6 examples + 3 theme variants</text>
+  <text x="68" y="632" fill="#596E7C">all 7 themes · Calibri/Arial/Georgia</text>
+  <text x="68" y="652" fill="#596E7C">Latin + Cyrillic · tables · charts · images</text>
+  <rect x="492" y="536" width="740" height="150" rx="14" fill="#0A2033"/>
+  <text x="514" y="566" font-size="15" font-weight="700" fill="#FFFFFF">Gate: every page ≥ 95 % (worst of 16 regions, RGB + edge detail)</text>
+  <g font-size="13">
+    <text x="514" y="596" fill="#C9D6E3">rebuilt editable PPTX ↔ original</text>
+    <rect x="800" y="585" width="300" height="14" rx="7" fill="#1E3A56"/><rect x="800" y="585" width="298" height="14" rx="7" fill="#22C55E"/>
+    <text x="1112" y="596" fill="#FFFFFF" font-weight="700">22/22 pages</text>
+    <text x="514" y="626" fill="#C9D6E3">generated HTML ↔ PPTX (mean page)</text>
+    <rect x="800" y="615" width="300" height="14" rx="7" fill="#1E3A56"/><rect x="800" y="615" width="268" height="14" rx="7" fill="#F59E0B"/>
+    <text x="1112" y="626" fill="#FFFFFF" font-weight="700">89.2 %</text>
+    <text x="514" y="660" fill="#8FB4E8" font-size="12.5">calibration/REPORT.md · sub-pixel glyph edges and chart labels remain → closed by the reviewer model</text>
+  </g>
+  <line x1="469" y1="611" x2="489" y2="611" stroke="#596E7C" stroke-width="1.6" marker-end="url(#cl-arrow)"/>
+</g>
+</svg>

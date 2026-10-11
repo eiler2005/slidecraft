@@ -1,13 +1,14 @@
 /**
  * pptx-convert: turn the built PPTX into PDF with the user's own office suite, so the
  * PDF is exactly what PowerPoint (or LibreOffice) shows. Nothing is bundled.
- *  - macOS PowerPoint via AppleScript (sandboxed: first run asks once for file access)
+ *  - macOS PowerPoint via AppleScript. Jobs run inside PowerPoint's own sandbox container,
+ *    so macOS never asks to grant access to a new folder (unattended runs keep working).
  *  - LibreOffice headless (`soffice --convert-to pdf`)
  * SLIDECRAFT_CONVERTER=libreoffice|powerpoint forces one.
  */
 import { execFileSync, spawnSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
-import { tmpdir } from 'node:os';
+import { homedir, tmpdir } from 'node:os';
 import { basename, dirname, join, resolve } from 'node:path';
 import type { Engine } from './types.ts';
 
@@ -49,9 +50,24 @@ function pickConverter(): Converter | undefined {
   return undefined;
 }
 
+/** Where a conversion job lives. PowerPoint is sandboxed: any folder outside its container
+ * triggers a "Grant Access" dialog, and every job uses a fresh folder. Its container's
+ * own tmp is always readable/writable for it. SLIDECRAFT_OFFICE_TMP overrides. */
+export function conversionRoot(kind: Converter['kind']): string {
+  const override = process.env.SLIDECRAFT_OFFICE_TMP;
+  if (override) {
+    mkdirSync(override, { recursive: true });
+    return override;
+  }
+  if (kind !== 'powerpoint') return tmpdir();
+  const root = join(homedir(), 'Library/Containers/com.microsoft.Powerpoint/Data/tmp/slidecraft');
+  mkdirSync(root, { recursive: true });
+  return root;
+}
+
 const asString = (s: string) => `"${s.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"`;
 
-function viaPowerPoint(inPptx: string, outPdf: string): void {
+function viaPowerPoint(inPptx: string, outPdf: string, retry = true): void {
   const script = `with timeout of 180 seconds
 tell application "Microsoft PowerPoint"
   open (POSIX file ${asString(inPptx)})
@@ -68,9 +84,17 @@ end timeout`;
     });
   } catch (e) {
     const msg = String((e as { stderr?: Buffer }).stderr ?? e);
-    if (msg.includes('-1712')) {
+    if (msg.includes('-1712') || msg.includes('-9074')) {
+      // Unattended runs (calibration) may opt in to restarting a stuck PowerPoint once.
+      // Never by default: it would discard whatever else the user has open.
+      if (retry && process.env.SLIDECRAFT_OFFICE_RECOVER === '1') {
+        spawnSync('pkill', ['-KILL', '-x', 'Microsoft PowerPoint']);
+        spawnSync('sleep', ['3']);
+        viaPowerPoint(inPptx, outPdf, false);
+        return;
+      }
       throw new Error(
-        'PowerPoint did not answer in time. On first use macOS asks you to grant PowerPoint access to the output folder — click "Grant Access" in PowerPoint and run the build again.',
+        'PowerPoint did not answer in time — usually a dialog is open in PowerPoint. Close it (or quit PowerPoint) and run again; unattended runs can set SLIDECRAFT_OFFICE_RECOVER=1 to restart PowerPoint automatically.',
       );
     }
     throw new Error(`PowerPoint export failed: ${msg.trim()}`);
@@ -110,7 +134,7 @@ export function convertToPdf(inPptx: string, outPdf: string): void {
   mkdirSync(dirname(outPdf), { recursive: true });
   // Never render onto a previous PDF or open an already-open client file.
   // PowerPoint can silently retain an existing PDF on save-as, yielding stale QA.
-  const tmp = mkdtempSync(join(tmpdir(), 'sc-conv-'));
+  const tmp = mkdtempSync(join(conversionRoot(c.kind), 'sc-conv-'));
   try {
     const input = join(tmp, `${basename(tmp)}.pptx`);
     const output = join(tmp, `${basename(tmp)}.pdf`);
@@ -151,7 +175,8 @@ export const pptxConvertEngine: Engine = {
     return c.kind === 'powerpoint'
       ? {
           available: true,
-          detail: 'Microsoft PowerPoint via AppleScript (first run asks once for file access)',
+          detail:
+            'Microsoft PowerPoint via AppleScript (jobs run in its sandbox container: no access prompts)',
         }
       : { available: true, detail: `LibreOffice at ${c.bin}` };
   },

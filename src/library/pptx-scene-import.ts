@@ -4,10 +4,11 @@
  * screenshot. Unsupported DrawingML is reported explicitly for visual review.
  */
 import { createHash } from 'node:crypto';
-import { existsSync, readFileSync } from 'node:fs';
-import { basename, extname, join, posix, resolve } from 'node:path';
+import { readFileSync } from 'node:fs';
+import { basename, extname, posix, resolve } from 'node:path';
 import JSZip from 'jszip';
-import { type Face, registerMeasureFont, vmetrics } from '../engine/fonts.ts';
+import { registerMeasureFont, vmetrics } from '../engine/fonts.ts';
+import { OFFICE_RULES } from '../engine/office-rules.gen.ts';
 import type {
   Box,
   Paragraph,
@@ -17,6 +18,7 @@ import type {
   TextNode,
   TextStyle,
 } from '../engine/scene.ts';
+import { type FaceFiles, findFontFiles } from '../engine/system-fonts.ts';
 import { layoutText, makeTextNode, plainText } from '../engine/text.ts';
 
 const EMU = 914400;
@@ -135,7 +137,7 @@ export interface ImportedPptxScene {
 export interface PptxSceneImportOptions {
   id?: string;
   /** Locally licensed fonts are read in place, never copied into an artifact. */
-  fonts?: Record<string, Partial<Record<Face, string>> & { regular: string }>;
+  fonts?: Record<string, FaceFiles>;
   /** Reject unsupported features instead of returning a partial visual representation. */
   strict?: boolean;
 }
@@ -162,29 +164,10 @@ function sourceFont(family: string, ctx: Context): string {
   const hit = ctx.fonts.get(family);
   if (hit) return hit;
   let files = ctx.options.fonts?.[family];
-  if (!files && /^Calibri(?: Light)?$/i.test(family)) {
-    const light = /Light/i.test(family);
-    const roots = [
-      '/Library/Fonts/Microsoft',
-      '/Applications/Microsoft PowerPoint.app/Contents/Resources/DFonts',
-    ];
-    for (const dir of roots) {
-      const regular = join(dir, light ? 'Calibril.ttf' : 'Calibri.ttf');
-      const lower = join(dir, light ? 'calibril.ttf' : 'calibri.ttf');
-      if (!existsSync(regular) && !existsSync(lower)) continue;
-      files = { regular: existsSync(regular) ? regular : lower };
-      const candidates = {
-        bold: ['Calibri Bold.ttf', 'Calibrib.ttf'],
-        italic: light ? ['calibrili.ttf'] : ['Calibri Italic.ttf', 'Calibrii.ttf'],
-        boldItalic: ['Calibri Bold Italic.ttf', 'Calibriz.ttf'],
-      };
-      for (const [face, names] of Object.entries(candidates)) {
-        const file = names.map((n) => join(dir, n)).find(existsSync);
-        if (file) files[face as Face] = file;
-      }
-      break;
-    }
-  }
+  // Arial/Times keep the bundled metric-compatible files (deterministic in CI);
+  // anything else resolves the way Office does, bundled Office fonts first.
+  if (!files && !/^(Arial|Liberation Sans|Times New Roman|Liberation Serif)$/i.test(family))
+    files = findFontFiles(family);
   let measure = 'liberation-sans';
   if (files) {
     measure = `pptx-${createHash('sha256').update(JSON.stringify({ family, files })).digest('hex').slice(0, 16)}`;
@@ -326,9 +309,13 @@ function textNodes(
       measure,
       bold ? (italic ? 'boldItalic' : 'bold') : italic ? 'italic' : 'regular',
     );
-    // Office uses a 1.2-em automatic line advance for Calibri, distinct from
-    // the 1.220703-em glyph ascent/descent box reported by the font file.
-    const naturalSpacing = size * (family === 'Calibri' ? 1.2 : metrics.asc + metrics.desc);
+    // Office's automatic line advance is calibrated per family (Calibri: 1.2 em, not the
+    // 1.2207-em ascent+descent box); uncalibrated families use the font's own box.
+    const naturalSpacing =
+      size *
+      (OFFICE_RULES.autoSpacing.pitchEm[family] ??
+        OFFICE_RULES.autoSpacing.pitchEm['*'] ??
+        metrics.asc + metrics.desc);
     const spacing = child(pp, 'lnSpc');
     const lineSpacing = child(spacing, 'spcPts')
       ? num(child(spacing, 'spcPts'), 'val') / 100
@@ -339,6 +326,7 @@ function textNodes(
       size,
       lineSpacing,
       lineSpacingAuto: !spacing,
+      ...(child(spacing, 'spcPts') ? { lineSpacingExact: true } : {}),
       // Native table cells do not inherit presentation-level kerning. Once
       // converted to text boxes that distinction must be made explicit.
       kerning:

@@ -49,7 +49,7 @@ For each slide: `sc layouts <layout> --json` for the contract, write the content
 
 ## 6 · Review ✅
 
-`sc check <deck> --json`: `sc fix <deck> --json` lists too-long fields with a character budget; rewrite within it (keep numbers, never truncate), save `[{pointer, text}]` to fixes.json and run `sc fix <deck> --apply fixes.json` until nothing remains, fix titles, add real sources for `SC-SRC-*`, make `SC-CONSIST-001` metrics agree (one fact). Open every `dist/previews/*.png`. Apply `slidecraft-partner-review-checklist`; fix blockers and majors; rebuild. Present the verdict, the fixes and the files.
+`sc check <deck> --json`: `sc fix <deck> --json` lists too-long fields with a character budget; rewrite within it (keep numbers, never truncate), save `[{pointer, text}]` to fixes.json and run `sc fix <deck> --apply fixes.json` until nothing remains, fix titles, add real sources for `SC-SRC-*`, make `SC-CONSIST-001` metrics agree (one fact). Open every `dist/previews/*.png`. Apply `slidecraft-partner-review-checklist`; fix blockers and majors; rebuild. Then the **final visual QA**: `sc visual-qa <deck> --json` renders the PPTX in PowerPoint/LibreOffice and the HTML in Chrome into `dist/visual-qa/`; open every PowerPoint, HTML and difference image and judge them with `{{SLIDECRAFT_ROOT}}/library/references/visual-qa.md` (parity, template conformance, layout, colour, typography, charts, meaning, readiness); fix in YAML, rebuild, max 3 rounds; record the round with `sc visual-qa <deck> --record findings.json` and show `dist/visual-qa/REPORT.md` (**Needs your attention**). Present the verdict, the fixes and the files.
 
 ## 7 · Deliver
 

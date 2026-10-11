@@ -9,11 +9,12 @@
  * Budgets come from re-composing the slide with shorter text until the diagnostic clears.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
-import YAML, { type Document, isMap, isSeq } from 'yaml';
+import { dirname, relative, resolve } from 'node:path';
+import YAML, { type Document, isMap, isScalar, isSeq } from 'yaml';
 import { checkDeck } from '../build.ts';
 import { composeDeck } from '../engine/compose.ts';
 import type { Diagnostic } from '../qa/codes.ts';
+import { appendReviewLog, type FieldChange } from '../qa/review-log.ts';
 import { checkScene } from '../qa/scene-checks.ts';
 import { loadDeck } from './load.ts';
 import { editYaml, type YamlEdit } from './yaml-edit.ts';
@@ -177,6 +178,7 @@ export function applyFixes(
   const edits = new Map<string, YamlEdit[]>();
   const errors: string[] = [];
   let applied = 0;
+  const changes: FieldChange[] = [];
   for (const f of fixes) {
     const ptr = parsePointer(f.pointer);
     const loc = ptr ? locs[ptr.slide] : undefined;
@@ -195,10 +197,25 @@ export function applyFixes(
       errors.push(`${f.pointer}: field not found in ${loc.file}`);
       continue;
     }
+    const before = doc.getIn(full);
     edits.set(loc.file, [...(edits.get(loc.file) ?? []), { path: full, value: f.text }]);
+    changes.push({
+      file: relative(dirname(resolve(deckPath)), loc.file),
+      pointer: f.pointer,
+      before: isScalar(before)
+        ? before.value
+        : ((before as { toJSON?: () => unknown })?.toJSON?.() ?? before),
+      after: f.text,
+    });
     applied++;
   }
   // only the edited values change; comments, quoting and flow style stay as written
   for (const [file, list] of edits) writeFileSync(file, editYaml(readFileSync(file, 'utf8'), list));
+  if (applied)
+    appendReviewLog(deckPath, {
+      stage: 'fit-fix',
+      summary: `Applied ${applied} rewrite(s) by JSON pointer${errors.length ? `; ${errors.length} rejected` : ''}.`,
+      changes,
+    });
   return { applied, errors, remaining: fitTasks(deckPath) };
 }

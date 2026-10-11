@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=../../../schemas/deck.v1.json
+# Stage 4 · Ghost deck (deck-strategist, Opus 5.5) → CP3: the user approves the numbered title chain.
+schemaVersion: 1
+id: <deck-id>
+title: <Governing thought as the deck title>
+storyline: <storyline id>
+theme: <theme id>
+status: ghost
+language: en
+sources:
+  - { id: <source-id>, title: <Document, page or dataset>, illustrative: false }
+slides:
+  - id: summary
+    layout: exec-summary
+    title: <Answer first: the governing thought as a claim>
+    ghost: { exhibit: "SCR + ask", data: "none", confidence: solid }
+  - id: <slide-id>
+    layout: <layout id from `sc exhibits --json`>
+    title: <Claim this slide proves>
+    ghost: { exhibit: "<what the picture shows>", data: "<numbers needed>", confidence: likely }

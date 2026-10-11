@@ -4,9 +4,10 @@
  */
 import { readFileSync } from 'node:fs';
 import { extname } from 'node:path';
-import { vectorFamily } from '../engine/fonts.ts';
+import { faceOf, vectorFamily } from '../engine/fonts.ts';
 import { freeformMarkup } from '../engine/freeform.ts';
 import type { Master, Scene, SceneNode, SceneSlide, Stroke, TextNode } from '../engine/scene.ts';
+import { autoPitchEm, drawSize, glyphOffsetsPt, layoutText, makeTextNode } from '../engine/text.ts';
 
 export const PX_PER_IN = 96;
 const px = (inch: number) => +(inch * PX_PER_IN).toFixed(2);
@@ -45,7 +46,7 @@ function dataUri(path: string): string {
 
 export function textSvg(t: TextNode): string {
   const fam = vectorFamily(t.style.measure);
-  const size = ptpx(t.style.size);
+  const size = ptpx(drawSize(t.style));
   let out = '';
   for (const line of t.lines) {
     const y = px(t.box.y + line.baseline);
@@ -54,7 +55,12 @@ export function textSvg(t: TextNode): string {
     }
     for (const s of line.segments) {
       if (s.link) out += `<a href="${esc(s.link)}" target="_blank">`;
-      out += `<text x="${px(t.box.x + s.x)}" y="${y}" font-family="${fam}" font-size="${size}"${s.bold ? ' font-weight="bold"' : ''}${s.italic ? ' font-style="italic"' : ''}${s.underline ? ' text-decoration="underline"' : ''} fill="${s.color}" xml:space="preserve">${esc(s.text)}</text>`;
+      // Every glyph sits where the shared layout measured it, so browsers cannot drift.
+      const x0 = t.box.x + s.x;
+      const xs = glyphOffsetsPt(t.style, faceOf(s.bold, s.italic), s.text)
+        .map((o) => px(x0 + o / 72))
+        .join(' ');
+      out += `<text x="${xs}" y="${y}" font-family="${fam}" font-size="${size}"${s.bold ? ' font-weight="bold"' : ''}${s.italic ? ' font-style="italic"' : ''}${s.underline ? ' text-decoration="underline"' : ''} fill="${s.color}" xml:space="preserve" style="white-space:pre">${esc(s.text)}</text>`;
       if (s.link) out += '</a>';
     }
   }
@@ -170,11 +176,17 @@ export function placeholderSvg(
 export function masterSvg(m: Master, slideNo: number): string {
   let out = m.nodes.map(nodeSvg).join('');
   if (m.slideNumber) {
+    // A PowerPoint slide-number placeholder: automatic spacing, anchored at the top.
     const s = m.slideNumber;
-    const fam = vectorFamily(s.style.measure);
-    const x = s.style.align === 'right' ? px(s.box.x + s.box.w) : px(s.box.x);
-    const anchor = s.style.align === 'right' ? ' text-anchor="end"' : '';
-    out += `<text data-sc-role="page-number" x="${x}" y="${px(s.box.y + s.box.h * 0.8)}"${anchor} font-family="${fam}" font-size="${ptpx(s.style.size)}" fill="${s.style.color}">${slideNo}</text>`;
+    const style = {
+      ...s.style,
+      lineSpacing: s.style.size * autoPitchEm(s.style.family),
+      lineSpacingAuto: true,
+      valign: 'top' as const,
+    };
+    const paragraphs = [{ runs: [{ text: String(slideNo) }] }];
+    const node = makeTextNode(paragraphs, s.box, style, layoutText(paragraphs, style, s.box.w));
+    out += `<g data-sc-role="page-number">${textSvg(node)}</g>`;
   }
   return out;
 }

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1280 760" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="quality-stages-title quality-stages-desc" id="quality-stages-root" font-family="Arial, Helvetica, sans-serif">
+<title id="quality-stages-title">Five quality layers between a draft and a deck the user receives</title>
+<desc id="quality-stages-desc">Rules catch what can be measured in the Scene, calibrated PowerPoint rules make the HTML and PPTX agree, real Office rendering measures parity per page, a reviewer model judges template, craft, colour and meaning and closes the last five to ten percent, and a human approves. The reviewer writes a report of what needs the user's attention and every change is logged.</desc>
+<defs>
+  <linearGradient id="qs-llm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6D28D9"/><stop offset="1" stop-color="#4C1D95"/></linearGradient>
+  <marker id="qs-arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 z" fill="#596E7C"/></marker>
+</defs>
+<rect width="1280" height="760" fill="#F5F7FA"/>
+<text x="48" y="56" font-size="13" letter-spacing="2.4" fill="#596E7C">SLIDECRAFT · QUALITY LAYERS</text>
+<text x="48" y="92" font-size="29" font-weight="700" fill="#0A2033">Rules get us to ~90 %, the reviewer model closes the rest</text>
+<text x="48" y="118" font-size="15" fill="#596E7C">Each layer catches what the previous one cannot; nothing reaches the user without a verdict and a report.</text>
+
+<!-- Ladder: five steps rising left to right -->
+<g font-size="13">
+  <g>
+    <rect x="48" y="420" width="220" height="180" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+    <rect x="48" y="420" width="220" height="8" rx="4" fill="#94A3B8"/>
+    <text x="66" y="458" font-size="12" font-weight="700" letter-spacing="1.4" fill="#596E7C">1 · RULES</text>
+    <text x="66" y="484" font-size="16" font-weight="700" fill="#0A2033">Scene checks</text>
+    <text x="66" y="510" fill="#596E7C">text fits, nothing overlaps,</text>
+    <text x="66" y="528" fill="#596E7C">contrast, sources, frame</text>
+    <text x="66" y="546" fill="#596E7C">roles, consistent numbers</text>
+    <text x="66" y="582" fill="#0960D5" font-weight="700">check · fix (Haiku)</text>
+  </g>
+  <g>
+    <rect x="292" y="352" width="220" height="248" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+    <rect x="292" y="352" width="220" height="8" rx="4" fill="#C2410C"/>
+    <text x="310" y="390" font-size="12" font-weight="700" letter-spacing="1.4" fill="#596E7C">2 · CALIBRATION</text>
+    <text x="310" y="416" font-size="16" font-weight="700" fill="#0A2033">PowerPoint's own rules</text>
+    <text x="310" y="442" fill="#596E7C">1/576-in advances,</text>
+    <text x="310" y="460" fill="#596E7C">whole-point lines, spacing</text>
+    <text x="310" y="478" fill="#596E7C">as multiples, hyphen breaks,</text>
+    <text x="310" y="496" fill="#596E7C">balanced titles</text>
+    <text x="310" y="534" font-size="22" font-weight="700" fill="#C2410C">0.06 pt</text>
+    <text x="310" y="554" fill="#596E7C" font-size="12">mean baseline error</text>
+    <text x="310" y="582" fill="#0960D5" font-weight="700">npm run calibrate</text>
+  </g>
+  <g>
+    <rect x="536" y="284" width="220" height="316" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+    <rect x="536" y="284" width="220" height="8" rx="4" fill="#0960D5"/>
+    <text x="554" y="322" font-size="12" font-weight="700" letter-spacing="1.4" fill="#596E7C">3 · OFFICE PARITY</text>
+    <text x="554" y="348" font-size="16" font-weight="700" fill="#0A2033">Rendered, not assumed</text>
+    <text x="554" y="374" fill="#596E7C">PowerPoint ↔ HTML</text>
+    <text x="554" y="392" fill="#596E7C">↔ original, per page,</text>
+    <text x="554" y="410" fill="#596E7C">worst of 16 regions</text>
+    <g font-size="12">
+      <rect x="554" y="428" width="184" height="12" rx="6" fill="#E6EDF5"/><rect x="554" y="428" width="182" height="12" rx="6" fill="#0960D5"/>
+      <text x="554" y="458" fill="#0A2033">rebuilt PPTX: 22/22 ≥ 95 %</text>
+      <rect x="554" y="472" width="184" height="12" rx="6" fill="#E6EDF5"/><rect x="554" y="472" width="164" height="12" rx="6" fill="#5B8FD9"/>
+      <text x="554" y="502" fill="#0A2033">generated decks: mean 89 %</text>
+    </g>
+    <text x="554" y="582" fill="#0960D5" font-weight="700">visual-qa pack</text>
+  </g>
+  <g>
+    <rect x="780" y="216" width="236" height="384" rx="14" fill="url(#qs-llm)"/>
+    <text x="800" y="254" font-size="12" font-weight="700" letter-spacing="1.4" fill="#E9DDFF">4 · REVIEWER MODEL</text>
+    <text x="800" y="280" font-size="16" font-weight="700" fill="#FFFFFF">The last 5–10 %</text>
+    <g fill="#F3ECFF">
+      <text x="800" y="310">◦ parity hotspots that matter</text>
+      <text x="800" y="330">◦ template conformance</text>
+      <text x="800" y="350">◦ alignment, rhythm, widows</text>
+      <text x="800" y="370">◦ colour, accent, contrast</text>
+      <text x="800" y="390">◦ typography, numbers</text>
+      <text x="800" y="410">◦ charts and tables</text>
+      <text x="800" y="430">◦ meaning: title proven?</text>
+      <text x="800" y="450">◦ readiness verdict</text>
+    </g>
+    <rect x="800" y="476" width="196" height="64" rx="10" fill="#FFFFFF" fill-opacity="0.14" stroke="#FFFFFF" stroke-opacity="0.5"/>
+    <text x="814" y="500" fill="#FFFFFF" font-weight="700">fix → rebuild → recheck</text>
+    <text x="814" y="522" fill="#E9DDFF" font-size="12">max 3 rounds, shared fixes first</text>
+    <text x="800" y="582" fill="#FFFFFF" font-weight="700">visual-reviewer · Opus 5.5</text>
+  </g>
+  <g>
+    <rect x="1040" y="148" width="192" height="452" rx="14" fill="#0A2033"/>
+    <text x="1058" y="186" font-size="12" font-weight="700" letter-spacing="1.4" fill="#8FB4E8">5 · HUMAN · CP4</text>
+    <text x="1058" y="212" font-size="16" font-weight="700" fill="#FFFFFF">You decide</text>
+    <text x="1058" y="238" fill="#C9D6E3">only what the report</text>
+    <text x="1058" y="256" fill="#C9D6E3">flags as needing you,</text>
+    <text x="1058" y="274" fill="#C9D6E3">then look at every slide</text>
+    <rect x="1058" y="296" width="156" height="26" rx="13" fill="#1F7A3A"/>
+    <text x="1136" y="314" text-anchor="middle" fill="#FFFFFF" font-size="12" font-weight="700">visual_review: true</text>
+    <g fill="#C9D6E3" font-size="12.5">
+      <text x="1058" y="362">◦ decide flagged items</text>
+      <text x="1058" y="384">◦ read the review log</text>
+      <text x="1058" y="406">◦ approve or ask for</text>
+      <text x="1070" y="424">changes</text>
+      <text x="1058" y="446">◦ nothing is sent or</text>
+      <text x="1070" y="464">published for you</text>
+    </g>
+    <text x="1058" y="582" fill="#8FB4E8" font-weight="700">deliver</text>
+  </g>
+  <g stroke="#596E7C" stroke-width="1.6" marker-end="url(#qs-arrow)">
+    <line x1="269" y1="520" x2="289" y2="520"/><line x1="513" y1="520" x2="533" y2="520"/><line x1="757" y1="520" x2="777" y2="520"/><line x1="1017" y1="520" x2="1037" y2="520"/>
+  </g>
+</g>
+
+<!-- Report and log previews -->
+<g font-size="12">
+  <rect x="48" y="636" width="580" height="96" rx="12" fill="#FFFFFF" stroke="#D5DEE7"/>
+  <text x="66" y="660" font-weight="700" fill="#4C1D95">dist/visual-qa/REPORT.md</text>
+  <text x="66" y="682" fill="#0A2033" font-weight="700">Ready, with points for you to check.</text>
+  <text x="66" y="702" fill="#596E7C">Needs your attention: s06 matrix leaves the right third empty — add a takeaway?</text>
+  <text x="66" y="720" fill="#596E7C">Fixed during review: hyphen wrap differed (shared rule) · six titles balanced</text>
+  <rect x="652" y="636" width="580" height="96" rx="12" fill="#FFFFFF" stroke="#D5DEE7"/>
+  <text x="670" y="660" font-weight="700" fill="#0A2033">REVIEW-LOG.md · review-log.jsonl</text>
+  <text x="670" y="682" fill="#596E7C">fit-fix · /slides/3/title: "…in our first three countries" → "…€14B market"</text>
+  <text x="670" y="702" fill="#596E7C">visual-qa · 10 slides, parity per slide, sources snapshotted</text>
+  <text x="670" y="720" fill="#596E7C">round 2 · ready-with-notes · deck.yaml +2 −1 lines (diff kept)</text>
+</g>
+</svg>

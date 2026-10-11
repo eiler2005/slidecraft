@@ -20,3 +20,17 @@ for (const name of ['slide-constructor', 'render-and-verify']) {
     expect(png.length).toBeGreaterThan(10000);
   });
 }
+
+for (const name of ['deck-workflow', 'quality-stages', 'calibration-loop', 'office-text-rules']) {
+  it(`keeps workflow diagram ${name} in English, accessible and renderable`, async () => {
+    const svg = readFileSync(
+      join(import.meta.dirname, '../docs/assets/workflow', `${name}.svg`),
+      'utf8',
+    );
+    expect(svg).not.toMatch(/[А-Яа-яЁё]/);
+    expect(svg).toContain('role="img"');
+    expect(svg).toContain(`aria-labelledby="${name}-title ${name}-desc"`);
+    const png = await rasterize(svg, 1280);
+    expect(png.length).toBeGreaterThan(10000);
+  });
+}

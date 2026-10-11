@@ -6,7 +6,7 @@ import type { FontSpec, Theme } from '../spec/theme.ts';
 import { buildChart } from './charts.ts';
 import type { Format } from './format.ts';
 import type { Box, Paragraph, SceneNode, TableCell, TableNode, TextStyle } from './scene.ts';
-import { fitText, layoutText, makeTextNode, para, plainText } from './text.ts';
+import { balanceLines, fitText, layoutText, makeTextNode, para, plainText } from './text.ts';
 
 export interface ContextInit {
   theme: Theme;
@@ -147,8 +147,10 @@ export function createContext(
           }),
         );
       }
-      nodes.push(r.node);
-      return r.node;
+      // Headlines never end on a widow: balance the break, same number of lines.
+      const node = r.fits && opts.role === 'title' ? balanceLines(r.node) : r.node;
+      nodes.push(node);
+      return node;
     },
 
     rect(box, opts = {}) {

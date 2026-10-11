@@ -2,6 +2,29 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.6.0] — 2026-10-11
+
+### Added
+- **PowerPoint text rules, measured:** advances snap to 1/576 in, glyphs draw at whole points, baselines sit on whole points (automatic pitch 1.2 em, ascent-share placement), anchored blocks centre the ink height. Rules are data in `src/engine/office-rules.gen.ts`, read by measurement, HTML/SVG and PPTX alike ([rules](docs/explanation/office-rendering-rules.md)).
+- **Calibration mode:** `npm run calibrate` renders ~2 200 probe lines in PowerPoint, fits candidate models, rewrites the rules (`--write`) with evidence in `calibration/RULES.md`, and gates a 10-deck corpus at ≥ 95 % per page (`calibration/REPORT.md`). Runs on demand.
+- **Final visual QA by a reviewer model:** `slidecraft visual-qa` writes per-slide PowerPoint, HTML and difference images with measured facts; the new `visual-reviewer` agent and `visual-qa` skill judge parity, template conformance, layout, colour, typography, charts and meaning; `--record` writes the user report `REPORT.md` (verdict, needs your attention, fixed, changes).
+- **Review log:** every fit-fix rewrite (field, before, after), review pack and review round (with a diff of the sources) is appended to `review-log.jsonl` / `REVIEW-LOG.md`.
+- **Orchestration templates** for every stage in YAML, JSON and Markdown, and a complete example run in every format (`examples/orchestration/`).
+- Office font lookup for any family (Office's bundled fonts first); HTML prefers installed metric-compatible originals through `local()`.
+
+### Changed
+- Generated line spacing is written to PPTX as the equivalent **multiple**, which PowerPoint places deterministically; authored "Exactly" spacing in imported decks stays exact.
+- Titles are balanced (no one-word last line) with the same line count and PPTX box; lines break after a hyphen between letters, as PowerPoint does.
+- Paragraph marks carry the last run's font; axis-aligned lines are crisp freeforms; slide numbers use the shared layout.
+- PowerPoint conversion jobs run inside its sandbox container — no "Grant Access" prompts; `SLIDECRAFT_OFFICE_RECOVER=1` restarts a stuck PowerPoint once for unattended runs.
+
+### Fixed
+- Runs of spaces were collapsed; arrowheads on lines pointing up or left were reversed in PPTX; the visual-QA build no longer overwrites the user's `dist/` manifest.
+
+### Verification
+- Digital Ruble: rebuilt editable PPTX ≥ 95 % on 22/22 pages against the original (98.5–99.8 %); HTML 88.9–97.0 % (was 69–86 %).
+- Generated corpus: mean 89.2 % per page HTML ↔ PowerPoint under the strict worst-region metric (first run 78.6 %); remaining differences are sub-pixel glyph edges and native chart labels, judged by the reviewer stage. Not a blanket 95 % guarantee.
+
 ## [0.5.3] — 2026-10-11
 
 ### Added

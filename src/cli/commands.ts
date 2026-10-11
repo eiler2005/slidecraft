@@ -1,5 +1,5 @@
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
-import { join, relative, resolve } from 'node:path';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname, join, relative, resolve } from 'node:path';
 import type { Command } from 'commander';
 import YAML from 'yaml';
 import { z } from 'zod';
@@ -12,6 +12,7 @@ import { exhibitRoutes } from '../library/exhibits.ts';
 import { loadStorylines, loadThemes } from '../library/load.ts';
 import { rebuildPptx } from '../library/pptx-rebuild.ts';
 import { SCHEMAS_DIR, VERSION } from '../paths.ts';
+import { recordReview, visualQaPack } from '../qa/visual-qa.ts';
 import { Brief } from '../spec/brief.ts';
 import { deckJsonSchema } from '../spec/deck.ts';
 import { Storyline } from '../spec/storyline.ts';
@@ -130,6 +131,34 @@ export function registerCommands(program: Command): void {
           : EXIT.ok;
       },
     );
+  program
+    .command('visual-qa')
+    .description(
+      'Final LLM review stage: render through PowerPoint and Chrome, write a review pack (images, differences, measured facts); --record stores the reviewer findings and a user report',
+    )
+    .argument('<deck>', 'deck.yaml')
+    .option('-o, --out <dir>', 'build output directory (default: <deck dir>/dist)')
+    .option('--width <px>', 'raster width', '1600')
+    .option('--record <findings.json>', 'append a review round and rewrite visual-qa/REPORT.md')
+    .option('--json', 'machine-readable output')
+    .action(async (deck: string, o: { out?: string; width: string; record?: string }) => {
+      const out = resolve(o.out ?? join(dirname(resolve(deck)), 'dist'));
+      if (o.record) {
+        const round = JSON.parse(readFileSync(o.record, 'utf8'));
+        printJson({ ok: true, ...recordReview(deck, join(out, 'visual-qa'), round) });
+        return;
+      }
+      const pack = await visualQaPack(deck, { outDir: out, width: Number(o.width) });
+      printJson({
+        ok: true,
+        pack: join(pack.dir, 'index.md'),
+        facts: join(pack.dir, 'qa.json'),
+        renderer: pack.renderer,
+        slides: pack.slides.length,
+        pagesBelowTarget: pack.deckFacts.pagesBelowTarget,
+        next: 'Review every image with library/references/visual-qa.md, fix, rebuild, rerun; then record findings with --record.',
+      });
+    });
   program.version(VERSION, '-v, --version');
   program
     .command('components')

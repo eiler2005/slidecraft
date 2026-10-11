@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1280 820" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="deck-workflow-title deck-workflow-desc" id="deck-workflow-root" font-family="Arial, Helvetica, sans-serif">
+<title id="deck-workflow-title">How a SlideCraft deck is created, exported and verified</title>
+<desc id="deck-workflow-desc">Eight authoring stages with four human checkpoints and model tiers feed one composition engine. Content, theme and layouts compose into a measured Scene that follows calibrated PowerPoint rules; independent engines write editable PPTX, HTML and PDF; four verification levels and a final reviewer-model stage produce a user report and a review log. Calibration measures PowerPoint on demand and regenerates the shared rules.</desc>
+<defs>
+  <marker id="dw-arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 z" fill="#596E7C"/></marker>
+  <marker id="dw-arrow-accent" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 z" fill="#0960D5"/></marker>
+  <marker id="dw-arrow-cal" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0,0 L9,3.5 L0,7 z" fill="#C2410C"/></marker>
+  <linearGradient id="dw-scene" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0960D5"/><stop offset="1" stop-color="#0B4AA6"/></linearGradient>
+  <linearGradient id="dw-llm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6D28D9"/><stop offset="1" stop-color="#4C1D95"/></linearGradient>
+</defs>
+<rect width="1280" height="820" fill="#F5F7FA"/>
+<text x="48" y="56" font-size="13" letter-spacing="2.4" fill="#596E7C">SLIDECRAFT · END-TO-END WORKFLOW</text>
+<text x="48" y="92" font-size="29" font-weight="700" fill="#0A2033">From a goal to an editable deck you can trust</text>
+<text x="48" y="118" font-size="15" fill="#596E7C">Agents write content, the engine owns geometry, PowerPoint is the judge, a reviewer model closes the last mile.</text>
+
+<g font-size="12" font-weight="700" letter-spacing="1.6" fill="#596E7C">
+  <text x="48" y="160">1 · AUTHOR</text>
+  <text x="48" y="352">2 · COMPOSE &amp; EXPORT</text>
+  <text x="48" y="580">3 · VERIFY</text>
+</g>
+
+<!-- Lane 1 -->
+<g font-size="13">
+  <g><rect x="48" y="172" width="134" height="128" rx="13" fill="#FFFFFF" stroke="#D5DEE7"/>
+    <circle cx="70" cy="195" r="11" fill="#0960D5"/><text x="70" y="199.5" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="700">1</text>
+    <text x="88" y="200" font-weight="700" fill="#0A2033" font-size="14">Brief</text>
+    <text x="60" y="226" fill="#596E7C" font-size="12">goal · ask · audience</text>
+    <text x="60" y="243" fill="#596E7C" font-size="12">usage → outputs</text>
+    <text x="60" y="264" fill="#8193A3" font-size="11">main session</text>
+    <rect x="60" y="273" width="50" height="17" rx="8.5" fill="#E3F4E8"/><text x="79" y="285.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1F7A3A">CP1</text><path d="M94 281 l2.6 2.8 l5 -6" fill="none" stroke="#1F7A3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g><rect x="194" y="172" width="134" height="128" rx="13" fill="#FFFFFF" stroke="#D5DEE7"/>
+    <circle cx="216" cy="195" r="11" fill="#0960D5"/><text x="216" y="199.5" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="700">2</text>
+    <text x="234" y="200" font-weight="700" fill="#0A2033" font-size="14">Pick</text>
+    <text x="206" y="226" fill="#596E7C" font-size="12">storyline × theme</text>
+    <text x="206" y="243" fill="#596E7C" font-size="12">A / B / C sheets</text>
+    <text x="206" y="264" fill="#8193A3" font-size="11">main session</text>
+    <rect x="206" y="273" width="50" height="17" rx="8.5" fill="#E3F4E8"/><text x="225" y="285.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1F7A3A">CP2</text><path d="M240 281 l2.6 2.8 l5 -6" fill="none" stroke="#1F7A3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g><rect x="340" y="172" width="134" height="128" rx="13" fill="#FFFFFF" stroke="#D5DEE7"/>
+    <circle cx="362" cy="195" r="11" fill="#0960D5"/><text x="362" y="199.5" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="700">3</text>
+    <text x="380" y="200" font-weight="700" fill="#0A2033" font-size="14">Storyline</text>
+    <text x="352" y="226" fill="#596E7C" font-size="12">governing thought</text>
+    <text x="352" y="243" fill="#596E7C" font-size="12">SCR · MECE</text>
+    <text x="352" y="264" fill="#6D28D9" font-size="11" font-weight="700">Opus 5.5</text></g>
+  <g><rect x="486" y="172" width="134" height="128" rx="13" fill="#FFFFFF" stroke="#D5DEE7"/>
+    <circle cx="508" cy="195" r="11" fill="#0960D5"/><text x="508" y="199.5" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="700">4</text>
+    <text x="526" y="200" font-weight="700" fill="#0A2033" font-size="14">Ghost deck</text>
+    <text x="498" y="226" fill="#596E7C" font-size="12">action-title chain</text>
+    <text x="498" y="243" fill="#596E7C" font-size="12">exhibit per slide</text>
+    <text x="498" y="264" fill="#6D28D9" font-size="11" font-weight="700">Opus 5.5</text>
+    <rect x="498" y="273" width="50" height="17" rx="8.5" fill="#E3F4E8"/><text x="517" y="285.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1F7A3A">CP3</text><path d="M532 281 l2.6 2.8 l5 -6" fill="none" stroke="#1F7A3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g><rect x="632" y="172" width="134" height="128" rx="13" fill="#FFFFFF" stroke="#0960D5" stroke-width="1.5"/>
+    <circle cx="654" cy="195" r="11" fill="#0960D5"/><text x="654" y="199.5" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="700">5</text>
+    <text x="672" y="200" font-weight="700" fill="#0A2033" font-size="14">Build</text>
+    <text x="644" y="226" fill="#596E7C" font-size="12">sections/*.yaml</text>
+    <text x="644" y="243" fill="#596E7C" font-size="12">layout contracts</text>
+    <text x="644" y="264" fill="#0E7490" font-size="11" font-weight="700">Sonnet 5.5</text></g>
+  <g><rect x="778" y="172" width="134" height="128" rx="13" fill="#FFFFFF" stroke="#D5DEE7"/>
+    <circle cx="800" cy="195" r="11" fill="#0960D5"/><text x="800" y="199.5" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="700">6</text>
+    <text x="818" y="200" font-weight="700" fill="#0A2033" font-size="14">Review</text>
+    <text x="790" y="226" fill="#596E7C" font-size="12">check · fix loop</text>
+    <text x="790" y="243" fill="#596E7C" font-size="12">partner review</text>
+    <text x="790" y="264" fill="#0E7490" font-size="11" font-weight="700">Haiku → Opus 5.5</text></g>
+  <g><rect x="924" y="172" width="148" height="128" rx="13" fill="url(#dw-llm)"/>
+    <circle cx="946" cy="195" r="11" fill="#FFFFFF"/><text x="946" y="199.5" text-anchor="middle" fill="#4C1D95" font-size="10.5" font-weight="700">6b</text>
+    <text x="964" y="200" font-weight="700" fill="#FFFFFF" font-size="14">Visual QA</text>
+    <text x="936" y="226" fill="#E9DDFF" font-size="12">look at every render</text>
+    <text x="936" y="243" fill="#E9DDFF" font-size="12">fix · report · log</text>
+    <text x="936" y="264" fill="#FFFFFF" font-size="11" font-weight="700">reviewer · Opus 5.5</text>
+    <rect x="936" y="273" width="50" height="17" rx="8.5" fill="#E3F4E8"/><text x="955" y="285.5" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1F7A3A">CP4</text><path d="M970 281 l2.6 2.8 l5 -6" fill="none" stroke="#1F7A3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g><rect x="1084" y="172" width="148" height="128" rx="13" fill="#0A2033"/>
+    <circle cx="1106" cy="195" r="11" fill="#FFFFFF"/><text x="1106" y="199.5" text-anchor="middle" fill="#0A2033" font-size="11.5" font-weight="700">7</text>
+    <text x="1124" y="200" font-weight="700" fill="#FFFFFF" font-size="14">Deliver</text>
+    <text x="1096" y="226" fill="#C9D6E3" font-size="12">PPTX · HTML · PDF</text>
+    <text x="1096" y="243" fill="#C9D6E3" font-size="12">REPORT.md · manifest</text>
+    <text x="1096" y="264" fill="#8FB4E8" font-size="11">never sent automatically</text></g>
+  <g stroke="#596E7C" stroke-width="1.6" marker-end="url(#dw-arrow)">
+    <line x1="183" y1="236" x2="191" y2="236"/><line x1="329" y1="236" x2="337" y2="236"/><line x1="475" y1="236" x2="483" y2="236"/>
+    <line x1="621" y1="236" x2="629" y2="236"/><line x1="767" y1="236" x2="775" y2="236"/><line x1="913" y1="236" x2="921" y2="236"/><line x1="1073" y1="236" x2="1081" y2="236"/>
+  </g>
+</g>
+
+<!-- Lane 2 -->
+<path d="M699 302 V 356" stroke="#0960D5" stroke-width="1.8" fill="none" marker-end="url(#dw-arrow-accent)"/>
+<g font-size="13.5">
+  <rect x="48" y="366" width="250" height="150" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+  <text x="68" y="396" font-weight="700" fill="#0A2033">Independent inputs</text>
+  <g fill="#0A2033" font-size="13">
+    <rect x="68" y="410" width="210" height="26" rx="7" fill="#EEF3F8"/><text x="80" y="428">content · facts · sources</text>
+    <rect x="68" y="442" width="210" height="26" rx="7" fill="#EEF3F8"/><text x="80" y="460">theme: type, palette, frame</text>
+    <rect x="68" y="474" width="210" height="26" rx="7" fill="#EEF3F8"/><text x="80" y="492">layouts: zod contracts</text>
+  </g>
+  <rect x="352" y="366" width="300" height="150" rx="16" fill="url(#dw-scene)"/>
+  <text x="374" y="398" font-weight="700" fill="#FFFFFF" font-size="16">Scene IR</text>
+  <text x="374" y="422" fill="#D6E6FB" font-size="13">measured text · geometry · roles</text>
+  <text x="374" y="442" fill="#D6E6FB" font-size="13">charts · tables · notes · pointers</text>
+  <rect x="374" y="456" width="256" height="44" rx="9" fill="#FFFFFF" fill-opacity="0.14" stroke="#FFFFFF" stroke-opacity="0.45"/>
+  <text x="388" y="474" fill="#FFFFFF" font-size="12.5" font-weight="700">office-rules.gen.ts</text>
+  <text x="388" y="491" fill="#D6E6FB" font-size="12">1/576-in advances · whole-point lines</text>
+  <rect x="706" y="366" width="526" height="150" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+  <text x="726" y="396" font-weight="700" fill="#0A2033">Engines read the same Scene</text>
+  <g font-size="13">
+    <rect x="726" y="410" width="156" height="90" rx="10" fill="#EEF3F8"/>
+    <text x="740" y="434" font-weight="700" fill="#0A2033">PPTX</text>
+    <text x="740" y="454" fill="#596E7C">native, editable</text>
+    <text x="740" y="472" fill="#596E7C">spacing as multiples</text>
+    <text x="740" y="490" fill="#596E7C">crisp axis lines</text>
+    <rect x="896" y="410" width="156" height="90" rx="10" fill="#EEF3F8"/>
+    <text x="910" y="434" font-weight="700" fill="#0A2033">HTML / SVG</text>
+    <text x="910" y="454" fill="#596E7C">glyph-exact x</text>
+    <text x="910" y="472" fill="#596E7C">local() originals</text>
+    <text x="910" y="490" fill="#596E7C">deep links, notes</text>
+    <rect x="1066" y="410" width="146" height="90" rx="10" fill="#EEF3F8"/>
+    <text x="1080" y="434" font-weight="700" fill="#0A2033">PDF · PNG</text>
+    <text x="1080" y="454" fill="#596E7C">native vector</text>
+    <text x="1080" y="472" fill="#596E7C">Chrome print</text>
+    <text x="1080" y="490" fill="#596E7C">Office render</text>
+  </g>
+  <g stroke="#596E7C" stroke-width="1.6" marker-end="url(#dw-arrow)">
+    <line x1="299" y1="441" x2="349" y2="441"/><line x1="653" y1="441" x2="703" y2="441"/>
+  </g>
+</g>
+
+<!-- Calibration -->
+<g>
+  <rect x="352" y="530" width="300" height="44" rx="12" fill="#FFF4EC" stroke="#C2410C" stroke-dasharray="5 4"/>
+  <text x="368" y="549" font-size="12.5" font-weight="700" fill="#C2410C">CALIBRATION · on demand</text>
+  <text x="368" y="566" font-size="12" fill="#7C2D12">probes + 10-deck corpus → office-rules.gen.ts</text>
+  <path d="M502 530 V 520" stroke="#C2410C" stroke-width="1.8" fill="none" marker-end="url(#dw-arrow-cal)"/>
+</g>
+
+<!-- Lane 3 -->
+<path d="M968 518 V 586" stroke="#0960D5" stroke-width="1.8" fill="none" marker-end="url(#dw-arrow-accent)"/>
+<g font-size="12.5">
+  <g><rect x="48" y="594" width="214" height="128" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+    <text x="66" y="620" font-weight="700" fill="#0A2033" font-size="14">L1 · Scene checks</text>
+    <text x="66" y="644" fill="#596E7C">fit, overlap, contrast,</text>
+    <text x="66" y="661" fill="#596E7C">sources, frame roles</text>
+    <text x="66" y="704" fill="#0960D5" font-weight="700">check · fix</text></g>
+  <g><rect x="274" y="594" width="214" height="128" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+    <text x="292" y="620" font-weight="700" fill="#0A2033" font-size="14">L2 · PPTX XML</text>
+    <text x="292" y="644" fill="#596E7C">text, notes, names,</text>
+    <text x="292" y="661" fill="#596E7C">geometry and size drift</text>
+    <text x="292" y="704" fill="#0960D5" font-weight="700">pptx-verify</text></g>
+  <g><rect x="500" y="594" width="214" height="128" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+    <text x="518" y="620" font-weight="700" fill="#0A2033" font-size="14">L3 · Real Office</text>
+    <text x="518" y="644" fill="#596E7C">PowerPoint → PDF/PNG</text>
+    <text x="518" y="661" fill="#596E7C">sandboxed, no prompts</text>
+    <text x="518" y="704" fill="#0960D5" font-weight="700">pptx-convert</text></g>
+  <g><rect x="726" y="594" width="214" height="128" rx="14" fill="#FFFFFF" stroke="#D5DEE7"/>
+    <text x="744" y="620" font-weight="700" fill="#0A2033" font-size="14">L4 · Fidelity</text>
+    <text x="744" y="644" fill="#596E7C">worst region ≥ 95 %</text>
+    <text x="744" y="661" fill="#596E7C">PowerPoint ↔ HTML ↔ original</text>
+    <text x="744" y="704" fill="#0960D5" font-weight="700">visual-qa pack</text></g>
+  <g><rect x="952" y="594" width="280" height="128" rx="14" fill="url(#dw-llm)"/>
+    <text x="970" y="620" font-weight="700" fill="#FFFFFF" font-size="14">Final · Reviewer model</text>
+    <text x="970" y="644" fill="#E9DDFF">template · craft · colour · meaning</text>
+    <text x="970" y="661" fill="#E9DDFF">fix, rebuild, ≤ 3 rounds</text>
+    <rect x="970" y="676" width="104" height="22" rx="11" fill="#FFFFFF"/><text x="1022" y="691" text-anchor="middle" font-size="11.5" font-weight="700" fill="#4C1D95">REPORT.md</text>
+    <rect x="1082" y="676" width="132" height="22" rx="11" fill="#FFFFFF" fill-opacity="0.18" stroke="#FFFFFF"/><text x="1148" y="691" text-anchor="middle" font-size="11.5" font-weight="700" fill="#FFFFFF">REVIEW-LOG.md</text></g>
+  <g stroke="#596E7C" stroke-width="1.6" marker-end="url(#dw-arrow)">
+    <line x1="263" y1="658" x2="271" y2="658"/><line x1="489" y1="658" x2="497" y2="658"/><line x1="715" y1="658" x2="723" y2="658"/><line x1="941" y1="658" x2="949" y2="658"/>
+  </g>
+</g>
+<text x="48" y="780" font-size="12.5" fill="#596E7C">Checkpoints CP1–CP4 are human decisions; the report lists what still needs one. Model tiers resolve to the newest model of each tier.</text>
+<text x="48" y="800" font-size="12.5" fill="#596E7C">Generated reports stay in dist/ and tests/.output; calibration evidence lives in calibration/.</text>
+</svg>

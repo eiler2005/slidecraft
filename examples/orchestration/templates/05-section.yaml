@@ -1,0 +1,21 @@
+# Stage 5 · Build (slide-writer, Sonnet 5.5). File: slidecraft/<id>/sections/<section>.yaml
+# A YAML list of complete slides; deck.yaml includes it with `- include: sections/<section>.yaml`.
+# Fill each layout's contract exactly (`sc layouts <layout> --json`); keep the approved titles.
+- id: traction
+  layout: chart-takeaway
+  variant: column
+  tracker: Traction
+  title: Monthly bookings grew eight-fold in nine months with no paid marketing
+  chart:
+    label: Loads booked per month, thousands
+    categories: [Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep]
+    series: [{ name: Loads, values: [0.6, 0.8, 1.1, 1.5, 2.0, 2.6, 3.4, 4.1, 4.9] }]
+    decimals: 1
+    highlight: [8]
+  takeaway:
+    headline: Growth is organic and repeat-driven
+    points:
+      - 68% of bookings come from returning shippers
+      - Gross margin per load reached 21% in September
+  sources: [fab-metrics]
+  notes: Eight-fold in nine months, without paid acquisition — two in three loads are repeat bookings.

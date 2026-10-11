@@ -24,9 +24,13 @@ allowed-tools: Read, Write, Edit, Glob, Agent, Bash(node ${CLAUDE_PLUGIN_ROOT}/d
 7. Fix blockers and majors (edit the section files or deck.yaml directly; use slide-writer for rewrites of whole slides). Rebuild all formats.
 8. **Look at every preview PNG yourself.** Check: nothing clipped or overlapping, one message per slide, the highlight is the insight, source lines present.
 
+## Visual QA (final LLM stage)
+
+9. Run the `visual-qa` skill: PowerPoint + HTML renders and their difference for every slide, the **visual-reviewer** verdict, fixes and rebuild (max 3 rounds), then `sc visual-qa <deck> --record …` writes `dist/visual-qa/REPORT.md`.
+
 ## ✅ CP4 — show the user
 
 - One-line verdict (review-ready or not).
 - What changed in this review (3–6 bullets).
-- Remaining minors, if any.
+- Remaining minors, if any, and the **Needs your attention** list from `dist/visual-qa/REPORT.md`.
 - Files: PPTX, PDF, HTML, previews, manifest. `visual_review` stays `false` until they confirm they looked at every slide.

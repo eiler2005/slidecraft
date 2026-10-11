@@ -8,8 +8,17 @@ import { join } from 'node:path';
 import JSZip from 'jszip';
 import pptxgenModule from 'pptxgenjs';
 import { chartAlt } from '../engine/alt.ts';
-import type { ChartNode, Master, Scene, SceneNode, Stroke, TextNode } from '../engine/scene.ts';
+import type {
+  ChartNode,
+  Master,
+  Scene,
+  SceneNode,
+  Stroke,
+  TextNode,
+  TextStyle,
+} from '../engine/scene.ts';
 import { in2pt } from '../engine/scene.ts';
+import { spacingMultiple } from '../engine/text.ts';
 import { VERSION } from '../paths.ts';
 import { markDecorative, markTitle, shapeName, titleFirst } from './pptx-a11y.ts';
 import { applyTemplate } from './pptx-template.ts';
@@ -24,6 +33,50 @@ type Pptx = Any;
 type Slide = Any;
 
 const hex = (c: string) => c.replace('#', '').toUpperCase();
+
+/** Automatic stays automatic, multiples stay multiples; see spacingMultiple(). */
+function lineSpacingOptions(style: TextStyle) {
+  if (style.lineSpacingAuto) return {};
+  const multiple = spacingMultiple(style);
+  return multiple !== undefined
+    ? { lineSpacingMultiple: multiple }
+    : { lineSpacing: style.lineSpacing };
+}
+
+/** PowerPoint writes a preset line with a 1-EMU slope ("cx 1 l"), so renderers anti-alias
+ * it across 2-3 device pixels while native table borders stay crisp. An axis-aligned line
+ * without arrowheads becomes a one-segment freeform with the same box: still an editable
+ * vector line, drawn exactly horizontal or vertical. */
+export function crispAxisLines(xml: string): string {
+  return xml.replace(
+    /<p:sp>(?:(?!<\/p:sp>)[\s\S])*?<a:prstGeom prst="line">[\s\S]*?<\/p:sp>/g,
+    (sp) => {
+      if (/<a:(?:headEnd|tailEnd)\b/.test(sp)) return sp;
+      const ext = /<a:ext cx="(\d+)" cy="(\d+)"\/>/.exec(sp);
+      if (!ext) return sp;
+      const [w, h] = [ext[1]!, ext[2]!];
+      if (w !== '0' && h !== '0') return sp;
+      const geom = `<a:custGeom><a:avLst/><a:gdLst/><a:ahLst/><a:cxnLst/><a:rect l="0" t="0" r="r" b="b"/><a:pathLst><a:path w="${w}" h="${h}" fill="none"><a:moveTo><a:pt x="0" y="0"/></a:moveTo><a:lnTo><a:pt x="${w}" y="${h}"/></a:lnTo></a:path></a:pathLst></a:custGeom>`;
+      return sp.replace(/<a:prstGeom prst="line">[\s\S]*?<\/a:prstGeom>/, geom);
+    },
+  );
+}
+
+/** PowerPoint sizes a line with its paragraph mark too. pptxgenjs writes the mark without
+ * the run's typeface/weight, so the theme font could push a baseline down by ~1 pt. Give
+ * every mark the properties of the paragraph's last run (minus its hyperlink). */
+export function endMarkLikeLastRun(xml: string): string {
+  return xml.replace(/<a:p>[\s\S]*?<\/a:p>/g, (p) => {
+    const runs = [...p.matchAll(/<a:rPr\b[^>]*?(?:\/>|>[\s\S]*?<\/a:rPr>)/g)];
+    const last = runs.at(-1)?.[0];
+    if (!last || !/<a:endParaRPr\b/.test(p)) return p;
+    const mark = last
+      .replace(/<a:hlinkClick\b[^>]*?(?:\/>|>[\s\S]*?<\/a:hlinkClick>)/g, '')
+      .replace(/^<a:rPr\b/, '<a:endParaRPr')
+      .replace(/<\/a:rPr>$/, '</a:endParaRPr>');
+    return p.replace(/<a:endParaRPr\b[^>]*?(?:\/>|>[\s\S]*?<\/a:endParaRPr>)/, mark);
+  });
+}
 
 /**
  * Resolve CSS-only generic aliases. A named family such as Apple's `System Font`
@@ -84,11 +137,7 @@ function textOpts(t: TextNode, slideId?: string): Any {
     fontFace: pptFontFace(t.style.family),
     fontSize: t.style.size,
     color: hex(t.style.color),
-    ...(t.style.lineSpacingAuto
-      ? {}
-      : t.style.lineSpacingMultiple !== undefined
-        ? { lineSpacingMultiple: t.style.lineSpacingMultiple }
-        : { lineSpacing: t.style.lineSpacing }),
+    ...lineSpacingOptions(t.style),
     valign: t.textFrame?.valign ?? t.style.valign,
     align: t.style.align,
     fit: 'none',
@@ -299,7 +348,10 @@ function addNode(pptx: Pptx, slide: Slide, n: SceneNode, slideId?: string): Prom
       };
       const name = shapeName(n, slideId);
       if (name) o.objectName = name;
-      if (n.x2 < n.x1 !== n.y2 < n.y1 && n.x1 !== n.x2 && n.y1 !== n.y2) o.flipV = true;
+      // A preset line runs from the box's top-left to bottom-right; flips set its direction,
+      // which decides where an arrowhead (tail end) goes.
+      if (n.x2 < n.x1) o.flipH = true;
+      if (n.y2 < n.y1) o.flipV = true;
       slide.addShape(pptx.ShapeType.line, o);
       return;
     }
@@ -321,7 +373,7 @@ function addNode(pptx: Pptx, slide: Slide, n: SceneNode, slideId?: string): Prom
               bold: t.style.bold ?? false,
               align: t.style.align,
               valign: 'top',
-              lineSpacing: t.style.lineSpacing,
+              ...lineSpacingOptions(t.style),
               margin: [in2pt(n.pad.t), in2pt(n.pad.r), in2pt(n.pad.b), in2pt(n.pad.l)],
               fill: cell.fill ? { color: hex(cell.fill) } : { type: 'none' },
               border: [b(cell.borderTop), none, b(cell.borderBottom), none],
@@ -489,6 +541,7 @@ export async function normalizeZip(
           );
         });
       }
+      xml = crispAxisLines(endMarkLikeLastRun(xml));
       // The action title is the slide's title placeholder, read first; pictures without
       // alt text are decorative (pptxgenjs would otherwise write the file path as descr).
       xml = markDecorative(titleFirst(markTitle(xml)));

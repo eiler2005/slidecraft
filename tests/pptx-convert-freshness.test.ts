@@ -2,7 +2,7 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { basename, join } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { convertToPdf } from '../src/backends/pptx-convert.ts';
+import { conversionRoot, convertToPdf } from '../src/backends/pptx-convert.ts';
 
 const state = vi.hoisted(() => ({ write: true, jobs: [] as string[] }));
 vi.mock('node:child_process', () => ({
@@ -40,6 +40,22 @@ describe('Office conversion freshness', () => {
       expect(readFileSync(output, 'utf8')).toBe('%PDF-1.7\nfresh');
     } finally {
       rmSync(dir, { recursive: true, force: true });
+    }
+  });
+
+  it('runs PowerPoint jobs inside its sandbox container so macOS never asks for folder access', () => {
+    const home = mkdtempSync(join(tmpdir(), 'sc-home-test-'));
+    try {
+      vi.stubEnv('HOME', home);
+      vi.stubEnv('SLIDECRAFT_OFFICE_TMP', '');
+      expect(conversionRoot('powerpoint')).toBe(
+        join(home, 'Library/Containers/com.microsoft.Powerpoint/Data/tmp/slidecraft'),
+      );
+      expect(conversionRoot('libreoffice')).toBe(tmpdir());
+      vi.stubEnv('SLIDECRAFT_OFFICE_TMP', join(home, 'jobs'));
+      expect(conversionRoot('powerpoint')).toBe(join(home, 'jobs'));
+    } finally {
+      rmSync(home, { recursive: true, force: true });
     }
   });
 });

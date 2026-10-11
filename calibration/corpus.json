@@ -1,0 +1,54 @@
+{
+  "$comment": "Calibration corpus: 10 decks covering every theme, Calibri/Arial/Georgia/Times, Latin and Cyrillic, native tables, charts and images. rebuild = original PPTX → editable PPTX + HTML; generated = deck YAML → editable PPTX + HTML. See docs/how-to/calibrate-rendering.md.",
+  "decks": [
+    {
+      "id": "digital-ruble",
+      "kind": "rebuild",
+      "source": "tests/fixtures/digital-ruble/Digital_Ruble_Explainer_RU_v3.pptx"
+    },
+    {
+      "id": "strategy-recommendation",
+      "kind": "generated",
+      "source": "examples/strategy-recommendation/deck.yaml"
+    },
+    {
+      "id": "executive-update",
+      "kind": "generated",
+      "source": "examples/executive-update/deck.yaml"
+    },
+    {
+      "id": "narrative-story",
+      "kind": "generated",
+      "source": "examples/narrative-story/deck.yaml"
+    },
+    { "id": "pitch-deck", "kind": "generated", "source": "examples/pitch-deck/deck.yaml" },
+    {
+      "id": "europe-first-trip",
+      "kind": "generated",
+      "source": "examples/europe-first-trip/deck.yaml"
+    },
+    {
+      "id": "slidecraft-overview",
+      "kind": "generated",
+      "source": "examples/slidecraft-overview/deck.yaml"
+    },
+    {
+      "id": "executive-update@corporate-blue",
+      "kind": "generated",
+      "source": "examples/executive-update/deck.yaml",
+      "theme": "corporate-blue"
+    },
+    {
+      "id": "strategy-recommendation@editorial-fintech",
+      "kind": "generated",
+      "source": "examples/strategy-recommendation/deck.yaml",
+      "theme": "editorial-fintech"
+    },
+    {
+      "id": "pitch-deck@editorial",
+      "kind": "generated",
+      "source": "examples/pitch-deck/deck.yaml",
+      "theme": "editorial"
+    }
+  ]
+}

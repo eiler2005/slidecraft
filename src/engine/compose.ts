@@ -11,7 +11,7 @@ import { createContext } from './context.ts';
 import { decorSvg } from './decor.ts';
 import { missingGlyphs } from './fonts.ts';
 import { FORMATS, type Format } from './format.ts';
-import type { Box, Master, Scene, SceneNode, SceneSlide, TextStyle } from './scene.ts';
+import type { Box, Master, Run, Scene, SceneNode, SceneSlide, TextStyle } from './scene.ts';
 import { layoutText, makeTextNode, para } from './text.ts';
 
 const COMMON_KEYS = new Set([
@@ -346,7 +346,25 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
       .filter(Boolean)
       .join(' ');
     if (srcText && def.frame === 'standard') {
-      ctx.text(srcText, format.source, {
+      // Same text as srcText, split into runs so registry titles with a URL become links.
+      const runs: Run[] = [];
+      const add = (text: string, link?: string) => {
+        if (text) runs.push(link ? { text, link } : { text });
+      };
+      if (illustrative)
+        add(srcTitles.length || slide.source ? 'Illustrative data. ' : 'Illustrative data.');
+      if (srcTitles.length) {
+        add('Source: ');
+        srcTitles.forEach((s, k) => {
+          add(s!.title, s!.url);
+          add(`${s!.date ? ` (${s!.date})` : ''}${k < srcTitles.length - 1 ? '; ' : ''}`);
+        });
+      }
+      if (slide.source)
+        add(
+          `${srcTitles.length ? ' ' : ''}${srcTitles.length ? slide.source : `Source: ${slide.source}`}`,
+        );
+      ctx.text([{ runs }], format.source, {
         role: 'source',
         size: 'source',
         color: c.muted,
@@ -395,6 +413,23 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
     themeId: theme.id,
     masters,
     slides: sceneSlides,
+    palette: {
+      background: c.background,
+      ink: c.titleInk ?? c.ink,
+      muted: c.muted,
+      accent: c.accent,
+      rule: c.rule,
+      surface: c.surface,
+    },
+    fonts: {
+      heading: { family: fonts.heading.family, measure: fonts.heading.measure },
+      body: { family: fonts.body.family, measure: fonts.body.measure },
+    },
+    meta: {
+      ...(deck.subtitle ? { subtitle: deck.subtitle } : {}),
+      ...(deck.date ? { date: deck.date } : {}),
+      ...(deck.organization ? { organization: deck.organization } : {}),
+    },
   };
   if (deck.author) scene.author = deck.author;
   return { scene, diagnostics };

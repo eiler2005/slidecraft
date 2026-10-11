@@ -28,29 +28,38 @@ export interface Format {
   pageNumber: Box;
 }
 
-const W = 13.333;
-const H = 7.5;
 const M = { l: 0.6, r: 0.6, t: 0.42, b: 0.38 };
-const inner = W - M.l - M.r;
 
-export const WIDE_16X9: Format = {
-  id: 'wide-16x9',
-  w: W,
-  h: H,
-  margin: M,
-  columns: 12,
-  gutter: 0.25,
-  tracker: { x: M.l, y: M.t, w: inner, h: 0.24 },
-  title: { x: M.l, y: M.t + 0.28, w: inner, h: 0.98 },
-  lead: { x: M.l, y: M.t + 1.3, w: inner, h: 0.42 },
-  body: { x: M.l, y: M.t + 1.86, w: inner, h: H - (M.t + 1.86) - 0.86 },
-  bodyNoLead: { x: M.l, y: M.t + 1.42, w: inner, h: H - (M.t + 1.42) - 0.86 },
-  source: { x: M.l, y: H - 0.98, w: inner - 1.2, h: 0.32 },
-  footer: { x: M.l, y: H - M.b - 0.14, w: inner - 1.2, h: 0.2 },
-  pageNumber: { x: W - M.r - 1.0, y: H - M.b - 0.14, w: 1.0, h: 0.2 },
+/** Same frame for every page size: fixed bands for tracker, title and footer; the body takes the rest. */
+function makeFormat(id: string, W: number, H: number): Format {
+  const inner = W - M.l - M.r;
+  return {
+    id,
+    w: W,
+    h: H,
+    margin: M,
+    columns: 12,
+    gutter: 0.25,
+    tracker: { x: M.l, y: M.t, w: inner, h: 0.24 },
+    title: { x: M.l, y: M.t + 0.28, w: inner, h: 0.98 },
+    lead: { x: M.l, y: M.t + 1.3, w: inner, h: 0.42 },
+    body: { x: M.l, y: M.t + 1.86, w: inner, h: H - (M.t + 1.86) - 0.86 },
+    bodyNoLead: { x: M.l, y: M.t + 1.42, w: inner, h: H - (M.t + 1.42) - 0.86 },
+    source: { x: M.l, y: H - 0.98, w: inner - 1.2, h: 0.32 },
+    footer: { x: M.l, y: H - M.b - 0.14, w: inner - 1.2, h: 0.2 },
+    pageNumber: { x: W - M.r - 1.0, y: H - M.b - 0.14, w: 1.0, h: 0.2 },
+  };
+}
+
+/** Default: PowerPoint widescreen, 13.333 × 7.5 in. */
+export const WIDE_16X9: Format = makeFormat('wide-16x9', 13.333, 7.5);
+/** A4 landscape, 297 × 210 mm — for decks that will be printed or read as documents. */
+export const A4_LANDSCAPE: Format = makeFormat('a4-landscape', 11.693, 8.268);
+
+export const FORMATS: Record<string, Format> = {
+  [WIDE_16X9.id]: WIDE_16X9,
+  [A4_LANDSCAPE.id]: A4_LANDSCAPE,
 };
-
-export const FORMATS: Record<string, Format> = { [WIDE_16X9.id]: WIDE_16X9 };
 
 /** Split a box into `n` equal columns with a gutter. */
 export function columns(box: Box, n: number, gutter: number): Box[] {

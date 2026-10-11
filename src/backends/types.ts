@@ -1,7 +1,7 @@
 import type { Scene } from '../engine/scene.ts';
 import type { Diagnostic } from '../qa/codes.ts';
 
-export type OutputKind = 'pptx' | 'pdf' | 'png' | 'html';
+export type OutputKind = 'pptx' | 'pdf' | 'png' | 'html' | 'onepager' | 'docx';
 
 export interface Detection {
   available: boolean;

@@ -45,6 +45,7 @@ export function textRuns(t: TextNode): Any[] {
         // so every run carries the same value; `bullet` only on the first run.
         align: t.style.align,
       };
+      if (r.link) o.hyperlink = { url: r.link, tooltip: r.link };
       if (ri === 0) {
         if (p.bullet) o.bullet = { indent: t.bulletIndent };
         if (pi > 0 && p.spaceBefore) o.paraSpaceBefore = p.spaceBefore;
@@ -402,6 +403,15 @@ export async function normalizeZip(buf: Buffer, epoch: Date): Promise<Buffer> {
     if (renames.size && /\.(xml|rels)$/.test(name))
       data = rename(Buffer.from(data).toString('utf8'));
     if (name.endsWith('.xlsx')) data = await normalizeZip(Buffer.from(data), epoch);
+    if (/^ppt\/slides\/slide\d+\.xml$/.test(name)) {
+      const xml = Buffer.from(data).toString('utf8');
+      // Hyperlinks keep the run's colour (Office 2019+) instead of the theme's blue.
+      if (xml.includes('<a:hlinkClick'))
+        data = xml.replace(
+          /<a:hlinkClick (r:id="rId\d+"[^>]*?)\/>/g,
+          '<a:hlinkClick $1><a:extLst><a:ext uri="{A12FA001-AC4F-418D-AE19-62706E023703}"><ahyp:hlinkClr xmlns:ahyp="http://schemas.microsoft.com/office/drawing/2018/hyperlinkcolor" val="tx"/></a:ext></a:extLst></a:hlinkClick>',
+        );
+    }
     if (name.endsWith('docProps/core.xml')) {
       data = Buffer.from(data)
         .toString('utf8')

@@ -72,7 +72,7 @@ export async function buildDeck(path: string, opts: BuildOptions = {}): Promise<
   const formats = opts.formats ?? deck.output?.formats ?? ['pptx', 'pdf', 'png'];
   const epoch = epochDate();
   const limitations = new Set<string>();
-  const order: OutputKind[] = ['pptx', 'png', 'html', 'pdf'];
+  const order: OutputKind[] = ['pptx', 'png', 'html', 'pdf', 'onepager', 'docx'];
   let pptxPath: string | undefined;
 
   for (const kind of order.filter((k) => formats.includes(k))) {

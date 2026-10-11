@@ -17,6 +17,13 @@ const schema = z
       .string()
       .optional()
       .describe('Image path relative to the deck file; leave empty to show a placeholder'),
+    imagePrompt: z
+      .string()
+      .max(400)
+      .optional()
+      .describe(
+        'What the picture should show; `slidecraft images` generates it when `image` is empty',
+      ),
     caption: z
       .string()
       .max(120)
@@ -86,7 +93,7 @@ export const textImage: LayoutDef<typeof schema> = {
     ctx.image({ ...imgCol, h: imgCol.h - capH }, c.image, c.alt, {
       fit: 'cover',
       field: 'image',
-      label: 'Image placeholder',
+      label: c.imagePrompt ? 'Image to generate — run slidecraft images' : 'Image placeholder',
     });
     if (c.caption) {
       ctx.text(

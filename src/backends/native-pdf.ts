@@ -16,11 +16,11 @@ const P = 72; // pt per inch
 type Doc = InstanceType<typeof PDFDocument>;
 const imageCache = new WeakMap<Doc, Map<string, unknown>>();
 
-function fontName(m: MeasureFont, f: Face) {
+export function fontName(m: MeasureFont, f: Face) {
   return `${m}-${f}`;
 }
 
-function registerFonts(doc: Doc) {
+export function registerFonts(doc: Doc) {
   for (const m of measureFontIds()) {
     for (const f of ['regular', 'bold', 'italic', 'boldItalic'] as Face[])
       doc.registerFont(fontName(m, f), fontPath(m, f));
@@ -54,6 +54,14 @@ function drawText(doc: Doc, t: TextNode) {
         baseline: 'alphabetic',
         features: [] as never,
       });
+      if (s.link)
+        doc.link(
+          (t.box.x + s.x) * P,
+          y - t.style.size * 0.85,
+          s.width * P,
+          t.style.size * 1.1,
+          s.link,
+        );
     }
   }
 }
@@ -241,6 +249,17 @@ function onBackground(svg: string, bg: string): string {
   return svg.replace(/(<svg[^>]*>)/, `$1<rect width="100%" height="100%" fill="${bg}"/>`);
 }
 
+/** Draw one slide untagged (thumbnails in the one-pager). */
+export async function drawSlide(doc: Doc, scene: Scene, slide: Scene['slides'][number]) {
+  const m = scene.masters[slide.master]!;
+  doc
+    .rect(0, 0, scene.format.w * P, scene.format.h * P)
+    .fillColor(slide.background ?? m.background)
+    .fill();
+  await drawMaster(doc, m, slide.index + 1);
+  for (const n of slide.nodes) await drawNode(doc, n);
+}
+
 async function drawMaster(doc: Doc, m: Master, slideNo: number) {
   for (const n of m.nodes) {
     if (n.kind === 'image' && n.svg && n.decorative)
@@ -258,6 +277,81 @@ async function drawMaster(doc: Doc, m: Master, slideNo: number) {
   }
 }
 
+/** Structure tag for a node in reading order; undefined = layout artifact (not read aloud). */
+function tagOf(n: SceneNode): string | undefined {
+  switch (n.kind) {
+    case 'text':
+      if (n.role === 'title') return 'H1';
+      if (n.role === 'decor' || n.role === 'quote-mark' || n.role === 'chart-label')
+        return undefined;
+      return 'P';
+    case 'image':
+      return n.decorative || (!n.path && !n.data) ? undefined : 'Figure';
+    case 'chart':
+      return 'Figure';
+    case 'table':
+      return 'Table';
+    default:
+      return undefined;
+  }
+}
+
+function altOf(n: SceneNode): string {
+  if (n.kind === 'image') return n.alt;
+  if (n.kind === 'chart')
+    return `Chart: ${n.series
+      .filter((s) => !s.invisible)
+      .map(
+        (s) => `${s.name} — ${n.categories.map((c, i) => `${c} ${s.values[i] ?? ''}`).join(', ')}`,
+      )
+      .join('; ')}`.slice(0, 1000);
+  return '';
+}
+
+type Struct = ReturnType<Doc['struct']>;
+
+async function tagged(
+  doc: Doc,
+  parent: Struct,
+  tag: string,
+  draw: () => Promise<void> | void,
+  alt?: string,
+) {
+  const el = doc.struct(tag, alt ? { alt } : {});
+  parent.add(el);
+  const c = doc.markStructureContent(tag);
+  await draw();
+  doc.endMarkedContent();
+  el.add(c);
+  el.end();
+}
+
+async function artifact(doc: Doc, draw: () => Promise<void> | void) {
+  doc.markContent('Artifact', { type: 'Layout' });
+  await draw();
+  doc.endMarkedContent();
+}
+
+/** Tables: Table › TR › TH/TD with cell backgrounds and rules as artifacts. */
+async function drawTableTagged(doc: Doc, sect: Struct, n: Extract<SceneNode, { kind: 'table' }>) {
+  const table = doc.struct('Table');
+  sect.add(table);
+  await artifact(doc, () =>
+    drawNode(doc, {
+      ...n,
+      cells: n.cells.map((r) => r.map((c) => ({ ...c, text: { ...c.text, lines: [] } }))),
+    }),
+  );
+  for (const [ri, row] of n.cells.entries()) {
+    const tr = doc.struct('TR');
+    table.add(tr);
+    for (const cell of row)
+      await tagged(doc, tr, ri === 0 ? 'TH' : 'TD', () => drawText(doc, cell.text));
+    tr.end();
+  }
+  table.end();
+}
+
 export async function renderPdf(scene: Scene, path: string, epoch: Date): Promise<void> {
   const doc = new PDFDocument({
     autoFirstPage: false,
@@ -273,6 +367,9 @@ export async function renderPdf(scene: Scene, path: string, epoch: Date): Promis
     },
     lang: scene.language,
     displayTitle: true,
+    // Tagged PDF: reading order, headings, figure alt text, tables; decoration as artifacts.
+    tagged: true,
+    pdfVersion: '1.7',
   });
   registerFonts(doc);
   const stream = createWriteStream(path);
@@ -280,12 +377,22 @@ export async function renderPdf(scene: Scene, path: string, epoch: Date): Promis
   for (const slide of scene.slides) {
     doc.addPage({ size: [scene.format.w * P, scene.format.h * P], margin: 0 });
     const m = scene.masters[slide.master]!;
-    doc
-      .rect(0, 0, scene.format.w * P, scene.format.h * P)
-      .fillColor(slide.background ?? m.background)
-      .fill();
-    await drawMaster(doc, m, slide.index + 1);
-    for (const n of slide.nodes) await drawNode(doc, n);
+    await artifact(doc, async () => {
+      doc
+        .rect(0, 0, scene.format.w * P, scene.format.h * P)
+        .fillColor(slide.background ?? m.background)
+        .fill();
+      await drawMaster(doc, m, slide.index + 1);
+    });
+    const sect = doc.struct('Sect', { title: slide.title });
+    doc.addStructure(sect);
+    for (const n of slide.nodes) {
+      const tag = tagOf(n);
+      if (!tag) await artifact(doc, () => drawNode(doc, n));
+      else if (n.kind === 'table') await drawTableTagged(doc, sect, n);
+      else await tagged(doc, sect, tag, () => drawNode(doc, n), altOf(n) || undefined);
+    }
+    sect.end();
   }
   doc.end();
   await new Promise<void>((res, rej) => {

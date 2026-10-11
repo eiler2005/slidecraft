@@ -52,7 +52,9 @@ export function textSvg(t: TextNode): string {
       out += `<text x="${px(t.box.x + line.bulletX)}" y="${y}" font-family="${fam}" font-size="${size}" fill="${line.segments[0]?.color ?? t.style.color}">•</text>`;
     }
     for (const s of line.segments) {
+      if (s.link) out += `<a href="${esc(s.link)}" target="_blank">`;
       out += `<text x="${px(t.box.x + s.x)}" y="${y}" font-family="${fam}" font-size="${size}"${s.bold ? ' font-weight="bold"' : ''}${s.italic ? ' font-style="italic"' : ''} fill="${s.color}" xml:space="preserve">${esc(s.text)}</text>`;
+      if (s.link) out += '</a>';
     }
   }
   return out;

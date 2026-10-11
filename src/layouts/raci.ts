@@ -157,6 +157,7 @@ export const raci: LayoutDef<typeof schema> = {
       ['I', 'Informed'],
     ];
     let lx = area.x;
+    const step = Math.min(2.85, area.w / items.length);
     for (const [k, label] of items) {
       const box = { x: lx, y: ly, w: 0.26, h: 0.26 };
       if (k === 'A') ctx.ellipse(box, { fill: colors.accent });
@@ -185,10 +186,10 @@ export const raci: LayoutDef<typeof schema> = {
       );
       ctx.text(
         label,
-        { x: lx + 0.34, y: ly, w: 2.4, h: 0.26 },
+        { x: lx + 0.34, y: ly, w: step - 0.45, h: 0.26 },
         { size: 'small', color: colors.muted, valign: 'middle', maxLines: 1, fixed: true },
       );
-      lx += 2.85;
+      lx += step;
     }
     if (c.note)
       ctx.text(

@@ -24,6 +24,8 @@ export interface Run {
   bold?: boolean;
   italic?: boolean;
   color?: Color;
+  /** Hyperlink target (source URLs). */
+  link?: string;
 }
 
 export interface Paragraph {
@@ -58,6 +60,7 @@ export interface LineSegment {
   bold: boolean;
   italic: boolean;
   color: Color;
+  link?: string;
 }
 
 export interface Line {
@@ -256,6 +259,17 @@ export interface Scene {
   themeId: string;
   masters: Record<string, Master>;
   slides: SceneSlide[];
+  /** Theme roles and fonts for document engines (one-pager, DOCX) that lay out their own pages. */
+  palette?: {
+    background: Color;
+    ink: Color;
+    muted: Color;
+    accent: Color;
+    rule: Color;
+    surface: Color;
+  };
+  fonts?: Record<'heading' | 'body', { family: string; measure: MeasureFont }>;
+  meta?: { subtitle?: string; date?: string; organization?: string };
 }
 
 export const PT_PER_IN = 72;

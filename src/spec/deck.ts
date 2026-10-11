@@ -90,7 +90,10 @@ export const Deck = z
     language: z.string().default('en').describe('BCP-47 language tag of the content'),
     storyline: z.string().optional().describe('Storyline id from the library'),
     theme: z.string().default('consulting-classic'),
-    format: z.string().default('wide-16x9'),
+    format: z
+      .enum(['wide-16x9', 'a4-landscape'])
+      .default('wide-16x9')
+      .describe('Page size: PowerPoint widescreen, or A4 landscape for printed / reading decks'),
     status: z.enum(['ghost', 'draft', 'review', 'final']).default('draft'),
     footer: z
       .string()
@@ -100,7 +103,9 @@ export const Deck = z
     sources: z.array(Source).default([]),
     output: z
       .object({
-        formats: z.array(z.enum(['pptx', 'pdf', 'png', 'html'])).default(['pptx', 'pdf', 'png']),
+        formats: z
+          .array(z.enum(['pptx', 'pdf', 'png', 'html', 'onepager', 'docx']))
+          .default(['pptx', 'pdf', 'png']),
         engines: z
           .object({
             pptx: z.enum(['auto', 'pptxgenjs', 'artifact-tool']).default('auto'),

@@ -1,0 +1,32 @@
+schemaVersion: 1
+id: linked
+title: Linked sources and accessible output
+theme: consulting-classic
+status: draft
+sources:
+  - id: eurostat
+    title: Eurostat tourism statistics
+    date: '2025'
+    url: https://ec.europa.eu/eurostat/web/tourism
+slides:
+  - id: chart
+    layout: chart-takeaway
+    variant: bar
+    title: Rome and Paris lead nights spent, Berlin is a clear third
+    sources: [eurostat]
+    chart:
+      categories: [Paris, Rome, Berlin]
+      series:
+        - name: Nights, M
+          values: [52, 44, 34]
+    takeaway:
+      headline: Two capitals take most nights
+      points: [Berlin grows fastest]
+  - id: table
+    layout: data-table
+    title: Shoulder seasons give the best balance of weather and crowds
+    source: Author's judgement
+    header: [City, Best months]
+    rows:
+      - [Rome, Apr–May]
+      - [Berlin, May–Sep]

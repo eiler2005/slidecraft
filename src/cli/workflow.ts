@@ -7,6 +7,7 @@ import { buildGallery, buildHero, writePicker } from '../gallery.ts';
 import { getLayout } from '../layouts/index.ts';
 import { libraryCheck } from '../library/check.ts';
 import { generateDocs } from '../library/docs.ts';
+import { describeJob, generateImages, openAiProvider, planImages } from '../library/images.ts';
 import {
   getStoryline,
   getTheme,
@@ -14,6 +15,7 @@ import {
   loadStorylines,
   readThemeFile,
 } from '../library/load.ts';
+import { importPptx } from '../library/pptx-import.ts';
 import { rankStorylines, templateOptions } from '../library/rank.ts';
 import { recommendOutput } from '../library/recommend.ts';
 import { importTheme } from '../library/theme-import.ts';
@@ -345,6 +347,75 @@ export function registerBrandCommands(program: Command): void {
         );
       },
     );
+
+  program
+    .command('import')
+    .description(
+      'Import an existing .pptx into a draft deck.yaml (text, tables, charts, images, notes)',
+    )
+    .argument('<file>', 'the presentation to import')
+    .option('-o, --out <dir>', 'output folder (default: ./slidecraft/<file-name>)')
+    .option('--id <id>', 'deck id')
+    .option('--theme <id|path>', 'theme for the draft', 'consulting-classic')
+    .option('--json', 'machine-readable output')
+    .action(
+      async (file: string, o: { out?: string; id?: string; theme: string; json?: boolean }) => {
+        const r = await importPptx(file, {
+          ...(o.out ? { out: o.out } : {}),
+          ...(o.id ? { id: o.id } : {}),
+          theme: o.theme,
+        });
+        if (wantsJson(o.json)) {
+          printJson(r);
+          return;
+        }
+        console.log(
+          `${green('✔')} ${relative(process.cwd(), r.deckPath)} · ${r.slides} slides · ${Object.entries(
+            r.layouts,
+          )
+            .map(([k, v]) => `${k} ×${v}`)
+            .join(', ')}`,
+        );
+        if (r.shortened)
+          console.log(
+            dim(`  ${r.shortened} text field(s) shortened to fit; originals are in speaker notes`),
+          );
+        console.log(
+          dim(
+            '  Next: slidecraft check, then restyle — rewrite titles as claims, swap text slides for exhibits.',
+          ),
+        );
+      },
+    );
+
+  program
+    .command('images')
+    .description(
+      'Generate pictures for slides that have an imagePrompt but no image (OpenAI-compatible API)',
+    )
+    .argument('<deck>', 'path to deck.yaml')
+    .option('--dry-run', 'list the prompts that would be sent; send nothing')
+    .option('--force', 'regenerate images that already exist')
+    .option('--json', 'machine-readable output')
+    .action(async (deck: string, o: { dryRun?: boolean; force?: boolean; json?: boolean }) => {
+      const jobs = planImages(deck, { force: !!o.force });
+      if (o.dryRun || !jobs.length) {
+        if (wantsJson(o.json)) printJson({ jobs });
+        else if (!jobs.length) console.log('No empty image slots with an imagePrompt.');
+        else jobs.forEach((j) => console.log(`  ${describeJob(j)}`));
+        return;
+      }
+      const provider = openAiProvider();
+      if (!wantsJson(o.json))
+        console.log(dim(`Sending ${jobs.length} prompt(s) to ${provider.id} …`));
+      const r = await generateImages(jobs, provider);
+      if (wantsJson(o.json)) printJson(r);
+      else {
+        r.generated.forEach((j) => console.log(`${green('✔')} ${describeJob(j)}`));
+        r.failed.forEach((f) => console.log(`✗ ${f.job.slideId}: ${f.error}`));
+      }
+      process.exitCode = r.failed.length ? 1 : 0;
+    });
 
   program
     .command('calibrate')

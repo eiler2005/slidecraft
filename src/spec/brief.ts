@@ -62,7 +62,7 @@ export const Brief = z
       .describe('What will happen with the deck — drives engine recommendations'),
     output: z
       .object({
-        formats: z.array(z.enum(['pptx', 'pdf', 'png', 'html'])).optional(),
+        formats: z.array(z.enum(['pptx', 'pdf', 'png', 'html', 'onepager', 'docx'])).optional(),
         engines: z
           .object({
             pptx: z.enum(['auto', 'pptxgenjs', 'artifact-tool']).optional(),

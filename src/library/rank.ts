@@ -59,7 +59,7 @@ export function rankStorylines(
       if (brief.task && s.name.toLowerCase().includes(brief.task.toLowerCase())) score += 4;
       for (const a of s.audiences) {
         // whole-phrase match: "executive committee" should not match "procurement committee"
-        if (audience && audience.includes(a.toLowerCase())) {
+        if (audience?.includes(a.toLowerCase())) {
           score += 1.5;
           matched.push(`audience: ${a}`);
         }

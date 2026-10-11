@@ -1,10 +1,18 @@
 import type { Theme } from '../spec/theme.ts';
+import { docxEngine } from './docx.ts';
 import { nativePdfEngine } from './native-pdf.ts';
+import { onePagerEngine } from './onepager.ts';
 import { pptxgenjsEngine } from './pptxgenjs.ts';
 import { resvgEngine } from './resvg.ts';
 import type { Detection, Engine, OutputKind } from './types.ts';
 
-const ENGINES: Engine[] = [pptxgenjsEngine, nativePdfEngine, resvgEngine];
+const ENGINES: Engine[] = [
+  pptxgenjsEngine,
+  nativePdfEngine,
+  resvgEngine,
+  onePagerEngine,
+  docxEngine,
+];
 
 /** Register additional engines (html, pptx-convert, artifact-tool live in their own modules). */
 export function registerEngine(e: Engine): void {
@@ -43,7 +51,7 @@ export function inCodex(): boolean {
  * Resolve `auto` deterministically:
  *  pptx: artifact-tool when running inside Codex and detected, else pptxgenjs.
  *  pdf:  html when the theme prefers html and Chrome is available, else native.
- *  png:  resvg.  html: html.
+ *  png:  resvg.  html: html.  onepager / docx: their bundled engine.
  */
 export async function resolveEngine(
   kind: OutputKind,
@@ -80,6 +88,8 @@ export async function resolveEngine(
     return { engine: nativePdfEngine, reason: 'auto: default' };
   }
   if (kind === 'png') return { engine: resvgEngine, reason: 'auto: default' };
+  if (kind === 'onepager') return { engine: onePagerEngine, reason: 'auto: default' };
+  if (kind === 'docx') return { engine: docxEngine, reason: 'auto: default' };
   const html = findEngine('html', 'html');
   return html
     ? { engine: html, reason: 'auto: default' }

@@ -91,7 +91,7 @@ export function registerCommands(program: Command): void {
     .command('build')
     .description('Build the deck into PPTX / PDF / PNG / HTML')
     .argument('<deck>', 'path to deck.yaml')
-    .option('-f, --format <list>', 'comma-separated: pptx,pdf,png,html')
+    .option('-f, --format <list>', 'comma-separated: pptx,pdf,png,html,onepager,docx')
     .option('--pptx-engine <id>', 'auto | pptxgenjs | artifact-tool')
     .option('--pdf-engine <id>', 'auto | native | html | pptx-convert')
     .option('-o, --out <dir>', 'output directory (default: <deck dir>/dist)')

@@ -16,6 +16,7 @@ import { processSteps } from './process-steps.ts';
 import { raci } from './raci.ts';
 import { riskMatrix } from './risk-matrix.ts';
 import { teamCards } from './team-cards.ts';
+import { text } from './text.ts';
 import { textImage } from './text-image.ts';
 import { timeline } from './timeline.ts';
 import { title } from './title.ts';
@@ -33,6 +34,7 @@ export const LAYOUTS: LayoutDef[] = [
   keyPoints,
   bigStatement,
   textImage,
+  text,
   kpiTiles,
   chartTakeaway,
   waterfall,

@@ -48,6 +48,7 @@ interface Token {
   bold: boolean;
   italic: boolean;
   color: string;
+  link?: string;
 }
 
 function tokenize(p: Paragraph, style: TextStyle): Token[] {
@@ -56,11 +57,21 @@ function tokenize(p: Paragraph, style: TextStyle): Token[] {
     const bold = r.bold ?? style.bold ?? false;
     const italic = r.italic ?? style.italic ?? false;
     const color = r.color ?? style.color;
+    const link = r.link ? { link: r.link } : {};
     for (const part of r.text.split(/(\n|[ \t]+)/)) {
       if (!part) continue;
-      if (part === '\n') out.push({ text: '', space: false, newline: true, bold, italic, color });
+      if (part === '\n')
+        out.push({ text: '', space: false, newline: true, bold, italic, color, ...link });
       else
-        out.push({ text: part, space: /^[ \t]+$/.test(part), newline: false, bold, italic, color });
+        out.push({
+          text: part,
+          space: /^[ \t]+$/.test(part),
+          newline: false,
+          bold,
+          italic,
+          color,
+          ...link,
+        });
     }
   }
   return out;
@@ -164,11 +175,26 @@ export function layoutText(
       for (const { t, w } of ln.toks) {
         const prev = segments[segments.length - 1];
         const text = t.space ? ' ' : t.text;
-        if (prev && prev.bold === t.bold && prev.italic === t.italic && prev.color === t.color) {
+        if (
+          prev &&
+          prev.bold === t.bold &&
+          prev.italic === t.italic &&
+          prev.color === t.color &&
+          prev.link === t.link
+        ) {
           prev.text += text;
           prev.width += w;
         } else {
-          segments.push({ text, x, width: w, bold: t.bold, italic: t.italic, color: t.color });
+          const seg: LineSegment = {
+            text,
+            x,
+            width: w,
+            bold: t.bold,
+            italic: t.italic,
+            color: t.color,
+          };
+          if (t.link) seg.link = t.link;
+          segments.push(seg);
         }
         x += w;
       }

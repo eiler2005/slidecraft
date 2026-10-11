@@ -52,7 +52,7 @@
     "gen": "tsx src/cli/main.ts gen",
     "check": "npm run lint && npm run typecheck && npm run test",
     "hooks": "node -e \"require('child_process').execFileSync(process.platform==='darwin'&&require('fs').existsSync('/usr/bin/git')?'/usr/bin/git':'git',['config','core.hooksPath','.githooks'],{stdio:'inherit'})\"",
-    "prepublishOnly": "npm run check && node scripts/bundle.mjs && git diff --exit-code dist/",
+    "prepublishOnly": "node scripts/prepublish.mjs",
     "showcase": "tsx scripts/showcase.ts"
   },
   "devDependencies": {

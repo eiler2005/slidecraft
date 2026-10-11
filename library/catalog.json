@@ -137,6 +137,48 @@
       "frame": "standard"
     },
     {
+      "id": "bubble-chart",
+      "name": "Bubble and scatter chart",
+      "group": "numbers",
+      "variants": [
+        "bubble",
+        "scatter",
+        "portfolio"
+      ],
+      "purpose": "Use for items positioned on two measured dimensions — with bubble size for a third, or quadrant dividers for a portfolio (growth-share) view.",
+      "frame": "standard"
+    },
+    {
+      "id": "marimekko",
+      "name": "Marimekko",
+      "group": "numbers",
+      "variants": [
+        "shares"
+      ],
+      "purpose": "Use for market structure in one picture: segment size as column width and each player’s share as the stack within it.",
+      "frame": "standard"
+    },
+    {
+      "id": "tornado",
+      "name": "Tornado (sensitivity)",
+      "group": "numbers",
+      "variants": [
+        "bars"
+      ],
+      "purpose": "Use for showing which assumptions move a result most: each driver’s downside and upside around the base case, widest on top.",
+      "frame": "standard"
+    },
+    {
+      "id": "football-field",
+      "name": "Football field (ranges)",
+      "group": "numbers",
+      "variants": [
+        "ranges"
+      ],
+      "purpose": "Use for comparing value ranges from several methods on one axis — valuation, price corridors or estimates — against a reference such as the offer.",
+      "frame": "standard"
+    },
+    {
       "id": "funnel",
       "name": "Funnel / pyramid",
       "group": "numbers",
@@ -178,6 +220,47 @@
         "quadrants"
       ],
       "purpose": "Use for prioritising items on two dimensions, or naming four strategic positions.",
+      "frame": "standard"
+    },
+    {
+      "id": "swot",
+      "name": "SWOT",
+      "group": "decide",
+      "variants": [
+        "grid",
+        "with-implications"
+      ],
+      "purpose": "Use for an internal (strengths, weaknesses) and external (opportunities, threats) view of a position — with the implications that follow.",
+      "frame": "standard"
+    },
+    {
+      "id": "five-forces",
+      "name": "Five forces",
+      "group": "decide",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for judging how attractive an industry is: the five competitive forces, each rated and evidenced, with the verdict.",
+      "frame": "standard"
+    },
+    {
+      "id": "pestel",
+      "name": "PESTEL",
+      "group": "decide",
+      "variants": [
+        "grid"
+      ],
+      "purpose": "Use for the macro trends — political, economic, social, technological, environmental, legal — that shape a market, each with its impact.",
+      "frame": "standard"
+    },
+    {
+      "id": "business-model-canvas",
+      "name": "Business model canvas",
+      "group": "decide",
+      "variants": [
+        "canvas"
+      ],
+      "purpose": "Use for the whole business model on one page: segments, value proposition, channels, relationships, revenue, resources, activities, partners and costs.",
       "frame": "standard"
     },
     {

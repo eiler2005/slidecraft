@@ -42,6 +42,15 @@ Pick the exhibit from the **relationship** the title claims, not from the data y
 | What the answer rests on: checks, sources, results | `evidence-chain` |
 | Who meets or decides when | `cadence` |
 | Where to click or look, what to expect, how to check | `callout` |
+| Items on two measured axes (bubble size for a third) | `bubble-chart` · scatter / bubble |
+| A portfolio by growth and share, with quadrant names | `bubble-chart` · portfolio |
+| Segment size × share of each player | `marimekko` |
+| Which assumptions move the result most | `tornado` |
+| Value ranges by method vs an offer or bid | `football-field` |
+| Strengths, weaknesses, opportunities, threats and the so-what | `swot` · grid / with-implications |
+| Industry attractiveness | `five-forces` |
+| Macro trends with their impact | `pestel` |
+| The business model on one page | `business-model-canvas` |
 | A bespoke visual no layout covers (story decks; a picture in PPTX) | `freeform` |
 | Text that is genuinely text (definitions, scope in/out) | `text` · bullets / paragraphs / two-column |
 

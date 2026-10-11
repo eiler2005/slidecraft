@@ -355,6 +355,46 @@ Options:
   -h, --help         display help for command
 ```
 
+## `ingest`
+
+Add client material (PDF, DOCX, PPTX, XLSX, CSV, MD) as sources with page-level references
+
+```
+Usage: slidecraft slidecraft ingest [options] <files...>
+
+Add client material (PDF, DOCX, PPTX, XLSX, CSV, MD) as sources with page-level
+references
+
+Arguments:
+  files          documents to read
+
+Options:
+  --deck <deck>  deck.yaml that gets the sources
+  --dir <dir>    where the extracted text goes (default: materials/ next to the
+                 deck)
+  --json         machine-readable output
+  -h, --help     display help for command
+```
+
+## `find`
+
+Find a phrase in ingested material; each hit comes with the citation to use
+
+```
+Usage: slidecraft slidecraft find [options] <query>
+
+Find a phrase in ingested material; each hit comes with the citation to use
+
+Arguments:
+  query          words to look for
+
+Options:
+  --deck <deck>  deck.yaml whose materials/ to search (default: "deck.yaml")
+  --dir <dir>    materials directory (overrides --deck)
+  --json         machine-readable output
+  -h, --help     display help for command
+```
+
 ## `fix`
 
 Fit-fix loop: list texts that do not fit with an exact character budget, or apply rewrites by JSON pointer

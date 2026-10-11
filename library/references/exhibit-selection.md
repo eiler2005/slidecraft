@@ -1,4 +1,4 @@
-> **Audience:** deck authors and agents choosing how to show a point · **Used by:** exhibit-chooser, deck-spec, partner-review-checklist · **Last reviewed:** 2026-10-10
+> **Audience:** deck authors and agents choosing how to show a point · **Used by:** exhibit-chooser, deck-spec, partner-review-checklist · **Last reviewed:** 2026-10-11
 
 # Exhibit selection: message → exhibit
 
@@ -42,6 +42,15 @@ Start from the sentence in the title. Identify the **relationship** it claims, t
 | **What an answer rests on** | `evidence-chain` · chain | A process, not checks → `process-steps` | Hiding the open or failed checks |
 | **Who meets or decides when** | `cadence` · grid | Dependencies matter → `timeline` gantt | More than seven rows |
 | **How to do it on a screen or object** | `callout` · image-left | No picture → `process-steps` | Callouts without the expected result |
+| **Two measured dimensions across many items** | `bubble-chart` · scatter / bubble (size = a third measure) | Positions are judgements → `matrix-2x2` | Bubble diameter instead of area; unlabelled bubbles |
+| **A portfolio by growth and share** | `bubble-chart` · portfolio (dividers and quadrant names) | No numbers behind the axes → `matrix-2x2` | Dividers placed to make a unit look good |
+| **Market structure: segment size × share** | `marimekko` | Segments of similar size → `chart-takeaway` stacked | More than six players — group the tail into "Others" |
+| **Which assumptions move the result** | `tornado` | Scenarios, not one driver at a time → `data-table` | Ranges that are not equally likely |
+| **Value ranges from several methods** | `football-field` (marker = offer or bid) | Point estimates → bar chart | Methods with different bases unlabelled |
+| **Internal and external position** | `swot` · grid / with-implications | No implications → add them or use `key-points` | Generic points ("strong brand") without evidence |
+| **How attractive an industry is** | `five-forces` | Named competitors → `bubble-chart` or `options-comparison` | Ratings without evidence |
+| **Macro trends that shape the case** | `pestel` | Trends that do not change the decision — cut them | Six boxes filled for completeness |
+| **The whole business model** | `business-model-canvas` | Only economics → `waterfall` / `data-table` | Mixing today's and target model on one canvas |
 | **A bespoke visual no layout covers** | `freeform` · body | Any exhibit a layout covers (layouts stay editable) | Text below the theme minimum |
 | **Plain text that really is text** | `text` · bullets / paragraphs / two-column | Parallel points with headings → `key-points` | Using it to avoid choosing an exhibit |
 
@@ -60,6 +69,10 @@ Start from the sentence in the title. Identify the **relationship** it claims, t
 **Plan and status.** Plan, actual and forecast share one time axis so slippage is visible. Gates sit on stage boundaries and name the evidence needed to pass.
 
 **Ownership.** Who decides, who does, who is consulted — with the boundary of each role. A RACI table beats an org chart when the question is accountability.
+
+**Frameworks.** SWOT, five forces, PESTEL and the canvas are diagnostics, not conclusions: the title states what they mean ("…attractive: buyers are fragmented and entry is hard"), each point carries a number or a fact, and the slide after it acts on the finding. Leave out a PESTEL factor rather than filling it with a platitude.
+
+**Ranges and sensitivity.** Football fields and tornados compare like with like: one metric, one unit, one basis per bar. State the range basis (WACC 8–10%, ±10% price) on the label or note.
 
 ## When the data cannot prove the title
 

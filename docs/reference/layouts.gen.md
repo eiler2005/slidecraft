@@ -19,10 +19,18 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 | [`kpi-tiles`](#kpi-tiles) | numbers | `tiles`, `strip` | Use for 2–4 headline numbers that prove the title at a glance, each with its label, change and context. |
 | [`chart-takeaway`](#chart-takeaway) | numbers | `bar`, `column`, `stacked`, `line` | Use for one chart that proves the title, with the interpretation in a side panel. |
 | [`waterfall`](#waterfall) | numbers | `full`, `with-takeaway` | Use for a bridge that explains how a starting total becomes an ending total through positive and negative drivers. |
+| [`bubble-chart`](#bubble-chart) | numbers | `bubble`, `scatter`, `portfolio` | Use for items positioned on two measured dimensions — with bubble size for a third, or quadrant dividers for a portfolio (growth-share) view. |
+| [`marimekko`](#marimekko) | numbers | `shares` | Use for market structure in one picture: segment size as column width and each player’s share as the stack within it. |
+| [`tornado`](#tornado) | numbers | `bars` | Use for showing which assumptions move a result most: each driver’s downside and upside around the base case, widest on top. |
+| [`football-field`](#football-field) | numbers | `ranges` | Use for comparing value ranges from several methods on one axis — valuation, price corridors or estimates — against a reference such as the offer. |
 | [`funnel`](#funnel) | numbers | `funnel`, `pyramid` | Use for a conversion funnel (where volume is lost) or a pyramid (levels that build on each other). |
 | [`data-table`](#data-table) | numbers | `plain`, `with-takeaway` | Use for a compact table of exact values where the reader needs to look up or compare several attributes at once. |
 | [`options-comparison`](#options-comparison) | decide | `text`, `rating` | Use for comparing 2–5 options on the same criteria and showing which one wins and why. |
 | [`matrix-2x2`](#matrix-2x2) | decide | `plot`, `quadrants` | Use for prioritising items on two dimensions, or naming four strategic positions. |
+| [`swot`](#swot) | decide | `grid`, `with-implications` | Use for an internal (strengths, weaknesses) and external (opportunities, threats) view of a position — with the implications that follow. |
+| [`five-forces`](#five-forces) | decide | `diagram` | Use for judging how attractive an industry is: the five competitive forces, each rated and evidenced, with the verdict. |
+| [`pestel`](#pestel) | decide | `grid` | Use for the macro trends — political, economic, social, technological, environmental, legal — that shape a market, each with its impact. |
+| [`business-model-canvas`](#business-model-canvas) | decide | `canvas` | Use for the whole business model on one page: segments, value proposition, channels, relationships, revenue, resources, activities, partners and costs. |
 | [`issue-tree`](#issue-tree) | decide | `issue`, `driver` | Use for breaking a question into MECE sub-questions (issue tree) or a metric into its drivers (driver tree). |
 | [`maturity-model`](#maturity-model) | decide | `grid`, `staircase` | Use for showing where an organisation stands on a maturity scale and where it should get to — one capability as a staircase, or several on one grid. |
 | [`coverage-map`](#coverage-map) | decide | `grid` | Use for showing the state of many functions at once on stable geometry — what is covered, partly covered, planned or missing. |
@@ -551,6 +559,289 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 
 </details>
 
+## bubble-chart
+
+**Bubble and scatter chart** — Use for items positioned on two measured dimensions — with bubble size for a third, or quadrant dividers for a portfolio (growth-share) view.
+
+![bubble-chart · bubble](../gallery/layouts/bubble-chart--bubble.png) ![bubble-chart · scatter](../gallery/layouts/bubble-chart--scatter.png) ![bubble-chart · portfolio](../gallery/layouts/bubble-chart--portfolio.png)
+
+- **Use when:** Portfolio of business units or products: growth vs share, size = revenue; Correlation between two metrics across markets, stores or customers; Competitor positioning on real numbers
+- **Avoid when:** Positions are judgements, not numbers — use matrix-2x2; One dimension only — use chart-takeaway (bar)
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `xAxis` | object | yes |  |  |
+| `xAxis.label` | string | yes | ≤ 48 chars |  |
+| `xAxis.unit` | string |  | ≤ 6 chars | e.g. "%", "€", "x" |
+| `xAxis.min` | number |  |  |  |
+| `xAxis.max` | number |  |  |  |
+| `yAxis` | object | yes |  |  |
+| `yAxis.label` | string | yes | ≤ 48 chars |  |
+| `yAxis.unit` | string |  | ≤ 6 chars | e.g. "%", "€", "x" |
+| `yAxis.min` | number |  |  |  |
+| `yAxis.max` | number |  |  |  |
+| `sizeLabel` | string |  | ≤ 40 chars | bubble and portfolio: what the bubble area shows, e.g. "Revenue, €M" |
+| `items` | object[] | yes | 2–15 items |  |
+| `items[].label` | string | yes | ≤ 24 chars |  |
+| `items[].x` | number | yes |  |  |
+| `items[].y` | number | yes |  |  |
+| `items[].size` | number |  |  | Bubble area; required for bubble and portfolio |
+| `items[].highlight` | boolean |  |  |  |
+| `split` | object |  |  | portfolio variant: quadrant dividers, e.g. a growth-share matrix |
+| `split.x` | number | yes |  | Vertical divider, in x units (e.g. relative share 1.0) |
+| `split.y` | number | yes |  | Horizontal divider, in y units (e.g. market growth 10%) |
+| `split.names` | string[] |  | 4–4 items, each ≤ 20 chars | Quadrant names: top-left, top-right, bottom-left, bottom-right |
+| `takeaway` | string |  | ≤ 140 chars | Interpretation, side panel |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: bubble-chart
+  variant: bubble
+  title: Germany and Poland combine the fastest growth with the largest profit pools
+  sources:
+    - market-est
+  xAxis:
+    label: Market growth 2025–2030, % a year
+    unit: "%"
+  yAxis:
+    label: EBIT margin of top three players
+    unit: "%"
+  sizeLabel: Bubble = market size, €B
+  items:
+    - label: Germany
+      x: 7.8
+      y: 10.5
+      size: 14
+      highlight: true
+    - label: Poland
+      x: 9.4
+      y: 9.2
+      size: 6.1
+      highlight: true
+    - label: Netherlands
+      x: 5.1
+      y: 8.4
+      size: 4.2
+    - label: France
+      x: 3.2
+      y: 6.1
+      size: 11
+    - label: Italy
+      x: 2.4
+      y: 5.2
+      size: 7.5
+    - label: Czechia
+      x: 6.6
+      y: 6.8
+      size: 1.8
+  takeaway: Enter Germany first and Poland second; France is large but low-margin
+```
+
+</details>
+
+## marimekko
+
+**Marimekko** — Use for market structure in one picture: segment size as column width and each player’s share as the stack within it.
+
+![marimekko · shares](../gallery/layouts/marimekko--shares.png)
+
+- **Use when:** Where we are strong and where the big segments are; Share by segment for us vs competitors; Profit pools by region and player
+- **Avoid when:** Segments are about the same size — use a stacked column (chart-takeaway); More than seven segments or six players — group the long tail
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `unit` | string |  | ≤ 6 chars | Unit of the column totals, e.g. "€B" |
+| `totalLabel` | string |  | ≤ 40 chars | What column width shows, e.g. "Market size, €B" |
+| `series` | string[] | yes | 2–6 items, each ≤ 20 chars | Players or sub-segments stacked in every column; put "Others" last |
+| `columns` | object[] | yes | 2–7 items |  |
+| `columns[].label` | string | yes | ≤ 18 chars |  |
+| `columns[].total` | number | yes |  | Column width: segment size |
+| `columns[].shares` | number[] | yes |  | One value per series (shares or amounts — normalised to 100%) |
+| `highlight` | integer |  | 0…9007199254740991 | Series index to show in the accent |
+| `decimals` | integer |  | 0…2 |  |
+| `takeaway` | string |  | ≤ 140 chars | Interpretation, side panel |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: marimekko
+  title: We lead in the two smallest segments; mid-market is the large pool we barely touch
+  sources:
+    - market-est
+  unit: €B
+  totalLabel: Column width = segment size, €B
+  series:
+    - Northwind
+    - Contoso
+    - Fabrikam
+    - Others
+  highlight: 0
+  columns:
+    - label: Enterprise
+      total: 4.2
+      shares:
+        - 8
+        - 41
+        - 22
+        - 29
+    - label: Mid-market
+      total: 6.8
+      shares:
+        - 6
+        - 18
+        - 21
+        - 55
+    - label: Small business
+      total: 2.1
+      shares:
+        - 34
+        - 12
+        - 9
+        - 45
+    - label: Public sector
+      total: 1.4
+      shares:
+        - 38
+        - 25
+        - 4
+        - 33
+  decimals: 1
+  takeaway: Mid-market is half the market; a 10-point gain there doubles our revenue
+```
+
+</details>
+
+## tornado
+
+**Tornado (sensitivity)** — Use for showing which assumptions move a result most: each driver’s downside and upside around the base case, widest on top.
+
+![tornado · bars](../gallery/layouts/tornado--bars.png)
+
+- **Use when:** Business case risk: which assumptions to test or hedge first; Explaining the range around a forecast or valuation
+- **Avoid when:** Scenarios rather than one driver at a time — use options-comparison or data-table; Bridging from one value to another — use waterfall
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `metric` | string | yes | ≤ 48 chars | What moves, e.g. "NPV, €M" |
+| `base` | number | yes |  | Base-case value of the metric |
+| `baseLabel` | string |  | ≤ 24 chars | Defaults to "Base case" |
+| `unit` | string |  | ≤ 6 chars |  |
+| `decimals` | integer |  | 0…2 |  |
+| `lowLabel` | string |  | ≤ 20 chars | Legend for the downside, e.g. "Pessimistic" |
+| `highLabel` | string |  | ≤ 20 chars | Legend for the upside, e.g. "Optimistic" |
+| `drivers` | object[] | yes | 2–9 items | Sorted automatically, widest swing on top |
+| `drivers[].label` | string | yes | ≤ 36 chars | Driver and its range, e.g. "Price ±10%" |
+| `drivers[].low` | number | yes |  | Metric when the driver is at its downside |
+| `drivers[].high` | number | yes |  | Metric when the driver is at its upside |
+| `takeaway` | string |  | ≤ 140 chars | Interpretation, side panel |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: tornado
+  title: Price and volume decide the case; cost assumptions barely move it
+  sources:
+    - fin-plan
+  metric: NPV 2026–2035, €M
+  base: 48
+  unit: ""
+  lowLabel: Downside
+  highLabel: Upside
+  drivers:
+    - label: Volume ±20%
+      low: 22
+      high: 71
+    - label: Price ±10%
+      low: 29
+      high: 66
+    - label: Launch 6 months late / early
+      low: 36
+      high: 55
+    - label: Churn 8% / 4%
+      low: 39
+      high: 54
+    - label: Opex ±10%
+      low: 43
+      high: 53
+    - label: Capex ±15%
+      low: 45
+      high: 51
+  takeaway: Lock in volume with two anchor customers before we commit the capex
+```
+
+</details>
+
+## football-field
+
+**Football field (ranges)** — Use for comparing value ranges from several methods on one axis — valuation, price corridors or estimates — against a reference such as the offer.
+
+![football-field · ranges](../gallery/layouts/football-field--ranges.png)
+
+- **Use when:** Valuation summary for M&A or fundraising; Price or cost estimates from several sources; Market sizing triangulated top-down and bottom-up
+- **Avoid when:** Point values, not ranges — use chart-takeaway (bar); Ranges around one driver at a time — use tornado
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `metric` | string | yes | ≤ 48 chars | What the ranges show, e.g. "Equity value, €M" |
+| `unit` | string |  | ≤ 6 chars |  |
+| `decimals` | integer |  | 0…2 |  |
+| `ranges` | object[] | yes | 2–8 items |  |
+| `ranges[].label` | string | yes | ≤ 30 chars | Method, e.g. "DCF (WACC 8–10%)" |
+| `ranges[].note` | string |  | ≤ 40 chars | Basis, e.g. "12 peers, 2027 EBITDA" |
+| `ranges[].low` | number | yes |  |  |
+| `ranges[].high` | number | yes |  |  |
+| `ranges[].highlight` | boolean |  |  |  |
+| `marker` | object |  |  | A reference line, e.g. the offer price or our bid |
+| `marker.value` | number | yes |  |  |
+| `marker.label` | string | yes | ≤ 28 chars |  |
+| `takeaway` | string |  | ≤ 140 chars | Interpretation, side panel |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: football-field
+  title: Every method supports a bid of up to €410M; the asking price sits above all but one
+  sources:
+    - fin-plan
+  metric: Equity value, €M
+  ranges:
+    - label: 52-week trading range
+      low: 300
+      high: 380
+    - label: Trading comparables
+      note: 12 peers, 6.5–8.0x EBITDA
+      low: 320
+      high: 410
+    - label: Precedent transactions
+      note: 9 deals since 2021
+      low: 360
+      high: 470
+    - label: DCF
+      note: WACC 8–10%, growth 1.5–2.5%
+      low: 340
+      high: 430
+      highlight: true
+    - label: LBO
+      note: IRR 20–25%
+      low: 290
+      high: 360
+  marker:
+    value: 450
+    label: Asking price €450M
+  takeaway: Open at €380M and walk away above €410M
+```
+
+</details>
+
 ## funnel
 
 **Funnel / pyramid** — Use for a conversion funnel (where volume is lost) or a pyramid (levels that build on each other).
@@ -816,6 +1107,242 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
       x: 0.22
       y: 0.52
   takeaway: Start with the four quick wins; fund one big bet only after Q2 results
+```
+
+</details>
+
+## swot
+
+**SWOT** — Use for an internal (strengths, weaknesses) and external (opportunities, threats) view of a position — with the implications that follow.
+
+![swot · grid](../gallery/layouts/swot--grid.png) ![swot · with-implications](../gallery/layouts/swot--with-implications.png)
+
+- **Use when:** Assessing a business, product or market entry before choosing a strategy; A one-page diagnostic that the recommendation then builds on
+- **Avoid when:** A list without a so-what — add implications or use key-points; Comparing options — use options-comparison
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `strengths` | string[] | yes | 1–4 items, each ≤ 90 chars | Internal, helpful — one specific, evidenced point each |
+| `weaknesses` | string[] | yes | 1–4 items, each ≤ 90 chars | Internal, harmful — one specific, evidenced point each |
+| `opportunities` | string[] | yes | 1–4 items, each ≤ 90 chars | External, helpful — one specific, evidenced point each |
+| `threats` | string[] | yes | 1–4 items, each ≤ 90 chars | External, harmful — one specific, evidenced point each |
+| `takeaway` | string |  | ≤ 140 chars | with-implications variant: what the four boxes mean for the decision |
+| `implications` | string[] |  | 2–4 items, each ≤ 110 chars | with-implications variant: the moves that follow (use S to seize O, fix W before T…) |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: swot
+  variant: grid
+  title: Northwind wins on service and data, but must fix cost before low-cost rivals scale
+  sources:
+    - ops-review
+  strengths:
+    - Highest on-time delivery in the region (97%)
+    - Proprietary demand data across 4,000 stores
+    - "Loyal mid-market base: 92% renewal"
+  weaknesses:
+    - Cost per order 18% above the best rival
+    - No self-serve ordering for small customers
+  opportunities:
+    - Mid-market shift to same-day delivery
+    - Retailers outsourcing last-mile operations
+    - Data products for suppliers
+  threats:
+    - Two low-cost entrants backed by €300M
+    - Fuel and wage inflation of 6–8% a year
+```
+
+</details>
+
+## five-forces
+
+**Five forces** — Use for judging how attractive an industry is: the five competitive forces, each rated and evidenced, with the verdict.
+
+![five-forces · diagram](../gallery/layouts/five-forces--diagram.png)
+
+- **Use when:** Market entry or investment: is the profit pool worth fighting for?; Explaining why margins are falling or protected
+- **Avoid when:** Comparing named competitors — use options-comparison or bubble-chart; Macro trends rather than industry structure — use pestel
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `entrants` | object | yes |  | Threat of new entrants |
+| `entrants.rating` | `low` \| `medium` \| `high` | yes |  | Strength of the force: high means it squeezes profit |
+| `entrants.points` | string[] | yes | 1–3 items, each ≤ 70 chars | The evidence behind the rating |
+| `suppliers` | object | yes |  | Bargaining power of suppliers |
+| `suppliers.rating` | `low` \| `medium` \| `high` | yes |  | Strength of the force: high means it squeezes profit |
+| `suppliers.points` | string[] | yes | 1–3 items, each ≤ 70 chars | The evidence behind the rating |
+| `rivalry` | object | yes |  | Rivalry among existing competitors (the centre) |
+| `rivalry.rating` | `low` \| `medium` \| `high` | yes |  | Strength of the force: high means it squeezes profit |
+| `rivalry.points` | string[] | yes | 1–3 items, each ≤ 70 chars | The evidence behind the rating |
+| `buyers` | object | yes |  | Bargaining power of buyers |
+| `buyers.rating` | `low` \| `medium` \| `high` | yes |  | Strength of the force: high means it squeezes profit |
+| `buyers.points` | string[] | yes | 1–3 items, each ≤ 70 chars | The evidence behind the rating |
+| `substitutes` | object | yes |  | Threat of substitutes |
+| `substitutes.rating` | `low` \| `medium` \| `high` | yes |  | Strength of the force: high means it squeezes profit |
+| `substitutes.points` | string[] | yes | 1–3 items, each ≤ 70 chars | The evidence behind the rating |
+| `takeaway` | string |  | ≤ 140 chars | Verdict on industry attractiveness, shown in the bottom-right corner |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: five-forces
+  title: "German regional freight is attractive: buyers are fragmented and entry is hard"
+  sources:
+    - market-est
+  entrants:
+    rating: low
+    points:
+      - Dense carrier network takes 3–4 years to build
+      - Licensing per Land
+  suppliers:
+    rating: medium
+    points:
+      - Driver shortage lifts wages 6% a year
+      - Trucks and fuel are commodities
+  rivalry:
+    rating: medium
+    points:
+      - Top five hold 31% share; long tail of small fleets
+      - Price wars only on long-haul lanes
+  buyers:
+    rating: low
+    points:
+      - 40,000 small shippers, none above 1% of volume
+      - "Switching costs: IT links"
+  substitutes:
+    rating: high
+    points:
+      - Rail freight subsidised on main corridors
+      - Parcel networks move up to 70 kg
+  takeaway: "Enter now: margins hold at 9–11% while rail is a threat only on the main corridors"
+```
+
+</details>
+
+## pestel
+
+**PESTEL** — Use for the macro trends — political, economic, social, technological, environmental, legal — that shape a market, each with its impact.
+
+![pestel · grid](../gallery/layouts/pestel--grid.png)
+
+- **Use when:** Context for a market entry or long-term strategy; Scanning regulation and technology shifts before a plan
+- **Avoid when:** Industry structure and competitors — use five-forces; Trends without an effect on the decision — cut them or use key-points
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `factors` | object[] | yes | 3–6 items | In PESTEL order; leave out factors that do not matter |
+| `factors[].factor` | `political` \| `economic` \| `social` \| `technological` \| `environmental` \| `legal` | yes |  |  |
+| `factors[].impact` | `low` \| `medium` \| `high` |  |  | How much this factor moves the business case |
+| `factors[].points` | string[] | yes | 1–3 items, each ≤ 90 chars | Trend and its effect on us |
+| `takeaway` | string |  | ≤ 140 chars | What the macro picture means, side panel |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: pestel
+  title: Regulation and labour costs move the German case most; technology works for us
+  sources:
+    - market-est
+  factors:
+    - factor: political
+      impact: medium
+      points:
+        - Federal push to shift freight to rail by 2030
+        - Toll extended to 3.5 t vans
+    - factor: economic
+      impact: high
+      points:
+        - Driver wages up 6% a year
+        - E-commerce volume growing 8% a year
+    - factor: social
+      impact: low
+      points:
+        - Shippers expect same-day as standard
+        - Ageing driver workforce
+    - factor: technological
+      impact: medium
+      points:
+        - Real-time load matching is mature
+        - Telematics standard in new trucks
+    - factor: environmental
+      impact: medium
+      points:
+        - CO₂ reporting for shippers from 2027
+        - Empty running is a visible waste
+    - factor: legal
+      impact: high
+      points:
+        - Mobility Package limits cabotage
+        - Platform worker rules under review
+```
+
+</details>
+
+## business-model-canvas
+
+**Business model canvas** — Use for the whole business model on one page: segments, value proposition, channels, relationships, revenue, resources, activities, partners and costs.
+
+![business-model-canvas · canvas](../gallery/layouts/business-model-canvas--canvas.png)
+
+- **Use when:** A new business, product line or venture explained end to end; Comparing today’s model with a target model (one canvas per slide)
+- **Avoid when:** Only the economics matter — use waterfall or data-table; Only the customer value matters — use key-points
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `partners` | string[] | yes | 1–5 items, each ≤ 60 chars | Key partners: who we rely on |
+| `activities` | string[] | yes | 1–3 items, each ≤ 50 chars | Key activities: what we must do well |
+| `resources` | string[] | yes | 1–3 items, each ≤ 50 chars | Key resources: what we must own |
+| `value` | string[] | yes | 1–5 items, each ≤ 60 chars | Value propositions: why customers choose us (highlighted) |
+| `relationships` | string[] | yes | 1–3 items, each ≤ 50 chars | Customer relationships: how we win and keep customers |
+| `channels` | string[] | yes | 1–3 items, each ≤ 50 chars | Channels: how we reach and deliver |
+| `segments` | string[] | yes | 1–5 items, each ≤ 60 chars | Customer segments: for whom |
+| `costs` | string[] | yes | 1–3 items, each ≤ 70 chars | Cost structure: biggest costs |
+| `revenue` | string[] | yes | 1–3 items, each ≤ 70 chars | Revenue streams: how we earn |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: business-model-canvas
+  title: Fabrikam earns a take rate on capacity that carriers already drive
+  sources:
+    - fab-metrics
+  partners:
+    - Regional carriers
+    - Telematics providers
+    - Payment provider
+  activities:
+    - Real-time matching
+    - Carrier onboarding
+  resources:
+    - Live capacity data
+    - Pricing engine
+  value:
+    - Same-day part loads at up to 40% below full-load price
+    - Booking in under a minute
+    - Carriers earn on empty space
+  relationships:
+    - Self-serve with account managers for top 100
+  channels:
+    - Web app and API
+    - Carrier mobile app
+  segments:
+    - Small shippers under 50 loads a month
+    - Regional carriers with 5–200 trucks
+  costs:
+    - Engineering and data (45%)
+    - Sales and onboarding (30%)
+  revenue:
+    - 21% take rate per load
+    - Premium tracking subscription
 ```
 
 </details>

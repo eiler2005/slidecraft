@@ -90,6 +90,15 @@
             "type": "string",
             "format": "uri"
           },
+          "file": {
+            "description": "The document this source is, relative to deck.yaml (from `slidecraft ingest`)",
+            "type": "string"
+          },
+          "pages": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9007199254740991
+          },
           "note": {
             "type": "string",
             "maxLength": 200
@@ -105,6 +114,84 @@
           "title",
           "illustrative"
         ],
+        "additionalProperties": false
+      }
+    },
+    "facts": {
+      "description": "Numbers defined once (a value or a spreadsheet cell) and used as {{id}} in any text",
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9-]*$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": [
+              "number",
+              "string"
+            ]
+          },
+          "from": {
+            "type": "object",
+            "properties": {
+              "file": {
+                "type": "string",
+                "description": ".xlsx or .csv, relative to deck.yaml"
+              },
+              "sheet": {
+                "description": "Worksheet name (default: the first)",
+                "type": "string"
+              },
+              "cell": {
+                "description": "One cell, e.g. \"F12\" (facts)",
+                "type": "string"
+              },
+              "range": {
+                "description": "A range, e.g. \"A1:C6\" (charts, tables)",
+                "type": "string"
+              },
+              "series": {
+                "description": "Charts: series in columns (default) or rows",
+                "type": "string",
+                "enum": [
+                  "columns",
+                  "rows"
+                ]
+              },
+              "header": {
+                "description": "Tables: the first row of the range is the header",
+                "type": "boolean"
+              },
+              "format": {
+                "description": "Number format for table cells, e.g. \"#,##0\" or \"0.0%\"",
+                "type": "string"
+              }
+            },
+            "required": [
+              "file"
+            ],
+            "additionalProperties": false
+          },
+          "format": {
+            "description": "e.g. \"€0.0M\", \"#,##0\", \"0%\", \"0.0x\"",
+            "type": "string"
+          },
+          "divide": {
+            "description": "Divide before formatting, e.g. 1000000 to show millions",
+            "type": "number"
+          },
+          "label": {
+            "description": "What the number is, for reviews and the manifest",
+            "type": "string",
+            "maxLength": 80
+          },
+          "source": {
+            "description": "Source id from the deck `sources:`",
+            "type": "string"
+          }
+        },
         "additionalProperties": false
       }
     },
@@ -202,7 +289,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -328,7 +415,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -459,7 +546,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -603,7 +690,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -734,7 +821,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -869,7 +956,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -1005,7 +1092,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -1161,7 +1248,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -1345,7 +1432,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -1461,7 +1548,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -1613,7 +1700,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -1815,7 +1902,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -1993,7 +2080,741 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
+                    "const": "bubble-chart"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "bubble",
+                      "scatter",
+                      "portfolio"
+                    ]
+                  },
+                  "xAxis": {
+                    "type": "object",
+                    "properties": {
+                      "label": {
+                        "type": "string",
+                        "maxLength": 48
+                      },
+                      "unit": {
+                        "description": "e.g. \"%\", \"€\", \"x\"",
+                        "type": "string",
+                        "maxLength": 6
+                      },
+                      "min": {
+                        "type": "number"
+                      },
+                      "max": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "label"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "yAxis": {
+                    "type": "object",
+                    "properties": {
+                      "label": {
+                        "type": "string",
+                        "maxLength": 48
+                      },
+                      "unit": {
+                        "description": "e.g. \"%\", \"€\", \"x\"",
+                        "type": "string",
+                        "maxLength": 6
+                      },
+                      "min": {
+                        "type": "number"
+                      },
+                      "max": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "label"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "sizeLabel": {
+                    "description": "bubble and portfolio: what the bubble area shows, e.g. \"Revenue, €M\"",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "items": {
+                    "minItems": 2,
+                    "maxItems": 15,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "label": {
+                          "type": "string",
+                          "maxLength": 24
+                        },
+                        "x": {
+                          "type": "number"
+                        },
+                        "y": {
+                          "type": "number"
+                        },
+                        "size": {
+                          "description": "Bubble area; required for bubble and portfolio",
+                          "type": "number",
+                          "exclusiveMinimum": 0
+                        },
+                        "highlight": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "x",
+                        "y"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "split": {
+                    "description": "portfolio variant: quadrant dividers, e.g. a growth-share matrix",
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number",
+                        "description": "Vertical divider, in x units (e.g. relative share 1.0)"
+                      },
+                      "y": {
+                        "type": "number",
+                        "description": "Horizontal divider, in y units (e.g. market growth 10%)"
+                      },
+                      "names": {
+                        "description": "Quadrant names: top-left, top-right, bottom-left, bottom-right",
+                        "minItems": 4,
+                        "maxItems": 4,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "maxLength": 20
+                        }
+                      }
+                    },
+                    "required": [
+                      "x",
+                      "y"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "takeaway": {
+                    "description": "Interpretation, side panel",
+                    "type": "string",
+                    "maxLength": 140
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "xAxis",
+                  "yAxis",
+                  "items"
+                ],
+                "additionalProperties": false,
+                "description": "Bubble and scatter chart — Use for items positioned on two measured dimensions — with bubble size for a third, or quadrant dividers for a portfolio (growth-share) view."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
+                    "const": "marimekko"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "shares"
+                    ]
+                  },
+                  "unit": {
+                    "description": "Unit of the column totals, e.g. \"€B\"",
+                    "type": "string",
+                    "maxLength": 6
+                  },
+                  "totalLabel": {
+                    "description": "What column width shows, e.g. \"Market size, €B\"",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "series": {
+                    "minItems": 2,
+                    "maxItems": 6,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 20
+                    },
+                    "description": "Players or sub-segments stacked in every column; put \"Others\" last"
+                  },
+                  "columns": {
+                    "minItems": 2,
+                    "maxItems": 7,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "label": {
+                          "type": "string",
+                          "maxLength": 18
+                        },
+                        "total": {
+                          "type": "number",
+                          "exclusiveMinimum": 0,
+                          "description": "Column width: segment size"
+                        },
+                        "shares": {
+                          "type": "array",
+                          "items": {
+                            "type": "number",
+                            "minimum": 0
+                          },
+                          "description": "One value per series (shares or amounts — normalised to 100%)"
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "total",
+                        "shares"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "highlight": {
+                    "description": "Series index to show in the accent",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 9007199254740991
+                  },
+                  "decimals": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 2
+                  },
+                  "takeaway": {
+                    "description": "Interpretation, side panel",
+                    "type": "string",
+                    "maxLength": 140
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "series",
+                  "columns"
+                ],
+                "additionalProperties": false,
+                "description": "Marimekko — Use for market structure in one picture: segment size as column width and each player’s share as the stack within it."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
+                    "const": "tornado"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "bars"
+                    ]
+                  },
+                  "metric": {
+                    "type": "string",
+                    "maxLength": 48,
+                    "description": "What moves, e.g. \"NPV, €M\""
+                  },
+                  "base": {
+                    "type": "number",
+                    "description": "Base-case value of the metric"
+                  },
+                  "baseLabel": {
+                    "description": "Defaults to \"Base case\"",
+                    "type": "string",
+                    "maxLength": 24
+                  },
+                  "unit": {
+                    "type": "string",
+                    "maxLength": 6
+                  },
+                  "decimals": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 2
+                  },
+                  "lowLabel": {
+                    "description": "Legend for the downside, e.g. \"Pessimistic\"",
+                    "type": "string",
+                    "maxLength": 20
+                  },
+                  "highLabel": {
+                    "description": "Legend for the upside, e.g. \"Optimistic\"",
+                    "type": "string",
+                    "maxLength": 20
+                  },
+                  "drivers": {
+                    "minItems": 2,
+                    "maxItems": 9,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "label": {
+                          "type": "string",
+                          "maxLength": 36,
+                          "description": "Driver and its range, e.g. \"Price ±10%\""
+                        },
+                        "low": {
+                          "type": "number",
+                          "description": "Metric when the driver is at its downside"
+                        },
+                        "high": {
+                          "type": "number",
+                          "description": "Metric when the driver is at its upside"
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "low",
+                        "high"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "description": "Sorted automatically, widest swing on top"
+                  },
+                  "takeaway": {
+                    "description": "Interpretation, side panel",
+                    "type": "string",
+                    "maxLength": 140
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "metric",
+                  "base",
+                  "drivers"
+                ],
+                "additionalProperties": false,
+                "description": "Tornado (sensitivity) — Use for showing which assumptions move a result most: each driver’s downside and upside around the base case, widest on top."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
+                    "const": "football-field"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "ranges"
+                    ]
+                  },
+                  "metric": {
+                    "type": "string",
+                    "maxLength": 48,
+                    "description": "What the ranges show, e.g. \"Equity value, €M\""
+                  },
+                  "unit": {
+                    "type": "string",
+                    "maxLength": 6
+                  },
+                  "decimals": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 2
+                  },
+                  "ranges": {
+                    "minItems": 2,
+                    "maxItems": 8,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "label": {
+                          "type": "string",
+                          "maxLength": 30,
+                          "description": "Method, e.g. \"DCF (WACC 8–10%)\""
+                        },
+                        "note": {
+                          "description": "Basis, e.g. \"12 peers, 2027 EBITDA\"",
+                          "type": "string",
+                          "maxLength": 40
+                        },
+                        "low": {
+                          "type": "number"
+                        },
+                        "high": {
+                          "type": "number"
+                        },
+                        "highlight": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "low",
+                        "high"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "marker": {
+                    "description": "A reference line, e.g. the offer price or our bid",
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "number"
+                      },
+                      "label": {
+                        "type": "string",
+                        "maxLength": 28
+                      }
+                    },
+                    "required": [
+                      "value",
+                      "label"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "takeaway": {
+                    "description": "Interpretation, side panel",
+                    "type": "string",
+                    "maxLength": 140
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "metric",
+                  "ranges"
+                ],
+                "additionalProperties": false,
+                "description": "Football field (ranges) — Use for comparing value ranges from several methods on one axis — valuation, price corridors or estimates — against a reference such as the offer."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -2139,7 +2960,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -2327,7 +3148,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -2507,7 +3328,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -2716,7 +3537,770 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
+                    "const": "swot"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "grid",
+                      "with-implications"
+                    ]
+                  },
+                  "strengths": {
+                    "minItems": 1,
+                    "maxItems": 4,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 90
+                    },
+                    "description": "Internal, helpful — one specific, evidenced point each"
+                  },
+                  "weaknesses": {
+                    "minItems": 1,
+                    "maxItems": 4,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 90
+                    },
+                    "description": "Internal, harmful — one specific, evidenced point each"
+                  },
+                  "opportunities": {
+                    "minItems": 1,
+                    "maxItems": 4,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 90
+                    },
+                    "description": "External, helpful — one specific, evidenced point each"
+                  },
+                  "threats": {
+                    "minItems": 1,
+                    "maxItems": 4,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 90
+                    },
+                    "description": "External, harmful — one specific, evidenced point each"
+                  },
+                  "takeaway": {
+                    "description": "with-implications variant: what the four boxes mean for the decision",
+                    "type": "string",
+                    "maxLength": 140
+                  },
+                  "implications": {
+                    "description": "with-implications variant: the moves that follow (use S to seize O, fix W before T…)",
+                    "minItems": 2,
+                    "maxItems": 4,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 110
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "strengths",
+                  "weaknesses",
+                  "opportunities",
+                  "threats"
+                ],
+                "additionalProperties": false,
+                "description": "SWOT — Use for an internal (strengths, weaknesses) and external (opportunities, threats) view of a position — with the implications that follow."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
+                    "const": "five-forces"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "diagram"
+                    ]
+                  },
+                  "entrants": {
+                    "type": "object",
+                    "properties": {
+                      "rating": {
+                        "type": "string",
+                        "enum": [
+                          "low",
+                          "medium",
+                          "high"
+                        ],
+                        "description": "Strength of the force: high means it squeezes profit"
+                      },
+                      "points": {
+                        "minItems": 1,
+                        "maxItems": 3,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "maxLength": 70
+                        },
+                        "description": "The evidence behind the rating"
+                      }
+                    },
+                    "required": [
+                      "rating",
+                      "points"
+                    ],
+                    "additionalProperties": false,
+                    "description": "Threat of new entrants"
+                  },
+                  "suppliers": {
+                    "type": "object",
+                    "properties": {
+                      "rating": {
+                        "type": "string",
+                        "enum": [
+                          "low",
+                          "medium",
+                          "high"
+                        ],
+                        "description": "Strength of the force: high means it squeezes profit"
+                      },
+                      "points": {
+                        "minItems": 1,
+                        "maxItems": 3,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "maxLength": 70
+                        },
+                        "description": "The evidence behind the rating"
+                      }
+                    },
+                    "required": [
+                      "rating",
+                      "points"
+                    ],
+                    "additionalProperties": false,
+                    "description": "Bargaining power of suppliers"
+                  },
+                  "rivalry": {
+                    "type": "object",
+                    "properties": {
+                      "rating": {
+                        "type": "string",
+                        "enum": [
+                          "low",
+                          "medium",
+                          "high"
+                        ],
+                        "description": "Strength of the force: high means it squeezes profit"
+                      },
+                      "points": {
+                        "minItems": 1,
+                        "maxItems": 3,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "maxLength": 70
+                        },
+                        "description": "The evidence behind the rating"
+                      }
+                    },
+                    "required": [
+                      "rating",
+                      "points"
+                    ],
+                    "additionalProperties": false,
+                    "description": "Rivalry among existing competitors (the centre)"
+                  },
+                  "buyers": {
+                    "type": "object",
+                    "properties": {
+                      "rating": {
+                        "type": "string",
+                        "enum": [
+                          "low",
+                          "medium",
+                          "high"
+                        ],
+                        "description": "Strength of the force: high means it squeezes profit"
+                      },
+                      "points": {
+                        "minItems": 1,
+                        "maxItems": 3,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "maxLength": 70
+                        },
+                        "description": "The evidence behind the rating"
+                      }
+                    },
+                    "required": [
+                      "rating",
+                      "points"
+                    ],
+                    "additionalProperties": false,
+                    "description": "Bargaining power of buyers"
+                  },
+                  "substitutes": {
+                    "type": "object",
+                    "properties": {
+                      "rating": {
+                        "type": "string",
+                        "enum": [
+                          "low",
+                          "medium",
+                          "high"
+                        ],
+                        "description": "Strength of the force: high means it squeezes profit"
+                      },
+                      "points": {
+                        "minItems": 1,
+                        "maxItems": 3,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "maxLength": 70
+                        },
+                        "description": "The evidence behind the rating"
+                      }
+                    },
+                    "required": [
+                      "rating",
+                      "points"
+                    ],
+                    "additionalProperties": false,
+                    "description": "Threat of substitutes"
+                  },
+                  "takeaway": {
+                    "description": "Verdict on industry attractiveness, shown in the bottom-right corner",
+                    "type": "string",
+                    "maxLength": 140
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "entrants",
+                  "suppliers",
+                  "rivalry",
+                  "buyers",
+                  "substitutes"
+                ],
+                "additionalProperties": false,
+                "description": "Five forces — Use for judging how attractive an industry is: the five competitive forces, each rated and evidenced, with the verdict."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
+                    "const": "pestel"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "grid"
+                    ]
+                  },
+                  "factors": {
+                    "minItems": 3,
+                    "maxItems": 6,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "factor": {
+                          "type": "string",
+                          "enum": [
+                            "political",
+                            "economic",
+                            "social",
+                            "technological",
+                            "environmental",
+                            "legal"
+                          ]
+                        },
+                        "impact": {
+                          "description": "How much this factor moves the business case",
+                          "type": "string",
+                          "enum": [
+                            "low",
+                            "medium",
+                            "high"
+                          ]
+                        },
+                        "points": {
+                          "minItems": 1,
+                          "maxItems": 3,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "maxLength": 90
+                          },
+                          "description": "Trend and its effect on us"
+                        }
+                      },
+                      "required": [
+                        "factor",
+                        "points"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "description": "In PESTEL order; leave out factors that do not matter"
+                  },
+                  "takeaway": {
+                    "description": "What the macro picture means, side panel",
+                    "type": "string",
+                    "maxLength": 140
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "factors"
+                ],
+                "additionalProperties": false,
+                "description": "PESTEL — Use for the macro trends — political, economic, social, technological, environmental, legal — that shape a market, each with its impact."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
+                    "const": "business-model-canvas"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "canvas"
+                    ]
+                  },
+                  "partners": {
+                    "minItems": 1,
+                    "maxItems": 5,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 60
+                    },
+                    "description": "Key partners: who we rely on"
+                  },
+                  "activities": {
+                    "minItems": 1,
+                    "maxItems": 3,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 50
+                    },
+                    "description": "Key activities: what we must do well"
+                  },
+                  "resources": {
+                    "minItems": 1,
+                    "maxItems": 3,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 50
+                    },
+                    "description": "Key resources: what we must own"
+                  },
+                  "value": {
+                    "minItems": 1,
+                    "maxItems": 5,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 60
+                    },
+                    "description": "Value propositions: why customers choose us (highlighted)"
+                  },
+                  "relationships": {
+                    "minItems": 1,
+                    "maxItems": 3,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 50
+                    },
+                    "description": "Customer relationships: how we win and keep customers"
+                  },
+                  "channels": {
+                    "minItems": 1,
+                    "maxItems": 3,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 50
+                    },
+                    "description": "Channels: how we reach and deliver"
+                  },
+                  "segments": {
+                    "minItems": 1,
+                    "maxItems": 5,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 60
+                    },
+                    "description": "Customer segments: for whom"
+                  },
+                  "costs": {
+                    "minItems": 1,
+                    "maxItems": 3,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 70
+                    },
+                    "description": "Cost structure: biggest costs"
+                  },
+                  "revenue": {
+                    "minItems": 1,
+                    "maxItems": 3,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "maxLength": 70
+                    },
+                    "description": "Revenue streams: how we earn"
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "partners",
+                  "activities",
+                  "resources",
+                  "value",
+                  "relationships",
+                  "channels",
+                  "segments",
+                  "costs",
+                  "revenue"
+                ],
+                "additionalProperties": false,
+                "description": "Business model canvas — Use for the whole business model on one page: segments, value proposition, channels, relationships, revenue, resources, activities, partners and costs."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -2904,7 +4488,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -3078,7 +4662,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -3253,7 +4837,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -3469,7 +5053,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -3642,7 +5226,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -3787,7 +5371,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -3921,7 +5505,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -4121,7 +5705,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -4285,7 +5869,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -4480,7 +6064,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -4656,7 +6240,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -4806,7 +6390,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -4941,7 +6525,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -5097,7 +6681,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"
@@ -5240,7 +6824,7 @@
                     "maxLength": 40
                   },
                   "sources": {
-                    "description": "Ids from the deck `sources:` list",
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
                     "type": "array",
                     "items": {
                       "type": "string"

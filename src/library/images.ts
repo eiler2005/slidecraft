@@ -115,7 +115,7 @@ export async function generateImages(
   for (const [file, js] of byFile) {
     const { doc, items } = slideMaps(file);
     for (const j of js) items.find((m) => m.get('id') === j.slideId)?.set('image', j.image);
-    writeFileSync(file, doc.toString({ lineWidth: 0 }));
+    writeFileSync(file, doc.toString({ lineWidth: 0, flowCollectionPadding: false }));
   }
   return out;
 }

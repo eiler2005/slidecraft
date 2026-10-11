@@ -37,6 +37,32 @@ slides:
   - include: sections/why.yaml   # a YAML list of slides
 ```
 
+## Client numbers: facts and spreadsheets
+
+Write each client number once; every slide uses the same value, and a changed file updates every slide on the next build.
+
+```yaml
+facts:
+  revenue-2028: { value: 40000000, divide: 1000000, format: "€0M", source: finance-fy25 }   # → €40M
+  churn: { from: { file: data/model.xlsx, sheet: KPIs, cell: B6 }, format: "0.0%" }
+slides:
+  - id: answer
+    layout: big-statement
+    title: Entering Germany can add {{revenue-2028}} by 2028
+  - id: trend
+    layout: chart-takeaway
+    chart: { from: { file: data/model.xlsx, sheet: Plan, range: A1:C6 } }   # first column = categories, header row = series
+  - id: costs
+    layout: data-table
+    rows: { from: { file: data/costs.csv, range: A1:D9 }, header: true }    # header row fills `header:`
+```
+
+The manifest records each file's sha256 and every fact's value. `SC-DATA-*` = a file, sheet or cell that cannot be read; `SC-CONSIST-001` = one metric shown with different values on different slides.
+
+## Page-level sources
+
+After `sc ingest <files> --deck <deck>`, each file is a source. Cite where the number is: `sources: [annual-report#p14]` (page), `#p14-16`, `#slide3`, `#sheet:Plan`, `#s:Market outlook` (a DOCX heading). The source line prints "Annual report 2025, p. 14" and the PDF link opens that page. `sc find "<phrase>" --deck <deck>` finds the page.
+
 Common fields on every slide: `id`, `layout`, `variant`, `title`, `lead`, `tracker`, `sources`, `source`, `notes`, `status`, `ghost {exhibit, data, confidence}`. Everything else comes from the layout contract: `sc layouts <id> --json`.
 
 ## Pitfalls

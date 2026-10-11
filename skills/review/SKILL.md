@@ -15,13 +15,14 @@ allowed-tools: Read, Write, Edit, Glob, Agent, Bash(node ${CLAUDE_PLUGIN_ROOT}/d
 1. `sc check <deck> --json`.
 2. **Mechanical fixes → copy-fitter (Haiku).** `sc fix <deck> --json` lists every too-long field with an exact character budget. Send copy-fitter the deck path plus any `SC-TITLE-001/003`. It rewrites within budget and applies with `sc fix <deck> --apply fixes.json`, looping until `remaining` is empty.
 3. **Sources.** For `SC-SRC-*` add `sources:` ids that exist in the deck, or ask the user. Never invent a source.
-4. `sc build <deck> -f png,pptx --json` and re-check until 0 errors.
+4. **Consistency.** `SC-CONSIST-001` names a metric with different values on different slides. Ask which is right (or read the source), then put it in `facts:` and use `{{id}}` everywhere.
+5. `sc build <deck> -f png,pptx --json` and re-check until 0 errors.
 
 ## Partner review (Opus)
 
-5. Launch **partner-reviewer** with the deck path, the brief, and `dist/previews/`. It reads every PNG and the title chain and returns Blockers / Majors / Minors with slide ids.
-6. Fix blockers and majors (edit the section files or deck.yaml directly; use slide-writer for rewrites of whole slides). Rebuild all formats.
-7. **Look at every preview PNG yourself.** Check: nothing clipped or overlapping, one message per slide, the highlight is the insight, source lines present.
+6. Launch **partner-reviewer** with the deck path, the brief, and `dist/previews/`. It reads every PNG and the title chain and returns Blockers / Majors / Minors with slide ids.
+7. Fix blockers and majors (edit the section files or deck.yaml directly; use slide-writer for rewrites of whole slides). Rebuild all formats.
+8. **Look at every preview PNG yourself.** Check: nothing clipped or overlapping, one message per slide, the highlight is the insight, source lines present.
 
 ## ✅ CP4 — show the user
 

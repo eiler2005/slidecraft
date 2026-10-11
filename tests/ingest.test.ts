@@ -20,6 +20,8 @@ describe('client material with page-level sources', () => {
       ['overview', 'pdf', 12, true],
       ['rates', 'csv', 1, true],
     ]);
+    // the deck keeps its formatting: flow lists stay `[model]`
+    expect(readFileSync(deck, 'utf8')).toContain('sources: [model]');
     const md = readFileSync(join(dir, 'materials/overview.md'), 'utf8');
     expect(md).toContain('## p. 9 {#p9}');
     expect(md).toContain('98.6% identical line breaks');
@@ -29,6 +31,19 @@ describe('client material with page-level sources', () => {
     const hits = findInMaterials('identical line breaks', join(dir, 'materials'));
     expect(hits[0]).toMatchObject({ ref: 'overview#p9', where: 'p. 9' });
     expect(existsSync(join(dir, 'materials/rates.md'))).toBe(true);
+    // a page past the end of the document, and an unknown id with a page
+    writeFileSync(
+      deck,
+      readFileSync(deck, 'utf8').replace(
+        'sources: [model]',
+        'sources: [model, overview#p99, nope#p2]',
+      ),
+    );
+    const codes = checkDeck(deck).diagnostics.filter((d) => d.code === 'SC-SRC-003');
+    expect(codes.map((d) => d.message)).toEqual([
+      '"overview#p99" cites page 99; "overview" has 12 pages',
+      'Unknown source id "nope"',
+    ]);
   }, 60_000);
 
   it('cites a page on the slide source line', () => {

@@ -265,12 +265,20 @@ export function syncPptx(
         );
     // speaker notes
     const flat = (x: string | string[]) => norm(Array.isArray(x) ? x.join(' ') : x);
-    if (es.notes && ref.notes !== undefined && flat(ref.notes) !== flat(es.notes)) {
-      const raw = readField(deckPath, `/slides/${i}/notes`);
-      if (typeof raw === 'string' && flat(raw) === flat(ref.notes)) {
-        const after = clean(es.notes).join('\n');
-        report.changes.push({ slide: es.id, pointer: `/slides/${i}/notes`, before: raw, after });
-        fixes.push({ pointer: `/slides/${i}/notes`, text: after });
+    const had = ref.notes ?? '';
+    if (es.notes && flat(had) !== flat(es.notes)) {
+      const pointer = `/slides/${i}/notes`;
+      const raw = readField(deckPath, pointer);
+      // notes the deck already had (as written), or notes added in PowerPoint
+      if ((typeof raw === 'string' && flat(raw) === flat(had)) || (raw === undefined && !had)) {
+        const after = clean(es.notes).filter(Boolean).join('\n');
+        report.changes.push({
+          slide: es.id,
+          pointer,
+          before: typeof raw === 'string' ? raw : '',
+          after,
+        });
+        fixes.push({ pointer, text: after });
       }
     }
     if (es.tables)

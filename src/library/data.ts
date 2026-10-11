@@ -192,7 +192,12 @@ export function resolveData(
     if (Array.isArray(v)) return v.map((x, i) => walk(x, `${pointer}/${i}`));
     if (v && typeof v === 'object') {
       const o = v as Record<string, unknown>;
-      if (o.from && typeof o.from === 'object' && Object.keys(o).length === 1) {
+      // `{ from }` alone, or a chart that also sets its own options (decimals, highlight, unit…)
+      if (
+        o.from &&
+        typeof o.from === 'object' &&
+        (Object.keys(o).length === 1 || key === 'chart')
+      ) {
         const p = From.safeParse(o.from);
         if (!p.success) {
           diagnostics.push(
@@ -204,8 +209,11 @@ export function resolveData(
         }
         const filled = fromValue(key, p.data, pointer);
         if (filled === undefined) return v;
-        // tables: a header taken from the same range
-        return filled;
+        if (key !== 'chart') return filled;
+        const rest: Record<string, unknown> = {};
+        for (const [k, x] of Object.entries(o))
+          if (k !== 'from') rest[k] = walk(x, `${pointer}/${k}`, k);
+        return { ...(filled as object), ...rest };
       }
       const out: Record<string, unknown> = {};
       for (const [k, x] of Object.entries(o)) out[k] = walk(x, `${pointer}/${k}`, k);

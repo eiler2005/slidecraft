@@ -2,6 +2,43 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.5.0] — 2026-10-11
+
+### Added
+- **MCP server** (`slidecraft mcp`, stdio):
+  - 18 tools cover the whole workflow — brief, templates, ghost deck, contracts, check, fit loop, build, ingest, find, import, sync;
+  - `preview_slide` returns the slide as an image;
+  - a `make_deck` prompt starts the flow from a goal;
+  - decks live in `~/SlideCraft` (`SLIDECRAFT_WORKSPACE`). [How-to](docs/how-to/use-with-mcp.md).
+- **`slidecraft install` / `uninstall`:** one command connects every AI app found on the machine:
+  - Claude Code (plugin) and Codex (skills);
+  - Claude Desktop, Cursor, VS Code, Windsurf and Gemini CLI (MCP server). JSON configs are backed up first; `--dry-run` and `--only` are available.
+- **Facts and spreadsheet data:**
+  - `facts:` defines a number once (`value`, or `from: { file, sheet, cell }`, with an Excel-style `format` and `divide`), and `{{id}}` uses it in any text;
+  - charts, table rows, headers, values and categories read `.xlsx` and `.csv` ranges directly. Formula results come from the workbook's cached values; the CSV delimiter is detected;
+  - the manifest records each data file's sha256 and every fact's value;
+  - codes `SC-DATA-001…003`. [How-to](docs/how-to/use-data-and-facts.md).
+- **Consistency check:** `SC-CONSIST-001` flags one metric shown with different values on different slides, allowing for rounding ("€40M" agrees with "€40.2M"). It found a real mismatch in the pitch-deck example (30% vs 31%).
+- **Client material with page-level sources:**
+  - `slidecraft ingest` reads PDF (pdf.js, bundled separately and loaded only when needed), DOCX, PPTX, XLSX, CSV and Markdown into `materials/<id>.md` with page or section markers, and registers each file in `sources:`;
+  - `slidecraft find` returns the page for a phrase;
+  - slides cite `id#p14`, `#p14-16`, `#slide3`, `#sheet:Plan` or `#s:Heading`; the source line prints "…, p. 14" and PDF links open that page;
+  - `SC-SRC-003` reports unknown ids and pages past the end of the document. [How-to](docs/how-to/ingest-materials.md).
+- **Edits flow back:**
+  - `slidecraft sync <deck> <edited.pptx> [--apply]` writes text edited in PowerPoint back into the YAML: titles, bullets (added or removed), labels and speaker notes. Comments and formatting are kept;
+  - PPTX text boxes are now named after their field (`sc:<slide>/<field>`), so mapping survives reordered slides;
+  - for files from Keynote or Google Slides, slides are matched by order and boxes by position;
+  - derived text (capitals, `{{facts}}`), tables, new boxes and moved or deleted slides are reported, never overwritten. [How-to](docs/how-to/sync-edits.md).
+- **Frameworks and charts pack:** eight layouts, drawn as editable shapes in every engine, with examples in every variant:
+  - `swot` (grid, with-implications), `five-forces`, `pestel`, `business-model-canvas`;
+  - `bubble-chart` (bubble, scatter, growth-share portfolio with dividers), `marimekko`, `tornado`, `football-field`.
+
+  40 layouts in total; the exhibit-selection guide and exhibit-chooser cover them.
+
+### Changed
+- YAML written by `fix --apply`, `sync --apply`, `ingest` and `images` keeps flow lists as written (`[a, b]`, not `[ a, b ]`).
+- Chart `from:` can sit next to chart options (`highlight`, `decimals`, `unit`).
+
 ## [0.4.2] — 2026-10-11
 
 ### Added

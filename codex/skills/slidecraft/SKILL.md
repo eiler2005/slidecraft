@@ -21,7 +21,7 @@ Inside Codex prefer the local artifact-tool runtime for PPTX: prefix builds with
 
 ## 1 · Brief ✅
 
-`sc new <deck-id> --goal "…" --audience "…"`, then fill `slidecraft/<id>/brief.yaml`: ask, audience knows/cares, task, `usage` (edit-together | send-pdf | present-live | web-link | automation | codex), length, language. Ask only what is missing, in one message. `sc templates --brief <brief> --json` → tell the user the recommended outputs and why. Confirm the brief.
+`sc new <deck-id> --goal "…" --audience "…"`, then fill `slidecraft/<id>/brief.yaml`: ask, audience knows/cares, task, `usage` (edit-together | send-pdf | present-live | web-link | automation | codex), length, language. Ask only what is missing, in one message. `sc templates --brief <brief> --json` → tell the user the recommended outputs and why. Confirm the brief. If the user gave files (PDF, DOCX, PPTX, XLSX, CSV, MD): `sc ingest <files…> --deck <deck>` — each becomes a source, and `sc find "<phrase>" --deck <deck>` returns the page to cite (`sources: [report#p14]`).
 
 ## 2 · Pick ✅
 
@@ -37,15 +37,17 @@ Follow `slidecraft-storyline-architect`: write `storyline.md` (question, governi
 
 ## 5 · Build
 
-For each slide: `sc layouts <layout> --json` for the contract, write the content fields, keep id and title, remove `status: ghost` (or set the deck `status: draft`). Rules: `slidecraft-deck-spec`. Then `sc validate <deck>` and `SLIDECRAFT_IN_CODEX=1 sc build <deck> --json`.
+For each slide: `sc layouts <layout> --json` for the contract, write the content fields, keep id and title, remove `status: ghost` (or set the deck `status: draft`). Client numbers go in `facts:` (or `from: { file, sheet, range }` for charts and tables) and are written as `{{id}}` — never retyped. Rules: `slidecraft-deck-spec`. Then `sc validate <deck>` and `SLIDECRAFT_IN_CODEX=1 sc build <deck> --json`.
 
 ## 6 · Review ✅
 
-`sc check <deck> --json`: `sc fix <deck> --json` lists too-long fields with a character budget; rewrite within it (keep numbers, never truncate), save `[{pointer, text}]` to fixes.json and run `sc fix <deck> --apply fixes.json` until nothing remains, fix titles, add real sources for `SC-SRC-*`. Open every `dist/previews/*.png`. Apply `slidecraft-partner-review-checklist`; fix blockers and majors; rebuild. Present the verdict, the fixes and the files.
+`sc check <deck> --json`: `sc fix <deck> --json` lists too-long fields with a character budget; rewrite within it (keep numbers, never truncate), save `[{pointer, text}]` to fixes.json and run `sc fix <deck> --apply fixes.json` until nothing remains, fix titles, add real sources for `SC-SRC-*`, make `SC-CONSIST-001` metrics agree (one fact). Open every `dist/previews/*.png`. Apply `slidecraft-partner-review-checklist`; fix blockers and majors; rebuild. Present the verdict, the fixes and the files.
 
 ## 7 · Deliver
 
 Paths to PPTX / PDF / HTML / previews / `manifest.json`. `visual_review` stays false until the user has looked at every slide. Never send or publish anything.
+
+If the user later edits the PPTX by hand: `sc sync <deck> <edited.pptx> --json`, show the changes, then `--apply` and rebuild.
 
 ## Hard rules
 

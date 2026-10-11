@@ -12,6 +12,8 @@ Runtime libraries inlined into dist/slidecraft.mjs (licenses retained by their a
   - pptxgenjs (MIT), pdfkit (MIT), fontkit (MIT), jszip (MIT or GPLv3, used under MIT),
     zod (MIT), yaml (ISC), commander (MIT)
   - @resvg/resvg-wasm (MPL-2.0) — dist/resvg.wasm is the unmodified upstream binary
+  - pdf.js / pdfjs-dist (Apache-2.0, Mozilla Foundation) — bundled separately in dist/pdf-text.mjs
+    and loaded only when PDF material is ingested
 
 Methodology
   - The consulting methodology generalises the author's earlier internal work (client-ai-agents).

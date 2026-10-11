@@ -214,8 +214,8 @@ export const CODES = {
   'SC-SRC-003': {
     severity: 'error',
     title: 'Unknown source page reference',
-    why: 'A slide cites `id#p12` but the source id does not exist.',
-    fix: 'Use an id from the deck `sources:` list, e.g. `annual-report#p14`.',
+    why: 'A slide cites `id#p12`, but the source id does not exist or the document has fewer pages.',
+    fix: 'Use an id from the deck `sources:` list and a page that exists — `slidecraft find` shows where a phrase is.',
   },
   'SC-ENGINE-001': {
     severity: 'warning',

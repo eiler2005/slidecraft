@@ -45,6 +45,7 @@ describe('facts and from-ranges in decks', () => {
         { name: 'UK', values: [42, 49, 58] },
         { name: 'Germany', values: [0, 12, 40] },
       ],
+      highlight: [2],
     });
     expect((d.slides[1] as unknown as { header: string[] }).header).toEqual([
       'City',

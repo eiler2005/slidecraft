@@ -4,6 +4,8 @@
 
 SlideCraft is a CLI with machine-readable output. An agent that can run shell commands and read files can drive the whole workflow. Claude Code and Codex get packaged skills on top of this; everything else uses [`AGENTS.md`](../../AGENTS.md).
 
+**Apps that speak MCP** (Claude Desktop, Cursor, VS Code, Windsurf, Gemini CLI) can use the SlideCraft MCP server instead: `npx @eiler2005/slidecraft install`, then ask in plain words. See [use with MCP apps](use-with-mcp.md).
+
 ## Set up
 
 ```sh
@@ -33,6 +35,8 @@ Then ask in plain words: *"Follow AGENTS.md and make a 6-slide deck for the boar
 | Contracts | `sc layouts <layout> --json` | JSON Schema and an example for each layout |
 | Validate | `sc validate <deck> --json` | `SC-*` diagnostics with JSON pointers and fixes |
 | Fit loop | `sc fix <deck> --json` then `--apply fixes.json` | each too-long field with its character budget |
+| Material | `sc ingest <files> --deck <deck>`, `sc find "<phrase>" --json` | sources with page references |
+| Edits back | `sc sync <deck> <edited.pptx> --json` then `--apply` | the fields changed in PowerPoint |
 | Build | `sc build <deck> --json` | output files and the manifest |
 
 `sc` = `node dist/slidecraft.mjs`. Exit codes: 0 ok, 1 deck errors, 2 usage error, 3 engine failure.

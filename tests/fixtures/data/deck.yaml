@@ -16,7 +16,7 @@ slides:
     variant: column
     title: Germany reaches {{rev-2028}} in 2028 while churn stays at {{churn}}
     sources: [model]
-    chart: { from: { file: model.xlsx, sheet: Plan, range: "A1:C4" } }
+    chart: { from: { file: model.xlsx, sheet: Plan, range: "A1:C4" }, highlight: [2] }
     takeaway:
       headline: Germany adds {{rev-2028}}
       points: [The UK keeps growing at the same time]

@@ -196,6 +196,7 @@ export function applyFixes(
     doc.setIn(full, f.text);
     applied++;
   }
-  for (const [file, doc] of docs) writeFileSync(file, doc.toString({ lineWidth: 0 }));
+  for (const [file, doc] of docs)
+    writeFileSync(file, doc.toString({ lineWidth: 0, flowCollectionPadding: false }));
   return { applied, errors, remaining: fitTasks(deckPath) };
 }

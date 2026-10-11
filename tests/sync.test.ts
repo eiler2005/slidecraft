@@ -69,6 +69,11 @@ describe('edits flow back from PowerPoint', () => {
             '$1<a:p><a:r><a:t>Referrals bring one in four new shippers</a:t></a:r></a:p>',
           ),
       );
+      // notes added to a slide that had none (slide 2, "problem")
+      const rel = await zip.file('ppt/slides/_rels/slide2.xml.rels')!.async('string');
+      const target = `ppt/notesSlides/${/notesSlides\/(notesSlide\d+\.xml)/.exec(rel)![1]}`;
+      const empty = await zip.file(target)!.async('string');
+      zip.file(target, empty.replace('<a:t></a:t>', '<a:t>Pause here for questions.</a:t>'));
       // the notes
       const notes = Object.keys(zip.files).filter((f) =>
         /notesSlides\/notesSlide\d+\.xml$/.test(f),
@@ -95,6 +100,7 @@ describe('edits flow back from PowerPoint', () => {
 
     const preview = syncPptx(deck, edited);
     expect(preview.changes.map((c) => [c.slide, c.pointer, c.after])).toEqual([
+      ['problem', '/slides/1/notes', 'Pause here for questions.'],
       [
         'market',
         '/slides/3/title',
@@ -115,13 +121,14 @@ describe('edits flow back from PowerPoint', () => {
     expect(readFileSync(deck, 'utf8')).toContain('€14B market'); // preview writes nothing
 
     const r = syncPptx(deck, edited, { apply: true });
-    expect(r.applied).toBe(3);
+    expect(r.applied).toBe(4);
     const yaml = readFileSync(deck, 'utf8');
     expect(yaml).toContain(
       'title: Regional part-load freight is a €15B market in our first three countries',
     );
     expect(yaml).toContain('Referrals bring one in four new shippers');
     expect(yaml).toContain('# Fictional example: Fabrikam Freight'); // comments kept
+    expect(yaml).toContain('    sources: [fab-metrics]'); // and flow lists as written
     // a second sync against the same file finds nothing new
     expect(syncPptx(deck, edited).changes).toEqual([]);
   }, 60_000);
@@ -157,7 +164,7 @@ id: s
 title: Sync
 theme: consulting-classic
 facts:
-  rev: { value: 42000000, format: "€#,##0.0,,M" }
+  rev: { value: 42000000, divide: 1000000, format: "€0M" }
 sources: [{ id: plan, title: Plan, illustrative: true }]
 slides:
   - id: q

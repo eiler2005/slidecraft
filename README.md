@@ -23,7 +23,10 @@
 It works with **any AI agent or LLM that can run a command**:
 - **Claude Code** — a plugin with skills and model-tiered agents;
 - **OpenAI Codex** — installable skills;
-- **Cursor, Gemini CLI, Aider or your own scripts** — through [`AGENTS.md`](AGENTS.md) and a JSON CLI.
+- **Claude Desktop, Cursor, VS Code, Windsurf, Gemini CLI** — an MCP server, connected with one `install` command;
+- **Aider or your own scripts** — through [`AGENTS.md`](AGENTS.md) and a JSON CLI.
+
+It works from **your material**: numbers come from your Excel or CSV files and are written once, sources cite the page of the report they come from, and text a colleague edits in PowerPoint flows back into the deck.
 
 Underneath is one **zero-install CLI**. Every layout is measured with metric-compatible fonts, so text that fits in SlideCraft fits in PowerPoint — verified line by line against real PowerPoint output.
 
@@ -86,7 +89,7 @@ In Claude Code that is Opus, Sonnet and Haiku. In Codex or any other agent, it i
 
 ## Template gallery
 
-A template is **a storyline (the shape of the argument for a task) × a theme (the look)**. Any storyline works in any theme. Fourteen storylines × six themes (or your own brand theme), built from thirty-two layouts. The [gallery site](https://eiler2005.github.io/slidecraft/) shows every storyline in every theme and the example decks in every format.
+A template is **a storyline (the shape of the argument for a task) × a theme (the look)**. Any storyline works in any theme. Fourteen storylines × six themes (or your own brand theme), built from forty layouts. The [gallery site](https://eiler2005.github.io/slidecraft/) shows every storyline in every theme and the example decks in every format.
 
 <table>
   <tr>
@@ -101,7 +104,7 @@ A template is **a storyline (the shape of the argument for a task) × a theme (t
   </tr>
 </table>
 
-<p align="center"><a href="docs/reference/storylines.gen.md">All 14 storylines →</a> · <a href="docs/reference/themes.gen.md">All 6 themes →</a> · <a href="docs/reference/layouts.gen.md">All 32 layouts →</a></p>
+<p align="center"><a href="docs/reference/storylines.gen.md">All 14 storylines →</a> · <a href="docs/reference/themes.gen.md">All 6 themes →</a> · <a href="docs/reference/layouts.gen.md">All 40 layouts →</a></p>
 
 Also included: **business case**, **product overview**, **case study**, **project kickoff**, **post-mortem**, **training / workshop**, **sales / customer QBR**, **investment memo**. Bring your own outline and SlideCraft maps it onto layouts.
 
@@ -138,6 +141,7 @@ Pick your agent. All of them drive the same CLI, the committed bundle `dist/slid
 | **Claude Code** | `/plugin marketplace add eiler2005/slidecraft` then `/plugin install slidecraft@slidecraft` | `/slidecraft:new <what the deck must achieve, for whom>` |
 | **OpenAI Codex** | `npm i -g @eiler2005/slidecraft` then `slidecraft codex install` (skills in `~/.codex/skills/slidecraft*`) | `codex "Using SlideCraft, make a 5-slide deck that …"` |
 | **Cursor, Gemini CLI, Aider, Copilot agents, any LLM with a shell** | `npm i -g @eiler2005/slidecraft`, or clone; point the agent at [`AGENTS.md`](AGENTS.md) | "Follow AGENTS.md and make a deck that …" — see [use with any agent](docs/how-to/use-with-any-agent.md) |
+| **Claude Desktop, Cursor, VS Code, Windsurf, Gemini CLI** — or all of the above | `npx @eiler2005/slidecraft install` connects every AI app it finds (MCP server + Claude Code plugin + Codex skills) | "Use SlideCraft to make a deck that …" — see [use with MCP apps](docs/how-to/use-with-mcp.md) |
 | **No agent, or any script** | `npx @eiler2005/slidecraft` — no clone needed ([npm](https://www.npmjs.com/package/@eiler2005/slidecraft)) | `npx @eiler2005/slidecraft build deck.yaml` |
 
 ```sh
@@ -158,7 +162,7 @@ Write `deck.yaml` by hand: [tutorial](docs/tutorials/cli-without-agent.md) · [d
 | `<id>-onepager.pdf` | A4 one-page summary: the title chain with slide thumbnails |
 | `<id>.docx` | Word memo: action titles as headings, editable text and tables, exhibits as images, notes |
 | `previews/NN-<slide>.png` | Slide previews for review and sharing |
-| `manifest.json` | Engines and versions, sha256 of inputs and outputs, check results, limitations, `visual_review: false` until a human signs off |
+| `manifest.json` | Engines and versions, sha256 of inputs, data files and outputs, every fact's value, check results, limitations, `visual_review: false` until a human signs off |
 
 Builds are **deterministic**: the same deck produces byte-identical PPTX and PDF.
 
@@ -179,8 +183,8 @@ Methodology: [writing standard](library/references/writing-standard.md) · [visu
 |---|---|
 | Frame | `title` (cover, closing) · `agenda` (agenda, section-divider) |
 | Message | `exec-summary` (SCR, key messages) · `key-points` · `big-statement` (statement, quote, hero number) · `text-image` · `text` · `before-after` · `freeform` (HTML/CSS, checked like any slide) |
-| Numbers | `kpi-tiles` · `chart-takeaway` (bar, column, stacked, line) · `waterfall` · `funnel` (funnel, pyramid) · `data-table` |
-| Decide | `options-comparison` (text, Harvey-ball rating, up to 5 options) · `matrix-2x2` · `issue-tree` (issue, driver) · `maturity-model` (grid, staircase) · `coverage-map` · `architecture` (zones + register) · `evidence-chain` · `risk-matrix` |
+| Numbers | `kpi-tiles` · `chart-takeaway` (bar, column, stacked, line) · `waterfall` · `bubble-chart` (bubble, scatter, growth-share portfolio) · `marimekko` · `tornado` · `football-field` · `funnel` (funnel, pyramid) · `data-table` |
+| Decide | `options-comparison` (text, Harvey-ball rating, up to 5 options) · `matrix-2x2` · `swot` · `five-forces` · `pestel` · `business-model-canvas` · `issue-tree` (issue, driver) · `maturity-model` (grid, staircase) · `coverage-map` · `architecture` (zones + register) · `evidence-chain` · `risk-matrix` |
 | Sequence | `process-steps` (chevrons, numbered) · `timeline` (milestones, gantt) · `gate-matrix` · `process-compare` (current vs proposed) · `cadence` (role calendar) · `callout` (numbered callouts on a screenshot) |
 | People · Close | `team-cards` · `org-chart` · `raci` · `next-steps` (decision, actions) |
 
@@ -188,17 +192,19 @@ Contracts, limits and thumbnails: [layouts reference](docs/reference/layouts.gen
 
 ## Roadmap
 
-Shipped in 0.4:
-- PPTX built inside your brand template, on its masters and layouts;
-- accessible PPTX (titles first, chart alt text, decorative marks);
-- `callout` — every visual pattern now has a layout (32);
-- freeform HTML, and the `slidecraft fix` loop (0.3).
+Shipped in 0.5:
+- **your numbers, once:** `facts:` with `{{id}}`, and charts and tables read straight from Excel and CSV;
+- **the same number everywhere:** a check flags a metric that shows different values on different slides;
+- **page-level sources:** `ingest` reads PDF, Word, PowerPoint and Excel material; slides cite `report#p14`;
+- **edits flow back:** `sync` brings text edited in PowerPoint back into the deck;
+- **frameworks and charts:** SWOT, five forces, PESTEL, business model canvas, bubble and portfolio charts, marimekko, tornado, football field (40 layouts);
+- **every AI app:** an MCP server and a one-line `install` for Claude Desktop, Cursor, VS Code, Windsurf, Gemini CLI, Claude Code and Codex.
 
-Next (0.5): an MCP server, stock photos, Excel/CSV into charts, icons, live preview. See [ROADMAP.md](ROADMAP.md).
+Next: stock photos, icons, live preview. See [ROADMAP.md](ROADMAP.md).
 
 ## Contributing
 
-Issues and PRs welcome — new layouts, themes and storylines especially. Start with [CONTRIBUTING.md](CONTRIBUTING.md); `npm run check` runs lint, types and 550+ tests, including pixel-hash visual regression of every layout.
+Issues and PRs welcome — new layouts, themes and storylines especially. Start with [CONTRIBUTING.md](CONTRIBUTING.md); `npm run check` runs lint, types and 780+ tests, including pixel-hash visual regression of every layout.
 
 ## License and acknowledgements
 

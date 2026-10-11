@@ -190,7 +190,7 @@ export async function ingest(
       added,
     });
   }
-  writeFileSync(deckPath, doc.toString({ lineWidth: 0 }));
+  writeFileSync(deckPath, doc.toString({ lineWidth: 0, flowCollectionPadding: false }));
   return out;
 }
 

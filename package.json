@@ -1,6 +1,6 @@
 {
   "name": "@eiler2005/slidecraft",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "Describe the goal. Pick a look. Ship a partner-ready deck. A Claude Code plugin and CLI that turns a brief into editable PPTX, vector PDF and HTML decks.",
   "type": "module",
   "license": "MIT",
@@ -66,7 +66,7 @@
     "esbuild": "0.28.2",
     "fontkit": "2.0.4",
     "jszip": "3.10.2",
-    "pdfjs-dist": "^4.10.38",
+    "pdfjs-dist": "4.10.38",
     "pdfkit": "0.20.2",
     "pptxgenjs": "4.0.1",
     "tsx": "4.23.15",

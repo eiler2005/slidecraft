@@ -275,14 +275,26 @@ export function loadDeck(path: string): LoadedDeck {
       );
     seen.add(slide.id);
     for (const ref of slide.sources ?? []) {
-      const sid = parseSourceRef(ref).id;
-      if (!sourceIds.has(sid))
+      const r = parseSourceRef(ref);
+      if (!sourceIds.has(r.id))
         diagnostics.push(
-          diag('SC-SPEC-002', `Unknown source id "${sid}"`, {
+          diag(r.where ? 'SC-SRC-003' : 'SC-SPEC-002', `Unknown source id "${r.id}"`, {
             pointer: `/slides/${i}/sources`,
             slide: slide.id,
           }),
         );
+      else {
+        // a page past the end of the document (`pages` is recorded by `slidecraft ingest`)
+        const pages = deck.sources.find((s) => s.id === r.id)?.pages;
+        const last = Number(/^p\d+-(\d+)$/.exec(ref.split('#')[1] ?? '')?.[1] ?? r.page);
+        if (pages && last > pages)
+          diagnostics.push(
+            diag('SC-SRC-003', `"${ref}" cites page ${last}; "${r.id}" has ${pages} pages`, {
+              pointer: `/slides/${i}/sources`,
+              slide: slide.id,
+            }),
+          );
+      }
     }
     slides.push(slide);
   });

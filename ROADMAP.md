@@ -49,17 +49,25 @@ SlideCraft ships in milestones. Each one ends with something people can use, tes
 - ✅ `slidecraft fix`: fit loop with measured character budgets, applied by JSON pointer.
 - ✅ PPTX accessibility: title placeholders read first, chart alt text in words, decorative marks; `SC-A11Y-*` checks (0.4).
 
-## v0.5 — next
+## v0.5 — shipped
 
-Reach and inputs. Ordered by value:
+Your material in, your edits back, every AI app.
+
+- ✅ **MCP server** (`slidecraft mcp`) with 18 tools and a `make_deck` prompt, including slide previews as images; **`slidecraft install`** connects Claude Code, Codex, Claude Desktop, Cursor, VS Code, Windsurf and Gemini CLI in one command.
+- ✅ **Excel and CSV into charts and tables** (`from: { file, sheet, range }`), and **`facts:`** written once and used as `{{id}}`; files and values pinned in the manifest.
+- ✅ **Cross-slide consistency check** (`SC-CONSIST-001`): one metric, one value.
+- ✅ **Document intake with page-level sources:** `ingest` (PDF, DOCX, PPTX, XLSX, CSV, MD) and `find`; slides cite `report#p14`, PDF links open the page.
+- ✅ **Edits flow back:** `sync` writes text edited in PowerPoint, Keynote or Google Slides back into deck.yaml.
+- ✅ **Frameworks and charts pack:** `swot`, `five-forces`, `pestel`, `business-model-canvas`, `bubble-chart` (bubble, scatter, portfolio), `marimekko`, `tornado`, `football-field` — 40 layouts.
+
+## v0.6 — next
 
 | Item | Why | Notes |
 |---|---|---|
-| **MCP server** (`slidecraft mcp`) | Build decks from Claude Desktop, Cursor, Zed and any MCP client, not only from coding agents | Tools: `new`, `templates`, `scaffold`, `validate`, `fix`, `build`, `layouts`; stdio transport; same JSON as the CLI |
 | **Stock photos** (Pexels, Pixabay) next to generation | Real photos for story decks instead of generated ones, with credit lines | Provider option for `slidecraft images`; attribution goes to the source line and the manifest |
-| **Excel and CSV into charts** | Chart data straight from the client's tables, no retyping | `chart: { from: data.xlsx, sheet, range }`; read at build time; values pinned in the manifest |
 | **Icon library** (Lucide or Tabler, MIT) | Icons for `key-points`, `process-steps` and similar | Optional per item; one icon set per theme; used sparingly in consulting themes |
 | **Live preview** (`slidecraft preview --watch`) | Edit YAML, see the slide instantly | Local server with hot reload of the HTML deck and diagnostics overlay |
+| **Table sync** | Bring edited table cells back too | Extends `sync` to `data-table` and option tables |
 
 ## Principles for what goes in
 

@@ -44,7 +44,7 @@ jobs:
 
       - name: Upload visual-regression renders
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: visual-diff-${{ matrix.os }}
           path: tests/.output/visual
@@ -71,7 +71,7 @@ jobs:
 
       - name: Upload deck preview
         if: matrix.os == 'ubuntu-latest'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: deck-preview
           path: out/ci

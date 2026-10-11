@@ -54,7 +54,8 @@
     "check": "npm run lint && npm run typecheck && npm run test",
     "hooks": "node -e \"require('child_process').execFileSync(process.platform==='darwin'&&require('fs').existsSync('/usr/bin/git')?'/usr/bin/git':'git',['config','core.hooksPath','.githooks'],{stdio:'inherit'})\"",
     "prepublishOnly": "node scripts/prepublish.mjs",
-    "showcase": "tsx scripts/showcase.ts"
+    "showcase": "tsx scripts/showcase.ts",
+    "test:digital-ruble": "tsx scripts/digital-ruble-regression.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",

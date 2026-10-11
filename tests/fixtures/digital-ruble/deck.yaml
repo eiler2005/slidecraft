@@ -1,0 +1,27 @@
+schemaVersion: 1
+id: digital-ruble-public-tech-2026
+title: "Цифровой рубль: объясняющие схемы"
+storyline: research-readout
+theme: theme/public-tech.json
+status: draft
+footer: Цифровой рубль · объясняющие схемы
+sources:
+  - id: original-deck
+    title: Digital_Ruble_Explainer_RU_v3 — исходная презентация
+  - id: digital-ruble-explainer-ru-v3
+    title: Digital Ruble Explainer RU v3
+    date: 2026-10
+    file: Digital_Ruble_Explainer_RU_v3.pptx
+    pages: 22
+output:
+  formats:
+    - pptx
+    - pdf
+    - png
+  engines:
+    pptx: pptxgenjs
+    pdf: native
+slides:
+  - include: sections/core.yaml
+  - include: sections/international.yaml
+  - include: sections/appendix.yaml

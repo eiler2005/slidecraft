@@ -28,6 +28,8 @@ SlideCraft turns a goal into a consulting-grade deck: brief → template → sto
 - Action titles are full-sentence claims, ≤ 2 lines; one message per slide.
 - Quote YAML values containing `, ` or `: ` inside `{ … }`.
 - Client material stays in `slidecraft/` (git-ignored). Never commit it.
+  - Explicit owner-approved exception: `tests/fixtures/digital-ruble/` is the public regression corpus based on `Digital_Ruble_Explainer_RU_v3`. Do not extend this exception to other client data. Do not redistribute locally licensed system fonts. Generated regression reports stay in ignored `tests/.output/`.
+- Project architecture diagrams and their labels use English; client deck content retains its original language.
 
 ## Developing SlideCraft itself
 

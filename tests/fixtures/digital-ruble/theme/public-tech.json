@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "id": "public-tech",
+  "name": "Public Tech Editorial",
+  "description": "Quiet public-infrastructure editorial system: warm-white paper, graphite type, electric ultramarine and semantic mint or amber signals.",
+  "bestFor": ["research-readout", "narrative-story", "public-policy"],
+  "mood": ["editorial", "precise", "contemporary"],
+  "dark": false,
+  "prefers": "pptx",
+  "colors": {
+    "background": "#F8F8F5",
+    "surface": "#EEF1F6",
+    "ink": "#172033",
+    "muted": "#59677A",
+    "accent": "#2349E8",
+    "accentText": "#FFFFFF",
+    "accentSoft": "#E3E9FF",
+    "rule": "#D5DCE7",
+    "positive": "#078A7E",
+    "negative": "#CB5847",
+    "titleInk": "#172033"
+  },
+  "chart": ["#2349E8", "#172033", "#078A7E", "#C78021", "#8D72C8", "#A8B4C4"],
+  "fonts": {
+    "heading": {
+      "family": "System Font",
+      "measure": "sfns",
+      "files": { "regular": "/System/Library/Fonts/SFNS.ttf" }
+    },
+    "body": {
+      "family": "System Font",
+      "measure": "sfns",
+      "files": { "regular": "/System/Library/Fonts/SFNS.ttf" }
+    }
+  },
+  "type": {
+    "cover": 48,
+    "title": 27,
+    "subtitle": 17,
+    "heading": 16,
+    "body": 14,
+    "minBody": 11,
+    "small": 10,
+    "source": 8,
+    "lineHeight": 1.18,
+    "titleWeight": "bold"
+  },
+  "decor": {
+    "kind": "geo",
+    "colors": ["#2349E8", "#078A7E"],
+    "intensity": 0.16,
+    "onContent": false
+  },
+  "chrome": {
+    "titleRule": true,
+    "accentBar": true,
+    "pageNumbers": true,
+    "tracker": true,
+    "footer": "Цифровой рубль · объясняющие схемы"
+  }
+}

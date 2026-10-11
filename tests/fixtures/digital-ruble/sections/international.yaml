@@ -1,0 +1,182 @@
+- id: s09
+  title: "CBDC — не один продукт: разные страны решают разные задачи"
+  sources: [original-deck]
+  lead: "8. МЕЖДУНАРОДНАЯ ПАНОРАМА · 09"
+  layout: freeform-canvas
+  variant: body
+  alt: "91% из 93 центробанков изучали CBDC; четыре направления международных проектов: розничные наличные, приватность, инклюзия и токенизированные расчёты."
+  css: |-
+    .s09{display:grid;grid-template-columns:1fr 2.35fr;grid-template-rows:1fr auto;gap:18px;height:100%;font-family:var(--font-body);color:var(--ink)}.s09-stat{grid-row:1;background:var(--ink);color:#fff;border-radius:18px;padding:26px;display:flex;flex-direction:column;justify-content:center}.s09-num{font:700 58pt/1 var(--font-heading)}.s09-stat b{font-size:19pt;color:#65d8ee;margin-top:14px}.s09-stat p{font-size:16pt;line-height:1.22;margin:28px 0}.s09-stat hr{width:100%;border:0;border-top:1px solid #718196}.s09-stat strong{font-size:15pt;line-height:1.24;margin-top:24px}.s09-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.s09-cell{border-left:7px solid var(--accent);padding:13px 18px;background:var(--surface);border-radius:10px}.s09-cell:nth-child(2){border-color:#7454b5}.s09-cell:nth-child(3){border-color:#009b8c}.s09-cell:nth-child(4){border-color:#e58a08}.s09-tag{font-weight:700;font-size:11pt;color:var(--accent)}.s09-cell:nth-child(2) .s09-tag{color:#7454b5}.s09-cell:nth-child(3) .s09-tag{color:#009b8c}.s09-cell:nth-child(4) .s09-tag{color:#c97100}.s09-cell h3{font:700 21pt/1.1 var(--font-heading);margin:10px 0}.s09-cell p{font-size:15pt;line-height:1.2;margin:0;color:var(--muted)}.s09-take{grid-column:1/-1;border-left:8px solid var(--accent);background:#e4efff;padding:16px 20px;font-size:16pt;font-weight:700;line-height:1.2}
+    .s09{gap:11px}.s09-stat{padding:18px}.s09-num{font-size:48pt}.s09-stat b{font-size:16pt;margin-top:9px}.s09-stat p{font-size:13pt;margin:17px 0}.s09-stat strong{font-size:12.5pt;margin-top:16px}.s09-grid{gap:10px}.s09-cell{padding:10px 14px}.s09-tag{font-size:9pt}.s09-cell h3{font-size:17pt;margin:7px 0}.s09-cell p{font-size:12.5pt}.s09-take{padding:11px 15px;font-size:13pt}
+    .s09{grid-template-rows:auto 1fr auto}.s09-title{grid-column:1/-1;font:700 21pt/1.06 var(--font-heading);letter-spacing:-.02em}.s09-stat,.s09-grid{grid-row:2}
+  html: |-
+    <div class="s09"><div class="s09-title">CBDC — не один продукт: разные страны решают разные задачи</div><aside class="s09-stat"><div class="s09-num">91%</div><b>из 93 центробанков</b><p>изучали розничную,<br>оптовую CBDC или обе<br>модели</p><hr><strong>Оптовые проекты в среднем продвинулись дальше розничных</strong></aside><section class="s09-grid"><article class="s09-cell"><div class="s09-tag">РОЗНИЧНЫЕ ЦИФРОВЫЕ НАЛИЧНЫЕ</div><h3>Россия · Китай</h3><p>Публичные деньги для ежедневных платежей; банки остаются интерфейсом.</p></article><article class="s09-cell"><div class="s09-tag">ПРИВАТНОСТЬ И АВТОНОМИЯ</div><h3>Еврозона</h3><p>Офлайн-приватность и публичная альтернатива картам; не «программируемые деньги».</p></article><article class="s09-cell"><div class="s09-tag">ИНКЛЮЗИЯ И УСТОЙЧИВОСТЬ</div><h3>Багамы · Ямайка · Нигерия</h3><p>Ранние запуски в небольших экономиках: доступность, островная и платежная устойчивость.</p></article><article class="s09-cell"><div class="s09-tag">ТОКЕНИЗИРОВАННЫЕ РАСЧЁТЫ</div><h3>Бразилия Drex</h3><p>Расчётный актив для банков и токенизированных рынков, а не просто новый кошелёк гражданина.</p></article></section><div class="s09-take">Слово CBDC описывает эмитента, но не дизайн: розничная и оптовая модели дают разные выгоды, риски и роли банкам.</div></div>
+  notes: |-
+    По опросу BIS за 2024 год 91% из 93 опрошенных центробанков изучали хотя бы одну модель CBDC; оптовые проекты в среднем находились на более продвинутых стадиях.
+    [Sources]
+    - https://www.bis.org/publications/paper-159-advancing-tandem-results-2024-bis-survey-central-bank-digital-currencies-and-crypto
+    - https://www.cbr.ru/PSystem/dr/
+    - https://www.ecb.europa.eu/euro/digital_euro/html/index.en.html
+    - https://www.bcb.gov.br/estabilidadefinanceira/drex
+    - https://www.sanddollar.bs/
+
+- id: s10
+  title: "Главные различия — в цели, архитектуре и границах контроля"
+  sources: [original-deck]
+  lead: "9. СРАВНЕНИЕ СТРАН · СТАТУС НА 05.09.2026 · 10"
+  layout: freeform-canvas
+  variant: body
+  alt: "Сравнительная таблица статуса, модели, данных и ключевой идеи CBDC в России, Китае, Еврозоне, Бразилии и на Багамах."
+  css: |-
+    .s10{height:100%;display:grid;grid-template-rows:auto 1fr auto;gap:9px}.s10-title{font:700 18pt/1.06 var(--font-heading);letter-spacing:-.02em}.s10-table{display:grid;grid-template-columns:.72fr 1fr 1.24fr 1.42fr 1.42fr;border:1px solid var(--ink);border-radius:10px;overflow:hidden}.s10-table div{padding:7px 8px;border-right:1px solid #b4c0cb;border-bottom:1px solid #b4c0cb;font-size:8.5pt;line-height:1.12;display:flex;align-items:center}.s10-table div:nth-child(5n){border-right:0}.s10-table div:nth-last-child(-n+5){border-bottom:0}.s10-th{background:var(--ink);color:#fff;font-size:8pt!important;font-weight:700}.s10-key{font:700 11pt/1.05 var(--font-heading);color:var(--accent)}.s10-take{border-left:6px solid #7454b5;background:#f0eaff;color:#61469e;padding:9px 12px;font-size:11pt;font-weight:700;line-height:1.16}
+  html: |-
+    <div class="s10"><div class="s10-title">Главные различия — в цели, архитектуре и границах контроля</div><div class="s10-table"><div class="s10-th">СТРАНА</div><div class="s10-th">СТАТУС</div><div class="s10-th">МОДЕЛЬ</div><div class="s10-th">ДАННЫЕ И ПРАВИЛА</div><div class="s10-th">ГЛАВНАЯ ИДЕЯ</div><div class="s10-key">Россия</div><div>Массовое подключение с 01.09.2026</div><div>Розничная; платформа ЦБ, доступ через банки</div><div>Не анонимна; единый реестр; смарт-контракты и маркирование</div><div>Платежная инфраструктура + автоматизация целевых потоков</div><div class="s10-key">Китай</div><div>Пилот / расширенное тестирование</div><div>Розничная; двухуровневая через операторов</div><div>«Управляемая анонимность»; отслеживание по закону</div><div>Цифровая замена M0 и эффективность розничных платежей</div><div class="s10-key">Еврозона</div><div>Подготовка; возможная эмиссия в 2029</div><div>Розничная; через банки и публичных посредников</div><div>ЦБ не должен видеть личность; офлайн — приватность как у наличных</div><div>Публичная европейская опция; не программируемые деньги</div><div class="s10-key">Бразилия</div><div>Пилот Drex</div><div>Токенизированная оптовая инфраструктура</div><div>Разрешённые участники; автоматизация смарт-контрактами</div><div>Расчёт токенизированных активов и обязательств</div><div class="s10-key">Багамы</div><div>Запущен</div><div>Розничная; через платёжных провайдеров</div><div>KYC и уровни кошельков</div><div>Финансовая доступность и устойчивость островной системы</div></div><div class="s10-take">Россия и Китай допускают более сильную управляемость потоков; проект евро сознательно отделяет условный платёж от ограничений на сами деньги.</div></div>
+  notes: |-
+    Сравнение сводит официальные проектные решения. Формулировка о степени управляемости — аналитический вывод из архитектуры и заявленных функций, а не правовой рейтинг стран.
+    [Sources]
+    - https://www.cbr.ru/faq/dr/
+    - https://www.cbr.ru/content/document/file/120075/concept_08042021.pdf
+    - https://www.pbc.gov.cn/en/3935690/3935759/4696666/2022110110364344083.pdf
+    - https://www.ecb.europa.eu/euro/digital_euro/html/index.en.html
+    - https://www.ecb.europa.eu/euro/digital_euro/features/privacy/html/index.en.html
+    - https://www.ecb.europa.eu/euro/digital_euro/features/facts/html/index.en.html
+    - https://www.bcb.gov.br/estabilidadefinanceira/drex
+    - https://www.sanddollar.bs/
+
+- id: s11
+  title: "Трансграничный потенциал — в сокращении расчётной цепочки, а не в отмене ограничений"
+  sources: [original-deck]
+  lead: "10. МЕЖДУНАРОДНЫЕ ПЛАТЕЖИ · 11"
+  layout: freeform-canvas
+  variant: body
+  alt: "Сравнение корреспондентской цепочки и связанных CBDC-платформ; технологии сокращают посредников, но не решают вопросы ликвидности, права, AML/KYC, санкций и доступа."
+  css: |-
+    .s11{height:100%;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1.15fr .7fr auto;gap:14px}.s11 h3{font:700 19pt/1.1 var(--font-heading);margin:7px 0 12px}.s11 .tag{display:inline-block;padding:5px 14px;border-radius:999px;background:#edf0f3;font-size:11pt;font-weight:700;color:var(--muted)}.s11 .tag.mint{background:#dff5f1;color:#008c80}.s11-box{background:var(--surface);border:1px solid #d5dee8;border-radius:14px;padding:14px}.s11-flow{height:55%;display:flex;align-items:center;gap:12px;justify-content:center}.s11-node{flex:1;text-align:center;padding:15px 8px;border:2px solid var(--accent);border-radius:10px;color:var(--accent);font-size:18pt;font-weight:700}.s11-node.mid{border-color:#c5d0db;color:var(--muted)}.s11-node.dark{background:var(--ink);border-color:var(--ink);color:#fff}.s11-arrow{color:#aebbc7;font-size:26pt}.s11-arrow.mint{color:#9adfd6}.s11-caption{text-align:center;color:var(--muted);font-size:13pt;line-height:1.18}.s11-caption.mint{color:#008c80;font-weight:700}.s11-effect{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.s11-effect article{padding:12px;border-radius:10px;background:var(--surface);border:1px solid #d5dee8;text-align:center;font-size:13pt;font-weight:700;line-height:1.15}.s11-effect article b{display:block;font-size:20pt;color:var(--accent);margin-bottom:6px}.s11-limit{padding:14px 18px;border-radius:12px;background:#fee8e8;color:#c8444b;font-size:14pt;font-weight:700;line-height:1.25}.s11-take{grid-column:1/-1;border-left:8px solid var(--ink);padding:14px 18px;background:#edf1f4;font-size:15pt;font-weight:700;line-height:1.2}
+    .s11{grid-template-rows:1.1fr .65fr auto;gap:9px}.s11 h3{font-size:16pt;margin:5px 0 7px}.s11 .tag{padding:3px 10px;font-size:9pt}.s11-box{padding:9px}.s11-flow{height:54%;gap:8px}.s11-node{padding:10px 6px;font-size:14pt}.s11-arrow{font-size:20pt}.s11-caption{font-size:10pt}.s11-effect{gap:8px}.s11-effect article{padding:8px;font-size:10.5pt}.s11-effect article b{font-size:16pt;margin-bottom:3px}.s11-limit{padding:9px 12px;font-size:11pt}.s11-take{padding:9px 12px;font-size:12pt}
+    .s11{grid-template-rows:auto 1.1fr .65fr auto}.s11-title{grid-column:1/-1;font:700 19pt/1.06 var(--font-heading);letter-spacing:-.02em}
+  html: |-
+    <div class="s11"><div class="s11-title">Трансграничный потенциал — в сокращении расчётной цепочки, а не в отмене ограничений</div><section><span class="tag">СЕГОДНЯ</span><h3>Корреспондентская цепочка</h3><div class="s11-box"><div class="s11-flow"><div class="s11-node">Банк A</div><div class="s11-arrow">→</div><div class="s11-node mid">1–3 банка<br>счета +<br>сообщения</div><div class="s11-arrow">→</div><div class="s11-node">B</div></div><div class="s11-caption">Предфондирование · комиссии · рабочие часы · риск разрыва FX-расчёта</div></div></section><section><span class="tag mint">ПОТЕНЦИАЛ CBDC</span><h3>Связанные платформы / общий мост</h3><div class="s11-box"><div class="s11-flow"><div class="s11-node">CBDC A</div><div class="s11-arrow mint">→</div><div class="s11-node dark">PvP<br>атомарный обмен</div><div class="s11-arrow mint">→</div><div class="s11-node">CBDC B</div></div><div class="s11-caption mint">24/7 · меньше посредников · платёж только одновременно с встречным платежом</div></div></section><section><div class="tag" style="color:var(--accent);background:none;padding-left:0">ВОЗМОЖНЫЙ ЭФФЕКТ</div><div class="s11-effect"><article><b>−</b>короче цепочка</article><article><b>↓</b>меньше средств заранее</article><article><b>PvP</b>ниже риск поставки валюты</article></div></section><section><div class="tag" style="color:#d24d54;background:none;padding-left:0">ЧТО ТЕХНОЛОГИЯ НЕ РЕШАЕТ САМА</div><div class="s11-limit">Валютная ликвидность и курс · право и финальность расчёта<br>AML/KYC и обмен данными · санкции, доверие и доступ участников</div></section><div class="s11-take">Для цифрового рубля трансграничный эффект возникнет только после соглашений и технической связки с валютами партнёров; внутренний запуск этого не даёт.</div></div>
+  notes: |-
+    mBridge достиг стадии MVP в 2024 году и показал модель общей multi-CBDC платформы. Project Mariana показал техническую реализуемость трансграничной торговли и расчётов оптовыми CBDC. Это эксперименты, а не гарантия политического или правового доступа России к таким платформам.
+    [Sources]
+    - https://www.bis.org/project/mbridge
+    - https://www.bis.org/project/mariana
+    - https://www.bis.org/media-releases/20211007-cpmi-calls-ideas-solutions-expand-pvp-settlement
+    - https://www.cbr.ru/content/document/file/120075/concept_08042021.pdf
+
+- id: s12
+  title: "Один счёт цифрового рубля доступен через разные банки"
+  sources: [original-deck]
+  lead: "ДОПОЛНЕНИЕ 1. КОШЕЛЁК И ДОСТУП · 12"
+  layout: freeform-canvas
+  variant: body
+  alt: "Два банка дают клиенту доступ к единому счёту на платформе Банка России; с этого счёта выполняется перевод получателю."
+  css: |-
+    .s12{height:100%;display:grid;grid-template-columns:1fr 2.45fr;grid-template-rows:1fr auto auto;gap:16px}.s12-bank{display:flex;flex-direction:column;justify-content:center;gap:26px}.s12-node{border:2px solid var(--accent);border-radius:14px;padding:24px 12px;text-align:center;font-size:18pt;line-height:1.25;background:var(--surface)}.s12-node b{font-family:var(--font-heading)}.s12-plat{border:1px solid #d4dee8;border-radius:16px;padding:15px 20px;background:var(--surface)}.s12-label{font-size:11pt;font-weight:700;color:var(--muted)}.s12-flow{height:82%;display:flex;align-items:center;gap:15px}.s12-account{flex:1;padding:22px 18px;text-align:center;border-radius:12px;background:#dff4f0;border:2px solid #009b8c;font-size:18pt;line-height:1.22}.s12-account.blue{background:#e1ecff;border-color:var(--accent)}.s12-arrow{font-size:14pt;color:var(--accent);font-weight:700}.s12-limit{font:700 28pt/1 var(--font-heading);color:var(--accent);align-self:center}.s12-explain{font-size:16pt;line-height:1.25;align-self:center}.s12-foot{grid-column:1/-1;border-top:1px solid #d6e0ea;padding-top:14px;font-size:16pt;font-weight:700}.s12-src{grid-column:1/-1;font-size:10pt;color:var(--muted)}
+    .s12{gap:10px}.s12-bank{gap:16px}.s12-node{padding:16px 9px;font-size:14pt}.s12-plat{padding:10px 14px}.s12-label{font-size:9pt}.s12-flow{gap:9px}.s12-account{padding:14px 11px;font-size:14pt}.s12-arrow{font-size:11pt}.s12-limit{font-size:22pt}.s12-explain{font-size:12.5pt}.s12-foot{padding-top:9px;font-size:13pt}.s12-src{font-size:8pt}
+    .s12{grid-template-rows:auto 1fr auto auto}.s12-title{grid-column:1/-1;font:700 20pt/1.06 var(--font-heading);letter-spacing:-.02em}
+  html: |-
+    <div class="s12"><div class="s12-title">Один счёт цифрового рубля доступен через разные банки</div><section class="s12-bank"><div class="s12-node"><b>Банк А</b><br>Приложение клиента</div><div class="s12-node"><b>Банк Б</b><br>Приложение того же клиента</div></section><section class="s12-plat"><div class="s12-label">ПЛАТФОРМА БАНКА РОССИИ</div><div class="s12-flow"><div class="s12-arrow">Доступ →</div><div class="s12-account"><b>Единый счёт клиента</b><br>Остаток и история операций</div><div class="s12-arrow">Перевод →</div><div class="s12-account blue"><b>Счёт получателя</b><br>Цифровые рубли</div></div></section><div class="s12-limit">300 000 ₽ в месяц</div><div class="s12-explain">Лимит пополнения со своих банковских счетов.<br>Смена приложения сохраняет тот же цифровой счёт.</div><div class="s12-foot">Банк предоставляет интерфейс. Банк России учитывает цифровые рубли и проводит операции.</div><div class="s12-src">CNews, обзор 2025 года   Банк России, устройство кошелька</div></div>
+  notes: |-
+    Схема показывает действующую модель счёта на платформе Банка России. Клиент может обращаться к одному счёту через приложения банков, в которых он обслуживается. Лимит относится к пополнению со своих банковских счетов.
+    Источники:
+    https://www.cnews.ru/articles/2025-12-17_tsifrovoj_rubl_chto_izvestno_o_novoj
+    https://www.cbr.ru/press/event/?id=32778
+    Дата проверки: 05.10.2026.
+
+- id: s13
+  title: "Доступ ФНС к данным об операциях"
+  sources: [original-deck]
+  lead: "ДОПОЛНЕНИЕ 2. ДАННЫЕ И НАЛОГОВЫЙ КОНТРОЛЬ · 13 · Новые формы: не ранее 1 июля 2027 года"
+  layout: freeform-canvas
+  variant: body
+  alt: "Таблица о составе данных об операциях, устройствах и порядке доступа ФНС, с пояснением, что технические идентификаторы сами по себе не доказывают нарушение."
+  css: |-
+    .s13{height:100%;display:grid;grid-template-rows:1fr auto;gap:14px}.s13-table{display:grid;grid-template-columns:.8fr 1.65fr 1.65fr;border:1px solid var(--ink);border-radius:12px;overflow:hidden}.s13-table div{padding:15px 16px;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);font-size:15pt;line-height:1.2;display:flex;align-items:center}.s13-table div:nth-child(3n){border-right:0}.s13-table div:nth-last-child(-n+3){border-bottom:0}.s13-th{background:var(--ink);color:#fff;font-size:14pt!important;font-weight:700}.s13-key{font:700 17pt/1.1 var(--font-heading);color:var(--accent)}.s13-take{font-size:14pt;line-height:1.23;color:var(--muted);margin:13px 0 8px}.s13-foot{font-size:15pt;font-weight:700;border-top:1px solid #d6e0ea;padding-top:12px}.s13-src{font-size:10pt;color:var(--muted);margin-top:5px}
+    .s13{gap:9px}.s13-table div{padding:10px 11px;font-size:11.5pt;line-height:1.15}.s13-th{font-size:11pt!important}.s13-key{font-size:13.5pt}.s13-take{font-size:11pt;margin:8px 0 5px}.s13-foot{font-size:12pt;padding-top:8px}.s13-src{font-size:8pt;margin-top:3px}
+    .s13{grid-template-rows:auto 1fr auto}.s13-title{font:700 20pt/1.06 var(--font-heading);letter-spacing:-.02em}
+  html: |-
+    <div class="s13"><div class="s13-title">Доступ ФНС к данным об операциях</div><section><div class="s13-table"><div class="s13-th">Аспект</div><div class="s13-th">Что предусматривает форма</div><div class="s13-th">Как интерпретировать</div><div class="s13-key">Операция</div><div>Дата и время, сумма, назначение, сведения о плательщике и получателе</div><div>История движения средств</div><div class="s13-key">Устройство</div><div>IP, MAC, телефон, SIM-карта или иной идентификатор устройства</div><div>Поля формы выписки. Состав доступных данных зависит от операции</div><div class="s13-key">Доступ</div><div>Банк и оператор платформы предоставляют информацию по запросу ФНС</div><div>Процедура налогового контроля. Общий IP или устройство требуют проверки</div></div><div class="s13-take">Сопоставление устройств помогает искать связи между операциями.<br>Вывод о нарушении требует других фактов и документов.</div></section><section><div class="s13-foot">Технические идентификаторы предусмотрены и в формах по обычным банковским счетам.</div><div class="s13-src">CNews, 09.09.2026   ФНС, приказ № ЕД-1-2/591@   Предыдущая форма банковской выписки</div></section></div>
+  notes: |-
+    Формы описывают сведения, предоставляемые по запросам налоговых органов. Приказ устанавливает вступление в силу через девять месяцев после официального опубликования, но не ранее 1 июля 2027 года. Наличие поля в форме не означает доступность каждого идентификатора в каждой операции. Технический след сам по себе не доказывает нарушение.
+    Форма по цифровому рублю: https://www.consultant.ru/document/cons_doc_LAW_543497/5a6d4b21a0250f31330988d96a8934add666f017/
+    Источники:
+    https://www.cnews.ru/news/top/2026-09-09_fns_usilit_slezhku_za_tsifrovym
+    https://www.consultant.ru/document/cons_doc_LAW_543497/
+    https://www.consultant.ru/document/cons_doc_LAW_350144/6e33d5b25584a9bfae2a6e4a8f4116e7186fd1ed/
+    Дата проверки: 05.10.2026.
+
+- id: s14
+  title: "Смарт-контракт проверяет условие и запускает платёж"
+  sources: [original-deck]
+  lead: "3. МЕХАНИКА СМАРТ-КОНТРАКТА · 14 · Учебный пример: оплата оборудования после подписания акта"
+  layout: freeform-canvas
+  variant: body
+  alt: "Поток учебного примера смарт-контракта: условия договора, подтверждение, проверка и перевод; при отсутствии подтверждения — ожидание или спор."
+  css: |-
+    .s14{height:100%;display:grid;grid-template-rows:1fr auto;gap:16px}.s14-flow{display:grid;grid-template-columns:1fr 42px 1fr 42px 1fr 42px 1fr;align-items:center;gap:8px}.s14-card{min-height:170px;border:2px solid var(--accent);border-radius:14px;background:var(--surface);padding:18px;text-align:center;font-size:18pt;line-height:1.22;display:flex;flex-direction:column;justify-content:center}.s14-card b{font-family:var(--font-heading)}.s14-card.mint{background:#dff4f0;border-color:#009b8c}.s14-card.blue{background:#e0ecff}.s14-arrow{text-align:center;font-size:25pt;color:#64778a}.s14-branch{grid-column:5;position:relative;margin-top:-5px;padding-top:58px}.s14-branch:before{content:"Нет подтверждения";position:absolute;top:10px;left:12px;color:var(--muted);font-size:13pt;white-space:nowrap}.s14-branch:after{content:"↓";position:absolute;top:25px;left:50%;color:#64778a;font-size:24pt}.s14-wait{border:1px solid #64778a;border-radius:12px;padding:14px;text-align:center;background:var(--surface);font-size:16pt;line-height:1.2}.s14-quality{font:700 16pt/1.2 var(--font-heading);padding-left:8px}.s14-foot{border-top:1px solid #d6e0ea;padding:14px 0;font-size:15pt;font-weight:700}.s14-src{font-size:10pt;color:var(--muted)}
+    .s14{gap:9px}.s14-flow{grid-template-columns:1fr 30px 1fr 30px 1fr 30px 1fr;gap:5px}.s14-card{min-height:128px;padding:11px;font-size:13pt}.s14-arrow{font-size:19pt}.s14-branch{padding-top:43px}.s14-branch:before{top:6px;left:7px;font-size:10pt}.s14-branch:after{top:18px;font-size:18pt}.s14-wait{padding:9px;font-size:12pt}.s14-quality{font-size:12pt;padding-left:5px}.s14-foot{padding:9px 0;font-size:12pt}.s14-src{font-size:8pt}
+    .s14{grid-template-rows:auto 1fr auto}.s14-title{font:700 19pt/1.06 var(--font-heading);letter-spacing:-.02em}
+  html: |-
+    <div class="s14"><div class="s14-title">Смарт-контракт проверяет условие и запускает платёж</div><section><div class="s14-flow"><div class="s14-card"><b>Условия договора</b><br>Стороны задают событие<br>и сумму платежа</div><div class="s14-arrow">→</div><div class="s14-card"><b>Подтверждение</b><br>Источник данных сообщает:<br>акт подписан</div><div class="s14-arrow">→</div><div class="s14-card mint"><b>Проверка условия</b><br>Код сопоставляет событие<br>с условиями сделки</div><div class="s14-arrow" style="color:#009b8c">→</div><div class="s14-card blue"><b>Условие выполнено</b><br>Перевод<br>цифровых рублей</div></div><div class="s14-branch"><div class="s14-wait"><b>Ожидание или спор</b><br>Условие пока не выполнено</div></div><div class="s14-quality">Качество внешних данных<br>влияет на результат исполнения</div></section><section><div class="s14-foot">В этой схеме условие определяет момент перевода. Дальнейшее целевое использование требует отдельных правил.</div><div class="s14-src">CNews, смарт-контракты   CNews, обзор цифрового рубля</div></section></div>
+  notes: |-
+    Учебный сценарий оплаты оборудования после подтверждения приёмки. Это объяснение механизма, а не описание доступной сегодня услуги. Проектирование условного платежа требует согласовать событие, источник подтверждения и действия при задержке или споре.
+    Источники:
+    https://www.cnews.ru/articles/2026-06-04_smart-kontrakty_novyj_etap_tsifrovizatsii
+    https://www.cnews.ru/articles/2025-12-17_tsifrovoj_rubl_chto_izvestno_o_novoj
+    Дата проверки: 05.10.2026.
+
+- id: s15
+  title: "Платформа коммерческих смарт-контрактов"
+  sources: [original-deck]
+  lead: "ДОПОЛНЕНИЕ 4. КОНЦЕПЦИЯ БАНКА РОССИИ · 15 · Предлагаемая модель. Концепция для обсуждения"
+  layout: freeform-canvas
+  variant: body
+  alt: "Предлагаемая модель коммерческих смарт-контрактов: разработчик и проверка ведут к витрине, доверенные данные поступают в среду исполнения, которая направляет распоряжение о переводе на платформу цифрового рубля."
+  css: |-
+    .s15{height:100%;display:grid;grid-template-rows:1fr auto;gap:14px}.s15-map{display:grid;grid-template-columns:1fr 54px 1.1fr 54px 1.25fr;grid-template-rows:1fr 54px 1fr;align-items:center;gap:8px}.s15-node{background:var(--surface);border:2px solid var(--accent);border-radius:13px;padding:18px;text-align:center;font-size:17pt;line-height:1.2}.s15-node b{font-family:var(--font-heading)}.s15-node.mint{background:#dff4f0;border-color:#009b8c}.s15-node.blue{background:#e0ecff}.s15-arrow{text-align:center;color:#607488;font-size:26pt}.s15-down{grid-column:5;grid-row:2;text-align:center;color:#009b8c;font-size:13pt;font-weight:700}.s15-data{grid-column:1;grid-row:3}.s15-exec{grid-column:3;grid-row:3}.s15-ruble{grid-column:5;grid-row:3}.s15-under{margin:-2px 0 0 0;text-align:center;color:var(--accent);font-size:13pt;font-weight:700}.s15-foot{border-top:1px solid #d6e0ea;padding-top:14px;font-size:15pt;font-weight:700}.s15-src{font-size:10pt;color:var(--muted);margin-top:5px}
+    .s15{grid-template-rows:auto 1fr auto;gap:9px}.s15-title{font:700 20pt/1.06 var(--font-heading);letter-spacing:-.02em}.s15-map{grid-template-columns:1fr 38px 1.1fr 38px 1.25fr;grid-template-rows:1fr 40px 1fr;gap:6px}.s15-node{padding:12px;font-size:13pt}.s15-arrow{font-size:20pt}.s15-down,.s15-under{font-size:10pt}.s15-foot{padding-top:9px;font-size:12pt}.s15-src{font-size:8pt;margin-top:3px}
+  html: |-
+    <div class="s15"><div class="s15-title">Платформа коммерческих смарт-контрактов</div><section class="s15-map"><div class="s15-node"><b>Разработчик</b><br>Логика и код</div><div class="s15-arrow">→</div><div class="s15-node"><b>Проверка</b><br>Логика, законность<br>и безопасность</div><div class="s15-arrow">→</div><div class="s15-node mint"><b>Витрина контрактов</b><br>Описание, условия и<br>источники данных</div><div class="s15-down">Выбор и запуск<br>↓</div><div class="s15-node s15-data"><b>Доверенные данные</b><br>Государственные и<br>коммерческие системы</div><div class="s15-arrow" style="grid-column:2;grid-row:3">→</div><div class="s15-node mint s15-exec"><b>Среда исполнения ПКСК</b><br>Проверка условий<br>выбранного контракта</div><div class="s15-arrow" style="grid-column:4;grid-row:3;color:var(--accent)">→</div><div class="s15-node blue s15-ruble"><b>Платформа цифрового рубля</b><br>Учёт средств и перевод</div><div class="s15-under" style="grid-column:4;grid-row:3;transform:translateY(-54px)">Распоряжение<br>о переводе</div></section><section><div class="s15-foot">Среда исполнения формирует распоряжение. Платформа цифрового рубля проводит перевод.</div><div class="s15-src">Банк России, концепция ПКСК, 18.06.2026   CNews, смарт-контракты</div></section></div>
+  notes: |-
+    Упрощённая схема одного из вариантов в концепции. ПКСК рассматривается как отдельный компонент платформы цифрового рубля. Публикация в витрине требует тестирования и проверки. Технические и правовые детали, включая ответственность участников, требуют дальнейшей проработки. Статус на дату проверки: предложенная модель.
+    Источники:
+    https://www.cbr.ru/Content/Document/File/193705/commercial_smart_contract_platform.pdf
+    https://www.cnews.ru/articles/2026-06-04_smart-kontrakty_novyj_etap_tsifrovizatsii
+    Дата проверки: 05.10.2026.
+
+- id: s16
+  title: "Риски автоматического исполнения сделки"
+  sources: [original-deck]
+  lead: "5. ИСПОЛНЕНИЕ И ОТВЕТСТВЕННОСТЬ · 16"
+  layout: freeform-canvas
+  variant: body
+  alt: "Таблица источников риска автоматического исполнения сделки, возможных проблем и мер, которые нужно определить заранее."
+  css: |-
+    .s16{height:100%;display:grid;grid-template-rows:auto 1fr auto;gap:10px}.s16-title{font:700 20pt/1.06 var(--font-heading);letter-spacing:-.02em}.s16-table{display:grid;grid-template-columns:.9fr 1.65fr 1.9fr;border:1px solid var(--ink);border-radius:11px;overflow:hidden}.s16-table div{padding:10px 13px;border-right:1px solid var(--ink);border-bottom:1px solid var(--ink);font-size:12.5pt;line-height:1.14;display:flex;align-items:center}.s16-table div:nth-child(3n){border-right:0}.s16-table div:nth-last-child(-n+3){border-bottom:0}.s16-th{background:var(--ink);color:#fff;font-size:12pt!important;font-weight:700}.s16-key{font:700 15pt/1.08 var(--font-heading);color:var(--accent)}.s16-take{border-top:1px solid #d6e0ea;padding-top:10px;font-size:13pt;font-weight:700}
+  html: |-
+    <div class="s16"><div class="s16-title">Риски автоматического исполнения сделки</div><div class="s16-table"><div class="s16-th">Источник риска</div><div class="s16-th">Что может пойти не так</div><div class="s16-th">Что определить заранее</div><div class="s16-key">Код</div><div>Условие допускает ошибочный перевод</div><div>Проверка логики и тестовые сценарии</div><div class="s16-key">Внешние данные</div><div>Система передаёт неверное событие</div><div>Источник, подпись, время и порядок перепроверки</div><div class="s16-key">Сроки</div><div>Подтверждение приходит поздно</div><div>Срок ожидания и действие по тайм-ауту</div><div class="s16-key">Исключения</div><div>Частичная поставка или спор сторон</div><div>Порядок согласования, возврата и ручного разбора</div><div class="s16-key">Ответственность</div><div>Стороны по-разному трактуют результат</div><div>Версия правил и ответственные за код, данные и решение</div></div><div class="s16-take">Правила обработки исключений и ответственность сторон остаются частью договора.</div></div>
+  notes: |-
+    Авторская систематизация вопросов к условной сделке по материалу CNews. Таблица не описывает обнаруженные уязвимости цифрового рубля. Ошибки публичных криптовалютных контрактов нельзя автоматически переносить на платформу Банка России.
+    Источники:
+    https://www.cnews.ru/articles/2026-06-04_smart-kontrakty_novyj_etap_tsifrovizatsii
+    Дата проверки: 05.10.2026.
+
+- id: s17
+  title: "Полный цикл оплаты цифровыми рублями"
+  sources: [original-deck]
+  lead: "ДОПОЛНЕНИЕ 6. ОПЛАТА И ВОЗВРАТЫ · 17 · РБС / БПЦ сообщают о работе сценариев оплаты и частичных возвратов"
+  layout: freeform-canvas
+  variant: body
+  alt: "Цикл оплаты цифровыми рублями: выбор на платёжной странице, подтверждение в банке и зачисление продавцу; учебный пример частичного возврата от 6 000 до 4 000 рублей."
+  css: |-
+    .s17{height:100%;display:grid;grid-template-rows:1fr auto;gap:15px}.s17-flow{display:grid;grid-template-columns:1fr 56px 1fr 56px 1fr;align-items:center}.s17-node{border:2px solid var(--accent);border-radius:14px;background:var(--surface);min-height:116px;padding:18px;text-align:center;font-size:17pt;line-height:1.2;display:flex;flex-direction:column;justify-content:center}.s17-node b{font-family:var(--font-heading)}.s17-node.mint{background:#dff4f0;border-color:#009b8c}.s17-arrow{text-align:center;font-size:28pt;color:#607488}.s17-arrow.mint{color:#009b8c}.s17-next{font-size:16pt;margin:17px 0;color:var(--ink)}.s17-table{display:grid;grid-template-columns:1fr 1fr 1fr;border:1px solid var(--ink);border-radius:10px;overflow:hidden}.s17-table div{padding:13px 16px;border-right:1px solid var(--ink)}.s17-table div:nth-child(3n){border-right:0}.s17-th{background:var(--ink);color:#fff;font-size:13pt;font-weight:700}.s17-val{font:700 25pt/1.1 var(--font-heading)}.s17-val.blue{color:var(--accent)}.s17-note{font-size:14pt;line-height:1.22;color:var(--muted);margin:13px 0}.s17-foot{border-top:1px solid #d6e0ea;padding-top:12px;font-size:15pt;font-weight:700}.s17-src{font-size:10pt;color:var(--muted);margin-top:5px}
+    .s17{gap:9px}.s17-flow{grid-template-columns:1fr 38px 1fr 38px 1fr}.s17-node{min-height:86px;padding:11px;font-size:13pt}.s17-arrow{font-size:21pt}.s17-next{font-size:12.5pt;margin:10px 0}.s17-table div{padding:9px 11px}.s17-th{font-size:10.5pt}.s17-val{font-size:19pt}.s17-note{font-size:11pt;margin:9px 0}.s17-foot{padding-top:8px;font-size:12pt}.s17-src{font-size:8pt;margin-top:3px}
+    .s17{grid-template-rows:auto 1fr auto}.s17-title{font:700 20pt/1.06 var(--font-heading);letter-spacing:-.02em}
+  html: |-
+    <div class="s17"><div class="s17-title">Полный цикл оплаты цифровыми рублями</div><section><div class="s17-flow"><div class="s17-node"><b>Платёжная страница</b><br>Выбор цифрового рубля<br>через УПК / QR</div><div class="s17-arrow">→</div><div class="s17-node"><b>Подтверждение в банке</b><br>Клиент подтверждает оплату</div><div class="s17-arrow mint">→</div><div class="s17-node mint"><b>Зачисление продавцу</b><br>Платёж в цифровых рублях</div></div><div class="s17-next">Далее: статус заказа, запись в учёте и фискальный чек</div><div class="s17-table"><div class="s17-th">Учебный пример: заказ</div><div class="s17-th">Возврат одной позиции</div><div class="s17-th">Итоговая оплаченная сумма</div><div class="s17-val blue">6 000 ₽</div><div class="s17-val">2 000 ₽</div><div class="s17-val">4 000 ₽</div></div><div class="s17-note">«Менее одного дня» относится к готовому подключению.<br>Нужен открытый счёт и выполненные условия сервиса.</div></section><section><div class="s17-foot">Для продавца платёж связан с учётом заказа, фискализацией и возвратами.</div><div class="s17-src">CNews, интервью РБС / БПЦ, 29.09.2026</div></section></div>
+  notes: |-
+    Материал CNews помечен как реклама. Возможности и сроки приведены как заявления РБС / БПЦ. Компания сообщает о платежах ЖКХ и частичных возвратах для авиаиндустрии. Срок менее одного дня относится к подключению при выполненных предпосылках. Суммы на слайде — учебный пример, а не данные поставщика.
+    Источники:
+    https://www.cnews.ru/articles/2026-09-22_mihail_danilovrbs_uzhe_segodnya_it-resheniya
+    Дата проверки: 05.10.2026.

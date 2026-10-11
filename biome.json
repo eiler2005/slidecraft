@@ -10,6 +10,7 @@
       "!work",
       "!slidecraft",
       "!tests/.output",
+      "!tests/fixtures/digital-ruble/reference.html",
       "!schemas",
       "!library/catalog.json"
     ]

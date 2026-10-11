@@ -1,0 +1,274 @@
+  - id: s01
+    title: "Цифровой рубль: новая форма денег — не новый кредит"
+    tracker: "Сентябрь 2026"
+    sources: [original-deck]
+    layout: freeform-canvas
+    variant: body
+    alt: "Открывающий слайд: цифровой рубль как третья форма рубля рядом с наличными и депозитом."
+    css: |
+        position:relative;.slide-title{position:absolute;top:0;left:0;right:0;font:700 16pt/1.12 var(--font-heading)}.hero{height:calc(100% - 52px);margin-top:52px;display:grid;grid-template-columns:1.12fr .88fr;gap:30px;align-items:center}.eyebrow{font-weight:700;color:#155EEF;letter-spacing:.08em;font-size:11pt}.thesis{margin-top:16px;font:700 19pt/1.2 var(--font-heading);color:var(--ink)}.topics{margin-top:18px;font-size:12pt;line-height:1.35;color:var(--muted)}.orb{justify-self:center;width:210px;height:210px;border:2px solid #155EEF;border-radius:50%;display:grid;place-items:center;position:relative}.orb:before{content:"";position:absolute;inset:24px;border:2px solid #0D9488;border-radius:50%}.ruble{width:90px;height:90px;background:#fff;border-radius:50%;display:grid;place-items:center;font:700 43pt/1 var(--font-heading);z-index:1}.forms{display:flex;gap:7px;justify-content:center;margin-top:16px}.pill{padding:6px 9px;border-radius:999px;font-weight:700;font-size:9pt;background:#E8EDF3}.pill:nth-child(2){background:#DCEBFF;color:#155EEF}.pill:nth-child(3){background:#D8F4EE;color:#0D8177}.caption{margin-top:14px;padding-top:11px;border-top:1px solid #B8C5D1;font-weight:700;font-size:11pt;line-height:1.2;text-align:center}.date{position:absolute;bottom:2px;font-size:9pt;color:var(--muted)}
+    html: |
+        <div class="slide-title">Цифровой рубль: новая форма денег — не новый кредит</div><div class="hero"><div><div class="eyebrow">ЦИФРОВОЙ РУБЛЬ | ОБЪЯСНЯЮЩИЕ СХЕМЫ · CBDC</div><div class="thesis">Одна валюта. Разные балансы, стимулы и правила.</div><div class="topics">Мультипликатор · банковская ликвидность · контроль<br>международные модели · трансграничные расчёты</div><div class="date">Сентябрь 2026</div></div><div><div class="orb"><div class="ruble">₽</div></div><div class="forms"><span class="pill">НАЛИЧНЫЕ</span><span class="pill">ДЕПОЗИТ</span><span class="pill">CBDC</span></div><div class="caption">Цифровой рубль:<br>новая форма денег —<br>не новый кредит</div></div></div>
+    notes: |-
+      Открывающая мысль: цифровой рубль нужно сравнивать не только с картой, но и с банковским депозитом как особой формой денег.
+      [Sources]
+      - https://www.cbr.ru/faq/dr/
+      - https://www.cbr.ru/content/document/file/120075/concept_08042021.pdf
+
+      IMPORT — original text that did not fit:
+      CBDC
+      Одна валюта. Разные балансы, стимулы и правила.
+      Сентябрь 2026
+
+      Imported from slide 1 of Digital_Ruble_Explainer_RU_v3.pptx.
+
+  - id: s02
+    title: "Три формы рубля различаются прежде всего тем, кто вам должен"
+    tracker: "1. ЭКОНОМИЧЕСКАЯ ПРИРОДА · 02"
+    sources: [original-deck]
+    layout: freeform-canvas
+    variant: body
+    alt: "Три вертикальные карточки сопоставляют наличные, банковский депозит и цифровой рубль по должнику и свойствам."
+    css: |
+        position:relative;.slide-title{position:absolute;top:0;left:0;right:0;font:700 17pt/1.15 var(--font-heading)}.grid{height:calc(100% - 106px);margin-top:55px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.form{padding:16px 18px;border-top:6px solid #64748B;background:#F5F7FA}.form.deposit{border-color:#155EEF;background:#EEF5FF}.form.cbdc{border-color:#0D9488;background:#E9F8F5}.symbol{width:45px;height:45px;border-radius:50%;display:grid;place-items:center;background:#64748B;color:#fff;font:700 22pt/1 var(--font-heading)}.deposit .symbol{background:#155EEF}.cbdc .symbol{background:#0D9488}.name{margin-top:12px;font:700 17pt/1.1 var(--font-heading)}.debt{margin-top:14px;padding:10px;font-weight:700;font-size:12pt;line-height:1.2}.deposit .debt{color:#155EEF}.cbdc .debt{color:#087F75}.props{margin-top:15px;color:var(--muted);font-size:11.5pt;line-height:1.35}.takeaway{position:absolute;bottom:0;left:0;right:0;padding:10px 15px;background:#D8F4EE;border-left:7px solid #0D9488;color:#087F75;font-weight:700;font-size:12pt;line-height:1.2}
+    html: |
+        <div class="slide-title">Три формы рубля различаются прежде всего тем, кто вам должен</div><div class="grid"><div class="form"><div class="symbol">₽</div><div class="name">Наличные</div><div class="debt">Обязательство<br>Банка России</div><div class="props">Физический платеж<br>Практическая анонимность<br>Нет процентов</div></div><div class="form deposit"><div class="symbol">Б</div><div class="name">Банковский депозит</div><div class="debt">Обязательство<br>коммерческого банка</div><div class="props">Платеж + сбережение<br>Основа фондирования банка<br>Связан с кредитованием</div></div><div class="form cbdc"><div class="symbol">ЦБ</div><div class="name">Цифровой рубль</div><div class="debt">Обязательство<br>Банка России</div><div class="props">Цифровой платеж<br>Единый реестр операций<br>Нет процентов и кредитов</div></div></div><div class="takeaway">По экономической природе цифровой рубль ближе к цифровым наличным, чем к банковскому депозиту.</div>
+    notes: |-
+      [Sources]
+      - https://www.cbr.ru/faq/dr/
+      - https://www.cbr.ru/press/event/?id=32778
+
+      IMPORT — original text that did not fit:
+      Нет процентов
+      Б
+      Банковский депозит
+      Обязательство
+      коммерческого банка
+      Платеж + сбережение
+      Основа фондирования банка
+      Связан с кредитованием
+      ЦБ
+      Цифровой рубль
+      Обязательство
+      Банка России
+      Цифровой платеж
+      Единый реестр операций
+      Нет процентов и кредитов
+      По экономической природе цифровой рубль ближе к цифровым наличным, чем к банковскому депозиту.
+
+      Imported from slide 2 of Digital_Ruble_Explainer_RU_v3.pptx.
+
+  - id: s03
+    title: "Мультипликатор появляется там, где кредит создает новый депозит"
+    tracker: "2. МЕХАНИКА БАНКОВСКИХ ДЕНЕГ · 03"
+    sources: [original-deck]
+    layout: freeform-canvas
+    variant: body
+    alt: "Учебная каскадная схема депозитов и отдельная панель с наблюдаемым соотношением M2 к широкой денежной базе."
+    css: |
+        position:relative;.slide-title{position:absolute;top:0;left:0;right:0;font:700 17pt/1.15 var(--font-heading)}.wrap{height:calc(100% - 105px);margin-top:55px;display:grid;grid-template-columns:.82fr 1.18fr;gap:20px}.label{font-size:10pt;font-weight:700;color:var(--muted);letter-spacing:.04em}.cascade{margin-top:10px;display:grid;gap:6px}.step{padding:9px 13px;border-left:6px solid #155EEF;background:#EAF2FF;font:700 15pt/1 var(--font-heading)}.step:nth-child(1){background:#10263D;color:#fff;border-color:#10263D}.step:nth-child(3){width:83%;background:#DCEBFF}.step:nth-child(4){width:68%;background:#D8F4EE;border-color:#0D9488}.arrow{margin:-3px 0 -2px 28px;color:#7E93A7;font-size:9pt}.panel{padding:16px 19px;background:#F5F7FA;border-top:5px solid #155EEF}.datechip{display:inline-block;padding:4px 8px;border-radius:999px;background:#DCEBFF;color:#155EEF;font-size:9pt;font-weight:700}.ratio{margin-top:12px;font:700 35pt/1 var(--font-heading)}.ratio-label{margin-top:5px;font-size:14pt;font-weight:700;color:var(--muted)}.rule{height:1px;background:#CBD5E1;margin:12px 0}.statement{font-size:13pt;line-height:1.2}.constraint{margin-top:12px;padding:7px 9px;background:#FFF1D8;color:#C96B00;font-size:10pt;font-weight:700}.footer{position:absolute;bottom:0;left:0;right:0;padding:9px 13px;background:#DCEBFF;border-left:7px solid #155EEF;color:#155EEF;font-weight:700;font-size:11pt;line-height:1.2}
+    html: |
+        <div class="slide-title">Мультипликатор появляется там, где кредит создает новый депозит</div><div class="wrap"><div><div class="label">УЧЕБНАЯ СХЕМА ПРИ НОРМЕ 20%</div><div class="cascade"><div class="step">Депозит 1 000</div><div class="arrow">начальная запись ↓</div><div class="step">+800</div><div class="arrow">кредит → депозит ↓</div><div class="step">+640</div><div class="arrow">следующий раунд ↓</div><div class="step">+512…</div><div class="arrow">и далее…</div></div></div><div class="panel"><span class="datechip">РОССИЯ · 01.08.2026</span><div class="ratio">≈ 4,3×</div><div class="ratio-label">M2 / широкая денежная база</div><div class="rule"></div><div class="statement">Это наблюдаемое соотношение,<br>а не разрешение банку выдать 4,3× кредита.</div><div class="constraint">Ограничители: капитал · ликвидность · спрос · ставка · риск</div></div></div><div class="footer">Современный банк не «перекладывает» ваш депозит заемщику: при выдаче кредита он одновременно создает депозит.</div>
+    notes: |-
+      Расчет на слайде: 135,7 трлн руб. M2 / 31,3153 трлн руб. широкой денежной базы ≈ 4,33.
+      [Sources]
+      - https://www.bankofengland.co.uk/quarterly-bulletin/2014/q1/money-creation-in-the-modern-economy
+      - https://www.cbr.ru/statistics/macro_itm/dkfs/monetary_agg/
+      - https://www.interfax.ru/business/1109341
+
+      IMPORT — original text that did not fit:
+      кредит →
+      депозит
+      +640
+      следующий
+      раунд
+      +512…
+      и далее…
+      РОССИЯ · 01.08.2026
+      M2 / широкая денежная база
+      Это наблюдаемое соотношение,
+      а не разрешение банку выдать 4,3× кредита.
+      Ограничители: капитал · ликвидность · спрос · ставка · риск
+      Современный банк не «перекладывает» ваш депозит заемщику: при выдаче кредита он одновременно создает депозит.
+
+      Imported from slide 3 of Digital_Ruble_Explainer_RU_v3.pptx.
+
+  - id: s04
+    title: "Конвертация в цифровой рубль меняет должника — но не создает новые деньги"
+    tracker: "3. ЧТО ПРОИСХОДИТ С 1 000 РУБЛЕЙ · 04"
+    sources: [original-deck]
+    layout: freeform-canvas
+    variant: body
+    alt: "Конвертация 1 к 1 между банковским счетом и цифровым кошельком с двумя изменяющимися балансами."
+    css: |
+        position:relative;.slide-title{position:absolute;top:0;left:0;right:0;font:700 16pt/1.12 var(--font-heading)}.conversion{height:calc(100% - 205px);margin-top:53px;display:grid;grid-template-columns:1fr 110px 1fr;gap:12px;align-items:center}.state{padding:13px;background:#F3F7FE;border-top:5px solid #155EEF}.state.after{background:#E9F8F5;border-color:#0D9488}.tag{font-size:10pt;font-weight:700;color:#155EEF}.after .tag{color:#087F75}.amount{margin-top:12px;font:700 16pt/1.1 var(--font-heading)}.claim{margin-top:10px;color:var(--muted);font-size:10.5pt}.transfer{text-align:center;color:var(--muted);font-weight:700;font-size:10pt}.transfer .one{font-size:15pt;color:var(--ink)}.transfer .arrow{font-size:30pt;color:#9AAEC0;line-height:1}.balances{position:absolute;left:0;right:0;bottom:42px;display:grid;grid-template-columns:1fr 1fr;gap:12px}.balance{padding:10px 13px;background:#F7F9FB;border-left:5px solid #10263D}.balance.central{border-color:#0D9488}.balance h3{margin:0 0 7px;color:#155EEF;font-size:11pt}.central h3{color:#087F75}.row{display:flex;justify-content:space-between;gap:10px;margin:5px 0;font-size:10.5pt}.minus{color:#C94A53;font-weight:700}.plus{color:#087F75;font-weight:700}.small{font-size:9pt;color:var(--muted)}.footer{position:absolute;bottom:0;left:0;right:0;padding:8px 12px;background:#EDF1F4;border-left:7px solid #10263D;font-weight:700;font-size:10.5pt;line-height:1.2}
+    html: |
+        <div class="slide-title">Конвертация в цифровой рубль меняет должника — но не создает новые деньги</div><div class="conversion"><div class="state"><div class="tag">ДО</div><div class="amount">1 000 ₽ на счете в банке</div><div class="claim">Ваш актив = требование к коммерческому банку</div></div><div class="transfer"><div class="one">1 : 1</div><div class="arrow">→</div><div>конвертация</div></div><div class="state after"><div class="tag">ПОСЛЕ</div><div class="amount">1 000 ₽ в цифровом кошельке</div><div class="claim">Ваш актив = прямое требование к Банку России</div></div></div><div class="balances"><div class="balance"><h3>КОММЕРЧЕСКИЙ БАНК</h3><div class="small">Пассивы</div><div class="row"><span>Депозит клиента</span><b class="minus">–1 000</b></div><div class="small">Активы</div><div class="row"><span>Резервы / корсчет</span><b class="minus">–1 000</b></div></div><div class="balance central"><h3>БАЛАНС БАНКА РОССИИ</h3><div class="row"><span>Обязательство перед банком</span><b class="minus">–1 000</b></div><div class="row"><span>Цифровой кошелек гражданина</span><b class="plus">+1 000</b></div><div class="small">Меняется структура пассивов ЦБ</div></div></div><div class="footer">Покупательная способность не выросла: форма денег изменилась, баланс коммерческого банка сократился.</div>
+    notes: |-
+      [Sources]
+      - https://www.cbr.ru/content/document/file/120075/concept_08042021.pdf
+      - https://www.cbr.ru/press/event/?id=32778
+
+      IMPORT — original text that did not fit:
+      1 000 ₽ в цифровом кошельке
+      Ваш актив = прямое требование к Банку России
+      КОММЕРЧЕСКИЙ БАНК
+      Пассивы
+      Депозит клиента
+      –1 000
+      Активы
+      Резервы / корсчет
+      –1 000
+      БАЛАНС БАНКА РОССИИ
+      Обязательство перед банком
+      –1 000
+      Цифровой кошелек гражданина
+      +1 000
+      Меняется структура пассивов ЦБ
+      Покупательная способность не выросла: форма денег изменилась, баланс коммерческого банка сократился.
+
+      Imported from slide 4 of Digital_Ruble_Explainer_RU_v3.pptx.
+
+  - id: s05
+    title: "Макроэффект зависит от того, какие деньги вытесняет цифровой рубль"
+    tracker: "4. ГЛАВНЫЙ ВЫВОД · 05"
+    sources: [original-deck]
+    layout: freeform-canvas
+    variant: body
+    alt: "Два сценария замещения: наличные не меняют баланс банка, депозит сокращает депозиты и резервы."
+    css: |
+        position:relative;.slide-title{position:absolute;top:0;left:0;right:0;font:700 15pt/1.1 var(--font-heading)}.micro{position:absolute;top:38px;font-size:9pt;font-weight:700;color:#52677A}.scenarios{height:calc(100% - 100px);margin-top:56px;display:grid;grid-template-columns:1fr 1fr;gap:12px}.scenario{padding:10px 12px;background:#F6F8FA;border-top:5px solid #9AAEC0}.scenario.b{border-color:#D84B56;background:#FFF8F8}.label{display:inline-block;padding:3px 7px;border-radius:999px;background:#E8EDF3;color:#52677A;font-size:9pt;font-weight:700}.b .label{background:#FFE3E5;color:#C94A53}.scenario h3{margin:9px 0;font:700 15pt/1.05 var(--font-heading)}.flow{display:grid;grid-template-columns:1fr 32px 1fr;align-items:center;gap:5px}.node{padding:7px 5px;border:1px solid #B8C5D1;text-align:center;font-size:10pt;font-weight:700}.node.cbdc{border-color:#0D9488;background:#D8F4EE;color:#087F75}.arr{text-align:center;font-size:19pt;color:#9AAEC0}.detail{margin-top:9px;padding-top:7px;border-top:1px solid #CBD5E1;font-size:9.5pt;line-height:1.16}.good{color:#087F75;font-weight:700}.risk{color:#C94A53;font-weight:700}.amber{color:#C96B00;font-weight:700}.takeaway{position:absolute;bottom:0;left:0;right:0;padding:8px 11px;background:#10263D;color:#fff;font-weight:700;font-size:10pt;line-height:1.15}
+    html: |
+        <div class="slide-title">Макроэффект зависит от того, какие деньги вытесняет цифровой рубль</div><div class="micro">ИЗ КОНЦЕПЦИИ БАНКА РОССИИ</div><div class="scenarios"><div class="scenario"><span class="label">СЦЕНАРИЙ A</span><h3>Вместо наличных</h3><div class="flow"><div class="node">Наличные<br>–1 000 ₽</div><div class="arr">→</div><div class="node cbdc">Цифровой рубль<br>+1 000 ₽</div></div><div class="detail"><b>Баланс коммерческого банка</b> <span class="good">БЕЗ ИЗМЕНЕНИЙ</span><br><br>Ликвидность и депозитное фондирование не уходят из банка.<br><br><span class="good">Прямой эффект на мультипликатор: ≈ 0</span></div></div><div class="scenario b"><span class="label">СЦЕНАРИЙ B</span><h3>Вместо банковского депозита</h3><div class="flow"><div class="node">Депозит<br>–1 000 ₽</div><div class="arr">→</div><div class="node cbdc">Цифровой рубль<br>+1 000 ₽</div></div><div class="detail"><b>У коммерческого банка</b> <span class="risk">депозиты ↓</span> <span class="risk">резервы ↓</span><br><br>Фондирование может подорожать <span class="amber">→ давление на ставку / кредит</span><br><br><span style="color:#155EEF;font-weight:700">ЦБ может компенсировать дефицит ликвидности.</span></div></div></div><div class="takeaway">Ключевой вопрос не «сколько цифровых рублей?», а «какую форму денег они заменили?». Сумма одна — каналы разные.</div>
+    notes: |-
+      Именно этот балансный разбор — главное содержательное улучшение из приложенного PDF. Прогнозы 2021 года о функциональности не выдаются за текущий статус.
+      [Sources]
+      - Приложенный документ: Банк России, Концепция цифрового рубля (2021), раздел 4.2, с. 25–26.
+      - https://www.cbr.ru/content/document/file/120075/concept_08042021.pdf
+
+      IMPORT — original text that did not fit:
+      Баланс коммерческого банка
+      БЕЗ ИЗМЕНЕНИЙ
+      Ликвидность и депозитное фондирование не уходят из банка.
+      Прямой эффект на мультипликатор: ≈ 0
+      СЦЕНАРИЙ B
+      Вместо банковского депозита
+      Депозит
+      –1 000 ₽
+      Цифровой рубль
+      +1 000 ₽
+      У коммерческого банка
+      депозиты ↓   резервы ↓
+      Фондирование может подорожать
+      давление на ставку / кредит
+      ЦБ может компенсировать дефицит ликвидности.
+      Ключевой вопрос не «сколько цифровых рублей?», а «какую форму денег они заменили?». Сумма одна — каналы разные.
+
+      Imported from slide 5 of Digital_Ruble_Explainer_RU_v3.pptx.
+
+  - id: s06
+    title: "Цифровой рубль не дает прямого мультипликатора; его эффект на рост — косвенный"
+    tracker: "5. КАНАЛЫ ВЛИЯНИЯ НА ЭКОНОМИКУ · 06"
+    sources: [original-deck]
+    layout: freeform-canvas
+    variant: body
+    alt: "Два параллельных причинных пути: банковские деньги создают депозит, цифровой рубль снижает трение и может повышать производительность."
+    css: |
+        position:relative;.slide-title{position:absolute;top:0;left:0;right:0;font:700 15pt/1.12 var(--font-heading)}.paths{height:calc(100% - 130px);margin-top:54px;display:grid;grid-template-columns:1fr 1fr;gap:18px}.path{padding:11px;background:#F6F8FA;border-top:5px solid #155EEF}.path.digital{border-color:#0D9488;background:#F0FBF8}.heading{font-weight:700;font-size:11pt;color:#155EEF}.digital .heading{color:#087F75}.steps{margin-top:8px;display:grid;gap:5px}.step{position:relative;padding:7px 9px;background:#fff;border-left:4px solid #B8C5D1;display:flex;justify-content:space-between;gap:10px;font-size:10pt}.step b{font-size:11pt}.step span{text-align:right;color:var(--muted)}.step:last-child{border-left-color:#155EEF;background:#EAF2FF}.digital .step:last-child{border-left-color:#0D9488;background:#D8F4EE}.reverse{position:absolute;bottom:38px;left:0;right:0;padding:6px 10px;background:#FFE3E5;color:#C94A53;font-weight:700;text-align:center;font-size:9pt;line-height:1.15}.takeaway{position:absolute;bottom:0;left:0;right:0;padding:7px 11px;background:#D8F4EE;border-left:7px solid #0D9488;color:#087F75;font-weight:700;font-size:10pt;line-height:1.15}
+    html: |
+        <div class="slide-title">Цифровой рубль не дает прямого мультипликатора; его эффект на рост — косвенный</div><div class="paths"><div class="path"><div class="heading">БАНКОВСКИЕ ДЕНЬГИ</div><div class="steps"><div class="step"><b>Кредит</b><span>банк создает актив</span></div><div class="step"><b>Новый депозит</b><span>возникают новые деньги M2</span></div><div class="step"><b>Расходы и инвестиции</b><span>финансирование спроса и проектов</span></div><div class="step"><b>Выпуск и занятость</b><span>при наличии ресурсов и спроса</span></div></div></div><div class="path digital"><div class="heading">ЦИФРОВОЙ РУБЛЬ</div><div class="steps"><div class="step"><b>Платеж</b><span>перевод между кошельками ЦБ</span></div><div class="step"><b>Быстрее и дешевле</b><span>ниже платежные издержки</span></div><div class="step"><b>Автоматизация</b><span>условные платежи и расчеты</span></div><div class="step"><b>Производительность</b><span>возможный косвенный эффект</span></div></div></div></div><div class="reverse">Обратный канал: устойчивый отток депозитов → дороже фондирование банков → потенциально дороже кредит.</div><div class="takeaway">Оценивать цифровой рубль нужно по снижению трения в расчетах — и по цене возможного оттока банковских депозитов.</div>
+    notes: |-
+      [Sources]
+      - https://www.bankofengland.co.uk/quarterly-bulletin/2014/q1/money-creation-in-the-modern-economy
+      - https://www.bis.org/publications/aer-2020/central-banks-payments-digital-era.htm
+      - https://www.cbr.ru/content/document/file/120075/concept_08042021.pdf
+
+      IMPORT — original text that did not fit:
+      Новый депозит
+      возникают новые деньги M2
+      Быстрее и дешевле
+      ниже платежные издержки
+      Расходы и инвестиции
+      финансирование спроса и проектов
+      Автоматизация
+      условные платежи и расчеты
+      Выпуск и занятость
+      при наличии ресурсов и спроса
+      Производительность
+      возможный косвенный эффект
+      Обратный канал: устойчивый отток депозитов → дороже фондирование банков → потенциально дороже кредит.
+      Оценивать цифровой рубль нужно по снижению трения в расчетах — и по цене возможного оттока банковских депозитов.
+
+      Imported from slide 6 of Digital_Ruble_Explainer_RU_v3.pptx.
+
+  - id: s07
+    title: "Чем ближе деньги к единому реестру, тем точнее их можно проследить и ограничить"
+    tracker: "6. ПРОСЛЕЖИВАЕМОСТЬ И КОНТРОЛЬ · 07"
+    sources: [original-deck]
+    layout: freeform-canvas
+    variant: body
+    alt: "Матрица из пяти критериев сравнивает наличные, безналичные и цифровой рубль."
+    css: |
+        position:relative;.slide-title{position:absolute;top:0;left:0;right:0;font:700 14pt/1.1 var(--font-heading)}table{margin-top:49px;border-collapse:collapse;width:100%;font-size:10pt}th,td{padding:7px 9px;border-bottom:1px solid #D6E0E8;text-align:left;vertical-align:middle}th{font-size:11pt;font-weight:700;background:#F1F4F6}th:nth-child(3){background:#DCEBFF;color:#155EEF}th:nth-child(4){background:#D8F4EE;color:#087F75}td:first-child{font-weight:700;color:var(--ink);width:24%}td:nth-child(4){color:#087F75;font-weight:700}.progress{position:absolute;bottom:34px;left:25%;right:5%;height:18px;background:#E8EDF3;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:8pt}.progress:after{content:"";position:absolute;right:-1px;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:14px solid #E8EDF3}.footer{position:absolute;bottom:0;left:0;right:0;padding:6px 10px;background:#EDF1F4;border-left:7px solid #10263D;font-weight:700;font-size:9.5pt;line-height:1.15}
+    html: |
+        <div class="slide-title">Чем ближе деньги к единому реестру, тем точнее их можно проследить и ограничить</div><table><thead><tr><th>КРИТЕРИЙ</th><th>Наличные</th><th>Безналичные</th><th>Цифровой рубль</th></tr></thead><tbody><tr><td>Запись операции</td><td>Обычно нет</td><td>Есть</td><td>Есть всегда</td></tr><tr><td>Где хранятся данные</td><td>Вне реестра</td><td>Распределены по банкам</td><td>Единая платформа ЦБ</td></tr><tr><td>Анонимность</td><td>Практически высокая</td><td>Нет</td><td>Не предусмотрена</td></tr><tr><td>Блокировка</td><td>Физически сложна</td><td>Через банк</td><td>Централизованно</td></tr><tr><td>Правила для потока денег</td><td>Почти невозможны</td><td>В отдельных продуктах</td><td>Технически встроимы</td></tr></tbody></table><div class="progress">Рост централизации, скорости применения правил и детализации контроля</div><div class="footer">Разница не в том, что безналичные деньги «не оставляют след», а в том, кто хранит полный реестр и применяет правила.</div>
+    notes: |-
+      [Sources]
+      - https://www.cbr.ru/faq/dr/
+      - https://www.cbr.ru/content/document/file/120075/concept_08042021.pdf
+      - https://www.cbr.ru/content/document/file/150171/standart_dr_20230807_2.pdf
+      - https://www.cbr.ru/Content/Document/File/189997/album_dr_20260701.pdf
+
+      IMPORT — original text that did not fit:
+      Есть
+      Есть всегда
+      Где хранятся данные
+      Вне реестра
+      Распределены по банкам
+      Единая платформа ЦБ
+      Анонимность
+      Практически высокая
+      Нет
+      Не предусмотрена
+      Блокировка
+      Физически сложна
+      Через банк
+      Централизованно
+      Правила для потока денег
+      Почти невозможны
+      В отдельных продуктах
+      Технически встроимы
+      Рост централизации, скорости применения правил и детализации контроля
+      Разница не в том, что безналичные деньги «не оставляют след», а в том, кто хранит полный реестр и применяет правила.
+
+      Imported from slide 7 of Digital_Ruble_Explainer_RU_v3.pptx.
+
+  - id: s08
+    title: "Один и тот же код может автоматизировать сделку — или управлять экономическим поведением"
+    tracker: "7. ДВЕ СТОРОНЫ СМАРТ-КОНТРАКТОВ · 08"
+    sources: [original-deck]
+    layout: freeform-canvas
+    variant: body
+    alt: "Два столбца противопоставляют программируемый платеж и программируемые деньги, сохраняя условия их применения."
+    css: |
+        position:relative;.slide-title{position:absolute;top:0;left:0;right:0;font:700 14pt/1.1 var(--font-heading)}.split{height:calc(100% - 130px);margin-top:52px;display:grid;grid-template-columns:1fr 1fr;gap:16px}.side{padding:10px;background:#F5F8FC;border-top:5px solid #155EEF}.side.right{border-color:#D84B56;background:#FFF8F8}.kind{font-size:10pt;font-weight:700;color:#155EEF}.right .kind{color:#C94A53}.side h3{margin:10px 0 8px;font:700 15pt/1.1 var(--font-heading)}.chain{display:grid;gap:5px}.node{padding:7px 9px;background:#fff;border-left:4px solid #B9D6FF;font-size:10.5pt;font-weight:700}.node:last-child{border-color:#155EEF;background:#EAF2FF;color:#155EEF}.rules{padding:9px 11px;background:#fff;border-left:4px solid #D84B56;line-height:1.45;font-size:10.5pt}.rules span{display:block}.rules span:before{content:"•";color:#C94A53;font-weight:700;margin-right:7px}.notice{position:absolute;bottom:36px;left:0;right:0;padding:6px 9px;background:#FFF1D8;color:#C96B00;text-align:center;font-weight:700;font-size:8.5pt;line-height:1.12}.govern{position:absolute;bottom:0;left:0;right:0;padding:7px 10px;background:#10263D;color:#fff;display:flex;justify-content:space-between;gap:12px;font-weight:700;font-size:9pt;line-height:1.1}.govern span:last-child{text-align:right}
+    html: |
+        <div class="slide-title">Один и тот же код может автоматизировать сделку — или управлять экономическим поведением</div><div class="split"><div class="side"><div class="kind">ПРОГРАММИРУЕМЫЙ ПЛАТЕЖ</div><h3>Условие относится к сделке</h3><div class="chain"><div class="node">1. Товар поставлен</div><div class="node">2. Платформа автоматически платит</div><div class="node">3. Получатель свободно тратит деньги</div></div></div><div class="side right"><div class="kind">ПРОГРАММИРУЕМЫЕ ДЕНЬГИ</div><h3>Условие следует за средствами</h3><div class="rules"><span>Только разрешенные категории товаров</span><span>Ограниченный круг получателей</span><span>Срок или территория использования</span><span>Прослеживание дальнейшей цепочки</span></div></div></div><div class="notice">На 01.09.2026 собственные цифровые рубли можно тратить свободно; маркирование — официально описанная техническая возможность, а не общее правило.</div><div class="govern"><span>Кто вправе задавать условия?</span><span>Согласие · Законное основание · Ограниченный срок · Право обжалования</span></div>
+    notes: |-
+      Тезис для обсуждения: смарт-контракт сам по себе нейтрален; общественный риск определяется полномочиями того, кто может задать условия расходования.
+      [Sources]
+      - https://www.cbr.ru/faq/dr/
+      - https://www.cbr.ru/press/event/?id=32778
+      - https://www.cbr.ru/content/document/file/120075/concept_08042021.pdf
+
+      IMPORT — original text that did not fit:
+      Условие следует за средствами
+      Только разрешенные категории товаров
+      Ограниченный круг получателей
+      Срок или территория использования
+      Прослеживание дальнейшей цепочки
+      На 01.09.2026 собственные цифровые рубли можно тратить свободно; маркирование — официально описанная техническая возможность, а не общее правило.
+      Кто вправе задавать условия?
+      Согласие  ·  Законное основание  ·  Ограниченный срок  ·  Право обжалования
+
+      Imported from slide 8 of Digital_Ruble_Explainer_RU_v3.pptx.

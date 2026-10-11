@@ -44,9 +44,9 @@ Verification has distinct levels:
 3. `--png-engine pptx-convert` renders the **actual PPTX** through PowerPoint or LibreOffice and Poppler into `previews-office/`; the manifest records the renderer. `resvg` previews only Scene IR and cannot certify Office output.
 4. Compare actual Office pages with frozen HTML references at identical dimensions; inspect wrapping, positioning and missing elements, then review each page.
 
-**95%+ fidelity is an acceptance target, not a certified blanket guarantee.** The current structural tests and Office-preview engine do not implement a calibrated perceptual 95% gate. A future automated gate must combine text/object coverage with region-level visual differences and manual review, recording fonts and renderer versions. A background-dominated pixel score is insufficient.
+**95%+ fidelity is an acceptance target, not a certified blanket guarantee.** The Digital Ruble integration runner now combines original-text/note checks, native-object counts and 4×4 region RGB/detail differences against both frozen and current HTML. It records fonts and renderer provenance and fails on any damaged slide, not only the deck average. This is an initial diagnostic gate, not a calibrated perceptual 95% score. Manual review and metric calibration remain necessary; a background-dominated pixel score is insufficient.
 
-The 22-slide Digital Ruble deck, original PPTX and HTML references form a private regression corpus under git-ignored `slidecraft/`. Public tests contain illustrative data only. Do not commit client content.
+The owner explicitly authorised the 22-slide Digital Ruble corpus as a public regression fixture. `tests/fixtures/digital-ruble/` contains the immutable original PPTX, a font-externalised historical HTML reference, hash locks and candidate input. `npm run test:digital-ruble` checks content, editability and actual Office output; generated reports stay ignored. This is a specific consent exception, not permission to commit other client content. See [regression instructions](../../tests/fixtures/digital-ruble/README.md) and [generation principles](presentation-generation-principles.md).
 
 [Confirmed defects, fixes and remaining acceptance work](editable-fidelity-audit.md).
 

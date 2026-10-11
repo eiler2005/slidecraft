@@ -1,0 +1,106 @@
+- id: s18
+  layout: freeform-canvas
+  variant: body
+  title: "Цифровой рубль и ЦФА"
+  sources: [original-deck]
+  alt: "Сравнение цифрового рубля и ЦФА по пяти параметрам: предмет права, эмитент, применение, стоимость и доход."
+  css: |-
+    .f{height:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:8px}.cap{font-size:10pt;font-weight:700;letter-spacing:.05em;color:var(--accent)}.cap b{float:right;background:var(--ink);color:var(--bg);border-radius:999px;padding:2px 10px;letter-spacing:0}.ft{font-family:var(--font-heading);font-size:24pt;line-height:1.02;font-weight:700;margin:0}.lead{font-size:12.5pt;line-height:1.18;color:var(--accent);font-weight:700;border-top:1px solid var(--rule);padding-top:7px}.grid{display:grid;grid-template-columns:1.05fr 1.45fr 1.65fr;border:1px solid var(--ink);font-size:11.2pt;line-height:1.12}.grid div{padding:7px 11px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}.grid div:nth-child(3n){border-right:0}.grid .h{background:var(--ink);color:var(--bg);font-weight:700}.grid .k{color:var(--accent);font-weight:700}.take{font-size:11.5pt;line-height:1.15;font-weight:700;border-top:1px solid var(--rule);padding-top:7px}.src{margin-top:auto;font-size:8.5pt;color:var(--muted);text-decoration:underline}
+  html: |-
+    <div class="f"><div class="cap">ПРИЛОЖЕНИЕ 1. ЦИФРОВОЙ РУБЛЬ И ЦИФРОВЫЕ ПРАВА <b>П1</b></div><h1 class="ft">Цифровой рубль и ЦФА</h1><div class="lead">ЦФА: цифровые финансовые активы. Права по каждому выпуску определяет его эмитент.</div><div class="grid"><div class="h">Параметр</div><div class="h">Цифровой рубль</div><div class="h">ЦФА</div><div class="k">Что получает владелец</div><div>Деньги в цифровой форме</div><div>Право, указанное в решении о выпуске</div><div class="k">Кто выпускает</div><div>Банк России</div><div>Конкретный эмитент, например компания</div><div class="k">Основное применение</div><div>Оплата и переводы</div><div>Финансирование и инвестиции</div><div class="k">Стоимость</div><div>1 цифровой рубль = 1 рубль</div><div>Условия выпуска и цена сделки</div><div class="k">Доход</div><div>Проценты на остаток отсутствуют</div><div>Выплата или доход по условиям выпуска</div></div><div class="take">Цифровой рубль служит для расчётов. ЦФА закрепляет финансовое право, указанное в условиях выпуска.</div><div class="src">Банк России, цифровой рубль&nbsp;&nbsp;&nbsp; Банк России, ЦФА</div></div>
+  notes: |-
+    Сравнение относится к цифровому рублю и цифровым финансовым активам (ЦФА) в российской практике. ЦФА являются одной из конструкций токенизации.
+    https://www.cbr.ru/faq/dr/
+    FAQ Банка России, обновление основных ответов 01.09.2026: форма национальной валюты, эмитент Банк России, эквивалентность форм рубля, отсутствие процентов на остаток.
+    https://www.cbr.ru/finm_infrastructure/digital_oper/
+    Определение ЦФА и видов прав, оператор информационной системы, решение о выпуске. ЦФА могут предусматривать денежные требования, права по эмиссионным ценным бумагам, участие в капитале непубличного АО и требование передачи эмиссионных ценных бумаг.
+    Строка о стоимости означает условия обязательства и цену сделки, а не обязательную рыночную котировку каждого выпуска. ЦФА не являются универсальным платёжным средством для обычных внутренних расчётов. Специальные режимы внешнеторговых расчётов в данном сравнении не рассматриваются.
+    Imported from slide 18 of Digital_Ruble_Explainer_RU_v3.pptx.
+
+- id: s19
+  layout: freeform-canvas
+  variant: body
+  title: "Какие права можно токенизировать"
+  sources: [original-deck]
+  alt: "Три карточки показывают ЦФА, утилитарные и гибридные цифровые права, их содержание и право обладателя."
+  css: |-
+    .f{height:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:14px}.cap{font-size:11pt;font-weight:700;letter-spacing:.05em;color:var(--accent)}.cap b{float:right;background:var(--ink);color:var(--bg);border-radius:999px;padding:3px 11px;letter-spacing:0}.ft{font-family:var(--font-heading);font-size:27pt;line-height:1.04;font-weight:700;margin:0}.lead{font-size:15pt;color:var(--accent);font-weight:700;border-top:1px solid var(--rule);padding-top:11px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;flex:1}.card{border:1px solid var(--rule);border-top:5px solid var(--accent);padding:15px;background:var(--surface);display:flex;flex-direction:column}.card h2{margin:0 0 12px;font-family:var(--font-heading);font-size:17pt;line-height:1.1;color:var(--accent)}.card p{font-size:12.5pt;line-height:1.25;margin:0}.card .r{margin-top:auto;padding-top:13px;border-top:1px solid var(--rule);font-weight:700}.take{font-size:13pt;line-height:1.22;font-weight:700}.src{font-size:8.5pt;color:var(--muted);text-decoration:underline}
+  html: |-
+    <div class="f"><div class="cap">ПРИЛОЖЕНИЕ 2. ЦИФРОВОЙ РУБЛЬ И ЦИФРОВЫЕ ПРАВА <b>П2</b></div><h1 class="ft">Какие права можно токенизировать</h1><div class="lead">В российской практике используют несколько конструкций цифровых прав.</div><div class="cards"><div class="card"><h2>ЦФА</h2><p>Денежное требование.<br>Права по ценным бумагам.<br>Участие в непубличном АО</p><p class="r">Предусмотренную выплату или соответствующее финансовое право</p></div><div class="card"><h2>Утилитарные<br>цифровые права</h2><p>Например, требование передать вещь или оказать услугу</p><p class="r">Право потребовать товар или услугу у обязанного лица</p></div><div class="card"><h2>Гибридные<br>цифровые права</h2><p>Сочетание финансового и другого цифрового права</p><p class="r">Например, право на денежную выплату и получение товара по условиям выпуска</p></div></div><div class="take">Токенизация закрепляет конкретное право. Его содержание определяют документы выпуска и сделки.</div><div class="src">Банк России, токенизация активов&nbsp;&nbsp;&nbsp; Банк России, ЦФА и гибридные права</div></div>
+  notes: |-
+    https://www.cbr.ru/press/event/?id=23159
+    Банк России, 22.11.2024: в российском законодательстве к токенам применима конструкция цифровых прав, в том числе ЦФА, утилитарных и гибридных цифровых прав.
+    https://www.cbr.ru/finm_infrastructure/digital_oper/
+    Определение финансовых прав по ЦФА и гибридных прав, объединяющих ЦФА и иные цифровые права.
+    https://www.cbr.ru/Content/doc/File/170116/analytical_report_22112024.pdf
+    Доклад Банка России «Токенизация активов реального мира: экономическая природа и опыт регулирования», 2024.
+    Таблица показывает примеры содержания прав и не перечисляет все допустимые конструкции. Утилитарные цифровые права могут включать требования передачи вещи, исключительных прав или прав использования результатов интеллектуальной деятельности, выполнения работ или оказания услуг. Пример гибридного права условный: конкретное сочетание и порядок исполнения определяются документами выпуска. Права участия в капитале непубличного АО не тождественны собственности на имущество самого общества.
+    Токенизация закрепляет конкретное право. Его содержание определяют документы выпуска и сделки.
+    Банк России, токенизация активов. Банк России, ЦФА и гибридные права.
+    Imported from slide 19 of Digital_Ruble_Explainer_RU_v3.pptx.
+
+- id: s20
+  layout: freeform-canvas
+  variant: body
+  title: "100 000 ₽: деньги и требование к эмитенту"
+  sources: [original-deck]
+  alt: "Учебное сравнение цифрового рубля и долгового ЦФА при одинаковой сумме 100 000 рублей."
+  css: |-
+    .f{height:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:11px}.cap{font-size:11pt;font-weight:700;letter-spacing:.05em;color:var(--accent)}.cap b{float:right;background:var(--ink);color:var(--bg);border-radius:999px;padding:3px 11px;letter-spacing:0}.ft{font-family:var(--font-heading);font-size:25pt;line-height:1.04;font-weight:700;margin:0}.lead{font-size:14pt;color:var(--accent);font-weight:700;border-top:1px solid var(--rule);padding-top:10px}.money{display:grid;grid-template-columns:1fr 1fr;gap:16px}.money div{font-family:var(--font-heading);font-size:28pt;font-weight:700;color:var(--accent)}.money small{display:block;font-family:var(--font-body);font-size:12pt;font-weight:700;color:var(--ink);margin-bottom:3px}.grid{display:grid;grid-template-columns:1.05fr 1.5fr 1.7fr;border:1px solid var(--ink);font-size:11.5pt;line-height:1.16}.grid div{padding:9px 12px;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}.grid div:nth-child(3n){border-right:0}.grid .h{background:var(--ink);color:var(--bg);font-weight:700}.grid .k{color:var(--accent);font-weight:700}.take{font-size:12.5pt;line-height:1.2;font-weight:700;border-top:1px solid var(--rule);padding-top:9px}.src{margin-top:auto;font-size:8.5pt;color:var(--muted);text-decoration:underline}
+  html: |-
+    <div class="f"><div class="cap">ПРИЛОЖЕНИЕ 3. ЦИФРОВОЙ РУБЛЬ И ЦИФРОВЫЕ ПРАВА <b>П3</b></div><h1 class="ft">100 000 ₽: деньги и требование к эмитенту</h1><div class="lead">Учебный пример. Выплата по условному долговому ЦФА через год составляет 110 000 ₽.</div><div class="money"><div><small>В цифровом кошельке</small>100 000 ₽</div><div><small>Вложено в условный ЦФА</small>100 000 ₽</div></div><div class="grid"><div class="h">Содержание</div><div class="h">Цифровой рубль</div><div class="h">Долговой ЦФА</div><div class="k">Право владельца</div><div>Проводить платежи и переводы</div><div>Потребовать выплату по условиям выпуска</div><div class="k">Через один год</div><div>100 000 ₽ при отсутствии операций.<br>Проценты не начисляются</div><div>Предусмотренная выплата 110 000 ₽.<br>Условный доход составляет 10%</div><div class="k">Кто исполняет</div><div>Банк России проводит операции платформы</div><div>Эмитент выплачивает деньги в соответствии с условиями</div></div><div class="take">Исполнение обязательства по ЦФА зависит от эмитента. Запись в реестре фиксирует право владельца.</div><div class="src">Банк России, свойства цифрового рубля&nbsp;&nbsp;&nbsp; Банк России, права по ЦФА</div></div>
+  notes: |-
+    Учебный пример. Числа не являются параметрами реального выпуска или прогнозом доходности.
+    Цена условного долгового ЦФА составляет 100 000 рублей. Условия выпуска предусматривают денежную выплату 110 000 рублей через один год. Прирост выплаты относительно цены приобретения: (110 000 - 100 000) / 100 000 = 10%. Выплата зависит от исполнения обязательства эмитентом.
+    Для цифрового рубля показан остаток при отсутствии операций: платформа не начисляет проценты. Это сравнение номинальных сумм, покупательная способность и инфляция не анализируются.
+    Источники определений и свойств:
+    https://www.cbr.ru/faq/dr/
+    https://www.cbr.ru/finm_infrastructure/digital_oper/
+    Эмитент ЦФА, оператор информационной системы и Банк России исполняют разные функции. Регулирование платформы не превращает обязательство частного эмитента в обязательство Банка России.
+    Imported from slide 20 of Digital_Ruble_Explainer_RU_v3.pptx.
+
+- id: s21
+  layout: freeform-canvas
+  variant: body
+  title: "Токен на золото или недвижимость"
+  sources: [original-deck]
+  alt: "Три примера показывают разницу между правом на выплату, цифровым квадратным метром и правом получить товар."
+  css: |-
+    .f{height:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:14px}.cap{font-size:11pt;font-weight:700;letter-spacing:.05em;color:var(--accent)}.cap b{float:right;background:var(--ink);color:var(--bg);border-radius:999px;padding:3px 11px;letter-spacing:0}.ft{font-family:var(--font-heading);font-size:27pt;line-height:1.04;font-weight:700;margin:0}.lead{font-size:15pt;color:var(--accent);font-weight:700;border-top:1px solid var(--rule);padding-top:11px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;flex:1}.card{border:1px solid var(--rule);padding:15px;background:var(--surface);display:flex;flex-direction:column}.card:nth-child(1){border-top:5px solid #d49b2a}.card:nth-child(2){border-top:5px solid var(--accent)}.card:nth-child(3){border-top:5px solid #53a89b}.card h2{margin:0 0 12px;font-family:var(--font-heading);font-size:16pt;line-height:1.1;color:var(--accent)}.card p{font-size:12.3pt;line-height:1.24;margin:0}.card .r{margin-top:auto;padding-top:13px;border-top:1px solid var(--rule);font-weight:700}.take{font-size:13pt;line-height:1.22;font-weight:700}.src{font-size:8.5pt;color:var(--muted);text-decoration:underline}
+  html: |-
+    <div class="f"><div class="cap">ПРИЛОЖЕНИЕ 4. ЦИФРОВОЙ РУБЛЬ И ЦИФРОВЫЕ ПРАВА <b>П4</b></div><h1 class="ft">Токен на золото или недвижимость</h1><div class="lead">В документах выпуска указано, на какую выплату или действие имеет право владелец.</div><div class="cards"><div class="card"><h2>ЦФА на цену золота<br>Учебный пример</h2><p>Получить денежную выплату по заданной формуле</p><p class="r">Цена золота влияет на выплату. Передача слитка таким правом не предусмотрена</p></div><div class="card"><h2>«Цифровой квадратный метр»<br>Пример из доклада ЦБ</h2><p>Денежное требование, привязанное к индексу рынка недвижимости</p><p class="r">Инвестор получает выплату. Такое ЦФА не даёт собственность на квартиру</p></div><div class="card"><h2>Право на получение товара<br>Учебный пример</h2><p>Потребовать передачи вещи у обязанного лица</p><p class="r">Переход собственности регулируют закон и документы сделки</p></div></div><div class="take">Право на выплату, требование передачи вещи и право собственности имеют разное содержание.</div><div class="src">Банк России, доклад о токенизации, 2024&nbsp;&nbsp;&nbsp; Банк России, цифровые права</div></div>
+  notes: |-
+    https://www.cbr.ru/Content/doc/File/170116/analytical_report_22112024.pdf
+    Банк России «Токенизация активов реального мира: экономическая природа и опыт регулирования», 2024. В докладе приведён российский пример продуктов, позиционируемых как «токенизированные квадратные метры», которые фактически представляют денежное требование к эмитенту с выплатой, зависящей от изменения индекса недвижимости.
+    https://www.cbr.ru/press/event/?id=23159
+    Обзор разных прав по токенизированным активам, 22.11.2024.
+    https://www.cbr.ru/finm_infrastructure/digital_oper/
+    Определения ЦФА и гибридных цифровых прав.
+    Первая и третья строки таблицы являются учебными примерами, а не конкретными выпусками. ЦФА, предусматривающий только денежную выплату по формуле цены золота, даёт денежное требование. Возможность получить металл должна следовать из отдельного содержания соответствующего права. Для права требовать передачу вещи момент перехода права собственности зависит от закона и документов сделки. Юридический результат определяется правами в конкретной конструкции, а не рекламным названием токена.
+    Право на выплату, требование передачи вещи и право собственности имеют разное содержание.
+    Банк России, доклад о токенизации, 2024. Банк России, цифровые права.
+    Imported from slide 21 of Digital_Ruble_Explainer_RU_v3.pptx.
+
+- id: s22
+  layout: freeform-canvas
+  variant: body
+  title: "Распределённый реестр и управление системой"
+  sources: [original-deck]
+  alt: "Сравнение цифрового рубля и ЦФА по технической основе, оператору, объекту учёта и исполнению."
+  css: |-
+    .f{height:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:12px}.cap{font-size:11pt;font-weight:700;letter-spacing:.05em;color:var(--accent)}.cap b{float:right;background:var(--ink);color:var(--bg);border-radius:999px;padding:3px 11px;letter-spacing:0}.ft{font-family:var(--font-heading);font-size:26pt;line-height:1.04;font-weight:700;margin:0}.lead{font-size:14pt;line-height:1.24;color:var(--accent);font-weight:700;border-top:1px solid var(--rule);padding-top:10px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:11px;flex:1}.card{border:1px solid var(--rule);padding:12px 14px;background:var(--surface)}.card h2{margin:0 0 8px;font-family:var(--font-heading);font-size:15pt;color:var(--accent)}.pair{display:grid;grid-template-columns:1fr 1fr;gap:13px;font-size:11.2pt;line-height:1.2}.pair b{display:block;margin-bottom:4px;font-size:10pt;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.take{font-size:13pt;line-height:1.2;font-weight:700;border-top:1px solid var(--rule);padding-top:9px}.src{margin-top:auto;font-size:8.5pt;color:var(--muted);text-decoration:underline}
+  html: |-
+    <div class="f"><div class="cap">ПРИЛОЖЕНИЕ 5. ЦИФРОВОЙ РУБЛЬ И ЦИФРОВЫЕ ПРАВА <b>П5</b></div><h1 class="ft">Распределённый реестр и управление системой</h1><div class="lead">DLT хранит согласованные копии данных на нескольких узлах. Блокчейн является одним из вариантов DLT.</div><div class="cards"><div class="card"><h2>Техническая основа</h2><div class="pair"><div><b>Цифровой рубль</b>Распределённый реестр. Подтверждён альбомом 2026.09</div><div><b>ЦФА</b>Распределённый реестр или иная информационная система</div></div></div><div class="card"><h2>Оператор</h2><div class="pair"><div><b>Цифровой рубль</b>Банк России</div><div><b>ЦФА</b>Оператор соответствующей системы из реестра Банка России</div></div></div><div class="card"><h2>Что фиксирует</h2><div class="pair"><div><b>Цифровой рубль</b>Счета и денежные операции</div><div><b>ЦФА</b>Обладателей цифровых прав и переход этих прав</div></div></div><div class="card"><h2>Исполнение</h2><div class="pair"><div><b>Цифровой рубль</b>Платформа проводит денежные операции</div><div><b>ЦФА</b>Система учитывает права. Обязанное лицо исполняет обязательство</div></div></div></div><div class="take">Распределённость данных совместима с централизованным управлением платформой.</div><div class="src">Банк России, альбом 2026.09&nbsp;&nbsp;&nbsp; Федеральный закон № 259-ФЗ, статья 1</div></div>
+  notes: |-
+    https://www.cbr.ru/PSystem/dr/doc_dr/albums_r/
+    https://www.cbr.ru/Content/doc/File/193355/cbdc_album_v2026.09.zip
+    Альбом электронных сообщений, используемых для взаимодействия субъектов платформы цифрового рубля, версия 2026.09. Глоссарий определяет распределённый реестр как базу данных с идентичными экземплярами на узлах платформы и внесением изменений по протоколу консенсуса. Узлы платформы установлены у оператора. Оператором является Банк России. Правила формирования транзакционного сообщения описывают запись данных в распределённый реестр. Документ подтверждает DLT. Называть конкретный блокчейн-движок или алгоритм консенсуса без отдельного технического источника нельзя.
+    Проверенные части альбома: Глоссарий и Правила формирования транзакционного сообщения (дайджеста) распределённого реестра, 2026.
+    https://www.mos.ru/upload/documents/files/5814/Federalniizakonot31072020N259-FZ%28redot08082024.pdf
+    Статья 1, часть 2 базового закона № 259-ФЗ: выпуск, учёт и обращение ЦФА через записи в информационных системах на основе распределённого реестра, а также в иных информационных системах. Ссылка ведёт на опубликованный текст редакции 08.08.2024.
+    https://www.cbr.ru/finm_infrastructure/digital_oper/
+    Требования к оператору информационной системы, определение прав по ЦФА.
+    Общее пояснение: блокчейн является разновидностью технологии распределённого реестра. Одинаковая технология учёта не означает одинаковый юридический или экономический смысл учитываемых объектов.
+    Распределённость данных совместима с централизованным управлением платформой.
+    Банк России, альбом 2026.09. Федеральный закон № 259-ФЗ, статья 1.
+    Imported from slide 22 of Digital_Ruble_Explainer_RU_v3.pptx.

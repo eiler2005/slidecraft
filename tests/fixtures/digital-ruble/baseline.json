@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "digital-ruble",
+  "slides": 22,
+  "original": {
+    "file": "Digital_Ruble_Explainer_RU_v3.pptx",
+    "sha256": "419c93d91d899dd870ea386f0dfef55e9e07bc4afa1797ad7cee6abd6aa5e790"
+  },
+  "reference": {
+    "file": "reference.html",
+    "sha256": "854766a08b317461fe355cfd424deefd6cef25530179de7e06f61a16c60c0fe5",
+    "historicalSha256": "7a7ceb1fcd3314ee23c26790eb85f006e06784ff4262bdef5f2bed552df97fcb",
+    "transformation": "Only embedded System Font font-face URLs replaced with local SFNS.ttf; no text, geometry or styling changed."
+  },
+  "candidate": "deck.yaml",
+  "target": 0.95,
+  "consent": "Owner explicitly authorised storing the original and regression fixture in Git on 2026-10-11.",
+  "fontRequirements": [
+    "Local macOS /System/Library/Fonts/SFNS.ttf",
+    "Original PPTX uses locally installed Office fonts; inspect the report."
+  ]
+}

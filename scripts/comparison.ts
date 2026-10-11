@@ -174,17 +174,12 @@ for (const deck of decks) {
     add('source', 'Deck source (YAML)', join(src, 'src', 'deck.yaml'), 'source');
     add(
       'reference',
-      'Editable PPTX (the deliverable)',
-      pick('.pptx') && join(build, pick('.pptx')!),
-      'reference',
-    );
-    add(
-      'reference',
-      'PPTX rendered by PowerPoint (PDF)',
+      'Editable PPTX as PowerPoint renders it (PDF)',
       join(src, 'pptx-office.pdf'),
       'reference',
       'pptx-powerpoint.pdf',
     );
+    add('result', 'Editable PPTX', pick('.pptx') && join(build, pick('.pptx')!), 'result');
     add('result', 'HTML deck', pick('.html') && join(build, pick('.html')!), 'result');
     add(
       'result',
@@ -230,7 +225,7 @@ for (const deck of decks) {
       '',
       deck.kind === 'rebuild'
         ? 'Reference: the original PowerPoint file as PowerPoint renders it. Result: SlideCraft rebuilt it into an editable PPTX and an HTML deck.'
-        : 'Reference: the editable PPTX SlideCraft generated, as PowerPoint renders it (the deliverable). Result: the HTML deck from the same source must look the same.',
+        : 'Result: SlideCraft generated an editable PPTX and an HTML deck from the same YAML (`result/`). Reference: the editable PPTX as PowerPoint renders it (`reference/`) — the HTML must look the same.',
       '',
       `Calibration run ${ranAt}. Gate pair \`${gate}\`, target ${pct(TARGET)} per page (worst of 16 regions, RGB + edge detail).`,
       '',
@@ -252,8 +247,8 @@ for (const deck of decks) {
   out.push({
     id: deck.id,
     kind: deck.kind,
-    reference: deck.kind === 'rebuild' ? 'Original PPTX' : 'Editable PPTX in PowerPoint',
-    result: deck.kind === 'rebuild' ? 'Rebuilt PPTX + HTML' : 'HTML deck',
+    reference: deck.kind === 'rebuild' ? 'Original PPTX' : 'Editable PPTX as PowerPoint renders it',
+    result: deck.kind === 'rebuild' ? 'Rebuilt editable PPTX + HTML' : 'Editable PPTX + HTML',
     files,
     pages,
   });

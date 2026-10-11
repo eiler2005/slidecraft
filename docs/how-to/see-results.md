@@ -45,7 +45,7 @@ comparison/
 ├── calibration/          REPORT.md, RULES.md and corpus.json of that run
 └── <deck>/
     ├── reference/        what the result must match
-    ├── result/           what SlideCraft produced
+    ├── result/           what SlideCraft produced: editable PPTX, HTML, PDFs
     ├── source/           deck YAML (generated decks)
     ├── pages/            NN-reference.png, NN-pptx.png / NN-html.png, NN-diff-*.png
     └── report.md         scores per page
@@ -56,7 +56,7 @@ What "reference" means depends on the deck:
 | Deck kind | Reference | Result | Example |
 |---|---|---|---|
 | `rebuild` — an existing PowerPoint made editable | the **original PPTX** as PowerPoint renders it (plus its historical HTML, for diagnosis only) | the rebuilt editable PPTX and the HTML deck | `digital-ruble` |
-| `generated` — a deck written in YAML | the **editable PPTX** SlideCraft generated, as PowerPoint renders it (the deliverable) | the HTML deck from the same source | the six examples and three theme variants |
+| `generated` — a deck written in YAML | how PowerPoint renders the generated editable PPTX (`reference/*.pdf`) | the **editable PPTX** and the HTML deck from the same source (`result/`) | the six examples and three theme variants |
 
 **Reading the images.** In a difference image grey means both agree, **red** is ink only in the
 reference, **cyan** only in the result. Coloured fringes along glyph edges are sub-pixel

@@ -550,6 +550,151 @@
                 ],
                 "additionalProperties": false
               }
+            },
+            "shapes": {
+              "description": "Vector decoration from the template masters, drawn under the pictures",
+              "type": "object",
+              "properties": {
+                "cover": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "rect",
+                          "ellipse",
+                          "line"
+                        ]
+                      },
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      },
+                      "w": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "h": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "fill": {
+                        "type": "string",
+                        "pattern": "^#[0-9A-Fa-f]{6}$",
+                        "description": "Hex color, #RRGGBB"
+                      },
+                      "stroke": {
+                        "type": "object",
+                        "properties": {
+                          "color": {
+                            "type": "string",
+                            "pattern": "^#[0-9A-Fa-f]{6}$",
+                            "description": "Hex color, #RRGGBB"
+                          },
+                          "width": {
+                            "type": "number",
+                            "minimum": 0
+                          }
+                        },
+                        "required": [
+                          "color",
+                          "width"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "radius": {
+                        "type": "number",
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "x",
+                      "y",
+                      "w",
+                      "h"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "content": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "enum": [
+                          "rect",
+                          "ellipse",
+                          "line"
+                        ]
+                      },
+                      "x": {
+                        "type": "number"
+                      },
+                      "y": {
+                        "type": "number"
+                      },
+                      "w": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "h": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "fill": {
+                        "type": "string",
+                        "pattern": "^#[0-9A-Fa-f]{6}$",
+                        "description": "Hex color, #RRGGBB"
+                      },
+                      "stroke": {
+                        "type": "object",
+                        "properties": {
+                          "color": {
+                            "type": "string",
+                            "pattern": "^#[0-9A-Fa-f]{6}$",
+                            "description": "Hex color, #RRGGBB"
+                          },
+                          "width": {
+                            "type": "number",
+                            "minimum": 0
+                          }
+                        },
+                        "required": [
+                          "color",
+                          "width"
+                        ],
+                        "additionalProperties": false
+                      },
+                      "radius": {
+                        "type": "number",
+                        "minimum": 0
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "x",
+                      "y",
+                      "w",
+                      "h"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "cover",
+                "content"
+              ],
+              "additionalProperties": false
             }
           },
           "required": [
@@ -570,6 +715,10 @@
     },
     "source": {
       "description": "Where the theme came from, e.g. \"imported from brand.potx\"",
+      "type": "string"
+    },
+    "template": {
+      "description": "The brand's own .pptx/.potx, relative to the theme file: PPTX output is built inside it, on its slide masters and layouts",
       "type": "string"
     },
     "officeTheme": {

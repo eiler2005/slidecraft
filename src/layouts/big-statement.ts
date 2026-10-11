@@ -108,7 +108,8 @@ export const bigStatement: LayoutDef<typeof schema> = {
         ctx.slide.title.toUpperCase(),
         { x: left, y: format.tracker.y, w: width, h: 0.5 },
         {
-          role: 'tracker',
+          // the claim above the quote is the slide's title (outline, screen readers)
+          role: 'title',
           size: 'small',
           bold: true,
           color: colors.accent,

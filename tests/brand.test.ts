@@ -68,6 +68,7 @@ describe('brand import', () => {
       title: 'BRAND',
       objects: [
         { image: { path: img, x: 0, y: 6.9, w: 10, h: 0.6 } },
+        { rect: { x: 0, y: 0, w: 0.25, h: 7.5, fill: { color: 'C8102E' } } },
         {
           placeholder: {
             options: { name: 'title', type: 'title', x: 0.8, y: 0.9, w: 8.4, h: 1 },
@@ -84,6 +85,9 @@ describe('brand import', () => {
     expect(fmt).toMatchObject({ w: 10, h: 7.5, margin: { l: 0.8, r: 0.8, t: 0.62 } });
     expect(fmt.margin.b).toBeGreaterThan(0.6); // footer kept above the bottom band
     expect(readThemeFile(r.themePath).chrome.art?.content).toHaveLength(1);
+    expect(readThemeFile(r.themePath).chrome.art?.shapes?.content).toEqual([
+      expect.objectContaining({ kind: 'rect', fill: '#C8102E', h: 7.5 }),
+    ]);
     const deck = join(out, 'deck.yaml');
     writeFileSync(
       deck,
@@ -100,6 +104,17 @@ describe('brand import', () => {
     expect(pres).toContain('cx="9144000" cy="6858000"');
     const slide2 = await zip.file('ppt/slides/slide2.xml')!.async('string');
     expect(slide2).toContain('<p:ph type="title"/>');
+    // built inside the template: its master and layouts, our slides linked to them
+    const rels2 = await zip.file('ppt/slides/_rels/slide2.xml.rels')!.async('string');
+    const layoutPart = /Target="\.\.\/slideLayouts\/([^"]+)"/.exec(rels2)![1]!;
+    const layoutXml = await zip.file(`ppt/slideLayouts/${layoutPart}`)!.async('string');
+    expect(layoutXml).toContain('name="BRAND"');
+    const types = await zip.file('[Content_Types].xml')!.async('string');
+    expect(types).toContain('PartName="/ppt/slides/slide2.xml"');
+    expect(
+      Object.keys(zip.files).filter((n) => /^ppt\/slideMasters\/slideMaster\d+\.xml$/.test(n)),
+    ).toHaveLength(1);
+    expect(slide2).toMatch(/type="slidenum"/);
   });
 
   it('measures a brand font registered from files exactly like the file it points to', () => {

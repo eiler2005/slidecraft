@@ -148,6 +148,36 @@ function buildMasters(
     if (art) {
       const sx = format.w / art.size.w;
       const sy = format.h / art.size.h;
+      const shapes = art.shapes
+        ? id === 'content'
+          ? art.shapes.content
+          : art.shapes.cover.length
+            ? art.shapes.cover
+            : art.shapes.content
+        : [];
+      for (const sh of shapes) {
+        const box = { x: sh.x * sx, y: sh.y * sy, w: sh.w * sx, h: sh.h * sy };
+        const stroke = sh.stroke ? { color: sh.stroke.color, width: sh.stroke.width } : undefined;
+        if (sh.kind === 'line')
+          nodes.push({
+            kind: 'line',
+            x1: box.x,
+            y1: box.y,
+            x2: box.x + box.w,
+            y2: box.y + box.h,
+            stroke: stroke ?? { color: sh.fill ?? c.rule, width: 1 },
+            role: 'art',
+          });
+        else
+          nodes.push({
+            kind: sh.kind,
+            box,
+            ...(sh.fill ? { fill: sh.fill } : {}),
+            ...(stroke ? { stroke } : {}),
+            ...(sh.kind === 'rect' && sh.radius ? { radius: sh.radius * Math.min(sx, sy) } : {}),
+            role: 'art',
+          });
+      }
       const list = id === 'content' ? art.content : art.cover.length ? art.cover : art.content;
       for (const a of list)
         if (existsSync(a.image))
@@ -461,5 +491,9 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
   };
   if (deck.author) scene.author = deck.author;
   if (theme.officeTheme) scene.officeTheme = theme.officeTheme;
+  if (theme.template && existsSync(theme.template)) {
+    const footer = deck.footer ?? theme.chrome.footer;
+    scene.template = { path: theme.template, ...(footer ? { footer } : {}) };
+  }
   return { scene, diagnostics };
 }

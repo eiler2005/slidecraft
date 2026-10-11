@@ -292,6 +292,8 @@ export interface Scene {
   meta?: { subtitle?: string; date?: string; organization?: string };
   /** Absolute path of a brand Office theme part to write into PPTX output. */
   officeTheme?: string;
+  /** Brand template whose masters and layouts the PPTX is built on. */
+  template?: { path: string; footer?: string };
 }
 
 export const PT_PER_IN = 72;

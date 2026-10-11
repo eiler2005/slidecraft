@@ -210,7 +210,7 @@ export async function importTheme(
   const needsCyr = [heading, body].some((f) => f.measure === 'gelasio');
 
   // template geometry: background art in place, and the title band as a page format
-  const geo = await readTemplateGeometry(zip);
+  const geo = await readTemplateGeometry(zip, c);
   const slideArea = geo.size.w * geo.size.h;
   const saved = new Map<string, string>();
   const keep = async (part: string) => {
@@ -240,7 +240,16 @@ export async function importTheme(
   };
   const artCover = await toArt(geo.cover);
   const artContent = await toArt(geo.content);
-  const hasArt = artCover.length + artContent.length > 0;
+  const round = <T extends { x: number; y: number; w: number; h: number }>(v: T): T => ({
+    ...v,
+    x: +v.x.toFixed(4),
+    y: +v.y.toFixed(4),
+    w: +v.w.toFixed(4),
+    h: +v.h.toFixed(4),
+  });
+  const shapeArt = { cover: geo.coverShapes.map(round), content: geo.contentShapes.map(round) };
+  const hasShapes = shapeArt.cover.length + shapeArt.content.length > 0;
+  const hasArt = artCover.length + artContent.length > 0 || hasShapes;
   // a small picture on the template is its logo; it is already placed by the art
   const smallPic = [...geo.content, ...geo.cover].some((p) => (p.w * p.h) / slideArea < 0.04);
   if (hasArt)
@@ -367,13 +376,23 @@ export async function importTheme(
               size: { w: +geo.size.w.toFixed(3), h: +geo.size.h.toFixed(3) },
               cover: artCover,
               content: artContent,
+              ...(hasShapes ? { shapes: shapeArt } : {}),
             },
           }
         : {}),
     },
     source: `imported from ${basename(file)}`,
     officeTheme: `${opts.id}.theme.xml`,
+    template: `${opts.id}.template${extname(file).toLowerCase() === '.potx' ? '.potx' : '.pptx'}`,
   };
+  // the template itself: PPTX output is built on its masters and layouts
+  copyFileSync(
+    file,
+    join(
+      outDir,
+      `${opts.id}.template${extname(file).toLowerCase() === '.potx' ? '.potx' : '.pptx'}`,
+    ),
+  );
   // keep the brand's own theme part (no relationships needed: colours, fonts, effects)
   writeFileSync(join(outDir, `${opts.id}.theme.xml`), xml);
   const themePath = join(outDir, `${opts.id}.json`);

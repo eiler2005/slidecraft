@@ -7,9 +7,12 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import JSZip from 'jszip';
 import pptxgenModule from 'pptxgenjs';
+import { chartAlt } from '../engine/alt.ts';
 import type { ChartNode, Master, Scene, SceneNode, Stroke, TextNode } from '../engine/scene.ts';
 import { in2pt } from '../engine/scene.ts';
 import { VERSION } from '../paths.ts';
+import { markDecorative, markTitle, TITLE_NAME, titleFirst } from './pptx-a11y.ts';
+import { applyTemplate } from './pptx-template.ts';
 import { rasterize } from './resvg.ts';
 import type { Engine } from './types.ts';
 
@@ -78,8 +81,6 @@ function textOpts(t: TextNode): Any {
   };
 }
 
-const TITLE_NAME = 'SlideCraft Title';
-
 function addText(slide: Slide, t: TextNode) {
   slide.addText(textRuns(t), textOpts(t));
 }
@@ -96,6 +97,7 @@ function addChart(pptx: Pptx, slide: Slide, n: ChartNode) {
     y: b.y,
     w: b.w,
     h: b.h,
+    altText: chartAlt(n),
     layout: {
       x: (n.plot.x - b.x) / b.w,
       y: (n.plot.y - b.y) / b.h,
@@ -346,6 +348,31 @@ async function defineMaster(pptx: Pptx, m: Master, scene: Scene) {
           line: lineProps(n.stroke),
         },
       });
+    } else if (n.kind === 'ellipse') {
+      objects.push({
+        text: {
+          text: '',
+          options: {
+            shape: 'ellipse',
+            x: n.box.x,
+            y: n.box.y,
+            w: n.box.w,
+            h: n.box.h,
+            fill: n.fill ? { color: hex(n.fill) } : { type: 'none' },
+            line: lineProps(n.stroke),
+          },
+        },
+      });
+    } else if (n.kind === 'line') {
+      objects.push({
+        line: {
+          x: Math.min(n.x1, n.x2),
+          y: Math.min(n.y1, n.y2),
+          w: Math.abs(n.x2 - n.x1),
+          h: Math.abs(n.y2 - n.y1),
+          line: lineProps(n.stroke),
+        },
+      });
     }
   }
   const props: Any = { title: m.id, background: { color: hex(m.background) }, objects };
@@ -411,17 +438,13 @@ export async function normalizeZip(
     if (renames.size && /\.(xml|rels)$/.test(name))
       data = rename(Buffer.from(data).toString('utf8'));
     if (name.endsWith('.xlsx')) data = await normalizeZip(Buffer.from(data), epoch);
+    if (/^ppt\/(slideLayouts|slideMasters)\/[^/]+\.xml$/.test(name))
+      data = markDecorative(Buffer.from(data).toString('utf8'));
     if (/^ppt\/slides\/slide\d+\.xml$/.test(name)) {
       let xml = Buffer.from(data).toString('utf8');
-      // The action title is the slide title: PowerPoint's outline, accessibility checker,
-      // screen readers and slide sorter read it. Formatting stays explicit on the runs.
-      if (xml.includes(TITLE_NAME))
-        xml = xml.replace(
-          new RegExp(
-            `(<p:cNvPr [^>]*name="${TITLE_NAME}"[^>]*>[\\s\\S]*?</p:cNvPr>|<p:cNvPr [^>]*name="${TITLE_NAME}"[^>]*/>)<p:cNvSpPr[^>]*/>\\s*<p:nvPr>\\s*</p:nvPr>`,
-          ),
-          '$1<p:cNvSpPr><a:spLocks noGrp="1"/></p:cNvSpPr><p:nvPr><p:ph type="title"/></p:nvPr>',
-        );
+      // The action title is the slide's title placeholder, read first; pictures without
+      // alt text are decorative (pptxgenjs would otherwise write the file path as descr).
+      xml = markDecorative(titleFirst(markTitle(xml)));
       // Hyperlinks keep the run's colour (Office 2019+) instead of the theme's blue.
       if (xml.includes('<a:hlinkClick'))
         xml = xml.replace(
@@ -464,7 +487,18 @@ export async function renderPptx(scene: Scene, epoch: Date): Promise<Buffer> {
     for (const n of s.nodes) await addNode(pptx, slide, n);
     if (s.notes) slide.addNotes(s.notes);
   }
-  const raw = (await pptx.write({ outputType: 'nodebuffer' })) as Buffer;
+  let raw = (await pptx.write({ outputType: 'nodebuffer' })) as Buffer;
+  // brand template: slides move onto the template's own masters and layouts
+  if (scene.template) {
+    raw = (
+      await applyTemplate(
+        raw,
+        readFileSync(scene.template.path),
+        scene.template.footer ? { footer: scene.template.footer } : {},
+      )
+    ).buf;
+    return normalizeZip(raw, epoch);
+  }
   return normalizeZip(raw, epoch, scene.officeTheme ? { officeTheme: scene.officeTheme } : {});
 }
 

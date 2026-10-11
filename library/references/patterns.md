@@ -37,7 +37,7 @@ Two independent catalogues. A **management pattern (M)** is the decision a mater
 | V12 | Two conditions, four actions (2×2) | How do conditions change the preferred approach? | Axis definitions, categories, actions, choice rule | Implemented via `matrix-2x2` |
 | V13 | Coverage map with stable geometry | Where did the state of the same functions change? | Stable objects and ids, snapshots, status definitions, evidence | Implemented via `coverage-map` |
 | V14 | Diagnostic tree and next step | Which step follows from a yes, borderline or unknown answer? | Questions with criteria, labelled branches, actions, stop rule | Implemented via `issue-tree` (issue) |
-| V15 | Action, callout and result check | How does the reader find the object, act and verify? | Steps, target object, role, expected result, check | Partly via `text-image` + `process-steps`; backlog (M4) |
+| V15 | Action, callout and result check | How does the reader find the object, act and verify? | Steps, target object, role, expected result, check | Implemented via `callout` |
 
 ## Rules that travel with every pattern
 

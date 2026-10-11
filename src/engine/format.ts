@@ -43,9 +43,10 @@ export function makeFormat(id: string, W: number, H: number, M = DEFAULT_MARGIN)
     tracker: { x: M.l, y: M.t, w: inner, h: 0.24 },
     title: { x: M.l, y: M.t + 0.28, w: inner, h: 0.98 },
     lead: { x: M.l, y: M.t + 1.3, w: inner, h: 0.42 },
-    body: { x: M.l, y: M.t + 1.86, w: inner, h: H - (M.t + 1.86) - 0.86 },
-    bodyNoLead: { x: M.l, y: M.t + 1.42, w: inner, h: H - (M.t + 1.42) - 0.86 },
-    source: { x: M.l, y: H - 0.98, w: inner - 1.2, h: 0.32 },
+    // source line and body sit above the footer band, so a larger bottom margin moves them up
+    body: { x: M.l, y: M.t + 1.86, w: inner, h: H - (M.t + 1.86) - (M.b + 0.48) },
+    bodyNoLead: { x: M.l, y: M.t + 1.42, w: inner, h: H - (M.t + 1.42) - (M.b + 0.48) },
+    source: { x: M.l, y: H - M.b - 0.6, w: inner - 1.2, h: 0.32 },
     footer: { x: M.l, y: H - M.b - 0.14, w: inner - 1.2, h: 0.2 },
     pageNumber: { x: W - M.r - 1.0, y: H - M.b - 0.14, w: 1.0, h: 0.2 },
   };

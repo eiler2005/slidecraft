@@ -18,6 +18,7 @@
 | Fill image slots with generated pictures | [Generate images](how-to/generate-images.md) |
 | Design a one-off visual in HTML/CSS | [Freeform HTML slides](how-to/freeform-html.md) |
 | Work in Codex | [Use with Codex](how-to/use-with-codex.md) · [Codex engine](how-to/use-codex-engine.md) |
+| Work in Cursor, Gemini CLI, Aider or any other agent | [Use with any agent](how-to/use-with-any-agent.md) |
 | Fix a check error | [Fix overflow and check errors](how-to/fix-overflow-and-check-errors.md) |
 | Add sources, images, my outline | [Cite sources](how-to/cite-sources.md) · [Add images](how-to/add-images.md) · [Bring your outline](how-to/bring-your-outline.md) |
 | Use my brand | [Apply your brand](how-to/apply-brand.md) · [Add a theme](how-to/add-theme.md) |

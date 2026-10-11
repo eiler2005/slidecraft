@@ -43,6 +43,15 @@ The native PDF engine writes a tagged PDF:
 
 Document language and title come from the deck (`language`, `title`).
 
+## Accessible PPTX
+
+Both PPTX engines write:
+- the action title as the slide's **title placeholder**, first in reading order, so the outline, the slide sorter and screen readers name the slide by its claim;
+- **alt text** on every picture (from `alt`) and every chart (the data in words, e.g. "FY2025 42, UK growth +31, Churn −9, FY2028 108");
+- the **decorative** mark on decor, logos and template art. No file path ever ends up in the alt text.
+
+`build` checks this after writing the file: `SC-A11Y-001` (picture or chart without alt text), `SC-A11Y-002` (title not first), `SC-A11Y-003` (no title).
+
 ## Links
 
 Give a source a `url` in the registry, and its title becomes a link on every slide that cites it. This works in the PPTX, the native PDF, the HTML deck and the Word memo.

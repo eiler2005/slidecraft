@@ -46,6 +46,22 @@ const ArtItem = z
   })
   .strict();
 
+const ArtShape = z
+  .object({
+    kind: z.enum(['rect', 'ellipse', 'line']),
+    x: z.number(),
+    y: z.number(),
+    w: z.number().min(0),
+    h: z.number().min(0),
+    fill: HexColor.optional(),
+    stroke: z
+      .object({ color: HexColor, width: z.number().min(0) })
+      .strict()
+      .optional(),
+    radius: z.number().min(0).optional(),
+  })
+  .strict();
+
 export const Theme = z
   .object({
     schemaVersion: z.literal(1),
@@ -130,6 +146,14 @@ export const Theme = z
               .describe('Slide size the positions refer to (inches); scaled to the deck format'),
             cover: z.array(ArtItem).default([]),
             content: z.array(ArtItem).default([]),
+            shapes: z
+              .object({
+                cover: z.array(ArtShape).default([]),
+                content: z.array(ArtShape).default([]),
+              })
+              .strict()
+              .optional()
+              .describe('Vector decoration from the template masters, drawn under the pictures'),
           })
           .strict()
           .optional()
@@ -142,6 +166,12 @@ export const Theme = z
       .string()
       .optional()
       .describe('Where the theme came from, e.g. "imported from brand.potx"'),
+    template: z
+      .string()
+      .optional()
+      .describe(
+        "The brand's own .pptx/.potx, relative to the theme file: PPTX output is built inside it, on its slide masters and layouts",
+      ),
     officeTheme: z
       .string()
       .optional()

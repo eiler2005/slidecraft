@@ -3,6 +3,7 @@ import { architecture } from './architecture.ts';
 import { beforeAfter } from './before-after.ts';
 import { bigStatement } from './big-statement.ts';
 import { cadence } from './cadence.ts';
+import { callout } from './callout.ts';
 import { chartTakeaway } from './chart-takeaway.ts';
 import { coverageMap } from './coverage-map.ts';
 import { dataTable } from './data-table.ts';
@@ -63,6 +64,7 @@ export const LAYOUTS: LayoutDef[] = [
   gateMatrix,
   processCompare,
   cadence,
+  callout,
   teamCards,
   orgChart,
   raci,

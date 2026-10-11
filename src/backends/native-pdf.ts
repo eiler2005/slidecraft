@@ -5,6 +5,7 @@
 import { createWriteStream, mkdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import PDFDocument from 'pdfkit';
+import { chartAlt } from '../engine/alt.ts';
 import { type Face, faceOf, fontPath, measureFontIds } from '../engine/fonts.ts';
 import type { Master, Scene, SceneNode, Stroke, TextNode } from '../engine/scene.ts';
 import type { MeasureFont } from '../spec/theme.ts';
@@ -298,13 +299,7 @@ function tagOf(n: SceneNode): string | undefined {
 
 function altOf(n: SceneNode): string {
   if (n.kind === 'image') return n.alt;
-  if (n.kind === 'chart')
-    return `Chart: ${n.series
-      .filter((s) => !s.invisible)
-      .map(
-        (s) => `${s.name} — ${n.categories.map((c, i) => `${c} ${s.values[i] ?? ''}`).join(', ')}`,
-      )
-      .join('; ')}`.slice(0, 1000);
+  if (n.kind === 'chart') return chartAlt(n);
   return '';
 }
 

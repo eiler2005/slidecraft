@@ -12,6 +12,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { chartAlt } from '../engine/alt.ts';
 import type {
   ChartNode,
   Master,
@@ -21,6 +22,7 @@ import type {
   Stroke,
   TextNode,
 } from '../engine/scene.ts';
+import { TITLE_NAME } from './pptx-a11y.ts';
 import { normalizeZip } from './pptxgenjs.ts';
 import { rasterize } from './resvg.ts';
 import type { Engine } from './types.ts';
@@ -114,6 +116,7 @@ function paragraphs(t: TextNode, ps: Paragraph[]): Any[] {
 function addText(slide: Any, t: TextNode) {
   const shape = slide.shapes.add({
     geometry: 'textbox',
+    ...(t.role === 'title' ? { name: TITLE_NAME } : {}),
     position: { left: px(t.box.x), top: px(t.box.y), width: px(t.box.w), height: px(t.box.h) },
     fill: 'none',
     line: { style: 'solid', fill: 'none', width: 0 },
@@ -416,6 +419,7 @@ function addChart(slide: Any, n: ChartNode) {
   plots.push({
     family: n.font.family,
     line: n.type === 'line',
+    alt: chartAlt(n),
     x: (n.plot.x - b.x) / b.w,
     y: (n.plot.y - b.y) / b.h,
     w: n.plot.w / b.w,
@@ -429,7 +433,15 @@ function addChart(slide: Any, n: ChartNode) {
 }
 
 /** Inner plot boxes (fractions of the chart frame) in the order charts were added. */
-let plots: { family: string; line: boolean; x: number; y: number; w: number; h: number }[] = [];
+let plots: {
+  family: string;
+  line: boolean;
+  alt: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}[] = [];
 
 /** Write each chart's manual inner plot layout, matching charts to parts in slide order. */
 async function pinPlotAreas(buf: Buffer, list: typeof plots): Promise<Buffer> {
@@ -468,6 +480,19 @@ async function pinPlotAreas(buf: Buffer, list: typeof plots): Promise<Buffer> {
     const xml = (await zip.file(part)?.async('string')) ?? '';
     const relsPath = part.replace(/slides\/(slide\d+\.xml)$/, 'slides/_rels/$1.rels');
     const rels = (await zip.file(relsPath)?.async('string')) ?? '';
+    // chart alt text (the runtime has no option for it), in the order charts were added
+    let j = k;
+    const withAlt = xml.replace(/<p:graphicFrame>([\s\S]*?)<\/p:graphicFrame>/g, (g) => {
+      if (!g.includes('<c:chart')) return g;
+      const alt = list[j++]?.alt ?? '';
+      const esc = alt.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+      return g.replace(
+        /<p:cNvPr ([^>]*?)(\/?)>/,
+        (_m, attrs: string, sc: string) =>
+          `<p:cNvPr ${attrs.replace(/\s*descr="[^"]*"/, '').trimEnd()} descr="${esc}"${sc}>`,
+      );
+    });
+    if (withAlt !== xml) zip.file(part, withAlt);
     for (const m of xml.matchAll(/<c:chart [^>]*r:id="([^"]+)"/g)) {
       const t = target(rels, m[1]!);
       const chartPart = norm('ppt/slides', t?.[1] ?? t?.[2] ?? '');

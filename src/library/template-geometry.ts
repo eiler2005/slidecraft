@@ -19,12 +19,70 @@ export interface TemplatePicture extends Rect {
   /** Zip path of the image part. */
   part: string;
 }
+export interface TemplateShape extends Rect {
+  kind: 'rect' | 'ellipse' | 'line';
+  fill?: string;
+  stroke?: { color: string; width: number };
+  radius?: number;
+}
 export interface TemplateGeometry {
   size: { w: number; h: number };
   title?: Rect;
   footer?: Rect;
   cover: TemplatePicture[];
   content: TemplatePicture[];
+  /** Simple vector decoration (rectangles, ellipses, lines) on the same parts. */
+  coverShapes: TemplateShape[];
+  contentShapes: TemplateShape[];
+}
+
+const SCHEME: Record<string, string> = { tx1: 'dk1', bg1: 'lt1', tx2: 'dk2', bg2: 'lt2' };
+
+function colorOf(xml: string, colors: Record<string, string>): string | undefined {
+  const srgb = /<a:srgbClr val="([0-9A-Fa-f]{6})"/.exec(xml)?.[1];
+  if (srgb) return `#${srgb.toUpperCase()}`;
+  const scheme = /<a:schemeClr val="(\w+)"/.exec(xml)?.[1];
+  return scheme ? colors[SCHEME[scheme] ?? scheme] : undefined;
+}
+
+/** Non-placeholder rectangles, ellipses and lines with a solid fill or line. */
+async function shapes(
+  zip: JSZip,
+  part: string,
+  colors: Record<string, string>,
+): Promise<TemplateShape[]> {
+  const xml = (await zip.file(part)?.async('string')) ?? '';
+  const out: TemplateShape[] = [];
+  for (const m of xml.matchAll(/<p:(sp|cxnSp)>([\s\S]*?)<\/p:\1>/g)) {
+    const body = m[2]!;
+    if (/<p:ph\b/.test(body) || /<a:t>[^<]*\S/.test(body)) continue; // placeholders and text are not decoration
+    const geom = /<a:prstGeom prst="(\w+)"/.exec(body)?.[1];
+    const kind =
+      geom === 'rect' || geom === 'roundRect'
+        ? 'rect'
+        : geom === 'ellipse'
+          ? 'ellipse'
+          : geom === 'line' || m[1] === 'cxnSp'
+            ? 'line'
+            : undefined;
+    const box = xfrm(body);
+    if (!kind || !box) continue;
+    const spPr = /<p:spPr>([\s\S]*?)<\/p:spPr>/.exec(body)?.[1] ?? '';
+    const fillXml = /<a:solidFill>([\s\S]*?)<\/a:solidFill>/.exec(
+      spPr.replace(/<a:ln\b[\s\S]*?<\/a:ln>/, ''),
+    )?.[1];
+    const ln = /<a:ln\b([^>]*)>([\s\S]*?)<\/a:ln>/.exec(spPr);
+    const lnColor = ln && !/<a:noFill\s*\/>/.test(ln[2]!) ? colorOf(ln[2]!, colors) : undefined;
+    const fill = fillXml ? colorOf(fillXml, colors) : undefined;
+    if (!fill && !lnColor) continue;
+    const shape: TemplateShape = { kind, ...box };
+    if (fill && kind !== 'line') shape.fill = fill;
+    if (lnColor)
+      shape.stroke = { color: lnColor, width: +(/w="(\d+)"/.exec(ln![1]!)?.[1] ?? 12700) / 12700 };
+    if (geom === 'roundRect') shape.radius = Math.min(box.w, box.h) * 0.1;
+    out.push(shape);
+  }
+  return out;
 }
 
 const xfrm = (xml: string): Rect | undefined => {
@@ -65,7 +123,10 @@ function placeholder(xml: string, type: string): Rect | undefined {
   return undefined;
 }
 
-export async function readTemplateGeometry(zip: JSZip): Promise<TemplateGeometry> {
+export async function readTemplateGeometry(
+  zip: JSZip,
+  colors: Record<string, string> = {},
+): Promise<TemplateGeometry> {
   const pres = (await zip.file('ppt/presentation.xml')?.async('string')) ?? '';
   const sz = /<p:sldSz cx="(\d+)" cy="(\d+)"/.exec(pres);
   const size = sz ? { w: +sz[1]! / EMU, h: +sz[2]! / EMU } : { w: 13.333, h: 7.5 };
@@ -90,10 +151,18 @@ export async function readTemplateGeometry(zip: JSZip): Promise<TemplateGeometry
     const own = await pictures(zip, l.part);
     return /showMasterSp="0"/.test(l.xml) ? own : [...masterPics, ...own];
   };
+  const masterShapes = await shapes(zip, master, colors);
+  const shapesFor = async (l?: (typeof layouts)[number]) => {
+    if (!l) return masterShapes;
+    const own = await shapes(zip, l.part, colors);
+    return /showMasterSp="0"/.test(l.xml) ? own : [...masterShapes, ...own];
+  };
   const geo: TemplateGeometry = {
     size,
     cover: await forLayout(cover),
     content: await forLayout(content),
+    coverShapes: await shapesFor(cover),
+    contentShapes: await shapesFor(content),
   };
   const title = (content && placeholder(content.xml, 'title')) ?? placeholder(masterXml, 'title');
   const footer = (content && placeholder(content.xml, 'ftr')) ?? placeholder(masterXml, 'ftr');

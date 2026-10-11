@@ -45,6 +45,7 @@ export function readThemeFile(path: string): Theme {
     for (const list of [theme.chrome.art.cover, theme.chrome.art.content])
       for (const a of list) a.image = resolve(base, a.image);
   if (theme.officeTheme) theme.officeTheme = resolve(base, theme.officeTheme);
+  if (theme.template) theme.template = resolve(base, theme.template);
   return theme;
 }
 

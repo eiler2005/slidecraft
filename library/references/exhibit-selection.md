@@ -41,6 +41,7 @@ Start from the sentence in the title. Identify the **relationship** it claims, t
 | **Where in a system a problem sits** | `architecture` · zones | No components, just steps → `process-steps` | Markers without a register entry |
 | **What an answer rests on** | `evidence-chain` · chain | A process, not checks → `process-steps` | Hiding the open or failed checks |
 | **Who meets or decides when** | `cadence` · grid | Dependencies matter → `timeline` gantt | More than seven rows |
+| **How to do it on a screen or object** | `callout` · image-left | No picture → `process-steps` | Callouts without the expected result |
 | **A bespoke visual no layout covers** | `freeform` · body | Any exhibit a layout covers (layouts stay editable) | Text below the theme minimum |
 | **Plain text that really is text** | `text` · bullets / paragraphs / two-column | Parallel points with headings → `key-points` | Using it to avoid choosing an exhibit |
 

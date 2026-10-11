@@ -5,7 +5,8 @@
 <p align="center">
   <a href="https://github.com/eiler2005/slidecraft/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/eiler2005/slidecraft/ci.yml?branch=main&label=CI&style=flat&labelColor=0B1F3A&color=1F5FBF"></a>
   <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-1F5FBF?style=flat&labelColor=0B1F3A"></a>
-  <a href="#install"><img alt="Claude Code plugin" src="https://img.shields.io/badge/Claude_Code-plugin-1F5FBF?style=flat&labelColor=0B1F3A"></a>
+  <a href="#install"><img alt="Works with Claude Code, Codex and any LLM agent" src="https://img.shields.io/badge/agents-Claude_Code_·_Codex_·_any_LLM-1F5FBF?style=flat&labelColor=0B1F3A"></a>
+  <a href="https://eiler2005.github.io/slidecraft/"><img alt="Gallery site" src="https://img.shields.io/badge/gallery-GitHub_Pages-1F5FBF?style=flat&labelColor=0B1F3A"></a>
   <img alt="Node 22+" src="https://img.shields.io/badge/node-%E2%89%A522.12-1F5FBF?style=flat&labelColor=0B1F3A">
 </p>
 
@@ -18,24 +19,35 @@
 
 **SlideCraft** turns a goal into a consulting-grade presentation. You say what the deck must achieve and for whom. SlideCraft proposes templates for the task, builds the storyline and a ghost deck of action titles for you to approve, then writes the slides and renders them to an **editable PowerPoint, an accessible vector PDF and a self-contained HTML deck** — plus a one-pager and a Word memo when readers read rather than watch. A partner-style review closes the loop.
 
-It is a **Claude Code plugin** (skills + model-tiered agents) on top of a **zero-install CLI**. Every layout is measured with metric-compatible fonts, so text that fits in SlideCraft fits in PowerPoint — verified line by line against real PowerPoint output.
+It works with **any AI agent or LLM that can run a command**:
+- **Claude Code** — a plugin with skills and model-tiered agents;
+- **OpenAI Codex** — installable skills;
+- **Cursor, Gemini CLI, Aider or your own scripts** — through [`AGENTS.md`](AGENTS.md) and a JSON CLI.
+
+Underneath is one **zero-install CLI**. Every layout is measured with metric-compatible fonts, so text that fits in SlideCraft fits in PowerPoint — verified line by line against real PowerPoint output.
+
+## Why it exists
+
+SlideCraft is built by **[Denis Ermilov](https://github.com/eiler2005)**. Denis has 20 years in B2B FinTech and enterprise platforms and is Director of Product at Cinimex Group. Much of that time went into decks made with and for consulting firms such as **McKinsey & Company, Accenture and IBM**: board papers, strategy recommendations, steering-committee updates, proposals. That work taught a short list of rules: answer first, one claim per slide, every number sourced, never shrink text until it is unreadable. Most of those rules are mechanical, so this project turns that consulting practice into software an AI agent follows every time.
+
+Denis also writes about AI beyond the hype: *Digital Bank* (2023) and *When Intelligence Became Cheap* (2026), part of a three-book series on people, companies and trust once intelligence becomes cheap. → [Books on Amazon](https://www.amazon.de/-/en/stores/author/B0HGYCXBVP/about) · [GitHub profile](https://github.com/eiler2005)
 
 ## 60 seconds
 
 ```text
-you     › /slidecraft:new The board should approve a partner-led entry into Germany
-claude  › Brief: board of 5, decision = €6M phase-1 budget, deck goes out as PDF.
+you     › Make a deck: the board should approve a partner-led entry into Germany
+agent   › Brief: board of 5, decision = €6M phase-1 budget, deck goes out as PDF.
           Outputs: PPTX (pptxgenjs) + PDF rendered by PowerPoint, because readers get the PDF.   ✅ CP1
-claude  › Three templates — opened picker.html:
+agent   › Three templates — opened picker.html:
           A  Strategy recommendation · Consulting Classic   (answer first, 3 reasons, plan, ask)
           B  Strategy recommendation · Executive
           C  Executive update · Corporate Blue
 you     › A                                                                                      ✅ CP2
-claude  › Governing thought: "Entering Germany now captures a €40M window before two rivals scale"
+agent   › Governing thought: "Entering Germany now captures a €40M window before two rivals scale"
           01 Entering the German mid-market can add €40M revenue by 2028
           02 Entering Germany now captures a €40M window before two rivals scale
           03 The UK business is profitable, growing and ready to fund a second market  …     ✅ CP3
-claude  › Built 11 slides. Review: 0 blockers, 2 majors fixed, 1 minor left.                    ✅ CP4
+agent   › Built 11 slides. Review: 0 blockers, 2 majors fixed, 1 minor left.                    ✅ CP4
           slidecraft/northwind-germany/dist/northwind-germany.pptx · .pdf · previews/ · manifest.json
 ```
 
@@ -55,11 +67,15 @@ flowchart LR
   class S,G opus; class W sonnet; class B,P,D,R main;
 ```
 
-You approve four checkpoints; everything between them is automated. Strategy work runs on **Opus**, parallel slide writing on **Sonnet**, mechanical copy-fitting on **Haiku**, the final partner review on **Opus** — see [workflow](docs/explanation/workflow.md).
+You approve four checkpoints; everything between them is automated. Work is tiered by difficulty:
+- the strongest model does the storyline and the partner review;
+- faster models write slides in parallel and fit copy.
+
+In Claude Code that is Opus, Sonnet and Haiku. In Codex or any other agent, it is whatever models you configure. See [workflow](docs/explanation/workflow.md).
 
 ## Template gallery
 
-A template is **a storyline (the shape of the argument for a task) × a theme (the look)**. Any storyline works in any theme. Fourteen storylines × six themes (or your own brand theme), built from thirty-one layouts. The [gallery site](https://eiler2005.github.io/slidecraft/) shows every storyline in every theme and the example decks in every format.
+A template is **a storyline (the shape of the argument for a task) × a theme (the look)**. Any storyline works in any theme. Fourteen storylines × six themes (or your own brand theme), built from thirty-two layouts. The [gallery site](https://eiler2005.github.io/slidecraft/) shows every storyline in every theme and the example decks in every format.
 
 <table>
   <tr>
@@ -74,7 +90,7 @@ A template is **a storyline (the shape of the argument for a task) × a theme (t
   </tr>
 </table>
 
-<p align="center"><a href="docs/reference/storylines.gen.md">All 14 storylines →</a> · <a href="docs/reference/themes.gen.md">All 6 themes →</a> · <a href="docs/reference/layouts.gen.md">All 31 layouts →</a></p>
+<p align="center"><a href="docs/reference/storylines.gen.md">All 14 storylines →</a> · <a href="docs/reference/themes.gen.md">All 6 themes →</a> · <a href="docs/reference/layouts.gen.md">All 32 layouts →</a></p>
 
 Also included: **business case**, **product overview**, **case study**, **project kickoff**, **post-mortem**, **training / workshop**, **sales / customer QBR**, **investment memo**. Bring your own outline and SlideCraft maps it onto layouts.
 
@@ -104,32 +120,14 @@ One spec, several engines — you choose, SlideCraft recommends based on what yo
 
 ## Install
 
-**As a Claude Code plugin**
+Pick your agent. All of them drive the same CLI, the committed bundle `dist/slidecraft.mjs` (Node ≥ 22.12, no `npm install`).
 
-```text
-/plugin marketplace add eiler2005/slidecraft
-/plugin install slidecraft@slidecraft
-/slidecraft:new <what the deck must achieve, for whom>
-```
-
-No `npm install` needed: the CLI ships as a committed bundle (`dist/slidecraft.mjs`) and runs on Node ≥ 22.12.
-
-**With OpenAI Codex** — clone the repo, then install the Codex skills (they call the same zero-install CLI):
-
-```sh
-node dist/slidecraft.mjs codex install      # → ~/.codex/skills/slidecraft*
-codex "Using SlideCraft, make a 5-slide deck that …"
-```
-
-Any other agent: point it at [`AGENTS.md`](AGENTS.md).
-
-**As a CLI**
-
-```sh
-npx @eiler2005/slidecraft new "Board must decide whether to enter Germany" --json   # once published to npm
-```
-
-Or from a clone:
+| You use | Set up | Then |
+|---|---|---|
+| **Claude Code** | `/plugin marketplace add eiler2005/slidecraft` then `/plugin install slidecraft@slidecraft` | `/slidecraft:new <what the deck must achieve, for whom>` |
+| **OpenAI Codex** | clone, then `node dist/slidecraft.mjs codex install` (skills in `~/.codex/skills/slidecraft*`) | `codex "Using SlideCraft, make a 5-slide deck that …"` |
+| **Cursor, Gemini CLI, Aider, Copilot agents, any LLM with a shell** | clone; point the agent at [`AGENTS.md`](AGENTS.md) | "Follow AGENTS.md and make a deck that …" — see [use with any agent](docs/how-to/use-with-any-agent.md) |
+| **No agent** | clone | write `deck.yaml` and `node dist/slidecraft.mjs build` |
 
 ```sh
 git clone https://github.com/eiler2005/slidecraft && cd slidecraft
@@ -172,21 +170,20 @@ Methodology: [writing standard](library/references/writing-standard.md) · [visu
 | Message | `exec-summary` (SCR, key messages) · `key-points` · `big-statement` (statement, quote, hero number) · `text-image` · `text` · `before-after` · `freeform` (HTML/CSS, checked like any slide) |
 | Numbers | `kpi-tiles` · `chart-takeaway` (bar, column, stacked, line) · `waterfall` · `funnel` (funnel, pyramid) · `data-table` |
 | Decide | `options-comparison` (text, Harvey-ball rating, up to 5 options) · `matrix-2x2` · `issue-tree` (issue, driver) · `maturity-model` (grid, staircase) · `coverage-map` · `architecture` (zones + register) · `evidence-chain` · `risk-matrix` |
-| Sequence | `process-steps` (chevrons, numbered) · `timeline` (milestones, gantt) · `gate-matrix` · `process-compare` (current vs proposed) · `cadence` (role calendar) |
+| Sequence | `process-steps` (chevrons, numbered) · `timeline` (milestones, gantt) · `gate-matrix` · `process-compare` (current vs proposed) · `cadence` (role calendar) · `callout` (numbered callouts on a screenshot) |
 | People · Close | `team-cards` · `org-chart` · `raci` · `next-steps` (decision, actions) |
 
 Contracts, limits and thumbnails: [layouts reference](docs/reference/layouts.gen.md). Add your own: [add a layout](docs/how-to/add-layout.md).
 
 ## Roadmap
 
-Shipped in 0.3:
-- brand templates reused (art in place, the template's frame and slide size, title placeholders);
-- freeform HTML slides;
-- the `slidecraft fix` fit loop with exact character budgets;
-- 31 layouts, covering 14 of the 15 visual patterns;
-- `artifact-tool` output verified against PowerPoint.
+Shipped in 0.4:
+- PPTX built inside your brand template, on its masters and layouts;
+- accessible PPTX (titles first, chart alt text, decorative marks);
+- `callout` — every visual pattern now has a layout (32);
+- freeform HTML, and the `slidecraft fix` loop (0.3).
 
-Next: real placeholder layouts in PPTX output, PPTX reading-order checks, an MCP server. See [ROADMAP.md](ROADMAP.md).
+Next (0.5): npm publish, an MCP server, stock photos, Excel/CSV into charts, icons, live preview. See [ROADMAP.md](ROADMAP.md).
 
 ## Contributing
 

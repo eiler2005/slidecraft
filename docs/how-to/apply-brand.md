@@ -56,7 +56,27 @@ The import also saves the template's Office theme part as `<id>.theme.xml`, and 
 
 SlideCraft still builds its own masters (background, decor, footer, logo) from the imported tokens. Reusing the template's own placeholder layouts and background art is on the [ROADMAP](../../ROADMAP.md).
 
+## PPTX built inside your template
+
+The import also copies the template itself (`<id>.template.pptx`), and the theme points to it (`"template"`). PPTX output is then built **inside the template package**:
+
+| SlideCraft slide | Linked to the template layout |
+|---|---|
+| Cover, closing | *Title Slide* (`title`) |
+| Content slides | *Title Only* (`titleOnly`), else *Title and Content* (`obj`) |
+| Section dividers | *Section Header* (`secHead`), else the cover's layout |
+
+The effects in PowerPoint:
+- the template's masters, layouts, theme and art apply;
+- the Layout menu shows the brand's layouts;
+- editing the slide master changes every slide;
+- slide numbers and the footer use the layout's own placeholders.
+
+The footer appears where the template has a footer placeholder.
+
+PDF, PNG and HTML are drawn by SlideCraft from the imported art (pictures and simple vector shapes: rectangles, ellipses, lines) and the template's frame. So all formats match. To go back to SlideCraft's own masters in PPTX, remove `"template"` from the theme JSON.
+
 ## Limits
 
-- SlideCraft draws its own masters from the imported tokens, art and frame. The template's placeholder layouts are not reused as-is, so a slide does not inherit, say, a "Two Content" layout from the template.
-- Vector shapes on the template's masters (lines, rectangles drawn in PowerPoint) are not imported, only pictures. Export such decoration as a PNG and add it to `chrome.art` if you need it.
+- Slide content stays SlideCraft's own: positioned text boxes, tables and charts, not the template's body placeholders. So switching a slide to another template layout in PowerPoint keeps the content where it is.
+- For PDF, PNG and HTML only simple vector shapes are imported (rectangles, rounded rectangles, ellipses, lines with solid colours). Gradients, freeforms and grouped shapes appear in the PPTX (it is the template), but not in the vector outputs. Export such decoration as a PNG into `chrome.art` if it must appear everywhere.

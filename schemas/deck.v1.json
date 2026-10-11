@@ -4712,6 +4712,156 @@
                   },
                   "layout": {
                     "type": "string",
+                    "const": "callout"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "image-left"
+                    ]
+                  },
+                  "image": {
+                    "description": "Screenshot or photo, relative to the deck file",
+                    "type": "string"
+                  },
+                  "alt": {
+                    "type": "string",
+                    "maxLength": 140,
+                    "description": "What the image shows"
+                  },
+                  "steps": {
+                    "minItems": 1,
+                    "maxItems": 6,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "action": {
+                          "type": "string",
+                          "maxLength": 70,
+                          "description": "What the reader does"
+                        },
+                        "result": {
+                          "description": "What they should see",
+                          "type": "string",
+                          "maxLength": 80
+                        },
+                        "x": {
+                          "description": "Callout position on the image, 0–1 from the left",
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        },
+                        "y": {
+                          "description": "Callout position on the image, 0–1 from the top",
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1
+                        }
+                      },
+                      "required": [
+                        "action"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "check": {
+                    "description": "How to verify the result",
+                    "type": "string",
+                    "maxLength": 110
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "alt",
+                  "steps"
+                ],
+                "additionalProperties": false,
+                "description": "Callouts and steps — Use for showing someone how to do something on a screen or object: numbered callouts on the picture, the action and expected result for each, and how to check it worked."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
                     "const": "team-cards"
                   },
                   "variant": {

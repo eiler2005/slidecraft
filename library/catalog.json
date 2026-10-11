@@ -1,5 +1,5 @@
 {
-  "version": "0.3.0",
+  "version": "0.4.0",
   "layouts": [
     {
       "id": "title",
@@ -292,6 +292,16 @@
         "grid"
       ],
       "purpose": "Use for showing who takes part when: roles or forums against a shared calendar, with recurring meetings, decisions, outputs and work periods.",
+      "frame": "standard"
+    },
+    {
+      "id": "callout",
+      "name": "Callouts and steps",
+      "group": "sequence",
+      "variants": [
+        "image-left"
+      ],
+      "purpose": "Use for showing someone how to do something on a screen or object: numbered callouts on the picture, the action and expected result for each, and how to check it worked.",
       "frame": "standard"
     },
     {

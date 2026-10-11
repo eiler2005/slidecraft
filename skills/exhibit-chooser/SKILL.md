@@ -41,6 +41,7 @@ Pick the exhibit from the **relationship** the title claims, not from the data y
 | Where in a system a problem sits, with a numbered register | `architecture` · zones |
 | What the answer rests on: checks, sources, results | `evidence-chain` |
 | Who meets or decides when | `cadence` |
+| Where to click or look, what to expect, how to check | `callout` |
 | A bespoke visual no layout covers (story decks; a picture in PPTX) | `freeform` |
 | Text that is genuinely text (definitions, scope in/out) | `text` · bullets / paragraphs / two-column |
 

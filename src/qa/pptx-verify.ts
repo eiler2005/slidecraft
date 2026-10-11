@@ -1,7 +1,8 @@
 /**
  * Post-build PPTX checks (ported from client-ai-agents' verify_text and image_quality):
  *  - every visible scene string is present in the written slide XML;
- *  - placed raster images have enough effective resolution.
+ *  - placed raster images have enough effective resolution;
+ *  - accessibility: a title placeholder read first, alt text or a decorative mark on pictures and charts.
  */
 import { readFileSync } from 'node:fs';
 import JSZip from 'jszip';
@@ -67,6 +68,34 @@ export async function verifyPptx(
       if (!hay.includes(k))
         out.push(
           diag('SC-PPTX-001', `Text not found in PPTX: "${w.slice(0, 60)}"`, { slide: s.id }),
+        );
+    }
+    // accessibility: titles, reading order, alt text
+    if (!/<p:ph type="(title|ctrTitle)"/.test(xml))
+      out.push(
+        diag('SC-A11Y-003', `Slide ${s.index + 1} has no title placeholder`, { slide: s.id }),
+      );
+    else {
+      const first =
+        /<\/p:grpSpPr>\s*(<p:(sp|pic|graphicFrame|grpSp|cxnSp)>[\s\S]*?<\/p:nvPr>)/.exec(
+          xml,
+        )?.[1] ?? '';
+      if (!/<p:ph type="(title|ctrTitle)"/.test(first))
+        out.push(
+          diag('SC-A11Y-002', `Slide ${s.index + 1}: the title is not read first`, { slide: s.id }),
+        );
+    }
+    for (const m of xml.matchAll(/<p:(pic|graphicFrame)>([\s\S]*?)<\/p:\1>/g)) {
+      const nv = /<p:cNvPr [^>]*?(\/>|>[\s\S]*?<\/p:cNvPr>)/.exec(m[2]!)?.[0] ?? '';
+      const descr = /descr="([^"]*)"/.exec(nv)?.[1] ?? '';
+      const isTable = m[1] === 'graphicFrame' && m[2]!.includes('<a:tbl>');
+      if (!descr.trim() && !nv.includes('adec:decorative') && !isTable)
+        out.push(
+          diag(
+            'SC-A11Y-001',
+            `Slide ${s.index + 1}: ${m[1] === 'pic' ? 'picture' : 'chart'} without alt text`,
+            { slide: s.id },
+          ),
         );
     }
     // image ppi

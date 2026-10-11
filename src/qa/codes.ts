@@ -163,6 +163,24 @@ export const CODES = {
     why: 'An image slot has no image yet; a labelled placeholder was rendered.',
     fix: 'Set `image: path/to/file.png` (relative to deck.yaml).',
   },
+  'SC-A11Y-001': {
+    severity: 'warning',
+    title: 'Picture or chart without alt text',
+    why: 'Screen readers announce nothing useful, and PowerPoint’s accessibility checker flags the slide.',
+    fix: 'Give images an `alt`; decorative images are marked decorative automatically.',
+  },
+  'SC-A11Y-002': {
+    severity: 'warning',
+    title: 'Slide title is not first in reading order',
+    why: 'Screen readers read shapes in tree order; the title should come first so the slide is announced by its claim.',
+    fix: 'Rebuild with the bundled engine; SlideCraft moves the title to the front.',
+  },
+  'SC-A11Y-003': {
+    severity: 'warning',
+    title: 'Slide has no title placeholder',
+    why: 'Without a title, the slide is unnamed in PowerPoint’s outline, navigation and screen readers.',
+    fix: 'Every SlideCraft layout writes its action title as the title placeholder; check custom post-processing.',
+  },
   'SC-ENGINE-001': {
     severity: 'warning',
     title: 'Engine unavailable, skipped',

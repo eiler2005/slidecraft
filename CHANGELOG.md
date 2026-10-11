@@ -2,6 +2,32 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.4.0] — 2026-10-11
+
+### Added
+- **PPTX inside the brand template (M3):** `theme import` keeps the template (`"template"`). PPTX output is built inside it:
+  - slides are linked to its *Title Slide*, *Title Only* or *Title and Content*, and *Section Header* layouts;
+  - its masters, theme and art apply, and its slide-number and footer placeholders are filled;
+  - the template's own slides and everything only they used are removed.
+
+  Verified in PowerPoint.
+- **Vector decoration from templates:** rectangles, rounded rectangles, ellipses and lines on the master and layouts become `chrome.art.shapes`, drawn by every engine.
+- **PPTX accessibility:**
+  - titles are moved to the front of the reading order;
+  - charts get alt text in words (helper series folded back, waterfall steps with signs), in both PPTX engines;
+  - decor, logos and art are marked decorative;
+  - new checks `SC-A11Y-001/002/003`.
+- **Layout `callout` (V15):** numbered callouts on a screenshot or photo, steps with action and expected result, and a check line. All 15 visual patterns now have a layout (32 layouts).
+- **Docs:** [use with any agent](docs/how-to/use-with-any-agent.md) (Cursor, Gemini CLI, Aider, Copilot agents, scripts). README rewritten as agent-neutral, with a section on why SlideCraft exists. The v0.5 roadmap: npm, MCP server, stock photos, Excel/CSV, icons, live preview.
+
+### Fixed
+- **Privacy:** pptxgenjs wrote the absolute file path into `descr` for images without alt text (brand art). Such images are now decorative with empty alt text.
+- **Frame:** the source line and body now follow the bottom margin, so brand frames with a tall footer band no longer overlap the source line.
+- **Quote slides** carry their action title as the title placeholder.
+
+### Changed
+- CI and Pages use `actions/checkout@v7`, `actions/setup-node@v7` and `actions/upload-artifact@v7`; `@types/node` 22.20.5 (Dependabot).
+
 ## [0.3.0] — 2026-10-11
 
 ### Added

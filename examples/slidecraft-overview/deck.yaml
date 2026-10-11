@@ -1,0 +1,208 @@
+# SlideCraft deck — schema: ../../schemas/deck.v1.json
+# The deck about SlideCraft, made with SlideCraft. Every number is a fact about the 0.4 release.
+schemaVersion: 1
+id: slidecraft-overview
+title: SlideCraft turns a goal into a partner-ready deck you can edit
+storyline: product-overview
+theme: consulting-classic
+status: final
+language: en
+author: Denis Ermilov
+organization: SlideCraft
+date: "2026"
+footer: SlideCraft · github.com/eiler2005/slidecraft
+sources:
+  - id: release
+    title: SlideCraft 0.4 release notes and test suite
+    date: Oct 2026
+    url: https://github.com/eiler2005/slidecraft/blob/main/CHANGELOG.md
+  - id: calibration
+    title: SlideCraft calibration against Microsoft PowerPoint, 144 strings
+    date: Oct 2026
+    url: https://github.com/eiler2005/slidecraft/blob/main/docs/how-to/apply-brand.md
+output:
+  formats: [pptx, pdf, png, html, onepager]
+slides:
+  - id: cover
+    layout: title
+    title: SlideCraft turns a goal into a partner-ready deck you can edit
+    kicker: Product overview · for people who present
+    subtitle: Describe what the deck must achieve and approve four checkpoints. Get an editable PowerPoint, a PDF and a partner-style review.
+    presenter: Denis Ermilov · SlideCraft
+    date: "2026"
+    notes: This deck was built with SlideCraft itself, from examples/slidecraft-overview/deck.yaml.
+
+  - id: problem
+    layout: big-statement
+    variant: statement
+    tracker: The problem
+    title: Most of a deck's time goes into work that is not thinking
+    support: Formatting, fitting text, chasing sources and fixing alignment take the hours that should go into the argument.
+    notes: Ask the room how long their last board deck took, and how much of that was formatting.
+
+  - id: summary
+    layout: exec-summary
+    variant: scr
+    tracker: In one page
+    title: SlideCraft applies consulting rules automatically and leaves you the decisions
+    situation: Decks drive decisions. Boards, steering committees, clients and investors judge the work by the pages they see.
+    complication: Good decks follow strict rules — answer first, one claim per slide, every number sourced — and applying them by hand is slow and uneven.
+    resolution: SlideCraft builds the deck from a brief with your AI assistant, applies the rules on every slide and checks the result before you see it.
+    ask: Try it on your next board, client or pitch deck
+
+  - id: how
+    layout: process-steps
+    variant: chevrons
+    tracker: How it works
+    title: Four checkpoints keep you in charge while the assistant does the work
+    lead: You approve steps 1, 2, 3 and 5; everything in between is automated.
+    steps:
+      - title: Describe the goal
+        body: Who the audience is, what you need from them, and what you will do with the deck
+      - title: Pick a template
+        body: Three options for your task, each shown as a contact sheet of real slides
+      - title: Approve the titles
+        body: The storyline as a chain of claims — read the titles and you have the argument
+      - title: Build the slides
+        body: Charts, tables and text written to fit, with sources on every number
+      - title: Review and send
+        body: A partner-style review, fixes applied, then PowerPoint, PDF and more
+
+  - id: before-after
+    layout: before-after
+    tracker: What changes
+    title: The same deck, without the late-night rework
+    before:
+      label: Building it by hand
+      items:
+        - Blank slides and copy-pasted templates
+        - Text that overflows, or shrinks until no one can read it
+        - Numbers without sources, found by the reviewer
+        - Last-minute fixes the night before the meeting
+    after:
+      label: With SlideCraft
+      items:
+        - The storyline and title chain agreed before any slide is drawn
+        - Text measured to fit, exactly as PowerPoint will show it
+        - Every number cited on the slide where it appears
+        - A partner-style review before you press send
+
+  - id: who
+    layout: key-points
+    variant: cards
+    tracker: Who it helps
+    title: It helps everyone who has to convince people with slides
+    points:
+      - heading: Consultants and strategy teams
+        body: Board-ready recommendations with an answer-first storyline, issue trees and options on shared criteria.
+      - heading: Managers and executives
+        body: Steering-committee updates, business cases and QBRs that show plan, actual and the decision needed.
+      - heading: Founders and sales teams
+        body: Pitch decks and client proposals that lead with the problem, the proof and a clear ask.
+      - heading: Speakers and trainers
+        body: Story-led talks and workshops, presented from the browser or sent as a PDF.
+
+  - id: tasks
+    layout: data-table
+    tracker: Choose your task
+    title: Pick the storyline for your task; the look is a separate choice
+    header: [Your task, Storyline, Typical audience]
+    rows:
+      - [Recommend a strategy, Strategy recommendation, "Board, leadership team"]
+      - [Report progress, Executive update, Steering committee]
+      - [Win a client, Client proposal, "Buyer, procurement"]
+      - [Ask for budget, Business case, "CFO, investment committee"]
+      - [Raise money, Pitch deck, Investors]
+      - [Review a quarter, Sales QBR, Customer executives]
+      - [Tell a story, Narrative story, "Conference, all-hands"]
+    colWeights: [1.2, 1.2, 1.4]
+    note: 14 storylines in all, each works in any of the 6 themes or in your own brand.
+    sources: [release]
+
+  - id: kit
+    layout: kpi-tiles
+    tracker: What you get
+    title: One brief gives you a complete kit, not just slides
+    tiles:
+      - value: "32"
+        label: Slide layouts
+        note: From executive summaries to waterfalls, risk matrices and org charts
+      - value: "14"
+        label: Storylines
+        note: Strategy, board update, proposal, pitch, story talk and more
+      - value: "6"
+        label: Themes
+        note: Plus your own brand, imported from a PowerPoint template
+      - value: "6"
+        label: Output formats
+        note: PowerPoint, PDF, HTML, images, a one-pager and a Word memo
+    highlight: 0
+    sources: [release]
+
+  - id: quality
+    layout: evidence-chain
+    tracker: Quality
+    title: Every deck is checked before you see it, not after the meeting
+    steps:
+      - check: Text fits
+        source: PowerPoint calibration, 144 strings
+        result: pass
+        finding: 98.6% identical line breaks and no overflow, so what fits here fits in PowerPoint
+      - check: Every number has a source
+        source: The deck's source list
+        result: pass
+        finding: Slides that show numbers without a source are flagged before delivery
+      - check: Readable and accessible
+        source: Contrast and accessibility checks
+        result: pass
+        finding: Colour contrast, slide titles and alt text are checked in PowerPoint and PDF
+      - check: Partner-style review
+        source: The review checklist
+        result: partial
+        finding: The assistant reviews like a partner; you give the final sign-off
+    conclusion: You open a deck that is ready to discuss, not ready to fix
+    exception: The data behind a slide is missing — then SlideCraft flags the gap instead of inventing it
+    resultLabels: { partial: Your call }
+    sources: [calibration, release]
+
+  - id: brand
+    layout: key-points
+    variant: columns
+    tracker: Fits your work
+    title: Your brand, your old decks and your readers all come along
+    points:
+      - heading: Your template, your look
+        body: Import a .potx once. Colours, fonts, logo and layouts apply, and PowerPoint files are built inside your template.
+      - heading: Old decks, restyled
+        body: Bring an existing PowerPoint. The assistant rewrites the titles as claims and rebuilds the charts from the data.
+      - heading: The format each reader needs
+        body: A PDF for the board, a one-page summary, a Word memo for pre-reading, an HTML deck for presenting.
+
+  - id: start
+    layout: next-steps
+    variant: decision
+    tracker: Get started
+    title: Start with your next deck in about ten minutes
+    decision: Try SlideCraft on one real deck this week
+    steps:
+      - action: Install it for your AI assistant — Claude Code, Codex, Cursor or another
+        owner: You
+        due: 2 min
+      - action: Say what the deck must achieve and for whom
+        owner: You
+        due: 1 min
+      - action: Approve the template, the titles and the review
+        owner: You
+        due: 5 min
+      - action: Open the PowerPoint and PDF, then edit freely
+        owner: You
+        due: Done
+
+  - id: close
+    layout: title
+    variant: closing
+    title: Describe the goal. Pick a look. Ship a partner-ready deck.
+    subtitle: Free and open source under the MIT licence
+    contact:
+      - github.com/eiler2005/slidecraft
+      - eiler2005.github.io/slidecraft

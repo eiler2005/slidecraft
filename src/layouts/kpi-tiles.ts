@@ -212,7 +212,18 @@ export const kpiTiles: LayoutDef<typeof schema> = {
     const valueY = top + (strip ? 0.3 : 0.3);
     const labelY = valueY + 1.2;
 
-    // Labels first: the delta row sits under the tallest label so rows stay aligned.
+    // Cards first: anything drawn later covers what was drawn before.
+    if (!strip)
+      parts.forEach((p, i) => {
+        ctx.rect({ x: p.x, y: top, w: p.w, h }, { fill: colors.surface, role: 'card' });
+        if (i === hl)
+          ctx.rect(
+            { x: p.x, y: top, w: p.w, h: 0.07 },
+            { fill: colors.accent, role: 'card-accent' },
+          );
+      });
+
+    // Labels next: the delta row sits under the tallest label so rows stay aligned.
     const labelH = Math.max(
       ...c.tiles.map((t, i) => {
         const node = ctx.text(
@@ -231,13 +242,6 @@ export const kpiTiles: LayoutDef<typeof schema> = {
       if (strip) {
         if (i > 0)
           ctx.line(p.x, top + 0.35, p.x, top + h - 0.35, { color: colors.rule, width: 0.75 });
-      } else {
-        ctx.rect({ x: p.x, y: top, w: p.w, h }, { fill: colors.surface, role: 'card' });
-        if (i === hl)
-          ctx.rect(
-            { x: p.x, y: top, w: p.w, h: 0.07 },
-            { fill: colors.accent, role: 'card-accent' },
-          );
       }
       ctx.text(
         t.value,

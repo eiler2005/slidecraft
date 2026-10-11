@@ -37,7 +37,11 @@ export async function buildSite(outDir = 'site'): Promise<SiteResult> {
   const hero = await buildHero(join(out, 'gallery', 'hero.png'));
 
   const examples: { id: string; title: string; files: { kind: string; path: string }[] }[] = [];
-  for (const dir of readdirSync(join(ROOT, 'examples')).sort()) {
+  // the deck about SlideCraft first, then the rest alphabetically
+  const dirs = readdirSync(join(ROOT, 'examples')).sort((a, b) =>
+    a === 'slidecraft-overview' ? -1 : b === 'slidecraft-overview' ? 1 : a.localeCompare(b),
+  );
+  for (const dir of dirs) {
     const deck = join(ROOT, 'examples', dir, 'deck.yaml');
     const r = await buildDeck(deck, {
       outDir: join(out, 'examples', dir),

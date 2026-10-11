@@ -92,6 +92,32 @@ export function checkScene(scene: Scene): Diagnostic[] {
         }
       }
     }
+    // text covered by an opaque shape drawn after it is invisible
+    for (const { t, i } of texts) {
+      const ink = textExtent(t);
+      const area = ink.w * ink.h;
+      if (area <= 0) continue;
+      for (let j = i + 1; j < s.nodes.length; j++) {
+        const n = s.nodes[j]!;
+        const opaque =
+          ((n.kind === 'rect' || n.kind === 'ellipse' || n.kind === 'polygon') &&
+            !!n.fill &&
+            (n.fillOpacity ?? 1) >= 0.9) ||
+          (n.kind === 'image' && !!(n.path || n.data || n.svg) && !n.decorative) ||
+          n.kind === 'chart' ||
+          n.kind === 'table';
+        if (opaque && overlap(ink, n.box) >= 0.5 * area) {
+          out.push(
+            diag(
+              'SC-GEOM-004',
+              `Text "${t.lines[0]?.segments[0]?.text.slice(0, 30) ?? ''}" is hidden under a ${n.kind} drawn after it`,
+              { slide: s.id, ...(t.pointer ? { pointer: t.pointer } : {}) },
+            ),
+          );
+          break;
+        }
+      }
+    }
     // text that starts inside a filled panel must stay inside it
     for (const { t, i } of texts) {
       const ink = textExtent(t);

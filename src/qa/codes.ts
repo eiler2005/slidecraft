@@ -127,6 +127,12 @@ export const CODES = {
     why: 'Text starts inside a card, band or panel but its ink extends past the panel edge.',
     fix: 'Shorten the text, reduce the number of items, or choose a layout with larger panels.',
   },
+  'SC-GEOM-004': {
+    severity: 'error',
+    title: 'Text hidden under a shape',
+    why: 'An opaque shape, picture, chart or table is drawn after the text and covers it, so the text is invisible.',
+    fix: 'Layout bug: draw backgrounds before the text they hold.',
+  },
   'SC-CONTRAST-001': {
     severity: 'warning',
     title: 'Low text contrast',

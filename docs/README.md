@@ -6,7 +6,9 @@
 
 | …goal | Start here |
 |---|---|
-| Make my first deck | [First deck in 10 minutes](tutorials/first-deck-in-10-minutes.md) |
+| Make my first deck | [Start here](start-here.md) · [first deck tutorial](tutorials/first-deck-in-10-minutes.md) |
+| See everything SlideCraft can do | [What you can do](features.md) |
+| Start from a finished deck | [Example library](examples.md) |
 | Build a board-ready recommendation | [Strategy recommendation tutorial](tutorials/strategy-recommendation-deck.md) |
 | Give a talk or tell a story | [Storytelling talk](tutorials/storytelling-talk.md) |
 | Use only the CLI / CI | [CLI without an agent](tutorials/cli-without-agent.md) |

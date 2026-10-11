@@ -57,6 +57,12 @@ jobs:
           node scripts/bundle.mjs
           git diff --exit-code dist/
 
+      - name: Showcase deck is up to date (docs/showcase is committed)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          npm run showcase
+          git diff --exit-code docs/showcase
+
       - name: Generated reference docs and schemas are up to date
         if: hashFiles('docs/reference/*.gen.md') != ''
         run: |

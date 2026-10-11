@@ -2,6 +2,19 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.4.1] — 2026-10-11
+
+### Added
+- **Showcase deck:** [`examples/slidecraft-overview`](examples/slidecraft-overview/deck.yaml), a 12-slide deck about SlideCraft made with SlideCraft, committed as PPTX, PDF, one-pager and contact sheet in `docs/showcase/` (`npm run showcase`; CI checks it is current). Shown at the top of the README and on the gallery site.
+- **User docs:**
+  - [Start here](docs/start-here.md): install, what to say, the four checkpoints, your files, changing the deck;
+  - [What you can do](docs/features.md): capabilities by job to be done;
+  - [Example library](docs/examples.md): six decks with previews, downloads and how to start from one.
+- `SC-GEOM-004`: text hidden under an opaque shape drawn after it.
+
+### Fixed
+- `kpi-tiles` (tiles variant): labels were drawn under the card background and invisible since 0.1. Cards are now drawn first; the new check prevents a repeat.
+
 ## [0.4.0] — 2026-10-11
 
 ### Added

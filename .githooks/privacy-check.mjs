@@ -36,6 +36,8 @@ const ALLOWLIST = [
   { dir: 'dist/', exts: [] }, // slidecraft.mjs + resvg.wasm are not in BINARY_EXTS either
   { dir: 'docs/gallery/', exts: MEDIA },
   { dir: 'docs/media/', exts: MEDIA },
+  // the showcase deck built from examples/slidecraft-overview (npm run showcase)
+  { dir: 'docs/showcase/', exts: ['pptx', 'pdf', 'png'] },
   { dir: 'tests/fixtures/', exts: '*' },
   { dir: 'tests/__snapshots__/', exts: ['png', 'pdf', 'pptx'] },
   // original artwork used by the fictional example decks
@@ -161,7 +163,7 @@ function pathViolations(path) {
     if (!allowed) {
       out.push(
         `binary/secret-bearing file type ".${ext}" is not allowed here ` +
-          `(allowed only in fonts/, dist/, docs/gallery/, docs/media/, examples/*/assets/, tests/fixtures/, tests/__snapshots__/)`,
+          `(allowed only in fonts/, dist/, docs/gallery/, docs/media/, docs/showcase/, examples/*/assets/, tests/fixtures/, tests/__snapshots__/)`,
       );
     }
   }

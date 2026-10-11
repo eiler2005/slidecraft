@@ -1,0 +1,16 @@
+# SlideCraft brief — schema: ../../schemas/brief.v1.json
+# The deck about SlideCraft, made with SlideCraft. Facts are from the 0.4 release.
+schemaVersion: 1
+id: slidecraft-overview
+goal: People who make decks for work see what SlideCraft does for them and try it on their next board, client or pitch deck.
+ask: Try SlideCraft on your next deck
+audience:
+  who: Consultants, managers, founders and speakers who present to decision-makers
+  knows: How long a good deck takes and how it is judged
+  cares: Time, quality in front of leadership, their brand, not losing control to a tool
+task: product overview
+length: { slides: 12 }
+language: en
+tone: [clear, confident, practical]
+usage: [send-pdf, edit-together, present-live]
+choice: { storyline: product-overview, theme: consulting-classic }

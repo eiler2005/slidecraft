@@ -1,6 +1,6 @@
 {
   "name": "@eiler2005/slidecraft",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Describe the goal. Pick a look. Ship a partner-ready deck. A Claude Code plugin and CLI that turns a brief into editable PPTX, vector PDF and HTML decks.",
   "type": "module",
   "license": "MIT",
@@ -52,7 +52,8 @@
     "gen": "tsx src/cli/main.ts gen",
     "check": "npm run lint && npm run typecheck && npm run test",
     "hooks": "node -e \"require('child_process').execFileSync(process.platform==='darwin'&&require('fs').existsSync('/usr/bin/git')?'/usr/bin/git':'git',['config','core.hooksPath','.githooks'],{stdio:'inherit'})\"",
-    "prepublishOnly": "npm run check && node scripts/bundle.mjs && git diff --exit-code dist/"
+    "prepublishOnly": "npm run check && node scripts/bundle.mjs && git diff --exit-code dist/",
+    "showcase": "tsx scripts/showcase.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",

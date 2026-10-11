@@ -199205,6 +199205,12 @@ var CODES = {
     why: "Text starts inside a card, band or panel but its ink extends past the panel edge.",
     fix: "Shorten the text, reduce the number of items, or choose a layout with larger panels."
   },
+  "SC-GEOM-004": {
+    severity: "error",
+    title: "Text hidden under a shape",
+    why: "An opaque shape, picture, chart or table is drawn after the text and covers it, so the text is invisible.",
+    fix: "Layout bug: draw backgrounds before the text they hold."
+  },
   "SC-CONTRAST-001": {
     severity: "warning",
     title: "Low text contrast",
@@ -203048,6 +203054,15 @@ var kpiTiles = {
     });
     const valueY = top + (strip ? 0.3 : 0.3);
     const labelY = valueY + 1.2;
+    if (!strip)
+      parts.forEach((p, i) => {
+        ctx.rect({ x: p.x, y: top, w: p.w, h }, { fill: colors.surface, role: "card" });
+        if (i === hl)
+          ctx.rect(
+            { x: p.x, y: top, w: p.w, h: 0.07 },
+            { fill: colors.accent, role: "card-accent" }
+          );
+      });
     const labelH = Math.max(
       ...c.tiles.map((t, i) => {
         const node2 = ctx.text(
@@ -203065,13 +203080,6 @@ var kpiTiles = {
       if (strip) {
         if (i > 0)
           ctx.line(p.x, top + 0.35, p.x, top + h - 0.35, { color: colors.rule, width: 0.75 });
-      } else {
-        ctx.rect({ x: p.x, y: top, w: p.w, h }, { fill: colors.surface, role: "card" });
-        if (i === hl)
-          ctx.rect(
-            { x: p.x, y: top, w: p.w, h: 0.07 },
-            { fill: colors.accent, role: "card-accent" }
-          );
       }
       ctx.text(
         t.value,
@@ -208239,6 +208247,25 @@ function checkScene(scene) {
     }
     for (const { t, i } of texts2) {
       const ink = textExtent(t);
+      const area = ink.w * ink.h;
+      if (area <= 0) continue;
+      for (let j = i + 1; j < s.nodes.length; j++) {
+        const n = s.nodes[j];
+        const opaque = (n.kind === "rect" || n.kind === "ellipse" || n.kind === "polygon") && !!n.fill && (n.fillOpacity ?? 1) >= 0.9 || n.kind === "image" && !!(n.path || n.data || n.svg) && !n.decorative || n.kind === "chart" || n.kind === "table";
+        if (opaque && overlap(ink, n.box) >= 0.5 * area) {
+          out.push(
+            diag(
+              "SC-GEOM-004",
+              `Text "${t.lines[0]?.segments[0]?.text.slice(0, 30) ?? ""}" is hidden under a ${n.kind} drawn after it`,
+              { slide: s.id, ...t.pointer ? { pointer: t.pointer } : {} }
+            )
+          );
+          break;
+        }
+      }
+    }
+    for (const { t, i } of texts2) {
+      const ink = textExtent(t);
       if (ink.w <= 0 || t.role === "source" || t.role === "footer") continue;
       for (let j = i - 1; j >= 0; j--) {
         const n = s.nodes[j];
@@ -210347,7 +210374,10 @@ async function buildSite(outDir = "site") {
   });
   const hero = await buildHero(join21(out, "gallery", "hero.png"));
   const examples = [];
-  for (const dir of readdirSync5(join21(ROOT, "examples")).sort()) {
+  const dirs = readdirSync5(join21(ROOT, "examples")).sort(
+    (a, b) => a === "slidecraft-overview" ? -1 : b === "slidecraft-overview" ? 1 : a.localeCompare(b)
+  );
+  for (const dir of dirs) {
     const deck = join21(ROOT, "examples", dir, "deck.yaml");
     const r = await buildDeck(deck, {
       outDir: join21(out, "examples", dir),

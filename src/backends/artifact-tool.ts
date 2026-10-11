@@ -22,7 +22,7 @@ import type {
   Stroke,
   TextNode,
 } from '../engine/scene.ts';
-import { TITLE_NAME } from './pptx-a11y.ts';
+import { shapeName } from './pptx-a11y.ts';
 import { normalizeZip } from './pptxgenjs.ts';
 import { rasterize } from './resvg.ts';
 import type { Engine } from './types.ts';
@@ -113,10 +113,11 @@ function paragraphs(t: TextNode, ps: Paragraph[]): Any[] {
   });
 }
 
-function addText(slide: Any, t: TextNode) {
+function addText(slide: Any, t: TextNode, slideId?: string) {
+  const name = shapeName(t, slideId);
   const shape = slide.shapes.add({
     geometry: 'textbox',
-    ...(t.role === 'title' ? { name: TITLE_NAME } : {}),
+    ...(name ? { name } : {}),
     position: { left: px(t.box.x), top: px(t.box.y), width: px(t.box.w), height: px(t.box.h) },
     fill: 'none',
     line: { style: 'solid', fill: 'none', width: 0 },
@@ -165,10 +166,10 @@ function pathShape(
   });
 }
 
-async function addNode(slide: Any, n: SceneNode): Promise<void> {
+async function addNode(slide: Any, n: SceneNode, slideId?: string): Promise<void> {
   switch (n.kind) {
     case 'text':
-      return addText(slide, n);
+      return addText(slide, n, slideId);
     case 'rect': {
       const cfg: Any = {
         geometry: n.radius ? 'roundRect' : 'rect',
@@ -619,7 +620,7 @@ export const artifactToolEngine: Engine = {
       const slide = p.slides.add();
       slide.setLayout(layouts[s.master]);
       if (s.background) slide.background.fill = s.background;
-      for (const n of s.nodes) await addNode(slide, n);
+      for (const n of s.nodes) await addNode(slide, n, s.id);
       if (s.notes) slide.speakerNotes.textFrame.setText(s.notes);
     }
     mkdirSync(opts.outDir, { recursive: true });

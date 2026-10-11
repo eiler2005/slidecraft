@@ -11,7 +11,7 @@ import { chartAlt } from '../engine/alt.ts';
 import type { ChartNode, Master, Scene, SceneNode, Stroke, TextNode } from '../engine/scene.ts';
 import { in2pt } from '../engine/scene.ts';
 import { VERSION } from '../paths.ts';
-import { markDecorative, markTitle, TITLE_NAME, titleFirst } from './pptx-a11y.ts';
+import { markDecorative, markTitle, shapeName, titleFirst } from './pptx-a11y.ts';
 import { applyTemplate } from './pptx-template.ts';
 import { rasterize } from './resvg.ts';
 import type { Engine } from './types.ts';
@@ -60,7 +60,8 @@ export function textRuns(t: TextNode): Any[] {
   return out;
 }
 
-function textOpts(t: TextNode): Any {
+function textOpts(t: TextNode, slideId?: string): Any {
+  const name = shapeName(t, slideId);
   return {
     x: t.box.x,
     y: t.box.y,
@@ -76,13 +77,14 @@ function textOpts(t: TextNode): Any {
     fit: 'none',
     wrap: true,
     isTextBox: true,
-    // the action title becomes the slide's title placeholder in post-processing
-    ...(t.role === 'title' ? { objectName: TITLE_NAME } : {}),
+    // the action title becomes the slide's title placeholder in post-processing;
+    // field text boxes are named after their field so `slidecraft sync` can map edits back
+    ...(name ? { objectName: name } : {}),
   };
 }
 
-function addText(slide: Slide, t: TextNode) {
-  slide.addText(textRuns(t), textOpts(t));
+function addText(slide: Slide, t: TextNode, slideId?: string) {
+  slide.addText(textRuns(t), textOpts(t, slideId));
 }
 
 function chartType(pptx: Pptx, n: ChartNode): Any {
@@ -210,10 +212,10 @@ async function addImage(slide: Slide, n: Extract<SceneNode, { kind: 'image' }>) 
   } as Any);
 }
 
-function addNode(pptx: Pptx, slide: Slide, n: SceneNode): Promise<void> | void {
+function addNode(pptx: Pptx, slide: Slide, n: SceneNode, slideId?: string): Promise<void> | void {
   switch (n.kind) {
     case 'text':
-      return addText(slide, n);
+      return addText(slide, n, slideId);
     case 'rect': {
       const shape = n.radius ? pptx.ShapeType.roundRect : pptx.ShapeType.rect;
       const o: Any = { x: n.box.x, y: n.box.y, w: n.box.w, h: n.box.h, line: lineProps(n.stroke) };
@@ -484,7 +486,7 @@ export async function renderPptx(scene: Scene, epoch: Date): Promise<Buffer> {
   for (const s of scene.slides) {
     const slide = pptx.addSlide({ masterName: s.master });
     if (s.background) slide.background = { color: hex(s.background) };
-    for (const n of s.nodes) await addNode(pptx, slide, n);
+    for (const n of s.nodes) await addNode(pptx, slide, n, s.id);
     if (s.notes) slide.addNotes(s.notes);
   }
   let raw = (await pptx.write({ outputType: 'nodebuffer' })) as Buffer;

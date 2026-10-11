@@ -58,6 +58,7 @@ Work in this order and stop at each ✅ to ask the user:
 3. ✅ Titles — scaffold(deck), then read_deck/write_deck: write one action title per slide (a full-sentence claim). Show the numbered title chain; revise until approved.
 4. Build — for each slide fill the content using list_layouts(layout) contracts; write_deck; check(deck). Put client numbers in \`facts:\` and use {{id}} in text; read spreadsheets with \`from: { file, sheet, range }\`; cite sources as \`id#p14\` (ingest + find).
 5. ✅ Review — check(deck) until no errors (use fix_tasks/apply_fixes for long text), preview_slide for each slide, then build(deck) and give the user the file paths.
+If the user edited the PPTX by hand, sync_pptx brings the text back before the next build.
 Never invent numbers or sources; flag gaps instead.`;
 
 interface Tool {
@@ -325,6 +326,29 @@ export const TOOLS: Tool[] = [
               .toLowerCase()
               .replace(/[^a-z0-9]+/g, '-'),
           ),
+          '--json',
+        ]).out,
+      ),
+  },
+  {
+    name: 'sync_pptx',
+    description:
+      'Bring text someone edited in the built PPTX back into deck.yaml. Without apply it only lists the changes — show them to the user, then call again with apply: true',
+    inputSchema: obj(
+      {
+        deck: s('Deck folder name or path'),
+        file: s('absolute path to the edited .pptx'),
+        apply: { type: 'boolean', description: 'write the changes into deck.yaml' },
+      },
+      ['deck', 'file'],
+    ),
+    run: (a) =>
+      text(
+        cli([
+          'sync',
+          deckPath(String(a.deck)),
+          String(a.file),
+          ...(a.apply === true ? ['--apply'] : []),
           '--json',
         ]).out,
       ),

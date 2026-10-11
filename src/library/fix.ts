@@ -150,6 +150,16 @@ export function fitTasks(deckPath: string): FitTask[] {
   return tasks;
 }
 
+/** The value a slide field pointer holds in the YAML as written (before facts are filled in). */
+export function readField(deckPath: string, pointer: string): unknown {
+  const ptr = parsePointer(pointer);
+  const loc = ptr ? slideLocations(deckPath)[ptr.slide] : undefined;
+  if (!ptr || !loc) return undefined;
+  const doc = YAML.parseDocument(readFileSync(loc.file, 'utf8'));
+  const v = doc.getIn([...loc.path, ...ptr.rest]);
+  return v && typeof v === 'object' && 'toJSON' in v ? (v as { toJSON(): unknown }).toJSON() : v;
+}
+
 export interface Fix {
   pointer: string;
   /** New text; for list fields, an array of strings. */

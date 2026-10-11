@@ -415,6 +415,26 @@ Options:
   -h, --help            display help for command
 ```
 
+## `sync`
+
+Bring text edited in PowerPoint (or Keynote, Google Slides) back into deck.yaml, field by field
+
+```
+Usage: slidecraft slidecraft sync [options] <deck> <pptx>
+
+Bring text edited in PowerPoint (or Keynote, Google Slides) back into deck.yaml,
+field by field
+
+Arguments:
+  deck        path to deck.yaml
+  pptx        the edited .pptx (built by SlideCraft, then edited)
+
+Options:
+  --apply     write the changes into the YAML (comments kept) and re-check
+  --json      machine-readable output
+  -h, --help  display help for command
+```
+
 ## `images`
 
 Generate pictures for slides that have an imagePrompt but no image (OpenAI-compatible API)

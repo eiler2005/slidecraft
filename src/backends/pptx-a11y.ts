@@ -6,6 +6,22 @@
  */
 export const TITLE_NAME = 'SlideCraft Title';
 
+/**
+ * Shape name for a text box that came from a deck field: "sc:<slide id>/<field>", e.g.
+ * "sc:market/tiles/0/value". `slidecraft sync` reads these names back from an edited PPTX,
+ * so edits land in the right field even after slides were reordered. The title keeps
+ * TITLE_NAME in front (it becomes the title placeholder).
+ */
+export function shapeName(
+  t: { pointer?: string; role?: string },
+  slideId: string | undefined,
+): string | undefined {
+  if (t.role === 'title') return slideId ? `${TITLE_NAME} sc:${slideId}/title` : TITLE_NAME;
+  if (!t.pointer || !slideId) return undefined;
+  const m = /^\/slides\/\d+(\/.+)$/.exec(t.pointer);
+  return m ? `sc:${slideId}${m[1]}` : undefined;
+}
+
 // Inserted elements declare their own namespace: some writers (artifact-tool) declare
 // `a:` per element instead of on the root.
 const A = 'xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"';
@@ -22,7 +38,7 @@ export function markTitle(xml: string): string {
   if (!xml.includes(TITLE_NAME)) return xml;
   return xml.replace(
     new RegExp(
-      `(<p:cNvPr [^>]*name="${TITLE_NAME}"[^>]*?(?:/>|>[\\s\\S]*?</p:cNvPr>))\\s*(?:<p:cNvSpPr[^>]*/>|<p:cNvSpPr[^>]*>[\\s\\S]*?</p:cNvSpPr>)\\s*(?:<p:nvPr\\s*/>|<p:nvPr>\\s*</p:nvPr>)`,
+      `(<p:cNvPr [^>]*name="${TITLE_NAME}[^"]*"[^>]*?(?:/>|>[\\s\\S]*?</p:cNvPr>))\\s*(?:<p:cNvSpPr[^>]*/>|<p:cNvSpPr[^>]*>[\\s\\S]*?</p:cNvSpPr>)\\s*(?:<p:nvPr\\s*/>|<p:nvPr>\\s*</p:nvPr>)`,
     ),
     `$1<p:cNvSpPr><a:spLocks ${A} noGrp="1"/></p:cNvSpPr><p:nvPr><p:ph type="title"/></p:nvPr>`,
   );

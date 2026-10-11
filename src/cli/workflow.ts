@@ -21,6 +21,7 @@ import {
 import { importPptx } from '../library/pptx-import.ts';
 import { rankStorylines, templateOptions } from '../library/rank.ts';
 import { recommendOutput } from '../library/recommend.ts';
+import { syncPptx } from '../library/sync.ts';
 import { importTheme } from '../library/theme-import.ts';
 import { runCalibration } from '../qa/calibrate.ts';
 import { buildSite } from '../site.ts';
@@ -35,6 +36,7 @@ import {
   printJson,
   summary,
   wantsJson,
+  yellow,
 } from './output.ts';
 
 function openFile(path: string): void {
@@ -491,6 +493,39 @@ export function registerBrandCommands(program: Command): void {
           ),
         );
       process.exitCode = tasks.length ? 1 : 0;
+    });
+
+  program
+    .command('sync')
+    .description(
+      'Bring text edited in PowerPoint (or Keynote, Google Slides) back into deck.yaml, field by field',
+    )
+    .argument('<deck>', 'path to deck.yaml')
+    .argument('<pptx>', 'the edited .pptx (built by SlideCraft, then edited)')
+    .option('--apply', 'write the changes into the YAML (comments kept) and re-check')
+    .option('--json', 'machine-readable output')
+    .action((deck: string, pptx: string, o: { apply?: boolean; json?: boolean }) => {
+      const r = syncPptx(deck, pptx, { ...(o.apply ? { apply: true } : {}) });
+      if (wantsJson(o.json)) return printJson(r);
+      const show = (v: string | string[]) => (Array.isArray(v) ? v.join(' | ') : v);
+      if (!r.changes.length) console.log(`${green('✔')} no text changes to bring back`);
+      for (const c of r.changes)
+        console.log(
+          `${c.slide} ${c.pointer.replace(/^\/slides\/\d+\//, '')}\n  - ${show(c.before)}\n  + ${show(c.after)}`,
+        );
+      for (const s of r.skipped)
+        console.log(
+          `${yellow('!')} ${s.slide} ${s.pointer ?? ''}: ${s.reason}${s.text ? `\n    "${s.text.slice(0, 100)}"` : ''}`,
+        );
+      for (const n of r.notes) console.log(dim(`· ${n}`));
+      if (o.apply) {
+        console.log(`${green('✔')} wrote ${r.applied ?? 0} field(s) into the YAML`);
+        for (const t of r.remaining ?? [])
+          console.log(
+            `  now too long: ${t.pointer} (${t.length}${t.budget ? ` → ≤ ${t.budget}` : ''}) — slidecraft fix`,
+          );
+      } else if (r.changes.length)
+        console.log(dim('\nRun again with --apply to write these changes.'));
     });
 
   program

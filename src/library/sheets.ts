@@ -13,7 +13,8 @@ export interface Sheet {
   rows: Cell[][];
 }
 
-const decode = (s: string) =>
+/** XML entity decoding for text read from OOXML parts. */
+export const decode = (s: string) =>
   s
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
@@ -68,8 +69,8 @@ function parseCsv(text: string): Cell[][] {
   return rows;
 }
 
-/** Minimal synchronous zip reader (stored and deflated entries), enough for .xlsx. */
-function unzip(buf: Buffer): Map<string, Buffer> {
+/** Minimal synchronous zip reader (stored and deflated entries), enough for .xlsx and .pptx. */
+export function unzip(buf: Buffer): Map<string, Buffer> {
   const out = new Map<string, Buffer>();
   let eocd = buf.length - 22;
   while (eocd >= 0 && buf.readUInt32LE(eocd) !== 0x06054b50) eocd--;

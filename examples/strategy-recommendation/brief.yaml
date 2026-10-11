@@ -1,4 +1,4 @@
-# SlideCraft brief — schema: ../../schemas/brief.v1.json
+# yaml-language-server: $schema=../../schemas/brief.v1.json
 # Fictional example: Northwind Analytics is not a real company; all figures are illustrative.
 schemaVersion: 1
 id: northwind-germany

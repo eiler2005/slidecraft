@@ -1,4 +1,4 @@
-# SlideCraft deck — schema: ../../schemas/deck.v1.json
+# yaml-language-server: $schema=../../schemas/deck.v1.json
 # Fictional example: a conference talk sharing a finance team's experience. All names and figures are invented.
 schemaVersion: 1
 id: close-in-a-morning

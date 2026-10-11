@@ -9,7 +9,7 @@ SlideCraft makes the deck with your AI assistant; you make the decisions. A firs
 | Your assistant | Do this |
 |---|---|
 | Claude Code | `/plugin marketplace add eiler2005/slidecraft`, then `/plugin install slidecraft@slidecraft` |
-| OpenAI Codex | `git clone https://github.com/eiler2005/slidecraft`, then `node slidecraft/dist/slidecraft.mjs codex install` |
+| OpenAI Codex | `npm i -g @eiler2005/slidecraft`, then `slidecraft codex install` |
 | Cursor, Gemini CLI, Aider, others | Clone the repo and tell the assistant to follow `AGENTS.md` — see [use with any agent](how-to/use-with-any-agent.md) |
 | No assistant, or a script | `npx @eiler2005/slidecraft --help` — nothing to clone |
 

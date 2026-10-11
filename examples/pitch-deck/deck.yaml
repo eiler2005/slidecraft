@@ -1,4 +1,4 @@
-# SlideCraft deck — schema: ../../schemas/deck.v1.json
+# yaml-language-server: $schema=../../schemas/deck.v1.json
 # Fictional example: Fabrikam Freight is an invented startup; all figures are illustrative.
 schemaVersion: 1
 id: fabrikam-seed

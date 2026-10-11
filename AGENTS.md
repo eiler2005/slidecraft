@@ -2,11 +2,11 @@
 
 SlideCraft turns a goal into a consulting-grade deck: brief → template → storyline → ghost deck → build → review. In Claude Code use the plugin (`/slidecraft:new`). Any other agent follows this file. Run commands from the repo root.
 
-`sc` below means `node dist/slidecraft.mjs` (zero install, Node ≥ 22.12). **Codex:** run `sc codex install` once to get the `slidecraft` skills in `~/.codex/skills`. Every command accepts `--json`; non-TTY output is JSON by default.
+`sc` below means `slidecraft` after `npm i -g @eiler2005/slidecraft`, or `node dist/slidecraft.mjs` in a clone (Node ≥ 22.12, no dependencies). The skills and references named below ship with the package (`$(npm root -g)/@eiler2005/slidecraft/`). **Codex:** run `sc codex install` once to get the `slidecraft` skills in `~/.codex/skills`. Every command accepts `--json`; non-TTY output is JSON by default.
 
 ## The workflow — stop at each ✅ and ask the user
 
-1. **Brief ✅** — `sc new <deck-id> --goal "…" --audience "…"` creates `slidecraft/<id>/brief.yaml` and a ghost `deck.yaml`. Fill the brief (decision/ask, audience knows/cares, task, `usage`: edit-together | send-pdf | present-live | web-link | automation | codex). `sc templates --brief <brief> --json` returns three template options and the recommended outputs/engines with reasons. Confirm the brief with the user.
+1. **Brief ✅** — `sc new "<the goal in one sentence>" --audience "…"` creates `slidecraft/<id>/brief.yaml` and a ghost `deck.yaml`. Fill the brief (decision/ask, audience knows/cares, task, `usage`: edit-together | send-pdf | present-live | web-link | automation | codex). `sc templates --brief <brief> --json` returns three template options and the recommended outputs/engines with reasons. Confirm the brief with the user.
 2. **Pick ✅** — `sc pick --brief <brief> --json` writes `.slidecraft/picker.html` and `option-A|B|C.png`. Show/describe them; record the choice with `sc choose --brief <brief> --option A`.
 3. **Storyline** — follow `skills/storyline-architect/SKILL.md`; write `storyline.md` (governing thought, SCR, MECE key line, evidence status). Methods: `library/references/writing-standard.md`, `storytelling.md`.
 4. **Ghost deck ✅** — `sc scaffold --brief <brief> --force`, then write final action titles (`skills/action-title-writer`), refine `ghost.exhibit / data / confidence`, pick layouts (`skills/exhibit-chooser`). Show the user the numbered title chain; iterate until approved.

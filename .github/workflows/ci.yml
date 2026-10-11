@@ -86,3 +86,28 @@ jobs:
 
       - name: Privacy check (all tracked files)
         run: .githooks/privacy-check tree
+
+  windows-smoke:
+    # Most people who present work on Windows: build real decks there with the committed bundle.
+    name: smoke (windows-latest)
+    runs-on: windows-latest
+    timeout-minutes: 15
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22.x
+      - name: Build an example deck (PPTX, PDF, PNG, one-pager, DOCX)
+        run: |
+          node dist/slidecraft.mjs --version
+          node dist/slidecraft.mjs build examples/europe-first-trip/deck.yaml -o out/win -f pptx,pdf,png,onepager,docx
+          node dist/slidecraft.mjs new "The board approves a partner-led entry into Germany" --dir out/new
+          node dist/slidecraft.mjs check examples/slidecraft-overview/deck.yaml
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: windows-smoke
+          path: out
+          if-no-files-found: warn
+          retention-days: 7

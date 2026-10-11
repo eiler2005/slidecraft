@@ -1,4 +1,4 @@
-# SlideCraft deck — schema: ../../schemas/deck.v1.json
+# yaml-language-server: $schema=../../schemas/deck.v1.json
 # A five-slide example built from a live end-to-end run (Claude Code plugin agents and Codex),
 # then curated. Figures are illustrative planning values, not statistics.
 schemaVersion: 1

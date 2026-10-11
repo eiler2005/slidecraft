@@ -24,6 +24,7 @@ import { importTheme } from '../library/theme-import.ts';
 import { runCalibration } from '../qa/calibrate.ts';
 import { buildSite } from '../site.ts';
 import type { Brief } from '../spec/brief.ts';
+import { SCHEMA_LINE } from './commands.ts';
 import {
   bold,
   dim,
@@ -251,7 +252,7 @@ export function registerWorkflowCommands(program: Command): void {
       mkdirSync(dirname(out), { recursive: true });
       writeFileSync(
         out,
-        `# SlideCraft deck — schema: schemas/deck.v1.json\n# Ghost deck: write the action titles first, review the title chain, then fill content.\n${YAML.stringify(deck, { lineWidth: 0 })}`,
+        `${SCHEMA_LINE('deck')}# Ghost deck: write the action titles first, review the title chain, then fill content.\n${YAML.stringify(deck, { lineWidth: 0 })}`,
       );
       console.log(
         `${green('✔')} ${relative(process.cwd(), out)} (${(deck.slides as unknown[]).length} ghost slides)`,

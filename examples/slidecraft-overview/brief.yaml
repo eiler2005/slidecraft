@@ -1,4 +1,4 @@
-# SlideCraft brief — schema: ../../schemas/brief.v1.json
+# yaml-language-server: $schema=../../schemas/brief.v1.json
 # The deck about SlideCraft, made with SlideCraft. Facts are from the 0.4 release.
 schemaVersion: 1
 id: slidecraft-overview

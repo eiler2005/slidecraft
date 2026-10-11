@@ -1,4 +1,4 @@
-# SlideCraft brief — schema: ../../schemas/brief.v1.json
+# yaml-language-server: $schema=../../schemas/brief.v1.json
 # Small fictional example: a five-slide travel guide. All figures are illustrative.
 schemaVersion: 1
 id: europe-first-trip

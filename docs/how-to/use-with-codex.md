@@ -1,15 +1,17 @@
 # Use SlideCraft from OpenAI Codex
 
-> **Audience:** Codex users · **Prerequisites:** Codex CLI, a clone of SlideCraft, Node ≥ 22.12 · **Last reviewed:** 2026-10-10
+> **Audience:** Codex users · **Prerequisites:** Codex CLI, Node ≥ 22.12 · **Last reviewed:** 2026-10-11
 
 ## Install the skills
 
 ```sh
-git clone https://github.com/eiler2005/slidecraft && cd slidecraft
-node dist/slidecraft.mjs codex install
+npm install -g @eiler2005/slidecraft
+slidecraft codex install
 ```
 
-This writes seven skills into `$CODEX_HOME/skills` (default `~/.codex/skills`): `slidecraft` (the workflow orchestrator for Codex) and the method skills `slidecraft-storyline-architect`, `slidecraft-action-title-writer`, `slidecraft-ghost-deck-skeleton`, `slidecraft-exhibit-chooser`, `slidecraft-deck-spec`, `slidecraft-partner-review-checklist`. They point at this checkout's `dist/slidecraft.mjs`; re-run after moving or updating it. Remove with `codex uninstall`.
+Or from a clone: `git clone https://github.com/eiler2005/slidecraft && node slidecraft/dist/slidecraft.mjs codex install`.
+
+This writes seven skills into `$CODEX_HOME/skills` (default `~/.codex/skills`): `slidecraft` (the workflow orchestrator for Codex) and the method skills `slidecraft-storyline-architect`, `slidecraft-action-title-writer`, `slidecraft-ghost-deck-skeleton`, `slidecraft-exhibit-chooser`, `slidecraft-deck-spec`, `slidecraft-partner-review-checklist`. They point at the installed package (or your checkout). Re-run `slidecraft codex install` after `npm update -g @eiler2005/slidecraft` or after moving a checkout. Remove with `codex uninstall`.
 
 ## Use
 

@@ -2,6 +2,14 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.4.2] — 2026-10-11
+
+### Added
+- `slidecraft new "<goal in your words>"`: a sentence is accepted as the goal, and the deck id is made from its key words (Cyrillic transliterated). A kebab-case id still works.
+- Generated `brief.yaml` and `deck.yaml` start with a `yaml-language-server` schema line, so VS Code, Cursor and JetBrains autocomplete fields, show their descriptions and flag errors. The examples carry it too.
+- No-clone setup for Codex and other assistants: `npm i -g @eiler2005/slidecraft`, then `slidecraft codex install`. `AGENTS.md` now ships in the package.
+- CI: a Windows smoke job builds an example deck in every format.
+
 ## [0.4.1] — 2026-10-11
 
 ### Added

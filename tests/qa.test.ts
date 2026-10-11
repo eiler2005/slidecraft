@@ -31,3 +31,18 @@ describe('scene checks', () => {
     expect(checkScene(scene).map((d) => d.code)).toContain('SC-GEOM-004');
   });
 });
+
+describe('new: a goal sentence becomes the deck id', () => {
+  it('drops filler words and transliterates Cyrillic', async () => {
+    const { slugFrom } = await import('../src/cli/commands.ts');
+    expect(slugFrom('The board should approve a partner-led entry into Germany')).toBe(
+      'board-approve-partner-led-entry-germany',
+    );
+    expect(slugFrom('Q3 steerco update for the ERP programme')).toBe(
+      'q3-steerco-update-erp-programme',
+    );
+    expect(slugFrom('Совет директоров утверждает выход в Германию')).toBe(
+      'sovet-direktorov-utverzhdaet-vykhod-germaniyu',
+    );
+  });
+});

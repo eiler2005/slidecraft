@@ -208520,6 +208520,33 @@ function layoutContract(l) {
     example: l.examples[0]
   };
 }
+var SCHEMA_LINE = (kind) => `# yaml-language-server: $schema=https://raw.githubusercontent.com/eiler2005/slidecraft/main/schemas/${kind}.v1.json
+`;
+var STOP = new Set(
+  "the a an to of for and or our we us you your should must will would can need needs that this these it its is are be been at on in into onto with by from about as so than then".split(
+    " "
+  )
+);
+var CYR = Object.fromEntries(
+  "\u0430:a \u0431:b \u0432:v \u0433:g \u0434:d \u0435:e \u0451:e \u0436:zh \u0437:z \u0438:i \u0439:y \u043A:k \u043B:l \u043C:m \u043D:n \u043E:o \u043F:p \u0440:r \u0441:s \u0442:t \u0443:u \u0444:f \u0445:kh \u0446:ts \u0447:ch \u0448:sh \u0449:shch \u044A: \u044B:y \u044C: \u044D:e \u044E:yu \u044F:ya \u0456:i \u0457:yi \u0454:ye \u04D9:a \u0493:g \u049B:q \u04A3:n \u04E9:o \u04B1:u \u04AF:u \u04BB:h".split(" ").map((p) => p.split(":"))
+);
+var CYR_STOP = /* @__PURE__ */ new Set([
+  "kak",
+  "my",
+  "za",
+  "v",
+  "na",
+  "i",
+  "po",
+  "s",
+  "dlya",
+  "chto",
+  "eto",
+  "ne"
+]);
+function slugFrom(text2) {
+  return [...text2.toLowerCase()].map((ch) => CYR[ch] ?? ch).join("").split(/\s+/).filter((w) => !CYR_STOP.has(w)).join(" ").normalize("NFKD").replace(/[^a-z0-9\s-]/g, " ").split(/\s+/).filter((w) => w && !STOP.has(w)).slice(0, 5).join("-").replace(/-+/g, "-").replace(/^-|-$/g, "").slice(0, 48);
+}
 function registerCommands(program3) {
   program3.version(VERSION2, "-v, --version");
   program3.command("validate").description("Validate deck.yaml against the schema and layout contracts").argument("<deck>", "path to deck.yaml").option("--json", "machine-readable output").action((deck, o) => {
@@ -208673,12 +208700,19 @@ ${dim(`${" ".repeat(27)}${x2.arc}`)}`)
     }
     console.log(dim("\nRecommendations: docs/how-to/choose-output-engine.md"));
   });
-  program3.command("new").description("Scaffold a deck workspace (brief.yaml + deck.yaml) under ./slidecraft/<slug>").argument("<slug>", "kebab-case deck id").option("--dir <dir>", "parent directory", "slidecraft").option("--goal <text>", "what must be true after the audience sees the deck").option("--audience <text>", "who the deck is for").option("--json", "machine-readable output").action(
+  program3.command("new").description("Scaffold a deck workspace (brief.yaml + deck.yaml) under ./slidecraft/<slug>").argument("<goal-or-slug>", "what the deck must achieve, in your words, or a kebab-case id").option("--dir <dir>", "parent directory", "slidecraft").option("--goal <text>", "what must be true after the audience sees the deck").option("--audience <text>", "who the deck is for").option("--json", "machine-readable output").action(
     (slug, o) => {
       if (!/^[a-z0-9][a-z0-9-]*$/.test(slug)) {
-        console.error('slug must be kebab-case, e.g. "germany-entry"');
-        process.exitCode = EXIT.usage;
-        return;
+        const goal = slug.trim();
+        slug = slugFrom(goal);
+        if (!slug) {
+          console.error(
+            'give the deck a goal in words, e.g. "The board approves entry into Germany"'
+          );
+          process.exitCode = EXIT.usage;
+          return;
+        }
+        o.goal ??= goal;
       }
       const dir = resolve9(o.dir, slug);
       if (existsSync12(join15(dir, "brief.yaml"))) {
@@ -208705,7 +208739,7 @@ ${dim(`${" ".repeat(27)}${x2.arc}`)}`)
       };
       writeFileSync9(
         join15(dir, "brief.yaml"),
-        `# SlideCraft brief \u2014 schema: schemas/brief.v1.json
+        `${SCHEMA_LINE("brief")}# SlideCraft brief \u2014 fill the TODOs or let your assistant ask you
 ${import_yaml2.default.stringify(brief)}`
       );
       const deck = {
@@ -208733,7 +208767,7 @@ ${import_yaml2.default.stringify(brief)}`
       };
       writeFileSync9(
         join15(dir, "deck.yaml"),
-        `# SlideCraft deck \u2014 schema: schemas/deck.v1.json
+        `${SCHEMA_LINE("deck")}# SlideCraft deck
 ${import_yaml2.default.stringify(deck)}`
       );
       if (wantsJson(o.json)) {
@@ -209674,13 +209708,13 @@ ${import_yaml6.default.stringify(deck, { lineWidth: 0 })}`
 }
 
 // src/library/rank.ts
-var STOP = new Set(
+var STOP2 = new Set(
   "a an and are as at be by for from has have in is it of on or our that the their this to we with will you your deck slides presentation about need want make".split(
     " "
   )
 );
 function tokens(s) {
-  return s.toLowerCase().replace(/[^a-z0-9а-яё\s-]/gi, " ").split(/\s+/).filter((w) => w.length > 1 && !STOP.has(w));
+  return s.toLowerCase().replace(/[^a-z0-9а-яё\s-]/gi, " ").split(/\s+/).filter((w) => w.length > 1 && !STOP2.has(w));
 }
 function rankStorylines(brief, all = loadStorylines()) {
   const text2 = [
@@ -210674,8 +210708,7 @@ ${bold("Outputs")}: ${output2.formats.join(", ")}  (pptx \u2190 ${output2.engine
     mkdirSync19(dirname8(out), { recursive: true });
     writeFileSync18(
       out,
-      `# SlideCraft deck \u2014 schema: schemas/deck.v1.json
-# Ghost deck: write the action titles first, review the title chain, then fill content.
+      `${SCHEMA_LINE("deck")}# Ghost deck: write the action titles first, review the title chain, then fill content.
 ${import_yaml7.default.stringify(deck, { lineWidth: 0 })}`
     );
     console.log(

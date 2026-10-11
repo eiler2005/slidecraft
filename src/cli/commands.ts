@@ -40,6 +40,55 @@ function layoutContract(l: (typeof LAYOUTS)[number]) {
   };
 }
 
+/** Editors (VS Code, Cursor, JetBrains) validate and autocomplete YAML from this line. */
+export const SCHEMA_LINE = (kind: 'brief' | 'deck') =>
+  `# yaml-language-server: $schema=https://raw.githubusercontent.com/eiler2005/slidecraft/main/schemas/${kind}.v1.json\n`;
+
+const STOP = new Set(
+  'the a an to of for and or our we us you your should must will would can need needs that this these it its is are be been at on in into onto with by from about as so than then'.split(
+    ' ',
+  ),
+);
+
+/** "The board approves a partner-led entry into Germany" → "board-approves-partner-led-entry". */
+const CYR: Record<string, string> = Object.fromEntries(
+  'а:a б:b в:v г:g д:d е:e ё:e ж:zh з:z и:i й:y к:k л:l м:m н:n о:o п:p р:r с:s т:t у:u ф:f х:kh ц:ts ч:ch ш:sh щ:shch ъ: ы:y ь: э:e ю:yu я:ya і:i ї:yi є:ye ә:a ғ:g қ:q ң:n ө:o ұ:u ү:u һ:h'
+    .split(' ')
+    .map((p) => p.split(':') as [string, string]),
+);
+const CYR_STOP = new Set([
+  'kak',
+  'my',
+  'za',
+  'v',
+  'na',
+  'i',
+  'po',
+  's',
+  'dlya',
+  'chto',
+  'eto',
+  'ne',
+]);
+
+export function slugFrom(text: string): string {
+  return [...text.toLowerCase()]
+    .map((ch) => CYR[ch] ?? ch)
+    .join('')
+    .split(/\s+/)
+    .filter((w) => !CYR_STOP.has(w))
+    .join(' ')
+    .normalize('NFKD')
+    .replace(/[^a-z0-9\s-]/g, ' ')
+    .split(/\s+/)
+    .filter((w) => w && !STOP.has(w))
+    .slice(0, 5)
+    .join('-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 48);
+}
+
 export function registerCommands(program: Command): void {
   program.version(VERSION, '-v, --version');
 
@@ -260,17 +309,25 @@ export function registerCommands(program: Command): void {
   program
     .command('new')
     .description('Scaffold a deck workspace (brief.yaml + deck.yaml) under ./slidecraft/<slug>')
-    .argument('<slug>', 'kebab-case deck id')
+    .argument('<goal-or-slug>', 'what the deck must achieve, in your words, or a kebab-case id')
     .option('--dir <dir>', 'parent directory', 'slidecraft')
     .option('--goal <text>', 'what must be true after the audience sees the deck')
     .option('--audience <text>', 'who the deck is for')
     .option('--json', 'machine-readable output')
     .action(
       (slug: string, o: { dir: string; goal?: string; audience?: string; json?: boolean }) => {
+        // a sentence is the goal; the id is made from its first words
         if (!/^[a-z0-9][a-z0-9-]*$/.test(slug)) {
-          console.error('slug must be kebab-case, e.g. "germany-entry"');
-          process.exitCode = EXIT.usage;
-          return;
+          const goal = slug.trim();
+          slug = slugFrom(goal);
+          if (!slug) {
+            console.error(
+              'give the deck a goal in words, e.g. "The board approves entry into Germany"',
+            );
+            process.exitCode = EXIT.usage;
+            return;
+          }
+          o.goal ??= goal;
         }
         const dir = resolve(o.dir, slug);
         if (existsSync(join(dir, 'brief.yaml'))) {
@@ -299,7 +356,7 @@ export function registerCommands(program: Command): void {
         };
         writeFileSync(
           join(dir, 'brief.yaml'),
-          `# SlideCraft brief — schema: schemas/brief.v1.json\n${YAML.stringify(brief)}`,
+          `${SCHEMA_LINE('brief')}# SlideCraft brief — fill the TODOs or let your assistant ask you\n${YAML.stringify(brief)}`,
         );
         const deck = {
           schemaVersion: 1,
@@ -326,7 +383,7 @@ export function registerCommands(program: Command): void {
         };
         writeFileSync(
           join(dir, 'deck.yaml'),
-          `# SlideCraft deck — schema: schemas/deck.v1.json\n${YAML.stringify(deck)}`,
+          `${SCHEMA_LINE('deck')}# SlideCraft deck\n${YAML.stringify(deck)}`,
         );
         if (wantsJson(o.json)) {
           printJson({

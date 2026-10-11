@@ -1,4 +1,4 @@
-# SlideCraft deck — schema: ../../schemas/deck.v1.json
+# yaml-language-server: $schema=../../schemas/deck.v1.json
 # Fictional example (see claims.md): Northwind, Contoso and Fabrikam are invented; all figures are illustrative.
 schemaVersion: 1
 id: northwind-germany

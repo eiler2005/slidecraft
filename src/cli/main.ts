@@ -3,6 +3,7 @@ import { Command } from 'commander';
 import '../backends/extra.ts';
 import { registerCodexCommands } from './codex.ts';
 import { registerCommands } from './commands.ts';
+import { registerInstallCommands } from './install.ts';
 import { registerBrandCommands, registerWorkflowCommands } from './workflow.ts';
 
 const program = new Command();
@@ -17,6 +18,7 @@ registerCommands(program);
 registerWorkflowCommands(program);
 registerCodexCommands(program);
 registerBrandCommands(program);
+registerInstallCommands(program);
 
 program.parseAsync(process.argv).catch((err: unknown) => {
   process.stderr.write(`slidecraft: ${err instanceof Error ? err.message : String(err)}\n`);

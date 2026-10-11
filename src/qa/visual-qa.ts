@@ -22,7 +22,6 @@ import { buildDeck } from '../build.ts';
 import { contrast } from '../engine/color.ts';
 import type { Box, Scene, SceneNode, SceneSlide, TextNode } from '../engine/scene.ts';
 import { getTheme } from '../library/load.ts';
-import { LIBRARY_DIR } from '../paths.ts';
 import type { Diagnostic } from './codes.ts';
 import { diffOverlay, encodePng, type Raster, readPpm, visualMetrics } from './raster.ts';
 import { appendReviewLog, diffAgainstSnapshot, snapshotSources } from './review-log.ts';

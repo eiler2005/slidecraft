@@ -20,12 +20,9 @@ import {
   rmSync,
   writeFileSync,
 } from 'node:fs';
-import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
-import { pathToFileURL } from 'node:url';
 import * as fontkit from 'fontkit';
 import * as pdfjs from 'pdfjs-dist/legacy/build/pdf.mjs';
-import { findChrome, runChrome } from '../src/backends/html.ts';
 import { convertToPdf, pptxConvertEngine } from '../src/backends/pptx-convert.ts';
 import { renderPptx } from '../src/backends/pptxgenjs.ts';
 import { buildDeck, checkDeck } from '../src/build.ts';
@@ -123,32 +120,6 @@ function rasterPages(pdf: string, dir: string): string[] {
     .filter((f) => f.endsWith('.ppm'))
     .sort((a, b) => Number(/\d+/.exec(a)![0]) - Number(/\d+/.exec(b)![0]))
     .map((f) => join(run, f));
-}
-async function chromePdf(html: string, pdf: string) {
-  const chrome = findChrome();
-  if (!chrome) throw new Error('Chrome is required');
-  const profile = mkdtempSync(join(tmpdir(), 'sc-calibrate-chrome-'));
-  try {
-    await runChrome(
-      chrome,
-      [
-        '--headless=new',
-        '--disable-gpu',
-        '--no-first-run',
-        '--no-default-browser-check',
-        '--hide-scrollbars',
-        '--no-pdf-header-footer',
-        `--user-data-dir=${profile}`,
-        `--print-to-pdf=${pdf}`,
-        '--virtual-time-budget=5000',
-        pathToFileURL(html).href,
-      ],
-      120000,
-      pdf,
-    );
-  } finally {
-    rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
-  }
 }
 
 // ───────────────────────────── stage 1: probe → rules ─────────────────────────────

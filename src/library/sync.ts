@@ -12,7 +12,7 @@
  */
 import { readFileSync } from 'node:fs';
 import { checkDeck } from '../build.ts';
-import type { SceneSlide, TextNode } from '../engine/scene.ts';
+import type { SceneSlide, TableNode, TextNode } from '../engine/scene.ts';
 import { applyFixes, type FitTask, type Fix, readField } from './fix.ts';
 import { decode, unzip } from './sheets.ts';
 
@@ -21,6 +21,8 @@ const TITLE = 'SlideCraft Title';
 interface PptxShape {
   name: string;
   paragraphs: string[];
+  /** Placeholder type (title, sldNum, ftr, dt…), if any. */
+  ph?: string;
   /** Top-left corner, inches (for files whose shape names were lost). */
   x?: number;
   y?: number;
@@ -33,7 +35,8 @@ interface PptxSlide {
   id?: string;
   shapes: PptxShape[];
   notes?: string[];
-  tables: number;
+  /** Cell texts of each table, row by row. */
+  tables: string[][];
 }
 
 function paragraphs(xml: string): string[] {
@@ -91,10 +94,12 @@ export function readPptx(path: string): PptxSlide[] {
       const name = decode(/<p:cNvPr\b[^>]*\bname="([^"]*)"/.exec(m[1]!)?.[1] ?? '');
       const body = /<p:txBody>([\s\S]*?)<\/p:txBody>/.exec(m[1]!)?.[1];
       const off = /<a:off\b[^>]*\bx="(-?\d+)"[^>]*\by="(-?\d+)"/.exec(m[1]!);
+      const ph = /<p:ph\b[^>]*\btype="([^"]+)"/.exec(m[1]!)?.[1];
       if (body !== undefined)
         shapes.push({
           name,
           paragraphs: paragraphs(body),
+          ...(ph ? { ph } : {}),
           ...(off ? { x: Number(off[1]) / 914400, y: Number(off[2]) / 914400 } : {}),
         });
     }
@@ -116,7 +121,11 @@ export function readPptx(path: string): PptxSlide[] {
       ...(ids[0] ? { id: ids[0] } : {}),
       shapes,
       ...(notes ? { notes } : {}),
-      tables: (xml.match(/<a:tbl>/g) ?? []).length,
+      tables: [...xml.matchAll(/<a:tbl>([\s\S]*?)<\/a:tbl>/g)].map((t) =>
+        [...t[1]!.matchAll(/<a:tc\b[^>]*>([\s\S]*?)<\/a:tc>/g)].map((c) =>
+          norm(paragraphs(c[1]!).join(' ')),
+        ),
+      ),
     };
   });
 }
@@ -224,6 +233,12 @@ export function syncPptx(
     seen.add(es.id);
     const ref = scene.slides[i]!;
     const named = new Set<string>();
+    // text SlideCraft drew without a field (step numbers, value labels, fixed captions)
+    const drawn = new Set(
+      ref.nodes
+        .filter((n): n is TextNode => n.kind === 'text')
+        .map((n) => norm(n.paragraphs.map((p) => p.runs.map((r) => r.text).join('')).join(' '))),
+    );
     for (const sh of es.shapes) {
       let m = /(?:^|\s)sc:([^/\s]+)(\/\S+)$/.exec(sh.name) as (string | undefined)[] | null;
       if (!m && byPosition && sh.x !== undefined && sh.y !== undefined) {
@@ -237,7 +252,15 @@ export function syncPptx(
         if (node) m = ['', es.id, node.pointer!.replace(/^\/slides\/\d+/, '')];
       }
       if (!m) {
-        if (clean(sh.paragraphs).some(Boolean) && !sh.name.startsWith(TITLE))
+        const txt = clean(sh.paragraphs).join(' ');
+        const chrome = sh.ph === 'sldNum' || sh.ph === 'ftr' || sh.ph === 'dt';
+        if (
+          txt &&
+          !chrome &&
+          !drawn.has(txt) &&
+          !/^[−+-]?[€$£¥]?\d[\d,.]*\s?[%xkKMB]*$/.test(txt) &&
+          !sh.name.startsWith(TITLE)
+        )
           report.notes.push(
             `Slide "${es.id}": a text box added in PowerPoint ("${clean(sh.paragraphs).join(' ').slice(0, 50)}") is not synced.`,
           );
@@ -281,10 +304,27 @@ export function syncPptx(
         fixes.push({ pointer, text: after });
       }
     }
-    if (es.tables)
-      report.notes.push(
-        `Slide "${es.id}": table edits are not synced — compare the table by hand.`,
-      );
+    // tables: not written back yet, but say exactly which cells changed
+    const refTables = ref.nodes.filter((n): n is TableNode => n.kind === 'table');
+    es.tables.forEach((cells, t) => {
+      const node = refTables[t];
+      if (!node) return;
+      const before = node.cells
+        .flat()
+        .map((c) =>
+          norm(c.text.paragraphs.map((p) => p.runs.map((r) => r.text).join('')).join(' ')),
+        );
+      const diff = cells
+        .map((after, k) => ({ k, after, was: before[k] ?? '' }))
+        .filter((d) => d.after !== d.was);
+      if (diff.length || cells.length !== before.length)
+        report.notes.push(
+          `Slide "${es.id}": table cells edited — copy into deck.yaml by hand: ${diff
+            .slice(0, 6)
+            .map((d) => `"${d.was}" → "${d.after}"`)
+            .join('; ')}${diff.length > 6 ? ' …' : ''}`,
+        );
+    });
   }
   const ids = edited.map((e) => e.id).filter((x): x is string => !!x && index.has(x));
   for (const s of loaded.slides)

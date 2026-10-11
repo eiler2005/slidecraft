@@ -136743,10 +136743,10 @@ var require_identity = __commonJS({
     var NODE_TYPE = /* @__PURE__ */ Symbol.for("yaml.node.type");
     var isAlias = (node2) => !!node2 && typeof node2 === "object" && node2[NODE_TYPE] === ALIAS;
     var isDocument = (node2) => !!node2 && typeof node2 === "object" && node2[NODE_TYPE] === DOC;
-    var isMap4 = (node2) => !!node2 && typeof node2 === "object" && node2[NODE_TYPE] === MAP;
+    var isMap5 = (node2) => !!node2 && typeof node2 === "object" && node2[NODE_TYPE] === MAP;
     var isPair = (node2) => !!node2 && typeof node2 === "object" && node2[NODE_TYPE] === PAIR;
-    var isScalar = (node2) => !!node2 && typeof node2 === "object" && node2[NODE_TYPE] === SCALAR;
-    var isSeq4 = (node2) => !!node2 && typeof node2 === "object" && node2[NODE_TYPE] === SEQ;
+    var isScalar2 = (node2) => !!node2 && typeof node2 === "object" && node2[NODE_TYPE] === SCALAR;
+    var isSeq5 = (node2) => !!node2 && typeof node2 === "object" && node2[NODE_TYPE] === SEQ;
     function isCollection(node2) {
       if (node2 && typeof node2 === "object")
         switch (node2[NODE_TYPE]) {
@@ -136767,7 +136767,7 @@ var require_identity = __commonJS({
         }
       return false;
     }
-    var hasAnchor = (node2) => (isScalar(node2) || isCollection(node2)) && !!node2.anchor;
+    var hasAnchor = (node2) => (isScalar2(node2) || isCollection(node2)) && !!node2.anchor;
     exports.ALIAS = ALIAS;
     exports.DOC = DOC;
     exports.MAP = MAP;
@@ -136779,11 +136779,11 @@ var require_identity = __commonJS({
     exports.isAlias = isAlias;
     exports.isCollection = isCollection;
     exports.isDocument = isDocument;
-    exports.isMap = isMap4;
+    exports.isMap = isMap5;
     exports.isNode = isNode;
     exports.isPair = isPair;
-    exports.isScalar = isScalar;
-    exports.isSeq = isSeq4;
+    exports.isScalar = isScalar2;
+    exports.isSeq = isSeq5;
   }
 });
 
@@ -137408,8 +137408,8 @@ var require_Alias = __commonJS({
         return anchor2 ? anchor2.count * anchor2.aliasCount : 0;
       } else if (identity.isCollection(node2)) {
         let count = 0;
-        for (const item of node2.items) {
-          const c = getAliasCount(doc, item, anchors2);
+        for (const item2 of node2.items) {
+          const c = getAliasCount(doc, item2, anchors2);
           if (c > count)
             count = c;
         }
@@ -138042,22 +138042,22 @@ ${indent}${body}`;
       return `|${header}
 ${indent}${start}${value}${end}`;
     }
-    function plainString(item, ctx, onComment, onChompKeep) {
-      const { type, value } = item;
+    function plainString(item2, ctx, onComment, onChompKeep) {
+      const { type, value } = item2;
       const { actualString, implicitKey, indent, indentStep, inFlow } = ctx;
       if (implicitKey && value.includes("\n") || inFlow && /[[\]{},]/.test(value)) {
         return quotedString(value, ctx);
       }
       if (/^[\n\t ,[\]{}#&*!|>'"%@`]|^[?-]$|^[?-][ \t]|[\n:][ \t]|[ \t]\n|[\n\t ]#|[\n\t :]$/.test(value)) {
-        return implicitKey || inFlow || !value.includes("\n") ? quotedString(value, ctx) : blockString(item, ctx, onComment, onChompKeep);
+        return implicitKey || inFlow || !value.includes("\n") ? quotedString(value, ctx) : blockString(item2, ctx, onComment, onChompKeep);
       }
       if (!implicitKey && !inFlow && type !== Scalar.Scalar.PLAIN && value.includes("\n")) {
-        return blockString(item, ctx, onComment, onChompKeep);
+        return blockString(item2, ctx, onComment, onChompKeep);
       }
       if (containsDocumentMarker(value)) {
         if (indent === "") {
           ctx.forceBlockIndent = true;
-          return blockString(item, ctx, onComment, onChompKeep);
+          return blockString(item2, ctx, onComment, onChompKeep);
         } else if (implicitKey && indent === indentStep) {
           return quotedString(value, ctx);
         }
@@ -138072,10 +138072,10 @@ ${indent}`);
       }
       return implicitKey ? str : foldFlowLines.foldFlowLines(str, indent, foldFlowLines.FOLD_FLOW, getFoldOptions(ctx, false));
     }
-    function stringifyString(item, ctx, onComment, onChompKeep) {
+    function stringifyString(item2, ctx, onComment, onChompKeep) {
       const { implicitKey, inFlow } = ctx;
-      const ss = typeof item.value === "string" ? item : Object.assign({}, item, { value: String(item.value) });
-      let { type } = item;
+      const ss = typeof item2.value === "string" ? item2 : Object.assign({}, item2, { value: String(item2.value) });
+      let { type } = item2;
       if (type !== Scalar.Scalar.QUOTE_DOUBLE) {
         if (/[\x00-\x08\x0b-\x1f\x7f-\x9f\u{D800}-\u{DFFF}]/u.test(ss.value))
           type = Scalar.Scalar.QUOTE_DOUBLE;
@@ -138159,25 +138159,25 @@ var require_stringify = __commonJS({
         options: opt
       };
     }
-    function getTagObject(tags, item) {
-      if (item.tag) {
-        const match = tags.filter((t) => t.tag === item.tag);
+    function getTagObject(tags, item2) {
+      if (item2.tag) {
+        const match = tags.filter((t) => t.tag === item2.tag);
         if (match.length > 0)
-          return match.find((t) => t.format === item.format) ?? match[0];
+          return match.find((t) => t.format === item2.format) ?? match[0];
       }
       let tagObj = void 0;
       let obj2;
-      if (identity.isScalar(item)) {
-        obj2 = item.value;
+      if (identity.isScalar(item2)) {
+        obj2 = item2.value;
         let match = tags.filter((t) => t.identify?.(obj2));
         if (match.length > 1) {
           const testMatch = match.filter((t) => t.test);
           if (testMatch.length > 0)
             match = testMatch;
         }
-        tagObj = match.find((t) => t.format === item.format) ?? match.find((t) => !t.format);
+        tagObj = match.find((t) => t.format === item2.format) ?? match.find((t) => !t.format);
       } else {
-        obj2 = item;
+        obj2 = item2;
         tagObj = tags.find((t) => t.nodeClass && obj2 instanceof t.nodeClass);
       }
       if (!tagObj) {
@@ -138200,24 +138200,24 @@ var require_stringify = __commonJS({
         props.push(doc.directives.tagString(tag));
       return props.join(" ");
     }
-    function stringify(item, ctx, onComment, onChompKeep) {
-      if (identity.isPair(item))
-        return item.toString(ctx, onComment, onChompKeep);
-      if (identity.isAlias(item)) {
+    function stringify(item2, ctx, onComment, onChompKeep) {
+      if (identity.isPair(item2))
+        return item2.toString(ctx, onComment, onChompKeep);
+      if (identity.isAlias(item2)) {
         if (ctx.doc.directives)
-          return item.toString(ctx);
-        if (ctx.resolvedAliases?.has(item)) {
+          return item2.toString(ctx);
+        if (ctx.resolvedAliases?.has(item2)) {
           throw new TypeError(`Cannot stringify circular structure without alias nodes`);
         } else {
           if (ctx.resolvedAliases)
-            ctx.resolvedAliases.add(item);
+            ctx.resolvedAliases.add(item2);
           else
-            ctx.resolvedAliases = /* @__PURE__ */ new Set([item]);
-          item = item.resolve(ctx.doc);
+            ctx.resolvedAliases = /* @__PURE__ */ new Set([item2]);
+          item2 = item2.resolve(ctx.doc);
         }
       }
       let tagObj = void 0;
-      const node2 = identity.isNode(item) ? item : ctx.doc.createNode(item, { onTagObj: (o) => tagObj = o });
+      const node2 = identity.isNode(item2) ? item2 : ctx.doc.createNode(item2, { onTagObj: (o) => tagObj = o });
       tagObj ?? (tagObj = getTagObject(ctx.doc.schema.tags, node2));
       const props = stringifyProps(node2, tagObj, ctx);
       if (props.length > 0)
@@ -138570,16 +138570,16 @@ var require_stringifyCollection = __commonJS({
       let chompKeep = false;
       const lines = [];
       for (let i = 0; i < items.length; ++i) {
-        const item = items[i];
+        const item2 = items[i];
         let comment2 = null;
-        if (identity.isNode(item)) {
-          if (!chompKeep && item.spaceBefore)
+        if (identity.isNode(item2)) {
+          if (!chompKeep && item2.spaceBefore)
             lines.push("");
-          addCommentBefore(ctx, lines, item.commentBefore, chompKeep);
-          if (item.comment)
-            comment2 = item.comment;
-        } else if (identity.isPair(item)) {
-          const ik = identity.isNode(item.key) ? item.key : null;
+          addCommentBefore(ctx, lines, item2.commentBefore, chompKeep);
+          if (item2.comment)
+            comment2 = item2.comment;
+        } else if (identity.isPair(item2)) {
+          const ik = identity.isNode(item2.key) ? item2.key : null;
           if (ik) {
             if (!chompKeep && ik.spaceBefore)
               lines.push("");
@@ -138587,7 +138587,7 @@ var require_stringifyCollection = __commonJS({
           }
         }
         chompKeep = false;
-        let str2 = stringify.stringify(item, itemCtx, () => comment2 = null, () => chompKeep = true);
+        let str2 = stringify.stringify(item2, itemCtx, () => comment2 = null, () => chompKeep = true);
         if (comment2)
           str2 += stringifyComment.lineComment(str2, itemIndent, commentString(comment2));
         if (chompKeep && comment2)
@@ -138625,16 +138625,16 @@ ${indent}${line2}` : "\n";
       let linesAtValue = 0;
       const lines = [];
       for (let i = 0; i < items.length; ++i) {
-        const item = items[i];
+        const item2 = items[i];
         let comment = null;
-        if (identity.isNode(item)) {
-          if (item.spaceBefore)
+        if (identity.isNode(item2)) {
+          if (item2.spaceBefore)
             lines.push("");
-          addCommentBefore(ctx, lines, item.commentBefore, false);
-          if (item.comment)
-            comment = item.comment;
-        } else if (identity.isPair(item)) {
-          const ik = identity.isNode(item.key) ? item.key : null;
+          addCommentBefore(ctx, lines, item2.commentBefore, false);
+          if (item2.comment)
+            comment = item2.comment;
+        } else if (identity.isPair(item2)) {
+          const ik = identity.isNode(item2.key) ? item2.key : null;
           if (ik) {
             if (ik.spaceBefore)
               lines.push("");
@@ -138642,19 +138642,19 @@ ${indent}${line2}` : "\n";
             if (ik.comment)
               reqNewline = true;
           }
-          const iv = identity.isNode(item.value) ? item.value : null;
+          const iv = identity.isNode(item2.value) ? item2.value : null;
           if (iv) {
             if (iv.comment)
               comment = iv.comment;
             if (iv.commentBefore)
               reqNewline = true;
-          } else if (item.value == null && ik?.comment) {
+          } else if (item2.value == null && ik?.comment) {
             comment = ik.comment;
           }
         }
         if (comment)
           reqNewline = true;
-        let str = stringify.stringify(item, itemCtx, () => comment = null);
+        let str = stringify.stringify(item2, itemCtx, () => comment = null);
         reqNewline || (reqNewline = lines.length > linesAtValue || str.includes("\n"));
         if (i < items.length - 1) {
           str += ",";
@@ -138784,7 +138784,7 @@ var require_YAMLMap = __commonJS({
           else
             prev.value = _pair.value;
         } else if (sortEntries) {
-          const i = this.items.findIndex((item) => sortEntries(_pair, item) < 0);
+          const i = this.items.findIndex((item2) => sortEntries(_pair, item2) < 0);
           if (i === -1)
             this.items.push(_pair);
           else
@@ -138820,16 +138820,16 @@ var require_YAMLMap = __commonJS({
         const map2 = Type ? new Type() : ctx?.mapAsMap ? /* @__PURE__ */ new Map() : {};
         if (ctx?.onCreate)
           ctx.onCreate(map2);
-        for (const item of this.items)
-          addPairToJSMap.addPairToJSMap(ctx, map2, item);
+        for (const item2 of this.items)
+          addPairToJSMap.addPairToJSMap(ctx, map2, item2);
         return map2;
       }
       toString(ctx, onComment, onChompKeep) {
         if (!ctx)
           return JSON.stringify(this);
-        for (const item of this.items) {
-          if (!identity.isPair(item))
-            throw new Error(`Map items must all be pairs; found ${JSON.stringify(item)} instead`);
+        for (const item2 of this.items) {
+          if (!identity.isPair(item2))
+            throw new Error(`Map items must all be pairs; found ${JSON.stringify(item2)} instead`);
         }
         if (!ctx.allNullValues && this.hasAllNullValues(false))
           ctx = Object.assign({}, ctx, { allNullValues: true });
@@ -138944,8 +138944,8 @@ var require_YAMLSeq = __commonJS({
         if (ctx?.onCreate)
           ctx.onCreate(seq);
         let i = 0;
-        for (const item of this.items)
-          seq.push(toJS.toJS(item, String(i++), ctx));
+        for (const item2 of this.items)
+          seq.push(toJS.toJS(item2, String(i++), ctx));
         return seq;
       }
       toString(ctx, onComment, onChompKeep) {
@@ -139017,9 +139017,9 @@ var require_string = __commonJS({
       default: true,
       tag: "tag:yaml.org,2002:str",
       resolve: (str) => str,
-      stringify(item, ctx, onComment, onChompKeep) {
+      stringify(item2, ctx, onComment, onChompKeep) {
         ctx = Object.assign({ actualString: true }, ctx);
-        return stringifyString.stringifyString(item, ctx, onComment, onChompKeep);
+        return stringifyString.stringifyString(item2, ctx, onComment, onChompKeep);
       }
     };
     exports.string = string4;
@@ -139358,24 +139358,24 @@ var require_pairs = __commonJS({
     function resolvePairs(seq, onError) {
       if (identity.isSeq(seq)) {
         for (let i = 0; i < seq.items.length; ++i) {
-          let item = seq.items[i];
-          if (identity.isPair(item))
+          let item2 = seq.items[i];
+          if (identity.isPair(item2))
             continue;
-          else if (identity.isMap(item)) {
-            if (item.items.length > 1)
+          else if (identity.isMap(item2)) {
+            if (item2.items.length > 1)
               onError("Each pair must have its own sequence indicator");
-            const pair = item.items[0] || new Pair.Pair(new Scalar.Scalar(null));
-            if (item.commentBefore)
-              pair.key.commentBefore = pair.key.commentBefore ? `${item.commentBefore}
-${pair.key.commentBefore}` : item.commentBefore;
-            if (item.comment) {
+            const pair = item2.items[0] || new Pair.Pair(new Scalar.Scalar(null));
+            if (item2.commentBefore)
+              pair.key.commentBefore = pair.key.commentBefore ? `${item2.commentBefore}
+${pair.key.commentBefore}` : item2.commentBefore;
+            if (item2.comment) {
               const cn = pair.value ?? pair.key;
-              cn.comment = cn.comment ? `${item.comment}
-${cn.comment}` : item.comment;
+              cn.comment = cn.comment ? `${item2.comment}
+${cn.comment}` : item2.comment;
             }
-            item = pair;
+            item2 = pair;
           }
-          seq.items[i] = identity.isPair(item) ? item : new Pair.Pair(item);
+          seq.items[i] = identity.isPair(item2) ? item2 : new Pair.Pair(item2);
         }
       } else
         onError("Expected a sequence for this tag");
@@ -140426,9 +140426,9 @@ var require_errors = __commonJS({
       if (error62.pos[0] === -1)
         return;
       error62.linePos = error62.pos.map((pos) => lc.linePos(pos));
-      const { line: line2, col } = error62.linePos[0];
-      error62.message += ` at line ${line2}, column ${col}`;
-      let ci = col - 1;
+      const { line: line2, col: col2 } = error62.linePos[0];
+      error62.message += ` at line ${line2}, column ${col2}`;
+      let ci = col2 - 1;
       let lineStr = src.substring(lc.lineStarts[line2 - 1], lc.lineStarts[line2]).replace(/[\n\r]+$/, "");
       if (ci >= 60 && lineStr.length > 80) {
         const trimStart = Math.min(ci - 39, lineStr.length - 79);
@@ -140446,8 +140446,8 @@ var require_errors = __commonJS({
       if (/[^ ]/.test(lineStr)) {
         let count = 1;
         const end = error62.linePos[1];
-        if (end?.line === line2 && end.col > col) {
-          count = Math.max(1, Math.min(end.col - col, 80 - ci));
+        if (end?.line === line2 && end.col > col2) {
+          count = Math.max(1, Math.min(end.col - col2, 80 - ci));
         }
         const pointer = " ".repeat(ci) + "^".repeat(count);
         error62.message += `:
@@ -140891,9 +140891,9 @@ var require_resolve_flow_collection = __commonJS({
     var blockMsg = "Block collections are not allowed within flow collections";
     var isBlock = (token) => token && (token.type === "block-map" || token.type === "block-seq");
     function resolveFlowCollection({ composeNode, composeEmptyNode }, ctx, fc, onError, tag) {
-      const isMap4 = fc.start.source === "{";
-      const fcName = isMap4 ? "flow map" : "flow sequence";
-      const NodeClass = tag?.nodeClass ?? (isMap4 ? YAMLMap.YAMLMap : YAMLSeq.YAMLSeq);
+      const isMap5 = fc.start.source === "{";
+      const fcName = isMap5 ? "flow map" : "flow sequence";
+      const NodeClass = tag?.nodeClass ?? (isMap5 ? YAMLMap.YAMLMap : YAMLSeq.YAMLSeq);
       const coll = new NodeClass(ctx.schema);
       coll.flow = true;
       const atRoot = ctx.atRoot;
@@ -140929,7 +140929,7 @@ var require_resolve_flow_collection = __commonJS({
             offset = props.end;
             continue;
           }
-          if (!isMap4 && ctx.options.strict && utilContainsNewline.containsNewline(key))
+          if (!isMap5 && ctx.options.strict && utilContainsNewline.containsNewline(key))
             onError(
               key,
               // checked by containsNewline()
@@ -140969,7 +140969,7 @@ var require_resolve_flow_collection = __commonJS({
             }
           }
         }
-        if (!isMap4 && !sep && !props.found) {
+        if (!isMap5 && !sep && !props.found) {
           const valueNode = value ? composeNode(ctx, value, props, onError) : composeEmptyNode(ctx, props.end, sep, null, props, onError);
           coll.items.push(valueNode);
           offset = valueNode.range[2];
@@ -140992,7 +140992,7 @@ var require_resolve_flow_collection = __commonJS({
             startOnNewline: false
           });
           if (valueProps.found) {
-            if (!isMap4 && !props.found && ctx.options.strict) {
+            if (!isMap5 && !props.found && ctx.options.strict) {
               if (sep)
                 for (const st of sep) {
                   if (st === valueProps.found)
@@ -141024,7 +141024,7 @@ var require_resolve_flow_collection = __commonJS({
           const pair = new Pair.Pair(keyNode, valueNode);
           if (ctx.options.keepSourceTokens)
             pair.srcToken = collItem;
-          if (isMap4) {
+          if (isMap5) {
             const map2 = coll;
             if (utilMapIncludes.mapIncludes(ctx, map2.items, keyNode))
               onError(keyStart, "DUPLICATE_KEY", "Map keys must be unique");
@@ -141040,7 +141040,7 @@ var require_resolve_flow_collection = __commonJS({
           offset = valueNode ? valueNode.range[2] : valueProps.end;
         }
       }
-      const expectedEnd = isMap4 ? "}" : "]";
+      const expectedEnd = isMap5 ? "}" : "]";
       const [ce, ...ee] = fc.end;
       let cePos = offset;
       if (ce?.source === expectedEnd)
@@ -141140,13 +141140,13 @@ var require_resolve_block_scalar = __commonJS({
   "node_modules/yaml/dist/compose/resolve-block-scalar.js"(exports) {
     "use strict";
     var Scalar = require_Scalar();
-    function resolveBlockScalar(ctx, scalar, onError) {
-      const start = scalar.offset;
-      const header = parseBlockScalarHeader(scalar, ctx.options.strict, onError);
+    function resolveBlockScalar(ctx, scalar2, onError) {
+      const start = scalar2.offset;
+      const header = parseBlockScalarHeader(scalar2, ctx.options.strict, onError);
       if (!header)
         return { value: "", type: null, comment: "", range: [start, start, start] };
       const type = header.mode === ">" ? Scalar.Scalar.BLOCK_FOLDED : Scalar.Scalar.BLOCK_LITERAL;
-      const lines = scalar.source ? splitLines(scalar.source) : [];
+      const lines = scalar2.source ? splitLines(scalar2.source) : [];
       let chompStart = lines.length;
       for (let i = lines.length - 1; i >= 0; --i) {
         const content = lines[i][1];
@@ -141158,12 +141158,12 @@ var require_resolve_block_scalar = __commonJS({
       if (chompStart === 0) {
         const value2 = header.chomp === "+" && lines.length > 0 ? "\n".repeat(Math.max(1, lines.length - 1)) : "";
         let end2 = start + header.length;
-        if (scalar.source)
-          end2 += scalar.source.length;
+        if (scalar2.source)
+          end2 += scalar2.source.length;
         return { value: value2, type, comment: header.comment, range: [start, end2, end2] };
       }
-      let trimIndent = scalar.indent + header.indent;
-      let offset = scalar.offset + header.length;
+      let trimIndent = scalar2.indent + header.indent;
+      let offset = scalar2.offset + header.length;
       let contentStart = 0;
       for (let i = 0; i < chompStart; ++i) {
         const [indent, content] = lines[i];
@@ -141241,7 +141241,7 @@ var require_resolve_block_scalar = __commonJS({
         default:
           value += "\n";
       }
-      const end = start + header.length + scalar.source.length;
+      const end = start + header.length + scalar2.source.length;
       return { value, type, comment: header.comment, range: [start, end, end] };
     }
     function parseBlockScalarHeader({ offset, props }, strict, onError) {
@@ -141324,8 +141324,8 @@ var require_resolve_flow_scalar = __commonJS({
     "use strict";
     var Scalar = require_Scalar();
     var resolveEnd = require_resolve_end();
-    function resolveFlowScalar(scalar, strict, onError) {
-      const { offset, type, source, end } = scalar;
+    function resolveFlowScalar(scalar2, strict, onError) {
+      const { offset, type, source, end } = scalar2;
       let _type;
       let value;
       const _onError = (rel, code, msg) => onError(offset + rel, code, msg);
@@ -141344,7 +141344,7 @@ var require_resolve_flow_scalar = __commonJS({
           break;
         /* istanbul ignore next should not happen */
         default:
-          onError(scalar, "UNEXPECTED_TOKEN", `Expected a flow scalar value, but found: ${type}`);
+          onError(scalar2, "UNEXPECTED_TOKEN", `Expected a flow scalar value, but found: ${type}`);
           return {
             value: "",
             type: null,
@@ -141559,26 +141559,26 @@ var require_compose_scalar = __commonJS({
         tag = findScalarTagByTest(ctx, value, token, onError);
       else
         tag = ctx.schema[identity.SCALAR];
-      let scalar;
+      let scalar2;
       try {
         const res = tag.resolve(value, (msg) => onError(tagToken ?? token, "TAG_RESOLVE_FAILED", msg), ctx.options);
-        scalar = identity.isScalar(res) ? res : new Scalar.Scalar(res);
+        scalar2 = identity.isScalar(res) ? res : new Scalar.Scalar(res);
       } catch (error62) {
         const msg = error62 instanceof Error ? error62.message : String(error62);
         onError(tagToken ?? token, "TAG_RESOLVE_FAILED", msg);
-        scalar = new Scalar.Scalar(value);
+        scalar2 = new Scalar.Scalar(value);
       }
-      scalar.range = range2;
-      scalar.source = value;
+      scalar2.range = range2;
+      scalar2.source = value;
       if (type)
-        scalar.type = type;
+        scalar2.type = type;
       if (tagName)
-        scalar.tag = tagName;
+        scalar2.tag = tagName;
       if (tag.format)
-        scalar.format = tag.format;
+        scalar2.format = tag.format;
       if (comment)
-        scalar.comment = comment;
-      return scalar;
+        scalar2.comment = comment;
+      return scalar2;
     }
     function findScalarTagByName(schema41, value, tagName, tagToken, onError) {
       if (tagName === "!")
@@ -141788,11 +141788,11 @@ var require_compose_doc = __commonJS({
           onError(props.end, "MISSING_CHAR", "Block collection cannot start on same line with directives-end marker");
       }
       doc.contents = value ? composeNode.composeNode(ctx, value, props, onError) : composeNode.composeEmptyNode(ctx, props.end, start, null, props, onError);
-      const contentEnd = doc.contents.range[2];
-      const re = resolveEnd.resolveEnd(end, contentEnd, false, onError);
+      const contentEnd2 = doc.contents.range[2];
+      const re = resolveEnd.resolveEnd(end, contentEnd2, false, onError);
       if (re.comment)
         doc.comment = re.comment;
-      doc.range = [offset, contentEnd, re.offset];
+      doc.range = [offset, contentEnd2, re.offset];
       return doc;
     }
     exports.composeDoc = composeDoc;
@@ -142208,14 +142208,14 @@ var require_cst_stringify = __commonJS({
         case "block-map":
         case "block-seq": {
           let res = "";
-          for (const item of token.items)
-            res += stringifyItem(item);
+          for (const item2 of token.items)
+            res += stringifyItem(item2);
           return res;
         }
         case "flow-collection": {
           let res = token.start.source;
-          for (const item of token.items)
-            res += stringifyItem(item);
+          for (const item2 of token.items)
+            res += stringifyItem(item2);
           for (const st of token.end)
             res += st.source;
           return res;
@@ -142269,15 +142269,15 @@ var require_cst_visit = __commonJS({
     visit2.SKIP = SKIP;
     visit2.REMOVE = REMOVE;
     visit2.itemAtPath = (cst, path2) => {
-      let item = cst;
+      let item2 = cst;
       for (const [field, index] of path2) {
-        const tok = item?.[field];
+        const tok = item2?.[field];
         if (tok && "items" in tok) {
-          item = tok.items[index];
+          item2 = tok.items[index];
         } else
           return void 0;
       }
-      return item;
+      return item2;
     };
     visit2.parentCollection = (cst, path2) => {
       const parent = visit2.itemAtPath(cst, path2.slice(0, -1));
@@ -142287,12 +142287,12 @@ var require_cst_visit = __commonJS({
         return coll;
       throw new Error("Parent collection not found");
     };
-    function _visit(path2, item, visitor) {
-      let ctrl = visitor(item, path2);
+    function _visit(path2, item2, visitor) {
+      let ctrl = visitor(item2, path2);
       if (typeof ctrl === "symbol")
         return ctrl;
       for (const field of ["key", "value"]) {
-        const token = item[field];
+        const token = item2[field];
         if (token && "items" in token) {
           for (let i = 0; i < token.items.length; ++i) {
             const ci = _visit(Object.freeze(path2.concat([[field, i]])), token.items[i], visitor);
@@ -142306,10 +142306,10 @@ var require_cst_visit = __commonJS({
             }
           }
           if (typeof ctrl === "function" && field === "key")
-            ctrl = ctrl(item, path2);
+            ctrl = ctrl(item2, path2);
         }
       }
-      return typeof ctrl === "function" ? ctrl(item, path2) : ctrl;
+      return typeof ctrl === "function" ? ctrl(item2, path2) : ctrl;
     }
     exports.visit = visit2;
   }
@@ -142327,7 +142327,7 @@ var require_cst = __commonJS({
     var FLOW_END = "";
     var SCALAR = "";
     var isCollection = (token) => !!token && "items" in token;
-    var isScalar = (token) => !!token && (token.type === "scalar" || token.type === "single-quoted-scalar" || token.type === "double-quoted-scalar" || token.type === "block-scalar");
+    var isScalar2 = (token) => !!token && (token.type === "scalar" || token.type === "single-quoted-scalar" || token.type === "double-quoted-scalar" || token.type === "block-scalar");
     function prettyToken(token) {
       switch (token) {
         case BOM:
@@ -142411,7 +142411,7 @@ var require_cst = __commonJS({
     exports.FLOW_END = FLOW_END;
     exports.SCALAR = SCALAR;
     exports.isCollection = isCollection;
-    exports.isScalar = isScalar;
+    exports.isScalar = isScalar2;
     exports.prettyToken = prettyToken;
     exports.tokenType = tokenType;
   }
@@ -143406,37 +143406,37 @@ var require_parser = __commonJS({
           };
         }
       }
-      *scalar(scalar) {
+      *scalar(scalar2) {
         if (this.type === "map-value-ind") {
           const prev = getPrevProps(this.peek(2));
           const start = getFirstKeyStartProps(prev);
           let sep;
-          if (scalar.end) {
-            sep = scalar.end;
+          if (scalar2.end) {
+            sep = scalar2.end;
             sep.push(this.sourceToken);
-            delete scalar.end;
+            delete scalar2.end;
           } else
             sep = [this.sourceToken];
           const map2 = {
             type: "block-map",
-            offset: scalar.offset,
-            indent: scalar.indent,
-            items: [{ start, key: scalar, sep }]
+            offset: scalar2.offset,
+            indent: scalar2.indent,
+            items: [{ start, key: scalar2, sep }]
           };
           this.onKeyLine = true;
           this.stack[this.stack.length - 1] = map2;
         } else
-          yield* this.lineEnd(scalar);
+          yield* this.lineEnd(scalar2);
       }
-      *blockScalar(scalar) {
+      *blockScalar(scalar2) {
         switch (this.type) {
           case "space":
           case "comment":
           case "newline":
-            scalar.props.push(this.sourceToken);
+            scalar2.props.push(this.sourceToken);
             return;
           case "scalar":
-            scalar.source = this.source;
+            scalar2.source = this.source;
             this.atNewLine = true;
             this.indent = 0;
             if (this.onNewLine) {
@@ -144553,16 +144553,16 @@ var Help = class {
    */
   groupItems(unsortedItems, visibleItems, getGroup) {
     const result = /* @__PURE__ */ new Map();
-    unsortedItems.forEach((item) => {
-      const group = getGroup(item);
+    unsortedItems.forEach((item2) => {
+      const group = getGroup(item2);
       if (!result.has(group)) result.set(group, []);
     });
-    visibleItems.forEach((item) => {
-      const group = getGroup(item);
+    visibleItems.forEach((item2) => {
+      const group = getGroup(item2);
       if (!result.has(group)) {
         result.set(group, []);
       }
-      result.get(group).push(item);
+      result.get(group).push(item2);
     });
     return result;
   }
@@ -148795,10 +148795,10 @@ function addChartDefinition(target, type, data, opt) {
     tmpData = data;
     tmpOpt = opt;
   }
-  tmpData.forEach((item, i) => {
-    item._dataIndex = i;
-    if (item.labels !== void 0 && !Array.isArray(item.labels[0])) {
-      item.labels = [item.labels];
+  tmpData.forEach((item2, i) => {
+    item2._dataIndex = i;
+    if (item2.labels !== void 0 && !Array.isArray(item2.labels[0])) {
+      item2.labels = [item2.labels];
     }
   });
   const options = tmpOpt && typeof tmpOpt === "object" ? tmpOpt : {};
@@ -149044,7 +149044,7 @@ function addImageDefinition(target, opt) {
     });
     newObject.imageRid = imageRelId + 1;
   } else {
-    const dupeItem = target._relsMedia.filter((item) => item.path && item.path === strImagePath && item.type === "image/" + strImgExtn && !item.isDuplicate)[0];
+    const dupeItem = target._relsMedia.filter((item2) => item2.path && item2.path === strImagePath && item2.type === "image/" + strImgExtn && !item2.isDuplicate)[0];
     target._relsMedia.push({
       path: strImagePath || "preencoded." + strImgExtn,
       type: "image/" + strImgExtn,
@@ -149125,7 +149125,7 @@ function addMediaDefinition(target, opt) {
       Target: `../media/image-${target._slideNum}-${target._relsMedia.length + 1}.png`
     });
   } else {
-    const dupeItem = target._relsMedia.filter((item) => item.path && item.path === strPath && item.type === strType + "/" + strExtn && !item.isDuplicate)[0];
+    const dupeItem = target._relsMedia.filter((item2) => item2.path && item2.path === strPath && item2.type === strType + "/" + strExtn && !item2.isDuplicate)[0];
     const relId1 = getNewRelId(target);
     target._relsMedia.push({
       path: strPath || "preencoded" + strExtn,
@@ -149395,7 +149395,7 @@ function addTextDefinition(target, text3, opts, isPlaceholder) {
         itemOpts.bullet = itemOpts.bullet || false;
       }
       if (itemOpts.placeholder && target._slideLayout && target._slideLayout._slideObjects) {
-        const placeHold = target._slideLayout._slideObjects.filter((item) => item._type === "placeholder" && item.options && item.options.placeholder && item.options.placeholder === itemOpts.placeholder)[0];
+        const placeHold = target._slideLayout._slideObjects.filter((item2) => item2._type === "placeholder" && item2.options && item2.options.placeholder && item2.options.placeholder === itemOpts.placeholder)[0];
         if (placeHold === null || placeHold === void 0 ? void 0 : placeHold.options)
           itemOpts = Object.assign(Object.assign({}, itemOpts), placeHold.options);
       }
@@ -149464,7 +149464,7 @@ function addTextDefinition(target, text3, opts, isPlaceholder) {
     return itemOpts;
   }
   newObject.options = cleanOpts(newObject.options);
-  newObject.text.forEach((item) => item.options = cleanOpts(item.options || {}));
+  newObject.text.forEach((item2) => item2.options = cleanOpts(item2.options || {}));
   createHyperlinkRels(target, newObject.text || "");
   target._slideObjects.push(newObject);
 }
@@ -151312,8 +151312,8 @@ function slideObjectToXml(slide) {
         strXml += '<a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/table"><a:tbl><a:tblPr/>';
         if (Array.isArray(objTabOpts.colW)) {
           strXml += "<a:tblGrid>";
-          for (let col = 0; col < intColCnt; col++) {
-            let w = inch2Emu(objTabOpts.colW[col]);
+          for (let col2 = 0; col2 < intColCnt; col2++) {
+            let w = inch2Emu(objTabOpts.colW[col2]);
             if (w == null || isNaN(w)) {
               w = (typeof slideItemObj.options.w === "number" ? slideItemObj.options.w : 1) / intColCnt;
             }
@@ -151997,7 +151997,7 @@ function genXmlTextBody(slideObj) {
   } else if (slideObj.text && !Array.isArray(slideObj.text) && typeof slideObj.text === "object" && Object.keys(slideObj.text).includes("text")) {
     tmpTextObjects.push({ text: slideObj.text || "", options: slideObj.options || {} });
   } else if (Array.isArray(slideObj.text)) {
-    tmpTextObjects = slideObj.text.map((item) => ({ text: item.text, options: item.options }));
+    tmpTextObjects = slideObj.text.map((item2) => ({ text: item2.text, options: item2.options }));
   }
   tmpTextObjects.forEach((itext, idx) => {
     if (!itext.text)
@@ -154027,8 +154027,8 @@ var ArrayT = class extends Base {
       size += this.length.size();
       ctx = { parent: ctx, pointerSize: 0 };
     }
-    for (let item of array2) {
-      size += this.type.size(item, ctx);
+    for (let item2 of array2) {
+      size += this.type.size(item2, ctx);
     }
     if (ctx && includePointers && this.length instanceof NumberT) {
       size += ctx.pointerSize;
@@ -154046,8 +154046,8 @@ var ArrayT = class extends Base {
       ctx.pointerOffset = stream2.pos + this.size(array2, ctx, false);
       this.length.encode(stream2, array2.length);
     }
-    for (let item of array2) {
-      this.type.encode(stream2, item, ctx);
+    for (let item2 of array2) {
+      this.type.encode(stream2, item2, ctx);
     }
     if (this.length instanceof NumberT) {
       let i = 0;
@@ -155830,8 +155830,8 @@ var $43e9821ef3717eec$export$2e2bcd8739ae039 = class {
     let type = this.type || new BufferT();
     let offset = 1;
     for (let i = 0; i < arr.length; i++) {
-      let item = arr[i];
-      offset += type.size(item, parent);
+      let item2 = arr[i];
+      offset += type.size(item2, parent);
     }
     let offsetType;
     if (offset <= 255) offsetType = uint8;
@@ -155849,8 +155849,8 @@ var $43e9821ef3717eec$export$2e2bcd8739ae039 = class {
     let type = this.type || new BufferT();
     let sizes = [];
     let offset = 1;
-    for (let item of arr) {
-      let s2 = type.size(item, parent);
+    for (let item2 of arr) {
+      let s2 = type.size(item2, parent);
       sizes.push(s2);
       offset += s2;
     }
@@ -155867,7 +155867,7 @@ var $43e9821ef3717eec$export$2e2bcd8739ae039 = class {
       offset += size;
       offsetType.encode(stream2, offset);
     }
-    for (let item of arr) type.encode(stream2, item, parent);
+    for (let item2 of arr) type.encode(stream2, item2, parent);
     return;
   }
   constructor(type) {
@@ -165844,7 +165844,7 @@ var $0bb840cac04e911b$export$2e2bcd8739ae039 = class {
     let normalizedCoords = this.normalizedCoords;
     let blendVector = [];
     for (let master = 0; master < varData.regionIndexCount; master++) {
-      let scalar = 1;
+      let scalar2 = 1;
       let regionIndex = varData.regionIndexes[master];
       let axes = itemStore.variationRegionList.variationRegions[regionIndex];
       for (let j = 0; j < axes.length; j++) {
@@ -165859,9 +165859,9 @@ var $0bb840cac04e911b$export$2e2bcd8739ae039 = class {
           else if (normalizedCoords[j] < axis.peakCoord) axisScalar = (normalizedCoords[j] - axis.startCoord + Number.EPSILON) / (axis.peakCoord - axis.startCoord + Number.EPSILON);
           else axisScalar = (axis.endCoord - normalizedCoords[j] + Number.EPSILON) / (axis.endCoord - axis.peakCoord + Number.EPSILON);
         }
-        scalar *= axisScalar;
+        scalar2 *= axisScalar;
       }
-      blendVector[master] = scalar;
+      blendVector[master] = scalar2;
     }
     this.blendVectors.set(varData, blendVector);
     return blendVector;
@@ -168289,7 +168289,7 @@ async function addNode2(slide, n, slideId) {
       } catch {
       }
       n.cells.forEach(
-        (row, r) => row.forEach((c, col) => {
+        (row, r) => row.forEach((c, col2) => {
           try {
             const cfg = {
               textStyle: {
@@ -168306,7 +168306,7 @@ async function addNode2(slide, n, slideId) {
             };
             if (c.fill) cfg.fill = c.fill;
             if (c.borderBottom) cfg.borders = { bottom: line(c.borderBottom) };
-            table.cells.block({ row: r, column: col, rowCount: 1, columnCount: 1 }).assign(cfg);
+            table.cells.block({ row: r, column: col2, rowCount: 1, columnCount: 1 }).assign(cfg);
           } catch {
           }
         })
@@ -171471,7 +171471,7 @@ var PNG = class _PNG {
         let row = 0;
         let c = 0;
         while (row < h && pos < length) {
-          var byte, col, i, left, upper;
+          var byte, col2, i, left, upper;
           switch (data[pos++]) {
             case 0:
               for (i = 0; i < scanlineLength; i++) {
@@ -171488,17 +171488,17 @@ var PNG = class _PNG {
             case 2:
               for (i = 0; i < scanlineLength; i++) {
                 byte = data[pos++];
-                col = (i - i % pixelBytes) / pixelBytes;
-                upper = row && buffer[(row - 1) * scanlineLength + col * pixelBytes + i % pixelBytes];
+                col2 = (i - i % pixelBytes) / pixelBytes;
+                upper = row && buffer[(row - 1) * scanlineLength + col2 * pixelBytes + i % pixelBytes];
                 buffer[c++] = (upper + byte) % 256;
               }
               break;
             case 3:
               for (i = 0; i < scanlineLength; i++) {
                 byte = data[pos++];
-                col = (i - i % pixelBytes) / pixelBytes;
+                col2 = (i - i % pixelBytes) / pixelBytes;
                 left = i < pixelBytes ? 0 : buffer[c - pixelBytes];
-                upper = row && buffer[(row - 1) * scanlineLength + col * pixelBytes + i % pixelBytes];
+                upper = row && buffer[(row - 1) * scanlineLength + col2 * pixelBytes + i % pixelBytes];
                 buffer[c++] = (byte + Math.floor((left + upper) / 2)) % 256;
               }
               break;
@@ -171506,13 +171506,13 @@ var PNG = class _PNG {
               for (i = 0; i < scanlineLength; i++) {
                 var paeth, upperLeft;
                 byte = data[pos++];
-                col = (i - i % pixelBytes) / pixelBytes;
+                col2 = (i - i % pixelBytes) / pixelBytes;
                 left = i < pixelBytes ? 0 : buffer[c - pixelBytes];
                 if (row === 0) {
                   upper = upperLeft = 0;
                 } else {
-                  upper = buffer[(row - 1) * scanlineLength + col * pixelBytes + i % pixelBytes];
-                  upperLeft = col && buffer[(row - 1) * scanlineLength + (col - 1) * pixelBytes + i % pixelBytes];
+                  upper = buffer[(row - 1) * scanlineLength + col2 * pixelBytes + i % pixelBytes];
+                  upperLeft = col2 && buffer[(row - 1) * scanlineLength + (col2 - 1) * pixelBytes + i % pixelBytes];
                 }
                 const p = left + upper - upperLeft;
                 const pa = Math.abs(p - left);
@@ -175865,13 +175865,13 @@ var TextMixin = {
     var flatten = function(list2) {
       let n = 1;
       for (let i = 0; i < list2.length; i++) {
-        const item = list2[i];
-        if (Array.isArray(item)) {
+        const item2 = list2[i];
+        if (Array.isArray(item2)) {
           level++;
-          flatten(item);
+          flatten(item2);
           level--;
         } else {
-          items.push(item);
+          items.push(item2);
           levels.push(level);
           if (listType !== "bullet") {
             numbers.push(n++);
@@ -175885,7 +175885,7 @@ var TextMixin = {
       wrapper.on("line", this._line);
       level = 1;
       wrapper.once("firstLine", () => {
-        let item, itemType, labelType, bodyType;
+        let item2, itemType, labelType, bodyType;
         if (options.structParent) {
           if (options.structTypes) {
             [itemType, labelType, bodyType] = options.structTypes;
@@ -175894,10 +175894,10 @@ var TextMixin = {
           }
         }
         if (itemType) {
-          item = this.struct(itemType);
-          options.structParent.add(item);
+          item2 = this.struct(itemType);
+          options.structParent.add(item2);
         } else if (options.structParent) {
-          item = options.structParent;
+          item2 = options.structParent;
         }
         let l;
         if ((l = levels[i++]) !== level) {
@@ -175906,8 +175906,8 @@ var TextMixin = {
           wrapper.lineWidth -= diff;
           level = l;
         }
-        if (item && (labelType || bodyType)) {
-          item.add(this.struct(labelType || bodyType, [this.markStructureContent(labelType || bodyType)]));
+        if (item2 && (labelType || bodyType)) {
+          item2.add(this.struct(labelType || bodyType, [this.markStructureContent(labelType || bodyType)]));
         }
         switch (listType) {
           case "bullet":
@@ -175920,11 +175920,11 @@ var TextMixin = {
             this._fragment(text3, this.x - indent, this.y, options);
             break;
         }
-        if (item && labelType && bodyType) {
-          item.add(this.struct(bodyType, [this.markStructureContent(bodyType)]));
+        if (item2 && labelType && bodyType) {
+          item2.add(this.struct(bodyType, [this.markStructureContent(bodyType)]));
         }
-        if (item && item !== options.structParent) {
-          item.end();
+        if (item2 && item2 !== options.structParent) {
+          item2.end();
         }
       });
       wrapper.on("sectionStart", () => {
@@ -177757,8 +177757,8 @@ function memoize(fn, maxSize) {
     return cache.get(key);
   };
 }
-function isObject(item) {
-  return item && typeof item === "object" && !Array.isArray(item);
+function isObject(item2) {
+  return item2 && typeof item2 === "object" && !Array.isArray(item2);
 }
 function deepMerge(target, ...sources) {
   if (!isObject(target)) return target;
@@ -177987,13 +177987,13 @@ function ensureColumnWidths(numCols) {
   let starMinAcc = 0;
   let unclaimedWidth = this._maxWidth;
   for (let i = 0; i < numCols; i++) {
-    let col = this._colStyle(i);
-    if (col.width === "*") {
-      starColumnIndexes[i] = col;
-      starMinAcc += col.minWidth;
+    let col2 = this._colStyle(i);
+    if (col2.width === "*") {
+      starColumnIndexes[i] = col2;
+      starMinAcc += col2.minWidth;
     } else {
-      unclaimedWidth -= col.width;
-      this._columnWidths[i] = col.width;
+      unclaimedWidth -= col2.width;
+      this._columnWidths[i] = col2.width;
     }
   }
   let starColCount = starColumnIndexes.reduce((x2) => x2 + 1, 0);
@@ -178002,11 +178002,11 @@ function ensureColumnWidths(numCols) {
       this._columnWidths[i] = cell.minWidth;
     });
   } else if (starColCount > 0) {
-    starColumnIndexes.forEach((col, i) => {
+    starColumnIndexes.forEach((col2, i) => {
       let starSize = unclaimedWidth / starColCount;
-      this._columnWidths[i] = Math.max(starSize, col.minWidth);
-      if (col.maxWidth > 0) {
-        this._columnWidths[i] = Math.min(this._columnWidths[i], col.maxWidth);
+      this._columnWidths[i] = Math.max(starSize, col2.minWidth);
+      if (col2.maxWidth > 0) {
+        this._columnWidths[i] = Math.min(this._columnWidths[i], col2.maxWidth);
       }
       unclaimedWidth -= this._columnWidths[i];
       starColCount--;
@@ -179212,10 +179212,10 @@ async function renderOnePager(scene, path2, epoch) {
   };
   newPage();
   for (const [i, s2] of slides.entries()) {
-    const col = i % COLS;
-    if (col === 0 && i > 0) y += rowH;
-    if (col === 0 && y + rowH > PAGE.h - M) newPage();
-    const x2 = M + col * (tw + GAP);
+    const col2 = i % COLS;
+    if (col2 === 0 && i > 0) y += rowH;
+    if (col2 === 0 && y + rowH > PAGE.h - M) newPage();
+    const x2 = M + col2 * (tw + GAP);
     doc.save();
     doc.translate(x2 * P2, y * P2);
     doc.scale(tw / scene.format.w);
@@ -182844,9 +182844,9 @@ var $ZodArray = /* @__PURE__ */ $constructor("$ZodArray", (inst, def) => {
     const proms = [];
     const abortEarly = ctx?.abortEarly;
     for (let i = 0; i < input2.length; i++) {
-      const item = input2[i];
+      const item2 = input2[i];
       const result = def.element._zod.run({
-        value: item,
+        value: item2,
         issues: []
       }, ctx);
       if (result instanceof Promise) {
@@ -183868,13 +183868,13 @@ var $ZodSet = /* @__PURE__ */ $constructor("$ZodSet", (inst, def) => {
     payload.value = memo2 ? memo2.alloc(inst, payload, /* @__PURE__ */ new Set(), ctx) : /* @__PURE__ */ new Set();
     const abortEarly = ctx?.abortEarly;
     let seen = payload.issues.length;
-    for (const item of input2) {
+    for (const item2 of input2) {
       if (abortEarly && payload.issues.length !== seen) {
         if (aborted(payload, seen))
           break;
         seen = payload.issues.length;
       }
-      const result = def.valueType._zod.run({ value: item, issues: [] }, ctx);
+      const result = def.valueType._zod.run({ value: item2, issues: [] }, ctx);
       if (result instanceof Promise) {
         proms.push(result.then((result2) => handleSetResult(result2, payload)));
       } else
@@ -195541,8 +195541,8 @@ function isTransforming(_schema, _ctx) {
     return false;
   }
   if (def.type === "tuple") {
-    for (const item of def.items) {
-      if (isTransforming(item, ctx))
+    for (const item2 of def.items) {
+      if (isTransforming(item2, ctx))
         return true;
     }
     if (def.rest && isTransforming(def.rest, ctx))
@@ -195985,8 +195985,8 @@ var tupleProcessor = (schema41, ctx, _json, params) => {
   }) : null;
   let minItems = def.items.length;
   while (minItems > 0) {
-    const item = def.items[minItems - 1];
-    const optional2 = ctx.io === "input" ? inputOptin(item) !== void 0 : item._zod.optout === "optional";
+    const item2 = def.items[minItems - 1];
+    const optional2 = ctx.io === "input" ? inputOptin(item2) !== void 0 : item2._zod.optout === "optional";
     if (!optional2)
       break;
     minItems--;
@@ -197625,7 +197625,7 @@ var ZodTuple = /* @__PURE__ */ $constructor("ZodTuple", (inst, def) => {
       throw new Error(".partial() cannot be used on tuple schemas containing refinements");
     return this.clone({
       ...def,
-      items: def.items.map((item) => new ZodOptional({ type: "optional", innerType: item }))
+      items: def.items.map((item2) => new ZodOptional({ type: "optional", innerType: item2 }))
     });
   }
 });
@@ -198277,7 +198277,7 @@ function detectVersion(schema41, defaultTarget) {
   return defaultTarget ?? "draft-2020-12";
 }
 function applyMinItems(items, minItems) {
-  return items.map((item, index) => index < minItems ? item : item.optional());
+  return items.map((item2, index) => index < minItems ? item2 : item2.optional());
 }
 function decodeJSONPointerSegment(segment) {
   return segment.replace(/~1/g, "/").replace(/~0/g, "~");
@@ -198364,8 +198364,8 @@ function canonicalKey(value, seen) {
   try {
     if (Array.isArray(value)) {
       const parts2 = [];
-      for (const item of value) {
-        const key = canonicalKey(item, seen);
+      for (const item2 of value) {
+        const key = canonicalKey(item2, seen);
         if (key === null)
           return null;
         parts2.push(key);
@@ -198458,8 +198458,8 @@ function checkArrayGuards(arraySchema, guards) {
       const minContains = guards.minContains ?? 1;
       const ceiling = guards.maxContains !== void 0 ? guards.maxContains + 1 : Number.POSITIVE_INFINITY;
       let matches = 0;
-      for (const item of items) {
-        if (guards.containsSchema.safeParse(item).success && ++matches >= ceiling)
+      for (const item2 of items) {
+        if (guards.containsSchema.safeParse(item2).success && ++matches >= ceiling)
           break;
       }
       if (matches < minContains) {
@@ -198763,7 +198763,7 @@ function convertBaseSchema(schema41, ctx) {
       const items = schema41.items;
       if (prefixItems && Array.isArray(prefixItems)) {
         const minItems = typeof schema41.minItems === "number" ? schema41.minItems : 0;
-        const tupleItems = prefixItems.map((item) => convertSchema(item, ctx));
+        const tupleItems = prefixItems.map((item2) => convertSchema(item2, ctx));
         const positionalItems = applyMinItems(tupleItems, minItems);
         const rest = !Array.isArray(items) ? getTupleRest(items, ctx) : void 0;
         const tupleSchema = z.tuple(positionalItems);
@@ -198776,7 +198776,7 @@ function convertBaseSchema(schema41, ctx) {
         }
       } else if (Array.isArray(items)) {
         const minItems = typeof schema41.minItems === "number" ? schema41.minItems : 0;
-        const tupleItems = items.map((item) => convertSchema(item, ctx));
+        const tupleItems = items.map((item2) => convertSchema(item2, ctx));
         const positionalItems = applyMinItems(tupleItems, minItems);
         const rest = getTupleRest(schema41.additionalItems, ctx);
         const tupleSchema = z.tuple(positionalItems);
@@ -198974,9 +198974,9 @@ function visit(schema41, fnOrHandlers) {
         const oldItems = def.items;
         let changed = false;
         const newItems = [];
-        for (const item of oldItems) {
-          const mapped = run(item);
-          if (mapped !== item)
+        for (const item2 of oldItems) {
+          const mapped = run(item2);
+          if (mapped !== item2)
             changed = true;
           newItems.push(mapped);
         }
@@ -201771,8 +201771,8 @@ var businessModelCanvas = {
     const topH = (b.h - gap) * 0.7;
     const botH = b.h - gap - topH;
     const halfH = (topH - gap) / 2;
-    const col = (i) => b.x + i * (cw + gap);
-    const at = (i, top, h) => ({ x: col(i), y: top, w: cw, h });
+    const col2 = (i) => b.x + i * (cw + gap);
+    const at = (i, top, h) => ({ x: col2(i), y: top, w: cw, h });
     const y = b.y;
     const blocks = [
       ["Key partners", c.partners, "partners", at(0, y, topH)],
@@ -203254,8 +203254,8 @@ var fiveForces = {
     const gy = 0.32;
     const cw = (a.w - 2 * gx) / 3;
     const ch = (a.h - 2 * gy) / 3;
-    const cell = (col, row) => ({
-      x: a.x + col * (cw + gx),
+    const cell = (col2, row) => ({
+      x: a.x + col2 * (cw + gx),
       y: a.y + row * (ch + gy),
       w: cw,
       h: ch
@@ -204650,18 +204650,18 @@ var kpiTiles = {
     const deltaY = labelY + labelH + 0.15;
     parts.forEach((p, i) => {
       const t = c.tiles[i];
-      const col = slots[i];
+      const col2 = slots[i];
       if (strip) {
         if (i > 0)
           ctx.line(p.x, top + 0.35, p.x, top + h - 0.35, { color: colors.rule, width: 0.75 });
       }
       ctx.text(
         t.value,
-        { x: col.x, y: valueY, w: col.w, h: 1.1 },
+        { x: col2.x, y: valueY, w: col2.w, h: 1.1 },
         {
           role: "kpi-value",
           font: "heading",
-          sizes: valueSizes(longest, col.w, strip ? 60 : 54),
+          sizes: valueSizes(longest, col2.w, strip ? 60 : 54),
           bold: true,
           color: i === hl ? colors.accent : colors.ink,
           valign: "bottom",
@@ -204669,15 +204669,15 @@ var kpiTiles = {
           field: `tiles/${i}/value`
         }
       );
-      delta(ctx, t, { x: col.x, y: deltaY, w: col.w }, `tiles/${i}/delta`);
+      delta(ctx, t, { x: col2.x, y: deltaY, w: col2.w }, `tiles/${i}/delta`);
       if (t.note) {
         const noteY = top + h - 0.9;
         if (!strip) {
-          ctx.line(col.x, noteY, col.x + col.w, noteY, { color: colors.rule, width: 0.75 });
+          ctx.line(col2.x, noteY, col2.x + col2.w, noteY, { color: colors.rule, width: 0.75 });
         }
         ctx.text(
           t.note,
-          { x: col.x, y: noteY + 0.1, w: col.w, h: 0.7 },
+          { x: col2.x, y: noteY + 0.1, w: col2.w, h: 0.7 },
           {
             role: "kpi-note",
             size: "small",
@@ -204747,12 +204747,12 @@ var marimekko = {
   ],
   compose(ctx, c) {
     const { colors, theme } = ctx;
-    c.columns.forEach((col, i) => {
-      if (col.shares.length !== c.series.length)
+    c.columns.forEach((col2, i) => {
+      if (col2.shares.length !== c.series.length)
         ctx.issue(
           diag(
             "SC-SPEC-001",
-            `column "${col.label}" has ${col.shares.length} shares for ${c.series.length} series`,
+            `column "${col2.label}" has ${col2.shares.length} shares for ${c.series.length} series`,
             {
               pointer: ctx.ptr(`columns/${i}/shares`)
             }
@@ -204767,7 +204767,7 @@ var marimekko = {
       Math.max(...c.series.map((s2, i) => labelWidth(ctx, s2, size, i === c.highlight))) + 0.2
     );
     const plot = { x: a.x, y: a.y + 0.34, w: a.w - legendW, h: a.h - 0.34 - 0.8 };
-    const sum = c.columns.reduce((t, col) => t + col.total, 0);
+    const sum = c.columns.reduce((t, col2) => t + col2.total, 0);
     const gap = 0.04;
     const usable = plot.w - gap * (c.columns.length - 1);
     const others = recedingFills(ctx, c.series.length - (c.highlight !== void 0 ? 1 : 0));
@@ -204775,11 +204775,11 @@ var marimekko = {
     const d = c.decimals ?? 0;
     let x2 = plot.x;
     const lastMid = [];
-    c.columns.forEach((col, ci) => {
-      const w = col.total / sum * usable;
-      const total = col.shares.reduce((t, v) => t + v, 0) || 1;
+    c.columns.forEach((col2, ci) => {
+      const w = col2.total / sum * usable;
+      const total = col2.shares.reduce((t, v) => t + v, 0) || 1;
       let y = plot.y;
-      col.shares.forEach((v, si) => {
+      col2.shares.forEach((v, si) => {
         const h = v / total * plot.h;
         const fill = colorOf2(si);
         ctx.rect(
@@ -204805,7 +204805,7 @@ var marimekko = {
         y += h;
       });
       ctx.text(
-        col.label,
+        col2.label,
         { x: x2 - gap / 2, y: plot.y + plot.h + 0.06, w: w + gap, h: 0.44 },
         {
           size: "small",
@@ -204818,7 +204818,7 @@ var marimekko = {
         }
       );
       ctx.text(
-        fmt2(col.total, d, c.unit),
+        fmt2(col2.total, d, c.unit),
         { x: x2, y: plot.y + plot.h + 0.5, w, h: 0.24 },
         { size: "source", color: colors.muted, align: "center", maxLines: 1, fixed: true }
       );
@@ -207351,15 +207351,15 @@ var text = {
         return;
       }
       const [l, r] = cols(body, [1, 1], 0.6);
-      for (const [col, box, field] of [
+      for (const [col2, box, field] of [
         [c.left, l, "left"],
         [c.right, r, "right"]
       ]) {
         let y = box.y;
-        if (col.heading) {
+        if (col2.heading) {
           ctx.rect({ x: box.x, y, w: 0.5, h: 0.05 }, { fill: colors.accent, role: "accent-rule" });
           ctx.text(
-            col.heading,
+            col2.heading,
             { x: box.x, y: y + 0.15, w: box.w, h: 0.4 },
             {
               font: "heading",
@@ -207372,7 +207372,7 @@ var text = {
           y += 0.7;
         }
         ctx.text(
-          ctx.paragraphs(col.items, { bullet: true, spaceBefore: 8 }),
+          ctx.paragraphs(col2.items, { bullet: true, spaceBefore: 8 }),
           { x: box.x, y, w: box.w, h: box.y + box.h - y },
           { size: "body", field: `${field}/items` }
         );
@@ -208440,7 +208440,7 @@ function parseXlsx(buf) {
     const xml = zip.file(part)?.text() ?? "";
     const rows2 = [];
     for (const c of xml.matchAll(/<c r="([A-Z]+\d+)"([^>]*?)(?:\/>|>([\s\S]*?)<\/c>)/g)) {
-      const { r, c: col } = cellRef(c[1]);
+      const { r, c: col2 } = cellRef(c[1]);
       const type = /t="(\w+)"/.exec(c[2])?.[1];
       const inner = c[3] ?? "";
       const v = /<v>([^<]*)<\/v>/.exec(inner)?.[1];
@@ -208452,7 +208452,7 @@ function parseXlsx(buf) {
       else if (type === "b") value = v === "1" ? "TRUE" : "FALSE";
       else if (v !== void 0) value = Number(v);
       if (!rows2[r]) rows2[r] = [];
-      rows2[r][col] = value;
+      rows2[r][col2] = value;
     }
     sheets.push({
       name: decode3(m[1]),
@@ -211203,7 +211203,7 @@ function registerInstallCommands(program3) {
 }
 
 // src/cli/workflow.ts
-var import_yaml8 = __toESM(require_dist(), 1);
+var import_yaml9 = __toESM(require_dist(), 1);
 import { spawn as spawn3 } from "node:child_process";
 import { existsSync as existsSync20, mkdirSync as mkdirSync22, readFileSync as readFileSync29, writeFileSync as writeFileSync21 } from "node:fs";
 import { dirname as dirname10, join as join25, relative as relative9, resolve as resolve19 } from "node:path";
@@ -211722,17 +211722,141 @@ async function generateDocs() {
 }
 
 // src/library/fix.ts
-var import_yaml4 = __toESM(require_dist(), 1);
+var import_yaml5 = __toESM(require_dist(), 1);
 import { readFileSync as readFileSync22, writeFileSync as writeFileSync14 } from "node:fs";
 import { dirname as dirname6, resolve as resolve13 } from "node:path";
+
+// src/library/yaml-edit.ts
+var import_yaml4 = __toESM(require_dist(), 1);
+var col = (text3, at) => at - text3.lastIndexOf("\n", at - 1) - 1;
+function scalar(v, flow) {
+  if (typeof v === "number" || typeof v === "boolean") return String(v);
+  const s2 = String(v);
+  if (s2 === "" || s2.includes("\n") || flow && /[,[\]{}]/.test(s2)) return JSON.stringify(s2);
+  const y = import_yaml4.default.stringify(s2, { lineWidth: 0 }).trimEnd();
+  return y.includes("\n") ? JSON.stringify(s2) : y;
+}
+function block(v, indent) {
+  const pad3 = " ".repeat(indent);
+  if (Array.isArray(v))
+    return v.length ? v.map((x2) => `
+${pad3}- ${item(x2, indent + 2)}`).join("") : " []";
+  if (v && typeof v === "object") {
+    const e = Object.entries(v);
+    return e.map(([k, x2]) => `
+${pad3}${k}:${blockOrInline(x2, indent + 2)}`).join("");
+  }
+  return ` ${scalar(v, false)}`;
+}
+var blockOrInline = (v, indent) => v !== null && typeof v === "object" ? block(v, indent) : ` ${scalar(v, false)}`;
+function item(v, indent) {
+  if (v && typeof v === "object" && !Array.isArray(v)) {
+    const e = Object.entries(v);
+    const pad3 = " ".repeat(indent);
+    return e.map(([k, x2], i) => `${i ? `
+${pad3}` : ""}${k}:${blockOrInline(x2, indent + 2)}`).join("");
+  }
+  return scalar(v, false);
+}
+function contentEnd(text3, node2) {
+  let end = node2.range[1];
+  while (end > node2.range[0] && /\s/.test(text3[end - 1])) end--;
+  return end;
+}
+function splice(text3, from, to, s2) {
+  return text3.slice(0, from) + s2 + text3.slice(to);
+}
+function inPlace(text3, e) {
+  const doc = import_yaml4.default.parseDocument(text3);
+  const node2 = doc.getIn(e.path, true);
+  const parent = e.path.length > 1 ? doc.getIn(e.path.slice(0, -1), true) : doc.contents;
+  const flowParent = !!(parent && ((0, import_yaml4.isMap)(parent) || (0, import_yaml4.isSeq)(parent)) && parent.flow);
+  if (node2?.range) {
+    const [from] = node2.range;
+    const to = contentEnd(text3, node2);
+    if ((0, import_yaml4.isScalar)(node2) && (e.value === null || typeof e.value !== "object"))
+      return splice(text3, from, to, scalar(e.value, flowParent));
+    if ((0, import_yaml4.isSeq)(node2) && Array.isArray(e.value) && e.value.every((x2) => typeof x2 !== "object")) {
+      if (node2.flow || flowParent) {
+        const padded = text3[from + 1] === " ";
+        const body = e.value.map((x2) => scalar(x2, true)).join(", ");
+        return splice(text3, from, to, padded && body ? `[ ${body} ]` : `[${body}]`);
+      }
+      if (!e.value.length) return void 0;
+      const dash = col(text3, from);
+      return splice(text3, from, to, block(e.value, dash).trimStart());
+    }
+    return void 0;
+  }
+  if ((0, import_yaml4.isMap)(parent) && !parent.flow && typeof e.path.at(-1) === "string" && parent.items.length) {
+    const first2 = parent.items[0];
+    const last2 = parent.items.at(-1);
+    const end = last2.value?.range ? contentEnd(text3, last2.value) : contentEnd(text3, last2.key);
+    const indent = col(text3, first2.key.range[0]);
+    return splice(
+      text3,
+      end,
+      end,
+      `
+${" ".repeat(indent)}${e.path.at(-1)}:${blockOrInline(e.value, indent + 2)}`
+    );
+  }
+  if ((0, import_yaml4.isSeq)(parent) && e.path.at(-1) === parent.items.length && parent.range) {
+    if (!parent.flow && parent.items.length) {
+      const lastItem = parent.items.at(-1);
+      const end = contentEnd(text3, lastItem);
+      const dash = text3.lastIndexOf("-", lastItem.range[0]);
+      const indent = col(text3, dash);
+      return splice(text3, end, end, `
+${" ".repeat(indent)}- ${item(e.value, indent + 2)}`);
+    }
+    if (parent.flow && !parent.items.length && text3.slice(parent.range[0], parent.range[0] + 2) === "[]") {
+      const lineStart = text3.lastIndexOf("\n", parent.range[0] - 1) + 1;
+      const keyIndent = /^ */.exec(text3.slice(lineStart))[0].length;
+      const at = parent.range[0];
+      const before = text3[at - 1] === " " ? at - 1 : at;
+      return splice(
+        text3,
+        before,
+        at + 2,
+        `
+${" ".repeat(keyIndent + 2)}- ${item(e.value, keyIndent + 4)}`
+      );
+    }
+  }
+  return void 0;
+}
+function editYaml(text3, edits) {
+  let out = text3;
+  for (const e of edits) {
+    const next = inPlace(out, e);
+    if (next !== void 0) {
+      const check2 = import_yaml4.default.parseDocument(next);
+      const got = check2.getIn(e.path);
+      const json2 = (v) => JSON.stringify(
+        v && typeof v === "object" && "toJSON" in v ? v.toJSON() : v
+      );
+      if (!check2.errors.length && json2(got) === JSON.stringify(e.value)) {
+        out = next;
+        continue;
+      }
+    }
+    const doc = import_yaml4.default.parseDocument(out);
+    doc.setIn(e.path, e.value);
+    out = doc.toString({ lineWidth: 0 });
+  }
+  return out;
+}
+
+// src/library/fix.ts
 function slideLocations(deckPath2) {
   const file2 = resolve13(deckPath2);
-  const doc = import_yaml4.default.parse(readFileSync22(file2, "utf8"));
+  const doc = import_yaml5.default.parse(readFileSync22(file2, "utf8"));
   const out = [];
   (doc.slides ?? []).forEach((s2, i) => {
     if (s2 && typeof s2 === "object" && "include" in s2) {
       const inc = resolve13(dirname6(file2), String(s2.include));
-      const list = import_yaml4.default.parse(readFileSync22(inc, "utf8"));
+      const list = import_yaml5.default.parse(readFileSync22(inc, "utf8"));
       if (Array.isArray(list)) list.forEach((_, k) => out.push({ file: inc, path: [k] }));
     } else out.push({ file: file2, path: ["slides", i] });
   });
@@ -211790,7 +211914,7 @@ function fitTasks(deckPath2) {
     const ptr = parsePointer(d.pointer);
     const loc = ptr ? locs[ptr.slide] : void 0;
     if (!ptr || !loc) continue;
-    const raw = getIn(loaded.slides[ptr.slide], ptr.rest) ?? getIn(getIn(import_yaml4.default.parse(readFileSync22(loc.file, "utf8")), loc.path), ptr.rest);
+    const raw = getIn(loaded.slides[ptr.slide], ptr.rest) ?? getIn(getIn(import_yaml5.default.parse(readFileSync22(loc.file, "utf8")), loc.path), ptr.rest);
     const text3 = Array.isArray(raw) ? raw.join("\n") : typeof raw === "string" ? raw : "";
     if (!text3) continue;
     const contract = /<=\s*(\d+)/.exec(d.message)?.[1];
@@ -211813,13 +211937,14 @@ function readField(deckPath2, pointer) {
   const ptr = parsePointer(pointer);
   const loc = ptr ? slideLocations(deckPath2)[ptr.slide] : void 0;
   if (!ptr || !loc) return void 0;
-  const doc = import_yaml4.default.parseDocument(readFileSync22(loc.file, "utf8"));
+  const doc = import_yaml5.default.parseDocument(readFileSync22(loc.file, "utf8"));
   const v = doc.getIn([...loc.path, ...ptr.rest]);
   return v && typeof v === "object" && "toJSON" in v ? v.toJSON() : v;
 }
 function applyFixes(deckPath2, fixes) {
   const locs = slideLocations(deckPath2);
   const docs = /* @__PURE__ */ new Map();
+  const edits = /* @__PURE__ */ new Map();
   const errors = [];
   let applied = 0;
   for (const f of fixes) {
@@ -211831,37 +211956,36 @@ function applyFixes(deckPath2, fixes) {
     }
     let doc = docs.get(loc.file);
     if (!doc) {
-      doc = import_yaml4.default.parseDocument(readFileSync22(loc.file, "utf8"));
+      doc = import_yaml5.default.parseDocument(readFileSync22(loc.file, "utf8"));
       docs.set(loc.file, doc);
     }
     const full = [...loc.path, ...ptr.rest];
     const parent = doc.getIn(full.slice(0, -1), true);
-    if (!(0, import_yaml4.isMap)(parent) && !(0, import_yaml4.isSeq)(parent)) {
+    if (!(0, import_yaml5.isMap)(parent) && !(0, import_yaml5.isSeq)(parent)) {
       errors.push(`${f.pointer}: field not found in ${loc.file}`);
       continue;
     }
-    doc.setIn(full, f.text);
+    edits.set(loc.file, [...edits.get(loc.file) ?? [], { path: full, value: f.text }]);
     applied++;
   }
-  for (const [file2, doc] of docs)
-    writeFileSync14(file2, doc.toString({ lineWidth: 0, flowCollectionPadding: false }));
+  for (const [file2, list] of edits) writeFileSync14(file2, editYaml(readFileSync22(file2, "utf8"), list));
   return { applied, errors, remaining: fitTasks(deckPath2) };
 }
 
 // src/library/images.ts
-var import_yaml5 = __toESM(require_dist(), 1);
+var import_yaml6 = __toESM(require_dist(), 1);
 import { existsSync as existsSync17, mkdirSync as mkdirSync16, readFileSync as readFileSync23, writeFileSync as writeFileSync15 } from "node:fs";
 import { dirname as dirname7, relative as relative5, resolve as resolve14 } from "node:path";
 var IMAGE_STYLE = "Photographic, natural light, calm and uncluttered, generous negative space so it can be cropped to a slide panel. No text, no captions, no logos, no watermarks.";
 function slideMaps(file2) {
-  const doc = import_yaml5.default.parseDocument(readFileSync23(file2, "utf8"));
+  const doc = import_yaml6.default.parseDocument(readFileSync23(file2, "utf8"));
   const root = doc.contents;
-  const seq = (0, import_yaml5.isMap)(root) ? root.get("slides", true) : (0, import_yaml5.isSeq)(root) ? root : void 0;
+  const seq = (0, import_yaml6.isMap)(root) ? root.get("slides", true) : (0, import_yaml6.isSeq)(root) ? root : void 0;
   const items = [];
   const includes = [];
-  if ((0, import_yaml5.isSeq)(seq))
+  if ((0, import_yaml6.isSeq)(seq))
     for (const it of seq.items) {
-      if (!(0, import_yaml5.isMap)(it)) continue;
+      if (!(0, import_yaml6.isMap)(it)) continue;
       const inc = it.get("include");
       if (typeof inc === "string") includes.push(resolve14(dirname7(file2), inc));
       else items.push(it);
@@ -211927,9 +212051,16 @@ ${IMAGE_STYLE}`);
   const byFile = /* @__PURE__ */ new Map();
   for (const j of out.generated) byFile.set(j.yamlFile, [...byFile.get(j.yamlFile) ?? [], j]);
   for (const [file2, js] of byFile) {
-    const { doc, items } = slideMaps(file2);
-    for (const j of js) items.find((m) => m.get("id") === j.slideId)?.set("image", j.image);
-    writeFileSync15(file2, doc.toString({ lineWidth: 0, flowCollectionPadding: false }));
+    const { doc } = slideMaps(file2);
+    const root = doc.contents;
+    const inDeck = (0, import_yaml6.isMap)(root) && (0, import_yaml6.isSeq)(root.get("slides", true));
+    const seq = inDeck ? root.get("slides", true) : root;
+    const edits = [];
+    for (const j of js) {
+      const k = seq.items.findIndex((m) => (0, import_yaml6.isMap)(m) && m.get("id") === j.slideId);
+      if (k >= 0) edits.push({ path: [...inDeck ? ["slides"] : [], k, "image"], value: j.image });
+    }
+    writeFileSync15(file2, editYaml(readFileSync23(file2, "utf8"), edits));
   }
   return out;
 }
@@ -211939,7 +212070,7 @@ function describeJob(j, cwd = process.cwd()) {
 }
 
 // src/library/ingest.ts
-var import_yaml6 = __toESM(require_dist(), 1);
+var import_yaml7 = __toESM(require_dist(), 1);
 import { createHash as createHash3 } from "node:crypto";
 import { existsSync as existsSync18, mkdirSync as mkdirSync17, readdirSync as readdirSync5, readFileSync as readFileSync24, writeFileSync as writeFileSync16 } from "node:fs";
 import { basename as basename2, dirname as dirname8, extname as extname4, join as join20, relative as relative6, resolve as resolve15 } from "node:path";
@@ -212021,14 +212152,11 @@ async function ingest(files, opts) {
   const deckDir = dirname8(deckPath2);
   const outDir = resolve15(opts.dir ?? join20(deckDir, "materials"));
   mkdirSync17(outDir, { recursive: true });
-  const doc = import_yaml6.default.parseDocument(readFileSync24(deckPath2, "utf8"));
-  let sources = doc.get("sources", true);
-  if (!(0, import_yaml6.isSeq)(sources)) {
-    doc.set("sources", doc.createNode([]));
-    sources = doc.get("sources", true);
-  }
-  const seq = sources;
-  const have = new Set(seq.items.filter(import_yaml6.isMap).map((m) => String(m.get("id"))));
+  const doc = import_yaml7.default.parseDocument(readFileSync24(deckPath2, "utf8"));
+  const sources = doc.get("sources", true);
+  const existing = (0, import_yaml7.isSeq)(sources) ? sources.items : [];
+  const have = new Set(existing.filter(import_yaml7.isMap).map((m) => String(m.get("id"))));
+  const fresh = [];
   const out = [];
   for (const f of files) {
     const path2 = resolve15(f);
@@ -212050,15 +212178,13 @@ async function ingest(files, opts) {
     writeFileSync16(mdPath, md);
     const added = !have.has(id);
     if (added) {
-      seq.add(
-        doc.createNode({
-          id,
-          title: title2,
-          ...r.date ? { date: r.date } : {},
-          file: relative6(deckDir, path2),
-          ...r.kind === "pdf" ? { pages: r.sections.length } : {}
-        })
-      );
+      fresh.push({
+        id,
+        title: title2,
+        ...r.date ? { date: r.date } : {},
+        file: relative6(deckDir, path2),
+        ...r.kind === "pdf" ? { pages: r.sections.length } : {}
+      });
       have.add(id);
     }
     out.push({
@@ -212071,7 +212197,8 @@ async function ingest(files, opts) {
       added
     });
   }
-  writeFileSync16(deckPath2, doc.toString({ lineWidth: 0, flowCollectionPadding: false }));
+  const edits = (0, import_yaml7.isSeq)(sources) ? fresh.map((value, k) => ({ path: ["sources", existing.length + k], value })) : fresh.length ? [{ path: ["sources"], value: fresh }] : [];
+  if (edits.length) writeFileSync16(deckPath2, editYaml(readFileSync24(deckPath2, "utf8"), edits));
   return out;
 }
 function findInMaterials(query, dir, limit = 20) {
@@ -212104,7 +212231,7 @@ function findInMaterials(query, dir, limit = 20) {
 
 // src/library/pptx-import.ts
 var import_jszip6 = __toESM(require_lib3(), 1);
-var import_yaml7 = __toESM(require_dist(), 1);
+var import_yaml8 = __toESM(require_dist(), 1);
 import { mkdirSync as mkdirSync18, readFileSync as readFileSync25, writeFileSync as writeFileSync17 } from "node:fs";
 import { basename as basename3, extname as extname5, join as join21, posix as posix2, resolve as resolve16 } from "node:path";
 var decode5 = (s2) => s2.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
@@ -212290,7 +212417,7 @@ ${notesExtra.join("\n")}` : "",
     deckPath2,
     `# SlideCraft deck imported from ${basename3(file2)} \u2014 a draft to restyle.
 # Next: pick a storyline/theme, rewrite titles as action titles, replace text slides with exhibits.
-${import_yaml7.default.stringify(deck, { lineWidth: 0 })}`
+${import_yaml8.default.stringify(deck, { lineWidth: 0 })}`
   );
   return { deckPath: deckPath2, slides: slides.length, layouts: counts, shortened };
 }
@@ -212480,10 +212607,12 @@ function readPptx(path2) {
       const name = decode3(/<p:cNvPr\b[^>]*\bname="([^"]*)"/.exec(m[1])?.[1] ?? "");
       const body = /<p:txBody>([\s\S]*?)<\/p:txBody>/.exec(m[1])?.[1];
       const off = /<a:off\b[^>]*\bx="(-?\d+)"[^>]*\by="(-?\d+)"/.exec(m[1]);
+      const ph = /<p:ph\b[^>]*\btype="([^"]+)"/.exec(m[1])?.[1];
       if (body !== void 0)
         shapes2.push({
           name,
           paragraphs: paragraphs3(body),
+          ...ph ? { ph } : {},
           ...off ? { x: Number(off[1]) / 914400, y: Number(off[2]) / 914400 } : {}
         });
     }
@@ -212503,7 +212632,11 @@ function readPptx(path2) {
       ...ids[0] ? { id: ids[0] } : {},
       shapes: shapes2,
       ...notes ? { notes } : {},
-      tables: (xml.match(/<a:tbl>/g) ?? []).length
+      tables: [...xml.matchAll(/<a:tbl>([\s\S]*?)<\/a:tbl>/g)].map(
+        (t) => [...t[1].matchAll(/<a:tc\b[^>]*>([\s\S]*?)<\/a:tc>/g)].map(
+          (c) => norm2(paragraphs3(c[1]).join(" "))
+        )
+      )
     };
   });
 }
@@ -212582,6 +212715,9 @@ function syncPptx(deckPath2, pptxPath, opts = {}) {
     seen.add(es.id);
     const ref = scene.slides[i];
     const named = /* @__PURE__ */ new Set();
+    const drawn = new Set(
+      ref.nodes.filter((n) => n.kind === "text").map((n) => norm2(n.paragraphs.map((p) => p.runs.map((r) => r.text).join("")).join(" ")))
+    );
     for (const sh of es.shapes) {
       let m = /(?:^|\s)sc:([^/\s]+)(\/\S+)$/.exec(sh.name);
       if (!m && byPosition && sh.x !== void 0 && sh.y !== void 0) {
@@ -212591,7 +212727,9 @@ function syncPptx(deckPath2, pptxPath, opts = {}) {
         if (node3) m = ["", es.id, node3.pointer.replace(/^\/slides\/\d+/, "")];
       }
       if (!m) {
-        if (clean3(sh.paragraphs).some(Boolean) && !sh.name.startsWith(TITLE))
+        const txt = clean3(sh.paragraphs).join(" ");
+        const chrome = sh.ph === "sldNum" || sh.ph === "ftr" || sh.ph === "dt";
+        if (txt && !chrome && !drawn.has(txt) && !/^[−+-]?[€$£¥]?\d[\d,.]*\s?[%xkKMB]*$/.test(txt) && !sh.name.startsWith(TITLE))
           report.notes.push(
             `Slide "${es.id}": a text box added in PowerPoint ("${clean3(sh.paragraphs).join(" ").slice(0, 50)}") is not synced.`
           );
@@ -212626,10 +212764,19 @@ function syncPptx(deckPath2, pptxPath, opts = {}) {
         fixes.push({ pointer, text: after });
       }
     }
-    if (es.tables)
-      report.notes.push(
-        `Slide "${es.id}": table edits are not synced \u2014 compare the table by hand.`
+    const refTables = ref.nodes.filter((n) => n.kind === "table");
+    es.tables.forEach((cells, t) => {
+      const node2 = refTables[t];
+      if (!node2) return;
+      const before = node2.cells.flat().map(
+        (c) => norm2(c.text.paragraphs.map((p) => p.runs.map((r) => r.text).join("")).join(" "))
       );
+      const diff = cells.map((after, k) => ({ k, after, was: before[k] ?? "" })).filter((d) => d.after !== d.was);
+      if (diff.length || cells.length !== before.length)
+        report.notes.push(
+          `Slide "${es.id}": table cells edited \u2014 copy into deck.yaml by hand: ${diff.slice(0, 6).map((d) => `"${d.was}" \u2192 "${d.after}"`).join("; ")}${diff.length > 6 ? " \u2026" : ""}`
+        );
+    });
   }
   const ids = edited.map((e) => e.id).filter((x2) => !!x2 && index.has(x2));
   for (const s2 of loaded.slides)
@@ -213117,8 +213264,8 @@ function buildCalibrationScene(fonts, strings = CALIBRATION_STRINGS) {
         const nodes = [];
         const yCol = [0.3, 0.3, 0.3];
         strings.slice(0, size === 11 ? 12 : 6).forEach((text3, ti) => {
-          const col = ti % 3;
-          const w = widths[col];
+          const col2 = ti % 3;
+          const w = widths[col2];
           const style = {
             family: f.family,
             measure: f.measure,
@@ -213132,10 +213279,10 @@ function buildCalibrationScene(fonts, strings = CALIBRATION_STRINGS) {
           const ps = [para(text3)];
           const laid = layoutText(ps, style, w);
           const h = laid.contentHeight + 0.05;
-          const x2 = [0.3, 3.3, 7.4][col];
-          const y = yCol[col];
+          const x2 = [0.3, 3.3, 7.4][col2];
+          const y = yCol[col2];
           if (y + h > 7.3) return;
-          yCol[col] = y + h + 0.18;
+          yCol[col2] = y + h + 0.18;
           const box = { x: x2, y, w, h };
           nodes.push(makeTextNode(ps, box, style, laid));
           cases.push({
@@ -213495,7 +213642,7 @@ ${bold("Outputs")}: ${output2.formats.join(", ")}  (pptx \u2190 ${output2.engine
     if (!storyline || !getStoryline(storyline))
       throw new Error(`unknown storyline "${storyline ?? ""}"`);
     if (!theme || !getTheme(theme)) throw new Error(`unknown theme "${theme ?? ""}"`);
-    const doc = import_yaml8.default.parseDocument(readFileSync29(o.brief, "utf8"));
+    const doc = import_yaml9.default.parseDocument(readFileSync29(o.brief, "utf8"));
     doc.set("choice", {
       storyline,
       theme,
@@ -213519,7 +213666,7 @@ ${bold("Outputs")}: ${output2.formats.join(", ")}  (pptx \u2190 ${output2.engine
     writeFileSync21(
       out,
       `${SCHEMA_LINE("deck")}# Ghost deck: write the action titles first, review the title chain, then fill content.
-${import_yaml8.default.stringify(deck, { lineWidth: 0 })}`
+${import_yaml9.default.stringify(deck, { lineWidth: 0 })}`
     );
     console.log(
       `${green("\u2714")} ${relative9(process.cwd(), out)} (${deck.slides.length} ghost slides)`

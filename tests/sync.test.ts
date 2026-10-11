@@ -120,9 +120,15 @@ describe('edits flow back from PowerPoint', () => {
     expect(preview.notes.join('\n')).toMatch(/reordered/);
     expect(readFileSync(deck, 'utf8')).toContain('€14B market'); // preview writes nothing
 
+    const original = readFileSync(deck, 'utf8');
     const r = syncPptx(deck, edited, { apply: true });
     expect(r.applied).toBe(4);
     const yaml = readFileSync(deck, 'utf8');
+    // only the edited lines differ: title, notes, one bullet, one new bullet
+    const was = new Set(original.split('\n'));
+    const now = new Set(yaml.split('\n'));
+    expect(original.split('\n').filter((l) => !now.has(l))).toHaveLength(3);
+    expect(yaml.split('\n').filter((l) => !was.has(l))).toHaveLength(5);
     expect(yaml).toContain(
       'title: Regional part-load freight is a €15B market in our first three countries',
     );

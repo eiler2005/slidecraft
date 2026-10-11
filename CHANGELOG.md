@@ -28,7 +28,8 @@ All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachang
   - `slidecraft sync <deck> <edited.pptx> [--apply]` writes text edited in PowerPoint back into the YAML: titles, bullets (added or removed), labels and speaker notes. Comments and formatting are kept;
   - PPTX text boxes are now named after their field (`sc:<slide>/<field>`), so mapping survives reordered slides;
   - for files from Keynote or Google Slides, slides are matched by order and boxes by position;
-  - derived text (capitals, `{{facts}}`), tables, new boxes and moved or deleted slides are reported, never overwritten. [How-to](docs/how-to/sync-edits.md).
+  - derived text (capitals, `{{facts}}`), new boxes and moved or deleted slides are reported, never overwritten; edited table cells are listed cell by cell;
+  - verified in PowerPoint for Mac (title, bullets, notes and a table cell edited there). [How-to](docs/how-to/sync-edits.md).
 - **Frameworks and charts pack:** eight layouts, drawn as editable shapes in every engine, with examples in every variant:
   - `swot` (grid, with-implications), `five-forces`, `pestel`, `business-model-canvas`;
   - `bubble-chart` (bubble, scatter, growth-share portfolio with dividers), `marimekko`, `tornado`, `football-field`.
@@ -36,7 +37,7 @@ All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachang
   40 layouts in total; the exhibit-selection guide and exhibit-chooser cover them.
 
 ### Changed
-- YAML written by `fix --apply`, `sync --apply`, `ingest` and `images` keeps flow lists as written (`[a, b]`, not `[ a, b ]`).
+- `fix --apply`, `sync --apply`, `ingest` and `images` edit YAML surgically: only the changed values, the new keys and the appended list items are written, and the rest of the file stays byte for byte (comments, quoting, `[a, b]` and `{ a: 1 }` styles).
 - Chart `from:` can sit next to chart options (`highlight`, `decimals`, `unit`).
 
 ## [0.4.2] — 2026-10-11

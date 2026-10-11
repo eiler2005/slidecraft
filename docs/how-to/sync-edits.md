@@ -27,7 +27,7 @@ slidecraft sync slidecraft/germany/deck.yaml ~/Downloads/germany-partner-edits.p
 slidecraft build slidecraft/germany/deck.yaml
 ```
 
-`--apply` writes into `deck.yaml`, or into the section file that holds the slide, keeping comments and formatting. It then reports any field that is now too long, with a character budget for `slidecraft fix`.
+`--apply` writes into `deck.yaml`, or into the section file that holds the slide. Only the edited values change: comments, quoting, `[a, b]` and `{ a: 1 }` styles stay byte for byte as you wrote them. It then reports any field that is now too long, with a character budget for `slidecraft fix`.
 
 ## What comes back
 
@@ -38,14 +38,14 @@ slidecraft build slidecraft/germany/deck.yaml
 | Speaker notes, edited or added | ✅ |
 | A slide moved or deleted | reported — change the order in `deck.yaml` if you agree |
 | A new text box or a new slide | reported — copy it into the deck by hand |
-| Table cells | reported — edit the table in the deck |
+| Table cells | reported cell by cell ("€310" → "€320") — copy into the table in the deck |
 | Chart data | not synced — change the numbers (or the spreadsheet) in the deck |
 | Text the deck shows transformed: labels in capitals, numbers from `{{facts}}` | reported, never overwritten — change the fact or the field yourself |
 | Colours, positions, fonts | not synced: the theme and the layout own the look |
 
 ## How it knows which field changed
 
-Every text box SlideCraft writes is named after its field, for example `sc:market/tiles/0/value`. You can see the names in PowerPoint's Selection Pane. The names survive editing text and reordering slides.
+Every text box SlideCraft writes is named after its field, for example `sc:market/tiles/0/value`. You can see the names in PowerPoint's Selection Pane. The names survive editing text and reordering slides. This round trip was verified in PowerPoint for Mac: a title, a bullet list with an added item, speaker notes and a table cell edited there all came back correctly.
 
 Keynote and Google Slides may drop shape names when they export a PPTX. Then SlideCraft matches slides by their order and text boxes by their position, and says so at the top of the report. Check the list before `--apply`.
 

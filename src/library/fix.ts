@@ -16,6 +16,7 @@ import { composeDeck } from '../engine/compose.ts';
 import type { Diagnostic } from '../qa/codes.ts';
 import { checkScene } from '../qa/scene-checks.ts';
 import { loadDeck } from './load.ts';
+import { editYaml, type YamlEdit } from './yaml-edit.ts';
 
 export interface FitTask {
   code: string;
@@ -173,6 +174,7 @@ export function applyFixes(
 ): { applied: number; errors: string[]; remaining: FitTask[] } {
   const locs = slideLocations(deckPath);
   const docs = new Map<string, Document>();
+  const edits = new Map<string, YamlEdit[]>();
   const errors: string[] = [];
   let applied = 0;
   for (const f of fixes) {
@@ -193,10 +195,10 @@ export function applyFixes(
       errors.push(`${f.pointer}: field not found in ${loc.file}`);
       continue;
     }
-    doc.setIn(full, f.text);
+    edits.set(loc.file, [...(edits.get(loc.file) ?? []), { path: full, value: f.text }]);
     applied++;
   }
-  for (const [file, doc] of docs)
-    writeFileSync(file, doc.toString({ lineWidth: 0, flowCollectionPadding: false }));
+  // only the edited values change; comments, quoting and flow style stay as written
+  for (const [file, list] of edits) writeFileSync(file, editYaml(readFileSync(file, 'utf8'), list));
   return { applied, errors, remaining: fitTasks(deckPath) };
 }

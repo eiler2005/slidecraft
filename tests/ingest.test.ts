@@ -20,8 +20,11 @@ describe('client material with page-level sources', () => {
       ['overview', 'pdf', 12, true],
       ['rates', 'csv', 1, true],
     ]);
-    // the deck keeps its formatting: flow lists stay `[model]`
-    expect(readFileSync(deck, 'utf8')).toContain('sources: [model]');
+    // the deck keeps its formatting: only the two new sources are added
+    const before = readFileSync(join(import.meta.dirname, 'fixtures/data/deck.yaml'), 'utf8');
+    const after = readFileSync(deck, 'utf8');
+    expect(before.split('\n').filter((l) => !after.includes(l))).toEqual([]);
+    expect(after).toContain('sources: [model]');
     const md = readFileSync(join(dir, 'materials/overview.md'), 'utf8');
     expect(md).toContain('## p. 9 {#p9}');
     expect(md).toContain('98.6% identical line breaks');

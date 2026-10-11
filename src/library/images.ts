@@ -9,7 +9,8 @@
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, relative, resolve } from 'node:path';
-import YAML, { isMap, isSeq, type YAMLMap } from 'yaml';
+import YAML, { isMap, isSeq, type YAMLMap, type YAMLSeq } from 'yaml';
+import { editYaml, type YamlEdit } from './yaml-edit.ts';
 
 /** Appended to every prompt so pictures suit a slide: no text, calm, croppable. */
 export const IMAGE_STYLE =
@@ -113,9 +114,16 @@ export async function generateImages(
   const byFile = new Map<string, ImageJob[]>();
   for (const j of out.generated) byFile.set(j.yamlFile, [...(byFile.get(j.yamlFile) ?? []), j]);
   for (const [file, js] of byFile) {
-    const { doc, items } = slideMaps(file);
-    for (const j of js) items.find((m) => m.get('id') === j.slideId)?.set('image', j.image);
-    writeFileSync(file, doc.toString({ lineWidth: 0, flowCollectionPadding: false }));
+    const { doc } = slideMaps(file);
+    const root = doc.contents;
+    const inDeck = isMap(root) && isSeq(root.get('slides', true));
+    const seq = (inDeck ? (root as YAMLMap).get('slides', true) : root) as YAMLSeq;
+    const edits: YamlEdit[] = [];
+    for (const j of js) {
+      const k = seq.items.findIndex((m) => isMap(m) && m.get('id') === j.slideId);
+      if (k >= 0) edits.push({ path: [...(inDeck ? ['slides'] : []), k, 'image'], value: j.image });
+    }
+    writeFileSync(file, editYaml(readFileSync(file, 'utf8'), edits));
   }
   return out;
 }

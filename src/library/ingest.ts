@@ -11,6 +11,7 @@ import { pathToFileURL } from 'node:url';
 import YAML, { isMap, isSeq } from 'yaml';
 import { ROOT } from '../paths.ts';
 import { readSheets } from './sheets.ts';
+import { editYaml, type YamlEdit } from './yaml-edit.ts';
 
 export interface Section {
   /** Where this text is: "p14", "slide3", "sheet:Plan", or a heading. */
@@ -141,13 +142,10 @@ export async function ingest(
   const outDir = resolve(opts.dir ?? join(deckDir, 'materials'));
   mkdirSync(outDir, { recursive: true });
   const doc = YAML.parseDocument(readFileSync(deckPath, 'utf8'));
-  let sources = doc.get('sources', true);
-  if (!isSeq(sources)) {
-    doc.set('sources', doc.createNode([]));
-    sources = doc.get('sources', true);
-  }
-  const seq = sources as YAML.YAMLSeq;
-  const have = new Set(seq.items.filter(isMap).map((m) => String(m.get('id'))));
+  const sources = doc.get('sources', true);
+  const existing = isSeq(sources) ? sources.items : [];
+  const have = new Set(existing.filter(isMap).map((m) => String(m.get('id'))));
+  const fresh: Record<string, unknown>[] = [];
   const out: Ingested[] = [];
   for (const f of files) {
     const path = resolve(f);
@@ -169,15 +167,13 @@ export async function ingest(
     writeFileSync(mdPath, md);
     const added = !have.has(id);
     if (added) {
-      seq.add(
-        doc.createNode({
-          id,
-          title,
-          ...(r.date ? { date: r.date } : {}),
-          file: relative(deckDir, path),
-          ...(r.kind === 'pdf' ? { pages: r.sections.length } : {}),
-        }),
-      );
+      fresh.push({
+        id,
+        title,
+        ...(r.date ? { date: r.date } : {}),
+        file: relative(deckDir, path),
+        ...(r.kind === 'pdf' ? { pages: r.sections.length } : {}),
+      });
       have.add(id);
     }
     out.push({
@@ -190,7 +186,13 @@ export async function ingest(
       added,
     });
   }
-  writeFileSync(deckPath, doc.toString({ lineWidth: 0, flowCollectionPadding: false }));
+  // append the new sources in place; the rest of deck.yaml stays as written
+  const edits: YamlEdit[] = isSeq(sources)
+    ? fresh.map((value, k) => ({ path: ['sources', existing.length + k], value }))
+    : fresh.length
+      ? [{ path: ['sources'], value: fresh }]
+      : [];
+  if (edits.length) writeFileSync(deckPath, editYaml(readFileSync(deckPath, 'utf8'), edits));
   return out;
 }
 

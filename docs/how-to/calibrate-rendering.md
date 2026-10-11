@@ -88,6 +88,10 @@ yet reach the strict 95 % per page: remaining differences are sub-pixel glyph ed
 chart label placement and dark backgrounds. The final 5–10 % is closed by the
 [visual QA stage](visual-qa.md), where a reviewer model judges what the metric cannot.
 
+## Look at the results
+
+`npm run comparison` puts every reference next to its result — originals, rebuilt PPTX, HTML, page images, differences and per-page scores — in a local `comparison/` folder with a viewer (`comparison/index.html`). See [see results](see-results.md).
+
 ## Adding a deck to the corpus
 
 Add an entry to `calibration/corpus.json`. Use content the owner has approved for the

@@ -29,6 +29,7 @@
 | Add sources, images, my outline | [Cite sources](how-to/cite-sources.md) · [Add images](how-to/add-images.md) · [Bring your outline](how-to/bring-your-outline.md) |
 | Use my brand | [Apply your brand](how-to/apply-brand.md) · [Add a theme](how-to/add-theme.md) |
 | Extend the library | [Add a layout](how-to/add-layout.md) · [Add a storyline](how-to/add-storyline.md) |
+| See results, open examples, compare originals with rebuilds | [See results and compare with references](how-to/see-results.md) |
 | Get a final verdict and a report of what needs my attention | [Final visual QA](how-to/visual-qa.md) |
 | See every stage's hand-off and a full run in all formats | [Orchestration templates and example run](../examples/orchestration/README.md) |
 | Re-measure PowerPoint and regenerate the rendering rules | [Calibrate rendering](how-to/calibrate-rendering.md) |

@@ -10,6 +10,7 @@ All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachang
 - **Final visual QA by a reviewer model:** `slidecraft visual-qa` writes per-slide PowerPoint, HTML and difference images with measured facts; the new `visual-reviewer` agent and `visual-qa` skill judge parity, template conformance, layout, colour, typography, charts and meaning; `--record` writes the user report `REPORT.md` (verdict, needs your attention, fixed, changes).
 - **Review log:** every fit-fix rewrite (field, before, after), review pack and review round (with a diff of the sources) is appended to `review-log.jsonl` / `REVIEW-LOG.md`.
 - **Orchestration templates** for every stage in YAML, JSON and Markdown, and a complete example run in every format (`examples/orchestration/`).
+- **Side-by-side comparison:** `npm run comparison` collects every reference (original PPTX, or the editable PPTX in PowerPoint) next to SlideCraft's result, with page images, difference images, per-page scores and the calibration reports, in a local `comparison/` folder with a viewer ([see results](docs/how-to/see-results.md)).
 - Office font lookup for any family (Office's bundled fonts first); HTML prefers installed metric-compatible originals through `local()`.
 
 ### Changed

@@ -73,4 +73,4 @@ simultaneous tokens. Sub-agents never talk to the user; the orchestrator owns ev
 3. **Report** — `ready-with-notes`: three items need the user (empty lower halves on two
    slides, a long decision panel) and one engine item stays open (native chart labels ~1 px).
 
-Rebuild after changing anything: `bash examples/orchestration/run/reproduce.sh`.
+Rebuild after changing anything: `bash examples/orchestration/run/reproduce.sh`. To compare originals and results for the whole calibration corpus: `npm run comparison` → `comparison/index.html` ([guide](../../docs/how-to/see-results.md)).

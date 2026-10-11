@@ -81,4 +81,5 @@ npm run calibrate -- --stage probe [--write]    # rules (10 min)
 npm run calibrate -- --stage corpus             # 10-deck gate (10 min)
 slidecraft visual-qa <deck.yaml> --json         # final review pack
 bash examples/orchestration/run/reproduce.sh    # example run in every format
+npm run comparison                              # references vs results → comparison/index.html
 ```

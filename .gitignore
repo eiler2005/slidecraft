@@ -18,3 +18,6 @@ examples/*/dist/
 # Word memo of the orchestration example: rebuilt by examples/orchestration/run/reproduce.sh
 # (the privacy hook keeps .docx out of git)
 docs/showcase/orchestration-run/*.docx
+
+# references vs results, built locally by `npm run comparison` (contains the corpus and binaries)
+/comparison/

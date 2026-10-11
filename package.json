@@ -56,7 +56,8 @@
     "prepublishOnly": "node scripts/prepublish.mjs",
     "showcase": "tsx scripts/showcase.ts",
     "test:digital-ruble": "tsx scripts/digital-ruble-regression.ts",
-    "calibrate": "tsx scripts/calibrate.ts"
+    "calibrate": "tsx scripts/calibrate.ts",
+    "comparison": "tsx scripts/comparison.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",

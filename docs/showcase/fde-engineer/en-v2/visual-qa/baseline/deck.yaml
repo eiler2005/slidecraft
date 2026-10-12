@@ -1,0 +1,174 @@
+# yaml-language-server: $schema=../../schemas/deck.v1.json
+schemaVersion: 1
+id: fde-engineer-en-v2
+title: Forward Deployed Engineers turn AI pilots into working products
+storyline: research-readout
+theme: theme/fde-desk.json
+status: review
+language: en
+author: SlideCraft example
+footer: The Forward Deployed Engineer · Briefing 2026 · v2
+sources:
+  - id: ft-fastcompany
+    title: Postings for this AI job are up 800%
+    publisher: Fast Company, citing Financial Times data
+    date: "2025"
+    url: https://www.fastcompany.com/91435680/postings-for-this-ai-job-are-up-800
+  - id: mit-nanda
+    title: "The GenAI Divide: State of AI in Business 2025"
+    publisher: MIT NANDA
+    date: Aug 2025
+  - id: paraform
+    title: What is a Forward Deployed AI Engineer?
+    publisher: Paraform
+    date: "2026"
+    url: https://www.paraform.com/blog/forward-deployed-ai-engineer
+  - id: pilot-plan
+    title: Pilot planning assumptions for a typical enterprise
+    illustrative: true
+output:
+  formats: [ pptx, pdf, html ]
+slides:
+  - id: cover
+    layout: title
+    variant: cover
+    title: Forward Deployed Engineers turn AI pilots into working products
+    kicker: Briefing · 2026 · second edition
+    subtitle: What the role is, where it creates value, what has to change around it, and a pilot to start
+    date: October 2026
+    imageQuery: laptop code screen desk
+    alt: An engineer's desk with several monitors showing code and a laptop
+    art: auto
+    notes: One message for the whole deck — the gap in enterprise AI is deployment, and this role closes it.
+    image: assets/cover.jpg
+    imageCredit:
+      author: Yutaka Tsutano
+      provider: Openverse · Flickr
+      license: CC BY 2.0
+      licenseUrl: https://creativecommons.org/licenses/by/2.0/
+      source: https://www.flickr.com/photos/23208360@N07/4532962327
+      title: Current Setup
+
+  - id: why-now
+    layout: kpi-tiles
+    variant: tiles
+    tracker: Why now
+    title: AI companies hire FDEs because most AI pilots stall before production
+    tiles:
+      - { value: "800%+", label: Growth in FDE job postings, delta: Jan–Sep 2025, trend: up, note: Financial Times data reported by Fast Company }
+      - { value: "~95%", label: Generative AI pilots with no measurable P&L impact, delta: 2025 study, note: "MIT NANDA, The GenAI Divide" }
+      - { value: "2010s", label: Decade the role was created at Palantir, note: Engineers placed with government and enterprise customers }
+    highlight: 0
+    sources: [ ft-fastcompany, mit-nanda, paraform ]
+    notes: The growth figures differ by dataset; all of them show a several-fold rise. The point is the cause — pilots that never reach production.
+
+  - id: value-chain
+    layout: value-chain
+    tracker: Where it fits
+    title: The FDE owns the middle of the AI value chain, where most pilots stall
+    support:
+      - { name: Models and platform, point: "Bought or built once; the same for every use case" }
+      - { name: Security and compliance, point: "Reviews data access and model behaviour before launch" }
+      - { name: People and incentives, point: "Decide whether teams adopt the tool or route around it" }
+    primary:
+      - { name: Pick the use case, points: [ Business owner and metric agreed ] }
+      - { name: Data access, points: [ Real data reaches the model, Permissions per role ] }
+      - { name: Build and integrate, points: [ Inside the tools people already use ] }
+      - { name: Ship and evaluate, points: [ Evaluations and guardrails in production ] }
+      - { name: Adoption, points: [ Weekly use measured with the owner ] }
+    highlight: [ 1, 2, 3 ]
+    takeaway: Pilots stall in data access, integration and evaluation — the FDE's job
+    sources: [ paraform, mit-nanda ]
+    notes: The model is rarely the bottleneck. The work in the middle is where an embedded engineer changes the outcome.
+
+  - id: cycle
+    layout: process-steps
+    variant: chevrons
+    tracker: What they do
+    title: The FDE cycle runs from the user's desk to the core product
+    steps:
+      - { icon: users, title: Embed, body: "Sit with the people who do the work and map the workflow and its data" }
+      - { icon: target, title: Pick the job, body: "Choose the step where AI changes cost, time or quality the most" }
+      - { icon: code, title: Build, body: "Connect data, prompts, evaluations and guardrails on the platform" }
+      - { icon: chart-line, title: Ship and measure, body: "Run it in production and track adoption and the business metric" }
+      - { icon: refresh, title: Feed the product, body: "Turn custom work that repeats into product features" }
+    highlight: 3
+    sources: [ paraform ]
+    notes: Step four is where most pilots stop; the FDE is measured on it.
+
+  - id: profile
+    layout: key-points
+    variant: columns
+    tracker: Who to hire
+    title: The profile combines production engineering, applied AI and customer judgement
+    points:
+      - { icon: server, heading: Production engineering, body: "Full-stack and data skills; integrates with legacy systems and owns reliability after go-live" }
+      - { icon: brain, heading: Applied AI, body: "Works with model APIs, retrieval, evaluations and guardrails — and knows when not to use a model" }
+      - { icon: heart-handshake, heading: Customer judgement, body: "Scopes problems with domain experts, explains trade-offs and says no to low-value requests" }
+    sources: [ paraform ]
+    notes: Hire for production engineering first; applied AI can be learned faster than customer judgement.
+
+  - id: organisation
+    layout: seven-s
+    tracker: What has to change
+    title: Strategy and platform are usually ready; staff placement and skills are not
+    strategy: { status: aligned, points: [ AI is among the top company priorities ] }
+    structure: { status: partial, points: [ "AI team sits in IT, far from the business" ] }
+    systems: { status: aligned, points: [ Data platform and model access in place ] }
+    sharedValues: { status: partial, points: [ Pilots are celebrated; production use is not ] }
+    style: { status: partial, points: [ Leaders sponsor AI but rarely use it ] }
+    staff: { status: gap, points: [ No engineers placed with business teams ] }
+    skills: { status: gap, points: [ Few people can scope and evaluate a use case ] }
+    takeaway: Fix staff and skills first — that is exactly what an FDE pilot tests
+    sources: [ pilot-plan ]
+    notes: A typical starting point, not a measured assessment — rate your own organisation before the pilot.
+
+  - id: pilot-plan
+    layout: chart-takeaway
+    variant: combo
+    tracker: The pilot
+    title: The pilot targets 40 weekly users and a third of tasks automated by week 12
+    chart:
+      label: Weekly active users, and share of tasks handled end to end, %
+      categories: [ Week 2, Week 4, Week 6, Week 8, Week 10, Week 12 ]
+      series:
+        - { name: Weekly active users, values: [ 8, 15, 24, 32, 38, 42 ] }
+        - { name: Tasks handled end to end, values: [ 5, 12, 20, 28, 33, 36 ] }
+      lineUnit: "%"
+    takeaway:
+      headline: Two numbers decide whether to scale
+      points:
+        - Users show adoption; automation shows value
+        - Review both with the business owner every week
+    sources: [ pilot-plan ]
+    notes: Targets are planning assumptions; set your own with the business owner in week one.
+
+  - id: budget
+    layout: data-table
+    variant: plain
+    tracker: The pilot
+    title: A one-quarter pilot costs about $206k, two-thirds of it the engineer
+    header: [ Item, Month 1, Month 2, Month 3, Total ]
+    rows:
+      - [ Forward Deployed Engineer, $45k, $45k, $45k, $135k ]
+      - [ Model and platform usage, $8k, $12k, $15k, $35k ]
+      - [ Business owner time, $6k, $6k, $6k, $18k ]
+      - [ Evaluation and security review, $10k, $4k, $4k, $18k ]
+      - [ Total, $69k, $67k, $70k, $206k ]
+    highlightRow: 0
+    sources: [ pilot-plan ]
+    notes: Planning figures for a typical enterprise; replace with your own rates.
+
+  - id: ask
+    layout: next-steps
+    variant: decision
+    tracker: What to do
+    title: Approve one FDE on your highest-value AI workflow for one quarter
+    decision: Approve a one-quarter pilot, about $206k, with one Forward Deployed Engineer on one production workflow
+    steps:
+      - { action: Pick one workflow with a measurable business metric, owner: Head of AI, due: Month 1 }
+      - { action: Assign or hire one engineer with production and AI experience, owner: CTO, due: Month 1 }
+      - { action: Embed the engineer with the team that owns the workflow, owner: Business owner, due: Month 1–2 }
+      - { action: Ship to production and review users and automation weekly, owner: FDE, due: Month 2–3 }
+      - { action: "Decide: scale, turn into product, or stop", owner: Leadership team, due: End of quarter }
+    notes: Ask for one decision — a one-quarter pilot with a named workflow, budget and metrics.

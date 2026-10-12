@@ -1,5 +1,7 @@
 # Apply your brand
 
+> No `.pptx`/`.potx` template? [Create a theme from a sample](theme-from-sample.md) — a PDF, a screenshot or a website.
+
 > **Audience:** teams with brand guidelines · **Prerequisites:** your `.pptx` or `.potx` template; optionally the brand font files · **Last reviewed:** 2026-10-11
 
 ## 1. Import the template

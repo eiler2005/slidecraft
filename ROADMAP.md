@@ -60,14 +60,24 @@ Your material in, your edits back, every AI app.
 - ✅ **Edits flow back:** `sync` writes text edited in PowerPoint, Keynote or Google Slides back into deck.yaml.
 - ✅ **Frameworks and charts pack:** `swot`, `five-forces`, `pestel`, `business-model-canvas`, `bubble-chart` (bubble, scatter, portfolio), `marimekko`, `tornado`, `football-field` — 40 layouts.
 
-## v0.6 — next
+## v0.6 – v0.7 — shipped
+
+- ✅ **PowerPoint-exact text** from measured Office rules, a calibration mode and a 10-deck corpus gate (0.6).
+- ✅ **Final visual QA** by a reviewer model with a user report and a review log (0.6).
+- ✅ **Cover visuals** and the **cover choice** from 2–3 options; **deck language** for labels, numbers, typography and proofing; **sources in speaker notes** (0.6–0.7).
+- ✅ **Stock photos** (Openverse, Pexels, Pixabay) with credits on the slide, in the notes and the manifest (0.7).
+- ✅ **Icon library** (Tabler, MIT) as native shapes for `key-points` and `process-steps` (0.7).
+- ✅ **Theme from a sample** — PDF, screenshot or website (0.7).
+- ✅ **Value chain, McKinsey 7S, combo bar + line** (0.7) and **totals, periods and units checks** (0.7).
+
+## v0.8 — next
 
 | Item | Why | Notes |
 |---|---|---|
-| **Stock photos** (Pexels, Pixabay) next to generation | Real photos for story decks instead of generated ones, with credit lines | Provider option for `slidecraft images`; attribution goes to the source line and the manifest |
-| **Icon library** (Lucide or Tabler, MIT) | Icons for `key-points`, `process-steps` and similar | Optional per item; one icon set per theme; used sparingly in consulting themes |
-| **Live preview** (`slidecraft preview --watch`) | Edit YAML, see the slide instantly | Local server with hot reload of the HTML deck and diagnostics overlay |
+| **Live preview** (`slidecraft preview --watch`) | Edit YAML, see the slide instantly | Local server with hot reload of the HTML deck and diagnostics overlay; click an element to copy its pointer |
 | **Table sync** | Bring edited table cells back too | Extends `sync` to `data-table` and option tables |
+| **Presenter tools** in the HTML deck | Rehearse and present from a browser | Timer, next-slide preview, phone remote |
+| **Talk video** | Asynchronous updates | Narrated notes + slides → MP4 |
 
 ## Principles for what goes in
 

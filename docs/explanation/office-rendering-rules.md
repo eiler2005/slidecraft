@@ -36,6 +36,11 @@ imported. A client deck that reveals a defect is only evidence; the fix always l
 | E5 | Slide-number placeholders use automatic spacing, top-anchored, through the shared layout | the HTML number sat 3.6 pt lower | `masterSvg` |
 | E6 | Headlines never end on a widow: **balanced wrapping** narrows the title box to the smallest width with the same line count; PowerPoint receives the same box | visual QA finding on six titles | `balanceLines` |
 
+| E7 | **Pictures** are exported with their own aspect so `cover` and `contain` crop the same as HTML and PDF | pptxgenjs crops from the box's aspect, which stretched photos to the box | `addImage` (pptxgenjs backend) |
+| E8 | **Combo charts** keep both value axes (invisible: no labels, line or ticks), give the line its own label position (`t`) and drop pptxgenjs' third axis id | a deleted axis makes PowerPoint plot the series on the other axis; `outEnd` labels corrupt a line chart; a 2D chart takes exactly two axis ids | `addChart`, `normalizeZip` |
+| E9 | **Icons** are freeforms (cubic Béziers from the SVG path, arcs converted) with round caps and joins | the same geometry in every engine, editable and recolourable in PowerPoint | `svg-path.ts`, `roundIconStrokes` |
+| E10 | Text runs, notes and charts carry the **deck's proofing language** | pptxgenjs writes en-US everywhere, so PowerPoint underlined every Russian word | `proofingLanguage` |
+
 Known traps that still hold: PptxGenJS shape margins are `[left, right, bottom, top]`
 but table margins `[top, right, bottom, left]`; `kern="0"` disables kerning, so the
 backend writes 100 (on) or 400000 (off); hyperlinks keep the run colour through an

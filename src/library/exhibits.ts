@@ -71,7 +71,7 @@ export const EXHIBITS = [
   {
     id: 'strategic-framework',
     question: 'Which factors shape a strategic choice?',
-    layouts: ['swot', 'pestel', 'five-forces', 'business-model-canvas'],
+    layouts: ['swot', 'pestel', 'five-forces', 'business-model-canvas', 'value-chain', 'seven-s'],
     guard: 'Use evidence and implications, not boxes filled for completeness.',
   },
 ] as const;

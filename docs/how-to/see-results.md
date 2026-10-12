@@ -25,6 +25,7 @@ Produce the review files with `slidecraft visual-qa <deck.yaml>` ([guide](visual
 | SlideCraft's own deck in PPTX, PDF, one-pager and a contact sheet | [`docs/showcase/`](../showcase/) |
 | A complete run in every format — PPTX, PDF, HTML, one-pager, PowerPoint renders, review report | [`docs/showcase/orchestration-run/`](../showcase/orchestration-run/) |
 | One deck in English and Russian, made through the whole workflow: PPTX, PDF, HTML, PowerPoint renders, review report | [`docs/showcase/fde-engineer/`](../showcase/fde-engineer/) · sources in [`examples/fde-engineer-en`](../../examples/fde-engineer-en/) and [`-ru`](../../examples/fde-engineer-ru/) |
+| The same deck's second edition with stock photo, sampled theme, value chain, icons, 7S, combo chart and the totals check | [`docs/showcase/fde-engineer/en-v2/`](../showcase/fde-engineer/en-v2/) · [how it was made](../../examples/fde-engineer-en-v2/README.md) |
 | How that run was orchestrated: plan, hand-off templates per stage, review log | [`examples/orchestration/`](../../examples/orchestration/README.md) |
 | Source decks of all examples | [`examples/*/deck.yaml`](../../examples/) — build with `slidecraft build examples/<name>/deck.yaml -f pptx,pdf,html` (output in `examples/<name>/dist/`, not committed) |
 | How PowerPoint was measured and how close we are | [`calibration/REPORT.md`](../../calibration/REPORT.md), [`calibration/RULES.md`](../../calibration/RULES.md) |

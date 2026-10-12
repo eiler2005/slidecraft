@@ -13,7 +13,7 @@
 
 <p align="center">
   <b>Describe the goal. Pick a look. Ship a partner-ready deck.</b><br>
-  <a href="#install">Install</a> · <a href="docs/tutorials/first-deck-in-10-minutes.md">First deck in 10 minutes</a> · <a href="https://eiler2005.github.io/slidecraft/">Gallery site</a> · <a href="docs/README.md">Docs</a> · <a href="ROADMAP.md">Roadmap</a> · <a href="CHANGELOG.md">Changelog</a>
+  <a href="#the-easiest-way-one-prompt">One prompt</a> · <a href="#install">Install</a> · <a href="docs/tutorials/first-deck-in-10-minutes.md">First deck in 10 minutes</a> · <a href="https://eiler2005.github.io/slidecraft/">Gallery site</a> · <a href="docs/README.md">Docs</a> · <a href="ROADMAP.md">Roadmap</a> · <a href="CHANGELOG.md">Changelog</a>
 </p>
 
 ---
@@ -29,6 +29,27 @@ It works with **any AI agent or LLM that can run a command**:
 It works from **your material**: numbers come from your Excel or CSV files and are written once, sources cite the page of the report they come from, and text a colleague edits in PowerPoint flows back into the deck.
 
 Underneath is one **zero-install CLI**. Every layout is measured with metric-compatible fonts, so text that fits in SlideCraft fits in PowerPoint — verified line by line against real PowerPoint output.
+
+## The easiest way: one prompt
+
+No install, no YAML. Paste this into **ChatGPT (agent mode), Codex, Claude or Claude Code** — any assistant that can run code and open a link — and fill in the brackets:
+
+```text
+Study the repository https://github.com/eiler2005/slidecraft (read AGENTS.md first) and use
+SlideCraft to make me an editable PowerPoint deck.
+
+Topic: [what the deck is about]
+For whom and why: [who will read it and what they should decide or do]
+Length: 15–20 slides
+Language: [English / Russian / …]
+Content: [your notes, key points, numbers with their sources, links or files]
+Style: [e.g. calm consulting look, dark keynote, or "match the colours of https://…"]
+
+Follow the SlideCraft workflow: show me the action-title chain and 2–3 cover options before
+building, cite a source for every number, then give me the .pptx and a PDF.
+```
+
+The assistant runs `npx @eiler2005/slidecraft` on its side, writes the deck, checks it and hands you an editable PowerPoint. The content can be in any language. A chat without code execution can still write the `deck.yaml`; build it yourself with `npx @eiler2005/slidecraft build deck.yaml`. For repeat work, install it into your assistant ([install](#install)).
 
 ## See it in action
 
@@ -77,7 +98,7 @@ agent   › Built 11 slides. Review: 0 blockers, 2 majors fixed, 1 minor left.  
 |---|---|---|
 | Brief | `brief.yaml` | goal, ask, audience, how the deck will be used → which outputs |
 | Storyline × theme | chosen from 14 × 7 | the shape of the argument for the task, and the look |
-| Content | `deck.yaml` (+ `sections/*.yaml`) | action titles and slide content against 40 layout contracts; `sources:`, `facts:` from Excel/CSV, cover visual, `language:` |
+| Content | `deck.yaml` (+ `sections/*.yaml`) | action titles and slide content against 42 layout contracts; `sources:`, `facts:` from Excel/CSV, cover visual, `language:` |
 | Your material | `materials/`, `assets/` | reports cited by page, data files, pictures |
 
 Layouts turn the content into one **Scene IR**; engines translate it into editable PPTX, PDF,
@@ -114,7 +135,7 @@ Full process: [workflow](docs/explanation/workflow.md) · [architecture](docs/ex
 
 ## Template gallery
 
-A template is **a storyline (the shape of the argument for a task) × a theme (the look)**. Any storyline works in any theme. Fourteen storylines × six themes (or your own brand theme), built from forty layouts. The [gallery site](https://eiler2005.github.io/slidecraft/) shows every storyline in every theme and the example decks in every format.
+A template is **a storyline (the shape of the argument for a task) × a theme (the look)**. Any storyline works in any theme. Fourteen storylines × six themes (or your own brand theme), built from forty-two layouts. The [gallery site](https://eiler2005.github.io/slidecraft/) shows every storyline in every theme and the example decks in every format.
 
 <table>
   <tr>
@@ -229,13 +250,19 @@ Shipped in 0.5:
 - **frameworks and charts:** SWOT, five forces, PESTEL, business model canvas, bubble and portfolio charts, marimekko, tornado, football field (40 layouts);
 - **every AI app:** an MCP server and a one-line `install` for Claude Desktop, Cursor, VS Code, Windsurf, Gemini CLI, Claude Code and Codex.
 
+Shipped in 0.7:
+- **pictures and icons:** licensed stock photos (Openverse, Pexels, Pixabay) with credits on the slide, in the notes and the manifest; 114 editable icons;
+- **a theme from a sample:** colours, fonts and margins from a PDF, a screenshot or a website;
+- **more frameworks:** value chain, McKinsey 7S, combo bar + line chart (42 layouts);
+- **numbers that add up:** totals, periods and units checked across the deck.
+
 Shipped in 0.6:
 - **PowerPoint-exact text:** measured Office rules shared by HTML and PPTX, a calibration mode and a 10-deck corpus gate;
 - **final visual QA:** a reviewer model checks every slide in PowerPoint and the browser and writes a report and a review log;
 - **covers that stand out:** a topic motif or a picture on the cover;
 - **any language:** labels, numbers, typography and proofing follow `language:`; sources in the speaker notes.
 
-Next: stock photos, icons, live preview. See [ROADMAP.md](ROADMAP.md).
+Next: live preview, table sync, presenter tools. See [ROADMAP.md](ROADMAP.md).
 
 ## Contributing
 

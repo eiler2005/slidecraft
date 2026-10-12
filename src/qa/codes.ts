@@ -253,6 +253,18 @@ export const CODES = {
     why: 'One metric appears with different values on different slides — the error a board notices first.',
     fix: 'Use one value everywhere; define it once in `facts:` and write {{id}} in the text.',
   },
+  'SC-CONSIST-002': {
+    severity: 'warning',
+    title: 'A total does not add up',
+    why: 'A total row or column, a "Total" category or a waterfall total differs from the sum of its parts beyond rounding.',
+    fix: 'Correct the parts or the total; if the parts are a selection, say so ("Top 3", "Other" row).',
+  },
+  'SC-CONSIST-003': {
+    severity: 'warning',
+    title: 'One figure, different period or unit',
+    why: 'The same metric shows the same number labelled with different years or currencies on different slides — one of the labels is wrong.',
+    fix: 'Use one period and one unit for the metric; define it once in `facts:`.',
+  },
   'SC-SRC-003': {
     severity: 'error',
     title: 'Unknown source page reference',

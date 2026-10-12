@@ -42,6 +42,8 @@ Split slides by section. For each section, launch a **slide-writer** agent (in p
 
 `sc build slidecraft/<id>/deck.yaml --json` (formats/engines from the brief's output plan; flags `--pptx-engine`, `--pdf-engine`).
 
+**Cover choice ✅ (repo rule).** Never default the cover. `sc covers <deck> --json` (add `--stock` when the cover has an `imageQuery`) renders 2–3 options — the motifs that fit the title best and a photo — to `.slidecraft/covers/` with a picker page and facts. Compare them yourself against the deck's message and look: does it say what the deck is about, does it fit the theme colours, is the title still the first thing seen, is a photo sharp (≥ 144 ppi), licensed, free of private people and logos? Recommend one with a one-line reason per option, show the picker to the user, then `sc covers <deck> --choose <A|B|C>`.
+
 ## 6 · Review ✅ CP4
 
 Use the `review` skill procedure:

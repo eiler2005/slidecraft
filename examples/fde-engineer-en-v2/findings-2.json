@@ -1,0 +1,39 @@
+{
+  "reviewer": "visual-reviewer (Claude Opus 5.5)",
+  "verdict": "ready-with-notes",
+  "summary": "Round 2: totals add up, the cover photo crops identically in PowerPoint and the browser, icons, value chain, 7S and the combo chart match between engines. Content placeholders (illustrative plan) stay with the author.",
+  "findings": [
+    {
+      "slide": "all",
+      "severity": "minor",
+      "area": "parity",
+      "issue": "Remaining PowerPoint/HTML differences are sub-pixel glyph edges and JPEG edges; no moved line, wrap or shape",
+      "fix": "none needed",
+      "status": "fixed"
+    },
+    {
+      "slide": "cycle, profile, budget",
+      "severity": "minor",
+      "area": "layout",
+      "issue": "Content sits in the upper half; the lower half is empty",
+      "fix": "Accept as whitespace, or add an example, a result line or a bottom line",
+      "status": "needs-user"
+    },
+    {
+      "slide": "organisation, pilot-plan, budget",
+      "severity": "minor",
+      "area": "meaning",
+      "issue": "7S ratings, pilot targets and budget are planning assumptions, labelled illustrative",
+      "fix": "Replace with your organisation's assessment, targets and rates before use",
+      "status": "needs-user"
+    },
+    {
+      "slide": "why-now",
+      "severity": "minor",
+      "area": "meaning",
+      "issue": "Growth figures for FDE postings differ by dataset; the deck uses the FT figure reported by Fast Company",
+      "fix": "Check the FT article before external use",
+      "status": "needs-user"
+    }
+  ]
+}

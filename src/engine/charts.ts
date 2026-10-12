@@ -93,6 +93,7 @@ function label(
 }
 
 export function buildChart(spec: ChartSpec, box: Box, ctx: Ctx): ChartNode {
+  if (spec.type === 'combo') return buildCombo(spec, box, ctx);
   const t = ctx.theme;
   const c = t.colors;
   const muted = mix(c.muted, c.background, 0.45);
@@ -583,6 +584,197 @@ export function buildChart(spec: ChartSpec, box: Box, ctx: Ctx): ChartNode {
       stacked || spec.type === 'waterfall' || (!multi && !!spec.highlight?.length)
         ? 'stacked'
         : 'clustered',
+    primitives: prims,
+    ...(spec.field ? { pointer: spec.field } : {}),
+  };
+}
+
+/**
+ * Bars and a line on one category axis (e.g. volume and rate). Bars take the lower part of
+ * the plot, the line its own scale in the upper band, so labels never collide; both value
+ * axes stay hidden and every point is labelled. The bars recede, the line carries the accent.
+ */
+function buildCombo(spec: ChartSpec, box: Box, ctx: Ctx): ChartNode {
+  const t = ctx.theme;
+  const c = t.colors;
+  const small = t.type.small;
+  const n = spec.categories.length;
+  const barS = spec.series[0]!;
+  const lineS = spec.series[1] ?? spec.series[0]!;
+  const decimals = spec.decimals ?? 0;
+  const unit = spec.unit ?? '';
+  const lineDecimals = spec.lineDecimals ?? decimals;
+  const lineUnit = spec.lineUnit ?? unit;
+  const num = (v: number, d: number, u: string) => formatNumber(v, d, u, false, ctx.language);
+  const legendH = 0.32;
+  const catLabelH = 0.42;
+  const plot: Box = {
+    x: box.x,
+    y: box.y + legendH + 0.05,
+    w: box.w,
+    h: box.h - legendH - catLabelH - 0.05,
+  };
+  const barColor = mix(c.muted, c.background, 0.45);
+  const lineColor = c.accent;
+  // bars: the tallest reaches 55 % of the plot height
+  const hi = Math.max(0, ...barS.values);
+  const lo = Math.min(0, ...barS.values);
+  const barAxis = {
+    min: lo < 0 ? lo / 0.55 : 0,
+    max: hi > 0 ? hi / 0.55 : 1,
+    major: niceStep(hi || 1),
+  };
+  // line: its range spans 10–35 % from the top of the plot
+  const l1 = Math.min(...lineS.values);
+  const l2 = Math.max(...lineS.values);
+  const r = l2 - l1 || Math.abs(l2) || 1;
+  const lineAxis = { max: l2 + 0.4 * r, min: l2 + 0.4 * r - 4 * r };
+  const slot = plot.w / Math.max(1, n);
+  const thick = slot / 1.8;
+  const vyBar = (v: number) => plot.y + (plot.h * (barAxis.max - v)) / (barAxis.max - barAxis.min);
+  const vyLine = (v: number) =>
+    plot.y + (plot.h * (lineAxis.max - v)) / (lineAxis.max - lineAxis.min);
+  const prims: SceneNode[] = [];
+  barS.values.forEach((v, i) => {
+    const x = plot.x + slot * i + (slot - thick) / 2;
+    const y1 = vyBar(Math.max(0, v));
+    const y2 = vyBar(Math.min(0, v));
+    prims.push({
+      kind: 'rect',
+      box: { x, y: y1, w: thick, h: Math.max(0.005, y2 - y1) },
+      fill: barColor,
+      role: 'chart-mark',
+    });
+    prims.push(
+      label(
+        ctx,
+        num(v, decimals, unit),
+        { x: x - 0.2, y: y1 - 0.27, w: thick + 0.4, h: 0.24 },
+        {
+          size: small,
+          color: c.ink,
+        },
+      ),
+    );
+  });
+  const pts = lineS.values.map((v, i) => ({ x: plot.x + slot * (i + 0.5), y: vyLine(v), v }));
+  for (let i = 1; i < pts.length; i++)
+    prims.push({
+      kind: 'line',
+      x1: pts[i - 1]!.x,
+      y1: pts[i - 1]!.y,
+      x2: pts[i]!.x,
+      y2: pts[i]!.y,
+      stroke: { color: lineColor, width: 2.25 },
+      role: 'chart-mark',
+    });
+  pts.forEach((p, i) => {
+    prims.push({
+      kind: 'ellipse',
+      box: { x: p.x - 0.045, y: p.y - 0.045, w: 0.09, h: 0.09 },
+      fill: lineColor,
+      role: 'chart-mark',
+    });
+    prims.push(
+      label(
+        ctx,
+        num(p.v, lineDecimals, lineUnit),
+        { x: p.x - 0.5, y: p.y - 0.3, w: 1, h: 0.24 },
+        {
+          size: small,
+          color: lineColor,
+          bold: i === pts.length - 1,
+        },
+      ),
+    );
+  });
+  const y0 = vyBar(0);
+  prims.push({
+    kind: 'line',
+    x1: plot.x,
+    y1: y0,
+    x2: plot.x + plot.w,
+    y2: y0,
+    stroke: { color: c.rule, width: 0.75 },
+    role: 'chart-axis',
+  });
+  spec.categories.forEach((cat, i) =>
+    prims.push(
+      label(
+        ctx,
+        cat,
+        { x: plot.x + slot * i, y: plot.y + plot.h + 0.06, w: slot, h: catLabelH - 0.06 },
+        {
+          color: c.muted,
+          size: small,
+          role: 'chart-cat',
+        },
+      ),
+    ),
+  );
+  // legend: a bar swatch and a line swatch, drawn as shapes in every engine
+  let x = box.x;
+  for (const [name, color, isLine] of [
+    [barS.name, barColor, false],
+    [lineS.name, lineColor, true],
+  ] as const) {
+    prims.push(
+      isLine
+        ? {
+            kind: 'line',
+            x1: x,
+            y1: box.y + 0.15,
+            x2: x + 0.22,
+            y2: box.y + 0.15,
+            stroke: { color, width: 2.25 },
+            role: 'chart-legend',
+          }
+        : {
+            kind: 'rect',
+            box: { x, y: box.y + 0.08, w: 0.14, h: 0.14 },
+            fill: color,
+            role: 'chart-legend',
+          },
+    );
+    const lx = x + (isLine ? 0.28 : 0.2);
+    const w = 0.18 + name.length * 0.075;
+    prims.push(
+      label(
+        ctx,
+        name,
+        { x: lx, y: box.y + 0.03, w, h: 0.24 },
+        {
+          align: 'left',
+          color: c.muted,
+          size: small,
+          role: 'chart-legend',
+        },
+      ),
+    );
+    x = lx + w + 0.45;
+  }
+  return {
+    kind: 'chart',
+    box,
+    type: 'combo',
+    categories: spec.categories,
+    series: [
+      { name: barS.name, values: barS.values, color: barColor },
+      { name: lineS.name, values: lineS.values, color: lineColor },
+    ],
+    axis: { ...barAxis, format: formatCode(decimals, unit), hidden: true },
+    lineAxis: { ...lineAxis, format: formatCode(lineDecimals, lineUnit) },
+    labels: { show: true, format: formatCode(decimals, unit), size: small, color: c.ink },
+    catLabels: { size: small, color: c.muted },
+    font: ctx.font,
+    gapWidth: 80,
+    legend: false,
+    plot,
+    // labels and legend are drawn as text over the native chart, exactly where SVG has them
+    nativeLabels: false,
+    nativeCatLabels: true,
+    barDir: 'col',
+    grouping: 'clustered',
     primitives: prims,
     ...(spec.field ? { pointer: spec.field } : {}),
   };

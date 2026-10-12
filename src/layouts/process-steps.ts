@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { mix } from '../engine/color.ts';
 import { columns } from '../engine/format.ts';
+import { Icon } from '../engine/icons.ts';
 import type { LayoutDef } from './types.ts';
 
 const schema = z
@@ -16,6 +17,7 @@ const schema = z
               .optional()
               .describe('What happens and the output of the step'),
             owner: z.string().max(30).optional(),
+            icon: Icon.optional().describe('Icon for the step (Tabler set); every step or none'),
           })
           .strict(),
       )
@@ -103,10 +105,42 @@ export const processSteps: LayoutDef<typeof schema> = {
         ],
       },
     },
+    {
+      title: 'Each AI feature moves from a user problem to a measured release in four steps',
+      variant: 'chevrons',
+      content: {
+        steps: [
+          {
+            icon: 'users',
+            title: 'Sit with users',
+            body: 'Map the workflow and its data with the people who do the work',
+          },
+          {
+            icon: 'target',
+            title: 'Pick the job',
+            body: 'Choose the step where AI changes cost, time or quality most',
+          },
+          {
+            icon: 'code',
+            title: 'Build',
+            body: 'Connect data, prompts, evaluations and guardrails',
+          },
+          {
+            icon: 'chart-line',
+            title: 'Ship and measure',
+            body: 'Track adoption and the business metric every week',
+          },
+        ],
+        highlight: 3,
+      },
+    },
   ],
   compose(ctx, c) {
     const { colors, theme, body } = ctx;
     const n = c.steps.length;
+    const hasIcon = c.steps.some((s) => s.icon);
+    const iconSize = 0.38;
+    const iconRow = hasIcon ? iconSize + 0.2 : 0;
     if (ctx.variant === 'chevrons') {
       const h = 0.78;
       const notch = 0.24;
@@ -149,7 +183,13 @@ export const processSteps: LayoutDef<typeof schema> = {
             field: `steps/${i}/title`,
           },
         );
-        const by = y + h + 0.28;
+        if (s.icon)
+          ctx.icon(
+            s.icon,
+            { x: x0 + 0.05, y: y + h + 0.28, w: iconSize, h: iconSize },
+            { color: hl ? colors.accent : colors.muted, field: `steps/${i}/icon` },
+          );
+        const by = y + h + 0.28 + iconRow;
         const bw = w - 0.1;
         const ownerH = s.owner ? 0.3 : 0;
         if (s.body)
@@ -211,15 +251,26 @@ export const processSteps: LayoutDef<typeof schema> = {
           { arrowEnd: true },
         );
       }
+      if (s.icon)
+        ctx.icon(
+          s.icon,
+          { x: b.x, y: b.y + numH + 0.1, w: iconSize, h: iconSize },
+          { color: hl ? colors.accent : colors.muted, field: `steps/${i}/icon` },
+        );
       ctx.text(
         s.title,
-        { x: b.x, y: b.y + numH + 0.1, w: b.w, h: 0.62 },
+        { x: b.x, y: b.y + numH + 0.1 + iconRow, w: b.w, h: 0.62 },
         { font: 'heading', size: 'heading', bold: true, maxLines: 2, field: `steps/${i}/title` },
       );
       if (s.body)
         ctx.text(
           s.body,
-          { x: b.x, y: b.y + numH + 0.8, w: b.w, h: b.h - numH - 0.8 - (s.owner ? 0.35 : 0) },
+          {
+            x: b.x,
+            y: b.y + numH + 0.8 + iconRow,
+            w: b.w,
+            h: b.h - numH - 0.8 - iconRow - (s.owner ? 0.35 : 0),
+          },
           { size: 'body', color: colors.ink, field: `steps/${i}/body` },
         );
       if (s.owner)

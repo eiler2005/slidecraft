@@ -8,6 +8,7 @@ import type {
   ImageNode,
   LineNode,
   Paragraph,
+  PathNode,
   PolygonNode,
   RectNode,
   SceneNode,
@@ -128,6 +129,8 @@ export interface ComposeContext {
     alt: string,
     opts?: { fit?: 'cover' | 'contain'; field?: string; label?: string },
   ): ImageNode;
+  /** An icon from the bundled set in a square box; stroke colour defaults to the accent. */
+  icon(name: string, box: Box, opts?: { color?: string; field?: string }): PathNode;
   table(spec: TableSpec, box: Box): TableNode;
   chart(spec: ChartSpec, box: Box): ChartNode;
   add(node: SceneNode): void;
@@ -160,6 +163,9 @@ export interface ChartSpec {
   unit?: string;
   /** Number of decimals for labels. */
   decimals?: number;
+  /** Combo charts: unit and decimals of the line series. */
+  lineUnit?: string;
+  lineDecimals?: number;
   showAxis?: boolean;
   field?: string;
 }

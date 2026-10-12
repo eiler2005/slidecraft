@@ -8,6 +8,7 @@ import { join } from 'node:path';
 import JSZip from 'jszip';
 import pptxgenModule from 'pptxgenjs';
 import { chartAlt } from '../engine/alt.ts';
+import { niceStep } from '../engine/charts.ts';
 import { culture } from '../engine/i18n.ts';
 import type {
   ChartNode,
@@ -21,6 +22,7 @@ import type {
 import { in2pt } from '../engine/scene.ts';
 import { spacingMultiple } from '../engine/text.ts';
 import { VERSION } from '../paths.ts';
+import { pngSize } from '../qa/pptx-verify.ts';
 import { markDecorative, markTitle, shapeName, titleFirst } from './pptx-a11y.ts';
 import { applyTemplate } from './pptx-template.ts';
 import { rasterize } from './resvg.ts';
@@ -77,6 +79,27 @@ export function endMarkLikeLastRun(xml: string): string {
       .replace(/<\/a:rPr>$/, '</a:endParaRPr>');
     return p.replace(/<a:endParaRPr\b[^>]*?(?:\/>|>[\s\S]*?<\/a:endParaRPr>)/, mark);
   });
+}
+
+// pptxgenjs' fixed axis ids
+const SECONDARY_VAL_AXIS = '2094734553';
+const SERIES_AXIS = '2094734556';
+
+/** Name of freeforms drawn with round caps and joins (icons). */
+export const ROUND_SHAPE = 'Icon';
+
+/** Give icon freeforms round caps and joins, as their SVG source draws them. */
+export function roundIconStrokes(xml: string): string {
+  if (!xml.includes(`name="${ROUND_SHAPE}"`)) return xml;
+  return xml.replace(/<p:sp>[\s\S]*?<\/p:sp>/g, (sp) =>
+    sp.includes(`name="${ROUND_SHAPE}"`)
+      ? sp.replace(
+          /<a:ln\b([^>]*)>([\s\S]*?)<\/a:ln>/,
+          (_, attrs: string, body: string) =>
+            `<a:ln${attrs.replace(/\s+cap="[^"]*"/, '')} cap="rnd">${body.replace(/<a:(?:round|miter|bevel)\b[^>]*\/>/g, '')}<a:round/></a:ln>`,
+        )
+      : sp,
+  );
 }
 
 /** pptxgenjs writes multi-line notes as one run with raw line feeds; PowerPoint wants one
@@ -249,13 +272,71 @@ function addChart(pptx: Pptx, slide: Slide, n: ChartNode) {
       if (n.type === 'stacked-column' || n.type === 'stacked-bar') opts.dataLabelColor = 'FFFFFF';
     }
   }
-  slide.addChart(chartType(pptx, n), data, opts);
+  if (n.type === 'combo' && n.lineAxis) {
+    // bars on the primary axis, the line on a secondary one; both hidden, labels overlaid
+    const [bars, line] = n.series as [ChartNode['series'][0], ChartNode['series'][0]];
+    const hiddenVal = (min: number, max: number) => ({
+      valAxisHidden: true,
+      valAxisMinVal: min,
+      valAxisMaxVal: max,
+      valAxisMajorUnit: niceStep(max - min),
+      valGridLine: { style: 'none' },
+      valAxisLineShow: false,
+      valAxisMajorTickMark: 'none',
+    });
+    Object.assign(opts, {
+      showValue: false,
+      showLegend: false,
+      // PowerPoint plots a series against a deleted value axis as if it were the other
+      // axis: keep both axes, invisible (no labels, line or ticks).
+      valAxes: [
+        { ...hiddenVal(n.axis.min, n.axis.max), valAxisHidden: false, valAxisLabelPos: 'none' },
+        {
+          ...hiddenVal(n.lineAxis.min, n.lineAxis.max),
+          valAxisHidden: false,
+          valAxisLabelPos: 'none',
+        },
+      ],
+      catAxes: [{}, { catAxisHidden: true }],
+    });
+    slide.addChart(
+      [
+        {
+          type: pptx.ChartType.bar,
+          data: [{ name: bars.name, labels: n.categories, values: bars.values }],
+          options: {
+            barDir: 'col',
+            barGrouping: 'clustered',
+            barGapWidthPct: n.gapWidth,
+            dataLabelPosition: 'outEnd',
+            chartColors: [hex(bars.color)],
+          },
+        },
+        {
+          type: pptx.ChartType.line,
+          data: [{ name: line.name, labels: n.categories, values: line.values }],
+          options: {
+            chartColors: [hex(line.color)],
+            lineSize: 2.25,
+            lineDataSymbol: 'circle',
+            lineDataSymbolSize: 6,
+            // line charts accept t/b/l/r/ctr only; outEnd (inherited from bars) corrupts the chart
+            dataLabelPosition: 't',
+            secondaryValAxis: true,
+            secondaryCatAxis: true,
+          },
+        },
+      ] as Any,
+      opts,
+    );
+  } else slide.addChart(chartType(pptx, n), data, opts);
   // Overlays computed by the engine where native charts cannot express them.
   for (const p of n.primitives) {
     const role = (p as { role?: string }).role;
     const overlay =
       (!n.nativeLabels && (role === 'chart-label' || role === 'chart-connector')) ||
-      role === 'chart-total';
+      role === 'chart-total' ||
+      (n.type === 'combo' && role === 'chart-legend');
     if (overlay) addNode(pptx, slide, p);
   }
 }
@@ -275,12 +356,17 @@ async function addImage(slide: Slide, n: Extract<SceneNode, { kind: 'image' }>) 
     return;
   }
   if (n.path) {
+    // pptxgenjs crops from the aspect of `w`/`h`, not of the file: give it the picture's own
+    // proportions so cover/contain crop exactly like the HTML and PDF engines (otherwise the
+    // photo is stretched to the box).
+    const px = pngSize(readFileSync(n.path));
+    const ih = px ? (w * px.h) / px.w : h;
     slide.addImage({
       path: n.path,
       x,
       y,
       w,
-      h,
+      h: ih,
       altText: n.alt,
       sizing: { type: n.fit === 'cover' ? 'cover' : 'contain', w, h },
     });
@@ -362,6 +448,33 @@ function addNode(pptx: Pptx, slide: Slide, n: SceneNode, slideId?: string): Prom
             transparency: n.fillOpacity !== undefined ? Math.round((1 - n.fillOpacity) * 100) : 0,
           }
         : { type: 'none' };
+      slide.addShape(pptx.ShapeType.custGeom, o);
+      return;
+    }
+    case 'path': {
+      const { x, y, w, h } = n.box;
+      const points: Any[] = [];
+      for (const g of n.segments) {
+        if (g.op === 'Z') points.push({ close: true });
+        else if (g.op === 'C')
+          points.push({
+            x: g.x - x,
+            y: g.y - y,
+            curve: { type: 'cubic', x1: g.x1 - x, y1: g.y1 - y, x2: g.x2 - x, y2: g.y2 - y },
+          });
+        else points.push({ x: g.x - x, y: g.y - y, ...(g.op === 'M' ? { moveTo: true } : {}) });
+      }
+      const o: Any = {
+        x,
+        y,
+        w: Math.max(0.001, w),
+        h: Math.max(0.001, h),
+        points,
+        line: lineProps(n.stroke),
+        // round caps and joins are added in post-processing (pptxgenjs has no option)
+        objectName: shapeName(n, slideId) ?? (n.round ? ROUND_SHAPE : 'Freeform'),
+      };
+      o.fill = n.fill ? { color: hex(n.fill) } : { type: 'none' };
       slide.addShape(pptx.ShapeType.custGeom, o);
       return;
     }
@@ -581,7 +694,7 @@ export async function normalizeZip(
           );
         });
       }
-      xml = crispAxisLines(endMarkLikeLastRun(xml));
+      xml = roundIconStrokes(crispAxisLines(endMarkLikeLastRun(xml)));
       // The action title is the slide's title placeholder, read first; pictures without
       // alt text are decorative (pptxgenjs would otherwise write the file path as descr).
       xml = markDecorative(titleFirst(markTitle(xml)));
@@ -592,6 +705,13 @@ export async function normalizeZip(
           '<a:hlinkClick $1><a:extLst><a:ext uri="{A12FA001-AC4F-418D-AE19-62706E023703}"><ahyp:hlinkClr xmlns:ahyp="http://schemas.microsoft.com/office/drawing/2018/hyperlinkcolor" val="tx"/></a:ext></a:extLst></a:hlinkClick>',
         );
       data = xml;
+    }
+    // Combo charts: pptxgenjs gives every 2D chart a third (series) axis id, which makes
+    // PowerPoint bind the line to the primary axis; 2D charts take exactly two.
+    if (/^ppt\/charts\/chart\d+\.xml$/.test(name)) {
+      const xml = Buffer.from(data).toString('utf8');
+      if (xml.includes(`<c:axId val="${SECONDARY_VAL_AXIS}"/>`) && !xml.includes('<c:serAx>'))
+        data = xml.replaceAll(`<c:axId val="${SERIES_AXIS}"/>`, '');
     }
     // Brand theme part: Design tab, theme colours and fonts follow the customer's template.
     if (opts.officeTheme && name === 'ppt/theme/theme1.xml') data = readFileSync(opts.officeTheme);

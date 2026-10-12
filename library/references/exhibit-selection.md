@@ -10,6 +10,7 @@ Start from the sentence in the title. Identify the **relationship** it claims, t
 |---|---|---|---|
 | **Ranking / comparison** of items | `chart-takeaway` · bar | Fewer than 3 items → `kpi-tiles` | Unsorted bars; highlighting every bar |
 | **Trend over time** | `chart-takeaway` · column (≤ 8 periods), line (more) | One before/after pair → `kpi-tiles` with delta | Mixing periods of different length |
+| **A volume and a rate over the same periods** | `chart-takeaway` · combo (bars + line on its own scale) | Two volumes in one unit → clustered column | Reading the two scales against each other — every point is labelled |
 | **Composition / mix** | `chart-takeaway` · stacked | More than 4 segments → table | Pie charts with many slices |
 | **Bridge / variance** (from A to B) | `waterfall` · full / with-takeaway | No start and end totals → bar chart of drivers | Steps that do not add up |
 | **A few headline numbers** | `kpi-tiles` · tiles / strip | Numbers with different periods side by side unlabeled | Five tiles: pick the 2–4 that matter |
@@ -49,6 +50,8 @@ Start from the sentence in the title. Identify the **relationship** it claims, t
 | **Value ranges from several methods** | `football-field` (marker = offer or bid) | Point estimates → bar chart | Methods with different bases unlabelled |
 | **Internal and external position** | `swot` · grid / with-implications | No implications → add them or use `key-points` | Generic points ("strong brand") without evidence |
 | **How attractive an industry is** | `five-forces` | Named competitors → `bubble-chart` or `options-comparison` | Ratings without evidence |
+| **Where a business creates or loses value** | `value-chain` | A process with owners and dates → `process-steps`, `timeline` | Highlighting every activity |
+| **Is the organisation set up for a change** | `seven-s` | Market factors → `swot`, `pestel` | Ratings without evidence; calling an assessment measured when it is a judgement |
 | **Macro trends that shape the case** | `pestel` | Trends that do not change the decision — cut them | Six boxes filled for completeness |
 | **The whole business model** | `business-model-canvas` | Only economics → `waterfall` / `data-table` | Mixing today's and target model on one canvas |
 | **A bespoke visual no layout covers** | `freeform` · body | Any exhibit a layout covers (layouts stay editable) | Text below the theme minimum |

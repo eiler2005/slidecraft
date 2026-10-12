@@ -93,6 +93,16 @@ SC-CONSIST-001  "revenue germany 2028" is €40M on answer; €42M on plan
 
 Rounding is allowed: "€40M" and "€40.2M" agree, because €40M is how €40.2M is written at that precision. Fix a report by deciding which value is right, putting it in `facts:` and writing `{{id}}` in both places.
 
+Two more checks run on every deck:
+
+| Code | Catches | Example |
+|---|---|---|
+| `SC-CONSIST-002` | **Totals that do not add up** — a "Total" row or column in a table, a "Total" category in a chart, a waterfall total that differs from the running sum; tolerance is one unit of the last digit shown | `Total row, Month 2: total $69k, parts add up to $67k` |
+| `SC-CONSIST-003` | **One figure, another period or currency** — the same metric and value labelled 2027 on one slide and 2028 on another, or € here and $ there | `"germany revenue" €40M/€40M: period 2027 on a, 2028 on b` |
+
+Shares are checked only when the total is 100%; growth rates in a total row are left alone.
+Subtotal rows are allowed: the total may equal the sum of the subtotals instead.
+
 ## When something cannot be read
 
 | Code | Meaning |

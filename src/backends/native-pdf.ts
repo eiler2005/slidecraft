@@ -2,12 +2,14 @@
  * Native PDF engine: pdfkit draws the Scene IR directly. Vector output, embedded
  * subset fonts, selectable text, deterministic with a fixed epoch.
  */
+
 import { createWriteStream, mkdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import PDFDocument from 'pdfkit';
 import { chartAlt } from '../engine/alt.ts';
 import { type Face, faceOf, fontPath, measureFontIds } from '../engine/fonts.ts';
 import type { Master, Scene, SceneNode, Stroke, TextNode } from '../engine/scene.ts';
+import { pathData } from '../engine/svg-path.ts';
 import type { MeasureFont } from '../spec/theme.ts';
 import { rasterize, rasterizeOpaque } from './resvg.ts';
 import type { Engine } from './types.ts';
@@ -103,6 +105,18 @@ async function drawNode(doc: Doc, n: SceneNode): Promise<void> {
       doc.polygon(...n.points.map(([x, y]) => [x * P, y * P] as [number, number]));
       if (n.fill) doc.fillOpacity(n.fillOpacity ?? 1).fillColor(n.fill);
       if (n.stroke) applyStroke(doc, n.stroke);
+      if (n.fill && n.stroke) doc.fillAndStroke();
+      else if (n.fill) doc.fill();
+      else if (n.stroke) doc.stroke();
+      doc.restore();
+      return;
+    }
+    case 'path': {
+      doc.save();
+      doc.path(pathData(n.segments, P));
+      if (n.fill) doc.fillColor(n.fill);
+      if (n.stroke) applyStroke(doc, n.stroke);
+      if (n.round) doc.lineCap('round').lineJoin('round');
       if (n.fill && n.stroke) doc.fillAndStroke();
       else if (n.fill) doc.fill();
       else if (n.stroke) doc.stroke();

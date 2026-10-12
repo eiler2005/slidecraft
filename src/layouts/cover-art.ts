@@ -146,24 +146,25 @@ const TOPICS: Record<CoverArt, string[]> = {
   ],
 };
 
-/** The motif whose topic words the text mentions most; ties and no match fall back by hash. */
-export function pickCoverArt(text: string): CoverArt {
+/** Every motif with the topic words of the text it matches, best first (ties keep the
+ * motif order). */
+export function rankCoverArt(text: string): { art: CoverArt; score: number; matched: string[] }[] {
   const words = text
     .toLowerCase()
     .split(/[^\p{L}\p{N}]+/u)
     .filter(Boolean);
-  let best: CoverArt | undefined;
-  let bestScore = 0;
-  for (const art of COVER_ART) {
-    const score = words.filter((w) =>
+  return COVER_ART.map((art) => {
+    const matched = words.filter((w) =>
       TOPICS[art].some((stem) => (stem.length <= 3 ? w === stem : w.startsWith(stem))),
-    ).length;
-    if (score > bestScore) {
-      best = art;
-      bestScore = score;
-    }
-  }
-  return best ?? COVER_ART[hash(text) % COVER_ART.length]!;
+    );
+    return { art, score: matched.length, matched: [...new Set(matched)] };
+  }).sort((a, b) => b.score - a.score);
+}
+
+/** The motif whose topic words the text mentions most; no match falls back by hash. */
+export function pickCoverArt(text: string): CoverArt {
+  const best = rankCoverArt(text)[0]!;
+  return best.score > 0 ? best.art : COVER_ART[hash(text) % COVER_ART.length]!;
 }
 
 function hash(s: string): number {

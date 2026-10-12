@@ -1,0 +1,1194 @@
+{
+  "dir": "docs/showcase/fde-engineer/en-v2/visual-qa",
+  "deck": "examples/fde-engineer-en-v2/deck.yaml",
+  "theme": "fde-desk",
+  "renderer": "Microsoft PowerPoint via AppleScript (jobs run in its sandbox container: no access prompts)",
+  "target": 0.95,
+  "slides": [
+    {
+      "slide": 1,
+      "id": "cover",
+      "title": "Forward Deployed Engineers turn AI pilots into working products",
+      "layout": "title",
+      "images": {
+        "html": "01-cover-html.png",
+        "pptx": "01-cover-pptx.png",
+        "diff": "01-cover-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.7679738562091504,
+        "hotspots": [
+          {
+            "region": "row 1, column 1",
+            "score": 0.936,
+            "box": {
+              "x": 0,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 2",
+            "score": 0.768,
+            "box": {
+              "x": 239.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 3",
+            "score": 0.912,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 4",
+            "score": 0.944,
+            "box": {
+              "x": 719.98,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 1",
+            "score": 0.908,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 2",
+            "score": 0.889,
+            "box": {
+              "x": 239.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 3",
+            "score": 0.947,
+            "box": {
+              "x": 479.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 2",
+            "score": 0.927,
+            "box": {
+              "x": 239.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [
+        {
+          "code": "SC-IMG-001",
+          "severity": "warning",
+          "message": "Image cover.jpg is 91 ppi at placed size"
+        }
+      ],
+      "contrast": [
+        {
+          "text": "BRIEFING · 2026 · SECOND EDITION [kicker]",
+          "ratio": 5.08,
+          "needs": 4.5,
+          "fg": "#AC571F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [
+        "Photo: Yutaka Tsutano / Openverse · Flickr, CC B [photo-credit]"
+      ],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 2,
+      "id": "why-now",
+      "title": "AI companies hire FDEs because most AI pilots stall before production",
+      "layout": "kpi-tiles",
+      "images": {
+        "html": "02-why-now-html.png",
+        "pptx": "02-why-now-pptx.png",
+        "diff": "02-why-now-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.810890952872377,
+        "hotspots": [
+          {
+            "region": "row 1, column 3",
+            "score": 0.885,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 4",
+            "score": 0.92,
+            "box": {
+              "x": 719.98,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 1",
+            "score": 0.915,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.893,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.831,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 3",
+            "score": 0.811,
+            "box": {
+              "x": 479.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 4",
+            "score": 0.95,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "WHY NOW [tracker]",
+          "ratio": 5.08,
+          "needs": 4.5,
+          "fg": "#AC571F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Financial Times data reported by Fast Company [kpi-note]",
+          "ratio": 5.83,
+          "needs": 4.5,
+          "fg": "#546275",
+          "bg": "#FBF7F4"
+        },
+        {
+          "text": "MIT NANDA, The GenAI Divide [kpi-note]",
+          "ratio": 5.83,
+          "needs": 4.5,
+          "fg": "#546275",
+          "bg": "#FBF7F4"
+        },
+        {
+          "text": "Engineers placed with government and enterprise  [kpi-note]",
+          "ratio": 5.83,
+          "needs": 4.5,
+          "fg": "#546275",
+          "bg": "#FBF7F4"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 3,
+      "id": "value-chain",
+      "title": "The FDE owns the middle of the AI value chain, where most pilots stall",
+      "layout": "value-chain",
+      "images": {
+        "html": "03-value-chain-html.png",
+        "pptx": "03-value-chain-pptx.png",
+        "diff": "03-value-chain-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8708842001318928,
+        "hotspots": [
+          {
+            "region": "row 1, column 2",
+            "score": 0.909,
+            "box": {
+              "x": 239.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 3",
+            "score": 0.899,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 1",
+            "score": 0.89,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 2",
+            "score": 0.871,
+            "box": {
+              "x": 239.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 1",
+            "score": 0.871,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 2",
+            "score": 0.892,
+            "box": {
+              "x": 239.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 3",
+            "score": 0.876,
+            "box": {
+              "x": 479.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 4",
+            "score": 0.884,
+            "box": {
+              "x": 719.98,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.927,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.921,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "WHERE IT FITS [tracker]",
+          "ratio": 5.08,
+          "needs": 4.5,
+          "fg": "#AC571F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "MARGIN",
+          "ratio": 4.54,
+          "needs": 4.5,
+          "fg": "#A3531D",
+          "bg": "#F3E7E0"
+        },
+        {
+          "text": "MODELS AND PLATFORM",
+          "ratio": 5.83,
+          "needs": 4.5,
+          "fg": "#546275",
+          "bg": "#FBF7F4"
+        },
+        {
+          "text": "SECURITY AND COMPLIANCE",
+          "ratio": 5.83,
+          "needs": 4.5,
+          "fg": "#546275",
+          "bg": "#FBF7F4"
+        },
+        {
+          "text": "PEOPLE AND INCENTIVES",
+          "ratio": 5.83,
+          "needs": 4.5,
+          "fg": "#546275",
+          "bg": "#FBF7F4"
+        },
+        {
+          "text": "Data access",
+          "ratio": 5.08,
+          "needs": 4.5,
+          "fg": "#FFFFFF",
+          "bg": "#AC571F"
+        },
+        {
+          "text": "Build and integrate",
+          "ratio": 5.08,
+          "needs": 4.5,
+          "fg": "#FFFFFF",
+          "bg": "#AC571F"
+        },
+        {
+          "text": "Ship and evaluate",
+          "ratio": 5.08,
+          "needs": 4.5,
+          "fg": "#FFFFFF",
+          "bg": "#AC571F"
+        },
+        {
+          "text": "Source:  What is a Forward Deployed AI Engineer? [source]",
+          "ratio": 1.22,
+          "needs": 4.5,
+          "fg": "#546275",
+          "bg": "#AC571F"
+        }
+      ],
+      "offPalette": [
+        "#A3531D"
+      ],
+      "nearMisalignments": [
+        {
+          "a": "WHERE IT FITS [tracker]",
+          "b": "Business owner and metric agreed",
+          "edge": "left",
+          "deltaPt": 2.9
+        },
+        {
+          "a": "The FDE owns the middle of the AI value chain, w [title]",
+          "b": "Business owner and metric agreed",
+          "edge": "left",
+          "deltaPt": 2.9
+        },
+        {
+          "a": "polygon [margin]",
+          "b": "MARGIN",
+          "edge": "left",
+          "deltaPt": 2.9
+        },
+        {
+          "a": "rect [band]",
+          "b": "Business owner and metric agreed",
+          "edge": "left",
+          "deltaPt": 2.9
+        },
+        {
+          "a": "MODELS AND PLATFORM",
+          "b": "Pick the use case",
+          "edge": "left",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "rect [band]",
+          "b": "Business owner and metric agreed",
+          "edge": "left",
+          "deltaPt": 2.9
+        },
+        {
+          "a": "SECURITY AND COMPLIANCE",
+          "b": "Pick the use case",
+          "edge": "left",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "rect [band]",
+          "b": "Business owner and metric agreed",
+          "edge": "left",
+          "deltaPt": 2.9
+        },
+        {
+          "a": "PEOPLE AND INCENTIVES",
+          "b": "Pick the use case",
+          "edge": "left",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Business owner and metric agreed",
+          "edge": "left",
+          "deltaPt": 2.9
+        },
+        {
+          "a": "Business owner and metric agreed",
+          "b": "rect [takeaway]",
+          "edge": "left",
+          "deltaPt": 2.9
+        },
+        {
+          "a": "Business owner and metric agreed",
+          "b": "rect [panel-accent]",
+          "edge": "left",
+          "deltaPt": 2.9
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 4,
+      "id": "cycle",
+      "title": "The FDE cycle runs from the user's desk to the core product",
+      "layout": "process-steps",
+      "images": {
+        "html": "04-cycle-html.png",
+        "pptx": "04-cycle-pptx.png",
+        "diff": "04-cycle-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8274509803921568,
+        "hotspots": [
+          {
+            "region": "row 1, column 3",
+            "score": 0.943,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 1",
+            "score": 0.887,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 2",
+            "score": 0.913,
+            "box": {
+              "x": 239.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 3",
+            "score": 0.887,
+            "box": {
+              "x": 479.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 4",
+            "score": 0.924,
+            "box": {
+              "x": 719.98,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.89,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.827,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 4",
+            "score": 0.94,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "WHAT THEY DO [tracker]",
+          "ratio": 5.08,
+          "needs": 4.5,
+          "fg": "#AC571F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "WHAT THEY DO [tracker]",
+          "b": "Sit with the people who do the work and map the ",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "The FDE cycle runs from the user's desk to the c [title]",
+          "b": "Sit with the people who do the work and map the ",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Sit with the people who do the work and map the ",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "path [icon]",
+          "b": "Sit with the people who do the work and map the ",
+          "edge": "left",
+          "deltaPt": 3.4
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 1.1
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 3.4
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 0.7
+        },
+        {
+          "a": "Sit with the people who do the work and map the ",
+          "b": "Source:  What is a Forward Deployed AI Engineer? [source]",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Choose the step where AI changes cost, time or q",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "path [icon]",
+          "b": "Choose the step where AI changes cost, time or q",
+          "edge": "left",
+          "deltaPt": 3.4
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 1.1
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 3.4
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 5,
+      "id": "profile",
+      "title": "The profile combines production engineering, applied AI and customer judgement",
+      "layout": "key-points",
+      "images": {
+        "html": "05-profile-html.png",
+        "pptx": "05-profile-pptx.png",
+        "diff": "05-profile-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8274509803921568,
+        "hotspots": [
+          {
+            "region": "row 2, column 1",
+            "score": 0.863,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 2",
+            "score": 0.918,
+            "box": {
+              "x": 239.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 3",
+            "score": 0.918,
+            "box": {
+              "x": 479.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 4",
+            "score": 0.886,
+            "box": {
+              "x": 719.98,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.89,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.827,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "WHO TO HIRE [tracker]",
+          "ratio": 5.08,
+          "needs": 4.5,
+          "fg": "#AC571F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "WHO TO HIRE [tracker]",
+          "b": "path [icon]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "The profile combines production engineering, app [title]",
+          "b": "path [icon]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "Production engineering [heading]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 1.3
+        },
+        {
+          "a": "path [icon]",
+          "b": "Full-stack and data skills; integrates with lega [body]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "Source:  What is a Forward Deployed AI Engineer? [source]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "Applied AI [heading]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 0.9
+        },
+        {
+          "a": "path [icon]",
+          "b": "Works with model APIs, retrieval, evaluations an [body]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "Customer judgement [heading]",
+          "edge": "left",
+          "deltaPt": 3.3
+        },
+        {
+          "a": "path [icon]",
+          "b": "Scopes problems with domain experts, explains tr [body]",
+          "edge": "left",
+          "deltaPt": 3.3
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 6,
+      "id": "organisation",
+      "title": "Strategy and platform are usually ready; staff placement and skills are not",
+      "layout": "seven-s",
+      "images": {
+        "html": "06-organisation-html.png",
+        "pptx": "06-organisation-pptx.png",
+        "diff": "06-organisation-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8328223774384744,
+        "hotspots": [
+          {
+            "region": "row 1, column 3",
+            "score": 0.928,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 4",
+            "score": 0.843,
+            "box": {
+              "x": 719.98,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.916,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.835,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 3",
+            "score": 0.833,
+            "box": {
+              "x": 479.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "WHAT HAS TO CHANGE [tracker]",
+          "ratio": 5.08,
+          "needs": 4.5,
+          "fg": "#AC571F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "GAP",
+          "ratio": 5.08,
+          "needs": 4.5,
+          "fg": "#FFFFFF",
+          "bg": "#AC571F"
+        },
+        {
+          "text": "GAP",
+          "ratio": 5.08,
+          "needs": 4.5,
+          "fg": "#FFFFFF",
+          "bg": "#AC571F"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 7,
+      "id": "pilot-plan",
+      "title": "The pilot targets 40 weekly users and a third of tasks automated by week 12",
+      "layout": "chart-takeaway",
+      "images": {
+        "html": "07-pilot-plan-html.png",
+        "pptx": "07-pilot-plan-pptx.png",
+        "diff": "07-pilot-plan-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8524576432514753,
+        "hotspots": [
+          {
+            "region": "row 1, column 3",
+            "score": 0.916,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 4",
+            "score": 0.932,
+            "box": {
+              "x": 719.98,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.895,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.852,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 3",
+            "score": 0.878,
+            "box": {
+              "x": 479.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 4",
+            "score": 0.943,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "THE PILOT [tracker]",
+          "ratio": 5.08,
+          "needs": 4.5,
+          "fg": "#AC571F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [
+        "#A1A9B3"
+      ],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 8,
+      "id": "budget",
+      "title": "A one-quarter pilot costs about $206k, two-thirds of it the engineer",
+      "layout": "data-table",
+      "images": {
+        "html": "08-budget-html.png",
+        "pptx": "08-budget-pptx.png",
+        "diff": "08-budget-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8382083108472747,
+        "hotspots": [
+          {
+            "region": "row 3, column 1",
+            "score": 0.863,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.912,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.838,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 4",
+            "score": 0.938,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "THE PILOT [tracker]",
+          "ratio": 5.08,
+          "needs": 4.5,
+          "fg": "#AC571F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 9,
+      "id": "ask",
+      "title": "Approve one FDE on your highest-value AI workflow for one quarter",
+      "layout": "next-steps",
+      "images": {
+        "html": "09-ask-html.png",
+        "pptx": "09-ask-pptx.png",
+        "diff": "09-ask-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8668212623820366,
+        "hotspots": [
+          {
+            "region": "row 3, column 1",
+            "score": 0.867,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 2",
+            "score": 0.945,
+            "box": {
+              "x": 239.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "WHAT TO DO [tracker]",
+          "ratio": 5.08,
+          "needs": 4.5,
+          "fg": "#AC571F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "DECISION REQUESTED [label]",
+          "ratio": 5.08,
+          "needs": 4.5,
+          "fg": "#FFFFFF",
+          "bg": "#AC571F"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    }
+  ],
+  "deckFacts": {
+    "titleTopSpreadPt": 0,
+    "paletteSize": 11,
+    "pagesBelowTarget": 9
+  }
+}

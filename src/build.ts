@@ -193,6 +193,14 @@ export async function buildDeck(path: string, opts: BuildOptions = {}): Promise<
       info: sorted.filter((d) => d.severity === 'info').length,
       codes: [...new Set(sorted.map((d) => d.code))],
     },
+    ...(() => {
+      // stock photo credits: author, licence and page of every photo in the deck
+      const credits = loaded.slides.flatMap((s) => {
+        const c = (s as { imageCredit?: Record<string, string>; image?: string }).imageCredit;
+        return c ? [{ slide: s.id, image: (s as { image?: string }).image ?? null, ...c }] : [];
+      });
+      return credits.length ? { imageCredits: credits } : {};
+    })(),
     visual_review: false,
     limitations: [...limitations],
     slides: scene.slides.map((s) => ({

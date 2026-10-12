@@ -3,6 +3,7 @@ import { isAbsolute, resolve } from 'node:path';
 import { z } from 'zod';
 import { diag } from '../qa/codes.ts';
 import { COVER_ART, drawCoverArt, pickCoverArt } from './cover-art.ts';
+import { creditLine, ImageCredit, ImageQuery } from './image-credit.ts';
 import type { LayoutDef } from './types.ts';
 
 const schema = z
@@ -39,6 +40,8 @@ const schema = z
       .describe(
         'Cover: what the panel picture should show; `slidecraft images` generates it. Until then the art motif is drawn',
       ),
+    imageQuery: ImageQuery.optional(),
+    imageCredit: ImageCredit.optional(),
     alt: z
       .string()
       .max(140)
@@ -91,7 +94,7 @@ export const title: LayoutDef<typeof schema> = {
     const { page, colors, theme } = ctx;
     const left = 0.9;
     // cover visual: a right-hand panel with the deck's picture or topic motif
-    const visual = ctx.variant !== 'closing' && (c.art || c.image || c.imagePrompt);
+    const visual = ctx.variant !== 'closing' && (c.art || c.image || c.imagePrompt || c.imageQuery);
     const panelX = Math.round(page.w * 0.7 * 100) / 100;
     const width =
       ctx.variant === 'closing'
@@ -103,16 +106,37 @@ export const title: LayoutDef<typeof schema> = {
       if (file && existsSync(file)) {
         const img = ctx.image(panel, c.image, c.alt ?? '', { fit: 'cover', field: 'image' });
         if (!c.alt) img.decorative = true;
+        if (c.imageCredit) {
+          // the photo credit sits on the picture, bottom left, on a dark band
+          const h = 0.3;
+          const band = { x: panel.x, y: panel.y + panel.h - h, w: panel.w, h };
+          ctx.rect(band, { fill: '#000000', fillOpacity: 0.65, role: 'photo-credit' });
+          ctx.text(
+            creditLine(c.imageCredit, ctx.t('photo')),
+            { x: band.x + 0.12, y: band.y, w: band.w - 0.24, h },
+            {
+              role: 'photo-credit',
+              size: 'source',
+              color: '#FFFFFF',
+              valign: 'middle',
+              maxLines: 1,
+              fixed: true,
+              field: 'imageCredit',
+            },
+          );
+        }
       } else {
-        if (c.image || c.imagePrompt)
+        if (c.image || c.imagePrompt || c.imageQuery)
           ctx.issue(
             diag(
               'SC-IMG-002',
               c.image
                 ? `Cover image not found: ${c.image}; drawing the art motif instead`
-                : 'Cover image not generated yet (slidecraft images); drawing the art motif instead',
+                : c.imageQuery
+                  ? 'Cover photo not fetched yet (slidecraft images --stock); drawing the art motif instead'
+                  : 'Cover image not generated yet (slidecraft images); drawing the art motif instead',
               {
-                pointer: ctx.ptr(c.image ? 'image' : 'imagePrompt'),
+                pointer: ctx.ptr(c.image ? 'image' : c.imageQuery ? 'imageQuery' : 'imagePrompt'),
                 severity: c.image ? 'warning' : 'info',
               },
             ),

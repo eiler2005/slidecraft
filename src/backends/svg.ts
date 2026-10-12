@@ -2,11 +2,13 @@
  * Scene → SVG. Shared by the PNG (resvg) and HTML engines. Text is drawn line by
  * line from the measurer's breaks using the bundled metric-compatible families.
  */
+
 import { readFileSync } from 'node:fs';
 import { extname } from 'node:path';
 import { faceOf, vectorFamily } from '../engine/fonts.ts';
 import { freeformMarkup } from '../engine/freeform.ts';
 import type { Master, Scene, SceneNode, SceneSlide, Stroke, TextNode } from '../engine/scene.ts';
+import { pathData } from '../engine/svg-path.ts';
 import { autoPitchEm, drawSize, glyphOffsetsPt, layoutText, makeTextNode } from '../engine/text.ts';
 
 export const PX_PER_IN = 96;
@@ -109,6 +111,11 @@ function nodeBodySvg(n: SceneNode): string {
         : 'fill="none"';
       const pts = n.points.map(([x, y]) => `${px(x)},${px(y)}`).join(' ');
       return `<polygon points="${pts}" ${fill} ${strokeAttrs(n.stroke)}/>`;
+    }
+    case 'path': {
+      const fill = n.fill ? `fill="${n.fill}"` : 'fill="none"';
+      const round = n.round ? ' stroke-linecap="round" stroke-linejoin="round"' : '';
+      return `<path d="${pathData(n.segments, PX_PER_IN)}" ${fill} ${strokeAttrs(n.stroke)}${round}/>`;
     }
     case 'line': {
       let out = `<line x1="${px(n.x1)}" y1="${px(n.y1)}" x2="${px(n.x2)}" y2="${px(n.y2)}" ${strokeAttrs(n.stroke)}/>`;

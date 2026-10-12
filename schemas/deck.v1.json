@@ -430,6 +430,51 @@
                     "type": "string",
                     "maxLength": 400
                   },
+                  "imageQuery": {
+                    "type": "string",
+                    "maxLength": 120,
+                    "description": "Stock photo search, e.g. \"engineer with laptop in a warehouse\"; `slidecraft images --stock` fills `image`"
+                  },
+                  "imageCredit": {
+                    "type": "object",
+                    "properties": {
+                      "author": {
+                        "type": "string",
+                        "maxLength": 120
+                      },
+                      "provider": {
+                        "type": "string",
+                        "maxLength": 60,
+                        "description": "Where it came from, e.g. \"Openverse · Flickr\", \"Pexels\""
+                      },
+                      "license": {
+                        "type": "string",
+                        "maxLength": 60,
+                        "description": "e.g. \"CC BY 2.0\", \"Pexels License\""
+                      },
+                      "licenseUrl": {
+                        "type": "string",
+                        "maxLength": 300
+                      },
+                      "source": {
+                        "type": "string",
+                        "maxLength": 400,
+                        "description": "Page of the photo at the provider"
+                      },
+                      "title": {
+                        "type": "string",
+                        "maxLength": 200
+                      }
+                    },
+                    "required": [
+                      "author",
+                      "provider",
+                      "license",
+                      "source"
+                    ],
+                    "additionalProperties": false,
+                    "description": "Photo credit; shown with the slide sources, in the notes and in the manifest"
+                  },
                   "alt": {
                     "description": "Alt text of the cover picture; without it the picture is decorative",
                     "type": "string",
@@ -870,6 +915,126 @@
                           "description": "Proof number shown prominently, e.g. \"+18%\", \"€40M\", \"3×\"",
                           "type": "string",
                           "maxLength": 10
+                        },
+                        "icon": {
+                          "description": "Icon above the point (Tabler set); give every point one or none",
+                          "type": "string",
+                          "enum": [
+                            "adjustments",
+                            "alert-triangle",
+                            "api",
+                            "arrow-right",
+                            "arrow-up-right",
+                            "arrows-exchange",
+                            "award",
+                            "bolt",
+                            "box",
+                            "brain",
+                            "briefcase",
+                            "building",
+                            "building-bank",
+                            "building-factory",
+                            "building-store",
+                            "bulb",
+                            "calendar",
+                            "cash",
+                            "certificate",
+                            "chart-arrows-vertical",
+                            "chart-bar",
+                            "chart-dots",
+                            "chart-line",
+                            "chart-pie",
+                            "check",
+                            "checklist",
+                            "circle-check",
+                            "clipboard-check",
+                            "clock",
+                            "cloud",
+                            "code",
+                            "coin",
+                            "compass",
+                            "components",
+                            "cpu",
+                            "currency-dollar",
+                            "currency-euro",
+                            "database",
+                            "device-laptop",
+                            "device-mobile",
+                            "eye",
+                            "file-analytics",
+                            "file-text",
+                            "flag",
+                            "flask",
+                            "gauge",
+                            "git-branch",
+                            "heart",
+                            "heart-handshake",
+                            "hierarchy",
+                            "home",
+                            "hourglass",
+                            "infinity",
+                            "info-circle",
+                            "layout-dashboard",
+                            "leaf",
+                            "lifebuoy",
+                            "link",
+                            "list-check",
+                            "lock",
+                            "mail",
+                            "map",
+                            "map-pin",
+                            "message",
+                            "messages",
+                            "microscope",
+                            "network",
+                            "package",
+                            "phone",
+                            "plane",
+                            "player-play",
+                            "plug",
+                            "presentation",
+                            "puzzle",
+                            "receipt",
+                            "refresh",
+                            "report-analytics",
+                            "robot",
+                            "rocket",
+                            "route",
+                            "run",
+                            "scale",
+                            "school",
+                            "search",
+                            "server",
+                            "settings",
+                            "shield",
+                            "shield-check",
+                            "shopping-cart",
+                            "sitemap",
+                            "sparkles",
+                            "speakerphone",
+                            "stack-2",
+                            "star",
+                            "stopwatch",
+                            "target",
+                            "terminal-2",
+                            "tool",
+                            "tools",
+                            "trending-down",
+                            "trending-up",
+                            "trophy",
+                            "truck",
+                            "user",
+                            "user-check",
+                            "user-search",
+                            "users",
+                            "users-group",
+                            "versions",
+                            "walk",
+                            "wand",
+                            "world",
+                            "x",
+                            "zoom-check"
+                          ]
                         }
                       },
                       "required": [
@@ -1342,6 +1507,51 @@
                     "description": "What the picture should show; `slidecraft images` generates it when `image` is empty",
                     "type": "string",
                     "maxLength": 400
+                  },
+                  "imageQuery": {
+                    "type": "string",
+                    "maxLength": 120,
+                    "description": "Stock photo search, e.g. \"engineer with laptop in a warehouse\"; `slidecraft images --stock` fills `image`"
+                  },
+                  "imageCredit": {
+                    "type": "object",
+                    "properties": {
+                      "author": {
+                        "type": "string",
+                        "maxLength": 120
+                      },
+                      "provider": {
+                        "type": "string",
+                        "maxLength": 60,
+                        "description": "Where it came from, e.g. \"Openverse · Flickr\", \"Pexels\""
+                      },
+                      "license": {
+                        "type": "string",
+                        "maxLength": 60,
+                        "description": "e.g. \"CC BY 2.0\", \"Pexels License\""
+                      },
+                      "licenseUrl": {
+                        "type": "string",
+                        "maxLength": 300
+                      },
+                      "source": {
+                        "type": "string",
+                        "maxLength": 400,
+                        "description": "Page of the photo at the provider"
+                      },
+                      "title": {
+                        "type": "string",
+                        "maxLength": 200
+                      }
+                    },
+                    "required": [
+                      "author",
+                      "provider",
+                      "license",
+                      "source"
+                    ],
+                    "additionalProperties": false,
+                    "description": "Photo credit; shown with the slide sources, in the notes and in the manifest"
                   },
                   "caption": {
                     "description": "Small line under the image: what it shows and where it was taken",
@@ -3252,7 +3462,8 @@
                       "bar",
                       "column",
                       "stacked",
-                      "line"
+                      "line",
+                      "combo"
                     ]
                   },
                   "chart": {
@@ -3303,6 +3514,16 @@
                         "maxLength": 4
                       },
                       "decimals": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 2
+                      },
+                      "lineUnit": {
+                        "description": "Combo: unit of the line series (the second), e.g. \"%\" next to bars in €M",
+                        "type": "string",
+                        "maxLength": 4
+                      },
+                      "lineDecimals": {
                         "type": "integer",
                         "minimum": 0,
                         "maximum": 2
@@ -6026,6 +6247,520 @@
                   },
                   "layout": {
                     "type": "string",
+                    "const": "value-chain"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "porter"
+                    ]
+                  },
+                  "support": {
+                    "default": [],
+                    "description": "Support activities across the chain (infrastructure, people, technology…)",
+                    "maxItems": 4,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "maxLength": 28
+                        },
+                        "point": {
+                          "description": "One line: what this function adds",
+                          "type": "string",
+                          "maxLength": 110
+                        }
+                      },
+                      "required": [
+                        "name"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "primary": {
+                    "minItems": 3,
+                    "maxItems": 6,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "maxLength": 28,
+                          "description": "Activity, e.g. \"Inbound logistics\", \"Customer success\""
+                        },
+                        "points": {
+                          "default": [],
+                          "description": "Where value is created or lost in this activity",
+                          "maxItems": 3,
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "maxLength": 80
+                          }
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "points"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "description": "Primary activities in the order value flows to the customer"
+                  },
+                  "highlight": {
+                    "description": "Indices of primary activities where the insight sits",
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 9007199254740991
+                    }
+                  },
+                  "margin": {
+                    "description": "Label of the margin arrow; defaults to \"Margin\" in the deck language",
+                    "type": "string",
+                    "maxLength": 14
+                  },
+                  "takeaway": {
+                    "description": "The so-what, in a band under the chain",
+                    "type": "string",
+                    "maxLength": 140
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "support",
+                  "primary"
+                ],
+                "additionalProperties": false,
+                "description": "Value chain — Use for showing where a business creates or loses value: Porter's primary activities in order, support activities across them, and the margin."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
+                    "const": "seven-s"
+                  },
+                  "variant": {
+                    "type": "string",
+                    "enum": [
+                      "diagram"
+                    ]
+                  },
+                  "strategy": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "aligned",
+                          "partial",
+                          "gap"
+                        ],
+                        "description": "aligned, partial or gap — how well it supports the change"
+                      },
+                      "points": {
+                        "minItems": 1,
+                        "maxItems": 2,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "maxLength": 70
+                        },
+                        "description": "Evidence for the status"
+                      }
+                    },
+                    "required": [
+                      "status",
+                      "points"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "structure": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "aligned",
+                          "partial",
+                          "gap"
+                        ],
+                        "description": "aligned, partial or gap — how well it supports the change"
+                      },
+                      "points": {
+                        "minItems": 1,
+                        "maxItems": 2,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "maxLength": 70
+                        },
+                        "description": "Evidence for the status"
+                      }
+                    },
+                    "required": [
+                      "status",
+                      "points"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "systems": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "aligned",
+                          "partial",
+                          "gap"
+                        ],
+                        "description": "aligned, partial or gap — how well it supports the change"
+                      },
+                      "points": {
+                        "minItems": 1,
+                        "maxItems": 2,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "maxLength": 70
+                        },
+                        "description": "Evidence for the status"
+                      }
+                    },
+                    "required": [
+                      "status",
+                      "points"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "sharedValues": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "aligned",
+                          "partial",
+                          "gap"
+                        ],
+                        "description": "aligned, partial or gap — how well it supports the change"
+                      },
+                      "points": {
+                        "minItems": 1,
+                        "maxItems": 2,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "maxLength": 70
+                        },
+                        "description": "Evidence for the status"
+                      }
+                    },
+                    "required": [
+                      "status",
+                      "points"
+                    ],
+                    "additionalProperties": false,
+                    "description": "The centre: what the organisation believes and rewards"
+                  },
+                  "style": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "aligned",
+                          "partial",
+                          "gap"
+                        ],
+                        "description": "aligned, partial or gap — how well it supports the change"
+                      },
+                      "points": {
+                        "minItems": 1,
+                        "maxItems": 2,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "maxLength": 70
+                        },
+                        "description": "Evidence for the status"
+                      }
+                    },
+                    "required": [
+                      "status",
+                      "points"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "staff": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "aligned",
+                          "partial",
+                          "gap"
+                        ],
+                        "description": "aligned, partial or gap — how well it supports the change"
+                      },
+                      "points": {
+                        "minItems": 1,
+                        "maxItems": 2,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "maxLength": 70
+                        },
+                        "description": "Evidence for the status"
+                      }
+                    },
+                    "required": [
+                      "status",
+                      "points"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "skills": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "aligned",
+                          "partial",
+                          "gap"
+                        ],
+                        "description": "aligned, partial or gap — how well it supports the change"
+                      },
+                      "points": {
+                        "minItems": 1,
+                        "maxItems": 2,
+                        "type": "array",
+                        "items": {
+                          "type": "string",
+                          "maxLength": 70
+                        },
+                        "description": "Evidence for the status"
+                      }
+                    },
+                    "required": [
+                      "status",
+                      "points"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "takeaway": {
+                    "description": "Where to act first, shown under the diagram",
+                    "type": "string",
+                    "maxLength": 120
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "layout",
+                  "strategy",
+                  "structure",
+                  "systems",
+                  "sharedValues",
+                  "style",
+                  "staff",
+                  "skills"
+                ],
+                "additionalProperties": false,
+                "description": "McKinsey 7S — Use for checking whether an organisation is set up for a change: the seven elements, each rated aligned, partial or gap, with the evidence."
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9][a-z0-9-]*$",
+                    "description": "Stable slide id; reviews and fixes target slides by id"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 3,
+                    "maxLength": 140,
+                    "description": "Action title: one full-sentence claim, ideally 8–14 words; the body proves it"
+                  },
+                  "lead": {
+                    "description": "Optional one-line lead under the title",
+                    "type": "string",
+                    "maxLength": 160
+                  },
+                  "tracker": {
+                    "description": "Section label shown above the title",
+                    "type": "string",
+                    "maxLength": 40
+                  },
+                  "frame": {
+                    "description": "Explicit frame override; otherwise use the layout and theme canvasFrame",
+                    "type": "string",
+                    "enum": [
+                      "standard",
+                      "none"
+                    ]
+                  },
+                  "bottomLine": {
+                    "description": "Bottom conclusion band, styled by the theme independently of the exhibit",
+                    "type": "string",
+                    "maxLength": 400
+                  },
+                  "sources": {
+                    "description": "Ids from the deck `sources:` list, optionally with a place: \"annual-report#p14\", \"#p14-16\", \"#slide3\", \"#sheet:Plan\"",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "source": {
+                    "description": "Free-text source line, if not in the registry",
+                    "type": "string",
+                    "maxLength": 180
+                  },
+                  "notes": {
+                    "description": "Speaker notes",
+                    "type": "string",
+                    "maxLength": 3000
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": [
+                      "ghost",
+                      "draft",
+                      "final"
+                    ]
+                  },
+                  "ghost": {
+                    "description": "Ghost-deck planning fields; rendered as a sketch until content is filled",
+                    "type": "object",
+                    "properties": {
+                      "exhibit": {
+                        "type": "string",
+                        "maxLength": 200,
+                        "description": "One-line sketch of the intended exhibit"
+                      },
+                      "data": {
+                        "description": "Data needed and whether we have it",
+                        "type": "string",
+                        "maxLength": 200
+                      },
+                      "confidence": {
+                        "default": "likely",
+                        "type": "string",
+                        "enum": [
+                          "solid",
+                          "likely",
+                          "speculative"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "exhibit",
+                      "confidence"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "layout": {
+                    "type": "string",
                     "const": "issue-tree"
                   },
                   "variant": {
@@ -7204,6 +7939,126 @@
                         "owner": {
                           "type": "string",
                           "maxLength": 30
+                        },
+                        "icon": {
+                          "description": "Icon for the step (Tabler set); every step or none",
+                          "type": "string",
+                          "enum": [
+                            "adjustments",
+                            "alert-triangle",
+                            "api",
+                            "arrow-right",
+                            "arrow-up-right",
+                            "arrows-exchange",
+                            "award",
+                            "bolt",
+                            "box",
+                            "brain",
+                            "briefcase",
+                            "building",
+                            "building-bank",
+                            "building-factory",
+                            "building-store",
+                            "bulb",
+                            "calendar",
+                            "cash",
+                            "certificate",
+                            "chart-arrows-vertical",
+                            "chart-bar",
+                            "chart-dots",
+                            "chart-line",
+                            "chart-pie",
+                            "check",
+                            "checklist",
+                            "circle-check",
+                            "clipboard-check",
+                            "clock",
+                            "cloud",
+                            "code",
+                            "coin",
+                            "compass",
+                            "components",
+                            "cpu",
+                            "currency-dollar",
+                            "currency-euro",
+                            "database",
+                            "device-laptop",
+                            "device-mobile",
+                            "eye",
+                            "file-analytics",
+                            "file-text",
+                            "flag",
+                            "flask",
+                            "gauge",
+                            "git-branch",
+                            "heart",
+                            "heart-handshake",
+                            "hierarchy",
+                            "home",
+                            "hourglass",
+                            "infinity",
+                            "info-circle",
+                            "layout-dashboard",
+                            "leaf",
+                            "lifebuoy",
+                            "link",
+                            "list-check",
+                            "lock",
+                            "mail",
+                            "map",
+                            "map-pin",
+                            "message",
+                            "messages",
+                            "microscope",
+                            "network",
+                            "package",
+                            "phone",
+                            "plane",
+                            "player-play",
+                            "plug",
+                            "presentation",
+                            "puzzle",
+                            "receipt",
+                            "refresh",
+                            "report-analytics",
+                            "robot",
+                            "rocket",
+                            "route",
+                            "run",
+                            "scale",
+                            "school",
+                            "search",
+                            "server",
+                            "settings",
+                            "shield",
+                            "shield-check",
+                            "shopping-cart",
+                            "sitemap",
+                            "sparkles",
+                            "speakerphone",
+                            "stack-2",
+                            "star",
+                            "stopwatch",
+                            "target",
+                            "terminal-2",
+                            "tool",
+                            "tools",
+                            "trending-down",
+                            "trending-up",
+                            "trophy",
+                            "truck",
+                            "user",
+                            "user-check",
+                            "user-search",
+                            "users",
+                            "users-group",
+                            "versions",
+                            "walk",
+                            "wand",
+                            "world",
+                            "x",
+                            "zoom-check"
+                          ]
                         }
                       },
                       "required": [

@@ -1,0 +1,55 @@
+{
+  "reviewer": "visual-reviewer (Claude Opus 5.5)",
+  "verdict": "not-ready",
+  "summary": "Round 1: the new techniques render, but the budget total did not add up, one 7S point split in two, the margin label lacked contrast and PowerPoint stretched the cover photo instead of cropping it.",
+  "findings": [
+    {
+      "slide": "budget",
+      "severity": "blocker",
+      "area": "meaning",
+      "issue": "Total for month 2 was $69k while the items add up to $67k (SC-CONSIST-002, also the $206k cross-check)",
+      "fix": "content: total row corrected to $67k",
+      "status": "fixed"
+    },
+    {
+      "slide": "cover",
+      "severity": "major",
+      "area": "parity",
+      "issue": "PowerPoint stretched the cover photo to the panel; HTML cropped it — pptxgenjs crops from the box aspect, not the file's",
+      "fix": "shared: images are exported with their own aspect, so cover/contain crop the same in every engine",
+      "status": "fixed"
+    },
+    {
+      "slide": "organisation",
+      "severity": "major",
+      "area": "meaning",
+      "issue": "Structure showed two bullets: an unquoted comma inside [ ] split one point in two",
+      "fix": "content: quoted the point",
+      "status": "fixed"
+    },
+    {
+      "slide": "value-chain",
+      "severity": "minor",
+      "area": "color",
+      "issue": "MARGIN label in the accent on the tinted arrow had 4.2:1 contrast with the sampled theme",
+      "fix": "shared: the label darkens the accent to 4.5:1 on the tint",
+      "status": "fixed"
+    },
+    {
+      "slide": "cycle, profile, budget",
+      "severity": "minor",
+      "area": "layout",
+      "issue": "Content sits in the upper half; the lower half is empty",
+      "fix": "Accept as whitespace, or add an example, a result line or a bottom line",
+      "status": "needs-user"
+    },
+    {
+      "slide": "organisation, pilot-plan, budget",
+      "severity": "minor",
+      "area": "meaning",
+      "issue": "7S ratings, pilot targets and budget are planning assumptions, labelled illustrative",
+      "fix": "Replace with your organisation's assessment, targets and rates before use",
+      "status": "needs-user"
+    }
+  ]
+}

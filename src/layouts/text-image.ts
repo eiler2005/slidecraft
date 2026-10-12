@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { cols } from '../engine/format.ts';
+import { ImageCredit, ImageQuery } from './image-credit.ts';
 import type { LayoutDef } from './types.ts';
 
 const schema = z
@@ -24,6 +25,8 @@ const schema = z
       .describe(
         'What the picture should show; `slidecraft images` generates it when `image` is empty',
       ),
+    imageQuery: ImageQuery.optional(),
+    imageCredit: ImageCredit.optional(),
     caption: z
       .string()
       .max(120)

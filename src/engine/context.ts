@@ -6,6 +6,7 @@ import type { FontSpec, Theme } from '../spec/theme.ts';
 import { buildChart } from './charts.ts';
 import type { Format } from './format.ts';
 import { label, typeset } from './i18n.ts';
+import { iconNode } from './icons.ts';
 import type { Box, Paragraph, SceneNode, TableCell, TableNode, TextStyle } from './scene.ts';
 import { balanceLines, fitText, layoutText, makeTextNode, para, plainText } from './text.ts';
 
@@ -172,6 +173,13 @@ export function createContext(
 
     ellipse(box, opts = {}) {
       const n = { kind: 'ellipse' as const, box, ...opts };
+      nodes.push(n);
+      return n;
+    },
+
+    icon(name, box, opts = {}) {
+      const n = iconNode(name, box, opts.color ?? theme.colors.accent);
+      if (opts.field) n.pointer = ptr(opts.field);
       nodes.push(n);
       return n;
     },

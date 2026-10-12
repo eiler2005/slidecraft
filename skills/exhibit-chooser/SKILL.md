@@ -15,6 +15,7 @@ Pick the exhibit from the **relationship** the title claims, not from the data y
 |---|---|
 | A ranking or comparison of items | `chart-takeaway` · bar (sorted, insight highlighted) |
 | A change over time | `chart-takeaway` · column (few periods) or line (many) |
+| A volume and a rate over the same periods | `chart-takeaway` · combo |
 | Composition / mix | `chart-takeaway` · stacked |
 | How we get from A to B (bridge, variance) | `waterfall` · full / with-takeaway |
 | 2–4 headline numbers | `kpi-tiles` · tiles / strip |
@@ -53,6 +54,8 @@ Pick the exhibit from the **relationship** the title claims, not from the data y
 | Value ranges by method vs an offer or bid | `football-field` |
 | Strengths, weaknesses, opportunities, threats and the so-what | `swot` · grid / with-implications |
 | Industry attractiveness | `five-forces` |
+| Where value is made or lost along the business | `value-chain` |
+| Organisation readiness for a change | `seven-s` |
 | Macro trends with their impact | `pestel` |
 | The business model on one page | `business-model-canvas` |
 | One metric motivating four parallel explanations | `evidence-panorama` |

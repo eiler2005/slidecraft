@@ -19,7 +19,9 @@
 | Restyle an existing PowerPoint | [Import a PPTX](how-to/import-pptx.md) |
 | Give the cover a visual that fits the topic | [Design the cover](how-to/design-the-cover.md) |
 | Make a deck in Russian or another language | [Deck language](how-to/deck-language.md) |
-| Fill image slots with generated pictures | [Generate images](how-to/generate-images.md) |
+| Fill image slots with stock photos or generated pictures | [Fill image slots](how-to/generate-images.md) |
+| Add icons to points and steps | [Use icons](how-to/use-icons.md) |
+| Make a theme look like a PDF, a screenshot or a website | [Theme from a sample](how-to/theme-from-sample.md) |
 | Design a one-off visual in HTML/CSS | [Freeform HTML slides](how-to/freeform-html.md) |
 | Work in Codex | [Use with Codex](how-to/use-with-codex.md) · [Codex engine](how-to/use-codex-engine.md) |
 | Work in Claude Desktop, Cursor, VS Code, Windsurf or Gemini CLI | [Use with MCP apps](how-to/use-with-mcp.md) — one `install` command |

@@ -70,7 +70,7 @@ const SERIF_GEORGIA =
 const SERIF_TIMES = /times|liberation serif|tinos/i;
 
 /** Map a brand font to a measurable spec, using supplied font files when they match. */
-function mapFont(
+export function mapFont(
   name: string | undefined,
   fontDir: string | undefined,
   themeId: string,
@@ -78,9 +78,11 @@ function mapFont(
   notes: string[],
 ): FontSpec {
   if (!name) return { family: 'Arial', measure: 'liberation-sans' };
-  if (/^(arial|helvetica)$/i.test(name)) return { family: 'Arial', measure: 'liberation-sans' };
-  if (/^georgia$/i.test(name)) return { family: 'Georgia', measure: 'gelasio' };
-  if (/^times( new roman)?$/i.test(name))
+  // the families SlideCraft measures, and their metric-compatible twins
+  if (/^(arial|helvetica|liberation sans|arimo)$/i.test(name))
+    return { family: 'Arial', measure: 'liberation-sans' };
+  if (/^(georgia|gelasio)$/i.test(name)) return { family: 'Georgia', measure: 'gelasio' };
+  if (/^(times( new roman)?|liberation serif|tinos)$/i.test(name))
     return { family: 'Times New Roman', measure: 'liberation-serif' };
   if (fontDir && existsSync(fontDir)) {
     const files: Record<string, string> = {};
@@ -151,7 +153,7 @@ async function findLogo(zip: JSZip): Promise<{ name: string; data: Uint8Array } 
 }
 
 /** Lightest accent tint on which muted text still reads (4.5:1) and ink stays crisp (7:1). */
-function softTint(accent: string, bg: string, ink: string, muted: string): string {
+export function softTint(accent: string, bg: string, ink: string, muted: string): string {
   for (const t of [0.86, 0.88, 0.9, 0.92, 0.94, 0.96]) {
     const c = mix(accent, bg, t);
     if (contrast(muted, c) >= 4.5 && contrast(ink, c) >= 7) return c;

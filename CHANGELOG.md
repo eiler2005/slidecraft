@@ -2,6 +2,21 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.7.0] — 2026-10-12
+
+### Added
+- **Cover choice:** `slidecraft covers <deck>` renders 2–3 cover options — the topic motifs that fit the title best and a photo — with facts to compare (topic words, licence, sharpness on the panel) and a picker page; the assistant recommends, the user chooses, `--choose` writes it into deck.yaml. A workflow rule: never default the cover ([design the cover](docs/how-to/design-the-cover.md)).
+- **Stock photos with licence tracking:** `imageQuery` on cover and text-image slides; `slidecraft images --stock [openverse|pexels|pixabay]`, `--list` to see candidates, `--pick N`; Openverse only returns licences that allow commercial use and changes. `imageCredit` is shown with the sources (on the picture for covers), in the notes and in `manifest.json` ([fill image slots](docs/how-to/generate-images.md)).
+- **Icons:** 114 Tabler icons (MIT) drawn as native, editable shapes — PowerPoint freeforms with round caps, paths in HTML and PDF; `icon:` on `key-points` and `process-steps`; `slidecraft icons` lists them ([use icons](docs/how-to/use-icons.md)).
+- **Theme from a sample:** `slidecraft theme from <pdf|png|jpg|url>` reads colours, fonts and margins from a reference deck, a screenshot or a website (a photograph gives only its colours) and writes a theme plus a page format ([theme from a sample](docs/how-to/theme-from-sample.md)).
+- **Frameworks and charts:** `value-chain` (Porter: support bands, primary chevrons, margin), `seven-s` (McKinsey 7S with aligned/partial/gap ratings), and the `combo` variant of `chart-takeaway` — bars and a line on its own scale, native and editable in PowerPoint.
+- **Deeper consistency checks:** `SC-CONSIST-002` totals that do not add up (total rows and columns, "Total" categories, waterfall totals; one unit of the last digit tolerated), `SC-CONSIST-003` one figure with two periods or currencies.
+- Example: `examples/fde-engineer-en-v2` — the FDE briefing remade with all of the above; results and review report in `docs/showcase/fde-engineer/en-v2/`.
+
+### Fixed
+- PowerPoint stretched pictures with `fit: cover`/`contain` to their box; they now crop exactly as in HTML and PDF.
+- "Illustrative data." and new layout labels follow the deck language.
+
 ## [0.6.0] — 2026-10-12
 
 ### Added

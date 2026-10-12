@@ -17,6 +17,12 @@ export const ChartData = z
       .max(4),
     unit: z.string().max(4).optional().describe('Unit glyph on labels: "%", "€", "$", "M"'),
     decimals: z.number().int().min(0).max(2).optional(),
+    lineUnit: z
+      .string()
+      .max(4)
+      .optional()
+      .describe('Combo: unit of the line series (the second), e.g. "%" next to bars in €M'),
+    lineDecimals: z.number().int().min(0).max(2).optional(),
     highlight: z
       .array(z.union([z.string(), z.number().int()]))
       .optional()
@@ -43,13 +49,14 @@ export const chartTakeaway: LayoutDef<typeof schema> = {
   purpose: 'Use for one chart that proves the title, with the interpretation in a side panel.',
   useWhen: [
     'Comparing items (bar), a trend over time (column or line), or composition (stacked)',
+    'A volume and a rate over the same periods — bars plus a line on its own scale (combo)',
     'Any slide whose title carries a number from the data',
   ],
   avoidWhen: [
     'A bridge from one total to another — use waterfall',
     'Fewer than three data points — use kpi-tiles',
   ],
-  variants: ['bar', 'column', 'stacked', 'line'],
+  variants: ['bar', 'column', 'stacked', 'line', 'combo'],
   frame: 'standard',
   master: 'content',
   schema,
@@ -131,6 +138,27 @@ export const chartTakeaway: LayoutDef<typeof schema> = {
       },
       sources: ['finance-fy25'],
     },
+    {
+      title: 'Orders kept growing while the return rate fell below 5% this year',
+      variant: 'combo',
+      content: {
+        chart: {
+          label: 'Orders, thousands, and return rate, %',
+          categories: ['Q1 25', 'Q2 25', 'Q3 25', 'Q4 25', 'Q1 26', 'Q2 26'],
+          series: [
+            { name: 'Orders', values: [182, 196, 214, 251, 238, 262] },
+            { name: 'Return rate', values: [7.8, 7.1, 6.4, 6.0, 5.2, 4.6] },
+          ],
+          lineUnit: '%',
+          lineDecimals: 1,
+        },
+        takeaway: {
+          headline: 'Better sizing data cut returns',
+          points: ['Returns fell every quarter since the size guide launched'],
+        },
+      },
+      sources: ['finance-fy25'],
+    },
   ],
   compose(ctx, c) {
     const { body, colors } = ctx;
@@ -164,13 +192,27 @@ export const chartTakeaway: LayoutDef<typeof schema> = {
       );
       return;
     }
+    if (ctx.variant === 'combo' && c.chart.series.length !== 2) {
+      ctx.issue(
+        diag('SC-SPEC-001', 'combo needs exactly two series: bars first, then the line', {
+          pointer: ctx.ptr('chart/series'),
+        }),
+      );
+      return;
+    }
     const hl = (c.chart.highlight ?? [])
       .map((h) => (typeof h === 'number' ? h : c.chart.categories.indexOf(h)))
       .filter((i) => i >= 0 && i < n);
     const type =
-      ({ bar: 'bar', column: 'column', stacked: 'stacked-column', line: 'line' } as const)[
-        ctx.variant as 'bar'
-      ] ?? 'column';
+      (
+        {
+          bar: 'bar',
+          column: 'column',
+          stacked: 'stacked-column',
+          line: 'line',
+          combo: 'combo',
+        } as const
+      )[ctx.variant as 'bar'] ?? 'column';
     ctx.chart(
       {
         type,
@@ -179,6 +221,8 @@ export const chartTakeaway: LayoutDef<typeof schema> = {
         ...(hl.length ? { highlight: hl } : {}),
         ...(c.chart.unit ? { unit: c.chart.unit } : {}),
         ...(c.chart.decimals !== undefined ? { decimals: c.chart.decimals } : {}),
+        ...(c.chart.lineUnit ? { lineUnit: c.chart.lineUnit } : {}),
+        ...(c.chart.lineDecimals !== undefined ? { lineDecimals: c.chart.lineDecimals } : {}),
         field: 'chart',
       },
       chartBox,

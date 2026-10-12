@@ -12,7 +12,22 @@ export type LabelKey =
   | 'delivers'
   | 'today'
   | 'target'
-  | 'baseCase';
+  | 'baseCase'
+  | 'margin'
+  | 'support'
+  | 'primary'
+  | 'strategy'
+  | 'structure'
+  | 'systems'
+  | 'sharedValues'
+  | 'style'
+  | 'staff'
+  | 'skills'
+  | 'aligned'
+  | 'partial'
+  | 'gap'
+  | 'photo'
+  | 'illustrative';
 
 const LABELS: Record<string, Record<LabelKey, string>> = {
   en: {
@@ -26,6 +41,21 @@ const LABELS: Record<string, Record<LabelKey, string>> = {
     today: 'Today',
     target: 'Target',
     baseCase: 'Base case',
+    margin: 'Margin',
+    support: 'Support activities',
+    primary: 'Primary activities',
+    strategy: 'Strategy',
+    structure: 'Structure',
+    systems: 'Systems',
+    sharedValues: 'Shared values',
+    style: 'Style',
+    staff: 'Staff',
+    skills: 'Skills',
+    aligned: 'Aligned',
+    partial: 'Partial',
+    gap: 'Gap',
+    photo: 'Photo',
+    illustrative: 'Illustrative data.',
   },
   ru: {
     source: 'Источник:',
@@ -38,6 +68,21 @@ const LABELS: Record<string, Record<LabelKey, string>> = {
     today: 'Сейчас',
     target: 'Цель',
     baseCase: 'Базовый сценарий',
+    margin: 'Маржа',
+    support: 'Вспомогательные процессы',
+    primary: 'Основные процессы',
+    strategy: 'Стратегия',
+    structure: 'Структура',
+    systems: 'Системы',
+    sharedValues: 'Общие ценности',
+    style: 'Стиль',
+    staff: 'Персонал',
+    skills: 'Навыки',
+    aligned: 'Согласовано',
+    partial: 'Частично',
+    gap: 'Разрыв',
+    photo: 'Фото',
+    illustrative: 'Иллюстративные данные.',
   },
   de: {
     source: 'Quelle:',
@@ -50,6 +95,21 @@ const LABELS: Record<string, Record<LabelKey, string>> = {
     today: 'Heute',
     target: 'Ziel',
     baseCase: 'Basisfall',
+    margin: 'Marge',
+    support: 'Unterstützende Aktivitäten',
+    primary: 'Primäre Aktivitäten',
+    strategy: 'Strategie',
+    structure: 'Struktur',
+    systems: 'Systeme',
+    sharedValues: 'Gemeinsame Werte',
+    style: 'Stil',
+    staff: 'Personal',
+    skills: 'Fähigkeiten',
+    aligned: 'Stimmig',
+    partial: 'Teilweise',
+    gap: 'Lücke',
+    photo: 'Foto',
+    illustrative: 'Illustrative Daten.',
   },
 };
 

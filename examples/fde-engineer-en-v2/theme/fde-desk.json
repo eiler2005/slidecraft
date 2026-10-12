@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "fde-desk",
+  "name": "FDE desk",
+  "description": "Theme sampled from cover.jpg: its colours, fonts on the Consulting Classic layout rules.",
+  "bestFor": [
+    "strategy-recommendation",
+    "executive-update",
+    "business-case",
+    "client-proposal",
+    "research-readout"
+  ],
+  "mood": ["sampled"],
+  "dark": false,
+  "prefers": "pptx",
+  "colors": {
+    "background": "#FFFFFF",
+    "surface": "#FBF7F4",
+    "ink": "#0B1F3A",
+    "muted": "#546275",
+    "accent": "#AC571F",
+    "accentText": "#FFFFFF",
+    "accentSoft": "#F3E7E0",
+    "rule": "#C9CED4",
+    "positive": "#2E7D5B",
+    "negative": "#B23A3A",
+    "titleInk": "#0B1F3A"
+  },
+  "chart": ["#AC571F", "#2B75A3", "#8CCCEC", "#FEDB3C", "#0B1F3A", "#D1A384"],
+  "fonts": {
+    "heading": {
+      "family": "Arial",
+      "measure": "liberation-sans"
+    },
+    "body": {
+      "family": "Arial",
+      "measure": "liberation-sans"
+    }
+  },
+  "type": {
+    "cover": 40,
+    "title": 24,
+    "subtitle": 16,
+    "heading": 15,
+    "body": 14,
+    "minBody": 11,
+    "small": 10,
+    "source": 8,
+    "lineHeight": 1.2,
+    "titleWeight": "bold"
+  },
+  "decor": {
+    "kind": "rule",
+    "colors": ["#AC571F"],
+    "intensity": 1,
+    "onContent": false
+  },
+  "chrome": {
+    "titleRule": false,
+    "accentBar": true,
+    "pageNumbers": true,
+    "tracker": true
+  },
+  "source": "sampled from cover.jpg"
+}

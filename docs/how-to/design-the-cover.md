@@ -52,6 +52,24 @@ changes do not touch it, but a brand theme's accent does (it is built from the t
 images](generate-images.md)) and writes `image:` back. Until the file exists the cover shows the
 motif (with an info diagnostic), so the deck always looks finished. A picture wins over `art:`.
 
+## Choose from options (the rule)
+
+The cover is chosen, not defaulted. SlideCraft renders the candidates; the assistant compares
+them and recommends; you pick.
+
+```sh
+slidecraft covers deck.yaml            # motifs that fit the title best (and the current photo)
+slidecraft covers deck.yaml --stock    # plus a stock photo for the cover's imageQuery
+slidecraft covers deck.yaml --choose B # write option B into deck.yaml
+```
+
+The command writes `.slidecraft/covers/option-A|B|C.png`, a picker page `covers.html` and
+`options.json` with the facts for each option: which words of the title a motif stands for, a
+photo's author, licence and sharpness on the panel (ppi). The assistant compares the options
+against the deck's message and look — does the cover say what the deck is about, does it fit
+the colours, is the title still read first, is the photo sharp, licensed and free of private
+people and logos — and recommends one with a reason for each.
+
 ## Rules
 
 - One visual per cover; it never sits behind the title.
@@ -59,5 +77,5 @@ motif (with an info diagnostic), so the deck always looks finished. A picture wi
   stock image is noise; the motif is the better default.
 - The visual-QA reviewer checks the cover ([checklist](../../library/references/visual-qa.md)):
   a plain cover is a `should` finding.
-- Covers without `art`, `image` or `imagePrompt` look as before — the panel is opt-in, and
-  the workflow turns it on for every new deck.
+- Covers without `art`, `image` or `imagePrompt` look as before — the panel is opt-in; the
+  workflow turns it on for every new deck through the cover choice.

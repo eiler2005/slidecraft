@@ -1,5 +1,5 @@
 {
-  "version": "0.6.0",
+  "version": "0.7.0",
   "layouts": [
     {
       "id": "title",
@@ -160,7 +160,8 @@
         "bar",
         "column",
         "stacked",
-        "line"
+        "line",
+        "combo"
       ],
       "purpose": "Use for one chart that proves the title, with the interpretation in a side panel.",
       "frame": "standard"
@@ -301,6 +302,26 @@
         "canvas"
       ],
       "purpose": "Use for the whole business model on one page: segments, value proposition, channels, relationships, revenue, resources, activities, partners and costs.",
+      "frame": "standard"
+    },
+    {
+      "id": "value-chain",
+      "name": "Value chain",
+      "group": "decide",
+      "variants": [
+        "porter"
+      ],
+      "purpose": "Use for showing where a business creates or loses value: Porter's primary activities in order, support activities across them, and the margin.",
+      "frame": "standard"
+    },
+    {
+      "id": "seven-s",
+      "name": "McKinsey 7S",
+      "group": "decide",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for checking whether an organisation is set up for a change: the seven elements, each rated aligned, partial or gap, with the evidence.",
       "frame": "standard"
     },
     {

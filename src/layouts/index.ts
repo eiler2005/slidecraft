@@ -34,6 +34,7 @@ import { processCompare } from './process-compare.ts';
 import { processSteps } from './process-steps.ts';
 import { raci } from './raci.ts';
 import { riskMatrix } from './risk-matrix.ts';
+import { sevenS } from './seven-s.ts';
 import { swot } from './swot.ts';
 import { teamCards } from './team-cards.ts';
 import { text } from './text.ts';
@@ -42,6 +43,7 @@ import { timeline } from './timeline.ts';
 import { title } from './title.ts';
 import { tornado } from './tornado.ts';
 import type { LayoutDef } from './types.ts';
+import { valueChain } from './value-chain.ts';
 import { waterfall } from './waterfall.ts';
 
 /**
@@ -77,6 +79,8 @@ export const LAYOUTS: LayoutDef[] = [
   fiveForces,
   pestel,
   businessModelCanvas,
+  valueChain,
+  sevenS,
   issueTree,
   maturityModel,
   coverageMap,

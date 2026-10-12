@@ -46,10 +46,13 @@ Open **every** image. Facts point you at places to look; they are not the verdic
 7. **Meaning.** The action title is a full-sentence claim the body proves; one message per
    slide; the title chain reads as the argument; numbers agree across slides and with the
    sources; the ask is explicit. Never invent data or sources.
-8. **Cover.** The first slide stands out and says what the deck is about: a cover visual
+8. **Pictures and icons.** Every stock photo shows its credit (sources line, or the band on the
+   cover) and is not stretched; no identifiable private people or brand logos by accident; icons
+   on every item of a row or none, all from one set, in the accent.
+9. **Cover.** The cover was chosen from 2–3 options (`slidecraft covers`), not defaulted. The first slide stands out and says what the deck is about: a cover visual
    (`art:` motif that fits the topic, or a picture that shows the subject), title in three
    lines or fewer, nothing crowding the panel. A plain cover is a `should` finding.
-9. **Readiness.** Would a demanding partner hand this to the client now? Decide
+10. **Readiness.** Would a demanding partner hand this to the client now? Decide
    `ready`, `ready-with-notes` or `not-ready`.
 
 ## Fix policy

@@ -137,3 +137,14 @@ export const resvgEngine: Engine = {
     };
   },
 };
+
+/** RGBA pixels of a rendered SVG (for colour analysis of a picture). */
+export async function rasterPixels(
+  svg: string,
+  width: number,
+): Promise<{ width: number; height: number; pixels: Uint8Array }> {
+  await ensureResvg();
+  const r = new Resvg(svg, { fitTo: { mode: 'width', value: Math.round(width) } });
+  const img = r.render();
+  return { width: img.width, height: img.height, pixels: new Uint8Array(img.pixels) };
+}

@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { cols, columns, inset } from '../engine/format.ts';
+import { Icon } from '../engine/icons.ts';
 import type { LayoutDef } from './types.ts';
 
 const schema = z
@@ -19,6 +20,9 @@ const schema = z
               .max(10)
               .optional()
               .describe('Proof number shown prominently, e.g. "+18%", "€40M", "3×"'),
+            icon: Icon.optional().describe(
+              'Icon above the point (Tabler set); give every point one or none',
+            ),
           })
           .strict(),
       )
@@ -127,11 +131,36 @@ export const keyPoints: LayoutDef<typeof schema> = {
       },
       sources: ['fabrikam-ops'],
     },
+    {
+      title: 'Three capabilities let the platform team ship AI features safely',
+      variant: 'columns',
+      content: {
+        points: [
+          {
+            icon: 'database',
+            heading: 'Clean data where the work happens',
+            body: 'Customer and order data reach the models through one governed interface.',
+          },
+          {
+            icon: 'shield-check',
+            heading: 'Guardrails before launch',
+            body: 'Every feature passes evaluation and red-team tests before it reaches users.',
+          },
+          {
+            icon: 'chart-line',
+            heading: 'Usage measured weekly',
+            body: 'Adoption and the business metric are reviewed with the owner every week.',
+          },
+        ],
+      },
+    },
   ],
   compose(ctx, c) {
     const { body, colors, theme } = ctx;
     const n = c.points.length;
     const hasMetric = c.points.some((p) => p.metric);
+    const hasIcon = c.points.some((p) => p.icon);
+    const iconSize = 0.42;
     const metricSizes = [48, 44, 40, 36, 32, 28];
 
     if (ctx.variant === 'list') {
@@ -143,11 +172,21 @@ export const keyPoints: LayoutDef<typeof schema> = {
         const y = body.y + i * (rowH + gapRows);
         if (i > 0) ctx.line(body.x, y, body.x + body.w, y, { color: colors.rule, width: 0.75 });
         const row = { x: body.x, y, w: body.w, h: rowH };
-        const [headBox, rest] = cols(row, [35, 65], 0.4);
+        const [headCol, rest] = cols(row, [35, 65], 0.4);
+        const iconW = hasIcon ? iconSize + 0.2 : 0;
+        if (p.icon)
+          ctx.icon(
+            p.icon,
+            { x: headCol!.x, y: y + 0.2, w: iconSize, h: iconSize },
+            {
+              field: `points/${i}/icon`,
+            },
+          );
+        const headBox = { ...headCol!, x: headCol!.x + iconW, w: headCol!.w - iconW };
         const metricW = hasMetricCol ? 1.9 : 0;
         const bodyBox = { ...rest!, w: rest!.w - (metricW ? metricW + 0.3 : 0) };
         const pad = 0.2;
-        ctx.text(p.heading, inset(headBox!, { t: pad, b: pad }), {
+        ctx.text(p.heading, inset(headBox, { t: pad, b: pad }), {
           role: 'heading',
           font: 'heading',
           size: theme.type.heading + 2,
@@ -214,6 +253,13 @@ export const keyPoints: LayoutDef<typeof schema> = {
       }
       const inner = { x: part.x + padX, y: part.y + (isCards ? top : 0.3), w: part.w - 2 * padX };
       let y = inner.y;
+      if (p.icon)
+        ctx.icon(
+          p.icon,
+          { x: inner.x, y, w: iconSize, h: iconSize },
+          { field: `points/${i}/icon` },
+        );
+      if (hasIcon) y += iconSize + 0.22;
       if (p.metric) {
         ctx.text(
           p.metric,

@@ -9,6 +9,7 @@
  * fonts, exact line spacing, zero insets, no autofit).
  */
 import type { MeasureFont } from '../spec/theme.ts';
+import type { PathSeg } from './svg-path.ts';
 
 export type Color = string; // #RRGGBB
 
@@ -150,6 +151,21 @@ export interface PolygonNode {
   role?: string;
 }
 
+/** Free path (icons): absolute move/line/cubic/close segments in inches. PowerPoint gets
+ * an editable freeform; `round` draws round caps and joins, as icon sets expect. */
+export interface PathNode {
+  kind: 'path';
+  /** Bounding box of the segments. */
+  box: Box;
+  segments: PathSeg[];
+  fill?: Color;
+  fillOpacity?: number;
+  stroke?: Stroke;
+  round?: boolean;
+  role?: string;
+  pointer?: string;
+}
+
 export interface LineNode {
   kind: 'line';
   x1: number;
@@ -196,7 +212,14 @@ export interface TableNode {
   pointer?: string;
 }
 
-export type ChartType = 'bar' | 'column' | 'stacked-column' | 'stacked-bar' | 'line' | 'waterfall';
+export type ChartType =
+  | 'bar'
+  | 'column'
+  | 'stacked-column'
+  | 'stacked-bar'
+  | 'line'
+  | 'waterfall'
+  | 'combo';
 
 export interface ChartSeries {
   name: string;
@@ -215,6 +238,8 @@ export interface ChartNode {
   categories: string[];
   series: ChartSeries[];
   axis: { min: number; max: number; major: number; format: string; hidden: boolean };
+  /** Combo: the line series (last) on its own hidden value axis. */
+  lineAxis?: { min: number; max: number; format: string };
   labels: { show: boolean; format: string; size: number; color: Color };
   catLabels: { size: number; color: Color };
   font: { family: string; measure: MeasureFont };
@@ -309,6 +334,7 @@ export type SceneNode =
   | RectNode
   | EllipseNode
   | PolygonNode
+  | PathNode
   | LineNode
   | ImageNode
   | TableNode

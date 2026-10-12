@@ -1,0 +1,196 @@
+{
+  "tool": "slidecraft",
+  "version": "0.6.0",
+  "deck": {
+    "id": "fde-engineer-en-v2",
+    "title": "Forward Deployed Engineers turn AI pilots into working products",
+    "status": "review",
+    "theme": "fde-desk",
+    "storyline": "research-readout",
+    "slides": 9
+  },
+  "input": {
+    "path": "../../../../examples/fde-engineer-en-v2/deck.yaml",
+    "sha256": "d006e79c41f1ae9972699d11231e310f8cf5763f8d17d70fb28f8f8af70f4e8f"
+  },
+  "epoch": "2026-01-01T00:00:00.000Z",
+  "engines": {
+    "pptx": {
+      "id": "pptxgenjs",
+      "reason": "auto: portable editable PPTX (v4.0.1)",
+      "license": "MIT"
+    },
+    "png": {
+      "id": "resvg",
+      "reason": "auto: default",
+      "license": "MPL-2.0 (resvg), MIT (SlideCraft)"
+    },
+    "html": {
+      "id": "html",
+      "reason": "auto: default",
+      "license": "MIT"
+    },
+    "pdf": {
+      "id": "native",
+      "reason": "auto: default",
+      "license": "MIT"
+    }
+  },
+  "outputs": [
+    {
+      "path": "fde-engineer-en-v2.pptx",
+      "kind": "pptx",
+      "engine": "pptxgenjs",
+      "sha256": "0ec5001ba902779edf25176c641fb0017fff57732bb713981aa0adfdc6cceeb1"
+    },
+    {
+      "path": "previews/01-cover.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "7c50510305bc99c0a443e652f3ccb68451ab3143ba0889c43794a463cfc17275"
+    },
+    {
+      "path": "previews/02-why-now.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "e66e1d72b86aacbdad1d6a6c8c269e70ec54629161869fa6ba37fbe93c409772"
+    },
+    {
+      "path": "previews/03-value-chain.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "88985f12080175c943c1457bb81a9d5a15b204d42408841b1b4d593847b55a45"
+    },
+    {
+      "path": "previews/04-cycle.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "61861b36e474ec962d21b9dc8f90506252aa72cebefcbb60126fac28b450dce1"
+    },
+    {
+      "path": "previews/05-profile.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "63201e0e88dfcb27f44a4a1b0385cce261510ea612dfa6c3aad9d6e21639bbd8"
+    },
+    {
+      "path": "previews/06-organisation.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "ff02d4a6ef0c40b64f6e8f0f4700deaaab511351dddb08a888c26789fed24f0e"
+    },
+    {
+      "path": "previews/07-pilot-plan.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "87be045d38d222eb9bbbd87e04a4e281006eb453904936808cd44f2e44f05e7a"
+    },
+    {
+      "path": "previews/08-budget.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "0a0e2ab1a6b597ba9de4e56ffc35266d1e4d23d1b49573d69679691a3c30af92"
+    },
+    {
+      "path": "previews/09-ask.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "369910099d0ae4fec3e632e02f646352be23791c6f7553c7aa36f815f6d847bc"
+    },
+    {
+      "path": "fde-engineer-en-v2.html",
+      "kind": "html",
+      "engine": "html",
+      "sha256": "ac5d3d1eacf69e0265339fb96ac46fc3c22885c4325837c1929d99678f034faa"
+    },
+    {
+      "path": "fde-engineer-en-v2.pdf",
+      "kind": "pdf",
+      "engine": "native",
+      "sha256": "4da5cb33779ea7c2775a9bc5241f90d2e3d96e3f65454eee6a8256be5141be47"
+    }
+  ],
+  "checks": {
+    "errors": 0,
+    "warnings": 1,
+    "info": 0,
+    "codes": [
+      "SC-IMG-001"
+    ]
+  },
+  "imageCredits": [
+    {
+      "slide": "cover",
+      "image": "assets/cover.jpg",
+      "author": "Yutaka Tsutano",
+      "provider": "Openverse · Flickr",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "source": "https://www.flickr.com/photos/23208360@N07/4532962327",
+      "title": "Current Setup"
+    }
+  ],
+  "visual_review": false,
+  "limitations": [
+    "Waterfall labels and stacked totals are text boxes placed over the native chart; edit them if you change the data.",
+    "Scene previews rendered by resvg, not by PowerPoint. Font support and text rendering may differ; use --png-engine pptx-convert for actual Office previews.",
+    "HTML slides are inline SVG drawn with embedded metric-compatible fonts (Liberation/Gelasio), not editable text boxes.",
+    "Same layout as the PPTX; glyph rendering uses bundled metric-compatible fonts, not Arial/Georgia."
+  ],
+  "slides": [
+    {
+      "id": "cover",
+      "layout": "title",
+      "variant": "cover",
+      "title": "Forward Deployed Engineers turn AI pilots into working products"
+    },
+    {
+      "id": "why-now",
+      "layout": "kpi-tiles",
+      "variant": "tiles",
+      "title": "AI companies hire FDEs because most AI pilots stall before production"
+    },
+    {
+      "id": "value-chain",
+      "layout": "value-chain",
+      "variant": "porter",
+      "title": "The FDE owns the middle of the AI value chain, where most pilots stall"
+    },
+    {
+      "id": "cycle",
+      "layout": "process-steps",
+      "variant": "chevrons",
+      "title": "The FDE cycle runs from the user's desk to the core product"
+    },
+    {
+      "id": "profile",
+      "layout": "key-points",
+      "variant": "columns",
+      "title": "The profile combines production engineering, applied AI and customer judgement"
+    },
+    {
+      "id": "organisation",
+      "layout": "seven-s",
+      "variant": "diagram",
+      "title": "Strategy and platform are usually ready; staff placement and skills are not"
+    },
+    {
+      "id": "pilot-plan",
+      "layout": "chart-takeaway",
+      "variant": "combo",
+      "title": "The pilot targets 40 weekly users and a third of tasks automated by week 12"
+    },
+    {
+      "id": "budget",
+      "layout": "data-table",
+      "variant": "plain",
+      "title": "A one-quarter pilot costs about $206k, two-thirds of it the engineer"
+    },
+    {
+      "id": "ask",
+      "layout": "next-steps",
+      "variant": "decision",
+      "title": "Approve one FDE on your highest-value AI workflow for one quarter"
+    }
+  ]
+}

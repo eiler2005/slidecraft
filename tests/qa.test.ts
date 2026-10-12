@@ -79,9 +79,92 @@ describe('cross-slide consistency (SC-CONSIST-001)', () => {
     for (const dir of readdirSync(root).filter((d) => existsSync(join(root, d, 'deck.yaml')))) {
       const r = checkDeck(join(import.meta.dirname, '../examples', dir, 'deck.yaml'));
       expect(
-        r.diagnostics.filter((x) => x.code === 'SC-CONSIST-001').map((x) => `${dir}: ${x.message}`),
+        r.diagnostics
+          .filter((x) => x.code.startsWith('SC-CONSIST-'))
+          .map((x) => `${dir}: ${x.message}`),
       ).toEqual([]);
     }
+  });
+});
+
+describe('totals, periods and units (SC-CONSIST-002/003)', () => {
+  it('flags a total row, a total column, a Total category and a waterfall that do not add up', async () => {
+    const { checkConsistency } = await import('../src/qa/consistency.ts');
+    const d = checkConsistency([
+      {
+        id: 'budget',
+        header: ['Item', 'Q1', 'Q2', 'Total'],
+        rows: [
+          ['People', '€1.2M', '€1.3M', '€2.5M'],
+          ['Cloud', '€0.4M', '€0.5M', '€1.2M'],
+          ['Total', '€1.6M', '€2.3M', '€3.7M'],
+        ],
+      },
+      {
+        id: 'mix',
+        chart: {
+          type: 'column',
+          categories: ['A', 'B', 'Total'],
+          series: [{ name: 'Sales', values: [10, 20, 31] }],
+        },
+      },
+      {
+        id: 'bridge',
+        chart: {
+          type: 'waterfall',
+          categories: ['2025', 'Price', 'Volume', '2026'],
+          series: [{ name: 'Revenue', values: [100, 8, -3, 104] }],
+          highlight: [0, 3],
+        },
+      },
+    ]);
+    const msgs = d
+      .filter((x) => x.code === 'SC-CONSIST-002')
+      .map((x) => `${x.slide}: ${x.message}`);
+    expect(msgs).toHaveLength(5);
+    expect(msgs.join('\n')).toContain('Cloud, Total column');
+    expect(msgs.join('\n')).toContain('Total row, Q2');
+    expect(msgs.join('\n')).toContain('"Total" of Sales');
+    expect(msgs.join('\n')).toContain('waterfall "2026"');
+  });
+
+  it('accepts totals within rounding, subtotals, shares and rates', async () => {
+    const { checkConsistency } = await import('../src/qa/consistency.ts');
+    const d = checkConsistency([
+      {
+        id: 't',
+        header: ['Segment', 'Revenue', 'Share', 'Growth'],
+        rows: [
+          ['Retail', '€1.24M', '41%', '12%'],
+          ['SME', '€1.13M', '38%', '8%'],
+          ['Corporate', '€0.64M', '21%', '-3%'],
+          ['Total', '€3.0M', '100%', '7%'],
+        ],
+      },
+      {
+        id: 'w',
+        chart: {
+          type: 'waterfall',
+          categories: ['Start', 'Up', 'End'],
+          series: [{ name: 'x', values: [12, 3, 15] }],
+          highlight: [0, 2],
+        },
+      },
+    ]);
+    expect(d.filter((x) => x.code === 'SC-CONSIST-002')).toEqual([]);
+  });
+
+  it('flags one figure labelled with two periods or two currencies', async () => {
+    const { checkConsistency } = await import('../src/qa/consistency.ts');
+    const d = checkConsistency([
+      { id: 'a', title: 'The entry adds €40M Germany revenue in 2027 with partners' },
+      { id: 'b', tiles: [{ value: '€40M', label: 'Germany revenue 2028' }] },
+      { id: 'c', title: 'Cloud savings of $12M cost in the first year' },
+      { id: 'd', title: 'We keep €12M cost savings in the first year' },
+    ]);
+    const msgs = d.filter((x) => x.code === 'SC-CONSIST-003').map((x) => x.message);
+    expect(msgs.some((m) => m.includes('period 2027 on a, 2028 on b'))).toBe(true);
+    expect(msgs.some((m) => m.includes('unit $ on c, € on d'))).toBe(true);
   });
 });
 

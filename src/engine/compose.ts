@@ -1,4 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs';
+import { creditLine, type ImageCredit } from '../layouts/image-credit.ts';
 import { getLayout } from '../layouts/index.ts';
 import type { LoadedDeck } from '../library/load.ts';
 import { getTheme } from '../library/load.ts';
@@ -351,12 +352,19 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
       })
       .filter((s) => !!s);
     const illustrative = srcTitles.some((s) => s!.illustrative);
+    const illustrativeLabel = label(deck.language, 'illustrative');
+    // a stock photo's author and licence travel with the slide's sources (the cover shows
+    // them on the picture)
+    const credit =
+      def.id === 'title' ? undefined : (slide as { imageCredit?: ImageCredit }).imageCredit;
+    const creditText = credit ? creditLine(credit, label(deck.language, 'photo')) : '';
     const srcText = [
-      illustrative ? 'Illustrative data.' : '',
+      illustrative ? illustrativeLabel : '',
       srcTitles.length
         ? `Source: ${srcTitles.map((s) => s!.title + (s!.date ? ` (${s!.date})` : '')).join('; ')}`
         : '',
       slide.source ? (srcTitles.length ? slide.source : `${sourcePrefix} ${slide.source}`) : '',
+      creditText ? `${creditText}.` : '',
     ]
       .filter(Boolean)
       .join(' ');
@@ -367,7 +375,7 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
         if (text) runs.push(link ? { text, link } : { text });
       };
       if (illustrative)
-        add(srcTitles.length || slide.source ? 'Illustrative data. ' : 'Illustrative data.');
+        add(srcTitles.length || slide.source ? `${illustrativeLabel} ` : illustrativeLabel);
       if (srcTitles.length) {
         add(`${sourcePrefix} `);
         srcTitles.forEach((s, k) => {
@@ -379,12 +387,17 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
         add(
           `${srcTitles.length ? ' ' : ''}${srcTitles.length ? slide.source : `${sourcePrefix} ${slide.source}`}`,
         );
+      if (credit) {
+        add(srcTitles.length || slide.source || illustrative ? ' ' : '');
+        add(`${creditText}.`, credit.source);
+      }
       composeSource(ctx, runs);
     }
     if (
       !isGhost &&
       frame === 'standard' &&
-      !srcText &&
+      !srcTitles.length &&
+      !slide.source &&
       !PLAN_LAYOUTS.has(def.id) &&
       hasNumbers(
         def.id === 'freeform'

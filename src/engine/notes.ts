@@ -4,7 +4,9 @@
  * Every engine that writes notes (PPTX, HTML deck, DOCX) receives the same block, and
  * `slidecraft sync` strips it again so it never travels back into deck.yaml.
  */
+import type { ImageCredit } from '../layouts/image-credit.ts';
 import { parseSourceRef, type Slide, type Source } from '../spec/deck.ts';
+import { label } from './i18n.ts';
 
 /** Marker line of the generated block, identical in every language so tools can find it. */
 export const SOURCES_HEADING = '[Sources]';
@@ -35,6 +37,19 @@ export function sourceNotes(
     lines.push(`- ${parts.join(' — ')}`);
   }
   if (slide.source) lines.push(`- ${slide.source}`);
+  const credit = (slide as { imageCredit?: ImageCredit }).imageCredit;
+  if (credit)
+    lines.push(
+      `- ${[
+        `${label(language, 'photo')}: ${credit.title ?? credit.author}`,
+        credit.author,
+        credit.provider,
+        credit.license,
+        credit.source,
+      ]
+        .filter((x, i, a) => a.indexOf(x) === i)
+        .join(' — ')}`,
+    );
   return lines.length ? [SOURCES_HEADING, ...lines].join('\n') : undefined;
 }
 

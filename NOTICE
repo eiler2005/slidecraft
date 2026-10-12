@@ -8,6 +8,10 @@ Fonts (fonts/, SIL Open Font License 1.1 — see each folder's license file and 
   - Liberation Sans 2.1.5, Liberation Serif 2.1.5 — https://github.com/liberationfonts/liberation-fonts
   - Gelasio — https://github.com/SorkinType/Gelasio
 
+Icons (src/engine/icons.gen.ts, a generated subset as path data)
+  - Tabler Icons 3.49.0 (MIT, Copyright (c) 2020-2026 Paweł Kuna) — https://tabler.io/icons;
+    the licence text is kept in the generated file
+
 Runtime libraries inlined into dist/slidecraft.mjs (licenses retained by their authors)
   - pptxgenjs (MIT), pdfkit (MIT), fontkit (MIT), jszip (MIT or GPLv3, used under MIT),
     zod (MIT), yaml (ISC), commander (MIT)

@@ -4,12 +4,25 @@ import { dirname, join, relative, resolve } from 'node:path';
 import type { Command } from 'commander';
 import YAML from 'yaml';
 import { convertToPdf } from '../backends/pptx-convert.ts';
+import { ICON_SOURCE } from '../engine/icons.gen.ts';
+import { ICON_NAMES } from '../engine/icons.ts';
 import { buildGallery, buildHero, writePicker } from '../gallery.ts';
 import { getLayout } from '../layouts/index.ts';
 import { libraryCheck } from '../library/check.ts';
+import { chooseCover, coverOptions } from '../library/covers.ts';
 import { generateDocs } from '../library/docs.ts';
 import { applyFixes, type Fix, fitTasks } from '../library/fix.ts';
-import { describeJob, generateImages, openAiProvider, planImages } from '../library/images.ts';
+import {
+  describeJob,
+  describeStock,
+  fetchStock,
+  generateImages,
+  listStock,
+  openAiProvider,
+  planImages,
+  planStock,
+  stockProvider,
+} from '../library/images.ts';
 import { findInMaterials, ingest } from '../library/ingest.ts';
 import {
   getStoryline,
@@ -23,6 +36,7 @@ import { rankStorylines, templateOptions } from '../library/rank.ts';
 import { recommendOutput } from '../library/recommend.ts';
 import { syncPptx } from '../library/sync.ts';
 import { importTheme } from '../library/theme-import.ts';
+import { themeFromSample } from '../library/theme-sample.ts';
 import { runCalibration } from '../qa/calibrate.ts';
 import { buildSite } from '../site.ts';
 import type { Brief } from '../spec/brief.ts';
@@ -368,6 +382,62 @@ export function registerBrandCommands(program: Command): void {
       },
     );
 
+  theme
+    .command('from')
+    .description(
+      'Create a theme from a sample: a reference PDF, a screenshot (PNG/JPEG) or a website — colours, fonts and margins',
+    )
+    .argument('<sample>', 'PDF, PNG/JPEG file or http(s) URL')
+    .requiredOption('--id <id>', 'theme id (kebab-case)')
+    .option('--name <name>', 'display name')
+    .option('-o, --out <dir>', 'output folder', 'slidecraft-theme')
+    .option('--font-dir <dir>', 'folder with the font files (TTF/OTF) to measure them exactly')
+    .option('--heading-font <name>', 'heading font, when the sample has none (pictures)')
+    .option('--body-font <name>', 'body font, when the sample has none (pictures)')
+    .option('--json', 'machine-readable output')
+    .action(
+      async (
+        sample: string,
+        o: {
+          id: string;
+          name?: string;
+          out: string;
+          fontDir?: string;
+          headingFont?: string;
+          bodyFont?: string;
+          json?: boolean;
+        },
+      ) => {
+        if (!/^[a-z0-9][a-z0-9-]*$/.test(o.id)) throw new Error('--id must be kebab-case');
+        const r = await themeFromSample(sample, {
+          id: o.id,
+          out: o.out,
+          ...(o.name ? { name: o.name } : {}),
+          ...(o.fontDir ? { fontDir: o.fontDir } : {}),
+          ...(o.headingFont ? { headingFont: o.headingFont } : {}),
+          ...(o.bodyFont ? { bodyFont: o.bodyFont } : {}),
+        });
+        if (wantsJson(o.json)) {
+          printJson(r);
+          return;
+        }
+        const c = r.theme.colors;
+        console.log(`${green('✔')} ${relative(process.cwd(), r.themePath)}`);
+        if (r.formatPath) console.log(`${green('✔')} ${relative(process.cwd(), r.formatPath)}`);
+        console.log(
+          dim(
+            `  background ${c.background} · ink ${c.ink} · accent ${c.accent} · fonts ${r.theme.fonts.heading.family} / ${r.theme.fonts.body.family}`,
+          ),
+        );
+        r.notes.forEach((n) => console.log(dim(`  · ${n}`)));
+        console.log(
+          dim(
+            `\nUse it: theme: ${relative(process.cwd(), r.themePath)}   (path relative to deck.yaml)`,
+          ),
+        );
+      },
+    );
+
   program
     .command('import')
     .description(
@@ -531,30 +601,147 @@ export function registerBrandCommands(program: Command): void {
   program
     .command('images')
     .description(
-      'Generate pictures for slides that have an imagePrompt but no image (OpenAI-compatible API)',
+      'Fill empty image slots: generate pictures for imagePrompt (OpenAI-compatible API), or find licensed stock photos for imageQuery (--stock)',
     )
     .argument('<deck>', 'path to deck.yaml')
-    .option('--dry-run', 'list the prompts that would be sent; send nothing')
-    .option('--force', 'regenerate images that already exist')
+    .option('--dry-run', 'list the prompts or searches that would be sent; send nothing')
+    .option('--force', 'replace images that already exist')
+    .option(
+      '--stock [provider]',
+      'stock photos for imageQuery: openverse (default, no key), pexels (PEXELS_API_KEY), pixabay (PIXABAY_API_KEY)',
+    )
+    .option(
+      '--list',
+      'with --stock: show candidate photos (title, author, licence, link); download nothing',
+    )
+    .option('--pick <n>', 'with --stock: take the n-th candidate from --list', (v) => Number(v), 1)
     .option('--json', 'machine-readable output')
-    .action(async (deck: string, o: { dryRun?: boolean; force?: boolean; json?: boolean }) => {
-      const jobs = planImages(deck, { force: !!o.force });
-      if (o.dryRun || !jobs.length) {
-        if (wantsJson(o.json)) printJson({ jobs });
-        else if (!jobs.length) console.log('No empty image slots with an imagePrompt.');
-        else jobs.forEach((j) => console.log(`  ${describeJob(j)}`));
-        return;
-      }
-      const provider = openAiProvider();
-      if (!wantsJson(o.json))
-        console.log(dim(`Sending ${jobs.length} prompt(s) to ${provider.id} …`));
-      const r = await generateImages(jobs, provider);
-      if (wantsJson(o.json)) printJson(r);
+    .action(
+      async (
+        deck: string,
+        o: {
+          dryRun?: boolean;
+          force?: boolean;
+          json?: boolean;
+          stock?: string | boolean;
+          list?: boolean;
+          pick: number;
+        },
+      ) => {
+        if (o.stock) {
+          const jobs = planStock(deck, { force: !!o.force });
+          if (o.dryRun || !jobs.length) {
+            if (wantsJson(o.json)) printJson({ jobs });
+            else if (!jobs.length) console.log('No empty image slots with an imageQuery.');
+            else jobs.forEach((j) => console.log(`  ${describeStock(j)}`));
+            return;
+          }
+          const provider = stockProvider(typeof o.stock === 'string' ? o.stock : 'openverse');
+          if (o.list) {
+            const lists = await listStock(jobs, provider);
+            if (wantsJson(o.json)) printJson({ candidates: lists });
+            else
+              for (const l of lists) {
+                console.log(`${l.slideId} — "${l.query}"`);
+                l.hits.forEach((h, i) =>
+                  console.log(
+                    `  ${i + 1}. ${h.credit.title ?? '(untitled)'} — ${h.credit.author}, ${h.credit.license} · ${h.width}×${h.height}\n     ${h.url}`,
+                  ),
+                );
+              }
+            return;
+          }
+          if (!wantsJson(o.json))
+            console.log(dim(`Searching ${provider.id} for ${jobs.length} photo(s) …`));
+          const r = await fetchStock(jobs, provider, fetch, o.pick);
+          if (wantsJson(o.json)) printJson(r);
+          else {
+            r.found.forEach((j) =>
+              console.log(
+                `${green('✔')} ${describeStock(j)}\n    ${j.credit.author} / ${j.credit.provider}, ${j.credit.license}`,
+              ),
+            );
+            r.failed.forEach((f) => console.log(`✗ ${f.job.slideId}: ${f.error}`));
+          }
+          process.exitCode = r.failed.length ? 1 : 0;
+          return;
+        }
+        const jobs = planImages(deck, { force: !!o.force });
+        if (o.dryRun || !jobs.length) {
+          if (wantsJson(o.json)) printJson({ jobs });
+          else if (!jobs.length) console.log('No empty image slots with an imagePrompt.');
+          else jobs.forEach((j) => console.log(`  ${describeJob(j)}`));
+          return;
+        }
+        const provider = openAiProvider();
+        if (!wantsJson(o.json))
+          console.log(dim(`Sending ${jobs.length} prompt(s) to ${provider.id} …`));
+        const r = await generateImages(jobs, provider);
+        if (wantsJson(o.json)) printJson(r);
+        else {
+          r.generated.forEach((j) => console.log(`${green('✔')} ${describeJob(j)}`));
+          r.failed.forEach((f) => console.log(`✗ ${f.job.slideId}: ${f.error}`));
+        }
+        process.exitCode = r.failed.length ? 1 : 0;
+      },
+    );
+
+  program
+    .command('covers')
+    .description(
+      'Render 2–3 cover options (topic motifs, a photo) with facts to compare; --choose writes the chosen one into deck.yaml',
+    )
+    .argument('<deck>', 'path to deck.yaml')
+    .option(
+      '--stock [provider]',
+      'include a stock photo for the cover imageQuery: openverse (default), pexels, pixabay',
+    )
+    .option('--choose <letter>', 'write option A, B or C into the cover slide')
+    .option('--json', 'machine-readable output')
+    .action(
+      async (deck: string, o: { stock?: string | boolean; choose?: string; json?: boolean }) => {
+        if (o.choose) {
+          const c = chooseCover(deck, o.choose);
+          if (wantsJson(o.json)) printJson({ chosen: c });
+          else console.log(`${green('✔')} cover option ${c.option}: ${c.label} → deck.yaml`);
+          return;
+        }
+        const r = await coverOptions(deck, {
+          ...(o.stock
+            ? { provider: stockProvider(typeof o.stock === 'string' ? o.stock : 'openverse') }
+            : {}),
+        });
+        if (wantsJson(o.json)) {
+          printJson(r);
+          return;
+        }
+        console.log(`Cover options for "${r.message.title}"`);
+        for (const x of r.options) {
+          const f = x.facts;
+          console.log(`  ${x.option}. ${x.label}`);
+          if (f.topicWords?.length) console.log(dim(`     stands for: ${f.topicWords.join(', ')}`));
+          if (f.credit)
+            console.log(dim(`     ${f.credit.author} / ${f.credit.provider}, ${f.credit.license}`));
+          if (f.ppi)
+            console.log(
+              dim(`     ${f.ppi} ppi on the panel${f.ppi < 144 ? ' — soft when projected' : ''}`),
+            );
+          console.log(dim(`     ${relative(process.cwd(), x.preview)}`));
+        }
+        console.log(dim(`\nOpen ${relative(process.cwd(), r.picker)}; then --choose A|B|C`));
+      },
+    );
+
+  program
+    .command('icons')
+    .description('List the bundled icons for `icon:` fields (Tabler Icons, MIT)')
+    .option('--json', 'machine-readable output')
+    .action((o: { json?: boolean }) => {
+      if (wantsJson(o.json)) printJson({ source: ICON_SOURCE, icons: ICON_NAMES });
       else {
-        r.generated.forEach((j) => console.log(`${green('✔')} ${describeJob(j)}`));
-        r.failed.forEach((f) => console.log(`✗ ${f.job.slideId}: ${f.error}`));
+        console.log(dim(`${ICON_NAMES.length} icons · ${ICON_SOURCE}`));
+        console.log(ICON_NAMES.join('  '));
       }
-      process.exitCode = r.failed.length ? 1 : 0;
     });
 
   program

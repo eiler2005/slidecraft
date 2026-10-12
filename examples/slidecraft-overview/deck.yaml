@@ -30,6 +30,7 @@ slides:
     subtitle: Describe what the deck must achieve and approve four checkpoints. Get an editable PowerPoint, a PDF and a partner-style review.
     presenter: Denis Ermilov · SlideCraft
     date: "2026"
+    art: flow
     notes: This deck was built with SlideCraft itself, from examples/slidecraft-overview/deck.yaml.
 
   - id: problem

@@ -155,7 +155,7 @@ export const marimekko: LayoutDef<typeof schema> = {
         },
       );
       ctx.text(
-        fmt(col.total, d, c.unit),
+        fmt(col.total, d, c.unit, ctx.language),
         { x, y: plot.y + plot.h + 0.5, w, h: 0.24 },
         { size: 'source', color: colors.muted, align: 'center', maxLines: 1, fixed: true },
       );

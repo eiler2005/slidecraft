@@ -1,0 +1,39 @@
+{
+  "reviewer": "visual-reviewer (Claude Opus 5.5)",
+  "verdict": "ready-with-notes",
+  "summary": "Round 2: the cover now carries the topic (network motif, editable shapes) and PowerPoint draws it exactly as the browser; speaker notes list the sources line by line. Two content points stay with the author.",
+  "findings": [
+    {
+      "slide": "cover",
+      "severity": "minor",
+      "area": "template",
+      "issue": "The cover was text only and did not stand out as the first slide",
+      "fix": "shared: cover visual panel (art: auto picks the network motif for an AI topic)",
+      "status": "fixed"
+    },
+    {
+      "slide": "all",
+      "severity": "minor",
+      "area": "other",
+      "issue": "Speaker notes with a [Sources] block were one paragraph with raw line breaks",
+      "fix": "shared: one PowerPoint paragraph per notes line",
+      "status": "fixed"
+    },
+    {
+      "slide": "cycle, profile, definition",
+      "severity": "minor",
+      "area": "layout",
+      "issue": "Content sits in the upper half; the lower half is empty",
+      "fix": "Accept as whitespace, or add an example or a result line",
+      "status": "needs-user"
+    },
+    {
+      "slide": "why-now",
+      "severity": "minor",
+      "area": "meaning",
+      "issue": "Growth figures for FDE postings differ by dataset (729–1,165 %); the deck uses the FT figure reported by Fast Company",
+      "fix": "Keep the qualifier in the notes; check the FT article before external use",
+      "status": "needs-user"
+    }
+  ]
+}

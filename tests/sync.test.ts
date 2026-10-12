@@ -88,11 +88,18 @@ describe('edits flow back from PowerPoint', () => {
             '$1<a:p><a:r><a:t>Referrals bring one in four new shippers</a:t></a:r></a:p>',
           ),
       );
-      // notes added to a slide that had none (slide 2, "problem")
+      // notes typed above the generated [Sources] block of a slide that had none (slide 2)
       const rel = await zip.file('ppt/slides/_rels/slide2.xml.rels')!.async('string');
       const target = `ppt/notesSlides/${/notesSlides\/(notesSlide\d+\.xml)/.exec(rel)![1]}`;
-      const empty = await zip.file(target)!.async('string');
-      zip.file(target, empty.replace('<a:t></a:t>', '<a:t>Pause here for questions.</a:t>'));
+      const generated = await zip.file(target)!.async('string');
+      expect(generated).toContain('[Sources]');
+      zip.file(
+        target,
+        generated.replace(
+          /(<a:p>(?:(?!<a:p>)[\s\S])*?\[Sources\])/,
+          '<a:p><a:r><a:t>Pause here for questions.</a:t></a:r></a:p>$1',
+        ),
+      );
       // the notes
       const notes = Object.keys(zip.files).filter((f) =>
         /notesSlides\/notesSlide\d+\.xml$/.test(f),

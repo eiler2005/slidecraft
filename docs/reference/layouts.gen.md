@@ -69,6 +69,10 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 | `presenter` | string |  | ≤ 70 chars |  |
 | `date` | string |  | ≤ 32 chars |  |
 | `contact` | string[] |  | 0–3 items, each ≤ 70 chars | Closing variant: contact lines |
+| `art` | `auto` \| `network` \| `growth` \| `flow` \| `orbit` \| `grid` \| `layers` |  |  | Cover: topic motif on a right-hand panel, drawn as editable shapes in the theme accent. auto picks it from the title (network: AI, data, tech · growth: money, markets · flow: process, plans · orbit: customers, people · layers: architecture, risk · grid: products, operations) |
+| `image` | string |  |  | Cover: picture for the right-hand panel (path relative to the deck); wins over art |
+| `imagePrompt` | string |  | ≤ 400 chars | Cover: what the panel picture should show; `slidecraft images` generates it. Until then the art motif is drawn |
+| `alt` | string |  | ≤ 140 chars | Alt text of the cover picture; without it the picture is decorative |
 
 <details><summary>Example</summary>
 

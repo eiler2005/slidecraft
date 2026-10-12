@@ -1,5 +1,6 @@
 import type { z } from 'zod';
 import type { Format } from '../engine/format.ts';
+import type { LabelKey } from '../engine/i18n.ts';
 import type {
   Box,
   ChartNode,
@@ -97,6 +98,10 @@ export interface ComposeContext {
   /** The full page box. */
   page: Box;
   colors: Theme['colors'] & { chart: string[] };
+  /** Deck language (ISO code). */
+  language: string;
+  /** A label SlideCraft draws ("Decision requested"…) in the deck language. */
+  t(key: LabelKey): string;
 
   /** Lay out text into a box with copy-fitting; records SC-FIT diagnostics. */
   text(content: string | string[] | Paragraph[], box: Box, opts?: TextOpts): TextNode;

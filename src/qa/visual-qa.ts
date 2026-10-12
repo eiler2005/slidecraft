@@ -17,6 +17,7 @@ import {
 } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, relative, resolve } from 'node:path';
+import YAML from 'yaml';
 import { convertToPdf, pptxConvertEngine } from '../backends/pptx-convert.ts';
 import { buildDeck } from '../build.ts';
 import { contrast } from '../engine/color.ts';
@@ -96,8 +97,10 @@ export function slideFacts(scene: Scene, slide: SceneSlide, palette: Set<string>
   const used = new Set<string>();
   const tight: SlideFacts['tightText'] = [];
   const fonts = new Set<string>();
+  // cover art is tinted and free-form on purpose: not a palette or alignment finding
+  const art = (n: SceneNode) => (n as { role?: string }).role === 'cover-art';
   slide.nodes.forEach((n, i) => {
-    colorsOf(n, used);
+    if (!art(n)) colorsOf(n, used);
     if (n.kind !== 'text') return;
     fonts.add(n.style.family);
     const back = bgAt(
@@ -123,6 +126,7 @@ export function slideFacts(scene: Scene, slide: SceneSlide, palette: Set<string>
       tight.push({ text: label(n), fill: Math.round(fill * 100) / 100 });
   });
   const boxes = slide.nodes
+    .filter((n) => !art(n))
     .map((n) => ({ n, b: boxOf(n) }))
     .filter((x): x is { n: SceneNode; b: Box } => !!x.b && x.b.w > 0.05 && x.b.h > 0.05);
   const near: SlideFacts['nearMisalignments'] = [];
@@ -425,58 +429,101 @@ export function recordReview(deckPath: string, packDir: string, round: ReviewRou
     data: { findings: round.findings },
   });
   writeFileSync(path, `${JSON.stringify(rounds, null, 2)}\n`);
-  const report = reviewReport(rounds);
+  let language = 'en';
+  try {
+    language =
+      (YAML.parse(readFileSync(deckPath, 'utf8')) as { language?: string })?.language ?? 'en';
+  } catch {
+    // unreadable deck: keep English
+  }
+  const report = reviewReport(rounds, language);
   writeFileSync(join(packDir, 'REPORT.md'), report);
   return { rounds: rounds.length, report: join(packDir, 'REPORT.md'), verdict: round.verdict };
 }
 
-export function reviewReport(rounds: ReviewRound[]): string {
+const REPORT_TEXT = {
+  en: {
+    title: 'Visual review report',
+    verdict: {
+      ready: 'Ready to hand over',
+      'ready-with-notes': 'Ready, with points for you to check',
+      'not-ready': 'Not ready — needs your decision or more work',
+    },
+    rounds: (n: number, who?: string) =>
+      `Rounds: ${n}${who ? ` · reviewer: ${who}` : ''}. Rules, calibration and Office parity ran first; this review covers what rules cannot judge.`,
+    attention: 'Needs your attention',
+    attentionHead: '| Slide | Severity | Area | What the reviewer saw | Suggested action |',
+    nothing: 'Nothing open.',
+    fixed: 'Fixed during review',
+    fixedHead: '| Slide | Severity | Area | Issue | Fix |',
+    noFixes: 'No changes were needed.',
+    changes: 'Changes made during review',
+    change: (r: number, f: string, a: number, d: number) =>
+      `- Round ${r}: \`${f}\` +${a} −${d} lines`,
+    noChanges: 'No source files were edited.',
+    log: 'Field-by-field before/after and full diffs: `REVIEW-LOG.md` next to deck.yaml.',
+    manual:
+      '`visual_review` in the manifest stays false until you have looked at every slide yourself.',
+  },
+  ru: {
+    title: 'Отчёт визуальной проверки',
+    verdict: {
+      ready: 'Готово к передаче',
+      'ready-with-notes': 'Готово, но есть пункты для вашей проверки',
+      'not-ready': 'Не готово — нужно ваше решение или доработка',
+    },
+    rounds: (n: number, who?: string) =>
+      `Раундов: ${n}${who ? ` · проверял: ${who}` : ''}. Сначала прошли правила, калибровка и сверка с PowerPoint; эта проверка — о том, что правилами не оценить.`,
+    attention: 'Требует вашего внимания',
+    attentionHead: '| Слайд | Важность | Область | Что увидел проверяющий | Что предлагается |',
+    nothing: 'Открытых пунктов нет.',
+    fixed: 'Исправлено в ходе проверки',
+    fixedHead: '| Слайд | Важность | Область | Проблема | Исправление |',
+    noFixes: 'Исправления не потребовались.',
+    changes: 'Изменения в ходе проверки',
+    change: (r: number, f: string, a: number, d: number) =>
+      `- Раунд ${r}: \`${f}\` +${a} −${d} строк`,
+    noChanges: 'Исходные файлы не менялись.',
+    log: 'Поля «было → стало» и полные diff: `REVIEW-LOG.md` рядом с deck.yaml.',
+    manual: '`visual_review` в манифесте остаётся false, пока вы сами не посмотрите каждый слайд.',
+  },
+};
+
+export function reviewReport(rounds: ReviewRound[], language = 'en'): string {
+  const t = language.slice(0, 2) === 'ru' ? REPORT_TEXT.ru : REPORT_TEXT.en;
   const last = rounds.at(-1)!;
   const fixed = rounds.flatMap((r) => r.findings.filter((f) => f.status === 'fixed'));
   const attention = last.findings.filter((f) => f.status !== 'fixed');
-  const verdict = {
-    ready: 'Ready to hand over',
-    'ready-with-notes': 'Ready, with points for you to check',
-    'not-ready': 'Not ready — needs your decision or more work',
-  }[last.verdict];
   const row = (f: Finding) =>
     `| ${f.slide} | ${f.severity} | ${f.area} | ${f.issue.replace(/\|/g, '\\|')} | ${(f.fix ?? '').replace(/\|/g, '\\|')} |`;
   return [
-    '# Visual review report',
+    `# ${t.title}`,
     '',
-    `**${verdict}.** ${last.summary}`,
+    `**${t.verdict[last.verdict]}.** ${last.summary}`,
     '',
-    `Rounds: ${rounds.length}${last.reviewer ? ` · reviewer: ${last.reviewer}` : ''}. Rules, calibration and Office parity ran first; this review covers what rules cannot judge.`,
+    t.rounds(rounds.length, last.reviewer),
     '',
-    '## Needs your attention',
+    `## ${t.attention}`,
     '',
     ...(attention.length
-      ? [
-          '| Slide | Severity | Area | What the reviewer saw | Suggested action |',
-          '|---|---|---|---|---|',
-          ...attention.map(row),
-        ]
-      : ['Nothing open.']),
+      ? [t.attentionHead, '|---|---|---|---|---|', ...attention.map(row)]
+      : [t.nothing]),
     '',
-    '## Fixed during review',
+    `## ${t.fixed}`,
     '',
-    ...(fixed.length
-      ? ['| Slide | Severity | Area | Issue | Fix |', '|---|---|---|---|---|', ...fixed.map(row)]
-      : ['No changes were needed.']),
+    ...(fixed.length ? [t.fixedHead, '|---|---|---|---|---|', ...fixed.map(row)] : [t.noFixes]),
     '',
-    '## Changes made during review',
+    `## ${t.changes}`,
     '',
     ...(rounds.some((r) => r.changes?.length)
       ? rounds.flatMap((r) =>
-          (r.changes ?? []).map(
-            (c) => `- Round ${r.round}: \`${c.file}\` +${c.added} −${c.removed} lines`,
-          ),
+          (r.changes ?? []).map((c) => t.change(r.round!, c.file, c.added, c.removed)),
         )
-      : ['No source files were edited.']),
+      : [t.noChanges]),
     '',
-    'Field-by-field before/after and full diffs: `REVIEW-LOG.md` next to deck.yaml.',
+    t.log,
     '',
-    '`visual_review` in the manifest stays false until you have looked at every slide yourself.',
+    t.manual,
     '',
   ].join('\n');
 }

@@ -119,7 +119,7 @@ export const gateMatrix: LayoutDef<typeof schema> = {
         },
       );
       ctx.text(
-        'DELIVERS',
+        ctx.t('delivers').toUpperCase(),
         { x, y: y0 + bandH + 0.25, w: stageW, h: 0.24 },
         {
           size: theme.type.source + 0.5,

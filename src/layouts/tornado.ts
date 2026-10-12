@@ -119,7 +119,7 @@ export const tornado: LayoutDef<typeof schema> = {
         );
         const right = x >= bx;
         ctx.text(
-          fmt(v, d, c.unit),
+          fmt(v, d, c.unit, ctx.language),
           { x: right ? x + 0.05 : x - 0.85, y, w: 0.8, h: barH },
           {
             size: 'source',
@@ -142,7 +142,7 @@ export const tornado: LayoutDef<typeof schema> = {
       { role: 'base' },
     );
     ctx.text(
-      `${c.baseLabel ?? 'Base case'} ${fmt(c.base, d, c.unit)}`,
+      `${c.baseLabel ?? ctx.t('baseCase')} ${fmt(c.base, d, c.unit, ctx.language)}`,
       { x: bx - 1.5, y: plot.y - 0.34, w: 3, h: 0.24 },
       { size: 'source', bold: true, color: colors.ink, align: 'center', maxLines: 1, fixed: true },
     );
@@ -171,7 +171,7 @@ export const tornado: LayoutDef<typeof schema> = {
     }
     for (const t of s.ticks)
       ctx.text(
-        fmt(t, d, c.unit),
+        fmt(t, d, c.unit, ctx.language),
         { x: s.at(t) - 0.5, y: plot.y + plot.h + 0.06, w: 1, h: 0.24 },
         {
           size: 'source',

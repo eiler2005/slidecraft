@@ -1,0 +1,113 @@
+# yaml-language-server: $schema=../../schemas/deck.v1.json
+schemaVersion: 1
+id: fde-engineer-ru
+title: FDE-инженеры превращают ИИ-пилоты в работающие продукты
+storyline: research-readout
+theme: consulting-classic
+status: review
+language: ru
+author: Пример SlideCraft
+footer: Forward Deployed Engineer · Брифинг 2026
+sources:
+  - id: ft-fastcompany
+    title: Postings for this AI job are up 800%
+    publisher: Fast Company, по данным Financial Times
+    date: "2025"
+    url: https://www.fastcompany.com/91435680/postings-for-this-ai-job-are-up-800
+  - id: mit-nanda
+    title: "The GenAI Divide: State of AI in Business 2025"
+    publisher: MIT NANDA
+    date: Aug 2025
+  - id: paraform
+    title: What is a Forward Deployed AI Engineer?
+    publisher: Paraform
+    date: "2026"
+    url: https://www.paraform.com/blog/forward-deployed-ai-engineer
+output:
+  formats: [pptx, pdf, html]
+slides:
+  - id: cover
+    layout: title
+    variant: cover
+    title: FDE-инженеры превращают ИИ-пилоты в работающие продукты
+    kicker: Брифинг · 2026
+    subtitle: Что это за роль, почему ИИ-компании нанимают таких инженеров и как начать с одного
+    date: Октябрь 2026
+    art: auto
+    notes: Одна мысль на всю презентацию — узкое место корпоративного ИИ во внедрении, и эта роль его закрывает.
+
+  - id: why-now
+    layout: kpi-tiles
+    variant: tiles
+    tracker: Почему сейчас
+    title: ИИ-компании нанимают FDE, потому что большинство пилотов не доходит до продакшна
+    tiles:
+      - { value: "800%+", label: Рост числа вакансий FDE, delta: янв.–сент. 2025, trend: up, note: "Данные Financial Times, по сообщению Fast Company" }
+      - { value: "~95%", label: Пилотов GenAI без измеримого влияния на P&L, delta: отчёт 2025, note: "MIT NANDA, The GenAI Divide" }
+      - { value: "2010-е", label: "Десятилетие, когда роль появилась в Palantir", note: Инженеры работали непосредственно у государственных и корпоративных заказчиков }
+    highlight: 0
+    sources: [ft-fastcompany, mit-nanda, paraform]
+    notes: "Оценки роста различаются в зависимости от источника данных; все показывают многократный рост. Главное — причина: пилоты не доходят до эксплуатации."
+
+  - id: definition
+    layout: data-table
+    variant: with-takeaway
+    tracker: Что это за роль
+    title: FDE выпускает рабочий софт прямо в процессах заказчика
+    header: [Роль, Где работает, Что поставляет, Чем измеряется]
+    rows:
+      - [Forward Deployed Engineer, В команде заказчика, Рабочий софт в продакшне, Использованием и эффектом для бизнеса]
+      - [Продуктовый разработчик, В продуктовой команде, Функции для многих клиентов, Релизами и качеством]
+      - [Пресейл-инженер, В цикле продаж, Демо и пилоты, Закрытыми сделками]
+      - [Консультант, Рядом с клиентом, Анализ и рекомендации, Принятыми решениями]
+    highlightRow: 0
+    colWeights: [1.6, 1.4, 1.6, 1.5]
+    takeaway:
+      headline: FDE отвечает за результат, а не за демо
+      points:
+        - Пишет код для продакшна, а не слайды
+        - Остаётся, пока процесс не заработает без него
+        - Возвращает повторяющиеся потребности в продукт
+    sources: [paraform]
+    notes: Частый вопрос — не переименованный ли это пресейл? Нет — FDE отвечает за использование в продакшне, а не за закрытие сделки.
+
+  - id: cycle
+    layout: process-steps
+    variant: chevrons
+    tracker: Что делает
+    title: Цикл FDE идёт от рабочего места пользователя до ядра продукта
+    steps:
+      - { title: Погружение, body: "Работает рядом с теми, кто делает работу, и описывает процесс и данные" }
+      - { title: Выбор задачи, body: "Находит шаг, где ИИ сильнее всего меняет затраты, время или качество" }
+      - { title: Разработка, body: "Подключает данные, промпты, оценки качества и ограничения на платформе" }
+      - { title: Запуск и замер, body: "Запускает в продакшн и отслеживает использование и бизнес-метрику" }
+      - { title: Вклад в продукт, body: "Превращает повторяющиеся доработки в функции продукта" }
+    highlight: 3
+    sources: [paraform]
+    notes: На шаге 4 останавливается большинство пилотов; FDE оценивают именно по нему.
+
+  - id: profile
+    layout: key-points
+    variant: columns
+    tracker: Кого нанимать
+    title: Профиль сочетает продакшн-разработку, прикладной ИИ и понимание заказчика
+    points:
+      - { heading: Продакшн-разработка, body: "Full-stack и работа с данными; интеграция с унаследованными системами и ответственность за надёжность после запуска" }
+      - { heading: Прикладной ИИ, body: "API моделей, поиск по данным, оценка качества и ограничения — и понимание, когда модель не нужна" }
+      - { heading: Понимание заказчика, body: "Формулирует задачу с экспертами предметной области, объясняет компромиссы и отказывается от малоценных запросов" }
+    sources: [paraform]
+    notes: Сначала ищите сильного продакшн-инженера; прикладному ИИ научиться быстрее, чем пониманию заказчика.
+
+  - id: ask
+    layout: next-steps
+    variant: decision
+    tracker: Что делать
+    title: Начните с одного FDE на самом ценном ИИ-сценарии
+    decision: Запустить пилот с одним FDE-инженером на один квартал на одном процессе в продакшне
+    steps:
+      - { action: Выбрать один процесс с измеримой бизнес-метрикой, owner: Руководитель по ИИ, due: Месяц 1 }
+      - { action: Назначить или нанять инженера с опытом продакшна и ИИ, owner: CTO, due: Месяц 1 }
+      - { action: Встроить инженера в команду — владельца процесса, owner: Владелец процесса, due: Месяцы 1–2 }
+      - { action: Запустить в продакшн и еженедельно проверять метрику, owner: FDE, due: Месяцы 2–3 }
+      - { action: "Решить: масштабировать, встроить в продукт или остановить", owner: Руководство, due: Конец квартала }
+    notes: Просим одного решения — пилот на квартал с названным процессом и метрикой.

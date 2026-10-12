@@ -183,7 +183,7 @@ export const bubbleChart: LayoutDef<typeof schema> = {
       const y = sy.at(t);
       ctx.line(plot.x, y, plot.x + plot.w, y, { color: colors.rule, width: 0.5 }, { role: 'grid' });
       ctx.text(
-        fmt(t, yd, c.yAxis.unit),
+        fmt(t, yd, c.yAxis.unit, ctx.language),
         { x: a.x, y: y - 0.12, w: yLabW - 0.1, h: 0.24 },
         { size: 'source', color: colors.muted, align: 'right', maxLines: 1, fixed: true },
       );

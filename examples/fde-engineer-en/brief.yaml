@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schemas/brief.v1.json
+schemaVersion: 1
+id: fde-engineer-en
+goal: Leaders understand what a Forward Deployed Engineer is, why AI companies
+  hire them now, and decide whether to build the role
+ask: Pilot one Forward Deployed Engineer on your highest-value AI use case next
+  quarter
+audience:
+  who: Engineering and product leaders adopting AI in their company
+  knows: AI pilots are easy to start and hard to put into production; most have
+    heard the job title but not what it means
+  cares: Getting AI into real workflows with measurable value, and whether this is
+    a new hire profile or a rename
+task: explainer for leaders
+context: The FDE role started at Palantir and spread to AI labs and AI-native
+  startups as enterprise AI moved from pilots to deployment.
+materials: []
+length: { slides: 6 }
+language: en
+tone: [ clear, evidence-led ]
+brand: { footer: The Forward Deployed Engineer · Briefing 2026 }
+usage: [ edit-together, send-pdf ]
+choice:
+  storyline: research-readout
+  theme: consulting-classic

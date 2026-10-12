@@ -8,6 +8,7 @@
 import type { ChartSpec } from '../layouts/types.ts';
 import type { FontSpec, Theme } from '../spec/theme.ts';
 import { mix } from './color.ts';
+import { culture } from './i18n.ts';
 import type { Box, ChartNode, ChartSeries, SceneNode, TextStyle } from './scene.ts';
 import { layoutText, makeTextNode, para } from './text.ts';
 
@@ -30,9 +31,16 @@ export function niceAxis(lo: number, hi: number): { min: number; max: number; ma
   return { min, max: max === min ? min + step : max, major: step };
 }
 
-export function formatNumber(v: number, decimals = 0, unit = '', signed = false): string {
+/** Number in the deck language's convention ("1,234.5" in English, "1 234,5" in Russian). */
+export function formatNumber(
+  v: number,
+  decimals = 0,
+  unit = '',
+  signed = false,
+  language?: string,
+): string {
   const abs = Math.abs(v);
-  const s = abs.toLocaleString('en-US', {
+  const s = abs.toLocaleString(culture(language), {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
   });
@@ -52,6 +60,7 @@ export function formatCode(decimals = 0, unit = ''): string {
 interface Ctx {
   theme: Theme;
   font: FontSpec;
+  language?: string;
 }
 
 function label(
@@ -90,6 +99,8 @@ export function buildChart(spec: ChartSpec, box: Box, ctx: Ctx): ChartNode {
   const small = t.type.small;
   const decimals = spec.decimals ?? 0;
   const unit = spec.unit ?? '';
+  const num = (v: number, d: number, u: string, signed = false) =>
+    formatNumber(v, d, u, signed, ctx.language);
   const n = spec.categories.length;
   const prims: SceneNode[] = [];
   const multi = spec.series.length > 1;
@@ -185,7 +196,7 @@ export function buildChart(spec: ChartSpec, box: Box, ctx: Ctx): ChartNode {
         lo: l,
         hi: h,
         color: isTot ? c.accent : color,
-        label: formatNumber(d, decimals, unit, !isTot),
+        label: num(d, decimals, unit, !isTot),
         labelAt: b >= a ? 'top' : 'bottom',
       });
       if (i < deltas.length - 1) connectors.push({ cat: i, v: run });
@@ -222,7 +233,7 @@ export function buildChart(spec: ChartSpec, box: Box, ctx: Ctx): ChartNode {
         lo: Math.min(0, v),
         hi: Math.max(0, v),
         color: hl.has(i) ? c.accent : muted,
-        label: formatNumber(v, decimals, unit),
+        label: num(v, decimals, unit),
         labelAt: v >= 0 ? 'top' : 'bottom',
       });
     });
@@ -247,7 +258,7 @@ export function buildChart(spec: ChartSpec, box: Box, ctx: Ctx): ChartNode {
             lo: a,
             hi: b,
             color: series[si]!.color,
-            label: formatNumber(v, decimals, unit),
+            label: num(v, decimals, unit),
             labelAt: 'inside',
           });
         });
@@ -303,7 +314,7 @@ export function buildChart(spec: ChartSpec, box: Box, ctx: Ctx): ChartNode {
           prims.push(
             label(
               ctx,
-              formatNumber(p.v, decimals, unit),
+              num(p.v, decimals, unit),
               { x: p.x - 0.5, y: p.y - 0.3, w: 1, h: 0.24 },
               { color: si === 0 ? c.ink : c.muted, size: small, bold: isLast },
             ),
@@ -319,7 +330,7 @@ export function buildChart(spec: ChartSpec, box: Box, ctx: Ctx): ChartNode {
           lo: Math.min(0, v),
           hi: Math.max(0, v),
           color: series[0]!.color,
-          label: formatNumber(v, decimals, unit),
+          label: num(v, decimals, unit),
           labelAt: (v >= 0 ? 'top' : 'bottom') as Bar['labelAt'],
         }));
     list.forEach((b) => {
@@ -395,7 +406,7 @@ export function buildChart(spec: ChartSpec, box: Box, ctx: Ctx): ChartNode {
           prims.push(
             label(
               ctx,
-              formatNumber(total, decimals, unit),
+              num(total, decimals, unit),
               { x: vx(top) + 0.06, y, w: 0.9, h: 0.24 },
               { align: 'left', size: small, bold: true, role: 'chart-total' },
             ),
@@ -405,7 +416,7 @@ export function buildChart(spec: ChartSpec, box: Box, ctx: Ctx): ChartNode {
           prims.push(
             label(
               ctx,
-              formatNumber(total, decimals, unit),
+              num(total, decimals, unit),
               { x: x - 0.2, y: vy(top) - 0.27, w: thick + 0.4, h: 0.24 },
               { size: small, bold: true, role: 'chart-total' },
             ),
@@ -444,7 +455,7 @@ export function buildChart(spec: ChartSpec, box: Box, ctx: Ctx): ChartNode {
           prims.push(
             label(
               ctx,
-              formatNumber(v, decimals, unit),
+              num(v, decimals, unit),
               { x: x2 + 0.05, y: y + thick / 2 - 0.12, w: 0.9, h: 0.24 },
               { align: 'left', size: small },
             ),
@@ -462,7 +473,7 @@ export function buildChart(spec: ChartSpec, box: Box, ctx: Ctx): ChartNode {
           prims.push(
             label(
               ctx,
-              formatNumber(v, decimals, unit),
+              num(v, decimals, unit),
               { x: x - 0.25, y: y1 - 0.27, w: thick + 0.5, h: 0.24 },
               { size: small },
             ),

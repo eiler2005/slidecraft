@@ -45,9 +45,25 @@ export function bgAt(
 ): string {
   for (let i = upto - 1; i >= 0; i--) {
     const n = nodes[i]!;
-    if (n.kind === 'rect' && n.fill && (n.fillOpacity ?? 1) > 0.6) {
+    if (!('fill' in n) || !n.fill || (n.fillOpacity ?? 1) <= 0.6) continue;
+    if (n.kind === 'rect') {
       const b = n.box;
       if (x >= b.x && x <= b.x + b.w && y >= b.y && y <= b.y + b.h) return n.fill;
+    } else if (n.kind === 'ellipse') {
+      const b = n.box;
+      const dx = (x - (b.x + b.w / 2)) / (b.w / 2);
+      const dy = (y - (b.y + b.h / 2)) / (b.h / 2);
+      if (dx * dx + dy * dy <= 1) return n.fill;
+    } else if (n.kind === 'polygon') {
+      // even-odd ray casting: chevrons, arrows and badges are polygons
+      let inside = false;
+      const p = n.points;
+      for (let a = 0, b = p.length - 1; a < p.length; b = a++) {
+        const [xa, ya] = p[a]!;
+        const [xb, yb] = p[b]!;
+        if (ya > y !== yb > y && x < ((xb - xa) * (y - ya)) / (yb - ya) + xa) inside = !inside;
+      }
+      if (inside) return n.fill;
     }
   }
   return fallback;

@@ -1,0 +1,55 @@
+{
+  "reviewer": "visual-reviewer (Claude Opus 5.5)",
+  "verdict": "ready-with-notes",
+  "summary": "Русская версия по шаблону, все цифры с источниками; найдены и исправлены в общем коде английские служебные надписи и русская типографика.",
+  "findings": [
+    {
+      "slide": "why-now, definition, cycle, profile",
+      "severity": "major",
+      "area": "template",
+      "issue": "Строка источников начиналась с английского «Source:» в русской презентации",
+      "fix": "shared: префикс источников по языку колоды («Источник:»)",
+      "status": "fixed"
+    },
+    {
+      "slide": "ask",
+      "severity": "major",
+      "area": "template",
+      "issue": "Надпись «DECISION REQUESTED» на английском",
+      "fix": "shared: служебные надписи макетов по языку колоды («ТРЕБУЕТСЯ РЕШЕНИЕ»)",
+      "status": "fixed"
+    },
+    {
+      "slide": "all",
+      "severity": "minor",
+      "area": "typography",
+      "issue": "Короткие предлоги и союзы («с», «в», «и») оставались в конце строки",
+      "fix": "shared: неразрывный пробел после слов из 1–2 букв и перед тире для ru",
+      "status": "fixed"
+    },
+    {
+      "slide": "cover",
+      "severity": "minor",
+      "area": "typography",
+      "issue": "Подзаголовок обложки заканчивался висячим словом «одного»",
+      "fix": "shared: балансировка подзаголовков",
+      "status": "fixed"
+    },
+    {
+      "slide": "cycle, profile, definition",
+      "severity": "minor",
+      "area": "layout",
+      "issue": "Контент занимает верхнюю половину слайда",
+      "fix": "Оставить как воздух или добавить пример/результат",
+      "status": "needs-user"
+    },
+    {
+      "slide": "why-now",
+      "severity": "minor",
+      "area": "meaning",
+      "issue": "Оценки роста вакансий FDE различаются по источникам; в колоде цифра FT в изложении Fast Company",
+      "fix": "Проверить статью FT перед внешним использованием",
+      "status": "needs-user"
+    }
+  ]
+}

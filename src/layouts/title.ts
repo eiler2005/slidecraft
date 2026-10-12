@@ -1,4 +1,8 @@
+import { existsSync } from 'node:fs';
+import { isAbsolute, resolve } from 'node:path';
 import { z } from 'zod';
+import { diag } from '../qa/codes.ts';
+import { COVER_ART, drawCoverArt, pickCoverArt } from './cover-art.ts';
 import type { LayoutDef } from './types.ts';
 
 const schema = z
@@ -16,6 +20,30 @@ const schema = z
       .max(3)
       .optional()
       .describe('Closing variant: contact lines'),
+    art: z
+      .enum(['auto', ...COVER_ART])
+      .optional()
+      .describe(
+        'Cover: topic motif on a right-hand panel, drawn as editable shapes in the theme accent. auto picks it from the title (network: AI, data, tech · growth: money, markets · flow: process, plans · orbit: customers, people · layers: architecture, risk · grid: products, operations)',
+      ),
+    image: z
+      .string()
+      .optional()
+      .describe(
+        'Cover: picture for the right-hand panel (path relative to the deck); wins over art',
+      ),
+    imagePrompt: z
+      .string()
+      .max(400)
+      .optional()
+      .describe(
+        'Cover: what the panel picture should show; `slidecraft images` generates it. Until then the art motif is drawn',
+      ),
+    alt: z
+      .string()
+      .max(140)
+      .optional()
+      .describe('Alt text of the cover picture; without it the picture is decorative'),
   })
   .strict();
 
@@ -48,11 +76,54 @@ export const title: LayoutDef<typeof schema> = {
         contact: ['strategy@northwind.example', '+44 20 0000 0000'],
       },
     },
+    {
+      title: 'An AI platform can cut claims handling time by 40% within a year',
+      content: {
+        kicker: 'Steering committee',
+        subtitle: 'Where AI changes the claims process, what it costs and how we start',
+        presenter: 'Operations team',
+        date: 'October 2026',
+        art: 'auto',
+      },
+    },
   ],
   compose(ctx, c) {
     const { page, colors, theme } = ctx;
     const left = 0.9;
-    const width = ctx.variant === 'closing' ? page.w - 2 * left : Math.min(8.8, page.w * 0.66);
+    // cover visual: a right-hand panel with the deck's picture or topic motif
+    const visual = ctx.variant !== 'closing' && (c.art || c.image || c.imagePrompt);
+    const panelX = Math.round(page.w * 0.7 * 100) / 100;
+    const width =
+      ctx.variant === 'closing'
+        ? page.w - 2 * left
+        : Math.min(8.8, page.w * 0.66, visual ? panelX - left - 0.4 : Infinity);
+    if (visual) {
+      const panel = { x: panelX, y: 0, w: page.w - panelX, h: page.h };
+      const file = c.image && (isAbsolute(c.image) ? c.image : resolve(ctx.baseDir, c.image));
+      if (file && existsSync(file)) {
+        const img = ctx.image(panel, c.image, c.alt ?? '', { fit: 'cover', field: 'image' });
+        if (!c.alt) img.decorative = true;
+      } else {
+        if (c.image || c.imagePrompt)
+          ctx.issue(
+            diag(
+              'SC-IMG-002',
+              c.image
+                ? `Cover image not found: ${c.image}; drawing the art motif instead`
+                : 'Cover image not generated yet (slidecraft images); drawing the art motif instead',
+              {
+                pointer: ctx.ptr(c.image ? 'image' : 'imagePrompt'),
+                severity: c.image ? 'warning' : 'info',
+              },
+            ),
+          );
+        const art =
+          c.art && c.art !== 'auto'
+            ? c.art
+            : pickCoverArt([ctx.slide.title, c.kicker, c.subtitle].filter(Boolean).join(' '));
+        drawCoverArt(ctx, panel, art, ctx.slide.title);
+      }
+    }
     const titleColor = colors.titleInk ?? colors.ink;
 
     if (ctx.variant === 'closing') {

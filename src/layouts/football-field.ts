@@ -153,7 +153,7 @@ export const footballField: LayoutDef<typeof schema> = {
         [Math.max(r.low, r.high), x2, true],
       ] as const)
         ctx.text(
-          fmt(v, d, c.unit),
+          fmt(v, d, c.unit, ctx.language),
           { x: right ? x + 0.05 : x - 0.85, y, w: 0.8, h: barH },
           {
             size: 'source',

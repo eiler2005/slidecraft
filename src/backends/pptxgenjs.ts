@@ -8,6 +8,7 @@ import { join } from 'node:path';
 import JSZip from 'jszip';
 import pptxgenModule from 'pptxgenjs';
 import { chartAlt } from '../engine/alt.ts';
+import { culture } from '../engine/i18n.ts';
 import type {
   ChartNode,
   Master,
@@ -76,6 +77,34 @@ export function endMarkLikeLastRun(xml: string): string {
       .replace(/<\/a:rPr>$/, '</a:endParaRPr>');
     return p.replace(/<a:endParaRPr\b[^>]*?(?:\/>|>[\s\S]*?<\/a:endParaRPr>)/, mark);
   });
+}
+
+/** pptxgenjs writes multi-line notes as one run with raw line feeds; PowerPoint wants one
+ * paragraph per line, so the notes pane shows the [Sources] block line by line. */
+export function notesParagraphs(xml: string): string {
+  return xml.replace(
+    /<a:p><a:r>(<a:rPr\b[^>]*\/>)<a:t>([^<]*\n[^<]*)<\/a:t><\/a:r>(<a:endParaRPr\b[^>]*\/>)?<\/a:p>/g,
+    (_, rPr: string, text: string, end = '') =>
+      text
+        .split(/\r?\n/)
+        .map((line) =>
+          line
+            ? `<a:p><a:r>${rPr}<a:t>${line}</a:t></a:r>${end}</a:p>`
+            : `<a:p>${end || rPr.replace(/^<a:rPr\b/, '<a:endParaRPr')}</a:p>`,
+        )
+        .join(''),
+  );
+}
+
+/** pptxgenjs marks every run en-US, so PowerPoint would spell-check a Russian deck as
+ * English and underline every word. Text, notes and charts take the deck's culture
+ * (Latin, East Asian and complex-script runs alike); `altLang` stays as written. */
+export function proofingLanguage(xml: string, culture: string): string {
+  if (culture === 'en-US') return xml;
+  return xml.replace(
+    /(<a:(?:rPr|endParaRPr|defRPr)\b[^>]*?\s)lang="en-US"/g,
+    `$1lang="${culture}"`,
+  );
 }
 
 /**
@@ -520,6 +549,17 @@ export async function normalizeZip(
     if (name.endsWith('.xlsx')) data = await normalizeZip(Buffer.from(data), epoch);
     if (/^ppt\/(slideLayouts|slideMasters)\/[^/]+\.xml$/.test(name))
       data = markDecorative(Buffer.from(data).toString('utf8'));
+    if (/^ppt\/notesSlides\/[^/]+\.xml$/.test(name))
+      data = notesParagraphs(Buffer.from(data).toString('utf8'));
+    const lang = culture(opts.scene?.language);
+    if (
+      lang !== 'en-US' &&
+      /^ppt\/(slides|notesSlides|charts|slideLayouts|slideMasters)\/[^/]+\.xml$/.test(name)
+    )
+      data = proofingLanguage(
+        typeof data === 'string' ? data : Buffer.from(data).toString('utf8'),
+        lang,
+      );
     if (/^ppt\/slides\/slide\d+\.xml$/.test(name)) {
       let xml = Buffer.from(data).toString('utf8');
       const slideIndex = Number(/slide(\d+)\.xml$/.exec(name)?.[1]) - 1;

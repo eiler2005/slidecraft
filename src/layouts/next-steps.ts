@@ -143,7 +143,7 @@ export const nextSteps: LayoutDef<typeof schema> = {
           h: panel!.h - 0.8,
         };
         ctx.text(
-          'DECISION REQUESTED',
+          ctx.t('decision').toUpperCase(),
           { x: inner.x, y: inner.y, w: inner.w, h: 0.3 },
           {
             role: 'label',

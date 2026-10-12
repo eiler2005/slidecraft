@@ -1,0 +1,47 @@
+{
+  "reviewer": "visual-reviewer (Claude Opus 5.5)",
+  "verdict": "ready-with-notes",
+  "summary": "Раунд 2: обложка несёт тему (мотив «сеть» из редактируемых фигур), PowerPoint рисует её так же, как браузер; русский текст размечен языком ru-RU, источники в заметках идут построчно. Два пункта по содержанию остаются за автором.",
+  "findings": [
+    {
+      "slide": "cover",
+      "severity": "minor",
+      "area": "template",
+      "issue": "Обложка была только текстовой и не выделялась как первый слайд",
+      "fix": "shared: панель обложки с визуалом (art: auto выбирает мотив «сеть» для темы ИИ)",
+      "status": "fixed"
+    },
+    {
+      "slide": "all",
+      "severity": "major",
+      "area": "other",
+      "issue": "В PPTX весь русский текст был размечен как en-US — PowerPoint подчёркивал каждое слово как ошибку",
+      "fix": "shared: язык проверки орфографии по языку колоды (ru-RU) в слайдах, заметках и диаграммах",
+      "status": "fixed"
+    },
+    {
+      "slide": "all",
+      "severity": "minor",
+      "area": "other",
+      "issue": "Заметки с блоком [Sources] были одним абзацем с переводами строк",
+      "fix": "shared: каждая строка заметок — отдельный абзац PowerPoint",
+      "status": "fixed"
+    },
+    {
+      "slide": "cycle, profile, definition",
+      "severity": "minor",
+      "area": "layout",
+      "issue": "Контент занимает верхнюю половину слайда",
+      "fix": "Оставить как воздух или добавить пример/результат",
+      "status": "needs-user"
+    },
+    {
+      "slide": "why-now",
+      "severity": "minor",
+      "area": "meaning",
+      "issue": "Оценки роста вакансий FDE различаются по источникам; в колоде цифра FT в изложении Fast Company",
+      "fix": "Проверить статью FT перед внешним использованием",
+      "status": "needs-user"
+    }
+  ]
+}

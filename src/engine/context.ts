@@ -5,6 +5,7 @@ import { type Diagnostic, diag } from '../qa/codes.ts';
 import type { FontSpec, Theme } from '../spec/theme.ts';
 import { buildChart } from './charts.ts';
 import type { Format } from './format.ts';
+import { label, typeset } from './i18n.ts';
 import type { Box, Paragraph, SceneNode, TableCell, TableNode, TextStyle } from './scene.ts';
 import { balanceLines, fitText, layoutText, makeTextNode, para, plainText } from './text.ts';
 
@@ -19,6 +20,8 @@ export interface ContextInit {
   slide: { title: string; lead?: string };
   body: Box;
   baseDir: string;
+  /** Deck language: labels SlideCraft draws and typography follow it. */
+  language?: string;
 }
 
 export function sizeLadder(start: number, min: number): number[] {
@@ -65,6 +68,8 @@ export function createContext(
     page: { x: 0, y: 0, w: format.w, h: format.h },
     colors,
     ptr,
+    language: init.language ?? 'en',
+    t: (key) => label(init.language, key),
 
     paragraphs(items, opts = {}) {
       return items.map((t, i) => {
@@ -75,7 +80,10 @@ export function createContext(
     },
 
     text(content, box, opts = {}) {
-      const paragraphs = toParagraphs(content);
+      const paragraphs = toParagraphs(content).map((p) => ({
+        ...p,
+        runs: p.runs.map((r) => ({ ...r, text: typeset(r.text, init.language) })),
+      }));
       const font = opts.font === 'heading' ? fonts.heading : fonts.body;
       const start = semantic(opts.size);
       const sizes =
@@ -148,7 +156,10 @@ export function createContext(
         );
       }
       // Headlines never end on a widow: balance the break, same number of lines.
-      const node = r.fits && opts.role === 'title' ? balanceLines(r.node) : r.node;
+      const node =
+        r.fits && (opts.role === 'title' || opts.role === 'subtitle')
+          ? balanceLines(r.node)
+          : r.node;
       nodes.push(node);
       return node;
     },
@@ -333,7 +344,7 @@ export function createContext(
     },
 
     chart(spec: ChartSpec, box: Box) {
-      const n = buildChart(spec, box, { theme, font: fonts.body });
+      const n = buildChart(spec, box, { theme, font: fonts.body, language: init.language });
       if (spec.field) n.pointer = ptr(spec.field);
       nodes.push(n);
       return n;

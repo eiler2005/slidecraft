@@ -17,7 +17,7 @@ owns the conversation; sub-agents do focused work and write files; the CLI check
 | 2 | **Pick** — three storyline × theme options as contact sheets | CLI + orchestrator | main session | `picker.html`, `option-A/B/C.png` | ✅ CP2 |
 | 3 | **Storyline** — governing thought, SCR, MECE key line, evidence | `deck-strategist` | **Opus 5.5** | `storyline.md` | — |
 | 4 | **Ghost deck** — action-title chain, exhibit per slide, data needed | `deck-strategist` | **Opus 5.5** | `deck.yaml` (ghost) | ✅ CP3 |
-| 5 | **Build** — slides per section against layout contracts | `slide-writer` × sections | **Sonnet 5.5** | `sections/*.yaml`, `dist/*` | — |
+| 5 | **Build** — slides per section against layout contracts; cover visual (`art:` motif or picture); deck `language:` drives labels, numbers, typography, proofing; sources go into the notes | `slide-writer` × sections | **Sonnet 5.5** | `sections/*.yaml`, `dist/*` | — |
 | 6 | **Review** — checks, fit-fix loop, partner review | `copy-fitter` → `partner-reviewer` | **Haiku 5.5** → **Opus 5.5** | fixed YAML, review notes, `REVIEW-LOG.md` | — |
 | 6b | **Visual QA** — PowerPoint/HTML/difference images, template, colour, meaning, readiness | `visual-reviewer` | **Opus 5.5** | `dist/visual-qa/REPORT.md`, `record.json` | ✅ CP4 |
 | 7 | **Deliver** | orchestrator | main session | PPTX · PDF · HTML · previews · manifest · report | — |

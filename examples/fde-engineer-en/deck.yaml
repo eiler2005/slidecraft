@@ -1,0 +1,113 @@
+# yaml-language-server: $schema=../../schemas/deck.v1.json
+schemaVersion: 1
+id: fde-engineer-en
+title: Forward Deployed Engineers turn AI pilots into working products
+storyline: research-readout
+theme: consulting-classic
+status: review
+language: en
+author: SlideCraft example
+footer: The Forward Deployed Engineer · Briefing 2026
+sources:
+  - id: ft-fastcompany
+    title: Postings for this AI job are up 800%
+    publisher: Fast Company, citing Financial Times data
+    date: "2025"
+    url: https://www.fastcompany.com/91435680/postings-for-this-ai-job-are-up-800
+  - id: mit-nanda
+    title: "The GenAI Divide: State of AI in Business 2025"
+    publisher: MIT NANDA
+    date: Aug 2025
+  - id: paraform
+    title: What is a Forward Deployed AI Engineer?
+    publisher: Paraform
+    date: "2026"
+    url: https://www.paraform.com/blog/forward-deployed-ai-engineer
+output:
+  formats: [pptx, pdf, html]
+slides:
+  - id: cover
+    layout: title
+    variant: cover
+    title: Forward Deployed Engineers turn AI pilots into working products
+    kicker: Briefing · 2026
+    subtitle: What the role is, why AI companies are hiring for it, and how to start with one
+    date: October 2026
+    art: auto
+    notes: One message for the whole deck — the gap in enterprise AI is deployment, and this role closes it.
+
+  - id: why-now
+    layout: kpi-tiles
+    variant: tiles
+    tracker: Why now
+    title: AI companies hire FDEs because most AI pilots stall before production
+    tiles:
+      - { value: "800%+", label: Growth in FDE job postings, delta: Jan–Sep 2025, trend: up, note: Financial Times data reported by Fast Company }
+      - { value: "~95%", label: Generative AI pilots with no measurable P&L impact, delta: 2025 study, note: "MIT NANDA, The GenAI Divide" }
+      - { value: "2010s", label: Decade the role was created at Palantir, note: Engineers placed with government and enterprise customers }
+    highlight: 0
+    sources: [ft-fastcompany, mit-nanda, paraform]
+    notes: The growth figures differ by dataset; all of them show a several-fold rise. The point is the cause — pilots that never reach production.
+
+  - id: definition
+    layout: data-table
+    variant: with-takeaway
+    tracker: What it is
+    title: An FDE ships production software inside the customer's workflow
+    header: [Role, Works, Delivers, Judged by]
+    rows:
+      - [Forward Deployed Engineer, With the customer's team, Working software in production, Adoption and business value]
+      - [Software engineer, In the product team, Features for many customers, Releases and quality]
+      - [Solutions engineer, In the sales cycle, Demos and proofs of concept, Deals closed]
+      - [Consultant, Next to the client, Analysis and recommendations, Decisions taken]
+    highlightRow: 0
+    colWeights: [1.6, 1.4, 1.6, 1.5]
+    takeaway:
+      headline: The FDE owns the outcome, not the demo
+      points:
+        - Writes production code, not slides
+        - Stays until the workflow runs without them
+        - Brings repeated needs back to the product
+    sources: [paraform]
+    notes: Typical question — is this a rebranded solutions engineer? No — the FDE is accountable for production use, not for closing the deal.
+
+  - id: cycle
+    layout: process-steps
+    variant: chevrons
+    tracker: What they do
+    title: The FDE cycle runs from the user's desk to the core product
+    steps:
+      - { title: Embed, body: "Sit with the people who do the work and map the workflow and its data" }
+      - { title: Pick the job, body: "Choose the step where AI changes cost, time or quality the most" }
+      - { title: Build, body: "Connect data, prompts, evaluations and guardrails on the platform" }
+      - { title: Ship and measure, body: "Run it in production and track adoption and the business metric" }
+      - { title: Feed the product, body: "Turn custom work that repeats into product features" }
+    highlight: 3
+    sources: [paraform]
+    notes: Step four is where most pilots stop; the FDE is measured on it.
+
+  - id: profile
+    layout: key-points
+    variant: columns
+    tracker: Who to hire
+    title: The profile combines production engineering, applied AI and customer judgement
+    points:
+      - { heading: Production engineering, body: "Full-stack and data skills; integrates with legacy systems and owns reliability after go-live" }
+      - { heading: Applied AI, body: "Works with model APIs, retrieval, evaluations and guardrails — and knows when not to use a model" }
+      - { heading: Customer judgement, body: "Scopes problems with domain experts, explains trade-offs and says no to low-value requests" }
+    sources: [paraform]
+    notes: Hire for production engineering first; applied AI can be learned faster than customer judgement.
+
+  - id: ask
+    layout: next-steps
+    variant: decision
+    tracker: What to do
+    title: Start with one FDE on your highest-value AI use case
+    decision: Pilot one Forward Deployed Engineer for one quarter on a single production workflow
+    steps:
+      - { action: Pick one workflow with a measurable business metric, owner: Head of AI, due: Month 1 }
+      - { action: Assign or hire one engineer with production and AI experience, owner: CTO, due: Month 1 }
+      - { action: Embed the engineer with the team that owns the workflow, owner: Business owner, due: Month 1–2 }
+      - { action: Ship to production and review the metric every week, owner: FDE, due: Month 2–3 }
+      - { action: "Decide: scale, turn into product, or stop", owner: Leadership team, due: End of quarter }
+    notes: Ask for one decision — a one-quarter pilot with a named workflow and metric.

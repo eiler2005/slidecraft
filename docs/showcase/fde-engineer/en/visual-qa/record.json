@@ -1,0 +1,100 @@
+[
+  {
+    "reviewer": "visual-reviewer (Claude Opus 5.5)",
+    "verdict": "ready-with-notes",
+    "summary": "Six slides on template, every number sourced, PowerPoint and HTML wrap the same; two layouts leave generous whitespace below the content.",
+    "findings": [
+      {
+        "slide": "cycle",
+        "severity": "minor",
+        "area": "parity",
+        "issue": "Contrast check flagged the highlighted chevron title at 1:1 although it is white on blue",
+        "fix": "shared: contrast lookup now sees polygon and ellipse fills",
+        "status": "fixed"
+      },
+      {
+        "slide": "profile",
+        "severity": "minor",
+        "area": "layout",
+        "issue": "Card variant stretched three cards to full height with text in the top third",
+        "fix": "deck: key-points variant 'columns'",
+        "status": "fixed"
+      },
+      {
+        "slide": "cover",
+        "severity": "minor",
+        "area": "typography",
+        "issue": "Subtitle could end on a single word",
+        "fix": "shared: subtitles are balanced like titles",
+        "status": "fixed"
+      },
+      {
+        "slide": "cycle, profile, definition",
+        "severity": "minor",
+        "area": "layout",
+        "issue": "Content sits in the upper half; the lower half is empty",
+        "fix": "Accept as whitespace, or add an example or a result line",
+        "status": "needs-user"
+      },
+      {
+        "slide": "why-now",
+        "severity": "minor",
+        "area": "meaning",
+        "issue": "Growth figures for FDE postings differ by dataset (729–1,165 %); the deck uses the FT figure reported by Fast Company",
+        "fix": "Keep the qualifier in the notes; check the FT article before external use",
+        "status": "needs-user"
+      },
+      {
+        "slide": "cover",
+        "severity": "minor",
+        "area": "parity",
+        "issue": "Large cover title sits 1–2 px apart between PowerPoint and HTML",
+        "fix": "shared: known residual of large-text vertical placement",
+        "status": "open"
+      }
+    ],
+    "round": 1,
+    "changes": []
+  },
+  {
+    "reviewer": "visual-reviewer (Claude Opus 5.5)",
+    "verdict": "ready-with-notes",
+    "summary": "Round 2: the cover now carries the topic (network motif, editable shapes) and PowerPoint draws it exactly as the browser; speaker notes list the sources line by line. Two content points stay with the author.",
+    "findings": [
+      {
+        "slide": "cover",
+        "severity": "minor",
+        "area": "template",
+        "issue": "The cover was text only and did not stand out as the first slide",
+        "fix": "shared: cover visual panel (art: auto picks the network motif for an AI topic)",
+        "status": "fixed"
+      },
+      {
+        "slide": "all",
+        "severity": "minor",
+        "area": "other",
+        "issue": "Speaker notes with a [Sources] block were one paragraph with raw line breaks",
+        "fix": "shared: one PowerPoint paragraph per notes line",
+        "status": "fixed"
+      },
+      {
+        "slide": "cycle, profile, definition",
+        "severity": "minor",
+        "area": "layout",
+        "issue": "Content sits in the upper half; the lower half is empty",
+        "fix": "Accept as whitespace, or add an example or a result line",
+        "status": "needs-user"
+      },
+      {
+        "slide": "why-now",
+        "severity": "minor",
+        "area": "meaning",
+        "issue": "Growth figures for FDE postings differ by dataset (729–1,165 %); the deck uses the FT figure reported by Fast Company",
+        "fix": "Keep the qualifier in the notes; check the FT article before external use",
+        "status": "needs-user"
+      }
+    ],
+    "round": 2,
+    "changes": []
+  }
+]

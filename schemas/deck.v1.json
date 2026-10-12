@@ -407,6 +407,33 @@
                       "type": "string",
                       "maxLength": 70
                     }
+                  },
+                  "art": {
+                    "description": "Cover: topic motif on a right-hand panel, drawn as editable shapes in the theme accent. auto picks it from the title (network: AI, data, tech · growth: money, markets · flow: process, plans · orbit: customers, people · layers: architecture, risk · grid: products, operations)",
+                    "type": "string",
+                    "enum": [
+                      "auto",
+                      "network",
+                      "growth",
+                      "flow",
+                      "orbit",
+                      "grid",
+                      "layers"
+                    ]
+                  },
+                  "image": {
+                    "description": "Cover: picture for the right-hand panel (path relative to the deck); wins over art",
+                    "type": "string"
+                  },
+                  "imagePrompt": {
+                    "description": "Cover: what the panel picture should show; `slidecraft images` generates it. Until then the art motif is drawn",
+                    "type": "string",
+                    "maxLength": 400
+                  },
+                  "alt": {
+                    "description": "Alt text of the cover picture; without it the picture is decorative",
+                    "type": "string",
+                    "maxLength": 140
                   }
                 },
                 "required": [

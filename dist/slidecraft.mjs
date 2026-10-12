@@ -2302,8 +2302,8 @@ var require_lib2 = __commonJS({
         return this;
       }
       var p = this.constructor;
-      return this.then(resolve25, reject2);
-      function resolve25(value) {
+      return this.then(resolve26, reject2);
+      function resolve26(value) {
         function yes() {
           return value;
         }
@@ -2456,8 +2456,8 @@ var require_lib2 = __commonJS({
       }
       return out;
     }
-    Promise2.resolve = resolve24;
-    function resolve24(value) {
+    Promise2.resolve = resolve25;
+    function resolve25(value) {
       if (value instanceof this) {
         return value;
       }
@@ -2992,10 +2992,10 @@ var require_utils = __commonJS({
           if (typeof Blob.prototype.arrayBuffer !== "undefined") {
             return data.arrayBuffer();
           } else if (typeof FileReader !== "undefined") {
-            return new external.Promise(function(resolve24, reject) {
+            return new external.Promise(function(resolve25, reject) {
               var reader = new FileReader();
               reader.onload = function(e) {
-                resolve24(e.target.result);
+                resolve25(e.target.result);
               };
               reader.onerror = function(e) {
                 reject(e.target.error);
@@ -3554,7 +3554,7 @@ var require_StreamHelper = __commonJS({
       }
     }
     function accumulate(helper, updateCallback) {
-      return new external.Promise(function(resolve24, reject) {
+      return new external.Promise(function(resolve25, reject) {
         var dataArray = [];
         var chunkType = helper._internalType, resultType = helper._outputType, mimeType = helper._mimeType;
         helper.on("data", function(data, meta3) {
@@ -3568,7 +3568,7 @@ var require_StreamHelper = __commonJS({
         }).on("end", function() {
           try {
             var result = transformZipOutput(resultType, concat2(chunkType, dataArray), mimeType);
-            resolve24(result);
+            resolve25(result);
           } catch (e) {
             reject(e);
           }
@@ -9681,7 +9681,7 @@ var require_load = __commonJS({
     var Crc32Probe = require_Crc32Probe();
     var nodejsUtils = require_nodejsUtils();
     function checkEntryCRC32(zipEntry) {
-      return new external.Promise(function(resolve24, reject) {
+      return new external.Promise(function(resolve25, reject) {
         var worker = zipEntry.decompressed.getContentWorker().pipe(new Crc32Probe());
         worker.on("error", function(e) {
           reject(e);
@@ -9689,7 +9689,7 @@ var require_load = __commonJS({
           if (worker.streamInfo.crc32 !== zipEntry.decompressed.crc32) {
             reject(new Error("Corrupted zip : CRC32 mismatch"));
           } else {
-            resolve24();
+            resolve25();
           }
         }).resume();
       });
@@ -10392,9 +10392,9 @@ var require_clone = __commonJS({
           } else if (_instanceof2(parent2, nativeSet)) {
             child2 = new nativeSet();
           } else if (_instanceof2(parent2, nativePromise)) {
-            child2 = new nativePromise(function(resolve24, reject) {
+            child2 = new nativePromise(function(resolve25, reject) {
               parent2.then(function(value) {
-                resolve24(_clone(value, depth2 - 1));
+                resolve25(_clone(value, depth2 - 1));
               }, function(err) {
                 reject(_clone(err, depth2 - 1));
               });
@@ -147522,11 +147522,11 @@ import { join as join4 } from "node:path";
 var import_jszip = __toESM(require_lib3());
 function __awaiter(thisArg, _arguments, P3, generator) {
   function adopt(value) {
-    return value instanceof P3 ? value : new P3(function(resolve24) {
-      resolve24(value);
+    return value instanceof P3 ? value : new P3(function(resolve25) {
+      resolve25(value);
     });
   }
-  return new (P3 || (P3 = Promise))(function(resolve24, reject) {
+  return new (P3 || (P3 = Promise))(function(resolve25, reject) {
     function fulfilled(value) {
       try {
         step(generator.next(value));
@@ -147542,7 +147542,7 @@ function __awaiter(thisArg, _arguments, P3, generator) {
       }
     }
     function step(result) {
-      result.done ? resolve24(result.value) : adopt(result.value).then(fulfilled, rejected);
+      result.done ? resolve25(result.value) : adopt(result.value).then(fulfilled, rejected);
     }
     step((generator = generator.apply(thisArg, _arguments || [])).next());
   });
@@ -149703,7 +149703,7 @@ var Slide = class {
 function createExcelWorksheet(chartObject, zip) {
   return __awaiter(this, void 0, void 0, function* () {
     const data = chartObject.data;
-    return yield new Promise((resolve24, reject) => {
+    return yield new Promise((resolve25, reject) => {
       var _a3, _b;
       const zipExcel = new import_jszip.default();
       const intBubbleCols = (data.length - 1) * 2 + 1;
@@ -149734,7 +149734,7 @@ function createExcelWorksheet(chartObject, zip) {
           strSharedStrings += `<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" count="${data.length}" uniqueCount="${data.length}">`;
         } else if (IS_MULTI_CAT_AXES) {
           let totCount = data.length;
-          data[0].labels.forEach((arrLabel) => totCount += arrLabel.filter((label3) => label3 && label3 !== "").length);
+          data[0].labels.forEach((arrLabel) => totCount += arrLabel.filter((label4) => label4 && label4 !== "").length);
           strSharedStrings += `<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" count="${totCount}" uniqueCount="${totCount}">`;
           strSharedStrings += "<si><t/></si>";
         } else {
@@ -149759,8 +149759,8 @@ function createExcelWorksheet(chartObject, zip) {
         }
         if (chartObject.opts._type !== CHART_TYPE.BUBBLE && chartObject.opts._type !== CHART_TYPE.BUBBLE3D && chartObject.opts._type !== CHART_TYPE.SCATTER) {
           data[0].labels.slice().reverse().forEach((labelsGroup) => {
-            labelsGroup.filter((label3) => label3 && label3 !== "").forEach((label3) => {
-              strSharedStrings += `<si><t>${encodeXmlEntities(label3)}</t></si>`;
+            labelsGroup.filter((label4) => label4 && label4 !== "").forEach((label4) => {
+              strSharedStrings += `<si><t>${encodeXmlEntities(label4)}</t></si>`;
             });
           });
         }
@@ -149892,7 +149892,7 @@ function createExcelWorksheet(chartObject, zip) {
               revLabelGroups.forEach((labelsGroup, idy) => {
                 const colLabel = labelsGroup[idx];
                 if (colLabel) {
-                  const totGrpLbls = idy === 0 ? 1 : revLabelGroups[idy - 1].filter((label3) => label3 && label3 !== "").length;
+                  const totGrpLbls = idy === 0 ? 1 : revLabelGroups[idy - 1].filter((label4) => label4 && label4 !== "").length;
                   totLabels += totGrpLbls;
                   strSheetXml += `<c r="${getExcelColName(idx + 1 + idy)}${idx + 2}" t="s"><v>${totLabels}</v></c>`;
                 }
@@ -149913,7 +149913,7 @@ function createExcelWorksheet(chartObject, zip) {
         zip.file(`ppt/embeddings/Microsoft_Excel_Worksheet${chartObject.globalId}.xlsx`, content, { base64: true });
         zip.file("ppt/charts/_rels/" + chartObject.fileName + ".rels", `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/package" Target="../embeddings/Microsoft_Excel_Worksheet${chartObject.globalId}.xlsx"/></Relationships>`);
         zip.file(`ppt/charts/${chartObject.fileName}`, makeXmlCharts(chartObject));
-        resolve24("");
+        resolve25("");
       }).catch((strErr) => {
         reject(strErr);
       });
@@ -150197,7 +150197,7 @@ function makeChartType(chartType2, data, opts, valAxisId, catAxisId, isMultiType
             strXml += "    <c:numCache>";
             strXml += "      <c:formatCode>" + (opts.catLabelFormatCode || "General") + "</c:formatCode>";
             strXml += `      <c:ptCount val="${obj2.labels[0].length}"/>`;
-            obj2.labels[0].forEach((label3, idx) => strXml += `<c:pt idx="${idx}"><c:v>${encodeXmlEntities(label3)}</c:v></c:pt>`);
+            obj2.labels[0].forEach((label4, idx) => strXml += `<c:pt idx="${idx}"><c:v>${encodeXmlEntities(label4)}</c:v></c:pt>`);
             strXml += "    </c:numCache>";
             strXml += "  </c:numRef>";
           } else {
@@ -150207,7 +150207,7 @@ function makeChartType(chartType2, data, opts, valAxisId, catAxisId, isMultiType
             strXml += `      <c:ptCount val="${obj2.labels[0].length}"/>`;
             obj2.labels.forEach((labelsGroup) => {
               strXml += "<c:lvl>";
-              labelsGroup.forEach((label3, idx) => strXml += `<c:pt idx="${idx}"><c:v>${encodeXmlEntities(label3)}</c:v></c:pt>`);
+              labelsGroup.forEach((label4, idx) => strXml += `<c:pt idx="${idx}"><c:v>${encodeXmlEntities(label4)}</c:v></c:pt>`);
               strXml += "</c:lvl>";
             });
             strXml += "    </c:multiLvlStrCache>";
@@ -150320,7 +150320,7 @@ function makeChartType(chartType2, data, opts, valAxisId, catAxisId, isMultiType
           const chartUuid = getUuid("-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
           if (obj2.labels[0] && (opts.dataLabelFormatScatter === "custom" || opts.dataLabelFormatScatter === "customXY")) {
             strXml += "<c:dLbls>";
-            obj2.labels[0].forEach((label3, idx2) => {
+            obj2.labels[0].forEach((label4, idx2) => {
               if (opts.dataLabelFormatScatter === "custom" || opts.dataLabelFormatScatter === "customXY") {
                 strXml += "  <c:dLbl>";
                 strXml += `    <c:idx val="${idx2}"/>`;
@@ -150336,9 +150336,9 @@ function makeChartType(chartType2, data, opts, valAxisId, catAxisId, isMultiType
                 strXml += "                </a:pPr>";
                 strXml += "              <a:r>";
                 strXml += '                    <a:rPr lang="' + (opts.lang || "en-US") + '" dirty="0"/>';
-                strXml += "                    <a:t>" + encodeXmlEntities(label3) + "</a:t>";
+                strXml += "                    <a:t>" + encodeXmlEntities(label4) + "</a:t>";
                 strXml += "              </a:r>";
-                if (opts.dataLabelFormatScatter === "customXY" && !/^ *$/.test(label3)) {
+                if (opts.dataLabelFormatScatter === "customXY" && !/^ *$/.test(label4)) {
                   strXml += "              <a:r>";
                   strXml += '                  <a:rPr lang="' + (opts.lang || "en-US") + '" baseline="0" dirty="0"/>';
                   strXml += "                  <a:t> (</a:t>";
@@ -150701,8 +150701,8 @@ function makeChartType(chartType2, data, opts, valAxisId, catAxisId, isMultiType
       strXml += `    <c:f>Sheet1!$A$2:$A$${optsChartData.labels[0].length + 1}</c:f>`;
       strXml += "    <c:strCache>";
       strXml += `         <c:ptCount val="${optsChartData.labels[0].length}"/>`;
-      optsChartData.labels[0].forEach((label3, idx) => {
-        strXml += `<c:pt idx="${idx}"><c:v>${encodeXmlEntities(label3)}</c:v></c:pt>`;
+      optsChartData.labels[0].forEach((label4, idx) => {
+        strXml += `<c:pt idx="${idx}"><c:v>${encodeXmlEntities(label4)}</c:v></c:pt>`;
       });
       strXml += "    </c:strCache>";
       strXml += "  </c:strRef>";
@@ -151118,7 +151118,7 @@ ${String(ex)}`);
         }
       }
       if (isNode && https && rel.path.startsWith("http")) {
-        return yield new Promise((resolve24, reject) => {
+        return yield new Promise((resolve25, reject) => {
           https.get(rel.path, (res) => {
             let raw = "";
             res.setEncoding("binary");
@@ -151126,7 +151126,7 @@ ${String(ex)}`);
             res.on("end", () => {
               rel.data = Buffer.from(raw, "binary").toString("base64");
               candidateRels.filter((dupe) => dupe.isDuplicate && dupe.path === rel.path).forEach((dupe) => dupe.data = rel.data);
-              resolve24("done");
+              resolve25("done");
             });
             res.on("error", () => {
               rel.data = IMG_BROKEN;
@@ -151136,7 +151136,7 @@ ${String(ex)}`);
           });
         });
       }
-      return yield new Promise((resolve24, reject) => {
+      return yield new Promise((resolve25, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.onload = () => {
           const reader = new FileReader();
@@ -151144,9 +151144,9 @@ ${String(ex)}`);
             rel.data = reader.result;
             candidateRels.filter((dupe) => dupe.isDuplicate && dupe.path === rel.path).forEach((dupe) => dupe.data = rel.data);
             if (!rel.isSvgPng) {
-              resolve24("done");
+              resolve25("done");
             } else {
-              createSvgPngPreview(rel).then(() => resolve24("done")).catch(reject);
+              createSvgPngPreview(rel).then(() => resolve25("done")).catch(reject);
             }
           };
           reader.readAsDataURL(xhr.response);
@@ -151178,7 +151178,7 @@ ${String(ex)}`);
 }
 function createSvgPngPreview(rel) {
   return __awaiter(this, void 0, void 0, function* () {
-    return yield new Promise((resolve24, reject) => {
+    return yield new Promise((resolve25, reject) => {
       const image = new Image();
       image.onload = () => {
         if (image.width + image.height === 0) {
@@ -151191,7 +151191,7 @@ function createSvgPngPreview(rel) {
         ctx.drawImage(image, 0, 0);
         try {
           rel.data = canvas.toDataURL(rel.type);
-          resolve24("done");
+          resolve25("done");
         } catch (ex) {
           image.onerror(ex.toString());
         }
@@ -152837,6 +152837,64 @@ var PptxGenJS = class {
     genTableToSlides(this, eleId, options, (options === null || options === void 0 ? void 0 : options.masterSlideName) ? this.slideLayouts.filter((layout) => layout._name === options.masterSlideName)[0] : null);
   }
 };
+
+// src/engine/i18n.ts
+var LABELS = {
+  en: {
+    source: "Source:",
+    decision: "Decision requested",
+    recommended: "Recommended",
+    soWhat: "So what",
+    likelihood: "Likelihood",
+    impact: "Impact",
+    delivers: "Delivers",
+    today: "Today",
+    target: "Target",
+    baseCase: "Base case"
+  },
+  ru: {
+    source: "\u0418\u0441\u0442\u043E\u0447\u043D\u0438\u043A:",
+    decision: "\u0422\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044F \u0440\u0435\u0448\u0435\u043D\u0438\u0435",
+    recommended: "\u0420\u0435\u043A\u043E\u043C\u0435\u043D\u0434\u0443\u0435\u043C",
+    soWhat: "\u0427\u0442\u043E \u044D\u0442\u043E \u0437\u043D\u0430\u0447\u0438\u0442",
+    likelihood: "\u0412\u0435\u0440\u043E\u044F\u0442\u043D\u043E\u0441\u0442\u044C",
+    impact: "\u0412\u043B\u0438\u044F\u043D\u0438\u0435",
+    delivers: "\u0420\u0435\u0437\u0443\u043B\u044C\u0442\u0430\u0442",
+    today: "\u0421\u0435\u0439\u0447\u0430\u0441",
+    target: "\u0426\u0435\u043B\u044C",
+    baseCase: "\u0411\u0430\u0437\u043E\u0432\u044B\u0439 \u0441\u0446\u0435\u043D\u0430\u0440\u0438\u0439"
+  },
+  de: {
+    source: "Quelle:",
+    decision: "Entscheidung erbeten",
+    recommended: "Empfohlen",
+    soWhat: "Was das hei\xDFt",
+    likelihood: "Wahrscheinlichkeit",
+    impact: "Auswirkung",
+    delivers: "Liefert",
+    today: "Heute",
+    target: "Ziel",
+    baseCase: "Basisfall"
+  }
+};
+function label(language, key) {
+  return (LABELS[(language ?? "en").slice(0, 2)] ?? LABELS.en)[key];
+}
+var CULTURES = { en: "en-US", ru: "ru-RU", de: "de-DE" };
+function culture(language) {
+  const lang = language ?? "en";
+  if (lang.includes("-")) return lang;
+  return CULTURES[lang.slice(0, 2)] ?? lang;
+}
+var isDefaultSourcePrefix = (prefix) => prefix === void 0 || prefix === LABELS.en.source;
+var NBSP = "\xA0";
+function typeset(text4, language) {
+  if ((language ?? "").slice(0, 2) !== "ru") return text4;
+  let out = text4;
+  for (let i = 0; i < 2; i++)
+    out = out.replace(/(^|[\s(«„"'])([А-Яа-яЁё]{1,2}) (?=\S)/gu, `$1$2${NBSP}`);
+  return out.replace(/ ([—–])(?=\s)/gu, `${NBSP}$1`);
+}
 
 // src/engine/scene.ts
 var PT_PER_IN = 72;
@@ -167853,8 +167911,8 @@ function nodeBodySvg(n) {
       return n.primitives.map(nodeSvg).join("");
   }
 }
-function placeholderSvg(b, label3) {
-  return `<rect x="${px(b.x)}" y="${px(b.y)}" width="${px(b.w)}" height="${px(b.h)}" fill="#E9ECF0" stroke="#AEB6C1" stroke-width="1" stroke-dasharray="6 4"/><line x1="${px(b.x)}" y1="${px(b.y)}" x2="${px(b.x + b.w)}" y2="${px(b.y + b.h)}" stroke="#C5CBD3" stroke-width="1"/><line x1="${px(b.x + b.w)}" y1="${px(b.y)}" x2="${px(b.x)}" y2="${px(b.y + b.h)}" stroke="#C5CBD3" stroke-width="1"/><text x="${px(b.x + b.w / 2)}" y="${px(b.y + b.h / 2) + 5}" text-anchor="middle" font-family="Liberation Sans" font-size="14" fill="#6B7480">${esc(label3)}</text>`;
+function placeholderSvg(b, label4) {
+  return `<rect x="${px(b.x)}" y="${px(b.y)}" width="${px(b.w)}" height="${px(b.h)}" fill="#E9ECF0" stroke="#AEB6C1" stroke-width="1" stroke-dasharray="6 4"/><line x1="${px(b.x)}" y1="${px(b.y)}" x2="${px(b.x + b.w)}" y2="${px(b.y + b.h)}" stroke="#C5CBD3" stroke-width="1"/><line x1="${px(b.x + b.w)}" y1="${px(b.y)}" x2="${px(b.x)}" y2="${px(b.y + b.h)}" stroke="#C5CBD3" stroke-width="1"/><text x="${px(b.x + b.w / 2)}" y="${px(b.y + b.h / 2) + 5}" text-anchor="middle" font-family="Liberation Sans" font-size="14" fill="#6B7480">${esc(label4)}</text>`;
 }
 function masterSvg(m, slideNo) {
   let out = m.nodes.map(nodeSvg).join("");
@@ -168029,6 +168087,21 @@ function endMarkLikeLastRun(xml2) {
     const mark = last2.replace(/<a:hlinkClick\b[^>]*?(?:\/>|>[\s\S]*?<\/a:hlinkClick>)/g, "").replace(/^<a:rPr\b/, "<a:endParaRPr").replace(/<\/a:rPr>$/, "</a:endParaRPr>");
     return p.replace(/<a:endParaRPr\b[^>]*?(?:\/>|>[\s\S]*?<\/a:endParaRPr>)/, mark);
   });
+}
+function notesParagraphs(xml2) {
+  return xml2.replace(
+    /<a:p><a:r>(<a:rPr\b[^>]*\/>)<a:t>([^<]*\n[^<]*)<\/a:t><\/a:r>(<a:endParaRPr\b[^>]*\/>)?<\/a:p>/g,
+    (_, rPr, text4, end = "") => text4.split(/\r?\n/).map(
+      (line3) => line3 ? `<a:p><a:r>${rPr}<a:t>${line3}</a:t></a:r>${end}</a:p>` : `<a:p>${end || rPr.replace(/^<a:rPr\b/, "<a:endParaRPr")}</a:p>`
+    ).join("")
+  );
+}
+function proofingLanguage(xml2, culture2) {
+  if (culture2 === "en-US") return xml2;
+  return xml2.replace(
+    /(<a:(?:rPr|endParaRPr|defRPr)\b[^>]*?\s)lang="en-US"/g,
+    `$1lang="${culture2}"`
+  );
 }
 function pptFontFace(family) {
   return /^(system-ui|-apple-system|blinkmacsystemfont)$/i.test(family.trim()) ? "Arial" : family;
@@ -168430,6 +168503,14 @@ async function normalizeZip(buf, epoch, opts = {}) {
     if (name.endsWith(".xlsx")) data = await normalizeZip(Buffer.from(data), epoch);
     if (/^ppt\/(slideLayouts|slideMasters)\/[^/]+\.xml$/.test(name))
       data = markDecorative(Buffer.from(data).toString("utf8"));
+    if (/^ppt\/notesSlides\/[^/]+\.xml$/.test(name))
+      data = notesParagraphs(Buffer.from(data).toString("utf8"));
+    const lang = culture(opts.scene?.language);
+    if (lang !== "en-US" && /^ppt\/(slides|notesSlides|charts|slideLayouts|slideMasters)\/[^/]+\.xml$/.test(name))
+      data = proofingLanguage(
+        typeof data === "string" ? data : Buffer.from(data).toString("utf8"),
+        lang
+      );
     if (/^ppt\/slides\/slide\d+\.xml$/.test(name)) {
       let xml2 = Buffer.from(data).toString("utf8");
       const slideIndex = Number(/slide(\d+)\.xml$/.exec(name)?.[1]) - 1;
@@ -169533,9 +169614,9 @@ var SCRIPT = `
 function buildHtml(scene) {
   const { w, h } = scene.format;
   const sections = scene.slides.map((s2, i) => {
-    const label3 = `Slide ${i + 1}: ${s2.title}`;
+    const label4 = `Slide ${i + 1}: ${s2.title}`;
     const notes = s2.notes?.trim();
-    return `<section class="slide${i === 0 ? " active" : ""}" id="slide-${i + 1}" aria-label="${esc(label3)}" data-slide="${i + 1}">${slideSvg(scene, s2)}<div class="notes" role="note" aria-label="Presenter notes"${notes ? "" : " data-empty"}>${notes ? esc(notes) : ""}</div></section>`;
+    return `<section class="slide${i === 0 ? " active" : ""}" id="slide-${i + 1}" aria-label="${esc(label4)}" data-slide="${i + 1}">${slideSvg(scene, s2)}<div class="notes" role="note" aria-label="Presenter notes"${notes ? "" : " data-empty"}>${notes ? esc(notes) : ""}</div></section>`;
   });
   const body = sections.join("\n");
   const css = fontFaceCss(body);
@@ -169684,7 +169765,7 @@ function detectChrome() {
   return chromeDetection;
 }
 function runChrome(bin, args, timeoutMs, pdfPath) {
-  return new Promise((resolve24, reject) => {
+  return new Promise((resolve25, reject) => {
     const child2 = spawn(bin, args, { stdio: ["ignore", "pipe", "pipe"] });
     let stderr = "";
     let done = false;
@@ -169694,7 +169775,7 @@ function runChrome(bin, args, timeoutMs, pdfPath) {
       done = true;
       clearInterval(poll);
       clearTimeout(timer);
-      const settle2 = () => err ? reject(err) : resolve24({ stderr });
+      const settle2 = () => err ? reject(err) : resolve25({ stderr });
       if (child2.exitCode !== null) return settle2();
       const force = setTimeout(() => child2.kill("SIGKILL"), 3e3);
       child2.once("exit", () => {
@@ -170093,8 +170174,8 @@ var Doc = class {
     for (const p of t.paragraphs) {
       if (!p.runs.some((r) => r.text.trim())) continue;
       const plain = p.runs.map((r) => r.text).join("");
-      const label3 = /^[\p{Lu}\d][\p{Lu}\d &/·–-]{2,40}$/u.test(plain);
-      const style = t.role === "lead" ? "Lead" : label3 ? "Tracker" : p.bullet ? "ListBullet" : "BodyText";
+      const label4 = /^[\p{Lu}\d][\p{Lu}\d &/·–-]{2,40}$/u.test(plain);
+      const style = t.role === "lead" ? "Lead" : label4 ? "Tracker" : p.bullet ? "ListBullet" : "BodyText";
       this.para(style, this.runs(p));
     }
   }
@@ -174186,8 +174267,8 @@ function getEncryptionKeyR2R3R4(r, keyBits, documentId, paddedUserPassword, owne
 function getUserPasswordR5(processedUserPassword, generateRandomWordArray) {
   const validationSalt = generateRandomWordArray(8);
   const keySalt = generateRandomWordArray(8);
-  const hash2 = sha256Hash(concatBytes(processedUserPassword, validationSalt));
-  return concatBytes(hash2, validationSalt, keySalt);
+  const hash3 = sha256Hash(concatBytes(processedUserPassword, validationSalt));
+  return concatBytes(hash3, validationSalt, keySalt);
 }
 function getUserEncryptionKeyR5(processedUserPassword, userKeySalt, encryptionKey) {
   const key = sha256Hash(concatBytes(processedUserPassword, userKeySalt));
@@ -174197,8 +174278,8 @@ function getUserEncryptionKeyR5(processedUserPassword, userKeySalt, encryptionKe
 function getOwnerPasswordR5(processedOwnerPassword, userPasswordEntry, generateRandomWordArray) {
   const validationSalt = generateRandomWordArray(8);
   const keySalt = generateRandomWordArray(8);
-  const hash2 = sha256Hash(concatBytes(processedOwnerPassword, validationSalt, userPasswordEntry));
-  return concatBytes(hash2, validationSalt, keySalt);
+  const hash3 = sha256Hash(concatBytes(processedOwnerPassword, validationSalt, userPasswordEntry));
+  return concatBytes(hash3, validationSalt, keySalt);
 }
 function getOwnerEncryptionKeyR5(processedOwnerPassword, ownerKeySalt, userPasswordEntry, encryptionKey) {
   const key = sha256Hash(concatBytes(processedOwnerPassword, ownerKeySalt, userPasswordEntry));
@@ -177111,10 +177192,10 @@ var COLOR_SPACE_MAP = {
   4: "DeviceCMYK"
 };
 var JPEG = class {
-  constructor(data, label3) {
+  constructor(data, label4) {
     let marker;
     this.data = data;
-    this.label = label3;
+    this.label = label4;
     if (readUInt16BE(this.data, 0) !== 65496) {
       throw "SOI not found in JPEG";
     }
@@ -177164,8 +177245,8 @@ var JPEG = class {
   }
 };
 var PNGImage = class {
-  constructor(data, label3) {
-    this.label = label3;
+  constructor(data, label4) {
+    this.label = label4;
     this.image = new PNG(data);
     this.width = this.image.width;
     this.height = this.image.height;
@@ -177297,7 +177378,7 @@ var PNGImage = class {
   }
 };
 var PDFImage = class {
-  static open(src, label3) {
+  static open(src, label4) {
     let data;
     if (src instanceof Uint8Array) {
       data = src;
@@ -177315,9 +177396,9 @@ var PDFImage = class {
       }
     }
     if (data[0] === 255 && data[1] === 216) {
-      return new JPEG(data, label3);
+      return new JPEG(data, label4);
     } else if (data[0] === 137 && data[1] === 80 && data[2] === 78 && data[3] === 71) {
-      return new PNGImage(data, label3);
+      return new PNGImage(data, label4);
     } else {
       throw new Error("Unknown image format.");
     }
@@ -180345,9 +180426,9 @@ In Codex: "Using SlideCraft, make a deck that \u2026"`
 }
 
 // src/cli/commands.ts
-var import_yaml3 = __toESM(require_dist(), 1);
-import { existsSync as existsSync16, mkdirSync as mkdirSync15, readFileSync as readFileSync24, writeFileSync as writeFileSync12 } from "node:fs";
-import { dirname as dirname7, join as join20, relative as relative6, resolve as resolve14 } from "node:path";
+var import_yaml4 = __toESM(require_dist(), 1);
+import { existsSync as existsSync17, mkdirSync as mkdirSync15, readFileSync as readFileSync24, writeFileSync as writeFileSync12 } from "node:fs";
+import { dirname as dirname7, join as join20, relative as relative6, resolve as resolve15 } from "node:path";
 
 // node_modules/zod/v4/classic/external.js
 var external_exports = {};
@@ -185375,7 +185456,7 @@ var recursive = /* @__PURE__ */ new WeakMap();
 var NONE = 0;
 var ASSUMED = 1;
 var PROVEN = 2;
-function isRecursive(inst, stack, resolve24) {
+function isRecursive(inst, stack, resolve25) {
   const cached2 = recursive.get(inst);
   if (cached2 !== void 0)
     return cached2 ? PROVEN : NONE;
@@ -185385,7 +185466,7 @@ function isRecursive(inst, stack, resolve24) {
   let result = NONE;
   const check2 = (child2) => {
     if (result !== PROVEN && child2?._zod) {
-      const answer = isRecursive(child2, stack, resolve24);
+      const answer = isRecursive(child2, stack, resolve25);
       if (answer > result)
         result = answer;
     }
@@ -185396,7 +185477,7 @@ function isRecursive(inst, stack, resolve24) {
       const desc = Object.getOwnPropertyDescriptor(sh, key);
       if (spread && !desc.enumerable)
         continue;
-      const child2 = desc.get ? ASSUMED : desc.value?._zod ? isRecursive(desc.value, stack, resolve24) : NONE;
+      const child2 = desc.get ? ASSUMED : desc.value?._zod ? isRecursive(desc.value, stack, resolve25) : NONE;
       if (child2 > answer)
         answer = child2;
     }
@@ -185460,7 +185541,7 @@ function isRecursive(inst, stack, resolve24) {
       break;
     // `$ZodLazy` caches its inner on the def, so a resolved edge is followed exactly
     case "lazy": {
-      const inner = def._cachedInner ?? (resolve24 ? inst._zod.innerType : void 0);
+      const inner = def._cachedInner ?? (resolve25 ? inst._zod.innerType : void 0);
       merge2(inner ? isRecursive(inner, stack, false) : ASSUMED);
       break;
     }
@@ -193529,9 +193610,9 @@ function codePointLengthVar(doc, ctx, accessor, inDoubt) {
   doc.write(`const ${v} = typeof ${accessor} === "string" && ${inDoubt} ? ${cpLen}(${accessor}) : ${accessor}.length;`);
   return v;
 }
-function numericOperand(value, label3) {
+function numericOperand(value, label4) {
   if (typeof value !== "number" || !Number.isFinite(value)) {
-    throw new ZodCompileUnsupportedError(`${label3} bound of type ${typeof value}`);
+    throw new ZodCompileUnsupportedError(`${label4} bound of type ${typeof value}`);
   }
   return `${value}`;
 }
@@ -200020,7 +200101,7 @@ function date4(params) {
 // src/build.ts
 import { createHash as createHash2 } from "node:crypto";
 import { mkdirSync as mkdirSync11, readFileSync as readFileSync19, writeFileSync as writeFileSync8 } from "node:fs";
-import { join as join15, relative as relative3, resolve as resolve9 } from "node:path";
+import { join as join15, relative as relative3, resolve as resolve10 } from "node:path";
 
 // src/backends/freeform-raster.ts
 import { spawn as spawn2 } from "node:child_process";
@@ -200057,13 +200138,13 @@ function chromeArgs(tmp) {
   ];
 }
 function dumpDom(bin, args, timeoutMs = 6e4) {
-  return new Promise((resolve24, reject) => {
+  return new Promise((resolve25, reject) => {
     const child2 = spawn2(bin, args, { stdio: ["ignore", "pipe", "pipe"] });
     let out = "";
     const done = (err) => {
       clearTimeout(timer);
       if (child2.exitCode === null) child2.kill("SIGKILL");
-      err ? reject(err) : resolve24(out);
+      err ? reject(err) : resolve25(out);
     };
     child2.stdout.on("data", (d) => {
       out += d.toString();
@@ -200401,7 +200482,7 @@ async function nativeFreeform(scene) {
 }
 
 // src/engine/compose.ts
-import { existsSync as existsSync12, readFileSync as readFileSync18 } from "node:fs";
+import { existsSync as existsSync13, readFileSync as readFileSync18 } from "node:fs";
 
 // src/layouts/agenda.ts
 var schema = external_exports.object({
@@ -201353,7 +201434,7 @@ var bigStatement = {
       const beside = page2.w - left - 0.8 - (left + numW + 0.7) >= 3.6;
       const labelX = beside ? left + numW + 0.7 : left;
       const labelW = beside ? page2.w - 0.8 - labelX : page2.w - 2 * left;
-      const label3 = ctx.text(
+      const label4 = ctx.text(
         c.label,
         { x: labelX, y: 0, w: labelW, h: 1.6 },
         {
@@ -201377,7 +201458,7 @@ var bigStatement = {
           field: "context"
         }
       ) : void 0;
-      const textH = label3.contentHeight + (ctxt ? 0.2 + ctxt.contentHeight : 0);
+      const textH = label4.contentHeight + (ctxt ? 0.2 + ctxt.contentHeight : 0);
       const areaTop = 2.45;
       const areaBottom = page2.h - 0.9;
       if (beside) {
@@ -201387,14 +201468,14 @@ var bigStatement = {
         num2.box.h = num2.contentHeight + 0.02;
         const ty = top + (blockH - textH) / 2;
         ctx.line(labelX - 0.35, ty, labelX - 0.35, ty + textH, { color: colors.rule, width: 1.25 });
-        settle2(label3, ty);
-        if (ctxt) settle2(ctxt, ty + label3.contentHeight + 0.2);
+        settle2(label4, ty);
+        if (ctxt) settle2(ctxt, ty + label4.contentHeight + 0.2);
       } else {
         const blockH = capH + 0.45 + textH;
         const top = areaTop + (areaBottom - areaTop - blockH) / 2;
         settle2(num2, top - capTopInBox);
-        settle2(label3, top + capH + 0.45);
-        if (ctxt) settle2(ctxt, top + capH + 0.45 + label3.contentHeight + 0.2);
+        settle2(label4, top + capH + 0.45);
+        if (ctxt) settle2(ctxt, top + capH + 0.45 + label4.contentHeight + 0.2);
       }
       return;
     }
@@ -201497,9 +201578,9 @@ function niceAxis(lo, hi) {
   const max = max0 > 0 ? Math.ceil(max0 * 1.12 / step) * step : 0;
   return { min, max: max === min ? min + step : max, major: step };
 }
-function formatNumber(v, decimals = 0, unit = "", signed = false) {
+function formatNumber(v, decimals = 0, unit = "", signed = false, language) {
   const abs = Math.abs(v);
-  const s2 = abs.toLocaleString("en-US", {
+  const s2 = abs.toLocaleString(culture(language), {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals
   });
@@ -201513,7 +201594,7 @@ function formatCode(decimals = 0, unit = "") {
   const base = `${pre}#,##0${d}${post}`;
   return `${base};-${base};;`;
 }
-function label(ctx, text4, box2, opts) {
+function label2(ctx, text4, box2, opts) {
   const size2 = opts.size ?? ctx.theme.type.small;
   const style = {
     family: ctx.font.family,
@@ -201536,6 +201617,7 @@ function buildChart(spec, box2, ctx) {
   const small = t.type.small;
   const decimals = spec.decimals ?? 0;
   const unit = spec.unit ?? "";
+  const num2 = (v, d, u, signed = false) => formatNumber(v, d, u, signed, ctx.language);
   const n = spec.categories.length;
   const prims = [];
   const multi = spec.series.length > 1;
@@ -201619,7 +201701,7 @@ function buildChart(spec, box2, ctx) {
         lo: l,
         hi: h,
         color: isTot ? c.accent : color4,
-        label: formatNumber(d, decimals, unit, !isTot),
+        label: num2(d, decimals, unit, !isTot),
         labelAt: b >= a ? "top" : "bottom"
       });
       if (i < deltas.length - 1) connectors.push({ cat: i, v: run });
@@ -201655,7 +201737,7 @@ function buildChart(spec, box2, ctx) {
         lo: Math.min(0, v),
         hi: Math.max(0, v),
         color: hl.has(i) ? c.accent : muted,
-        label: formatNumber(v, decimals, unit),
+        label: num2(v, decimals, unit),
         labelAt: v >= 0 ? "top" : "bottom"
       });
     });
@@ -201680,7 +201762,7 @@ function buildChart(spec, box2, ctx) {
             lo: a,
             hi: b,
             color: series[si].color,
-            label: formatNumber(v, decimals, unit),
+            label: num2(v, decimals, unit),
             labelAt: "inside"
           });
         });
@@ -201729,9 +201811,9 @@ function buildChart(spec, box2, ctx) {
         const isLast = i === pts.length - 1;
         if (!multi || isLast) {
           prims.push(
-            label(
+            label2(
               ctx,
-              formatNumber(p.v, decimals, unit),
+              num2(p.v, decimals, unit),
               { x: p.x - 0.5, y: p.y - 0.3, w: 1, h: 0.24 },
               { color: si === 0 ? c.ink : c.muted, size: small, bold: isLast }
             )
@@ -201745,7 +201827,7 @@ function buildChart(spec, box2, ctx) {
       lo: Math.min(0, v),
       hi: Math.max(0, v),
       color: series[0].color,
-      label: formatNumber(v, decimals, unit),
+      label: num2(v, decimals, unit),
       labelAt: v >= 0 ? "top" : "bottom"
     }));
     list.forEach((b) => {
@@ -201762,7 +201844,7 @@ function buildChart(spec, box2, ctx) {
         if (b.labelAt === "inside") {
           if (x2 - x1 > 0.45)
             prims.push(
-              label(
+              label2(
                 ctx,
                 b.label,
                 { x: x1, y: y + thick / 2 - 0.12, w: x2 - x1, h: 0.24 },
@@ -201771,7 +201853,7 @@ function buildChart(spec, box2, ctx) {
             );
         } else if (b.label) {
           prims.push(
-            label(
+            label2(
               ctx,
               b.label,
               { x: x2 + 0.06, y: y + thick / 2 - 0.12, w: 0.9, h: 0.24 },
@@ -201792,7 +201874,7 @@ function buildChart(spec, box2, ctx) {
         if (b.labelAt === "inside") {
           if (y2 - y1 > 0.28)
             prims.push(
-              label(
+              label2(
                 ctx,
                 b.label,
                 { x: x2, y: (y1 + y2) / 2 - 0.12, w: thick, h: 0.24 },
@@ -201802,7 +201884,7 @@ function buildChart(spec, box2, ctx) {
         } else if (b.label) {
           const ly = b.labelAt === "top" ? y1 - 0.27 : y2 + 0.03;
           prims.push(
-            label(
+            label2(
               ctx,
               b.label,
               { x: x2 - 0.2, y: ly, w: thick + 0.4, h: 0.24 },
@@ -201819,9 +201901,9 @@ function buildChart(spec, box2, ctx) {
         if (isBar) {
           const y = plot.y + slot * i + slot / 2 - 0.12;
           prims.push(
-            label(
+            label2(
               ctx,
-              formatNumber(total, decimals, unit),
+              num2(total, decimals, unit),
               { x: vx(top) + 0.06, y, w: 0.9, h: 0.24 },
               { align: "left", size: small, bold: true, role: "chart-total" }
             )
@@ -201829,9 +201911,9 @@ function buildChart(spec, box2, ctx) {
         } else {
           const x2 = plot.x + slot * i + (slot - thick) / 2;
           prims.push(
-            label(
+            label2(
               ctx,
-              formatNumber(total, decimals, unit),
+              num2(total, decimals, unit),
               { x: x2 - 0.2, y: vy(top) - 0.27, w: thick + 0.4, h: 0.24 },
               { size: small, bold: true, role: "chart-total" }
             )
@@ -201867,9 +201949,9 @@ function buildChart(spec, box2, ctx) {
             role: "chart-mark"
           });
           prims.push(
-            label(
+            label2(
               ctx,
-              formatNumber(v, decimals, unit),
+              num2(v, decimals, unit),
               { x: x2 + 0.05, y: y + thick / 2 - 0.12, w: 0.9, h: 0.24 },
               { align: "left", size: small }
             )
@@ -201885,9 +201967,9 @@ function buildChart(spec, box2, ctx) {
             role: "chart-mark"
           });
           prims.push(
-            label(
+            label2(
               ctx,
-              formatNumber(v, decimals, unit),
+              num2(v, decimals, unit),
               { x: x2 - 0.25, y: y1 - 0.27, w: thick + 0.5, h: 0.24 },
               { size: small }
             )
@@ -201923,7 +202005,7 @@ function buildChart(spec, box2, ctx) {
     if (isBar) {
       const y = plot.y + slot * i;
       prims.push(
-        label(
+        label2(
           ctx,
           cat,
           { x: box2.x, y: y + slot / 2 - 0.17, w: catLabelW - 0.12, h: 0.34 },
@@ -201932,7 +202014,7 @@ function buildChart(spec, box2, ctx) {
       );
     } else {
       prims.push(
-        label(
+        label2(
           ctx,
           cat,
           { x: plot.x + slot * i, y: plot.y + plot.h + 0.06, w: slot, h: catLabelH - 0.06 },
@@ -201952,7 +202034,7 @@ function buildChart(spec, box2, ctx) {
       });
       const w = 0.18 + s2.name.length * 0.075;
       prims.push(
-        label(
+        label2(
           ctx,
           s2.name,
           { x: x2 + 0.2, y: box2.y + 0.03, w, h: 0.24 },
@@ -202080,9 +202162,9 @@ function linearScale(lo, hi, from, to, opts = {}) {
 function decimalsFor(step) {
   return step >= 1 ? 0 : Math.min(3, Math.ceil(-Math.log10(step) - 1e-9));
 }
-function fmt2(v, decimals, unit = "") {
+function fmt2(v, decimals, unit = "", language) {
   const m = /^([€$£¥])([A-Za-z]{1,3})$/.exec(unit);
-  return m ? `${formatNumber(v, decimals, m[1])}${m[2]}` : formatNumber(v, decimals, unit);
+  return m ? `${formatNumber(v, decimals, m[1], false, language)}${m[2]}` : formatNumber(v, decimals, unit, false, language);
 }
 function recedingFills(ctx, n) {
   const { colors } = ctx;
@@ -202102,7 +202184,7 @@ function xAxis(ctx, s2, plot, o = {}) {
     if (o.grid !== false)
       ctx.line(x2, plot.y, x2, plot.y + plot.h, { color: colors.rule, width: 0.5 }, { role: "grid" });
     ctx.text(
-      fmt2(t, d, o.unit),
+      fmt2(t, d, o.unit, ctx.language),
       { x: x2 - 0.6, y: plot.y + plot.h + 0.06, w: 1.2, h: 0.24 },
       { size: "source", color: colors.muted, align: "center", maxLines: 1, fixed: true }
     );
@@ -202258,7 +202340,7 @@ var bubbleChart = {
       const y = sy2.at(t);
       ctx.line(plot.x, y, plot.x + plot.w, y, { color: colors.rule, width: 0.5 }, { role: "grid" });
       ctx.text(
-        fmt2(t, yd, c.yAxis.unit),
+        fmt2(t, yd, c.yAxis.unit, ctx.language),
         { x: a.x, y: y - 0.12, w: yLabW - 0.1, h: 0.24 },
         { size: "source", color: colors.muted, align: "right", maxLines: 1, fixed: true }
       );
@@ -202656,7 +202738,7 @@ var cadence = {
       ["output", "Output"],
       ["work", "Work period"]
     ];
-    for (const [k, label3] of items) {
+    for (const [k, label4] of items) {
       const cy2 = ly + 0.13;
       if (k === "meeting")
         ctx.ellipse({ x: lx, y: cy2 - 0.1, w: 0.2, h: 0.2 }, { fill: colors.ink });
@@ -202681,7 +202763,7 @@ var cadence = {
           { fill: colors.accentSoft, stroke: { color: colors.accent, width: 0.75 }, radius: 0.03 }
         );
       ctx.text(
-        label3,
+        label4,
         { x: lx + 0.36, y: ly, w: 1.8, h: 0.26 },
         { size: "small", color: colors.muted, valign: "middle", maxLines: 1, fixed: true }
       );
@@ -203258,6 +203340,8 @@ function createContext(init) {
     page: { x: 0, y: 0, w: format.w, h: format.h },
     colors,
     ptr,
+    language: init.language ?? "en",
+    t: (key) => label(init.language, key),
     paragraphs(items, opts = {}) {
       return items.map((t, i) => {
         const p = para(t, opts.bullet ? { bullet: true } : {});
@@ -203266,7 +203350,10 @@ function createContext(init) {
       });
     },
     text(content, box2, opts = {}) {
-      const paragraphs4 = toParagraphs(content);
+      const paragraphs4 = toParagraphs(content).map((p) => ({
+        ...p,
+        runs: p.runs.map((r2) => ({ ...r2, text: typeset(r2.text, init.language) }))
+      }));
       const font = opts.font === "heading" ? fonts.heading : fonts.body;
       const start = semantic(opts.size);
       const sizes = opts.sizes ?? (opts.fixed ? [start] : sizeLadder(start, Math.min(start, theme.type.minBody)));
@@ -203336,7 +203423,7 @@ function createContext(init) {
           })
         );
       }
-      const node2 = r.fits && opts.role === "title" ? balanceLines(r.node) : r.node;
+      const node2 = r.fits && (opts.role === "title" || opts.role === "subtitle") ? balanceLines(r.node) : r.node;
       nodes.push(node2);
       return node2;
     },
@@ -203507,7 +203594,7 @@ function createContext(init) {
       return node2;
     },
     chart(spec, box2) {
-      const n = buildChart(spec, box2, { theme, font: fonts.body });
+      const n = buildChart(spec, box2, { theme, font: fonts.body, language: init.language });
       if (spec.field) n.pointer = ptr(spec.field);
       nodes.push(n);
       return n;
@@ -203655,6 +203742,7 @@ var composition = {
         slideIndex: ctx.slideIndex,
         slide: ctx.slide,
         baseDir: ctx.baseDir,
+        language: ctx.language,
         variant,
         body,
         pointerPrefix: `${pointer}/content`
@@ -204461,13 +204549,13 @@ var execSummary = {
         );
       }
       const bands2 = rows(area, [1, 1, 1.15], 0);
-      parts.forEach(([label3, text4, field], i) => {
+      parts.forEach(([label4, text4, field], i) => {
         const b = bands2[i];
         const [lab, txt] = cols(b, [1.6, 8], 0.3);
         if (i > 0) ctx.line(b.x, b.y, b.x + b.w, b.y, { color: colors.rule, width: 0.75 });
         const isAnswer = field === "resolution";
         ctx.text(
-          label3.toUpperCase(),
+          label4.toUpperCase(),
           { x: lab.x, y: lab.y + 0.16, w: lab.w, h: 0.3 },
           {
             role: "label",
@@ -204797,7 +204885,7 @@ var footballField = {
         [Math.max(r.low, r.high), x2, true]
       ])
         ctx.text(
-          fmt2(v, d, c.unit),
+          fmt2(v, d, c.unit, ctx.language),
           { x: right ? x3 + 0.05 : x3 - 0.85, y, w: 0.8, h: barH },
           {
             size: "source",
@@ -205248,7 +205336,7 @@ var gateMatrix = {
         }
       );
       ctx.text(
-        "DELIVERS",
+        ctx.t("delivers").toUpperCase(),
         { x: x2, y: y0 + bandH + 0.25, w: stageW, h: 0.24 },
         {
           size: theme.type.source + 0.5,
@@ -205496,7 +205584,7 @@ var issueTree = {
     const leafW = area.x + area.w - leafX - (driver ? 0 : 0.3);
     const unit = area.h / nLeaves;
     const leafH = Math.min(0.62, unit * 0.82);
-    const node2 = (b, label3, value, opts) => {
+    const node2 = (b, label4, value, opts) => {
       ctx.rect(b, {
         fill: opts.fill ?? colors.surface,
         stroke: opts.strong ? void 0 : { color: colors.rule, width: 0.75 },
@@ -205520,7 +205608,7 @@ var issueTree = {
           }
         );
         ctx.text(
-          label3,
+          label4,
           { x: inner.x, y: inner.y + 0.42, w: inner.w, h: inner.h - 0.42 },
           {
             size: theme.type.body - 1,
@@ -205532,7 +205620,7 @@ var issueTree = {
       } else if (value) {
         const vw = 0.8;
         ctx.text(
-          label3,
+          label4,
           { ...inner, w: inner.w - vw - 0.08 },
           {
             size: theme.type.body - 1,
@@ -205560,7 +205648,7 @@ var issueTree = {
           }
         );
       } else {
-        ctx.text(label3, inner, {
+        ctx.text(label4, inner, {
           size: theme.type.body - 1,
           bold: !!opts.strong,
           color: ink,
@@ -206241,7 +206329,7 @@ var marimekko = {
         }
       );
       ctx.text(
-        fmt2(col2.total, d, c.unit),
+        fmt2(col2.total, d, c.unit, ctx.language),
         { x: x2, y: plot.y + plot.h + 0.5, w, h: 0.24 },
         { size: "source", color: colors.muted, align: "center", maxLines: 1, fixed: true }
       );
@@ -206619,7 +206707,7 @@ function staircase(ctx, body, c) {
       );
     if (isCur || isTgt)
       ctx.text(
-        isTgt ? (c.targetLabel ?? "Target").toUpperCase() : "TODAY",
+        isTgt ? (c.targetLabel ?? ctx.t("target")).toUpperCase() : ctx.t("today").toUpperCase(),
         { x: s2.x, y: y - markH, w: s2.w, h: markH - 0.08 },
         {
           size: "small",
@@ -206713,13 +206801,13 @@ function grid(ctx, body, c) {
   });
   const ly = area.y + area.h + 0.12;
   let lx = area.x;
-  for (const [fill, label3] of [
+  for (const [fill, label4] of [
     [colors.ink, "Today"],
     [colors.accent, c.targetLabel ?? "Target"]
   ]) {
     ctx.ellipse({ x: lx, y: ly + 0.04, w: 0.2, h: 0.2 }, { fill });
     ctx.text(
-      label3,
+      label4,
       { x: lx + 0.3, y: ly, w: 2.6, h: 0.28 },
       { size: "small", color: colors.muted, valign: "middle", maxLines: 1, fixed: true }
     );
@@ -207096,7 +207184,7 @@ var nextSteps = {
           h: panel3.h - 0.8
         };
         ctx.text(
-          "DECISION REQUESTED",
+          ctx.t("decision").toUpperCase(),
           { x: inner.x, y: inner.y, w: inner.w, h: 0.3 },
           {
             role: "label",
@@ -207405,7 +207493,7 @@ var optionsComparison = {
       const inner = { x: b.x + 0.15, y: top + 0.08, w: b.w - 0.3, h: headH - 0.12 };
       if (isRec) {
         ctx.text(
-          "RECOMMENDED",
+          ctx.t("recommended").toUpperCase(),
           { x: inner.x, y: inner.y, w: inner.w, h: 0.22 },
           {
             size: theme.type.source + 0.5,
@@ -208291,7 +208379,7 @@ var raci = {
     ];
     let lx = area.x;
     const step = Math.min(2.85, area.w / items.length);
-    for (const [k, label3] of items) {
+    for (const [k, label4] of items) {
       const box2 = { x: lx, y: ly, w: 0.26, h: 0.26 };
       if (k === "A") ctx.ellipse(box2, { fill: colors.accent });
       else if (k === "R") ctx.ellipse(box2, { fill: colors.ink });
@@ -208311,7 +208399,7 @@ var raci = {
         }
       );
       ctx.text(
-        label3,
+        label4,
         { x: lx + 0.34, y: ly, w: step - 0.45, h: 0.26 },
         { size: "small", color: colors.muted, valign: "middle", maxLines: 1, fixed: true }
       );
@@ -208420,7 +208508,7 @@ var riskMatrix = {
       }
     }
     ctx.text(
-      "LIKELIHOOD",
+      ctx.t("likelihood").toUpperCase(),
       { x: g.x, y: g.y, w: 2, h: 0.24 },
       { size: theme.type.source, bold: true, color: colors.muted, maxLines: 1, fixed: true }
     );
@@ -208439,7 +208527,7 @@ var riskMatrix = {
       )
     );
     ctx.text(
-      "IMPACT",
+      ctx.t("impact").toUpperCase(),
       { x: gx, y: gy + side + 0.3, w: side, h: 0.24 },
       {
         size: theme.type.source,
@@ -208629,7 +208717,7 @@ var swot = {
           { fill: colors.accent, role: "panel-accent" }
         );
         ctx.text(
-          "SO WHAT",
+          ctx.t("soWhat").toUpperCase(),
           { x: side.x + 0.3, y: side.y + 0.24, w: side.w - 0.5, h: 0.28 },
           { size: "small", bold: true, color: colors.accent, maxLines: 1, fixed: true }
         );
@@ -208823,14 +208911,14 @@ var teamCards = {
     people.forEach((p, i) => {
       const cell = cells[i];
       const alt = `Portrait of ${p.name}`;
-      const label3 = "Photo";
+      const label4 = "Photo";
       if (rowCount === 1) {
         const imgH = cell.h * 0.55;
         ctx.rect(cell, { fill: colors.surface, role: "card" });
         ctx.image({ x: cell.x, y: cell.y, w: cell.w, h: imgH }, p.image, alt, {
           fit: "cover",
           field: `people/${i}/image`,
-          label: label3
+          label: label4
         });
         ctx.rect(
           { x: cell.x, y: cell.y + imgH, w: cell.w, h: 0.05 },
@@ -208848,7 +208936,7 @@ var teamCards = {
         ctx.image({ x: cell.x, y: cell.y, w: imgW, h: cell.h }, p.image, alt, {
           fit: "cover",
           field: `people/${i}/image`,
-          label: label3
+          label: label4
         });
         ctx.rect(
           { x: cell.x + imgW, y: cell.y, w: 0.05, h: cell.h },
@@ -209353,12 +209441,387 @@ var timeline = {
 };
 
 // src/layouts/title.ts
+import { existsSync as existsSync10 } from "node:fs";
+import { isAbsolute as isAbsolute4, resolve as resolve7 } from "node:path";
+
+// src/layouts/cover-art.ts
+var COVER_ART = ["network", "growth", "flow", "orbit", "grid", "layers"];
+var TOPICS = {
+  network: [
+    "ai",
+    "\u0438\u0438",
+    "artificial",
+    "data",
+    "\u0434\u0430\u043D\u043D",
+    "platform",
+    "\u043F\u043B\u0430\u0442\u0444\u043E\u0440\u043C",
+    "digital",
+    "\u0446\u0438\u0444\u0440\u043E\u0432",
+    "network",
+    "\u0441\u0435\u0442",
+    "cloud",
+    "\u043E\u0431\u043B\u0430\u043A",
+    "model",
+    "\u043C\u043E\u0434\u0435\u043B",
+    "software",
+    "engineer",
+    "\u0438\u043D\u0436\u0435\u043D\u0435\u0440",
+    "tech",
+    "\u0442\u0435\u0445\u043D\u043E\u043B\u043E\u0433",
+    "agent",
+    "\u0430\u0433\u0435\u043D\u0442",
+    "automat",
+    "\u0430\u0432\u0442\u043E\u043C\u0430\u0442"
+  ],
+  growth: [
+    "growth",
+    "grow",
+    "\u0440\u043E\u0441\u0442",
+    "revenue",
+    "\u0432\u044B\u0440\u0443\u0447\u043A",
+    "market",
+    "\u0440\u044B\u043D",
+    "invest",
+    "\u0438\u043D\u0432\u0435\u0441\u0442",
+    "profit",
+    "\u043F\u0440\u0438\u0431\u044B\u043B",
+    "sales",
+    "\u043F\u0440\u043E\u0434\u0430\u0436",
+    "scale",
+    "\u043C\u0430\u0441\u0448\u0442\u0430\u0431",
+    "financ",
+    "\u0444\u0438\u043D\u0430\u043D\u0441",
+    "price",
+    "\u0446\u0435\u043D",
+    "ruble",
+    "\u0440\u0443\u0431\u043B",
+    "fund",
+    "\u0444\u043E\u043D\u0434",
+    "seed",
+    "raise"
+  ],
+  flow: [
+    "process",
+    "\u043F\u0440\u043E\u0446\u0435\u0441\u0441",
+    "journey",
+    "\u043F\u0443\u0442\u044C",
+    "transform",
+    "\u0442\u0440\u0430\u043D\u0441\u0444\u043E\u0440\u043C",
+    "roadmap",
+    "plan",
+    "\u043F\u043B\u0430\u043D",
+    "step",
+    "\u0448\u0430\u0433",
+    "pilot",
+    "\u043F\u0438\u043B\u043E\u0442",
+    "deploy",
+    "\u0432\u043D\u0435\u0434\u0440",
+    "launch",
+    "\u0437\u0430\u043F\u0443\u0441\u043A",
+    "trip",
+    "\u043F\u0443\u0442\u0435\u0448\u0435\u0441\u0442\u0432",
+    "kickoff",
+    "migrat",
+    "\u043C\u0438\u0433\u0440\u0430\u0446"
+  ],
+  orbit: [
+    "customer",
+    "\u043A\u043B\u0438\u0435\u043D\u0442",
+    "ecosystem",
+    "\u044D\u043A\u043E\u0441\u0438\u0441\u0442\u0435\u043C",
+    "partner",
+    "\u043F\u0430\u0440\u0442\u043D",
+    "community",
+    "\u0441\u043E\u043E\u0431\u0449\u0435\u0441\u0442\u0432",
+    "user",
+    "\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442",
+    "people",
+    "\u043B\u044E\u0434",
+    "team",
+    "\u043A\u043E\u043C\u0430\u043D\u0434",
+    "talent",
+    "hiring",
+    "\u043D\u0430\u0439\u043C"
+  ],
+  layers: [
+    "architecture",
+    "\u0430\u0440\u0445\u0438\u0442\u0435\u043A\u0442\u0443\u0440",
+    "stack",
+    "\u0441\u0442\u0435\u043A",
+    "security",
+    "\u0431\u0435\u0437\u043E\u043F\u0430\u0441\u043D",
+    "infrastructure",
+    "\u0438\u043D\u0444\u0440\u0430\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440",
+    "system",
+    "\u0441\u0438\u0441\u0442\u0435\u043C",
+    "layer",
+    "\u0443\u0440\u043E\u0432",
+    "risk",
+    "\u0440\u0438\u0441\u043A",
+    "compliance"
+  ],
+  grid: [
+    "product",
+    "\u043F\u0440\u043E\u0434\u0443\u043A\u0442",
+    "portfolio",
+    "\u043F\u043E\u0440\u0442\u0444\u0435\u043B",
+    "operations",
+    "\u043E\u043F\u0435\u0440\u0430\u0446",
+    "program",
+    "\u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C",
+    "structure",
+    "\u0441\u0442\u0440\u0443\u043A\u0442\u0443\u0440",
+    "update",
+    "review",
+    "\u043E\u0431\u0437\u043E\u0440",
+    "quarter",
+    "\u043A\u0432\u0430\u0440\u0442\u0430\u043B"
+  ]
+};
+function pickCoverArt(text4) {
+  const words = text4.toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+  let best;
+  let bestScore = 0;
+  for (const art of COVER_ART) {
+    const score = words.filter(
+      (w) => TOPICS[art].some((stem) => stem.length <= 3 ? w === stem : w.startsWith(stem))
+    ).length;
+    if (score > bestScore) {
+      best = art;
+      bestScore = score;
+    }
+  }
+  return best ?? COVER_ART[hash2(text4) % COVER_ART.length];
+}
+function hash2(s2) {
+  let h = 2166136261;
+  for (let i = 0; i < s2.length; i++) h = Math.imul(h ^ s2.charCodeAt(i), 16777619);
+  return h >>> 0;
+}
+function random(seed) {
+  let a = hash2(seed) || 1;
+  return () => {
+    a = a + 1831565813 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+var ROLE = "cover-art";
+function drawCoverArt(ctx, panel3, art, seed) {
+  const accent = ctx.colors.accent;
+  const tint = (k) => mix(accent, "#FFFFFF", k);
+  const shade = (k) => mix(accent, "#000000", k);
+  const rnd = random(`${art}:${seed}`);
+  const P3 = panel3;
+  const role = { role: ROLE };
+  ctx.rect(P3, { fill: accent, ...role });
+  const inner = { x: P3.x + 0.45, y: P3.y + 0.7, w: P3.w - 0.9, h: P3.h - 1.4 };
+  switch (art) {
+    case "network": {
+      const cols2 = 4;
+      const rows2 = 6;
+      const cw = inner.w / cols2;
+      const rh = inner.h / rows2;
+      const nodes = [];
+      for (let r = 0; r < rows2; r++)
+        for (let c = 0; c < cols2; c++) {
+          if (rnd() < 0.18) continue;
+          nodes.push([
+            inner.x + (c + 0.5 + (rnd() - 0.5) * 0.8) * cw,
+            inner.y + (r + 0.5 + (rnd() - 0.5) * 0.8) * rh,
+            0.05 + rnd() * 0.08
+          ]);
+        }
+      const seen = /* @__PURE__ */ new Set();
+      nodes.forEach(([x2, y], i) => {
+        const near = nodes.map((n, j) => ({ j, d: Math.hypot(n[0] - x2, n[1] - y) })).filter((n) => n.j !== i).sort((a, b) => a.d - b.d).slice(0, 2);
+        for (const { j } of near) {
+          const key = i < j ? `${i}-${j}` : `${j}-${i}`;
+          if (seen.has(key)) continue;
+          seen.add(key);
+          ctx.line(x2, y, nodes[j][0], nodes[j][1], { color: tint(0.45), width: 1.25 }, role);
+        }
+      });
+      const third = Math.floor(nodes.length / 3);
+      const hubs = /* @__PURE__ */ new Set([Math.floor(rnd() * third) + 1, Math.floor(rnd() * third) + 2 * third]);
+      nodes.forEach(([x2, y, r], i) => {
+        if (hubs.has(i)) {
+          const R = 0.34;
+          ctx.ellipse(
+            { x: x2 - R, y: y - R, w: 2 * R, h: 2 * R },
+            { stroke: { color: tint(0.7), width: 1.25 }, ...role }
+          );
+          ctx.ellipse({ x: x2 - 0.17, y: y - 0.17, w: 0.34, h: 0.34 }, { fill: "#FFFFFF", ...role });
+        } else
+          ctx.ellipse({ x: x2 - r, y: y - r, w: 2 * r, h: 2 * r }, { fill: tint(0.6), ...role });
+      });
+      break;
+    }
+    case "growth": {
+      const n = 6;
+      const slot = inner.w / n;
+      const bw = slot * 0.62;
+      const base = inner.y + inner.h;
+      const tops = [];
+      for (let i = 0; i < n; i++) {
+        const h = inner.h * (0.16 + 0.56 * i / (n - 1) + (rnd() - 0.5) * 0.08);
+        const x2 = inner.x + i * slot + (slot - bw) / 2;
+        ctx.rect(
+          { x: x2, y: base - h, w: bw, h },
+          { fill: i === n - 1 ? "#FFFFFF" : tint(0.55 - i * 0.07), ...role }
+        );
+        tops.push([x2 + bw / 2, base - h - 0.35]);
+      }
+      tops.forEach(([x2, y], i) => {
+        const next = tops[i + 1];
+        if (next)
+          ctx.line(
+            x2,
+            y,
+            next[0],
+            next[1],
+            { color: "#FFFFFF", width: 2.25 },
+            { ...role, arrowEnd: i === tops.length - 2 }
+          );
+      });
+      break;
+    }
+    case "flow": {
+      const n = 5;
+      const gap = 0.12;
+      const h = (inner.h - gap * (n - 1)) / n;
+      const d = Math.min(0.55, h * 0.45);
+      const w = inner.w * 0.78;
+      for (let i = 0; i < n; i++) {
+        const x2 = inner.x + (inner.w - w) / 2 + (i % 2 ? 0.18 : -0.18) * (rnd() + 0.5);
+        const y = inner.y + i * (h + gap);
+        const fill = i === n - 2 ? "#FFFFFF" : tint(0.25 + i * 0.1);
+        ctx.polygon(
+          [
+            [x2, y],
+            [x2 + w / 2, y + d],
+            [x2 + w, y],
+            [x2 + w, y + h - d],
+            [x2 + w / 2, y + h],
+            [x2, y + h - d]
+          ],
+          { fill, ...role }
+        );
+      }
+      break;
+    }
+    case "orbit": {
+      const cx2 = P3.x + P3.w / 2;
+      const cy2 = inner.y + inner.h * 0.55;
+      const maxR = Math.min(P3.w / 2 - 0.25, inner.h / 2);
+      const rings = 4;
+      for (let i = rings; i >= 1; i--) {
+        const r = maxR * i / rings;
+        ctx.ellipse(
+          { x: cx2 - r, y: cy2 - r, w: 2 * r, h: 2 * r },
+          { stroke: { color: tint(0.35 + i * 0.08), width: 1.25 }, ...role }
+        );
+      }
+      ctx.ellipse(
+        { x: cx2 - maxR * 0.16, y: cy2 - maxR * 0.16, w: maxR * 0.32, h: maxR * 0.32 },
+        { fill: "#FFFFFF", ...role }
+      );
+      for (let i = 1; i <= rings; i++) {
+        const r = maxR * i / rings;
+        const a = rnd() * Math.PI * 2;
+        const s2 = i === rings - 1 ? 0.16 : 0.09;
+        ctx.ellipse(
+          { x: cx2 + r * Math.cos(a) - s2, y: cy2 + r * Math.sin(a) - s2, w: 2 * s2, h: 2 * s2 },
+          { fill: i === rings - 1 ? "#FFFFFF" : tint(0.6), ...role }
+        );
+      }
+      break;
+    }
+    case "grid": {
+      const cols2 = 4;
+      const gap = 0.12;
+      const s2 = (inner.w - gap * (cols2 - 1)) / cols2;
+      const rows2 = Math.floor((inner.h + gap) / (s2 + gap));
+      const y0 = inner.y + (inner.h - (rows2 * (s2 + gap) - gap)) / 2;
+      const lit = Math.floor(rnd() * rows2 * cols2);
+      for (let r = 0; r < rows2; r++)
+        for (let c = 0; c < cols2; c++) {
+          const k = r * cols2 + c;
+          const v = rnd();
+          if (k !== lit && v < 0.22) continue;
+          ctx.rect(
+            { x: inner.x + c * (s2 + gap), y: y0 + r * (s2 + gap), w: s2, h: s2 },
+            {
+              fill: k === lit ? "#FFFFFF" : v < 0.55 ? tint(0.18) : v < 0.85 ? tint(0.38) : shade(0.18),
+              radius: 0.05,
+              ...role
+            }
+          );
+        }
+      break;
+    }
+    case "layers": {
+      const n = 4;
+      const cx2 = P3.x + P3.w / 2;
+      const hw = Math.min(inner.w / 2, 1.7);
+      const hh = hw * 0.5;
+      const t = 0.16;
+      const step = Math.min(0.95, (inner.h - 2 * hh - t) / (n - 1));
+      const y0 = inner.y + (inner.h - (2 * hh + t + step * (n - 1))) / 2;
+      for (let i = n - 1; i >= 0; i--) {
+        const y = y0 + i * step;
+        const top = i === 0 ? "#FFFFFF" : tint(0.2 + i * 0.12);
+        ctx.polygon(
+          [
+            [cx2 - hw, y + hh],
+            [cx2, y + 2 * hh],
+            [cx2, y + 2 * hh + t],
+            [cx2 - hw, y + hh + t]
+          ],
+          { fill: shade(0.12 + i * 0.03), ...role }
+        );
+        ctx.polygon(
+          [
+            [cx2, y + 2 * hh],
+            [cx2 + hw, y + hh],
+            [cx2 + hw, y + hh + t],
+            [cx2, y + 2 * hh + t]
+          ],
+          { fill: shade(0.25 + i * 0.03), ...role }
+        );
+        ctx.polygon(
+          [
+            [cx2, y],
+            [cx2 + hw, y + hh],
+            [cx2, y + 2 * hh],
+            [cx2 - hw, y + hh]
+          ],
+          { fill: top, ...role }
+        );
+      }
+      break;
+    }
+  }
+}
+
+// src/layouts/title.ts
 var schema41 = external_exports.object({
   kicker: external_exports.string().max(48).optional().describe('Small label above the title, e.g. "Board meeting \xB7 Q3 review"'),
   subtitle: external_exports.string().max(170).optional().describe("One sentence framing the decision or story"),
   presenter: external_exports.string().max(70).optional(),
   date: external_exports.string().max(32).optional(),
-  contact: external_exports.array(external_exports.string().max(70)).max(3).optional().describe("Closing variant: contact lines")
+  contact: external_exports.array(external_exports.string().max(70)).max(3).optional().describe("Closing variant: contact lines"),
+  art: external_exports.enum(["auto", ...COVER_ART]).optional().describe(
+    "Cover: topic motif on a right-hand panel, drawn as editable shapes in the theme accent. auto picks it from the title (network: AI, data, tech \xB7 growth: money, markets \xB7 flow: process, plans \xB7 orbit: customers, people \xB7 layers: architecture, risk \xB7 grid: products, operations)"
+  ),
+  image: external_exports.string().optional().describe(
+    "Cover: picture for the right-hand panel (path relative to the deck); wins over art"
+  ),
+  imagePrompt: external_exports.string().max(400).optional().describe(
+    "Cover: what the panel picture should show; `slidecraft images` generates it. Until then the art motif is drawn"
+  ),
+  alt: external_exports.string().max(140).optional().describe("Alt text of the cover picture; without it the picture is decorative")
 }).strict();
 var title = {
   id: "title",
@@ -209388,12 +209851,46 @@ var title = {
         subtitle: "Questions and discussion",
         contact: ["strategy@northwind.example", "+44 20 0000 0000"]
       }
+    },
+    {
+      title: "An AI platform can cut claims handling time by 40% within a year",
+      content: {
+        kicker: "Steering committee",
+        subtitle: "Where AI changes the claims process, what it costs and how we start",
+        presenter: "Operations team",
+        date: "October 2026",
+        art: "auto"
+      }
     }
   ],
   compose(ctx, c) {
     const { page: page2, colors, theme } = ctx;
     const left = 0.9;
-    const width = ctx.variant === "closing" ? page2.w - 2 * left : Math.min(8.8, page2.w * 0.66);
+    const visual = ctx.variant !== "closing" && (c.art || c.image || c.imagePrompt);
+    const panelX = Math.round(page2.w * 0.7 * 100) / 100;
+    const width = ctx.variant === "closing" ? page2.w - 2 * left : Math.min(8.8, page2.w * 0.66, visual ? panelX - left - 0.4 : Infinity);
+    if (visual) {
+      const panel3 = { x: panelX, y: 0, w: page2.w - panelX, h: page2.h };
+      const file2 = c.image && (isAbsolute4(c.image) ? c.image : resolve7(ctx.baseDir, c.image));
+      if (file2 && existsSync10(file2)) {
+        const img = ctx.image(panel3, c.image, c.alt ?? "", { fit: "cover", field: "image" });
+        if (!c.alt) img.decorative = true;
+      } else {
+        if (c.image || c.imagePrompt)
+          ctx.issue(
+            diag(
+              "SC-IMG-002",
+              c.image ? `Cover image not found: ${c.image}; drawing the art motif instead` : "Cover image not generated yet (slidecraft images); drawing the art motif instead",
+              {
+                pointer: ctx.ptr(c.image ? "image" : "imagePrompt"),
+                severity: c.image ? "warning" : "info"
+              }
+            )
+          );
+        const art = c.art && c.art !== "auto" ? c.art : pickCoverArt([ctx.slide.title, c.kicker, c.subtitle].filter(Boolean).join(" "));
+        drawCoverArt(ctx, panel3, art, ctx.slide.title);
+      }
+    }
     const titleColor = colors.titleInk ?? colors.ink;
     if (ctx.variant === "closing") {
       const t2 = ctx.text(
@@ -209598,7 +210095,7 @@ var tornado = {
         );
         const right = x2 >= bx;
         ctx.text(
-          fmt2(v, d, c.unit),
+          fmt2(v, d, c.unit, ctx.language),
           { x: right ? x2 + 0.05 : x2 - 0.85, y, w: 0.8, h: barH },
           {
             size: "source",
@@ -209620,7 +210117,7 @@ var tornado = {
       { role: "base" }
     );
     ctx.text(
-      `${c.baseLabel ?? "Base case"} ${fmt2(c.base, d, c.unit)}`,
+      `${c.baseLabel ?? ctx.t("baseCase")} ${fmt2(c.base, d, c.unit, ctx.language)}`,
       { x: bx - 1.5, y: plot.y - 0.34, w: 3, h: 0.24 },
       { size: "source", bold: true, color: colors.ink, align: "center", maxLines: 1, fixed: true }
     );
@@ -209634,11 +210131,11 @@ var tornado = {
       [c.highLabel ?? "Upside", colors.accent]
     ];
     let lx = a.x + a.w;
-    for (const [label3, fill] of [...legend].reverse()) {
-      const w = labelWidth(ctx, label3, theme.type.source) + 0.08;
+    for (const [label4, fill] of [...legend].reverse()) {
+      const w = labelWidth(ctx, label4, theme.type.source) + 0.08;
       lx -= w;
       ctx.text(
-        label3,
+        label4,
         { x: lx, y: a.y, w, h: 0.26 },
         { size: "source", color: colors.muted, maxLines: 1, fixed: true }
       );
@@ -209648,7 +210145,7 @@ var tornado = {
     }
     for (const t of s2.ticks)
       ctx.text(
-        fmt2(t, d, c.unit),
+        fmt2(t, d, c.unit, ctx.language),
         { x: s2.at(t) - 0.5, y: plot.y + plot.h + 0.06, w: 1, h: 0.24 },
         {
           size: "source",
@@ -209893,8 +210390,8 @@ function getLayout(id) {
 
 // src/library/load.ts
 var import_yaml = __toESM(require_dist(), 1);
-import { existsSync as existsSync11, readdirSync as readdirSync4, readFileSync as readFileSync17 } from "node:fs";
-import { dirname as dirname3, join as join14, resolve as resolve8 } from "node:path";
+import { existsSync as existsSync12, readdirSync as readdirSync4, readFileSync as readFileSync17 } from "node:fs";
+import { dirname as dirname3, join as join14, resolve as resolve9 } from "node:path";
 
 // src/spec/brief.ts
 var Usage = external_exports.enum([
@@ -209944,8 +210441,8 @@ var Brief = external_exports.object({
 
 // src/library/data.ts
 import { createHash } from "node:crypto";
-import { existsSync as existsSync10, readFileSync as readFileSync16 } from "node:fs";
-import { isAbsolute as isAbsolute4, resolve as resolve7 } from "node:path";
+import { existsSync as existsSync11, readFileSync as readFileSync16 } from "node:fs";
+import { isAbsolute as isAbsolute5, resolve as resolve8 } from "node:path";
 
 // src/library/sheets.ts
 import { readFileSync as readFileSync15 } from "node:fs";
@@ -210106,7 +210603,7 @@ var Fact = external_exports.object({
   label: external_exports.string().max(80).optional().describe("What the number is, for reviews and the manifest"),
   source: external_exports.string().optional().describe("Source id from the deck `sources:`")
 }).strict();
-function formatNumber2(v, format = "#,##0.##") {
+function formatNumber2(v, format = "#,##0.##", language) {
   const m = /^(.*?)([#0][#0,]*(?:\.[#0]+)?)(.*)$/.exec(format);
   if (!m) return String(v);
   const [, pre, pattern2, suf] = m;
@@ -210114,20 +210611,20 @@ function formatNumber2(v, format = "#,##0.##") {
   const [, dec = ""] = pattern2.split(".");
   const minDec = (dec.match(/0/g) ?? []).length;
   const maxDec = dec.length;
-  const s2 = Math.abs(value).toLocaleString("en-US", {
+  const s2 = Math.abs(value).toLocaleString(culture(language), {
     minimumFractionDigits: minDec,
     maximumFractionDigits: maxDec,
     useGrouping: pattern2.includes(",")
   });
   return `${value < 0 ? "\u2212" : ""}${pre}${s2}${suf}`;
 }
-function resolveData(facts, slides, baseDir) {
+function resolveData(facts, slides, baseDir, language) {
   const diagnostics = [];
   const report = { facts: {}, files: [] };
   const seen = /* @__PURE__ */ new Set();
   const sheetFor = (f, pointer) => {
-    const path2 = isAbsolute4(f.file) ? f.file : resolve7(baseDir, f.file);
-    if (!existsSync10(path2)) {
+    const path2 = isAbsolute5(f.file) ? f.file : resolve8(baseDir, f.file);
+    if (!existsSync11(path2)) {
       diagnostics.push(diag("SC-DATA-001", `Data file not found: ${f.file}`, { pointer }));
       return void 0;
     }
@@ -210162,7 +210659,7 @@ function resolveData(facts, slides, baseDir) {
       diagnostics.push(diag("SC-DATA-002", `Fact "${id}" has no value`, { pointer }));
       continue;
     }
-    const shown = typeof v === "number" ? formatNumber2(f.divide ? v / f.divide : v, f.format) : String(v);
+    const shown = typeof v === "number" ? formatNumber2(f.divide ? v / f.divide : v, f.format, language) : String(v);
     display.set(id, shown);
     report.facts[id] = {
       value: v,
@@ -210171,7 +210668,7 @@ function resolveData(facts, slides, baseDir) {
       ...f.from ? { from: `${f.from.file}${f.from.sheet ? `!${f.from.sheet}` : ""}!${f.from.cell}` } : {}
     };
   }
-  const cellText = (c, fmt3) => c === null ? "" : typeof c === "number" ? fmt3 ? formatNumber2(c, fmt3) : String(c) : c;
+  const cellText = (c, fmt3) => c === null ? "" : typeof c === "number" ? fmt3 ? formatNumber2(c, fmt3, language) : String(c) : c;
   const num2 = (c, pointer) => {
     if (typeof c === "number") return c;
     const n = Number(String(c ?? "").replace(/[,\s]/g, ""));
@@ -210549,7 +211046,7 @@ var Theme = external_exports.object({
 
 // src/library/load.ts
 function readThemeFile(path2) {
-  const abs = resolve8(path2);
+  const abs = resolve9(path2);
   const r = Theme.safeParse(JSON.parse(readFileSync17(abs, "utf8")));
   if (!r.success) throw new Error(`Invalid theme ${path2}: ${r.error.message}`);
   const theme = r.data;
@@ -210563,7 +211060,7 @@ function readThemeFile(path2) {
   for (const f of specs) {
     if (!f?.files) continue;
     const files = Object.fromEntries(
-      Object.entries(f.files).map(([k, v]) => [k, resolve8(base, v)])
+      Object.entries(f.files).map(([k, v]) => [k, resolve9(base, v)])
     );
     registerMeasureFont(f.measure, files);
   }
@@ -210573,12 +211070,12 @@ function readThemeFile(path2) {
         `Theme ${theme.id}: unknown measure font "${f.measure}" \u2014 add "files" with the font's TTF/OTF`
       );
   }
-  if (theme.chrome.logo) theme.chrome.logo = resolve8(base, theme.chrome.logo);
+  if (theme.chrome.logo) theme.chrome.logo = resolve9(base, theme.chrome.logo);
   if (theme.chrome.art)
     for (const list of [theme.chrome.art.cover, theme.chrome.art.content])
-      for (const a of list) a.image = resolve8(base, a.image);
-  if (theme.officeTheme) theme.officeTheme = resolve8(base, theme.officeTheme);
-  if (theme.template) theme.template = resolve8(base, theme.template);
+      for (const a of list) a.image = resolve9(base, a.image);
+  if (theme.officeTheme) theme.officeTheme = resolve9(base, theme.officeTheme);
+  if (theme.template) theme.template = resolve9(base, theme.template);
   return theme;
 }
 var themeCache;
@@ -210599,7 +211096,7 @@ function getTheme(id) {
 var storyCache;
 function loadStorylines() {
   if (storyCache) return storyCache;
-  if (!existsSync11(STORYLINES_DIR)) return [];
+  if (!existsSync12(STORYLINES_DIR)) return [];
   storyCache = readdirSync4(STORYLINES_DIR).filter((f) => f.endsWith(".yaml")).sort().map((f) => {
     const raw = import_yaml.default.parse(readFileSync17(join14(STORYLINES_DIR, f), "utf8"));
     const r = Storyline.safeParse(raw);
@@ -210625,7 +211122,7 @@ function zodDiagnostics(err, prefix = "") {
   );
 }
 function loadDeck(path2) {
-  const abs = resolve8(path2);
+  const abs = resolve9(path2);
   const baseDir = dirname3(abs);
   const diagnostics = [];
   const raw = import_yaml.default.parse(readFileSync17(abs, "utf8"));
@@ -210641,8 +211138,8 @@ function loadDeck(path2) {
   }
   const deck = top.data;
   if (/\.json$/i.test(deck.theme)) {
-    const p = resolve8(baseDir, deck.theme);
-    if (!existsSync11(p)) {
+    const p = resolve9(baseDir, deck.theme);
+    if (!existsSync12(p)) {
       diagnostics.push(
         diag("SC-SPEC-002", `Theme file not found: ${deck.theme}`, { pointer: "/theme" })
       );
@@ -210659,8 +211156,8 @@ function loadDeck(path2) {
     }
   }
   if (/\.json$/i.test(deck.format)) {
-    const p = resolve8(baseDir, deck.format);
-    const r = existsSync11(p) ? FormatFile.safeParse(JSON.parse(readFileSync17(p, "utf8"))) : void 0;
+    const p = resolve9(baseDir, deck.format);
+    const r = existsSync12(p) ? FormatFile.safeParse(JSON.parse(readFileSync17(p, "utf8"))) : void 0;
     if (!r?.success)
       diagnostics.push(
         diag(
@@ -210688,8 +211185,8 @@ function loadDeck(path2) {
   const expanded = [];
   deck.slides.forEach((s2, i) => {
     if (s2 && typeof s2 === "object" && "include" in s2) {
-      const inc = resolve8(baseDir, String(s2.include));
-      if (!existsSync11(inc)) {
+      const inc = resolve9(baseDir, String(s2.include));
+      if (!existsSync12(inc)) {
         diagnostics.push(
           diag("SC-SPEC-004", `Include not found: ${s2.include}`, {
             pointer: `/slides/${i}/include`
@@ -210712,7 +211209,7 @@ function loadDeck(path2) {
   const slides = [];
   const seen = /* @__PURE__ */ new Set();
   const sourceIds = new Set(deck.sources.map((s2) => s2.id));
-  const data = resolveData(deck.facts, expanded, baseDir);
+  const data = resolveData(deck.facts, expanded, baseDir, deck.language);
   expanded.splice(0, expanded.length, ...data.slides);
   deck.title = data.text(deck.title);
   if (deck.subtitle) deck.subtitle = data.text(deck.subtitle);
@@ -210812,7 +211309,7 @@ function loadDeck(path2) {
   };
 }
 function loadBrief(path2) {
-  const raw = import_yaml.default.parse(readFileSync17(resolve8(path2), "utf8"));
+  const raw = import_yaml.default.parse(readFileSync17(resolve9(path2), "utf8"));
   const r = Brief.safeParse(raw);
   if (!r.success) return { diagnostics: zodDiagnostics(r.error) };
   return { brief: r.data, diagnostics: [] };
@@ -211046,6 +211543,40 @@ function decorSvg(theme, placement, w, h) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}"><defs>${defs}</defs>${body}</svg>`;
 }
 
+// src/engine/notes.ts
+var SOURCES_HEADING = "[Sources]";
+var ILLUSTRATIVE = {
+  en: "illustrative data",
+  ru: "\u0438\u043B\u043B\u044E\u0441\u0442\u0440\u0430\u0442\u0438\u0432\u043D\u044B\u0435 \u0434\u0430\u043D\u043D\u044B\u0435"
+};
+function sourceNotes(slide, registry2, language = "en") {
+  const lines = [];
+  for (const ref of slide.sources ?? []) {
+    const r = parseSourceRef(ref);
+    const s2 = registry2.get(r.id);
+    if (!s2) continue;
+    const parts = [
+      s2.title,
+      s2.publisher,
+      s2.date,
+      r.where,
+      s2.url ? r.page && /\.pdf($|\?)/i.test(s2.url) ? `${s2.url}#page=${r.page}` : s2.url : s2.file,
+      s2.illustrative ? ILLUSTRATIVE[language.slice(0, 2)] ?? ILLUSTRATIVE.en : void 0
+    ].filter(Boolean);
+    lines.push(`- ${parts.join(" \u2014 ")}`);
+  }
+  if (slide.source) lines.push(`- ${slide.source}`);
+  return lines.length ? [SOURCES_HEADING, ...lines].join("\n") : void 0;
+}
+function withSourceNotes(notes, block2) {
+  return [notes?.trim(), block2].filter(Boolean).join("\n\n") || void 0;
+}
+function stripSourceNotes(text4) {
+  const lines = text4.split("\n");
+  const at = lines.findIndex((l) => l.trim() === SOURCES_HEADING);
+  return (at < 0 ? text4 : lines.slice(0, at).join("\n")).trimEnd();
+}
+
 // src/engine/compose.ts
 var COMMON_KEYS = /* @__PURE__ */ new Set([
   "id",
@@ -211182,7 +211713,7 @@ function buildMasters(theme, format, fonts, footer) {
       }
       const list = id === "content" ? art.content : art.cover.length ? art.cover : art.content;
       for (const a of list)
-        if (existsSync12(a.image))
+        if (existsSync13(a.image))
           nodes.push({
             kind: "image",
             box: { x: a.x * sx2, y: a.y * sy2, w: a.w * sx2, h: a.h * sy2 },
@@ -211206,7 +211737,7 @@ function buildMasters(theme, format, fonts, footer) {
       });
     }
     const bg = c.background;
-    if (theme.chrome.logo && existsSync12(theme.chrome.logo)) {
+    if (theme.chrome.logo && existsSync13(theme.chrome.logo)) {
       const size2 = pngSize(readFileSync18(theme.chrome.logo));
       const ratio = size2 ? size2.w / size2.h : 3;
       const h = id === "cover" ? 0.55 : 0.3;
@@ -211267,6 +211798,7 @@ function composeDeck(loaded) {
       variant,
       body,
       baseDir,
+      language: deck.language,
       slide: { title: slide.title, ...slide.lead ? { lead: slide.lead } : {} }
     });
     const isGhost = slide.status === "ghost" || slide.status === void 0 && deck.status === "ghost";
@@ -211308,6 +211840,7 @@ function composeDeck(loaded) {
         slide.bottomLine,
         fullBody.y + fullBody.h - (theme.chrome.takeaway?.height ?? 0.65)
       );
+    const sourcePrefix = isDefaultSourcePrefix(theme.chrome.sources?.prefix) ? label(deck.language, "source") : theme.chrome.sources.prefix;
     const srcTitles = (slide.sources ?? []).map((ref) => {
       const r = parseSourceRef(ref);
       const src = sourceMap.get(r.id);
@@ -211320,7 +211853,7 @@ function composeDeck(loaded) {
     const srcText = [
       illustrative ? "Illustrative data." : "",
       srcTitles.length ? `Source: ${srcTitles.map((s2) => s2.title + (s2.date ? ` (${s2.date})` : "")).join("; ")}` : "",
-      slide.source ? srcTitles.length ? slide.source : `${theme.chrome.sources?.prefix ?? "Source:"} ${slide.source}` : ""
+      slide.source ? srcTitles.length ? slide.source : `${sourcePrefix} ${slide.source}` : ""
     ].filter(Boolean).join(" ");
     if (srcText && frame === "standard") {
       const runs = [];
@@ -211330,7 +211863,7 @@ function composeDeck(loaded) {
       if (illustrative)
         add2(srcTitles.length || slide.source ? "Illustrative data. " : "Illustrative data.");
       if (srcTitles.length) {
-        add2(`${theme.chrome.sources?.prefix ?? "Source:"} `);
+        add2(`${sourcePrefix} `);
         srcTitles.forEach((s2, k) => {
           add2(s2.title, s2.url);
           add2(`${s2.date ? ` (${s2.date})` : ""}${k < srcTitles.length - 1 ? "; " : ""}`);
@@ -211338,7 +211871,7 @@ function composeDeck(loaded) {
       }
       if (slide.source)
         add2(
-          `${srcTitles.length ? " " : ""}${srcTitles.length ? slide.source : `${theme.chrome.sources?.prefix ?? "Source:"} ${slide.source}`}`
+          `${srcTitles.length ? " " : ""}${srcTitles.length ? slide.source : `${sourcePrefix} ${slide.source}`}`
         );
       composeSource(ctx, runs);
     }
@@ -211383,7 +211916,8 @@ function composeDeck(loaded) {
         ...slide.bottomLine && !isGhost ? ["chrome-takeaway-band", "chrome-takeaway-accent", "chrome-takeaway"] : []
       ] : []
     };
-    if (slide.notes) sceneSlide.notes = slide.notes;
+    const notes = withSourceNotes(slide.notes, sourceNotes(slide, sourceMap, deck.language));
+    if (notes) sceneSlide.notes = notes;
     sceneSlides.push(sceneSlide);
   });
   const scene = {
@@ -211414,7 +211948,7 @@ function composeDeck(loaded) {
   };
   if (deck.author) scene.author = deck.author;
   if (theme.officeTheme) scene.officeTheme = theme.officeTheme;
-  if (theme.template && existsSync12(theme.template)) {
+  if (theme.template && existsSync13(theme.template)) {
     const footer = deck.footer ?? theme.chrome.footer;
     scene.template = { path: theme.template, ...footer ? { footer } : {} };
   }
@@ -211576,9 +212110,24 @@ function overlap(a, b) {
 function bgAt(nodes, upto, x2, y, fallback) {
   for (let i = upto - 1; i >= 0; i--) {
     const n = nodes[i];
-    if (n.kind === "rect" && n.fill && (n.fillOpacity ?? 1) > 0.6) {
+    if (!("fill" in n) || !n.fill || (n.fillOpacity ?? 1) <= 0.6) continue;
+    if (n.kind === "rect") {
       const b = n.box;
       if (x2 >= b.x && x2 <= b.x + b.w && y >= b.y && y <= b.y + b.h) return n.fill;
+    } else if (n.kind === "ellipse") {
+      const b = n.box;
+      const dx = (x2 - (b.x + b.w / 2)) / (b.w / 2);
+      const dy = (y - (b.y + b.h / 2)) / (b.h / 2);
+      if (dx * dx + dy * dy <= 1) return n.fill;
+    } else if (n.kind === "polygon") {
+      let inside2 = false;
+      const p = n.points;
+      for (let a = 0, b = p.length - 1; a < p.length; b = a++) {
+        const [xa, ya] = p[a];
+        const [xb, yb] = p[b];
+        if (ya > y !== yb > y && x2 < (xb - xa) * (y - ya) / (yb - ya) + xa) inside2 = !inside2;
+      }
+      if (inside2) return n.fill;
     }
   }
   return fallback;
@@ -211741,7 +212290,7 @@ async function buildDeck(path2, opts = {}) {
     return { ...checked, files, engines: engines2 };
   }
   const deck = loaded.deck;
-  const outDir = resolve9(opts.outDir ?? join15(loaded.baseDir, "dist"));
+  const outDir = resolve10(opts.outDir ?? join15(loaded.baseDir, "dist"));
   mkdirSync11(outDir, { recursive: true });
   const theme = getTheme(deck.theme);
   const formats = opts.formats ?? deck.output?.formats ?? ["pptx", "pdf", "png"];
@@ -211952,16 +212501,16 @@ function exhibitRoutes(id) {
 // src/library/pptx-rebuild.ts
 import { createHash as createHash4 } from "node:crypto";
 import { mkdirSync as mkdirSync12, readFileSync as readFileSync21, writeFileSync as writeFileSync9 } from "node:fs";
-import { basename as basename3, dirname as dirname4, extname as extname6, join as join17, resolve as resolve11 } from "node:path";
+import { basename as basename3, dirname as dirname4, extname as extname6, join as join17, resolve as resolve12 } from "node:path";
 
 // src/library/pptx-scene-import.ts
 var import_jszip6 = __toESM(require_lib3(), 1);
 import { createHash as createHash3 } from "node:crypto";
 import { readFileSync as readFileSync20 } from "node:fs";
-import { basename as basename2, extname as extname5, posix as posix3, resolve as resolve10 } from "node:path";
+import { basename as basename2, extname as extname5, posix as posix3, resolve as resolve11 } from "node:path";
 
 // src/engine/system-fonts.ts
-import { existsSync as existsSync13, readdirSync as readdirSync5 } from "node:fs";
+import { existsSync as existsSync14, readdirSync as readdirSync5 } from "node:fs";
 import { homedir as homedir5 } from "node:os";
 import { extname as extname4, join as join16 } from "node:path";
 function fontDirs() {
@@ -212021,7 +212570,7 @@ function indexDir(dir) {
 function findFontFiles(family, dirs = fontDirs()) {
   const want = family.toLowerCase();
   for (const dir of dirs) {
-    if (!existsSync13(dir)) continue;
+    if (!existsSync14(dir)) continue;
     const faces = indexDir(dir).filter((e) => e.family.toLowerCase() === want);
     const regular = faces.find((e) => e.face === "regular");
     if (!regular) continue;
@@ -212610,7 +213159,7 @@ function tableNodes(shape, ctx) {
   return [...nodes, ...continuous];
 }
 async function importPptxScene(file2, options = {}) {
-  const path2 = resolve10(file2);
+  const path2 = resolve11(file2);
   const bytes = readFileSync20(path2);
   const zip = await import_jszip6.default.loadAsync(bytes);
   const read = async (part) => {
@@ -212773,7 +213322,7 @@ async function rebuildPptx(file2, opts = {}) {
   }
   diagnostics.push(...checkChrome(scene));
   const files = [];
-  const outDir = resolve11(opts.outDir ?? join17(dirname4(file2), "rebuilt"));
+  const outDir = resolve12(opts.outDir ?? join17(dirname4(file2), "rebuilt"));
   const baseName = `${basename3(file2, extname6(file2))}-rebuilt`;
   const formats = opts.formats ?? ["pptx", "html"];
   const engines2 = {};
@@ -212805,7 +213354,7 @@ async function rebuildPptx(file2, opts = {}) {
       const result = await engine.render(scene, {
         outDir,
         baseName,
-        deckDir: dirname4(resolve11(file2)),
+        deckDir: dirname4(resolve12(file2)),
         epoch: epochDate(),
         pptxPath,
         previewWidth: opts.previewWidth
@@ -212845,9 +213394,10 @@ async function rebuildPptx(file2, opts = {}) {
 }
 
 // src/qa/visual-qa.ts
+var import_yaml3 = __toESM(require_dist(), 1);
 import { execFileSync as execFileSync4, spawnSync as spawnSync3 } from "node:child_process";
 import {
-  existsSync as existsSync15,
+  existsSync as existsSync16,
   mkdirSync as mkdirSync14,
   mkdtempSync as mkdtempSync5,
   readdirSync as readdirSync6,
@@ -212856,7 +213406,7 @@ import {
   writeFileSync as writeFileSync11
 } from "node:fs";
 import { tmpdir as tmpdir5 } from "node:os";
-import { dirname as dirname6, join as join19, relative as relative5, resolve as resolve13 } from "node:path";
+import { dirname as dirname6, join as join19, relative as relative5, resolve as resolve14 } from "node:path";
 
 // src/qa/raster.ts
 import { deflateSync as deflateSync2 } from "node:zlib";
@@ -212981,17 +213531,17 @@ var import_yaml2 = __toESM(require_dist(), 1);
 import {
   appendFileSync,
   copyFileSync as copyFileSync4,
-  existsSync as existsSync14,
+  existsSync as existsSync15,
   mkdirSync as mkdirSync13,
   readFileSync as readFileSync22,
   rmSync as rmSync7,
   writeFileSync as writeFileSync10
 } from "node:fs";
-import { dirname as dirname5, join as join18, relative as relative4, resolve as resolve12 } from "node:path";
-var logFile = (deckPath2) => join18(dirname5(resolve12(deckPath2)), "review-log.jsonl");
+import { dirname as dirname5, join as join18, relative as relative4, resolve as resolve13 } from "node:path";
+var logFile = (deckPath2) => join18(dirname5(resolve13(deckPath2)), "review-log.jsonl");
 function readReviewLog(deckPath2) {
   const f = logFile(deckPath2);
-  if (!existsSync14(f)) return [];
+  if (!existsSync15(f)) return [];
   return readFileSync22(f, "utf8").split("\n").filter((l) => l.trim()).map((l) => JSON.parse(l));
 }
 function appendReviewLog(deckPath2, entry2) {
@@ -212999,20 +213549,20 @@ function appendReviewLog(deckPath2, entry2) {
   appendFileSync(logFile(deckPath2), `${JSON.stringify(full)}
 `);
   writeFileSync10(
-    join18(dirname5(resolve12(deckPath2)), "REVIEW-LOG.md"),
+    join18(dirname5(resolve13(deckPath2)), "REVIEW-LOG.md"),
     reviewLogMarkdown(readReviewLog(deckPath2))
   );
   return full;
 }
 function deckSourceFiles(deckPath2) {
-  const abs = resolve12(deckPath2);
+  const abs = resolve13(deckPath2);
   const files = [abs];
   try {
     const doc = import_yaml2.default.parse(readFileSync22(abs, "utf8"));
     for (const s2 of doc?.slides ?? [])
       if (s2 && typeof s2 === "object" && "include" in s2) {
-        const inc = resolve12(dirname5(abs), String(s2.include));
-        if (existsSync14(inc)) files.push(inc);
+        const inc = resolve13(dirname5(abs), String(s2.include));
+        if (existsSync15(inc)) files.push(inc);
       }
   } catch {
   }
@@ -213020,7 +213570,7 @@ function deckSourceFiles(deckPath2) {
 }
 function snapshotSources(deckPath2, dir) {
   rmSync7(dir, { recursive: true, force: true });
-  const base = dirname5(resolve12(deckPath2));
+  const base = dirname5(resolve13(deckPath2));
   const files = deckSourceFiles(deckPath2);
   for (const f of files) {
     const target = join18(dir, relative4(base, f));
@@ -213070,14 +213620,14 @@ function diffLines(file2, before, after) {
   };
 }
 function diffAgainstSnapshot(deckPath2, dir) {
-  const base = dirname5(resolve12(deckPath2));
+  const base = dirname5(resolve13(deckPath2));
   const out = [];
   for (const f of deckSourceFiles(deckPath2)) {
     const rel = relative4(base, f);
     const snap = join18(dir, rel);
     const d = diffLines(
       rel,
-      existsSync14(snap) ? readFileSync22(snap, "utf8") : "",
+      existsSync15(snap) ? readFileSync22(snap, "utf8") : "",
       readFileSync22(f, "utf8")
     );
     if (d) out.push(d);
@@ -213120,7 +213670,7 @@ function reviewLogMarkdown(entries) {
 // src/qa/visual-qa.ts
 var VISUAL_QA_TARGET = 0.95;
 var pt = (inch) => Math.round(inch * 72 * 100) / 100;
-var label2 = (n) => (n.kind === "text" ? n.paragraphs.flatMap((p) => p.runs.map((r) => r.text)).join(" ").slice(0, 48) : `${n.kind}`) + (n.role ? ` [${n.role}]` : "");
+var label3 = (n) => (n.kind === "text" ? n.paragraphs.flatMap((p) => p.runs.map((r) => r.text)).join(" ").slice(0, 48) : `${n.kind}`) + (n.role ? ` [${n.role}]` : "");
 function boxOf2(n) {
   if (n.kind === "line")
     return {
@@ -213150,8 +213700,9 @@ function slideFacts(scene, slide, palette) {
   const used = /* @__PURE__ */ new Set();
   const tight = [];
   const fonts = /* @__PURE__ */ new Set();
+  const art = (n) => n.role === "cover-art";
   slide.nodes.forEach((n, i) => {
-    colorsOf(n, used);
+    if (!art(n)) colorsOf(n, used);
     if (n.kind !== "text") return;
     fonts.add(n.style.family);
     const back = bgAt(
@@ -213166,7 +213717,7 @@ function slideFacts(scene, slide, palette) {
     const needs = n.style.size >= 18 || n.style.size >= 14 && n.style.bold ? 3 : 4.5;
     if (ratio < needs + 1.5)
       contrastRows.push({
-        text: label2(n),
+        text: label3(n),
         ratio: Math.round(ratio * 100) / 100,
         needs,
         fg,
@@ -213174,9 +213725,9 @@ function slideFacts(scene, slide, palette) {
       });
     const fill = n.contentHeight / Math.max(1e-6, n.box.h);
     if (n.lines.length > 1 && fill > 0.97)
-      tight.push({ text: label2(n), fill: Math.round(fill * 100) / 100 });
+      tight.push({ text: label3(n), fill: Math.round(fill * 100) / 100 });
   });
-  const boxes = slide.nodes.map((n) => ({ n, b: boxOf2(n) })).filter((x2) => !!x2.b && x2.b.w > 0.05 && x2.b.h > 0.05);
+  const boxes = slide.nodes.filter((n) => !art(n)).map((n) => ({ n, b: boxOf2(n) })).filter((x2) => !!x2.b && x2.b.w > 0.05 && x2.b.h > 0.05);
   const near = [];
   for (let i = 0; i < boxes.length; i++)
     for (let j = i + 1; j < boxes.length; j++) {
@@ -213185,7 +213736,7 @@ function slideFacts(scene, slide, palette) {
       for (const edge2 of ["left", "top"]) {
         const d = Math.abs(edge2 === "left" ? a.b.x - b.b.x : a.b.y - b.b.y);
         if (d * 72 > 0.5 && d * 72 < 4)
-          near.push({ a: label2(a.n), b: label2(b.n), edge: edge2, deltaPt: Math.round(d * 72 * 10) / 10 });
+          near.push({ a: label3(a.n), b: label3(b.n), edge: edge2, deltaPt: Math.round(d * 72 * 10) / 10 });
       }
     }
   const W = scene.format.w;
@@ -213193,7 +213744,7 @@ function slideFacts(scene, slide, palette) {
   const margin = 0.25;
   const outside = boxes.filter(({ b }) => !(b.w > W * 0.9 || b.h > H * 0.9)).filter(
     ({ b }) => b.x < margin || b.y < margin || b.x + b.w > W - margin || b.y + b.h > H - margin
-  ).filter(({ n }) => n.kind === "text").map(({ n }) => label2(n));
+  ).filter(({ n }) => n.kind === "text").map(({ n }) => label3(n));
   return {
     contrast: contrastRows,
     offPalette: [...used].filter((c) => !palette.has(c)),
@@ -213222,7 +213773,7 @@ function rasterPages(pdf, width) {
 async function visualQaPack(deckPath2, opts = {}) {
   if (spawnSync3("pdftoppm", ["-v"]).status !== 0)
     throw new Error("Visual QA needs Poppler (pdftoppm) to rasterise the rendered pages");
-  const outDir = resolve13(opts.outDir ?? join19(dirname6(resolve13(deckPath2)), "dist"));
+  const outDir = resolve14(opts.outDir ?? join19(dirname6(resolve14(deckPath2)), "dist"));
   const dir = join19(outDir, "visual-qa");
   mkdirSync14(dir, { recursive: true });
   for (const f of readdirSync6(dir))
@@ -213295,7 +213846,7 @@ async function visualQaPack(deckPath2, opts = {}) {
   for (const s2 of scene.slides) for (const n of s2.nodes) colorsOf(n, allColors);
   const pack = {
     dir: relative5(process.cwd(), dir) || ".",
-    deck: relative5(process.cwd(), resolve13(deckPath2)),
+    deck: relative5(process.cwd(), resolve14(deckPath2)),
     theme: scene.themeId,
     renderer: pptx ? office.detail ?? "Office" : "none (HTML only \u2014 install PowerPoint or LibreOffice for parity)",
     target: VISUAL_QA_TARGET,
@@ -213395,7 +213946,7 @@ function recordReview(deckPath2, packDir, round) {
   const errors = validateRound(round);
   if (errors.length) throw new Error(`Invalid review record: ${errors.join("; ")}`);
   const path2 = join19(packDir, "record.json");
-  const rounds = existsSync15(path2) ? JSON.parse(readFileSync23(path2, "utf8")) : [];
+  const rounds = existsSync16(path2) ? JSON.parse(readFileSync23(path2, "utf8")) : [];
   const diffs = diffAgainstSnapshot(deckPath2, join19(packDir, "baseline"));
   rounds.push({
     ...round,
@@ -213411,50 +213962,87 @@ function recordReview(deckPath2, packDir, round) {
   });
   writeFileSync11(path2, `${JSON.stringify(rounds, null, 2)}
 `);
-  const report = reviewReport(rounds);
+  let language = "en";
+  try {
+    language = import_yaml3.default.parse(readFileSync23(deckPath2, "utf8"))?.language ?? "en";
+  } catch {
+  }
+  const report = reviewReport(rounds, language);
   writeFileSync11(join19(packDir, "REPORT.md"), report);
   return { rounds: rounds.length, report: join19(packDir, "REPORT.md"), verdict: round.verdict };
 }
-function reviewReport(rounds) {
+var REPORT_TEXT = {
+  en: {
+    title: "Visual review report",
+    verdict: {
+      ready: "Ready to hand over",
+      "ready-with-notes": "Ready, with points for you to check",
+      "not-ready": "Not ready \u2014 needs your decision or more work"
+    },
+    rounds: (n, who) => `Rounds: ${n}${who ? ` \xB7 reviewer: ${who}` : ""}. Rules, calibration and Office parity ran first; this review covers what rules cannot judge.`,
+    attention: "Needs your attention",
+    attentionHead: "| Slide | Severity | Area | What the reviewer saw | Suggested action |",
+    nothing: "Nothing open.",
+    fixed: "Fixed during review",
+    fixedHead: "| Slide | Severity | Area | Issue | Fix |",
+    noFixes: "No changes were needed.",
+    changes: "Changes made during review",
+    change: (r, f, a, d) => `- Round ${r}: \`${f}\` +${a} \u2212${d} lines`,
+    noChanges: "No source files were edited.",
+    log: "Field-by-field before/after and full diffs: `REVIEW-LOG.md` next to deck.yaml.",
+    manual: "`visual_review` in the manifest stays false until you have looked at every slide yourself."
+  },
+  ru: {
+    title: "\u041E\u0442\u0447\u0451\u0442 \u0432\u0438\u0437\u0443\u0430\u043B\u044C\u043D\u043E\u0439 \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438",
+    verdict: {
+      ready: "\u0413\u043E\u0442\u043E\u0432\u043E \u043A \u043F\u0435\u0440\u0435\u0434\u0430\u0447\u0435",
+      "ready-with-notes": "\u0413\u043E\u0442\u043E\u0432\u043E, \u043D\u043E \u0435\u0441\u0442\u044C \u043F\u0443\u043D\u043A\u0442\u044B \u0434\u043B\u044F \u0432\u0430\u0448\u0435\u0439 \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438",
+      "not-ready": "\u041D\u0435 \u0433\u043E\u0442\u043E\u0432\u043E \u2014 \u043D\u0443\u0436\u043D\u043E \u0432\u0430\u0448\u0435 \u0440\u0435\u0448\u0435\u043D\u0438\u0435 \u0438\u043B\u0438 \u0434\u043E\u0440\u0430\u0431\u043E\u0442\u043A\u0430"
+    },
+    rounds: (n, who) => `\u0420\u0430\u0443\u043D\u0434\u043E\u0432: ${n}${who ? ` \xB7 \u043F\u0440\u043E\u0432\u0435\u0440\u044F\u043B: ${who}` : ""}. \u0421\u043D\u0430\u0447\u0430\u043B\u0430 \u043F\u0440\u043E\u0448\u043B\u0438 \u043F\u0440\u0430\u0432\u0438\u043B\u0430, \u043A\u0430\u043B\u0438\u0431\u0440\u043E\u0432\u043A\u0430 \u0438 \u0441\u0432\u0435\u0440\u043A\u0430 \u0441 PowerPoint; \u044D\u0442\u0430 \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0430 \u2014 \u043E \u0442\u043E\u043C, \u0447\u0442\u043E \u043F\u0440\u0430\u0432\u0438\u043B\u0430\u043C\u0438 \u043D\u0435 \u043E\u0446\u0435\u043D\u0438\u0442\u044C.`,
+    attention: "\u0422\u0440\u0435\u0431\u0443\u0435\u0442 \u0432\u0430\u0448\u0435\u0433\u043E \u0432\u043D\u0438\u043C\u0430\u043D\u0438\u044F",
+    attentionHead: "| \u0421\u043B\u0430\u0439\u0434 | \u0412\u0430\u0436\u043D\u043E\u0441\u0442\u044C | \u041E\u0431\u043B\u0430\u0441\u0442\u044C | \u0427\u0442\u043E \u0443\u0432\u0438\u0434\u0435\u043B \u043F\u0440\u043E\u0432\u0435\u0440\u044F\u044E\u0449\u0438\u0439 | \u0427\u0442\u043E \u043F\u0440\u0435\u0434\u043B\u0430\u0433\u0430\u0435\u0442\u0441\u044F |",
+    nothing: "\u041E\u0442\u043A\u0440\u044B\u0442\u044B\u0445 \u043F\u0443\u043D\u043A\u0442\u043E\u0432 \u043D\u0435\u0442.",
+    fixed: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u043E \u0432 \u0445\u043E\u0434\u0435 \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438",
+    fixedHead: "| \u0421\u043B\u0430\u0439\u0434 | \u0412\u0430\u0436\u043D\u043E\u0441\u0442\u044C | \u041E\u0431\u043B\u0430\u0441\u0442\u044C | \u041F\u0440\u043E\u0431\u043B\u0435\u043C\u0430 | \u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435 |",
+    noFixes: "\u0418\u0441\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u044F \u043D\u0435 \u043F\u043E\u0442\u0440\u0435\u0431\u043E\u0432\u0430\u043B\u0438\u0441\u044C.",
+    changes: "\u0418\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u0432 \u0445\u043E\u0434\u0435 \u043F\u0440\u043E\u0432\u0435\u0440\u043A\u0438",
+    change: (r, f, a, d) => `- \u0420\u0430\u0443\u043D\u0434 ${r}: \`${f}\` +${a} \u2212${d} \u0441\u0442\u0440\u043E\u043A`,
+    noChanges: "\u0418\u0441\u0445\u043E\u0434\u043D\u044B\u0435 \u0444\u0430\u0439\u043B\u044B \u043D\u0435 \u043C\u0435\u043D\u044F\u043B\u0438\u0441\u044C.",
+    log: "\u041F\u043E\u043B\u044F \xAB\u0431\u044B\u043B\u043E \u2192 \u0441\u0442\u0430\u043B\u043E\xBB \u0438 \u043F\u043E\u043B\u043D\u044B\u0435 diff: `REVIEW-LOG.md` \u0440\u044F\u0434\u043E\u043C \u0441 deck.yaml.",
+    manual: "`visual_review` \u0432 \u043C\u0430\u043D\u0438\u0444\u0435\u0441\u0442\u0435 \u043E\u0441\u0442\u0430\u0451\u0442\u0441\u044F false, \u043F\u043E\u043A\u0430 \u0432\u044B \u0441\u0430\u043C\u0438 \u043D\u0435 \u043F\u043E\u0441\u043C\u043E\u0442\u0440\u0438\u0442\u0435 \u043A\u0430\u0436\u0434\u044B\u0439 \u0441\u043B\u0430\u0439\u0434."
+  }
+};
+function reviewReport(rounds, language = "en") {
+  const t = language.slice(0, 2) === "ru" ? REPORT_TEXT.ru : REPORT_TEXT.en;
   const last2 = rounds.at(-1);
   const fixed = rounds.flatMap((r) => r.findings.filter((f) => f.status === "fixed"));
   const attention = last2.findings.filter((f) => f.status !== "fixed");
-  const verdict = {
-    ready: "Ready to hand over",
-    "ready-with-notes": "Ready, with points for you to check",
-    "not-ready": "Not ready \u2014 needs your decision or more work"
-  }[last2.verdict];
   const row = (f) => `| ${f.slide} | ${f.severity} | ${f.area} | ${f.issue.replace(/\|/g, "\\|")} | ${(f.fix ?? "").replace(/\|/g, "\\|")} |`;
   return [
-    "# Visual review report",
+    `# ${t.title}`,
     "",
-    `**${verdict}.** ${last2.summary}`,
+    `**${t.verdict[last2.verdict]}.** ${last2.summary}`,
     "",
-    `Rounds: ${rounds.length}${last2.reviewer ? ` \xB7 reviewer: ${last2.reviewer}` : ""}. Rules, calibration and Office parity ran first; this review covers what rules cannot judge.`,
+    t.rounds(rounds.length, last2.reviewer),
     "",
-    "## Needs your attention",
+    `## ${t.attention}`,
     "",
-    ...attention.length ? [
-      "| Slide | Severity | Area | What the reviewer saw | Suggested action |",
-      "|---|---|---|---|---|",
-      ...attention.map(row)
-    ] : ["Nothing open."],
+    ...attention.length ? [t.attentionHead, "|---|---|---|---|---|", ...attention.map(row)] : [t.nothing],
     "",
-    "## Fixed during review",
+    `## ${t.fixed}`,
     "",
-    ...fixed.length ? ["| Slide | Severity | Area | Issue | Fix |", "|---|---|---|---|---|", ...fixed.map(row)] : ["No changes were needed."],
+    ...fixed.length ? [t.fixedHead, "|---|---|---|---|---|", ...fixed.map(row)] : [t.noFixes],
     "",
-    "## Changes made during review",
+    `## ${t.changes}`,
     "",
     ...rounds.some((r) => r.changes?.length) ? rounds.flatMap(
-      (r) => (r.changes ?? []).map(
-        (c) => `- Round ${r.round}: \`${c.file}\` +${c.added} \u2212${c.removed} lines`
-      )
-    ) : ["No source files were edited."],
+      (r) => (r.changes ?? []).map((c) => t.change(r.round, c.file, c.added, c.removed))
+    ) : [t.noChanges],
     "",
-    "Field-by-field before/after and full diffs: `REVIEW-LOG.md` next to deck.yaml.",
+    t.log,
     "",
-    "`visual_review` in the manifest stays false until you have looked at every slide yourself.",
+    t.manual,
     ""
   ].join("\n");
 }
@@ -213528,7 +214116,7 @@ function registerCommands(program3) {
   program3.command("visual-qa").description(
     "Final LLM review stage: render through PowerPoint and Chrome, write a review pack (images, differences, measured facts); --record stores the reviewer findings and a user report"
   ).argument("<deck>", "deck.yaml").option("-o, --out <dir>", "build output directory (default: <deck dir>/dist)").option("--width <px>", "raster width", "1600").option("--record <findings.json>", "append a review round and rewrite visual-qa/REPORT.md").option("--json", "machine-readable output").action(async (deck, o) => {
-    const out = resolve14(o.out ?? join20(dirname7(resolve14(deck)), "dist"));
+    const out = resolve15(o.out ?? join20(dirname7(resolve15(deck)), "dist"));
     if (o.record) {
       const round = JSON.parse(readFileSync24(o.record, "utf8"));
       printJson({ ok: true, ...recordReview(deck, join20(out, "visual-qa"), round) });
@@ -213649,7 +214237,7 @@ ${summary(r.diagnostics)}`);
       list.forEach((l) => {
         console.log(`${bold(l.id.padEnd(20))} ${dim(`[${l.group}]`)} ${l.purpose}`);
         console.log(dim(`${" ".repeat(21)}variants: ${l.variants.join(", ")}`));
-        if (id) console.log(import_yaml3.default.stringify({ example: l.examples[0] }));
+        if (id) console.log(import_yaml4.default.stringify({ example: l.examples[0] }));
       });
   });
   program3.command("themes").description("List themes").option("--json", "machine-readable output").action((o) => {
@@ -213733,8 +214321,8 @@ ${dim(`${" ".repeat(27)}${x2.arc}`)}`)
         }
         o.goal ??= goal;
       }
-      const dir = resolve14(o.dir, slug2);
-      if (existsSync16(join20(dir, "brief.yaml"))) {
+      const dir = resolve15(o.dir, slug2);
+      if (existsSync17(join20(dir, "brief.yaml"))) {
         console.error(`${relative6(process.cwd(), dir)}/brief.yaml already exists`);
         process.exitCode = EXIT.usage;
         return;
@@ -213759,7 +214347,7 @@ ${dim(`${" ".repeat(27)}${x2.arc}`)}`)
       writeFileSync12(
         join20(dir, "brief.yaml"),
         `${SCHEMA_LINE("brief")}# SlideCraft brief \u2014 fill the TODOs or let your assistant ask you
-${import_yaml3.default.stringify(brief)}`
+${import_yaml4.default.stringify(brief)}`
       );
       const deck = {
         schemaVersion: 1,
@@ -213787,7 +214375,7 @@ ${import_yaml3.default.stringify(brief)}`
       writeFileSync12(
         join20(dir, "deck.yaml"),
         `${SCHEMA_LINE("deck")}# SlideCraft deck
-${import_yaml3.default.stringify(deck)}`
+${import_yaml4.default.stringify(deck)}`
       );
       if (wantsJson(o.json)) {
         printJson({
@@ -213808,14 +214396,14 @@ ${green("\u2714")} ${relative6(process.cwd(), dir)}/deck.yaml`
 
 // src/cli/install.ts
 import { spawnSync as spawnSync5 } from "node:child_process";
-import { copyFileSync as copyFileSync5, existsSync as existsSync18, mkdirSync as mkdirSync17, readFileSync as readFileSync26, writeFileSync as writeFileSync14 } from "node:fs";
+import { copyFileSync as copyFileSync5, existsSync as existsSync19, mkdirSync as mkdirSync17, readFileSync as readFileSync26, writeFileSync as writeFileSync14 } from "node:fs";
 import { homedir as homedir7 } from "node:os";
 import { dirname as dirname8, join as join22 } from "node:path";
 
 // src/mcp/server.ts
 import { spawnSync as spawnSync4 } from "node:child_process";
 import {
-  existsSync as existsSync17,
+  existsSync as existsSync18,
   mkdirSync as mkdirSync16,
   mkdtempSync as mkdtempSync6,
   readdirSync as readdirSync7,
@@ -213824,11 +214412,11 @@ import {
   writeFileSync as writeFileSync13
 } from "node:fs";
 import { homedir as homedir6, tmpdir as tmpdir6 } from "node:os";
-import { isAbsolute as isAbsolute5, join as join21, resolve as resolve15 } from "node:path";
+import { isAbsolute as isAbsolute6, join as join21, resolve as resolve16 } from "node:path";
 import { createInterface } from "node:readline";
-var workspace = () => resolve15(process.env.SLIDECRAFT_WORKSPACE ?? join21(homedir6(), "SlideCraft"));
+var workspace = () => resolve16(process.env.SLIDECRAFT_WORKSPACE ?? join21(homedir6(), "SlideCraft"));
 function deckPath(deck) {
-  const p = isAbsolute5(deck) ? deck : resolve15(workspace(), deck);
+  const p = isAbsolute6(deck) ? deck : resolve16(workspace(), deck);
   return /\.ya?ml$/i.test(p) ? p : join21(p, "deck.yaml");
 }
 var briefPath = (deck) => join21(deckPath(deck), "..", "brief.yaml");
@@ -213887,7 +214475,7 @@ Workspace: ${workspace()}`)
     inputSchema: obj({}),
     run: () => {
       const ws = workspace();
-      const decks = existsSync17(ws) ? readdirSync7(ws).filter((d) => existsSync17(join21(ws, d, "deck.yaml"))) : [];
+      const decks = existsSync18(ws) ? readdirSync7(ws).filter((d) => existsSync18(join21(ws, d, "deck.yaml"))) : [];
       return text3(decks.length ? decks.join("\n") : "No decks yet \u2014 use new_deck.");
     }
   },
@@ -214044,7 +214632,7 @@ Workspace: ${workspace()}`)
           renderer,
           "--json"
         ]);
-        const files = existsSync17(previewDir) ? readdirSync7(previewDir).sort() : [];
+        const files = existsSync18(previewDir) ? readdirSync7(previewDir).sort() : [];
         const want = String(a.slide);
         const file2 = /^\d+$/.test(want) ? files[Number(want) - 1] : files.find((f) => f.replace(/^\d+-/, "").replace(/\.png$/, "") === want);
         if (!file2)
@@ -214270,13 +214858,13 @@ function serverCommand() {
   const script = join22(ROOT, "dist", "slidecraft.mjs");
   if (/[\\/]_npx[\\/]/.test(ROOT)) {
     const npx = join22(dirname8(process.execPath), win ? "npx.cmd" : "npx");
-    return { command: existsSync18(npx) ? npx : "npx", args: ["-y", "@eiler2005/slidecraft", "mcp"] };
+    return { command: existsSync19(npx) ? npx : "npx", args: ["-y", "@eiler2005/slidecraft", "mcp"] };
   }
   return { command: process.execPath, args: [script, "mcp"] };
 }
 function editJson(file2, edit) {
-  const j = existsSync18(file2) ? JSON.parse(readFileSync26(file2, "utf8") || "{}") : {};
-  if (existsSync18(file2)) copyFileSync5(file2, `${file2}.bak`);
+  const j = existsSync19(file2) ? JSON.parse(readFileSync26(file2, "utf8") || "{}") : {};
+  if (existsSync19(file2)) copyFileSync5(file2, `${file2}.bak`);
   edit(j);
   mkdirSync17(dirname8(file2), { recursive: true });
   writeFileSync14(file2, `${JSON.stringify(j, null, 2)}
@@ -214306,7 +214894,7 @@ function install(opts = {}) {
     });
   }
   const codexHome = process.env.CODEX_HOME ?? join22(home(), ".codex");
-  if (want("codex") && existsSync18(codexHome)) {
+  if (want("codex") && existsSync19(codexHome)) {
     const dir = join22(codexHome, "skills");
     if (!opts.dryRun) {
       if (opts.uninstall) uninstallCodex(dir);
@@ -214320,7 +214908,7 @@ function install(opts = {}) {
     });
   }
   for (const t of mcpTargets()) {
-    if (!want(t.id) || !existsSync18(t.detect)) continue;
+    if (!want(t.id) || !existsSync19(t.detect)) continue;
     if (!opts.dryRun)
       editJson(t.file, (j) => {
         const servers = j[t.key] ?? {};
@@ -214368,14 +214956,14 @@ function registerInstallCommands(program3) {
 }
 
 // src/cli/workflow.ts
-var import_yaml10 = __toESM(require_dist(), 1);
+var import_yaml11 = __toESM(require_dist(), 1);
 import { spawn as spawn3 } from "node:child_process";
-import { existsSync as existsSync24, mkdirSync as mkdirSync26, readFileSync as readFileSync35, writeFileSync as writeFileSync24 } from "node:fs";
-import { dirname as dirname14, join as join30, relative as relative12, resolve as resolve23 } from "node:path";
+import { existsSync as existsSync25, mkdirSync as mkdirSync26, readFileSync as readFileSync35, writeFileSync as writeFileSync24 } from "node:fs";
+import { dirname as dirname14, join as join30, relative as relative12, resolve as resolve24 } from "node:path";
 
 // src/gallery.ts
-import { existsSync as existsSync19, mkdirSync as mkdirSync18, readFileSync as readFileSync27, writeFileSync as writeFileSync15 } from "node:fs";
-import { dirname as dirname9, join as join23, resolve as resolve16 } from "node:path";
+import { existsSync as existsSync20, mkdirSync as mkdirSync18, readFileSync as readFileSync27, writeFileSync as writeFileSync15 } from "node:fs";
+import { dirname as dirname9, join as join23, resolve as resolve17 } from "node:path";
 async function flat(scene) {
   if (!scene.slides.some((sl) => sl.nodes.some((n) => n.kind === "html"))) return scene;
   return (await flattenFreeform(scene, 0)).scene;
@@ -214401,7 +214989,7 @@ async function contactSheetPng(scene, width = 2e3, cols2 = 4, max = 12) {
 }
 function previewDeck(storyline, themeId) {
   const example = join23(ROOT, "examples", storyline.id, "deck.yaml");
-  if (existsSync19(example)) {
+  if (existsSync20(example)) {
     const l = loadDeck(example);
     l.deck = { ...l.deck, theme: themeId };
     return l;
@@ -214450,7 +215038,7 @@ function previewDeck(storyline, themeId) {
   };
 }
 async function buildGallery(opts) {
-  const out = resolve16(opts.out ?? join23(DOCS_DIR, "gallery"));
+  const out = resolve17(opts.out ?? join23(DOCS_DIR, "gallery"));
   mkdirSync18(join23(out, "layouts"), { recursive: true });
   const files = [];
   for (const s2 of opts.storylines) {
@@ -214506,7 +215094,7 @@ async function writePicker(options, outPath, briefGoal) {
     const t = getTheme(o.theme);
     if (!s2 || !t) continue;
     const cached2 = join23(DOCS_DIR, "gallery", `${o.storyline}--${o.theme}.png`);
-    const png = existsSync19(cached2) ? readFileSync27(cached2) : await contactSheetPng(await flat(composeDeck(previewDeck(s2, o.theme)).scene), 1800);
+    const png = existsSync20(cached2) ? readFileSync27(cached2) : await contactSheetPng(await flat(composeDeck(previewDeck(s2, o.theme)).scene), 1800);
     const img = `data:image/png;base64,${png.toString("base64")}`;
     const sheet = join23(dirname9(outPath), `option-${o.option}.png`);
     writeFileSync15(sheet, png);
@@ -214615,7 +215203,7 @@ function libraryCheck() {
 // src/library/docs.ts
 import { mkdirSync as mkdirSync19, writeFileSync as writeFileSync16 } from "node:fs";
 import { join as join24 } from "node:path";
-var import_yaml4 = __toESM(require_dist(), 1);
+var import_yaml5 = __toESM(require_dist(), 1);
 var HEADER = (title2, what) => `<!-- Generated by \`slidecraft gen\` \u2014 do not edit by hand. -->
 # ${title2}
 
@@ -214694,7 +215282,7 @@ function layoutsDoc() {
     md += `<details><summary>Example</summary>
 
 \`\`\`yaml
-${import_yaml4.default.stringify([slide], { lineWidth: 0 })}\`\`\`
+${import_yaml5.default.stringify([slide], { lineWidth: 0 })}\`\`\`
 
 </details>
 `;
@@ -214887,18 +215475,18 @@ async function generateDocs() {
 }
 
 // src/library/fix.ts
-var import_yaml6 = __toESM(require_dist(), 1);
+var import_yaml7 = __toESM(require_dist(), 1);
 import { readFileSync as readFileSync28, writeFileSync as writeFileSync17 } from "node:fs";
-import { dirname as dirname10, relative as relative7, resolve as resolve17 } from "node:path";
+import { dirname as dirname10, relative as relative7, resolve as resolve18 } from "node:path";
 
 // src/library/yaml-edit.ts
-var import_yaml5 = __toESM(require_dist(), 1);
+var import_yaml6 = __toESM(require_dist(), 1);
 var col = (text4, at) => at - text4.lastIndexOf("\n", at - 1) - 1;
 function scalar(v, flow) {
   if (typeof v === "number" || typeof v === "boolean") return String(v);
   const s2 = String(v);
   if (s2 === "" || s2.includes("\n") || flow && /[,[\]{}]/.test(s2)) return JSON.stringify(s2);
-  const y = import_yaml5.default.stringify(s2, { lineWidth: 0 }).trimEnd();
+  const y = import_yaml6.default.stringify(s2, { lineWidth: 0 }).trimEnd();
   return y.includes("\n") ? JSON.stringify(s2) : y;
 }
 function block(v, indent) {
@@ -214932,16 +215520,16 @@ function splice(text4, from, to, s2) {
   return text4.slice(0, from) + s2 + text4.slice(to);
 }
 function inPlace(text4, e) {
-  const doc = import_yaml5.default.parseDocument(text4);
+  const doc = import_yaml6.default.parseDocument(text4);
   const node2 = doc.getIn(e.path, true);
   const parent = e.path.length > 1 ? doc.getIn(e.path.slice(0, -1), true) : doc.contents;
-  const flowParent = !!(parent && ((0, import_yaml5.isMap)(parent) || (0, import_yaml5.isSeq)(parent)) && parent.flow);
+  const flowParent = !!(parent && ((0, import_yaml6.isMap)(parent) || (0, import_yaml6.isSeq)(parent)) && parent.flow);
   if (node2?.range) {
     const [from] = node2.range;
     const to = contentEnd(text4, node2);
-    if ((0, import_yaml5.isScalar)(node2) && (e.value === null || typeof e.value !== "object"))
+    if ((0, import_yaml6.isScalar)(node2) && (e.value === null || typeof e.value !== "object"))
       return splice(text4, from, to, scalar(e.value, flowParent));
-    if ((0, import_yaml5.isSeq)(node2) && Array.isArray(e.value) && e.value.every((x2) => typeof x2 !== "object")) {
+    if ((0, import_yaml6.isSeq)(node2) && Array.isArray(e.value) && e.value.every((x2) => typeof x2 !== "object")) {
       if (node2.flow || flowParent) {
         const padded = text4[from + 1] === " ";
         const body = e.value.map((x2) => scalar(x2, true)).join(", ");
@@ -214953,7 +215541,7 @@ function inPlace(text4, e) {
     }
     return void 0;
   }
-  if ((0, import_yaml5.isMap)(parent) && !parent.flow && typeof e.path.at(-1) === "string" && parent.items.length) {
+  if ((0, import_yaml6.isMap)(parent) && !parent.flow && typeof e.path.at(-1) === "string" && parent.items.length) {
     const first2 = parent.items[0];
     const last2 = parent.items.at(-1);
     const end = last2.value?.range ? contentEnd(text4, last2.value) : contentEnd(text4, last2.key);
@@ -214966,7 +215554,7 @@ function inPlace(text4, e) {
 ${" ".repeat(indent)}${e.path.at(-1)}:${blockOrInline(e.value, indent + 2)}`
     );
   }
-  if ((0, import_yaml5.isSeq)(parent) && e.path.at(-1) === parent.items.length && parent.range) {
+  if ((0, import_yaml6.isSeq)(parent) && e.path.at(-1) === parent.items.length && parent.range) {
     if (!parent.flow && parent.items.length) {
       const lastItem = parent.items.at(-1);
       const end = contentEnd(text4, lastItem);
@@ -214996,7 +215584,7 @@ function editYaml(text4, edits) {
   for (const e of edits) {
     const next = inPlace(out, e);
     if (next !== void 0) {
-      const check2 = import_yaml5.default.parseDocument(next);
+      const check2 = import_yaml6.default.parseDocument(next);
       const got = check2.getIn(e.path);
       const json2 = (v) => JSON.stringify(
         v && typeof v === "object" && "toJSON" in v ? v.toJSON() : v
@@ -215006,7 +215594,7 @@ function editYaml(text4, edits) {
         continue;
       }
     }
-    const doc = import_yaml5.default.parseDocument(out);
+    const doc = import_yaml6.default.parseDocument(out);
     doc.setIn(e.path, e.value);
     out = doc.toString({ lineWidth: 0 });
   }
@@ -215015,13 +215603,13 @@ function editYaml(text4, edits) {
 
 // src/library/fix.ts
 function slideLocations(deckPath2) {
-  const file2 = resolve17(deckPath2);
-  const doc = import_yaml6.default.parse(readFileSync28(file2, "utf8"));
+  const file2 = resolve18(deckPath2);
+  const doc = import_yaml7.default.parse(readFileSync28(file2, "utf8"));
   const out = [];
   (doc.slides ?? []).forEach((s2, i) => {
     if (s2 && typeof s2 === "object" && "include" in s2) {
-      const inc = resolve17(dirname10(file2), String(s2.include));
-      const list = import_yaml6.default.parse(readFileSync28(inc, "utf8"));
+      const inc = resolve18(dirname10(file2), String(s2.include));
+      const list = import_yaml7.default.parse(readFileSync28(inc, "utf8"));
       if (Array.isArray(list)) list.forEach((_, k) => out.push({ file: inc, path: [k] }));
     } else out.push({ file: file2, path: ["slides", i] });
   });
@@ -215079,7 +215667,7 @@ function fitTasks(deckPath2) {
     const ptr = parsePointer(d.pointer);
     const loc = ptr ? locs[ptr.slide] : void 0;
     if (!ptr || !loc) continue;
-    const raw = getIn(loaded.slides[ptr.slide], ptr.rest) ?? getIn(getIn(import_yaml6.default.parse(readFileSync28(loc.file, "utf8")), loc.path), ptr.rest);
+    const raw = getIn(loaded.slides[ptr.slide], ptr.rest) ?? getIn(getIn(import_yaml7.default.parse(readFileSync28(loc.file, "utf8")), loc.path), ptr.rest);
     const text4 = Array.isArray(raw) ? raw.join("\n") : typeof raw === "string" ? raw : "";
     if (!text4) continue;
     const contract = /<=\s*(\d+)/.exec(d.message)?.[1];
@@ -215102,7 +215690,7 @@ function readField(deckPath2, pointer) {
   const ptr = parsePointer(pointer);
   const loc = ptr ? slideLocations(deckPath2)[ptr.slide] : void 0;
   if (!ptr || !loc) return void 0;
-  const doc = import_yaml6.default.parseDocument(readFileSync28(loc.file, "utf8"));
+  const doc = import_yaml7.default.parseDocument(readFileSync28(loc.file, "utf8"));
   const v = doc.getIn([...loc.path, ...ptr.rest]);
   return v && typeof v === "object" && "toJSON" in v ? v.toJSON() : v;
 }
@@ -215122,21 +215710,21 @@ function applyFixes(deckPath2, fixes) {
     }
     let doc = docs.get(loc.file);
     if (!doc) {
-      doc = import_yaml6.default.parseDocument(readFileSync28(loc.file, "utf8"));
+      doc = import_yaml7.default.parseDocument(readFileSync28(loc.file, "utf8"));
       docs.set(loc.file, doc);
     }
     const full = [...loc.path, ...ptr.rest];
     const parent = doc.getIn(full.slice(0, -1), true);
-    if (!(0, import_yaml6.isMap)(parent) && !(0, import_yaml6.isSeq)(parent)) {
+    if (!(0, import_yaml7.isMap)(parent) && !(0, import_yaml7.isSeq)(parent)) {
       errors.push(`${f.pointer}: field not found in ${loc.file}`);
       continue;
     }
     const before = doc.getIn(full);
     edits.set(loc.file, [...edits.get(loc.file) ?? [], { path: full, value: f.text }]);
     changes.push({
-      file: relative7(dirname10(resolve17(deckPath2)), loc.file),
+      file: relative7(dirname10(resolve18(deckPath2)), loc.file),
       pointer: f.pointer,
-      before: (0, import_yaml6.isScalar)(before) ? before.value : before?.toJSON?.() ?? before,
+      before: (0, import_yaml7.isScalar)(before) ? before.value : before?.toJSON?.() ?? before,
       after: f.text
     });
     applied++;
@@ -215152,21 +215740,21 @@ function applyFixes(deckPath2, fixes) {
 }
 
 // src/library/images.ts
-var import_yaml7 = __toESM(require_dist(), 1);
-import { existsSync as existsSync20, mkdirSync as mkdirSync20, readFileSync as readFileSync29, writeFileSync as writeFileSync18 } from "node:fs";
-import { dirname as dirname11, relative as relative8, resolve as resolve18 } from "node:path";
+var import_yaml8 = __toESM(require_dist(), 1);
+import { existsSync as existsSync21, mkdirSync as mkdirSync20, readFileSync as readFileSync29, writeFileSync as writeFileSync18 } from "node:fs";
+import { dirname as dirname11, relative as relative8, resolve as resolve19 } from "node:path";
 var IMAGE_STYLE = "Photographic, natural light, calm and uncluttered, generous negative space so it can be cropped to a slide panel. No text, no captions, no logos, no watermarks.";
 function slideMaps(file2) {
-  const doc = import_yaml7.default.parseDocument(readFileSync29(file2, "utf8"));
+  const doc = import_yaml8.default.parseDocument(readFileSync29(file2, "utf8"));
   const root = doc.contents;
-  const seq = (0, import_yaml7.isMap)(root) ? root.get("slides", true) : (0, import_yaml7.isSeq)(root) ? root : void 0;
+  const seq = (0, import_yaml8.isMap)(root) ? root.get("slides", true) : (0, import_yaml8.isSeq)(root) ? root : void 0;
   const items = [];
   const includes = [];
-  if ((0, import_yaml7.isSeq)(seq))
+  if ((0, import_yaml8.isSeq)(seq))
     for (const it of seq.items) {
-      if (!(0, import_yaml7.isMap)(it)) continue;
+      if (!(0, import_yaml8.isMap)(it)) continue;
       const inc = it.get("include");
-      if (typeof inc === "string") includes.push(resolve18(dirname11(file2), inc));
+      if (typeof inc === "string") includes.push(resolve19(dirname11(file2), inc));
       else items.push(it);
     }
   return { doc, items, includes };
@@ -215181,14 +215769,14 @@ function planImages(deckPath2, opts = {}) {
       if (typeof prompt !== "string" || !id) continue;
       const current = m.get("image");
       const base = dirname11(file2);
-      if (!opts.force && typeof current === "string" && existsSync20(resolve18(base, current)))
+      if (!opts.force && typeof current === "string" && existsSync21(resolve19(base, current)))
         continue;
       const image = typeof current === "string" && current ? current : `assets/${id}.png`;
-      jobs.push({ slideId: id, prompt, image, file: resolve18(base, image), yamlFile: file2 });
+      jobs.push({ slideId: id, prompt, image, file: resolve19(base, image), yamlFile: file2 });
     }
     includes.forEach(visit2);
   };
-  visit2(resolve18(deckPath2));
+  visit2(resolve19(deckPath2));
   return jobs;
 }
 function openAiProvider(env = process.env) {
@@ -215232,11 +215820,11 @@ ${IMAGE_STYLE}`);
   for (const [file2, js] of byFile) {
     const { doc } = slideMaps(file2);
     const root = doc.contents;
-    const inDeck = (0, import_yaml7.isMap)(root) && (0, import_yaml7.isSeq)(root.get("slides", true));
+    const inDeck = (0, import_yaml8.isMap)(root) && (0, import_yaml8.isSeq)(root.get("slides", true));
     const seq = inDeck ? root.get("slides", true) : root;
     const edits = [];
     for (const j of js) {
-      const k = seq.items.findIndex((m) => (0, import_yaml7.isMap)(m) && m.get("id") === j.slideId);
+      const k = seq.items.findIndex((m) => (0, import_yaml8.isMap)(m) && m.get("id") === j.slideId);
       if (k >= 0) edits.push({ path: [...inDeck ? ["slides"] : [], k, "image"], value: j.image });
     }
     writeFileSync18(file2, editYaml(readFileSync29(file2, "utf8"), edits));
@@ -215249,16 +215837,16 @@ function describeJob(j, cwd = process.cwd()) {
 }
 
 // src/library/ingest.ts
-var import_yaml8 = __toESM(require_dist(), 1);
+var import_yaml9 = __toESM(require_dist(), 1);
 import { createHash as createHash5 } from "node:crypto";
-import { existsSync as existsSync21, mkdirSync as mkdirSync21, readdirSync as readdirSync8, readFileSync as readFileSync30, writeFileSync as writeFileSync19 } from "node:fs";
-import { basename as basename4, dirname as dirname12, extname as extname7, join as join25, relative as relative9, resolve as resolve19 } from "node:path";
+import { existsSync as existsSync22, mkdirSync as mkdirSync21, readdirSync as readdirSync8, readFileSync as readFileSync30, writeFileSync as writeFileSync19 } from "node:fs";
+import { basename as basename4, dirname as dirname12, extname as extname7, join as join25, relative as relative9, resolve as resolve20 } from "node:path";
 import { pathToFileURL as pathToFileURL4 } from "node:url";
 var decode5 = (s2) => s2.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
 var slug = (s2) => s2.toLowerCase().replace(/\.[a-z0-9]+$/, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "source";
 async function loadPdf() {
   const bundled = join25(ROOT, "dist", "pdf-text.mjs");
-  const mod2 = import.meta.url.includes("/dist/") && existsSync21(bundled) ? await import(pathToFileURL4(bundled).href) : await import([".", "pdf-text.ts"].join("/"));
+  const mod2 = import.meta.url.includes("/dist/") && existsSync22(bundled) ? await import(pathToFileURL4(bundled).href) : await import([".", "pdf-text.ts"].join("/"));
   return mod2.pdfPages;
 }
 async function zipText(path2) {
@@ -215327,18 +215915,18 @@ async function sectionsOf(path2) {
   throw new Error(`Cannot ingest ${basename4(path2)}: use PDF, DOCX, PPTX, XLSX, CSV, MD or TXT`);
 }
 async function ingest(files, opts) {
-  const deckPath2 = resolve19(opts.deck);
+  const deckPath2 = resolve20(opts.deck);
   const deckDir = dirname12(deckPath2);
-  const outDir = resolve19(opts.dir ?? join25(deckDir, "materials"));
+  const outDir = resolve20(opts.dir ?? join25(deckDir, "materials"));
   mkdirSync21(outDir, { recursive: true });
-  const doc = import_yaml8.default.parseDocument(readFileSync30(deckPath2, "utf8"));
+  const doc = import_yaml9.default.parseDocument(readFileSync30(deckPath2, "utf8"));
   const sources = doc.get("sources", true);
-  const existing = (0, import_yaml8.isSeq)(sources) ? sources.items : [];
-  const have = new Set(existing.filter(import_yaml8.isMap).map((m) => String(m.get("id"))));
+  const existing = (0, import_yaml9.isSeq)(sources) ? sources.items : [];
+  const have = new Set(existing.filter(import_yaml9.isMap).map((m) => String(m.get("id"))));
   const fresh = [];
   const out = [];
   for (const f of files) {
-    const path2 = resolve19(f);
+    const path2 = resolve20(f);
     const r = await sectionsOf(path2);
     const id = slug(basename4(path2));
     const title2 = (r.title?.trim() || basename4(path2, extname7(path2)).replace(/[-_]+/g, " ")).slice(
@@ -215376,12 +215964,12 @@ async function ingest(files, opts) {
       added
     });
   }
-  const edits = (0, import_yaml8.isSeq)(sources) ? fresh.map((value, k) => ({ path: ["sources", existing.length + k], value })) : fresh.length ? [{ path: ["sources"], value: fresh }] : [];
+  const edits = (0, import_yaml9.isSeq)(sources) ? fresh.map((value, k) => ({ path: ["sources", existing.length + k], value })) : fresh.length ? [{ path: ["sources"], value: fresh }] : [];
   if (edits.length) writeFileSync19(deckPath2, editYaml(readFileSync30(deckPath2, "utf8"), edits));
   return out;
 }
 function findInMaterials(query, dir, limit = 20) {
-  if (!existsSync21(dir)) return [];
+  if (!existsSync22(dir)) return [];
   const words = query.toLowerCase().split(/\s+/).filter(Boolean);
   const hits = [];
   for (const f of readdirSync8(dir).filter((n) => n.endsWith(".md"))) {
@@ -215410,9 +215998,9 @@ function findInMaterials(query, dir, limit = 20) {
 
 // src/library/pptx-import.ts
 var import_jszip7 = __toESM(require_lib3(), 1);
-var import_yaml9 = __toESM(require_dist(), 1);
+var import_yaml10 = __toESM(require_dist(), 1);
 import { mkdirSync as mkdirSync22, readFileSync as readFileSync31, writeFileSync as writeFileSync20 } from "node:fs";
-import { basename as basename5, extname as extname8, join as join26, posix as posix4, resolve as resolve20 } from "node:path";
+import { basename as basename5, extname as extname8, join as join26, posix as posix4, resolve as resolve21 } from "node:path";
 var decode6 = (s2) => s2.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
 function validImportedTitle(title2, fallback, slideNumber) {
   const clean4 = title2.trim();
@@ -215483,7 +216071,7 @@ async function importPptx(file2, opts = {}) {
   const presRels = await rels2(zip, "ppt/presentation.xml");
   const order = [...pres.matchAll(/<p:sldId [^>]*r:id="([^"]+)"/g)].map((m) => presRels.get(m[1])).filter((p) => !!p);
   const id = opts.id ?? (basename5(file2, extname8(file2)).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "imported");
-  const outDir = resolve20(opts.out ?? join26("slidecraft", id));
+  const outDir = resolve21(opts.out ?? join26("slidecraft", id));
   mkdirSync22(join26(outDir, "assets"), { recursive: true });
   let shortened = 0;
   const notesExtra = [];
@@ -215604,7 +216192,7 @@ ${notesExtra.join("\n")}` : "",
     deckPath2,
     `# SlideCraft deck imported from ${basename5(file2)} \u2014 a draft to restyle.
 # Next: pick a storyline/theme, rewrite titles as action titles, replace text slides with exhibits.
-${import_yaml9.default.stringify(deck, { lineWidth: 0 })}`
+${import_yaml10.default.stringify(deck, { lineWidth: 0 })}`
   );
   return { deckPath: deckPath2, slides: slides.length, layouts: counts, shortened };
 }
@@ -215947,12 +216535,13 @@ function syncPptx(deckPath2, pptxPath, opts = {}) {
           `Slide "${es.id}": ${n.pointer.replace(/^\/slides\/\d+\//, "")} was deleted in the PPTX \u2014 kept in deck.yaml.`
         );
     const flat2 = (x2) => norm2(Array.isArray(x2) ? x2.join(" ") : x2);
-    const had = ref.notes ?? "";
-    if (es.notes && flat2(had) !== flat2(es.notes)) {
+    const had = stripSourceNotes(ref.notes ?? "");
+    const edited2 = es.notes ? stripSourceNotes(es.notes.join("\n")).split("\n") : void 0;
+    if (edited2 && flat2(had) !== flat2(edited2)) {
       const pointer = `/slides/${i}/notes`;
       const raw = readField(deckPath2, pointer);
       if (typeof raw === "string" && flat2(raw) === flat2(had) || raw === void 0 && !had) {
-        const after = clean3(es.notes).filter(Boolean).join("\n");
+        const after = clean3(edited2).filter(Boolean).join("\n");
         report.changes.push({
           slide: es.id,
           pointer,
@@ -215999,13 +216588,13 @@ function syncPptx(deckPath2, pptxPath, opts = {}) {
 // src/library/theme-import.ts
 import {
   copyFileSync as copyFileSync6,
-  existsSync as existsSync22,
+  existsSync as existsSync23,
   mkdirSync as mkdirSync23,
   readdirSync as readdirSync9,
   readFileSync as readFileSync33,
   writeFileSync as writeFileSync21
 } from "node:fs";
-import { basename as basename6, dirname as dirname13, extname as extname9, join as join27, relative as relative10, resolve as resolve21 } from "node:path";
+import { basename as basename6, dirname as dirname13, extname as extname9, join as join27, relative as relative10, resolve as resolve22 } from "node:path";
 var import_jszip8 = __toESM(require_lib3(), 1);
 
 // src/library/template-geometry.ts
@@ -216157,7 +216746,7 @@ function mapFont(name, fontDir, themeId, role, notes) {
   if (/^georgia$/i.test(name)) return { family: "Georgia", measure: "gelasio" };
   if (/^times( new roman)?$/i.test(name))
     return { family: "Times New Roman", measure: "liberation-serif" };
-  if (fontDir && existsSync22(fontDir)) {
+  if (fontDir && existsSync23(fontDir)) {
     const files = {};
     for (const f of readdirSync9(fontDir)) {
       if (!/\.(ttf|otf)$/i.test(f)) continue;
@@ -216222,7 +216811,7 @@ async function importTheme(file2, opts) {
   const c = readColors(xml2);
   const fonts = readFonts(xml2);
   const notes = [];
-  const outDir = resolve21(opts.out ?? join27(dirname13(resolve21(file2)), "slidecraft-theme"));
+  const outDir = resolve22(opts.out ?? join27(dirname13(resolve22(file2)), "slidecraft-theme"));
   mkdirSync23(outDir, { recursive: true });
   const bg = c.lt1 ?? "#FFFFFF";
   const dark = luminance(bg) < 0.25;
@@ -216336,7 +216925,7 @@ async function importTheme(file2, opts) {
     if (!spec.files) continue;
     for (const [face, p] of Object.entries(spec.files)) {
       const dest = join27(outDir, basename6(p));
-      if (resolve21(p) !== dest) copyFileSync6(p, dest);
+      if (resolve22(p) !== dest) copyFileSync6(p, dest);
       spec.files[face] = `./${basename6(p)}`;
     }
   }
@@ -216601,12 +217190,12 @@ async function runCalibration(fonts, outDir) {
 }
 
 // src/site.ts
-import { copyFileSync as copyFileSync7, existsSync as existsSync23, mkdirSync as mkdirSync25, readdirSync as readdirSync10, rmSync as rmSync10, writeFileSync as writeFileSync23 } from "node:fs";
-import { basename as basename7, join as join29, relative as relative11, resolve as resolve22 } from "node:path";
+import { copyFileSync as copyFileSync7, existsSync as existsSync24, mkdirSync as mkdirSync25, readdirSync as readdirSync10, rmSync as rmSync10, writeFileSync as writeFileSync23 } from "node:fs";
+import { basename as basename7, join as join29, relative as relative11, resolve as resolve23 } from "node:path";
 var REPO = "https://github.com/eiler2005/slidecraft";
 var esc4 = (s2) => s2.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 async function buildSite(outDir = "site") {
-  const out = resolve22(outDir);
+  const out = resolve23(outDir);
   mkdirSync25(out, { recursive: true });
   const storylines = loadStorylines();
   const themes = loadThemes();
@@ -216618,7 +217207,7 @@ async function buildSite(outDir = "site") {
   });
   const hero = await buildHero(join29(out, "gallery", "hero.png"));
   const examples = [];
-  const dirs = readdirSync10(join29(ROOT, "examples")).filter((d) => existsSync23(join29(ROOT, "examples", d, "deck.yaml"))).sort(
+  const dirs = readdirSync10(join29(ROOT, "examples")).filter((d) => existsSync24(join29(ROOT, "examples", d, "deck.yaml"))).sort(
     (a, b) => a === "slidecraft-overview" ? -1 : b === "slidecraft-overview" ? 1 : a.localeCompare(b)
   );
   for (const dir of dirs) {
@@ -216814,7 +217403,7 @@ ${bold("Outputs")}: ${output2.formats.join(", ")}  (pptx \u2190 ${output2.engine
   program3.command("pick").description("Render options A/B/C as contact sheets and open the picker page").requiredOption("-b, --brief <path>", "brief.yaml").option("--no-open", "do not open the page").option("--json", "machine-readable output").action(async (o) => {
     const brief = requireBrief(o.brief);
     const options = templateOptions(brief);
-    const out = join30(dirname14(resolve23(o.brief)), ".slidecraft", "picker.html");
+    const out = join30(dirname14(resolve24(o.brief)), ".slidecraft", "picker.html");
     await writePicker(options, out, brief.goal);
     if (o.open && process.stdout.isTTY) openFile(out);
     if (wantsJson(o.json)) printJson({ picker: out, options });
@@ -216840,7 +217429,7 @@ ${bold("Outputs")}: ${output2.formats.join(", ")}  (pptx \u2190 ${output2.engine
     if (!storyline || !getStoryline(storyline))
       throw new Error(`unknown storyline "${storyline ?? ""}"`);
     if (!theme || !getTheme(theme)) throw new Error(`unknown theme "${theme ?? ""}"`);
-    const doc = import_yaml10.default.parseDocument(readFileSync35(o.brief, "utf8"));
+    const doc = import_yaml11.default.parseDocument(readFileSync35(o.brief, "utf8"));
     doc.set("choice", {
       storyline,
       theme,
@@ -216852,8 +217441,8 @@ ${bold("Outputs")}: ${output2.formats.join(", ")}  (pptx \u2190 ${output2.engine
   program3.command("scaffold").description("Create a ghost deck.yaml from the chosen storyline (one slide per slot)").requiredOption("-b, --brief <path>", "brief.yaml").option("-o, --out <path>", "deck.yaml path (default: next to the brief)").option("--force", "overwrite an existing deck.yaml").action(async (o) => {
     const brief = requireBrief(o.brief);
     if (!brief.choice) throw new Error("brief has no choice yet \u2014 run `slidecraft choose` first");
-    const out = resolve23(o.out ?? join30(dirname14(resolve23(o.brief)), "deck.yaml"));
-    if (existsSync24(out) && !o.force)
+    const out = resolve24(o.out ?? join30(dirname14(resolve24(o.brief)), "deck.yaml"));
+    if (existsSync25(out) && !o.force)
       throw new Error(`${relative12(process.cwd(), out)} exists (use --force)`);
     const deck = scaffoldDeck(brief, brief.choice.storyline, brief.choice.theme);
     if (!deck.output) {
@@ -216864,7 +217453,7 @@ ${bold("Outputs")}: ${output2.formats.join(", ")}  (pptx \u2190 ${output2.engine
     writeFileSync24(
       out,
       `${SCHEMA_LINE("deck")}# Ghost deck: write the action titles first, review the title chain, then fill content.
-${import_yaml10.default.stringify(deck, { lineWidth: 0 })}`
+${import_yaml11.default.stringify(deck, { lineWidth: 0 })}`
     );
     console.log(
       `${green("\u2714")} ${relative12(process.cwd(), out)} (${deck.slides.length} ghost slides)`
@@ -216993,7 +217582,7 @@ Use it: theme: ${relative12(process.cwd(), r.themePath)}   (path relative to dec
       );
   });
   program3.command("find").description("Find a phrase in ingested material; each hit comes with the citation to use").argument("<query>", "words to look for").option("--deck <deck>", "deck.yaml whose materials/ to search", "deck.yaml").option("--dir <dir>", "materials directory (overrides --deck)").option("--json", "machine-readable output").action((query, o) => {
-    const dir = resolve23(o.dir ?? join30(dirname14(resolve23(o.deck)), "materials"));
+    const dir = resolve24(o.dir ?? join30(dirname14(resolve24(o.deck)), "materials"));
     const hits = findInMaterials(query, dir);
     if (wantsJson(o.json)) printJson({ hits });
     else if (!hits.length) console.log("No matches.");
@@ -217093,7 +217682,7 @@ Use it: theme: ${relative12(process.cwd(), r.themePath)}   (path relative to dec
       t.fonts.body,
       ...t.fonts.cyrillic?.heading ? [t.fonts.cyrillic.heading] : []
     ];
-    const r = await runCalibration(fonts, resolve23(o.out));
+    const r = await runCalibration(fonts, resolve24(o.out));
     if (wantsJson(o.json)) {
       printJson(r);
       return;

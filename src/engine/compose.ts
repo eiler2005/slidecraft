@@ -12,6 +12,8 @@ import { createContext } from './context.ts';
 import { decorSvg } from './decor.ts';
 import { missingGlyphs } from './fonts.ts';
 import { FORMATS, type Format } from './format.ts';
+import { isDefaultSourcePrefix, label } from './i18n.ts';
+import { sourceNotes, withSourceNotes } from './notes.ts';
 import type { Box, Master, Run, Scene, SceneNode, SceneSlide, TextStyle } from './scene.ts';
 import { layoutText, makeTextNode, para } from './text.ts';
 
@@ -284,6 +286,7 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
       variant,
       body,
       baseDir,
+      language: deck.language,
       slide: { title: slide.title, ...(slide.lead ? { lead: slide.lead } : {}) },
     });
     const isGhost =
@@ -330,7 +333,10 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
         fullBody.y + fullBody.h - (theme.chrome.takeaway?.height ?? 0.65),
       );
 
-    // Source line
+    // Source line (the prefix follows the deck language unless a theme sets its own)
+    const sourcePrefix = isDefaultSourcePrefix(theme.chrome.sources?.prefix)
+      ? label(deck.language, 'source')
+      : theme.chrome.sources!.prefix!;
     // "annual-report#p14": the source plus where in it
     const srcTitles = (slide.sources ?? [])
       .map((ref) => {
@@ -350,11 +356,7 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
       srcTitles.length
         ? `Source: ${srcTitles.map((s) => s!.title + (s!.date ? ` (${s!.date})` : '')).join('; ')}`
         : '',
-      slide.source
-        ? srcTitles.length
-          ? slide.source
-          : `${theme.chrome.sources?.prefix ?? 'Source:'} ${slide.source}`
-        : '',
+      slide.source ? (srcTitles.length ? slide.source : `${sourcePrefix} ${slide.source}`) : '',
     ]
       .filter(Boolean)
       .join(' ');
@@ -367,7 +369,7 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
       if (illustrative)
         add(srcTitles.length || slide.source ? 'Illustrative data. ' : 'Illustrative data.');
       if (srcTitles.length) {
-        add(`${theme.chrome.sources?.prefix ?? 'Source:'} `);
+        add(`${sourcePrefix} `);
         srcTitles.forEach((s, k) => {
           add(s!.title, s!.url);
           add(`${s!.date ? ` (${s!.date})` : ''}${k < srcTitles.length - 1 ? '; ' : ''}`);
@@ -375,7 +377,7 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
       }
       if (slide.source)
         add(
-          `${srcTitles.length ? ' ' : ''}${srcTitles.length ? slide.source : `${theme.chrome.sources?.prefix ?? 'Source:'} ${slide.source}`}`,
+          `${srcTitles.length ? ' ' : ''}${srcTitles.length ? slide.source : `${sourcePrefix} ${slide.source}`}`,
         );
       composeSource(ctx, runs);
     }
@@ -439,7 +441,9 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
             ]
           : [],
     };
-    if (slide.notes) sceneSlide.notes = slide.notes;
+    // Notes say where the slide's facts come from (PPTX, HTML, DOCX and notes PDF alike).
+    const notes = withSourceNotes(slide.notes, sourceNotes(slide, sourceMap, deck.language));
+    if (notes) sceneSlide.notes = notes;
     sceneSlides.push(sceneSlide);
   });
 

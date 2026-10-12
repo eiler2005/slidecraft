@@ -141,7 +141,7 @@ export const swot: LayoutDef<typeof schema> = {
           { fill: colors.accent, role: 'panel-accent' },
         );
         ctx.text(
-          'SO WHAT',
+          ctx.t('soWhat').toUpperCase(),
           { x: side.x + 0.3, y: side.y + 0.24, w: side.w - 0.5, h: 0.28 },
           { size: 'small', bold: true, color: colors.accent, maxLines: 1, fixed: true },
         );

@@ -67,6 +67,8 @@ Three sizes visible at once is plenty. Bold marks the key phrase inside a senten
 - Images must carry meaning (a product, a place, a moment). Stock images that only decorate are noise.
 - Every image has alt text; at least 144 ppi at its placed size (`SC-IMG-001`).
 - Decor (waves, glows, frames) belongs to the theme and stays behind content; it never overlaps text.
+- The cover carries the topic: a right-hand panel with a picture that shows the subject, or the
+  topic motif (`art:`) in the theme accent. One visual, never on top of the title.
 
 ## 9. Accessibility
 

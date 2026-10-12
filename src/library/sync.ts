@@ -10,8 +10,10 @@
  * capitals, {{facts}}) is reported, never overwritten. Tables, charts and new shapes are
  * listed for the author to carry over by hand.
  */
+
 import { readFileSync } from 'node:fs';
 import { checkDeck } from '../build.ts';
+import { stripSourceNotes } from '../engine/notes.ts';
 import type { SceneSlide, TableNode, TextNode } from '../engine/scene.ts';
 import { applyFixes, type FitTask, type Fix, readField } from './fix.ts';
 import { decode, unzip } from './sheets.ts';
@@ -302,13 +304,15 @@ export function syncPptx(
         );
     // speaker notes
     const flat = (x: string | string[]) => norm(Array.isArray(x) ? x.join(' ') : x);
-    const had = ref.notes ?? '';
-    if (es.notes && flat(had) !== flat(es.notes)) {
+    // the generated [Sources] block is rebuilt from `sources:` and never written back
+    const had = stripSourceNotes(ref.notes ?? '');
+    const edited = es.notes ? stripSourceNotes(es.notes.join('\n')).split('\n') : undefined;
+    if (edited && flat(had) !== flat(edited)) {
       const pointer = `/slides/${i}/notes`;
       const raw = readField(deckPath, pointer);
       // notes the deck already had (as written), or notes added in PowerPoint
       if ((typeof raw === 'string' && flat(raw) === flat(had)) || (raw === undefined && !had)) {
-        const after = clean(es.notes).filter(Boolean).join('\n');
+        const after = clean(edited).filter(Boolean).join('\n');
         report.changes.push({
           slide: es.id,
           pointer,

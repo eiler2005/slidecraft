@@ -46,7 +46,10 @@ Open **every** image. Facts point you at places to look; they are not the verdic
 7. **Meaning.** The action title is a full-sentence claim the body proves; one message per
    slide; the title chain reads as the argument; numbers agree across slides and with the
    sources; the ask is explicit. Never invent data or sources.
-8. **Readiness.** Would a demanding partner hand this to the client now? Decide
+8. **Cover.** The first slide stands out and says what the deck is about: a cover visual
+   (`art:` motif that fits the topic, or a picture that shows the subject), title in three
+   lines or fewer, nothing crowding the panel. A plain cover is a `should` finding.
+9. **Readiness.** Would a demanding partner hand this to the client now? Decide
    `ready`, `ready-with-notes` or `not-ready`.
 
 ## Fix policy

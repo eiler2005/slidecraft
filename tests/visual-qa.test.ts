@@ -120,3 +120,57 @@ describe('visual QA facts and rasters', () => {
     expect(visualMetrics(a, a).worstRegion).toBe(1);
   });
 });
+
+describe('speaker notes say where the facts come from', () => {
+  it('appends a [Sources] block from the registry and strips it again for sync', async () => {
+    const { sourceNotes, stripSourceNotes, withSourceNotes } = await import(
+      '../src/engine/notes.ts'
+    );
+    const registry = new Map([
+      [
+        'report',
+        {
+          id: 'report',
+          title: 'Annual report 2025',
+          publisher: 'Contoso',
+          url: 'https://example.com/ar.pdf',
+        },
+      ],
+      ['model', { id: 'model', title: 'Market model', illustrative: true }],
+    ]);
+    const block = sourceNotes(
+      { sources: ['report#p14', 'model'], source: 'Team interviews' },
+      registry as never,
+      'ru',
+    )!;
+    expect(block.split('\n')).toEqual([
+      '[Sources]',
+      '- Annual report 2025 — Contoso — p. 14 — https://example.com/ar.pdf#page=14',
+      '- Market model — иллюстративные данные',
+      '- Team interviews',
+    ]);
+    const notes = withSourceNotes('Open with the answer.', block)!;
+    expect(notes.startsWith('Open with the answer.\n\n[Sources]')).toBe(true);
+    expect(stripSourceNotes(notes)).toBe('Open with the answer.');
+    expect(sourceNotes({}, registry as never)).toBeUndefined();
+  });
+
+  it('writes the block into the notes of every exported deck', () => {
+    const scene = checkDeck('examples/pitch-deck/deck.yaml').scene!;
+    const traction = scene.slides.find((s) => s.id === 'traction')!;
+    expect(traction.notes).toContain('[Sources]\n- Fabrikam platform metrics, Sep 2026');
+  });
+
+  it('gives each notes line its own PowerPoint paragraph', async () => {
+    const { notesParagraphs } = await import('../src/backends/pptxgenjs.ts');
+    const xml =
+      '<a:p><a:r><a:rPr lang="en-US" dirty="0"/><a:t>Say it.\n\n[Sources]\n- A — B</a:t></a:r><a:endParaRPr lang="en-US" dirty="0"/></a:p>';
+    const out = notesParagraphs(xml);
+    expect([...out.matchAll(/<a:p>/g)]).toHaveLength(4);
+    expect([...out.matchAll(/<a:t>([^<]*)<\/a:t>/g)].map((m) => m[1])).toEqual([
+      'Say it.',
+      '[Sources]',
+      '- A — B',
+    ]);
+  });
+});

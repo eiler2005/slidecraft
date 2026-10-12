@@ -16,6 +16,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, readFileSync } from 'node:fs';
 import { isAbsolute, resolve } from 'node:path';
 import { z } from 'zod';
+import { culture } from '../engine/i18n.ts';
 import { type Diagnostic, diag } from '../qa/codes.ts';
 import { type Cell, pickSheet, range, readSheets } from './sheets.ts';
 
@@ -54,7 +55,7 @@ export const Fact = z
 export type Fact = z.infer<typeof Fact>;
 
 /** Excel-like number format: prefix, digits pattern (0, #, ",", "."), suffix; "%" multiplies by 100. */
-export function formatNumber(v: number, format = '#,##0.##'): string {
+export function formatNumber(v: number, format = '#,##0.##', language?: string): string {
   const m = /^(.*?)([#0][#0,]*(?:\.[#0]+)?)(.*)$/.exec(format);
   if (!m) return String(v);
   const [, pre, pattern, suf] = m as unknown as [string, string, string, string];
@@ -62,7 +63,7 @@ export function formatNumber(v: number, format = '#,##0.##'): string {
   const [, dec = ''] = pattern.split('.');
   const minDec = (dec.match(/0/g) ?? []).length;
   const maxDec = dec.length;
-  const s = Math.abs(value).toLocaleString('en-US', {
+  const s = Math.abs(value).toLocaleString(culture(language), {
     minimumFractionDigits: minDec,
     maximumFractionDigits: maxDec,
     useGrouping: pattern.includes(','),
@@ -79,6 +80,7 @@ export function resolveData(
   facts: Record<string, Fact> | undefined,
   slides: unknown[],
   baseDir: string,
+  language?: string,
 ): {
   slides: unknown[];
   diagnostics: Diagnostic[];
@@ -129,7 +131,9 @@ export function resolveData(
       continue;
     }
     const shown =
-      typeof v === 'number' ? formatNumber(f.divide ? v / f.divide : v, f.format) : String(v);
+      typeof v === 'number'
+        ? formatNumber(f.divide ? v / f.divide : v, f.format, language)
+        : String(v);
     display.set(id, shown);
     report.facts[id] = {
       value: v,
@@ -143,7 +147,13 @@ export function resolveData(
 
   // 2. {{fact}} in text, `from:` in content
   const cellText = (c: Cell, fmt?: string) =>
-    c === null ? '' : typeof c === 'number' ? (fmt ? formatNumber(c, fmt) : String(c)) : c;
+    c === null
+      ? ''
+      : typeof c === 'number'
+        ? fmt
+          ? formatNumber(c, fmt, language)
+          : String(c)
+        : c;
   const num = (c: Cell, pointer: string) => {
     if (typeof c === 'number') return c;
     const n = Number(String(c ?? '').replace(/[,\s]/g, ''));

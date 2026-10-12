@@ -145,9 +145,11 @@ export function decimalsFor(step: number): number {
 }
 
 /** Format with a unit; "€B" / "$M" put the symbol in front and the scale after ("€4.2B"). */
-export function fmt(v: number, decimals: number, unit = ''): string {
+export function fmt(v: number, decimals: number, unit = '', language?: string): string {
   const m = /^([€$£¥])([A-Za-z]{1,3})$/.exec(unit);
-  return m ? `${formatNumber(v, decimals, m[1])}${m[2]}` : formatNumber(v, decimals, unit);
+  return m
+    ? `${formatNumber(v, decimals, m[1], false, language)}${m[2]}`
+    : formatNumber(v, decimals, unit, false, language);
 }
 
 /** Receding fills for the non-highlighted series: a ramp between rule and muted. */
@@ -177,7 +179,7 @@ export function xAxis(
     if (o.grid !== false)
       ctx.line(x, plot.y, x, plot.y + plot.h, { color: colors.rule, width: 0.5 }, { role: 'grid' });
     ctx.text(
-      fmt(t, d, o.unit),
+      fmt(t, d, o.unit, ctx.language),
       { x: x - 0.6, y: plot.y + plot.h + 0.06, w: 1.2, h: 0.24 },
       { size: 'source', color: colors.muted, align: 'center', maxLines: 1, fixed: true },
     );

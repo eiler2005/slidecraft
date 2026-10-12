@@ -1,0 +1,146 @@
+{
+  "tool": "slidecraft",
+  "version": "0.6.0",
+  "deck": {
+    "id": "fde-engineer-ru",
+    "title": "FDE-инженеры превращают ИИ-пилоты в работающие продукты",
+    "status": "review",
+    "theme": "consulting-classic",
+    "storyline": "research-readout",
+    "slides": 6
+  },
+  "input": {
+    "path": "../../../../examples/fde-engineer-ru/deck.yaml",
+    "sha256": "479fae444f089ad4bca04895e91232d6bc3954774febed1d3353749eced7b9ef"
+  },
+  "epoch": "2026-01-01T00:00:00.000Z",
+  "engines": {
+    "pptx": {
+      "id": "pptxgenjs",
+      "reason": "auto: portable editable PPTX (v4.0.1)",
+      "license": "MIT"
+    },
+    "png": {
+      "id": "resvg",
+      "reason": "auto: default",
+      "license": "MPL-2.0 (resvg), MIT (SlideCraft)"
+    },
+    "html": {
+      "id": "html",
+      "reason": "auto: default",
+      "license": "MIT"
+    },
+    "pdf": {
+      "id": "native",
+      "reason": "auto: default",
+      "license": "MIT"
+    }
+  },
+  "outputs": [
+    {
+      "path": "fde-engineer-ru.pptx",
+      "kind": "pptx",
+      "engine": "pptxgenjs",
+      "sha256": "0fe5f37af2a807e0628c6e915d1357926cdd9a1c19ec53f23f5dd8b117c0da72"
+    },
+    {
+      "path": "previews/01-cover.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "c2d2a688e5669fea88aaae4f4f04b742a499c16c6efbca65af937e9452437555"
+    },
+    {
+      "path": "previews/02-why-now.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "478019bd620e2b43055b4ad6af3ea44e385a1dbb5d4a86168e8ed7508e66bc17"
+    },
+    {
+      "path": "previews/03-definition.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "a34e2d5ae9a2cb6f8256201e60cbd1b45a17048cbda18ad4a53846e8a3248650"
+    },
+    {
+      "path": "previews/04-cycle.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "3a8858595f4dec4c53de0a6dc4883679766953204dbeaa93d6a83cd7d7caab6d"
+    },
+    {
+      "path": "previews/05-profile.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "eeb9cf423ba0da5bba07b83fcc50b77618a083c01da512147ec2c41779f1f1e4"
+    },
+    {
+      "path": "previews/06-ask.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "45f22f49662db672438056b1c39efa73257336d80086c9ee78375810ffac11a2"
+    },
+    {
+      "path": "fde-engineer-ru.html",
+      "kind": "html",
+      "engine": "html",
+      "sha256": "b6b0bcd2db3768fefb97632304bb4a705af409894564b4d628a0185ff18fe2e1"
+    },
+    {
+      "path": "fde-engineer-ru.pdf",
+      "kind": "pdf",
+      "engine": "native",
+      "sha256": "254845423bf25d9ea00226cb761737315352fd6eb3285b6e53f80f1692c35439"
+    }
+  ],
+  "checks": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "codes": []
+  },
+  "visual_review": false,
+  "limitations": [
+    "Waterfall labels and stacked totals are text boxes placed over the native chart; edit them if you change the data.",
+    "Scene previews rendered by resvg, not by PowerPoint. Font support and text rendering may differ; use --png-engine pptx-convert for actual Office previews.",
+    "HTML slides are inline SVG drawn with embedded metric-compatible fonts (Liberation/Gelasio), not editable text boxes.",
+    "Same layout as the PPTX; glyph rendering uses bundled metric-compatible fonts, not Arial/Georgia."
+  ],
+  "slides": [
+    {
+      "id": "cover",
+      "layout": "title",
+      "variant": "cover",
+      "title": "FDE-инженеры превращают ИИ-пилоты в работающие продукты"
+    },
+    {
+      "id": "why-now",
+      "layout": "kpi-tiles",
+      "variant": "tiles",
+      "title": "ИИ-компании нанимают FDE, потому что большинство пилотов не доходит до продакшна"
+    },
+    {
+      "id": "definition",
+      "layout": "data-table",
+      "variant": "with-takeaway",
+      "title": "FDE выпускает рабочий софт прямо в процессах заказчика"
+    },
+    {
+      "id": "cycle",
+      "layout": "process-steps",
+      "variant": "chevrons",
+      "title": "Цикл FDE идёт от рабочего места пользователя до ядра продукта"
+    },
+    {
+      "id": "profile",
+      "layout": "key-points",
+      "variant": "columns",
+      "title": "Профиль сочетает продакшн-разработку, прикладной ИИ и понимание заказчика"
+    },
+    {
+      "id": "ask",
+      "layout": "next-steps",
+      "variant": "decision",
+      "title": "Начните с одного FDE на самом ценном ИИ-сценарии"
+    }
+  ]
+}

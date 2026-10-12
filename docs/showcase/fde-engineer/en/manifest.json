@@ -1,0 +1,146 @@
+{
+  "tool": "slidecraft",
+  "version": "0.6.0",
+  "deck": {
+    "id": "fde-engineer-en",
+    "title": "Forward Deployed Engineers turn AI pilots into working products",
+    "status": "review",
+    "theme": "consulting-classic",
+    "storyline": "research-readout",
+    "slides": 6
+  },
+  "input": {
+    "path": "../../../../examples/fde-engineer-en/deck.yaml",
+    "sha256": "c93ec90e6715627e6aa639d84111aab7826ed2205c953ca42b074b621ade5ac1"
+  },
+  "epoch": "2026-01-01T00:00:00.000Z",
+  "engines": {
+    "pptx": {
+      "id": "pptxgenjs",
+      "reason": "auto: portable editable PPTX (v4.0.1)",
+      "license": "MIT"
+    },
+    "png": {
+      "id": "resvg",
+      "reason": "auto: default",
+      "license": "MPL-2.0 (resvg), MIT (SlideCraft)"
+    },
+    "html": {
+      "id": "html",
+      "reason": "auto: default",
+      "license": "MIT"
+    },
+    "pdf": {
+      "id": "native",
+      "reason": "auto: default",
+      "license": "MIT"
+    }
+  },
+  "outputs": [
+    {
+      "path": "fde-engineer-en.pptx",
+      "kind": "pptx",
+      "engine": "pptxgenjs",
+      "sha256": "6c89e49e1ca474ba7948525100067ece3a8b05bc826b6c5a2a13f53aabf4234b"
+    },
+    {
+      "path": "previews/01-cover.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "b104423d75f18ff8706b13800403b92f3a3ed47c5602c354211914f85abc5029"
+    },
+    {
+      "path": "previews/02-why-now.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "da8e41a0ced165b9758f8538e2fc90a2a5dd1b061bff9975952c71a1b5da5ccc"
+    },
+    {
+      "path": "previews/03-definition.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "656a3272d6bf5c7f9babc1df4b712430209de36d74f34e94871da6d9853459e6"
+    },
+    {
+      "path": "previews/04-cycle.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "668b1478dea28f8518bcfb5c351aee2ac53c76ad6f8c94ca5f53c4fdba767bfe"
+    },
+    {
+      "path": "previews/05-profile.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "448bebcaf1418f77822a1a9378dcbcd210709bbcd2aff03d33b57be202f76654"
+    },
+    {
+      "path": "previews/06-ask.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "fd98963bf54ba456ecd4a8c8f996b7b88fdb23084114a9ee76ddad852462fdbe"
+    },
+    {
+      "path": "fde-engineer-en.html",
+      "kind": "html",
+      "engine": "html",
+      "sha256": "9ffe0194109d34690701f30f9908fbd102429a015a412bb723e99685b3e924d3"
+    },
+    {
+      "path": "fde-engineer-en.pdf",
+      "kind": "pdf",
+      "engine": "native",
+      "sha256": "0b3f2874ceba996fe5204b05ab728f9ee06176d72712f4659897f1837f1497bc"
+    }
+  ],
+  "checks": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "codes": []
+  },
+  "visual_review": false,
+  "limitations": [
+    "Waterfall labels and stacked totals are text boxes placed over the native chart; edit them if you change the data.",
+    "Scene previews rendered by resvg, not by PowerPoint. Font support and text rendering may differ; use --png-engine pptx-convert for actual Office previews.",
+    "HTML slides are inline SVG drawn with embedded metric-compatible fonts (Liberation/Gelasio), not editable text boxes.",
+    "Same layout as the PPTX; glyph rendering uses bundled metric-compatible fonts, not Arial/Georgia."
+  ],
+  "slides": [
+    {
+      "id": "cover",
+      "layout": "title",
+      "variant": "cover",
+      "title": "Forward Deployed Engineers turn AI pilots into working products"
+    },
+    {
+      "id": "why-now",
+      "layout": "kpi-tiles",
+      "variant": "tiles",
+      "title": "AI companies hire FDEs because most AI pilots stall before production"
+    },
+    {
+      "id": "definition",
+      "layout": "data-table",
+      "variant": "with-takeaway",
+      "title": "An FDE ships production software inside the customer's workflow"
+    },
+    {
+      "id": "cycle",
+      "layout": "process-steps",
+      "variant": "chevrons",
+      "title": "The FDE cycle runs from the user's desk to the core product"
+    },
+    {
+      "id": "profile",
+      "layout": "key-points",
+      "variant": "columns",
+      "title": "The profile combines production engineering, applied AI and customer judgement"
+    },
+    {
+      "id": "ask",
+      "layout": "next-steps",
+      "variant": "decision",
+      "title": "Start with one FDE on your highest-value AI use case"
+    }
+  ]
+}

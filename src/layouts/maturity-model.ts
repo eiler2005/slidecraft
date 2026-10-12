@@ -98,7 +98,7 @@ function staircase(ctx: ComposeContext, body: Box, c: C) {
       );
     if (isCur || isTgt)
       ctx.text(
-        isTgt ? (c.targetLabel ?? 'Target').toUpperCase() : 'TODAY',
+        isTgt ? (c.targetLabel ?? ctx.t('target')).toUpperCase() : ctx.t('today').toUpperCase(),
         { x: s.x, y: y - markH, w: s.w, h: markH - 0.08 },
         {
           size: 'small',

@@ -216,7 +216,7 @@ export function loadDeck(path: string): LoadedDeck {
   const seen = new Set<string>();
   const sourceIds = new Set(deck.sources.map((s) => s.id));
   // facts and `from:` data ranges, resolved before the slides are validated
-  const data = resolveData(deck.facts, expanded, baseDir);
+  const data = resolveData(deck.facts, expanded, baseDir, deck.language);
   expanded.splice(0, expanded.length, ...data.slides);
   deck.title = data.text(deck.title);
   if (deck.subtitle) deck.subtitle = data.text(deck.subtitle);

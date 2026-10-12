@@ -40,7 +40,7 @@ This deck explains SlideCraft — and SlideCraft made it from [one `deck.yaml`](
 
 New here? [**Start here**](docs/start-here.md) — your first deck in ten minutes · [**What you can do**](docs/features.md) — capabilities by job to be done · [**Example library**](docs/examples.md) — six finished decks to copy
 
-**See the results yourself:** a full run in every format with its review report in [`docs/showcase/orchestration-run/`](docs/showcase/orchestration-run/) · originals next to SlideCraft's rebuilds and HTML, slide by slide, with `npm run comparison` → `comparison/index.html` · [where to find what](docs/how-to/see-results.md)
+**See the results yourself:** a full run in every format with its review report in [`docs/showcase/orchestration-run/`](docs/showcase/orchestration-run/) · one deck in English and Russian made through the whole workflow in [`docs/showcase/fde-engineer/`](docs/showcase/fde-engineer/) ([example](examples/fde-engineer-en/README.md)) · originals next to SlideCraft's rebuilds and HTML, slide by slide, with `npm run comparison` → `comparison/index.html` · [where to find what](docs/how-to/see-results.md)
 
 ## Why it exists
 
@@ -69,25 +69,48 @@ agent   › Built 11 slides. Review: 0 blockers, 2 majors fixed, 1 minor left.  
 
 ## How it works
 
+<p align="center"><img src="docs/assets/workflow/deck-workflow.svg" alt="SlideCraft workflow: brief, pick, storyline, ghost deck, build, review, visual QA, deliver — with the four checkpoints the user approves" width="100%"></p>
+
+**What a deck is made of.** Four independent layers, all plain files you can read and diff:
+
+| Layer | File | What it holds |
+|---|---|---|
+| Brief | `brief.yaml` | goal, ask, audience, how the deck will be used → which outputs |
+| Storyline × theme | chosen from 14 × 7 | the shape of the argument for the task, and the look |
+| Content | `deck.yaml` (+ `sections/*.yaml`) | action titles and slide content against 40 layout contracts; `sources:`, `facts:` from Excel/CSV, cover visual, `language:` |
+| Your material | `materials/`, `assets/` | reports cited by page, data files, pictures |
+
+Layouts turn the content into one **Scene IR**; engines translate it into editable PPTX, PDF,
+HTML, a one-pager and a Word memo. Text is laid out with PowerPoint's measured rules, so the
+HTML and the PPTX break lines the same way.
+
+**How it is assembled** — eight stages, four checkpoints you approve:
+
 ```mermaid
 flowchart LR
-  B["1 · Brief<br/>goal, audience, ask,<br/>what you'll do with it"] -->|✅ CP1| P["2 · Pick<br/>3 templates as<br/>contact sheets"]
-  P -->|✅ CP2| S["3 · Storyline<br/>governing thought,<br/>SCR, key line"]
-  S --> G["4 · Ghost deck<br/>action-title chain,<br/>exhibit sketches"]
-  G -->|✅ CP3| W["5 · Build<br/>slides written in parallel,<br/>rendered by engines"]
+  B["1 · Brief"] -->|✅ CP1| P["2 · Pick<br/>3 templates"]
+  P -->|✅ CP2| S["3 · Storyline"]
+  S --> G["4 · Ghost deck<br/>action titles"]
+  G -->|✅ CP3| W["5 · Build<br/>slides, cover, sources"]
   W --> R["6 · Review<br/>checks, copy-fit,<br/>partner review"]
-  R -->|✅ CP4| D["7 · Deliver<br/>PPTX · PDF · HTML<br/>+ manifest"]
+  R --> V["6b · Visual QA<br/>PowerPoint vs HTML,<br/>reviewer model"]
+  V -->|✅ CP4| D["7 · Deliver<br/>PPTX · PDF · HTML<br/>+ report"]
   classDef opus fill:#5B3FD1,color:#fff,stroke:#5B3FD1;
   classDef sonnet fill:#1F5FBF,color:#fff,stroke:#1F5FBF;
   classDef main fill:#0B1F3A,color:#fff,stroke:#0B1F3A;
-  class S,G opus; class W sonnet; class B,P,D,R main;
+  class S,G,V opus; class W sonnet; class B,P,D,R main;
 ```
 
-You approve four checkpoints; everything between them is automated. Work is tiered by difficulty:
-- the strongest model does the storyline and the partner review;
-- faster models write slides in parallel and fit copy.
+**How it is checked.** Automatic checks after every build (fit without truncation, sources for
+every number, the same number everywhere, contrast, geometry); a copy-fit loop and a partner
+review; then a reviewer model looks at every slide as PowerPoint and the browser draw it and
+writes `REPORT.md` — a verdict and what needs your attention. Every change made while checking
+lands in `REVIEW-LOG.md`.
 
-In Claude Code that is Opus, Sonnet and Haiku. In Codex or any other agent, it is whatever models you configure. See [workflow](docs/explanation/workflow.md).
+The strongest model does the storyline and the reviews; faster models write slides in parallel
+and fit copy (Opus, Sonnet and Haiku in Claude Code; whatever you configure elsewhere).
+
+Full process: [workflow](docs/explanation/workflow.md) · [architecture](docs/explanation/architecture.md) · [final visual QA](docs/how-to/visual-qa.md) · [design the cover](docs/how-to/design-the-cover.md) · [decks in Russian and other languages](docs/how-to/deck-language.md) · [orchestration templates and a full run](examples/orchestration/README.md)
 
 ## Template gallery
 
@@ -206,11 +229,17 @@ Shipped in 0.5:
 - **frameworks and charts:** SWOT, five forces, PESTEL, business model canvas, bubble and portfolio charts, marimekko, tornado, football field (40 layouts);
 - **every AI app:** an MCP server and a one-line `install` for Claude Desktop, Cursor, VS Code, Windsurf, Gemini CLI, Claude Code and Codex.
 
+Shipped in 0.6:
+- **PowerPoint-exact text:** measured Office rules shared by HTML and PPTX, a calibration mode and a 10-deck corpus gate;
+- **final visual QA:** a reviewer model checks every slide in PowerPoint and the browser and writes a report and a review log;
+- **covers that stand out:** a topic motif or a picture on the cover;
+- **any language:** labels, numbers, typography and proofing follow `language:`; sources in the speaker notes.
+
 Next: stock photos, icons, live preview. See [ROADMAP.md](ROADMAP.md).
 
 ## Contributing
 
-Issues and PRs welcome — new layouts, themes and storylines especially. Start with [CONTRIBUTING.md](CONTRIBUTING.md); `npm run check` runs lint, types and 780+ tests, including pixel-hash visual regression of every layout.
+Issues and PRs welcome — new layouts, themes and storylines especially. Start with [CONTRIBUTING.md](CONTRIBUTING.md); `npm run check` runs lint, types and 1,100+ tests, including pixel-hash visual regression of every layout.
 
 ## License and acknowledgements
 

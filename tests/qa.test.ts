@@ -84,3 +84,26 @@ describe('cross-slide consistency (SC-CONSIST-001)', () => {
     }
   });
 });
+
+describe('contrast background lookup', () => {
+  it('sees polygon and ellipse fills under text, not only rectangles', async () => {
+    const { bgAt } = await import('../src/qa/scene-checks.ts');
+    const nodes = [
+      {
+        kind: 'polygon',
+        points: [
+          [0, 0],
+          [2, 0],
+          [2.5, 0.5],
+          [2, 1],
+          [0, 1],
+        ],
+        fill: '#1F5FBF',
+      },
+      { kind: 'ellipse', box: { x: 3, y: 0, w: 1, h: 1 }, fill: '#AA0000' },
+    ] as never[];
+    expect(bgAt(nodes, 2, 1, 0.5, '#FFFFFF')).toBe('#1F5FBF');
+    expect(bgAt(nodes, 2, 3.5, 0.5, '#FFFFFF')).toBe('#AA0000');
+    expect(bgAt(nodes, 2, 3.05, 0.05, '#FFFFFF')).toBe('#FFFFFF');
+  });
+});

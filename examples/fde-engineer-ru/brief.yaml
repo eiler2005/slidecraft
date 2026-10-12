@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=../../schemas/brief.v1.json
+schemaVersion: 1
+id: fde-engineer-ru
+goal: Руководители понимают, кто такой Forward Deployed Engineer, почему
+  ИИ-компании нанимают их сейчас, и решают, нужна ли им эта роль
+ask: Запустить пилот с одним FDE-инженером на самом ценном ИИ-сценарии в
+  следующем квартале
+audience:
+  who: Руководители разработки и продукта, внедряющие ИИ в компании
+  knows: ИИ-пилоты легко начать и трудно довести до промышленной эксплуатации;
+    название роли слышали, но не знают, что за ним стоит
+  cares: Встроить ИИ в реальные процессы с измеримым эффектом и понять, новый ли
+    это профиль или переименование
+task: объясняющая презентация для руководителей
+context: Роль FDE появилась в Palantir и распространилась на ИИ-лаборатории и
+  ИИ-стартапы, когда корпоративный ИИ перешёл от пилотов к внедрению.
+materials: []
+length: { slides: 6 }
+language: ru
+tone: [ ясно, с опорой на факты ]
+brand: { footer: Forward Deployed Engineer · Брифинг 2026 }
+usage: [ edit-together, send-pdf ]
+choice:
+  storyline: research-readout
+  theme: consulting-classic

@@ -17,6 +17,8 @@
 | Present from a browser | [Export an HTML deck](how-to/export-html-deck.md) |
 | Print, pre-read, memo: A4, one-pager, Word | [Export A4, one-pager and DOCX](how-to/export-documents.md) |
 | Restyle an existing PowerPoint | [Import a PPTX](how-to/import-pptx.md) |
+| Give the cover a visual that fits the topic | [Design the cover](how-to/design-the-cover.md) |
+| Make a deck in Russian or another language | [Deck language](how-to/deck-language.md) |
 | Fill image slots with generated pictures | [Generate images](how-to/generate-images.md) |
 | Design a one-off visual in HTML/CSS | [Freeform HTML slides](how-to/freeform-html.md) |
 | Work in Codex | [Use with Codex](how-to/use-with-codex.md) · [Codex engine](how-to/use-codex-engine.md) |

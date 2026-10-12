@@ -160,6 +160,7 @@ export const composition: LayoutDef<typeof schema> = {
         slideIndex: ctx.slideIndex,
         slide: ctx.slide,
         baseDir: ctx.baseDir,
+        language: ctx.language,
         variant,
         body,
         pointerPrefix: `${pointer}/content`,

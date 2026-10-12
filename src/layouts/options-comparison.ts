@@ -223,7 +223,7 @@ export const optionsComparison: LayoutDef<typeof schema> = {
       const inner = { x: b.x + 0.15, y: top + 0.08, w: b.w - 0.3, h: headH - 0.12 };
       if (isRec) {
         ctx.text(
-          'RECOMMENDED',
+          ctx.t('recommended').toUpperCase(),
           { x: inner.x, y: inner.y, w: inner.w, h: 0.22 },
           {
             size: theme.type.source + 0.5,

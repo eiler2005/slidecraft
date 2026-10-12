@@ -110,7 +110,7 @@ export const riskMatrix: LayoutDef<typeof schema> = {
     }
     // axes
     ctx.text(
-      'LIKELIHOOD',
+      ctx.t('likelihood').toUpperCase(),
       { x: g.x, y: g.y, w: 2, h: 0.24 },
       { size: theme.type.source, bold: true, color: colors.muted, maxLines: 1, fixed: true },
     );
@@ -129,7 +129,7 @@ export const riskMatrix: LayoutDef<typeof schema> = {
       ),
     );
     ctx.text(
-      'IMPACT',
+      ctx.t('impact').toUpperCase(),
       { x: gx, y: gy + side + 0.3, w: side, h: 0.24 },
       {
         size: theme.type.source,

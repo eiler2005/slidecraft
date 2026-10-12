@@ -1,0 +1,647 @@
+{
+  "dir": "docs/showcase/fde-engineer/ru/visual-qa",
+  "deck": "examples/fde-engineer-ru/deck.yaml",
+  "theme": "consulting-classic",
+  "renderer": "Microsoft PowerPoint via AppleScript (jobs run in its sandbox container: no access prompts)",
+  "target": 0.95,
+  "slides": [
+    {
+      "slide": 1,
+      "id": "cover",
+      "title": "FDE-инженеры превращают ИИ-пилоты в работающие продукты",
+      "layout": "title",
+      "images": {
+        "html": "01-cover-html.png",
+        "pptx": "01-cover-pptx.png",
+        "diff": "01-cover-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.7810457516339869,
+        "hotspots": [
+          {
+            "region": "row 1, column 1",
+            "score": 0.902,
+            "box": {
+              "x": 0,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 2",
+            "score": 0.781,
+            "box": {
+              "x": 239.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 3",
+            "score": 0.836,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 1",
+            "score": 0.917,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 2",
+            "score": 0.949,
+            "box": {
+              "x": 239.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 3",
+            "score": 0.928,
+            "box": {
+              "x": 479.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 1",
+            "score": 0.947,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 2",
+            "score": 0.93,
+            "box": {
+              "x": 239.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 3",
+            "score": 0.878,
+            "box": {
+              "x": 479.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Что это за роль, почему ИИ-компании нанимают так [subtitle]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Октябрь 2026 [meta]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 2,
+      "id": "why-now",
+      "title": "ИИ-компании нанимают FDE, потому что большинство пилотов не доходит до продакшна",
+      "layout": "kpi-tiles",
+      "images": {
+        "html": "02-why-now-html.png",
+        "pptx": "02-why-now-pptx.png",
+        "diff": "02-why-now-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8416511410765857,
+        "hotspots": [
+          {
+            "region": "row 2, column 1",
+            "score": 0.921,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.901,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.86,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 3",
+            "score": 0.842,
+            "box": {
+              "x": 479.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Данные Financial Times, по сообщению Fast Compan [kpi-note]",
+          "ratio": 4.98,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#F2F5F9"
+        },
+        {
+          "text": "MIT NANDA, The GenAI Divide [kpi-note]",
+          "ratio": 4.98,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#F2F5F9"
+        },
+        {
+          "text": "Инженеры работали непосредственно у государствен [kpi-note]",
+          "ratio": 4.98,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#F2F5F9"
+        },
+        {
+          "text": "Источник:  Postings for this AI job are up 800%  [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 3,
+      "id": "definition",
+      "title": "FDE выпускает рабочий софт прямо в процессах заказчика",
+      "layout": "data-table",
+      "images": {
+        "html": "03-definition-html.png",
+        "pptx": "03-definition-pptx.png",
+        "diff": "03-definition-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8215043394406943,
+        "hotspots": [
+          {
+            "region": "row 1, column 4",
+            "score": 0.939,
+            "box": {
+              "x": 719.98,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 1",
+            "score": 0.929,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 2",
+            "score": 0.9,
+            "box": {
+              "x": 239.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 3",
+            "score": 0.909,
+            "box": {
+              "x": 479.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 1",
+            "score": 0.894,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 2",
+            "score": 0.932,
+            "box": {
+              "x": 239.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.894,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.822,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Источник:  What is a Forward Deployed AI Enginee [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 4,
+      "id": "cycle",
+      "title": "Цикл FDE идёт от рабочего места пользователя до ядра продукта",
+      "layout": "process-steps",
+      "images": {
+        "html": "04-cycle-html.png",
+        "pptx": "04-cycle-pptx.png",
+        "diff": "04-cycle-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8215043394406943,
+        "hotspots": [
+          {
+            "region": "row 2, column 1",
+            "score": 0.939,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.894,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.822,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 4",
+            "score": 0.943,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Источник:  What is a Forward Deployed AI Enginee [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "ЧТО ДЕЛАЕТ [tracker]",
+          "b": "Работает рядом с теми, кто делает работу, и опис",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "Цикл FDE идёт от рабочего места пользователя до  [title]",
+          "b": "Работает рядом с теми, кто делает работу, и опис",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Работает рядом с теми, кто делает работу, и опис",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "Работает рядом с теми, кто делает работу, и опис",
+          "b": "Источник:  What is a Forward Deployed AI Enginee [source]",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Находит шаг, где ИИ сильнее всего меняет затраты",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Подключает данные, промпты, оценки качества и ог",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Запускает в продакшн и отслеживает использование",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Превращает повторяющиеся доработки в функции про",
+          "edge": "left",
+          "deltaPt": 3.6
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 5,
+      "id": "profile",
+      "title": "Профиль сочетает продакшн-разработку, прикладной ИИ и понимание заказчика",
+      "layout": "key-points",
+      "images": {
+        "html": "05-profile-html.png",
+        "pptx": "05-profile-pptx.png",
+        "diff": "05-profile-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8215043394406943,
+        "hotspots": [
+          {
+            "region": "row 2, column 1",
+            "score": 0.898,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 2",
+            "score": 0.91,
+            "box": {
+              "x": 239.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 3",
+            "score": 0.946,
+            "box": {
+              "x": 479.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 4",
+            "score": 0.906,
+            "box": {
+              "x": 719.98,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.894,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.822,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Источник:  What is a Forward Deployed AI Enginee [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 6,
+      "id": "ask",
+      "title": "Начните с одного FDE на самом ценном ИИ-сценарии",
+      "layout": "next-steps",
+      "images": {
+        "html": "06-ask-html.png",
+        "pptx": "06-ask-pptx.png",
+        "diff": "06-ask-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8681827502242727,
+        "hotspots": [
+          {
+            "region": "row 3, column 1",
+            "score": 0.868,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 2",
+            "score": 0.929,
+            "box": {
+              "x": 239.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Руководитель по ИИ · Месяц 1 [meta]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "CTO · Месяц 1 [meta]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Владелец процесса · Месяцы 1–2 [meta]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "FDE · Месяцы 2–3 [meta]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Руководство · Конец квартала [meta]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    }
+  ],
+  "deckFacts": {
+    "titleTopSpreadPt": 0,
+    "paletteSize": 11,
+    "pagesBelowTarget": 6
+  }
+}

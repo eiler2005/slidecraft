@@ -3,7 +3,7 @@
   "version": "0.7.0",
   "description": "Describe the goal. Pick a look. Ship a partner-ready deck. A Claude Code plugin and CLI that turns a brief into editable PPTX, vector PDF and HTML decks.",
   "type": "module",
-  "license": "MIT",
+  "license": "PolyForm-Shield-1.0.0",
   "author": "Denis Ermilov",
   "homepage": "https://github.com/eiler2005/slidecraft",
   "repository": {

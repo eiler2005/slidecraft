@@ -5,7 +5,7 @@
 <p align="center">
   <a href="https://github.com/eiler2005/slidecraft/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/eiler2005/slidecraft/ci.yml?branch=main&label=CI&style=flat&labelColor=0B1F3A&color=1F5FBF"></a>
   <a href="https://www.npmjs.com/package/@eiler2005/slidecraft"><img alt="npm" src="https://img.shields.io/npm/v/@eiler2005/slidecraft?style=flat&labelColor=0B1F3A&color=1F5FBF"></a>
-  <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-1F5FBF?style=flat&labelColor=0B1F3A"></a>
+  <a href="#license"><img alt="PolyForm Shield license" src="https://img.shields.io/badge/license-PolyForm_Shield_1.0.0-1F5FBF?style=flat&labelColor=0B1F3A"></a>
   <a href="#install"><img alt="Works with Claude Code, Codex and any LLM agent" src="https://img.shields.io/badge/agents-Claude_Code_·_Codex_·_any_LLM-1F5FBF?style=flat&labelColor=0B1F3A"></a>
   <a href="https://eiler2005.github.io/slidecraft/"><img alt="Gallery site" src="https://img.shields.io/badge/gallery-GitHub_Pages-1F5FBF?style=flat&labelColor=0B1F3A"></a>
   <img alt="Node 22+" src="https://img.shields.io/badge/node-%E2%89%A522.12-1F5FBF?style=flat&labelColor=0B1F3A">
@@ -268,6 +268,12 @@ Next: live preview, table sync, presenter tools. See [ROADMAP.md](ROADMAP.md).
 
 Issues and PRs welcome — new layouts, themes and storylines especially. Start with [CONTRIBUTING.md](CONTRIBUTING.md); `npm run check` runs lint, types and 1,100+ tests, including pixel-hash visual regression of every layout.
 
-## License and acknowledgements
+## License
 
-[MIT](LICENSE). Bundled fonts are SIL OFL ([fonts/SOURCES.md](fonts/SOURCES.md)). The consulting methodology generalises the author's earlier internal work. See [NOTICE](NOTICE).
+SlideCraft is **source-available** under the [PolyForm Shield License 1.0.0](LICENSE):
+
+- **Use it freely** — personally, at work, in a company or for clients: make decks, change the code, build it into your own workflow. The decks you make are yours, for any purpose.
+- **Do not compete with it** — you may not sell, redistribute or offer SlideCraft, or a product built from it, as a product or service that competes with SlideCraft.
+- **Commercial licence** — for anything the licence does not cover (reselling, white-label, a hosted service), [contact the author](https://github.com/eiler2005).
+
+Versions up to and including 0.6.0 were released under the MIT License and stay under it. Bundled fonts are SIL OFL ([fonts/SOURCES.md](fonts/SOURCES.md)), icons are Tabler Icons (MIT), and third-party libraries keep their own licences ([NOTICE](NOTICE)). The consulting methodology generalises the author's earlier internal work.

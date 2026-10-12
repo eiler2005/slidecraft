@@ -16,6 +16,6 @@
 
 **Why not Google Slides?** Not yet. PPTX imports into Google Slides; native export is on the wish list.
 
-**Is artifact-tool required?** No. It is an optional engine for Codex users and is proprietary; the default engines are open source.
+**Is artifact-tool required?** No. It is an optional engine for Codex users and is proprietary; the default engines are open-source libraries bundled with SlideCraft.
 
 **Which languages?** Any language whose characters exist in the bundled fonts — Latin, Greek and Cyrillic today.

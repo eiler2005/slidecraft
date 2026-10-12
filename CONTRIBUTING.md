@@ -46,4 +46,4 @@ Docs follow [Diátaxis](docs/adr/0007-docs-diataxis-and-generated-reference.md):
 - Fill the checklist in the PR template.
 - Commits: conventional style (`feat(layouts): …`, `fix(engine): …`, `docs: …`).
 
-By contributing you agree your work is released under the [MIT license](LICENSE) and you follow the [Code of Conduct](CODE_OF_CONDUCT.md).
+By contributing you agree that your work is released under the project licence ([PolyForm Shield 1.0.0](LICENSE)), that the author may also offer it under other licence terms (for example a commercial licence), and that you follow the [Code of Conduct](CODE_OF_CONDUCT.md).

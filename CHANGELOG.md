@@ -13,6 +13,9 @@ All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachang
 - **Deeper consistency checks:** `SC-CONSIST-002` totals that do not add up (total rows and columns, "Total" categories, waterfall totals; one unit of the last digit tolerated), `SC-CONSIST-003` one figure with two periods or currencies.
 - Example: `examples/fde-engineer-en-v2` — the FDE briefing remade with all of the above; results and review report in `docs/showcase/fde-engineer/en-v2/`.
 
+### Changed
+- **Licence:** from 0.7.0 SlideCraft is released under the **PolyForm Shield License 1.0.0** — free to use, modify and build decks with, also commercially; not to be sold, redistributed or offered as a competing product or service. Versions up to 0.6.0 stay MIT.
+
 ### Fixed
 - PowerPoint stretched pictures with `fit: cover`/`contain` to their box; they now crop exactly as in HTML and PDF.
 - "Illustrative data." and new layout labels follow the deck language.

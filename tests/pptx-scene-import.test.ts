@@ -4,6 +4,7 @@ import { join, resolve } from 'node:path';
 import JSZip from 'jszip';
 import { describe, expect, it } from 'vitest';
 import type { TextNode } from '../src/engine/scene.ts';
+import { findFontFiles } from '../src/engine/system-fonts.ts';
 import { plainText } from '../src/engine/text.ts';
 import { importPptxScene } from '../src/library/pptx-scene-import.ts';
 
@@ -48,7 +49,10 @@ describe('geometry-preserving PPTX Scene import', () => {
     ).toHaveLength(3);
     const grouped = texts.find((n) => plainText(n.paragraphs).startsWith('Физический платеж'))!;
     expect(grouped.paragraphs).toHaveLength(3);
-    expect(grouped.lines).toHaveLength(3);
+    // Line breaks are measured with the deck's own font; Calibri is licensed and only
+    // present where Office is installed, elsewhere a fallback may wrap a line earlier.
+    if (findFontFiles('Calibri')) expect(grouped.lines).toHaveLength(3);
+    else expect(grouped.lines.length).toBeGreaterThanOrEqual(3);
     expect(grouped.textFrame?.insets).toEqual({ l: 0.1, r: 0.1, t: 0.05, b: 0.05 });
     const rich = result.scene.slides[11]!.nodes.find(
       (n): n is TextNode => n.kind === 'text' && plainText(n.paragraphs).startsWith('Банк А'),

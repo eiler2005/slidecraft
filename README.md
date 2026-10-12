@@ -51,6 +51,26 @@ building, cite a source for every number, then give me the .pptx and a PDF.
 
 The assistant runs `npx @eiler2005/slidecraft` on its side, writes the deck, checks it and hands you an editable PowerPoint. The content can be in any language. A chat without code execution can still write the `deck.yaml`; build it yourself with `npx @eiler2005/slidecraft build deck.yaml`. For repeat work, install it into your assistant ([install](#install)).
 
+## Why an editable PowerPoint from one prompt
+
+Most AI deck tools end in a web page or a picture of slides, so someone rebuilds the deck in PowerPoint — where boards, clients and brand teams actually work. SlideCraft ends in a **`.pptx` whose text, tables, charts, notes and icons are native objects**, from one prompt in the assistant you already use. The model brings the words. SlideCraft brings what the model lacks:
+- the consulting method;
+- layouts with measured limits;
+- PowerPoint's own text rules;
+- source and number checks;
+- a final visual review.
+
+The deck is right the first time, and stays editable for the next round.
+
+**The honest limits.**
+- "One click" needs an assistant that can run code (ChatGPT agent mode, Codex, Claude with code execution, Claude Code).
+- The quality comes from a few short approvals, not from skipping them.
+- The content is only as good as the numbers and sources you give.
+- PowerPoint is the reference; Keynote and Google Slides differ slightly.
+- Editable decks are becoming standard in Copilot and Gemini. SlideCraft's lasting edge is the method and the checks, not the file format.
+
+Full analysis: [why an editable PowerPoint matters — and where the claim stops](docs/explanation/why-editable-pptx.md).
+
 ## See it in action
 
 This deck explains SlideCraft — and SlideCraft made it from [one `deck.yaml`](examples/slidecraft-overview/deck.yaml):

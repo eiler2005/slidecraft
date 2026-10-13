@@ -102,5 +102,38 @@
     ],
     "round": 2,
     "changes": []
+  },
+  {
+    "reviewer": "visual-reviewer (Claude Opus 5.5)",
+    "verdict": "ready-with-notes",
+    "summary": "Round 3: sharp cover photo (1920 px CC0, Wikimedia Commons) cropped on the laptop screen with imageFocus: left — identical in PowerPoint and the browser. Placeholders (illustrative plan) stay with the author.",
+    "findings": [
+      {
+        "slide": "cover",
+        "severity": "major",
+        "area": "other",
+        "issue": "Cover photo was 1024 px wide (91 ppi on the panel) and soft on a projector; the top stock candidate listed 7360 px but served a 1024 px preview",
+        "fix": "Stock downloads are measured (shared fix); --stock auto took a 1920 px CC0 photo",
+        "status": "fixed"
+      },
+      {
+        "slide": "cover",
+        "severity": "minor",
+        "area": "layout",
+        "issue": "On the tall panel the centred crop showed a book, not the code on the laptop screen",
+        "fix": "imageFocus: left (shared feature: same crop window in PPTX, PDF and HTML)",
+        "status": "fixed"
+      },
+      {
+        "slide": "organisation, pilot-plan, budget",
+        "severity": "minor",
+        "area": "meaning",
+        "issue": "7S ratings, pilot targets and budget are planning assumptions, labelled illustrative",
+        "fix": "Replace with your organisation's assessment, targets and rates before use",
+        "status": "needs-user"
+      }
+    ],
+    "round": 3,
+    "changes": []
   }
 ]

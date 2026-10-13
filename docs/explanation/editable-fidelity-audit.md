@@ -42,7 +42,7 @@ Measured against PowerPoint for Mac 16.113.4; details in [Office rendering rules
 |---|---|---|
 | Digital Ruble, rebuilt editable PPTX | original ↔ PPTX (PowerPoint) | **22/22 pages ≥ 95 %** (98.5–99.8 %) |
 | Digital Ruble, HTML | original ↔ HTML | 88.9–97.0 % (was 69–86 %) |
-| Nine generated decks | HTML ↔ PPTX (PowerPoint) | mean 89.2 % per page (first run 78.6 %); visually indistinguishable at viewing size, not yet ≥ 95 % on the strict metric |
+| Nine generated decks | HTML ↔ PPTX (PowerPoint) | mean 87.4 % per page, medians 87–93 % (corpus of 2026-10-13; all 103 pages 90.0 %, first run 78.6 %); visually indistinguishable at viewing size, not yet ≥ 95 % on the strict metric |
 
 ## Digital Ruble integration run — 2026-10-11 (first)
 

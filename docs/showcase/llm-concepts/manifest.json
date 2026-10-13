@@ -1,6 +1,6 @@
 {
   "tool": "slidecraft",
-  "version": "0.7.0",
+  "version": "0.7.2",
   "deck": {
     "id": "llm-ai-agents-vocabulary",
     "title": "Shared vocabulary turns AI ambition into sound project choices",
@@ -41,7 +41,7 @@
       "path": "llm-ai-agents-vocabulary.pptx",
       "kind": "pptx",
       "engine": "pptxgenjs",
-      "sha256": "61bdbce9797f59cc1b5c2ce78bc47a709ae4e808733804e5d5388cd167517afc"
+      "sha256": "2eca2c1dbfddcd30223b520d6222ce950b6306fab242eea2f87bf52eb3f2e353"
     },
     {
       "path": "previews/01-cover.png",
@@ -53,19 +53,19 @@
       "path": "previews/02-system.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "05cd1f88d2246f038ed7118ac72972e781c79a83fadf6cf193e0b94c7d97aa78"
+      "sha256": "5c26d5e3e243c6daf4c6a6e5beb77fb97d312e5e198d8637be6bd6c62b1f42d8"
     },
     {
       "path": "previews/03-tokens-context.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "373ff7e79448feca06b7a4f24fcb133b91ba021e2bf30f9e624bb2be1d138916"
+      "sha256": "af4eea3f0b7b9035e3736f6ad0984622eee8e586bf2b0139a707d20ecb30d9d2"
     },
     {
       "path": "previews/04-training-inference.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "aa89a2b94724f59fa76029bab025605bc8cb112e9235b88c05b94922f201420f"
+      "sha256": "5391515a8e5045aa7e849902e6b7ce2e6082a5d71a4112dc459bfac30f22851a"
     },
     {
       "path": "previews/05-rag.png",
@@ -119,13 +119,13 @@
       "path": "llm-ai-agents-vocabulary.html",
       "kind": "html",
       "engine": "html",
-      "sha256": "b388917663eaa67d83f96f662aa089d7ee985787c1382226e397fe686fed3b29"
+      "sha256": "0913460dcbf6a00e74f9851b97be083a9889a957f7a40e20aaace5c2526c384f"
     },
     {
       "path": "llm-ai-agents-vocabulary.pdf",
       "kind": "pdf",
       "engine": "native",
-      "sha256": "7cca192ee5295df7739fac24a97ad5ffd524836f6c82a095247989b3899e07cc"
+      "sha256": "7b916a06fd0c2ed4111922e1134d8b1a32ab59ab139905bb916fa313b7879052"
     }
   ],
   "checks": {

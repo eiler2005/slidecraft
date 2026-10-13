@@ -33,3 +33,15 @@ Review pack for 9 slides (Microsoft PowerPoint via AppleScript (jobs run in its 
 
 Round 2: ready-with-notes. Round 2: totals add up, the cover photo crops identically in PowerPoint and the browser, icons, value chain, 7S and the combo chart match between engines. Content placeholders (illustrative plan) stay with the author. Findings: 4 (1 fixed, 3 for the user).
 
+## 2026-10-13 11:56:45 · visual-qa
+
+Review pack for 9 slides (Microsoft PowerPoint via AppleScript (jobs run in its sandbox container: no access prompts)); 9 page(s) below 95 % PowerPoint↔HTML parity. Sources snapshotted: deck.yaml.
+
+## 2026-10-13 12:02:56 · visual-qa
+
+Review pack for 9 slides (Microsoft PowerPoint via AppleScript (jobs run in its sandbox container: no access prompts)); 9 page(s) below 95 % PowerPoint↔HTML parity. Sources snapshotted: deck.yaml.
+
+## 2026-10-13 12:03:53 · visual-qa-round · visual-reviewer (Claude Opus 5.5)
+
+Round 3: ready-with-notes. Round 3: sharp cover photo (1920 px CC0, Wikimedia Commons) cropped on the laptop screen with imageFocus: left — identical in PowerPoint and the browser. Placeholders (illustrative plan) stay with the author. Findings: 3 (2 fixed, 1 for the user).
+

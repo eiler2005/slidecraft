@@ -14,6 +14,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, relative, resolve } from 'node:path';
 import YAML, { isMap, isSeq, type YAMLMap, type YAMLSeq } from 'yaml';
+import { pngSize } from '../qa/pptx-verify.ts';
 import { editYaml, type YamlEdit } from './yaml-edit.ts';
 
 /** Appended to every prompt so pictures suit a slide: no text, calm, croppable. */
@@ -353,7 +354,8 @@ export function wikimediaProvider(fetchImpl: Fetch = fetch): StockProvider {
         gsrlimit: '20',
         prop: 'imageinfo',
         iiprop: 'url|size|extmetadata',
-        iiurlwidth: '2400',
+        // Commons serves thumbnails only at its standard steps (…, 1280, 1920, 3840)
+        iiurlwidth: '1920',
       });
       const res = await fetchImpl(`https://commons.wikimedia.org/w/api.php?${q}`, {
         headers: { 'user-agent': 'SlideCraft (https://github.com/eiler2005/slidecraft)' },
@@ -393,12 +395,11 @@ export function wikimediaProvider(fetchImpl: Fetch = fetch): StockProvider {
           const author = plain(m.Artist?.value) || 'Unknown author';
           return [
             {
-              // a 2400 px rendition keeps downloads small and is sharp on any slide panel
+              // a 1920 px rendition keeps downloads small and is sharp on any slide panel;
+              // the rendition's real width is in its URL, the API may round it up
               url: ii.thumburl ?? ii.url,
-              width: ii.thumburl ? Math.min(ii.width, 2400) : ii.width,
-              height: ii.thumburl
-                ? Math.round((ii.height * Math.min(ii.width, 2400)) / ii.width)
-                : ii.height,
+              width: thumbWidth(ii.thumburl, ii.width),
+              height: Math.round((ii.height * thumbWidth(ii.thumburl, ii.width)) / ii.width),
               credit: {
                 author: author.length > 80 ? `${author.slice(0, 78)}…` : author,
                 provider: 'Wikimedia Commons',
@@ -414,6 +415,9 @@ export function wikimediaProvider(fetchImpl: Fetch = fetch): StockProvider {
     },
   };
 }
+
+const thumbWidth = (url: string | undefined, original: number) =>
+  Math.min(original, Number(url?.match(/\/(\d+)px-[^/]*$/)?.[1] ?? original));
 
 /** Openverse and Wikimedia together: sharp landscape photos first, each in its own order. */
 export function autoProvider(fetchImpl: Fetch = fetch): StockProvider {
@@ -456,15 +460,29 @@ export interface StockRunResult {
   failed: { job: StockJob; error: string }[];
 }
 
+/** Width that keeps a photo sharp on a full-height slide panel. */
+export const SHARP_WIDTH = 1600;
+
+/** Landscape hits sharp on a full-height panel (≥ 1600 px) first, then ≥ 1000 px, then the rest by width. */
+export function rankHits(hits: StockHit[]): StockHit[] {
+  const landscape = hits.filter((h) => h.width >= h.height);
+  const sharp = landscape.filter((h) => h.width >= SHARP_WIDTH);
+  const fair = landscape.filter((h) => h.width >= 1000 && h.width < SHARP_WIDTH);
+  const rest = hits
+    .filter((h) => !sharp.includes(h) && !fair.includes(h))
+    .sort((a, b) => b.width - a.width);
+  return [...sharp, ...fair, ...rest];
+}
+
 /** The first landscape hit sharp on a full-height panel (≥ 1600 px), else ≥ 1000 px, else the widest. */
 export function pickHit(hits: StockHit[]): StockHit | undefined {
-  const landscape = hits.filter((h) => h.width >= h.height);
-  return (
-    landscape.find((h) => h.width >= 1600) ??
-    landscape.find((h) => h.width >= 1000) ??
-    [...hits].sort((a, b) => b.width - a.width)[0]
-  );
+  return rankHits(hits)[0];
 }
+
+const UA = { 'user-agent': 'SlideCraft (https://github.com/eiler2005/slidecraft)' };
+
+/** Candidates downloaded before settling for the widest one seen. */
+const DOWNLOAD_TRIES = 4;
 
 /** Candidate photos for each job, best first, for a person or an agent to choose from. */
 export async function listStock(
@@ -497,21 +515,40 @@ export async function fetchStock(
   for (const job of jobs) {
     try {
       // search engines match every word: fall back to the leading words of the query
-      let hit: StockHit | undefined;
+      let ranked: StockHit[] = [];
       let used = job.query;
       for (const q of fallbackQueries(job.query)) {
         const hits = await provider.search(q);
-        hit =
+        const chosen =
           pick > 1
             ? hits.filter((h) => h.width >= 1000 && h.width >= h.height)[pick - 1]
-            : pickHit(hits);
+            : undefined;
+        ranked = pick > 1 ? (chosen ? [chosen] : []) : rankHits(hits);
         used = q;
-        if (hit) break;
+        if (ranked.length) break;
       }
-      if (!hit) throw new Error(`no photo found for "${job.query}"`);
-      const res = await fetchImpl(hit.url);
-      if (!res.ok) throw new Error(`download ${res.status}`);
-      const buf = Buffer.from(await res.arrayBuffer());
+      if (!ranked.length) throw new Error(`no photo found for "${job.query}"`);
+      // listed sizes can be the original's while the URL serves a smaller rendition:
+      // measure each download and move on until one is really sharp
+      let best: { hit: StockHit; buf: Buffer; width: number } | undefined;
+      let lastError = '';
+      for (const hit of ranked.slice(0, DOWNLOAD_TRIES)) {
+        const res = await fetchImpl(hit.url, { headers: UA }).catch((e: Error) => e);
+        if (res instanceof Error || !res.ok) {
+          lastError = res instanceof Error ? res.message : `download ${res.status}`;
+          continue;
+        }
+        const buf = Buffer.from(await res.arrayBuffer());
+        const size = pngSize(buf);
+        if (!size) {
+          lastError = 'download is not a JPEG or PNG image';
+          continue;
+        }
+        if (!best || size.w > best.width) best = { hit, buf, width: size.w };
+        if (size.w >= SHARP_WIDTH && size.w >= size.h) break;
+      }
+      if (!best) throw new Error(lastError || `no photo found for "${job.query}"`);
+      const { hit, buf } = best;
       const ext = buf[0] === 0x89 && buf[1] === 0x50 ? '.png' : '.jpg';
       const image = job.image.replace(/\.[a-z]+$/, ext);
       const file = job.file.replace(/\.[a-z]+$/, ext);

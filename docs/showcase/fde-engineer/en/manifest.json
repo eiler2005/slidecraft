@@ -1,6 +1,6 @@
 {
   "tool": "slidecraft",
-  "version": "0.6.0",
+  "version": "0.7.2",
   "deck": {
     "id": "fde-engineer-en",
     "title": "Forward Deployed Engineers turn AI pilots into working products",
@@ -41,7 +41,7 @@
       "path": "fde-engineer-en.pptx",
       "kind": "pptx",
       "engine": "pptxgenjs",
-      "sha256": "6c89e49e1ca474ba7948525100067ece3a8b05bc826b6c5a2a13f53aabf4234b"
+      "sha256": "a671914c4ffdc9eb7fd08df8328859277bfd8e309fe951efdb401c44c5cc0421"
     },
     {
       "path": "previews/01-cover.png",
@@ -71,25 +71,25 @@
       "path": "previews/05-profile.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "448bebcaf1418f77822a1a9378dcbcd210709bbcd2aff03d33b57be202f76654"
+      "sha256": "d4843584ee713ef8c3d730490bc09132c2d1b3c3ad658b145b517b19e273e79d"
     },
     {
       "path": "previews/06-ask.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "fd98963bf54ba456ecd4a8c8f996b7b88fdb23084114a9ee76ddad852462fdbe"
+      "sha256": "93d2bff9fd55a8796162fa8a1de322186b000a7e9a9463a0cb94974f07d68aec"
     },
     {
       "path": "fde-engineer-en.html",
       "kind": "html",
       "engine": "html",
-      "sha256": "9ffe0194109d34690701f30f9908fbd102429a015a412bb723e99685b3e924d3"
+      "sha256": "e0339fb84e2f0aa31170fd037bc3718251f683dd6c4a72a5d990d38dbb8436c8"
     },
     {
       "path": "fde-engineer-en.pdf",
       "kind": "pdf",
       "engine": "native",
-      "sha256": "0b3f2874ceba996fe5204b05ab728f9ee06176d72712f4659897f1837f1497bc"
+      "sha256": "16ec0035ffc810329ed8fbdaa2ea45c7782eebe25d79f2236294f176c29fa0dd"
     }
   ],
   "checks": {

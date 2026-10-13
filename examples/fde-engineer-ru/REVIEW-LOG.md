@@ -22,3 +22,7 @@ Review pack for 6 slides (Microsoft PowerPoint via AppleScript (jobs run in its 
 
 Round 2: ready-with-notes. Раунд 2: обложка несёт тему (мотив «сеть» из редактируемых фигур), PowerPoint рисует её так же, как браузер; русский текст размечен языком ru-RU, источники в заметках идут построчно. Два пункта по содержанию остаются за автором. Findings: 5 (3 fixed, 2 for the user).
 
+## 2026-10-13 11:57:05 · visual-qa
+
+Review pack for 6 slides (Microsoft PowerPoint via AppleScript (jobs run in its sandbox container: no access prompts)); 6 page(s) below 95 % PowerPoint↔HTML parity. Sources snapshotted: deck.yaml.
+

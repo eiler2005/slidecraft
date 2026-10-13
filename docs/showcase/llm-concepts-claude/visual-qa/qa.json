@@ -100,7 +100,14 @@
           }
         ]
       },
-      "diagnostics": [],
+      "diagnostics": [
+        {
+          "code": "SC-COVER-001",
+          "severity": "warning",
+          "message": "The cover has no visual — it was not chosen from options",
+          "pointer": "/slides/0/art"
+        }
+      ],
       "contrast": [
         {
           "text": "A one-hour session for mixed project teams befor [subtitle]",
@@ -286,7 +293,7 @@
           },
           {
             "region": "row 4, column 1",
-            "score": 0.929,
+            "score": 0.931,
             "box": {
               "x": 0,
               "y": 405,
@@ -412,7 +419,7 @@
         "diff": "04-tokens-context-diff.png"
       },
       "parity": {
-        "worstRegion": 0.7205212012108997,
+        "worstRegion": 0.8225552725286154,
         "hotspots": [
           {
             "region": "row 1, column 2",
@@ -430,46 +437,6 @@
             "box": {
               "x": 479.99,
               "y": 0,
-              "w": 239.99,
-              "h": 135
-            }
-          },
-          {
-            "region": "row 2, column 1",
-            "score": 0.801,
-            "box": {
-              "x": 0,
-              "y": 135,
-              "w": 239.99,
-              "h": 135
-            }
-          },
-          {
-            "region": "row 2, column 2",
-            "score": 0.8,
-            "box": {
-              "x": 239.99,
-              "y": 135,
-              "w": 239.99,
-              "h": 135
-            }
-          },
-          {
-            "region": "row 2, column 3",
-            "score": 0.724,
-            "box": {
-              "x": 479.99,
-              "y": 135,
-              "w": 239.99,
-              "h": 135
-            }
-          },
-          {
-            "region": "row 2, column 4",
-            "score": 0.721,
-            "box": {
-              "x": 719.98,
-              "y": 135,
               "w": 239.99,
               "h": 135
             }
@@ -545,7 +512,7 @@
         "diff": "05-train-vs-inference-diff.png"
       },
       "parity": {
-        "worstRegion": 0.6511941004471964,
+        "worstRegion": 0.8184308186551457,
         "hotspots": [
           {
             "region": "row 1, column 2",
@@ -553,46 +520,6 @@
             "box": {
               "x": 239.99,
               "y": 0,
-              "w": 239.99,
-              "h": 135
-            }
-          },
-          {
-            "region": "row 2, column 1",
-            "score": 0.787,
-            "box": {
-              "x": 0,
-              "y": 135,
-              "w": 239.99,
-              "h": 135
-            }
-          },
-          {
-            "region": "row 2, column 2",
-            "score": 0.807,
-            "box": {
-              "x": 239.99,
-              "y": 135,
-              "w": 239.99,
-              "h": 135
-            }
-          },
-          {
-            "region": "row 2, column 3",
-            "score": 0.724,
-            "box": {
-              "x": 479.99,
-              "y": 135,
-              "w": 239.99,
-              "h": 135
-            }
-          },
-          {
-            "region": "row 2, column 4",
-            "score": 0.651,
-            "box": {
-              "x": 719.98,
-              "y": 135,
               "w": 239.99,
               "h": 135
             }
@@ -1503,7 +1430,7 @@
           },
           {
             "region": "row 3, column 2",
-            "score": 0.912,
+            "score": 0.917,
             "box": {
               "x": 239.99,
               "y": 270,
@@ -1523,7 +1450,7 @@
           },
           {
             "region": "row 4, column 2",
-            "score": 0.887,
+            "score": 0.881,
             "box": {
               "x": 239.99,
               "y": 405,

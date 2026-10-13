@@ -60,8 +60,8 @@ the deck language).
   substitutes and line breaking differ.
 - Fonts other than Arial, Georgia and Times New Roman need their files to be measured
   exactly.
-- The strict pixel comparison between PowerPoint and HTML averages about 89 % per page on
-  generated decks. That looks close at normal size, but it is not pixel-identical.
+- The strict pixel comparison between PowerPoint and HTML averages about 87 % per page on
+  generated decks (90 % across the whole calibration corpus). That looks close at normal size, but it is not pixel-identical.
 - Native charts follow PowerPoint's own rendering, and number formats follow the viewer's
   Office locale.
 

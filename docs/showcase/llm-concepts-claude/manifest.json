@@ -1,6 +1,6 @@
 {
   "tool": "slidecraft",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "deck": {
     "id": "llm-ai-agents-vocabulary",
     "title": "Key concepts for LLMs and AI agents: the shared vocabulary your first project needs",
@@ -41,7 +41,7 @@
       "path": "llm-ai-agents-vocabulary.pptx",
       "kind": "pptx",
       "engine": "pptxgenjs",
-      "sha256": "67f13740e2e2d9ea985241eb2aab4bf20a6f9f6c0a647ffa97e0d17e630836bf"
+      "sha256": "781784eb578ce4459fcc1c91fa323aa379e06c8bccf10a205fa790aa580b99d0"
     },
     {
       "path": "previews/01-cover.png",
@@ -59,19 +59,19 @@
       "path": "previews/03-how-to-read.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "4f51ac34837de4c256d0c46f1d19f604127dbe61377a6cb65570330aa05d8780"
+      "sha256": "91e383d0605122e421ff07b8d7fc2cc6b7ffa78ccf82dccfc1b47dd31b992cc2"
     },
     {
       "path": "previews/04-tokens-context.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "53ab40e9233614b83cd2cd44c70583b14f2ce04d4633c3293bb88c8f0138e551"
+      "sha256": "ac0507e307fb21884139bf218d5e192d036a902ec62d60a51d7f99bbcafd289c"
     },
     {
       "path": "previews/05-train-vs-inference.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "9398b9657c15ba41c2b8fa632322cbc5bac1acee954bf1b7971dba51adfb4cf1"
+      "sha256": "47e0bd255eebdfc62f7590f966c8c667718dcdcb32ab041bc7aa2f40f404e500"
     },
     {
       "path": "previews/06-rag.png",
@@ -113,26 +113,27 @@
       "path": "previews/12-ship-gates.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "692bc172963009acbb28f368063bc089f6096c726feedd741d84a26641b02de6"
+      "sha256": "5801744013254cc210d21e92dc367631b8add1d66ffdb565329eb7cccc74655d"
     },
     {
       "path": "llm-ai-agents-vocabulary.html",
       "kind": "html",
       "engine": "html",
-      "sha256": "14e9bf3ac7c10a9f72b23839f7c798fe0b23c73b7c4d512f3aef96fb67c3cf53"
+      "sha256": "3f6c7947058f184ab4bb0c935d71823d244c4204e9e085c169fa4a9590bcf765"
     },
     {
       "path": "llm-ai-agents-vocabulary.pdf",
       "kind": "pdf",
       "engine": "native",
-      "sha256": "76c27d98d8a852accadf1e684e8d68d62470d168d8794a6356fb1f05e0ab8ec0"
+      "sha256": "f4e1aba7884346447d4ce590539f76f71da68bb9e8e646aac96e814d03d3d1ef"
     }
   ],
   "checks": {
     "errors": 0,
-    "warnings": 2,
+    "warnings": 3,
     "info": 0,
     "codes": [
+      "SC-COVER-001",
       "SC-DENSITY-001"
     ]
   },

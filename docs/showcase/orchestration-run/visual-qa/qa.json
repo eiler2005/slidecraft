@@ -19,7 +19,14 @@
         "worstRegion": 0.961301546997696,
         "hotspots": []
       },
-      "diagnostics": [],
+      "diagnostics": [
+        {
+          "code": "SC-COVER-001",
+          "severity": "warning",
+          "message": "The cover has no visual — it was not chosen from options",
+          "pointer": "/slides/0/art"
+        }
+      ],
       "contrast": [],
       "offPalette": [],
       "nearMisalignments": [],

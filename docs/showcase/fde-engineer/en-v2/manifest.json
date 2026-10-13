@@ -1,6 +1,6 @@
 {
   "tool": "slidecraft",
-  "version": "0.6.0",
+  "version": "0.7.2",
   "deck": {
     "id": "fde-engineer-en-v2",
     "title": "Forward Deployed Engineers turn AI pilots into working products",
@@ -11,7 +11,7 @@
   },
   "input": {
     "path": "../../../../examples/fde-engineer-en-v2/deck.yaml",
-    "sha256": "d006e79c41f1ae9972699d11231e310f8cf5763f8d17d70fb28f8f8af70f4e8f"
+    "sha256": "b8a9b4d6325c16b1704a546e146d3181da1661be8bbd52120768fe4e86c936fb"
   },
   "epoch": "2026-01-01T00:00:00.000Z",
   "engines": {
@@ -41,13 +41,13 @@
       "path": "fde-engineer-en-v2.pptx",
       "kind": "pptx",
       "engine": "pptxgenjs",
-      "sha256": "0ec5001ba902779edf25176c641fb0017fff57732bb713981aa0adfdc6cceeb1"
+      "sha256": "aceec4ba4e667566dc53db39b1bd3a814b268ab0f20e1acd763bed616cceb4b5"
     },
     {
       "path": "previews/01-cover.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "7c50510305bc99c0a443e652f3ccb68451ab3143ba0889c43794a463cfc17275"
+      "sha256": "9b1c36d788e8b43f7613aa4d1fdcf4ee4bccffe46c788614c486f8d1b03b9edf"
     },
     {
       "path": "previews/02-why-now.png",
@@ -71,7 +71,7 @@
       "path": "previews/05-profile.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "63201e0e88dfcb27f44a4a1b0385cce261510ea612dfa6c3aad9d6e21639bbd8"
+      "sha256": "b163b019ac68cc19861e8ae561dc529bba9863178e3d6668a3f9079485bff54c"
     },
     {
       "path": "previews/06-organisation.png",
@@ -95,39 +95,37 @@
       "path": "previews/09-ask.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "369910099d0ae4fec3e632e02f646352be23791c6f7553c7aa36f815f6d847bc"
+      "sha256": "b2fcb4a781960c1f388223da7784839496f721fe99002af13d99c0a4a3e8a50f"
     },
     {
       "path": "fde-engineer-en-v2.html",
       "kind": "html",
       "engine": "html",
-      "sha256": "ac5d3d1eacf69e0265339fb96ac46fc3c22885c4325837c1929d99678f034faa"
+      "sha256": "c619f7ad26215753f8aa30a4b99f66691f2bdd4ed429b56a59527d25a017dc71"
     },
     {
       "path": "fde-engineer-en-v2.pdf",
       "kind": "pdf",
       "engine": "native",
-      "sha256": "4da5cb33779ea7c2775a9bc5241f90d2e3d96e3f65454eee6a8256be5141be47"
+      "sha256": "696d1038cee6629b5e0bfec7668d26249024861b61c84e9791c6dec407a6f737"
     }
   ],
   "checks": {
     "errors": 0,
-    "warnings": 1,
+    "warnings": 0,
     "info": 0,
-    "codes": [
-      "SC-IMG-001"
-    ]
+    "codes": []
   },
   "imageCredits": [
     {
       "slide": "cover",
       "image": "assets/cover.jpg",
-      "author": "Yutaka Tsutano",
-      "provider": "Openverse · Flickr",
-      "license": "CC BY 2.0",
-      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
-      "source": "https://www.flickr.com/photos/23208360@N07/4532962327",
-      "title": "Current Setup"
+      "author": "Ehud Neuhaus paramir",
+      "provider": "Wikimedia Commons",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source": "https://commons.wikimedia.org/wiki/File:Two_Loves_(Unsplash).jpg",
+      "title": "Two Loves (Unsplash)"
     }
   ],
   "visual_review": false,

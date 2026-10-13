@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { cols } from '../engine/format.ts';
-import { ImageCredit, ImageQuery } from './image-credit.ts';
+import { focusPoint, ImageCredit, ImageFocus, ImageQuery } from './image-credit.ts';
 import type { LayoutDef } from './types.ts';
 
 const schema = z
@@ -27,6 +27,7 @@ const schema = z
       ),
     imageQuery: ImageQuery.optional(),
     imageCredit: ImageCredit.optional(),
+    imageFocus: ImageFocus.optional(),
     caption: z
       .string()
       .max(120)
@@ -96,6 +97,7 @@ export const textImage: LayoutDef<typeof schema> = {
     ctx.image({ ...imgCol, h: imgCol.h - capH }, c.image, c.alt, {
       fit: 'cover',
       field: 'image',
+      ...(focusPoint(c.imageFocus) ? { focus: focusPoint(c.imageFocus)! } : {}),
       label: c.imagePrompt ? 'Image to generate — run slidecraft images' : 'Image placeholder',
     });
     if (c.caption) {

@@ -7,9 +7,18 @@ import { readFileSync } from 'node:fs';
 import { extname } from 'node:path';
 import { faceOf, vectorFamily } from '../engine/fonts.ts';
 import { freeformMarkup } from '../engine/freeform.ts';
-import type { Master, Scene, SceneNode, SceneSlide, Stroke, TextNode } from '../engine/scene.ts';
+import {
+  coverPlacement,
+  type Master,
+  type Scene,
+  type SceneNode,
+  type SceneSlide,
+  type Stroke,
+  type TextNode,
+} from '../engine/scene.ts';
 import { pathData } from '../engine/svg-path.ts';
 import { autoPitchEm, drawSize, glyphOffsetsPt, layoutText, makeTextNode } from '../engine/text.ts';
+import { pngSize } from '../qa/pptx-verify.ts';
 
 export const PX_PER_IN = 96;
 const px = (inch: number) => +(inch * PX_PER_IN).toFixed(2);
@@ -136,6 +145,15 @@ function nodeBodySvg(n: SceneNode): string {
         : n.data
           ? `data:${n.data.mime};base64,${n.data.base64}`
           : undefined;
+      const size =
+        n.fit === 'cover' && n.focus
+          ? pngSize(n.path ? readFileSync(n.path) : Buffer.from(n.data?.base64 ?? '', 'base64'))
+          : undefined;
+      if (href && size) {
+        // a focal point other than the centre: place the whole picture, clipped by its own viewport
+        const p = coverPlacement(size, { x: 0, y: 0, w, h }, n.focus);
+        return `<svg x="${px(x)}" y="${px(y)}" width="${px(w)}" height="${px(h)}" overflow="hidden"><image x="${px(p.x)}" y="${px(p.y)}" width="${px(p.w)}" height="${px(p.h)}" preserveAspectRatio="none" href="${href}"/></svg>`;
+      }
       if (href) {
         const par = n.fit === 'cover' ? 'xMidYMid slice' : 'xMidYMid meet';
         return `<image x="${px(x)}" y="${px(y)}" width="${px(w)}" height="${px(h)}" preserveAspectRatio="${par}" href="${href}"/>`;

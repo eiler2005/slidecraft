@@ -37,17 +37,18 @@ slides:
     subtitle: What the role is, where it creates value, what has to change around it, and a pilot to start
     date: October 2026
     imageQuery: laptop code screen desk
-    alt: An engineer's desk with several monitors showing code and a laptop
+    alt: A laptop screen showing code, seen close up on a desk
+    imageFocus: left
     art: auto
     notes: One message for the whole deck — the gap in enterprise AI is deployment, and this role closes it.
     image: assets/cover.jpg
     imageCredit:
-      author: Yutaka Tsutano
-      provider: Openverse · Flickr
-      license: CC BY 2.0
-      licenseUrl: https://creativecommons.org/licenses/by/2.0/
-      source: https://www.flickr.com/photos/23208360@N07/4532962327
-      title: Current Setup
+      author: Ehud Neuhaus paramir
+      provider: Wikimedia Commons
+      license: CC0
+      licenseUrl: http://creativecommons.org/publicdomain/zero/1.0/deed.en
+      source: https://commons.wikimedia.org/wiki/File:Two_Loves_(Unsplash).jpg
+      title: Two Loves (Unsplash)
 
   - id: why-now
     layout: kpi-tiles

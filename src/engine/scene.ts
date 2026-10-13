@@ -177,6 +177,21 @@ export interface LineNode {
   role?: string;
 }
 
+/**
+ * Where a picture of `img` proportions is drawn so that it covers `box` with the `focus` point
+ * kept in view: its drawn size and its top-left corner (in box units, ≤ the box origin).
+ */
+export function coverPlacement(
+  img: { w: number; h: number },
+  box: Box,
+  focus: { x: number; y: number } = { x: 0.5, y: 0.5 },
+): { x: number; y: number; w: number; h: number } {
+  const scale = Math.max(box.w / img.w, box.h / img.h);
+  const w = img.w * scale;
+  const h = img.h * scale;
+  return { x: box.x - (w - box.w) * focus.x, y: box.y - (h - box.h) * focus.y, w, h };
+}
+
 export interface ImageNode {
   kind: 'image';
   box: Box;
@@ -188,6 +203,8 @@ export interface ImageNode {
   svg?: string;
   alt: string;
   fit: 'cover' | 'contain';
+  /** With `cover`: the point of the picture kept in view, 0–1 on each axis (default centre). */
+  focus?: { x: number; y: number };
   placeholderLabel?: string;
   decorative?: boolean;
   role?: string;

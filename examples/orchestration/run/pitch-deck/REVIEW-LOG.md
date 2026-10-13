@@ -32,3 +32,7 @@ Review pack for 10 slides (Microsoft PowerPoint via AppleScript (jobs run in its
 
 Round 2: ready-with-notes. Both content fixes landed and the matrix now states its conclusion; a reversed axis arrow in PowerPoint was traced to line export and fixed for every deck. Remaining items are design choices for you. Findings: 4 (1 fixed, 2 for the user).
 
+## 2026-10-13 11:57:41 · visual-qa
+
+Review pack for 10 slides (Microsoft PowerPoint via AppleScript (jobs run in its sandbox container: no access prompts)); 9 page(s) below 95 % PowerPoint↔HTML parity. Sources snapshotted: deck.yaml.
+

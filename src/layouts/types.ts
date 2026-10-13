@@ -127,7 +127,13 @@ export interface ComposeContext {
     box: Box,
     src: string | undefined,
     alt: string,
-    opts?: { fit?: 'cover' | 'contain'; field?: string; label?: string },
+    opts?: {
+      fit?: 'cover' | 'contain';
+      field?: string;
+      label?: string;
+      /** Point kept in view when `cover` crops, 0–1 on each axis; centre by default. */
+      focus?: { x: number; y: number };
+    },
   ): ImageNode;
   /** An icon from the bundled set in a square box; stroke colour defaults to the accent. */
   icon(name: string, box: Box, opts?: { color?: string; field?: string }): PathNode;

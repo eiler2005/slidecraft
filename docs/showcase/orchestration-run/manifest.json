@@ -1,6 +1,6 @@
 {
   "tool": "slidecraft",
-  "version": "0.6.0",
+  "version": "0.7.2",
   "deck": {
     "id": "fabrikam-seed",
     "title": "Fabrikam turns idle truck space into same-day freight",
@@ -51,7 +51,7 @@
       "path": "fabrikam-seed.pptx",
       "kind": "pptx",
       "engine": "pptxgenjs",
-      "sha256": "2c9a575a78be5406e089ffce9c20da6d48b1f9ae3a38cedc477a894c341b28bb"
+      "sha256": "8ec4ef43597e1b8a826140e61692517952dd5a1b1a774af84944360257a7e4c2"
     },
     {
       "path": "previews/01-cover.png",
@@ -117,7 +117,7 @@
       "path": "fabrikam-seed.html",
       "kind": "html",
       "engine": "html",
-      "sha256": "2023f62584e3ef067b64e5441089cf679cd59509f30dba792bfd9a9f776d7ef7"
+      "sha256": "b68efd64e26f79d3d40d29639e0eff5583bfdb9ece27d2a729939ede452e67c8"
     },
     {
       "path": "fabrikam-seed.pdf",
@@ -135,14 +135,15 @@
       "path": "fabrikam-seed.docx",
       "kind": "docx",
       "engine": "docx",
-      "sha256": "b0b35e8f74b3a0bfe08b385e1f6ca7fc0fe5ecb2a13b4a0c5be7a633b1cec5de"
+      "sha256": "da2a106f85976ef31197ead78bbe2539c3061f6bbca9a908f87ef2b93a168bc5"
     }
   ],
   "checks": {
     "errors": 0,
-    "warnings": 1,
+    "warnings": 2,
     "info": 0,
     "codes": [
+      "SC-COVER-001",
       "SC-SRC-001"
     ]
   },

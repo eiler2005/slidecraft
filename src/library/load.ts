@@ -60,16 +60,17 @@ export function loadThemes(): Theme[] {
   return themeCache;
 }
 
+/** Themes from outside the library (a brand theme next to a deck), found by id but never
+ * listed with the library: galleries, pickers and catalogues show library themes only. */
+const registered = new Map<string, Theme>();
+
 /** Make a theme from outside the library (e.g. a brand theme next to the deck) available by id. */
 export function registerTheme(theme: Theme): void {
-  const all = loadThemes();
-  const i = all.findIndex((t) => t.id === theme.id);
-  if (i >= 0) all[i] = theme;
-  else all.push(theme);
+  registered.set(theme.id, theme);
 }
 
 export function getTheme(id: string): Theme | undefined {
-  return loadThemes().find((t) => t.id === id);
+  return registered.get(id) ?? loadThemes().find((t) => t.id === id);
 }
 
 let storyCache: Storyline[] | undefined;

@@ -35,8 +35,8 @@ weaken the metric or bless goldens to pass. Architecture diagrams are in English
   ≥ 95 % on 22/22 pages** (98.5–99.8 %); original ↔ HTML 88.9–97.0 % (was 69–86 %).
 - Calibration probe (~2 200 lines): baselines 0.064–0.066 pt mean for automatic and generated
   spacing, word positions 0.09 pt, drawn sizes exact.
-- Corpus of 10 decks: rebuild gate 22/22; nine generated decks mean 89.2 % per page under the
-  strict metric (was 78.6 % at the first corpus run).
+- Corpus of 10 decks (2026-10-13): rebuild gate 22/22; nine generated decks mean 87.4 % per
+  page under the strict metric, all 103 pages 90.0 % (78.6 % at the first corpus run).
 - Visual QA run on the pitch-deck example found and fixed two shared defects (hyphen breaks,
   reversed arrow flips) and two content issues; see `examples/orchestration/run/`.
 

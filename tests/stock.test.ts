@@ -18,10 +18,31 @@ afterEach(() => {
 
 const json = (body: unknown) =>
   ({ ok: true, json: async () => body, arrayBuffer: async () => new ArrayBuffer(0) }) as Response;
-const jpeg = () =>
+/** A JPEG header with an APP0 segment and a SOF0 frame of the given size. */
+const jpeg = (w = 2048, h = 1365) =>
   ({
     ok: true,
-    arrayBuffer: async () => new Uint8Array([0xff, 0xd8, 0xff, 0xe0, 1, 2, 3]).buffer,
+    arrayBuffer: async () =>
+      new Uint8Array([
+        0xff,
+        0xd8,
+        0xff,
+        0xe0,
+        0,
+        4,
+        1,
+        2,
+        0xff,
+        0xc0,
+        0,
+        11,
+        8,
+        h >> 8,
+        h & 0xff,
+        w >> 8,
+        w & 0xff,
+        3,
+      ]).buffer,
   }) as Response;
 
 const openverseBody = {
@@ -80,7 +101,7 @@ describe('stock photos', () => {
       imageinfo: [
         {
           url: `https://upload/${title}`,
-          thumburl: `https://upload/2400/${title}`,
+          thumburl: `https://upload/thumb/${title}.jpg/1920px-${title}.jpg`,
           width: w,
           height: Math.round(w / 1.5),
           descriptionurl: `https://commons/${title}`,
@@ -105,7 +126,12 @@ describe('stock photos', () => {
     const hits = await p.search('desk');
     expect(hits.map((h) => h.credit.title)).toEqual(['Laptop', 'Desk']);
     const desk = hits.find((h) => h.credit.title === 'Desk')!;
-    expect(desk).toMatchObject({ url: 'https://upload/2400/Desk', width: 2400 });
+    expect(desk).toMatchObject({
+      url: 'https://upload/thumb/Desk.jpg/1920px-Desk.jpg',
+      width: 1920,
+    });
+    // a rendition never claims more pixels than the original
+    expect(hits.find((h) => h.credit.title === 'Laptop')!.width).toBe(1200);
     expect(desk.credit).toMatchObject({
       author: 'Ada Lovelace',
       provider: 'Wikimedia Commons',
@@ -157,5 +183,52 @@ slides:
         : '';
     expect(text).toContain('Photo: Jane Doe / Openverse · Flickr, CC BY-SA 4.0');
     expect(s.notes).toContain('[Sources]\n- Photo: Team at work — Jane Doe — Openverse · Flickr');
+  });
+
+  it('measures each download and skips a photo whose real size is smaller than listed', async () => {
+    const dir = mkdtempSync(join(tmpdir(), 'sc-stock-'));
+    dirs.push(dir);
+    const deck = join(dir, 'deck.yaml');
+    writeFileSync(
+      deck,
+      `schemaVersion: 1
+id: s
+title: Stock
+theme: consulting-classic
+language: en
+slides:
+  - id: story
+    layout: text-image
+    title: The team that ships works next to the people who use the software
+    body: [Engineers sit with the operations team every day.]
+    alt: Engineers and operators at one table
+    imageQuery: team
+`,
+    );
+    const hit = (url: string, creator: string) => ({
+      url,
+      width: 7360,
+      height: 4912,
+      creator,
+      license: 'cc0',
+      license_version: '1.0',
+      source: 'rawpixel',
+      foreign_landing_url: url,
+    });
+    const provider = openverseProvider((async () =>
+      json({
+        results: [
+          hit('https://img/editor_1024.jpg', 'Small'),
+          hit('https://img/full.jpg', 'Sharp'),
+        ],
+      })) as typeof fetch);
+    const asked: string[] = [];
+    const r = await fetchStock(planStock(deck), provider, (async (u: string) => {
+      asked.push(u);
+      return u.includes('1024') ? jpeg(1024, 683) : jpeg(2400, 1602);
+    }) as typeof fetch);
+    expect(r.failed).toEqual([]);
+    expect(asked).toEqual(['https://img/editor_1024.jpg', 'https://img/full.jpg']);
+    expect(r.found[0]!.credit.author).toBe('Sharp');
   });
 });

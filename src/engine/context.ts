@@ -239,6 +239,7 @@ export function createContext(
         ...(path ? { path } : {}),
         alt,
         fit: opts.fit ?? 'cover',
+        ...(opts.focus ? { focus: opts.focus } : {}),
         placeholderLabel: opts.label ?? 'Image placeholder',
         role: 'image',
       };

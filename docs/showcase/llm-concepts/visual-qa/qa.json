@@ -170,7 +170,7 @@
           },
           {
             "region": "row 3, column 1",
-            "score": 0.891,
+            "score": 0.903,
             "box": {
               "x": 0,
               "y": 270,
@@ -326,48 +326,8 @@
         "diff": "03-tokens-context-diff.png"
       },
       "parity": {
-        "worstRegion": 0.757614796384103,
+        "worstRegion": 0.8980982277664791,
         "hotspots": [
-          {
-            "region": "row 2, column 1",
-            "score": 0.758,
-            "box": {
-              "x": 0,
-              "y": 135,
-              "w": 239.99,
-              "h": 135
-            }
-          },
-          {
-            "region": "row 2, column 2",
-            "score": 0.764,
-            "box": {
-              "x": 239.99,
-              "y": 135,
-              "w": 239.99,
-              "h": 135
-            }
-          },
-          {
-            "region": "row 2, column 3",
-            "score": 0.764,
-            "box": {
-              "x": 479.99,
-              "y": 135,
-              "w": 239.99,
-              "h": 135
-            }
-          },
-          {
-            "region": "row 2, column 4",
-            "score": 0.763,
-            "box": {
-              "x": 719.98,
-              "y": 135,
-              "w": 239.99,
-              "h": 135
-            }
-          },
           {
             "region": "row 4, column 1",
             "score": 0.898,
@@ -474,7 +434,7 @@
         "diff": "04-training-inference-diff.png"
       },
       "parity": {
-        "worstRegion": 0.7430471603846216,
+        "worstRegion": 0.8235148874364561,
         "hotspots": [
           {
             "region": "row 1, column 4",
@@ -482,46 +442,6 @@
             "box": {
               "x": 719.98,
               "y": 0,
-              "w": 239.99,
-              "h": 135
-            }
-          },
-          {
-            "region": "row 2, column 1",
-            "score": 0.767,
-            "box": {
-              "x": 0,
-              "y": 135,
-              "w": 239.99,
-              "h": 135
-            }
-          },
-          {
-            "region": "row 2, column 2",
-            "score": 0.781,
-            "box": {
-              "x": 239.99,
-              "y": 135,
-              "w": 239.99,
-              "h": 135
-            }
-          },
-          {
-            "region": "row 2, column 3",
-            "score": 0.784,
-            "box": {
-              "x": 479.99,
-              "y": 135,
-              "w": 239.99,
-              "h": 135
-            }
-          },
-          {
-            "region": "row 2, column 4",
-            "score": 0.743,
-            "box": {
-              "x": 719.98,
-              "y": 135,
               "w": 239.99,
               "h": 135
             }

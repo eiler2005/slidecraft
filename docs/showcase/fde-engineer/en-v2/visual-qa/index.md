@@ -10,11 +10,10 @@ Deck facts: title top spread 0 pt · 11 colours in use · 9 page(s) below 95.0% 
 Layout `title`. Fonts: Arial.
 
 Images: [PowerPoint](01-cover-pptx.png) · [HTML](01-cover-html.png) · [difference](01-cover-diff.png)
-Parity 76.8%; hotspots: row 1, column 1 (93.6%), row 1, column 2 (76.8%), row 1, column 3 (91.2%), row 1, column 4 (94.4%), row 2, column 1 (90.8%), row 2, column 2 (88.9%), row 2, column 3 (94.7%), row 3, column 2 (92.7%).
+Parity 76.8%; hotspots: row 1, column 1 (93.6%), row 1, column 2 (76.8%), row 2, column 1 (90.8%), row 2, column 2 (88.9%), row 3, column 2 (92.7%).
 
-- warning SC-IMG-001: Image cover.jpg is 91 ppi at placed size
 - contrast 5.08:1 (needs 4.5:1) — BRIEFING · 2026 · SECOND EDITION [kicker]
-- text outside the 0.25 in safe area: Photo: Yutaka Tsutano / Openverse · Flickr, CC B [photo-credit]
+- text outside the 0.25 in safe area: Photo: Ehud Neuhaus paramir / Wikimedia Commons, [photo-credit]
 
 ## 2 · why-now — AI companies hire FDEs because most AI pilots stall before production
 
@@ -84,7 +83,7 @@ Parity 82.7%; hotspots: row 1, column 3 (94.3%), row 3, column 1 (88.7%), row 3,
 Layout `key-points`. Fonts: Arial.
 
 Images: [PowerPoint](05-profile-pptx.png) · [HTML](05-profile-html.png) · [difference](05-profile-diff.png)
-Parity 82.7%; hotspots: row 2, column 1 (86.3%), row 2, column 2 (91.8%), row 2, column 3 (91.8%), row 2, column 4 (88.6%), row 4, column 1 (89.0%), row 4, column 2 (82.7%).
+Parity 82.7%; hotspots: row 4, column 1 (89.0%), row 4, column 2 (82.7%).
 
 - contrast 5.08:1 (needs 4.5:1) — WHO TO HIRE [tracker]
 - almost aligned (left, 3.8 pt): WHO TO HIRE [tracker] ↔ path [icon]
@@ -134,7 +133,7 @@ Parity 83.8%; hotspots: row 3, column 1 (86.3%), row 4, column 1 (91.2%), row 4,
 Layout `next-steps`. Fonts: Arial.
 
 Images: [PowerPoint](09-ask-pptx.png) · [HTML](09-ask-html.png) · [difference](09-ask-diff.png)
-Parity 86.7%; hotspots: row 3, column 1 (86.7%), row 3, column 2 (94.5%).
+Parity 86.7%; hotspots: row 3, column 1 (86.7%), row 4, column 2 (93.3%).
 
 - contrast 5.08:1 (needs 4.5:1) — WHAT TO DO [tracker]
 - contrast 5.08:1 (needs 4.5:1) — DECISION REQUESTED [label]

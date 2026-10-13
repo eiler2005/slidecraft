@@ -166688,6 +166688,12 @@ function missingGlyphs(font, text4) {
 }
 
 // src/engine/scene.ts
+function coverPlacement(img, box2, focus = { x: 0.5, y: 0.5 }) {
+  const scale = Math.max(box2.w / img.w, box2.h / img.h);
+  const w = img.w * scale;
+  const h = img.h * scale;
+  return { x: box2.x - (w - box2.w) * focus.x, y: box2.y - (h - box2.h) * focus.y, w, h };
+}
 var PT_PER_IN = 72;
 var pt2in = (pt2) => pt2 / PT_PER_IN;
 var in2pt = (inch) => inch * PT_PER_IN;
@@ -169412,6 +169418,11 @@ function nodeBodySvg(n) {
       const { x: x2, y, w, h } = n.box;
       if (n.svg) return nestedSvg(n.svg, x2, y, w, h);
       const href = n.path ? dataUri(n.path) : n.data ? `data:${n.data.mime};base64,${n.data.base64}` : void 0;
+      const size2 = n.fit === "cover" && n.focus ? pngSize(n.path ? readFileSync5(n.path) : Buffer.from(n.data?.base64 ?? "", "base64")) : void 0;
+      if (href && size2) {
+        const p = coverPlacement(size2, { x: 0, y: 0, w, h }, n.focus);
+        return `<svg x="${px(x2)}" y="${px(y)}" width="${px(w)}" height="${px(h)}" overflow="hidden"><image x="${px(p.x)}" y="${px(p.y)}" width="${px(p.w)}" height="${px(p.h)}" preserveAspectRatio="none" href="${href}"/></svg>`;
+      }
       if (href) {
         const par = n.fit === "cover" ? "xMidYMid slice" : "xMidYMid meet";
         return `<image x="${px(x2)}" y="${px(y)}" width="${px(w)}" height="${px(h)}" preserveAspectRatio="${par}" href="${href}"/>`;
@@ -169872,6 +169883,19 @@ async function addImage(slide, n) {
   }
   if (n.path) {
     const px4 = pngSize(readFileSync7(n.path));
+    if (px4 && n.fit === "cover" && n.focus) {
+      const p = coverPlacement({ w: px4.w, h: px4.h }, { x: 0, y: 0, w, h }, n.focus);
+      slide.addImage({
+        path: n.path,
+        x: x2,
+        y,
+        w: p.w,
+        h: p.h,
+        altText: n.alt,
+        sizing: { type: "crop", x: -p.x, y: -p.y, w, h }
+      });
+      return;
+    }
     const ih = px4 ? w * px4.h / px4.w : h;
     slide.addImage({
       path: n.path,
@@ -181262,7 +181286,11 @@ async function drawNode(doc, n) {
       }
       doc.save();
       doc.rect(x2 * P, y * P, w * P, h * P).clip();
-      if (n.fit === "cover")
+      const img = buf;
+      if (n.fit === "cover" && n.focus && img.width && img.height) {
+        const p = coverPlacement({ w: img.width, h: img.height }, n.box, n.focus);
+        doc.image(buf, p.x * P, p.y * P, { width: p.w * P, height: p.h * P });
+      } else if (n.fit === "cover")
         doc.image(buf, x2 * P, y * P, {
           cover: [w * P, h * P],
           align: "center",
@@ -201874,6 +201902,23 @@ var ImageCredit = external_exports.object({
 var ImageQuery = external_exports.string().max(120).describe(
   'Stock photo search, e.g. "engineer with laptop in a warehouse"; `slidecraft images --stock` fills `image`'
 );
+var FOCUS = {
+  left: { x: 0, y: 0.5 },
+  center: { x: 0.5, y: 0.5 },
+  right: { x: 1, y: 0.5 },
+  top: { x: 0.5, y: 0 },
+  bottom: { x: 0.5, y: 1 }
+};
+var ImageFocus = external_exports.union([
+  external_exports.enum(["left", "center", "right", "top", "bottom"]),
+  external_exports.object({ x: external_exports.number().min(0).max(1), y: external_exports.number().min(0).max(1) }).strict()
+]).describe(
+  "Which part of the picture stays in view when it is cropped to the slot: left, center, right, top, bottom, or { x, y } from 0 to 1 (default center)"
+);
+function focusPoint(f) {
+  if (f === void 0 || f === "center") return void 0;
+  return typeof f === "string" ? FOCUS[f] : f;
+}
 function creditLine(c, photoLabel) {
   return `${photoLabel}: ${c.author} / ${c.provider}, ${c.license}`;
 }
@@ -204341,6 +204386,7 @@ function createContext(init) {
         ...path2 ? { path: path2 } : {},
         alt,
         fit: opts.fit ?? "cover",
+        ...opts.focus ? { focus: opts.focus } : {},
         placeholderLabel: opts.label ?? "Image placeholder",
         role: "image"
       };
@@ -210186,6 +210232,7 @@ var schema40 = external_exports.object({
   ),
   imageQuery: ImageQuery.optional(),
   imageCredit: ImageCredit.optional(),
+  imageFocus: ImageFocus.optional(),
   caption: external_exports.string().max(120).optional().describe("Small line under the image: what it shows and where it was taken"),
   alt: external_exports.string().max(140).describe("Alt text for the image: what it shows, for screen readers")
 }).strict();
@@ -210247,6 +210294,7 @@ var textImage = {
     ctx.image({ ...imgCol, h: imgCol.h - capH }, c.image, c.alt, {
       fit: "cover",
       field: "image",
+      ...focusPoint(c.imageFocus) ? { focus: focusPoint(c.imageFocus) } : {},
       label: c.imagePrompt ? "Image to generate \u2014 run slidecraft images" : "Image placeholder"
     });
     if (c.caption) {
@@ -210918,6 +210966,7 @@ var schema42 = external_exports.object({
   ),
   imageQuery: ImageQuery.optional(),
   imageCredit: ImageCredit.optional(),
+  imageFocus: ImageFocus.optional(),
   alt: external_exports.string().max(140).optional().describe("Alt text of the cover picture; without it the picture is decorative")
 }).strict();
 var title = {
@@ -210977,7 +211026,11 @@ var title = {
       const panel3 = { x: panelX, y: 0, w: page2.w - panelX, h: page2.h };
       const file2 = c.image && (isAbsolute4(c.image) ? c.image : resolve7(ctx.baseDir, c.image));
       if (file2 && existsSync10(file2)) {
-        const img = ctx.image(panel3, c.image, c.alt ?? "", { fit: "cover", field: "image" });
+        const img = ctx.image(panel3, c.image, c.alt ?? "", {
+          fit: "cover",
+          field: "image",
+          ...focusPoint(c.imageFocus) ? { focus: focusPoint(c.imageFocus) } : {}
+        });
         if (!c.alt) img.decorative = true;
         if (c.imageCredit) {
           const h = 0.3;
@@ -212391,14 +212444,12 @@ function loadThemes() {
   themeCache = readdirSync4(THEMES_DIR).filter((f) => f.endsWith(".json")).sort().map((f) => readThemeFile(join14(THEMES_DIR, f)));
   return themeCache;
 }
+var registered = /* @__PURE__ */ new Map();
 function registerTheme(theme) {
-  const all = loadThemes();
-  const i = all.findIndex((t) => t.id === theme.id);
-  if (i >= 0) all[i] = theme;
-  else all.push(theme);
+  registered.set(theme.id, theme);
 }
 function getTheme(id) {
-  return loadThemes().find((t) => t.id === id);
+  return registered.get(id) ?? loadThemes().find((t) => t.id === id);
 }
 var storyCache;
 function loadStorylines() {
@@ -217070,7 +217121,8 @@ function wikimediaProvider(fetchImpl = fetch) {
         gsrlimit: "20",
         prop: "imageinfo",
         iiprop: "url|size|extmetadata",
-        iiurlwidth: "2400"
+        // Commons serves thumbnails only at its standard steps (…, 1280, 1920, 3840)
+        iiurlwidth: "1920"
       });
       const res = await fetchImpl(`https://commons.wikimedia.org/w/api.php?${q}`, {
         headers: { "user-agent": "SlideCraft (https://github.com/eiler2005/slidecraft)" }
@@ -217086,10 +217138,11 @@ function wikimediaProvider(fetchImpl = fetch) {
         const author = plain(m.Artist?.value) || "Unknown author";
         return [
           {
-            // a 2400 px rendition keeps downloads small and is sharp on any slide panel
+            // a 1920 px rendition keeps downloads small and is sharp on any slide panel;
+            // the rendition's real width is in its URL, the API may round it up
             url: ii.thumburl ?? ii.url,
-            width: ii.thumburl ? Math.min(ii.width, 2400) : ii.width,
-            height: ii.thumburl ? Math.round(ii.height * Math.min(ii.width, 2400) / ii.width) : ii.height,
+            width: thumbWidth(ii.thumburl, ii.width),
+            height: Math.round(ii.height * thumbWidth(ii.thumburl, ii.width) / ii.width),
             credit: {
               author: author.length > 80 ? `${author.slice(0, 78)}\u2026` : author,
               provider: "Wikimedia Commons",
@@ -217104,6 +217157,7 @@ function wikimediaProvider(fetchImpl = fetch) {
     }
   };
 }
+var thumbWidth = (url2, original) => Math.min(original, Number(url2?.match(/\/(\d+)px-[^/]*$/)?.[1] ?? original));
 function autoProvider(fetchImpl = fetch) {
   const sources = [openverseProvider(fetchImpl), wikimediaProvider(fetchImpl)];
   return {
@@ -217135,10 +217189,16 @@ function fallbackQueries(q) {
     ])
   ];
 }
-function pickHit(hits) {
+var SHARP_WIDTH = 1600;
+function rankHits(hits) {
   const landscape = hits.filter((h) => h.width >= h.height);
-  return landscape.find((h) => h.width >= 1600) ?? landscape.find((h) => h.width >= 1e3) ?? [...hits].sort((a, b) => b.width - a.width)[0];
+  const sharp = landscape.filter((h) => h.width >= SHARP_WIDTH);
+  const fair = landscape.filter((h) => h.width >= 1e3 && h.width < SHARP_WIDTH);
+  const rest = hits.filter((h) => !sharp.includes(h) && !fair.includes(h)).sort((a, b) => b.width - a.width);
+  return [...sharp, ...fair, ...rest];
 }
+var UA = { "user-agent": "SlideCraft (https://github.com/eiler2005/slidecraft)" };
+var DOWNLOAD_TRIES = 4;
 async function listStock(jobs, provider, limit = 6) {
   const out = [];
   for (const job of jobs) {
@@ -217157,18 +217217,35 @@ async function fetchStock(jobs, provider, fetchImpl = fetch, pick2 = 1) {
   const out = { found: [], failed: [] };
   for (const job of jobs) {
     try {
-      let hit;
+      let ranked = [];
       let used = job.query;
       for (const q of fallbackQueries(job.query)) {
         const hits = await provider.search(q);
-        hit = pick2 > 1 ? hits.filter((h) => h.width >= 1e3 && h.width >= h.height)[pick2 - 1] : pickHit(hits);
+        const chosen = pick2 > 1 ? hits.filter((h) => h.width >= 1e3 && h.width >= h.height)[pick2 - 1] : void 0;
+        ranked = pick2 > 1 ? chosen ? [chosen] : [] : rankHits(hits);
         used = q;
-        if (hit) break;
+        if (ranked.length) break;
       }
-      if (!hit) throw new Error(`no photo found for "${job.query}"`);
-      const res = await fetchImpl(hit.url);
-      if (!res.ok) throw new Error(`download ${res.status}`);
-      const buf = Buffer.from(await res.arrayBuffer());
+      if (!ranked.length) throw new Error(`no photo found for "${job.query}"`);
+      let best;
+      let lastError = "";
+      for (const hit2 of ranked.slice(0, DOWNLOAD_TRIES)) {
+        const res = await fetchImpl(hit2.url, { headers: UA }).catch((e) => e);
+        if (res instanceof Error || !res.ok) {
+          lastError = res instanceof Error ? res.message : `download ${res.status}`;
+          continue;
+        }
+        const buf2 = Buffer.from(await res.arrayBuffer());
+        const size2 = pngSize(buf2);
+        if (!size2) {
+          lastError = "download is not a JPEG or PNG image";
+          continue;
+        }
+        if (!best || size2.w > best.width) best = { hit: hit2, buf: buf2, width: size2.w };
+        if (size2.w >= SHARP_WIDTH && size2.w >= size2.h) break;
+      }
+      if (!best) throw new Error(lastError || `no photo found for "${job.query}"`);
+      const { hit, buf } = best;
       const ext2 = buf[0] === 137 && buf[1] === 80 ? ".png" : ".jpg";
       const image = job.image.replace(/\.[a-z]+$/, ext2);
       const file2 = job.file.replace(/\.[a-z]+$/, ext2);
@@ -219081,6 +219158,29 @@ async function readPdfSample(file2) {
     notes: []
   };
 }
+function flatShare(pixels) {
+  const count = /* @__PURE__ */ new Map();
+  let n = 0;
+  for (let i = 0; i < pixels.length; i += 4) {
+    if (pixels[i + 3] < 128) continue;
+    const k = pixels[i] << 16 | pixels[i + 1] << 8 | pixels[i + 2];
+    count.set(k, (count.get(k) ?? 0) + 1);
+    n++;
+  }
+  let mode = 0;
+  let best = 0;
+  for (const [k, c] of count)
+    if (c > best) {
+      best = c;
+      mode = k;
+    }
+  const [r, g, b] = [mode >> 16, mode >> 8 & 255, mode & 255];
+  let near = 0;
+  for (let i = 0; i < pixels.length; i += 4)
+    if (pixels[i + 3] >= 128 && Math.abs(pixels[i] - r) <= 3 && Math.abs(pixels[i + 1] - g) <= 3 && Math.abs(pixels[i + 2] - b) <= 3)
+      near++;
+  return n ? near / n : 0;
+}
 async function readImageSample(file2) {
   const data = readFileSync35(file2);
   const mime = /\.png$/i.test(file2) ? "image/png" : /\.webp$/i.test(file2) ? "image/webp" : "image/jpeg";
@@ -219119,7 +219219,7 @@ async function readImageSample(file2) {
         b = Math.max(b, y);
       }
     }
-  if (top.weight < 0.35)
+  if (top.weight < 0.35 || flatShare(pixels) < 0.15)
     return {
       kind: "image",
       photo: true,

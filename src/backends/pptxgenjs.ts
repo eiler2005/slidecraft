@@ -19,7 +19,7 @@ import type {
   TextNode,
   TextStyle,
 } from '../engine/scene.ts';
-import { in2pt } from '../engine/scene.ts';
+import { coverPlacement, in2pt } from '../engine/scene.ts';
 import { spacingMultiple } from '../engine/text.ts';
 import { VERSION } from '../paths.ts';
 import { pngSize } from '../qa/pptx-verify.ts';
@@ -360,6 +360,20 @@ async function addImage(slide: Slide, n: Extract<SceneNode, { kind: 'image' }>) 
     // proportions so cover/contain crop exactly like the HTML and PDF engines (otherwise the
     // photo is stretched to the box).
     const px = pngSize(readFileSync(n.path));
+    if (px && n.fit === 'cover' && n.focus) {
+      // a focal point: crop an explicit window from the picture at its drawn size
+      const p = coverPlacement({ w: px.w, h: px.h }, { x: 0, y: 0, w, h }, n.focus);
+      slide.addImage({
+        path: n.path,
+        x,
+        y,
+        w: p.w,
+        h: p.h,
+        altText: n.alt,
+        sizing: { type: 'crop', x: -p.x, y: -p.y, w, h },
+      });
+      return;
+    }
     const ih = px ? (w * px.h) / px.w : h;
     slide.addImage({
       path: n.path,

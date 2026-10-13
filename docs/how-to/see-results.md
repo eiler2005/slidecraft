@@ -70,6 +70,6 @@ similarity and edge-detail similarity, at 1600 px. Green is ≥ 95 % (the target
 red below 90 %. The metric is strict on purpose — a 1 px shift of a text line costs several
 points — so read it together with the images and the review report.
 
-On the run of 2026-10-11 the Digital Ruble rebuild met the target on all 22 pages
-(98.5–99.8 %); the generated decks averaged 89 % per page, visually close at normal size,
+On the run of 2026-10-13 the Digital Ruble rebuild met the target on all 22 pages
+(98.5–99.8 %); the generated decks averaged 87 % per page (90 % across all 103 pages), visually close at normal size,
 with sub-pixel glyph edges and native chart labels as the remaining differences.

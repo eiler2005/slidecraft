@@ -475,6 +475,41 @@
                     "additionalProperties": false,
                     "description": "Photo credit; shown with the slide sources, in the notes and in the manifest"
                   },
+                  "imageFocus": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "left",
+                          "center",
+                          "right",
+                          "top",
+                          "bottom"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "x": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "y": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          }
+                        },
+                        "required": [
+                          "x",
+                          "y"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ],
+                    "description": "Which part of the picture stays in view when it is cropped to the slot: left, center, right, top, bottom, or { x, y } from 0 to 1 (default center)"
+                  },
                   "alt": {
                     "description": "Alt text of the cover picture; without it the picture is decorative",
                     "type": "string",
@@ -1552,6 +1587,41 @@
                     ],
                     "additionalProperties": false,
                     "description": "Photo credit; shown with the slide sources, in the notes and in the manifest"
+                  },
+                  "imageFocus": {
+                    "anyOf": [
+                      {
+                        "type": "string",
+                        "enum": [
+                          "left",
+                          "center",
+                          "right",
+                          "top",
+                          "bottom"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "x": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          },
+                          "y": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                          }
+                        },
+                        "required": [
+                          "x",
+                          "y"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ],
+                    "description": "Which part of the picture stays in view when it is cropped to the slot: left, center, right, top, bottom, or { x, y } from 0 to 1 (default center)"
                   },
                   "caption": {
                     "description": "Small line under the image: what it shows and where it was taken",

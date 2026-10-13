@@ -81,7 +81,8 @@ Results go to `calibration/REPORT.md` (committed) and `tests/.output/calibration
 | Probe: baselines, generated spacing | 1.19 pt (exact, centred) | **0.064 pt** (exported as multiples) |
 | Probe: word positions | 0.19 pt | **0.09 pt** |
 | Corpus: rebuilt editable PPTX ↔ original | 8/22 pages ≥ 95 % | **22/22** (98.5–99.8 %) |
-| Corpus: generated HTML ↔ PPTX, mean page score | 78.6 % | **89.2 %** (medians 78–93 %) |
+| Corpus: all 103 pages, mean page score | 78.6 % | **90.0 %** |
+| Corpus: generated HTML ↔ PPTX, mean page score | — | **87.4 %** (medians 87–93 %) |
 
 The generated decks are visually indistinguishable at normal viewing size, but they do not
 yet reach the strict 95 % per page: remaining differences are sub-pixel glyph edges, native

@@ -1,6 +1,6 @@
 {
   "tool": "slidecraft",
-  "version": "0.6.0",
+  "version": "0.7.2",
   "deck": {
     "id": "fde-engineer-ru",
     "title": "FDE-инженеры превращают ИИ-пилоты в работающие продукты",
@@ -41,7 +41,7 @@
       "path": "fde-engineer-ru.pptx",
       "kind": "pptx",
       "engine": "pptxgenjs",
-      "sha256": "0fe5f37af2a807e0628c6e915d1357926cdd9a1c19ec53f23f5dd8b117c0da72"
+      "sha256": "e5e5203f29218a49ef018ebe78e7fe9f683604dfebd811e11d7b2b2fa649cb3f"
     },
     {
       "path": "previews/01-cover.png",
@@ -71,25 +71,25 @@
       "path": "previews/05-profile.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "eeb9cf423ba0da5bba07b83fcc50b77618a083c01da512147ec2c41779f1f1e4"
+      "sha256": "cb67a5ca3214f19dc58b847c7e3771284dee7996505b9b494d08cbc471676716"
     },
     {
       "path": "previews/06-ask.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "45f22f49662db672438056b1c39efa73257336d80086c9ee78375810ffac11a2"
+      "sha256": "053c781a104ee2bcb180f1e3923aaf6a242b239e920332cf373ec3398516753d"
     },
     {
       "path": "fde-engineer-ru.html",
       "kind": "html",
       "engine": "html",
-      "sha256": "b6b0bcd2db3768fefb97632304bb4a705af409894564b4d628a0185ff18fe2e1"
+      "sha256": "846d66f8341ee95fbb1b8ef2070a1da6ef42a6a30f71e4ec1bc179370206f365"
     },
     {
       "path": "fde-engineer-ru.pdf",
       "kind": "pdf",
       "engine": "native",
-      "sha256": "254845423bf25d9ea00226cb761737315352fd6eb3285b6e53f80f1692c35439"
+      "sha256": "1ffba6cd0d45870570861ea5126b579124effbee4b4da293ee053c5301823ede"
     }
   ],
   "checks": {

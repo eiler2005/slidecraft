@@ -159,6 +159,36 @@ export async function readPdfSample(file: string): Promise<SampleEvidence> {
   };
 }
 
+/** Share of pixels within ±3 per channel of the most common exact colour. */
+function flatShare(pixels: Uint8Array | Uint8ClampedArray): number {
+  const count = new Map<number, number>();
+  let n = 0;
+  for (let i = 0; i < pixels.length; i += 4) {
+    if (pixels[i + 3]! < 128) continue;
+    const k = (pixels[i]! << 16) | (pixels[i + 1]! << 8) | pixels[i + 2]!;
+    count.set(k, (count.get(k) ?? 0) + 1);
+    n++;
+  }
+  let mode = 0;
+  let best = 0;
+  for (const [k, c] of count)
+    if (c > best) {
+      best = c;
+      mode = k;
+    }
+  const [r, g, b] = [mode >> 16, (mode >> 8) & 255, mode & 255];
+  let near = 0;
+  for (let i = 0; i < pixels.length; i += 4)
+    if (
+      pixels[i + 3]! >= 128 &&
+      Math.abs(pixels[i]! - r) <= 3 &&
+      Math.abs(pixels[i + 1]! - g) <= 3 &&
+      Math.abs(pixels[i + 2]! - b) <= 3
+    )
+      near++;
+  return n ? near / n : 0;
+}
+
 export async function readImageSample(file: string): Promise<SampleEvidence> {
   const data = readFileSync(file);
   const mime = /\.png$/i.test(file)
@@ -206,7 +236,10 @@ export async function readImageSample(file: string): Promise<SampleEvidence> {
     }
   // A slide or page screenshot has one flat background covering much of it; a photograph
   // does not. From a photo only the colours are taken — the page stays light and readable.
-  if (top.weight < 0.35)
+  // A dark, muted photo can still fall into one colour cluster, so flatness decides too:
+  // a screenshot's background is one exact colour (≥ 0.5 of the pixels within ±3, even as a
+  // JPEG), a photograph's most common colour covers under 0.1.
+  if (top.weight < 0.35 || flatShare(pixels) < 0.15)
     return {
       kind: 'image',
       photo: true,

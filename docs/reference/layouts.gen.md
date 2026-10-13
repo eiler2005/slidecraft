@@ -82,6 +82,7 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 | `imageCredit.licenseUrl` | string |  | ≤ 300 chars |  |
 | `imageCredit.source` | string | yes | ≤ 400 chars | Page of the photo at the provider |
 | `imageCredit.title` | string |  | ≤ 200 chars |  |
+| `imageFocus` | `left` \| `center` \| `right` \| `top` \| `bottom` \| object |  |  | Which part of the picture stays in view when it is cropped to the slot: left, center, right, top, bottom, or { x, y } from 0 to 1 (default center) |
 | `alt` | string |  | ≤ 140 chars | Alt text of the cover picture; without it the picture is decorative |
 
 <details><summary>Example</summary>
@@ -333,6 +334,7 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 | `imageCredit.licenseUrl` | string |  | ≤ 300 chars |  |
 | `imageCredit.source` | string | yes | ≤ 400 chars | Page of the photo at the provider |
 | `imageCredit.title` | string |  | ≤ 200 chars |  |
+| `imageFocus` | `left` \| `center` \| `right` \| `top` \| `bottom` \| object |  |  | Which part of the picture stays in view when it is cropped to the slot: left, center, right, top, bottom, or { x, y } from 0 to 1 (default center) |
 | `caption` | string |  | ≤ 120 chars | Small line under the image: what it shows and where it was taken |
 | `alt` | string | yes | ≤ 140 chars | Alt text for the image: what it shows, for screen readers |
 

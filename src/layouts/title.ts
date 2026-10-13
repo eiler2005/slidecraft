@@ -3,7 +3,7 @@ import { isAbsolute, resolve } from 'node:path';
 import { z } from 'zod';
 import { diag } from '../qa/codes.ts';
 import { COVER_ART, drawCoverArt, pickCoverArt } from './cover-art.ts';
-import { creditLine, ImageCredit, ImageQuery } from './image-credit.ts';
+import { creditLine, focusPoint, ImageCredit, ImageFocus, ImageQuery } from './image-credit.ts';
 import type { LayoutDef } from './types.ts';
 
 const schema = z
@@ -42,6 +42,7 @@ const schema = z
       ),
     imageQuery: ImageQuery.optional(),
     imageCredit: ImageCredit.optional(),
+    imageFocus: ImageFocus.optional(),
     alt: z
       .string()
       .max(140)
@@ -111,7 +112,11 @@ export const title: LayoutDef<typeof schema> = {
       const panel = { x: panelX, y: 0, w: page.w - panelX, h: page.h };
       const file = c.image && (isAbsolute(c.image) ? c.image : resolve(ctx.baseDir, c.image));
       if (file && existsSync(file)) {
-        const img = ctx.image(panel, c.image, c.alt ?? '', { fit: 'cover', field: 'image' });
+        const img = ctx.image(panel, c.image, c.alt ?? '', {
+          fit: 'cover',
+          field: 'image',
+          ...(focusPoint(c.imageFocus) ? { focus: focusPoint(c.imageFocus)! } : {}),
+        });
         if (!c.alt) img.decorative = true;
         if (c.imageCredit) {
           // the photo credit sits on the picture, bottom left, on a dark band

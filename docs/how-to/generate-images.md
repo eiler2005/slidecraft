@@ -39,7 +39,7 @@ Real photos instead of generated ones: give the slot a search phrase, not a prom
   layout: title
   title: Forward Deployed Engineers turn AI pilots into working products
   imageQuery: laptop code screen desk
-  alt: An engineer's desk with several monitors showing code and a laptop
+  alt: A laptop showing code next to a book on a desk by the window
 ```
 
 ```sh
@@ -52,14 +52,14 @@ slidecraft images deck.yaml --stock wikimedia          # one provider: openverse
 |---|---|---|
 | `auto` (default) | none | Openverse and Wikimedia Commons together; photos ≥ 1600 px wide come first |
 | `openverse` | none | Creative Commons and public domain that allow **commercial use and changes** (crop); no NC/ND |
-| `wikimedia` | none | Wikimedia Commons originals (a 2400 px rendition is downloaded): CC0, public domain, CC BY, CC BY-SA only |
+| `wikimedia` | none | Wikimedia Commons originals (a 1920 px rendition is downloaded): CC0, public domain, CC BY, CC BY-SA only |
 | `pexels` | `PEXELS_API_KEY` | Pexels License |
 | `pixabay` | `PIXABAY_API_KEY` | Pixabay Content License |
 
 The command writes `image:` and `imageCredit:` (author, provider, licence, licence link, page of
 the photo) back into the YAML. The credit then appears:
 
-- on the slide — with the sources ("Photo: Yutaka Tsutano / Openverse · Flickr, CC BY 2.0"),
+- on the slide — with the sources ("Photo: Ehud Neuhaus paramir / Wikimedia Commons, CC0"),
   or on a dark band over the picture on the cover;
 - in the speaker notes' `[Sources]` block, with the photo page;
 - in `dist/manifest.json` under `imageCredits`.
@@ -74,3 +74,12 @@ save it as `assets/<slide-id>.png`. Generated pictures are illustrations, never 
 avoid identifiable private people and brand logos, then `--pick`. A long phrase is shortened word
 by word until something matches; the result says which query matched. Photos narrower than about
 1600 px look soft on a full-height cover panel (`SC-IMG-001`).
+
+**Choose what stays in view.** A landscape photo on the tall cover panel loses two thirds of its
+width. If the subject is not in the middle, set `imageFocus: left` (or `right`, `top`, `bottom`,
+`{ x: 0.2, y: 0.5 }`); PowerPoint, the PDF and the HTML crop the same window.
+
+**Sizes are measured, not trusted.** A listing can show the original's size while its link serves
+a 1024 px preview (Rawpixel on Openverse does this). The download is measured: if it is narrower
+than 1600 px, the next candidate is tried (up to four) and the widest download is kept. With
+`--pick` the chosen photo is taken as it is, so check its size in the result.

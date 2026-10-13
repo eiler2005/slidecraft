@@ -20,7 +20,7 @@ Parity 78.1%; hotspots: row 1, column 1 (93.0%), row 1, column 2 (78.1%), row 1,
 Layout `exec-summary`. Fonts: Arial.
 
 Images: [PowerPoint](02-system-pptx.png) · [HTML](02-system-html.png) · [difference](02-system-diff.png)
-Parity 85.2%; hotspots: row 1, column 3 (88.7%), row 1, column 4 (87.2%), row 3, column 1 (89.1%), row 4, column 1 (88.8%), row 4, column 2 (85.3%), row 4, column 3 (85.2%), row 4, column 4 (88.9%).
+Parity 85.2%; hotspots: row 1, column 3 (88.7%), row 1, column 4 (87.2%), row 3, column 1 (90.3%), row 4, column 1 (88.8%), row 4, column 2 (85.3%), row 4, column 3 (85.2%), row 4, column 4 (88.9%).
 
 - contrast 5.45:1 (needs 4.5:1) — Select a model and define what it can see in eac [detail]
 - contrast 5.45:1 (needs 4.5:1) — Retrieve trusted, current enterprise information [detail]
@@ -41,7 +41,7 @@ Parity 85.2%; hotspots: row 1, column 3 (88.7%), row 1, column 4 (87.2%), row 3,
 Layout `key-points`. Fonts: Arial.
 
 Images: [PowerPoint](03-tokens-context-pptx.png) · [HTML](03-tokens-context-html.png) · [difference](03-tokens-context-diff.png)
-Parity 75.8%; hotspots: row 2, column 1 (75.8%), row 2, column 2 (76.4%), row 2, column 3 (76.4%), row 2, column 4 (76.3%), row 4, column 1 (89.8%), row 4, column 4 (94.8%).
+Parity 89.8%; hotspots: row 4, column 1 (89.8%), row 4, column 4 (94.8%).
 
 - contrast 5.45:1 (needs 4.5:1) — Source:  OpenAI — Tokens and tokenization [source]
 - almost aligned (left, 3.8 pt): MODEL FUNDAMENTALS [tracker] ↔ path [icon]
@@ -59,7 +59,7 @@ Parity 75.8%; hotspots: row 2, column 1 (75.8%), row 2, column 2 (76.4%), row 2,
 Layout `key-points`. Fonts: Arial.
 
 Images: [PowerPoint](04-training-inference-pptx.png) · [HTML](04-training-inference-html.png) · [difference](04-training-inference-diff.png)
-Parity 74.3%; hotspots: row 1, column 4 (94.5%), row 2, column 1 (76.7%), row 2, column 2 (78.1%), row 2, column 3 (78.4%), row 2, column 4 (74.3%), row 4, column 1 (89.2%), row 4, column 2 (82.4%), row 4, column 4 (94.3%).
+Parity 82.4%; hotspots: row 1, column 4 (94.5%), row 4, column 1 (89.2%), row 4, column 2 (82.4%), row 4, column 4 (94.3%).
 
 - contrast 5.45:1 (needs 4.5:1) — Source:  Vaswani et al. — Attention Is All You N [source]
 - almost aligned (left, 3.8 pt): MODEL LIFECYCLE [tracker] ↔ path [icon]

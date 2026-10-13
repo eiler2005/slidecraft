@@ -12,6 +12,7 @@ Layout `title`. Fonts: Arial.
 Images: [PowerPoint](01-cover-pptx.png) · [HTML](01-cover-html.png) · [difference](01-cover-diff.png)
 Parity 78.1%; hotspots: row 1, column 1 (94.1%), row 1, column 2 (89.1%), row 1, column 3 (78.1%), row 1, column 4 (78.1%), row 2, column 1 (92.1%), row 2, column 2 (93.9%), row 3, column 1 (92.1%), row 3, column 2 (93.1%).
 
+- warning SC-COVER-001: The cover has no visual — it was not chosen from options
 - contrast 5.45:1 (needs 4.5:1) — A one-hour session for mixed project teams befor [subtitle]
 - contrast 5.45:1 (needs 4.5:1) — Strategy & Engineering   ·   October 2026 [meta]
 
@@ -34,7 +35,7 @@ Parity 82.2%; hotspots: row 1, column 2 (94.1%), row 3, column 1 (92.4%), row 3,
 Layout `exec-summary`. Fonts: Arial.
 
 Images: [PowerPoint](03-how-to-read-pptx.png) · [HTML](03-how-to-read-html.png) · [difference](03-how-to-read-diff.png)
-Parity 88.6%; hotspots: row 1, column 3 (88.6%), row 1, column 4 (92.5%), row 4, column 1 (92.9%), row 4, column 2 (94.1%).
+Parity 88.6%; hotspots: row 1, column 3 (88.6%), row 1, column 4 (92.5%), row 4, column 1 (93.1%), row 4, column 2 (94.1%).
 
 - contrast 5.45:1 (needs 4.5:1) — Slides 4–5 cover the context window and training [detail]
 - contrast 5.45:1 (needs 4.5:1) — Slides 6–8 cover RAG, fine-tuning versus prompti [detail]
@@ -55,7 +56,7 @@ Parity 88.6%; hotspots: row 1, column 3 (88.6%), row 1, column 4 (92.5%), row 4,
 Layout `key-points`. Fonts: Arial.
 
 Images: [PowerPoint](04-tokens-context-pptx.png) · [HTML](04-tokens-context-html.png) · [difference](04-tokens-context-diff.png)
-Parity 72.1%; hotspots: row 1, column 2 (93.7%), row 1, column 3 (94.9%), row 2, column 1 (80.1%), row 2, column 2 (80.0%), row 2, column 3 (72.4%), row 2, column 4 (72.1%), row 4, column 1 (82.6%), row 4, column 2 (82.6%), row 4, column 3 (82.3%), row 4, column 4 (94.3%).
+Parity 82.3%; hotspots: row 1, column 2 (93.7%), row 1, column 3 (94.9%), row 4, column 1 (82.6%), row 4, column 2 (82.6%), row 4, column 3 (82.3%), row 4, column 4 (94.3%).
 
 - contrast 5.45:1 (needs 4.5:1) — Source:  OpenAI platform documentation — models  [source]
 
@@ -64,7 +65,7 @@ Parity 72.1%; hotspots: row 1, column 2 (93.7%), row 1, column 3 (94.9%), row 2,
 Layout `key-points`. Fonts: Arial.
 
 Images: [PowerPoint](05-train-vs-inference-pptx.png) · [HTML](05-train-vs-inference-html.png) · [difference](05-train-vs-inference-diff.png)
-Parity 65.1%; hotspots: row 1, column 2 (93.5%), row 2, column 1 (78.7%), row 2, column 2 (80.7%), row 2, column 3 (72.4%), row 2, column 4 (65.1%), row 4, column 1 (82.6%), row 4, column 2 (82.5%), row 4, column 3 (81.8%).
+Parity 81.8%; hotspots: row 1, column 2 (93.5%), row 4, column 1 (82.6%), row 4, column 2 (82.5%), row 4, column 3 (81.8%).
 
 - contrast 5.45:1 (needs 4.5:1) — Source:  OpenAI platform documentation — models  [source]
 
@@ -182,7 +183,7 @@ Parity 92.0%; hotspots: row 1, column 2 (94.9%), row 1, column 3 (94.1%), row 4,
 Layout `next-steps`. Fonts: Arial.
 
 Images: [PowerPoint](12-ship-gates-pptx.png) · [HTML](12-ship-gates-html.png) · [difference](12-ship-gates-diff.png)
-Parity 84.5%; hotspots: row 1, column 2 (93.9%), row 3, column 1 (85.2%), row 3, column 2 (91.2%), row 4, column 1 (84.5%), row 4, column 2 (88.7%), row 4, column 3 (91.9%).
+Parity 84.5%; hotspots: row 1, column 2 (93.9%), row 3, column 1 (85.2%), row 3, column 2 (91.7%), row 4, column 1 (84.5%), row 4, column 2 (88.1%), row 4, column 3 (91.9%).
 
 - contrast 5.45:1 (needs 4.5:1) — Product lead · Before kickoff [meta]
 - contrast 5.45:1 (needs 4.5:1) — Engineering lead · Before kickoff [meta]

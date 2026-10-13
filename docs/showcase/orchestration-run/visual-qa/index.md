@@ -12,7 +12,7 @@ Layout `title`. Fonts: Arial.
 Images: [PowerPoint](01-cover-pptx.png) · [HTML](01-cover-html.png) · [difference](01-cover-diff.png)
 Parity 96.1%.
 
-- no measured issues
+- warning SC-COVER-001: The cover has no visual — it was not chosen from options
 
 ## 2 · problem — Every third truck on the road is driving with empty space
 

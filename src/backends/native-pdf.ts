@@ -8,7 +8,14 @@ import { join } from 'node:path';
 import PDFDocument from 'pdfkit';
 import { chartAlt } from '../engine/alt.ts';
 import { type Face, faceOf, fontPath, measureFontIds } from '../engine/fonts.ts';
-import type { Master, Scene, SceneNode, Stroke, TextNode } from '../engine/scene.ts';
+import {
+  coverPlacement,
+  type Master,
+  type Scene,
+  type SceneNode,
+  type Stroke,
+  type TextNode,
+} from '../engine/scene.ts';
 import { pathData } from '../engine/svg-path.ts';
 import type { MeasureFont } from '../spec/theme.ts';
 import { rasterize, rasterizeOpaque } from './resvg.ts';
@@ -204,7 +211,11 @@ async function drawNode(doc: Doc, n: SceneNode): Promise<void> {
       }
       doc.save();
       doc.rect(x * P, y * P, w * P, h * P).clip();
-      if (n.fit === 'cover')
+      const img = buf as { width?: number; height?: number };
+      if (n.fit === 'cover' && n.focus && img.width && img.height) {
+        const p = coverPlacement({ w: img.width, h: img.height }, n.box, n.focus);
+        doc.image(buf as Buffer, p.x * P, p.y * P, { width: p.w * P, height: p.h * P });
+      } else if (n.fit === 'cover')
         doc.image(buf as Buffer, x * P, y * P, {
           cover: [w * P, h * P],
           align: 'center',

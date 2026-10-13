@@ -10,3 +10,7 @@ Review pack for 12 slides (Microsoft PowerPoint via AppleScript (jobs run in its
 
 Round 1: ready-with-notes. Independent review of the deck Codex made from one prompt, unedited: 12 slides as asked, an action-title chain, every concept sourced, icons and native exhibits, no check findings. Notes are about choices, not defects. Findings: 4 (2 fixed, 1 for the user).
 
+## 2026-10-13 11:57:17 · visual-qa
+
+Review pack for 12 slides (Microsoft PowerPoint via AppleScript (jobs run in its sandbox container: no access prompts)); 12 page(s) below 95 % PowerPoint↔HTML parity. Sources snapshotted: deck.yaml.
+

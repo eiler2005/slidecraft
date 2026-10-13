@@ -58,7 +58,7 @@ Parity 82.2%; hotspots: row 2, column 1 (93.9%), row 4, column 1 (89.4%), row 4,
 Layout `key-points`. Fonts: Arial.
 
 Images: [PowerPoint](05-profile-pptx.png) · [HTML](05-profile-html.png) · [difference](05-profile-diff.png)
-Parity 82.2%; hotspots: row 2, column 1 (89.8%), row 2, column 2 (91.0%), row 2, column 3 (94.6%), row 2, column 4 (90.6%), row 4, column 1 (89.4%), row 4, column 2 (82.2%).
+Parity 82.2%; hotspots: row 4, column 1 (89.4%), row 4, column 2 (82.2%).
 
 - contrast 5.45:1 (needs 4.5:1) — Источник:  What is a Forward Deployed AI Enginee [source]
 
@@ -67,7 +67,7 @@ Parity 82.2%; hotspots: row 2, column 1 (89.8%), row 2, column 2 (91.0%), row 2,
 Layout `next-steps`. Fonts: Arial.
 
 Images: [PowerPoint](06-ask-pptx.png) · [HTML](06-ask-html.png) · [difference](06-ask-diff.png)
-Parity 86.8%; hotspots: row 3, column 1 (86.8%), row 3, column 2 (92.9%).
+Parity 86.8%; hotspots: row 3, column 1 (86.8%), row 3, column 2 (93.6%), row 4, column 2 (93.4%).
 
 - contrast 5.45:1 (needs 4.5:1) — Руководитель по ИИ · Месяц 1 [meta]
 - contrast 5.45:1 (needs 4.5:1) — CTO · Месяц 1 [meta]

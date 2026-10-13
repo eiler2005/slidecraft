@@ -1,6 +1,6 @@
 {
   "name": "@eiler2005/slidecraft",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "Describe the goal. Pick a look. Ship a partner-ready deck. A Claude Code plugin and CLI that turns a brief into editable PPTX, vector PDF and HTML decks.",
   "type": "module",
   "license": "PolyForm-Shield-1.0.0",

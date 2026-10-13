@@ -85,7 +85,7 @@ This deck explains SlideCraft — and SlideCraft made it from [one `deck.yaml`](
 
 <p align="center"><b><a href="docs/showcase/slidecraft-overview.pdf">PDF</a></b> · <b><a href="docs/showcase/slidecraft-overview.pptx">PowerPoint</a></b> · <a href="docs/showcase/slidecraft-overview-onepager.pdf">one-page summary</a> · <a href="docs/examples.md">all examples</a></p>
 
-New here? [**Start here**](docs/start-here.md) — your first deck in ten minutes · [**What you can do**](docs/features.md) — capabilities by job to be done · [**Example library**](docs/examples.md) — six finished decks to copy
+New here? [**Start here**](docs/start-here.md) — your first deck in ten minutes · [**What you can do**](docs/features.md) — capabilities by job to be done · [**Example library**](docs/examples.md) — eleven finished decks to copy
 
 **See the results yourself:** a full run in every format with its review report in [`docs/showcase/orchestration-run/`](docs/showcase/orchestration-run/) · one deck in English and Russian made through the whole workflow in [`docs/showcase/fde-engineer/`](docs/showcase/fde-engineer/) ([example](examples/fde-engineer-en/README.md)) · originals next to SlideCraft's rebuilds and HTML, slide by slide, with `npm run comparison` → `comparison/index.html` · [where to find what](docs/how-to/see-results.md)
 
@@ -255,12 +255,14 @@ Methodology: [writing standard](library/references/writing-standard.md) · [visu
 
 ## Layout library
 
+46 layouts in six groups.
+
 | Group | Layouts |
 |---|---|
 | Frame | `title` (cover, closing) · `agenda` (agenda, section-divider) |
-| Message | `exec-summary` (SCR, key messages) · `key-points` · `big-statement` (statement, quote, hero number) · `text-image` · `text` · `before-after` · `freeform` (HTML/CSS, checked like any slide) |
-| Numbers | `kpi-tiles` · `chart-takeaway` (bar, column, stacked, line) · `waterfall` · `bubble-chart` (bubble, scatter, growth-share portfolio) · `marimekko` · `tornado` · `football-field` · `funnel` (funnel, pyramid) · `data-table` |
-| Decide | `options-comparison` (text, Harvey-ball rating, up to 5 options) · `matrix-2x2` · `swot` · `five-forces` · `pestel` · `business-model-canvas` · `issue-tree` (issue, driver) · `maturity-model` (grid, staircase) · `coverage-map` · `architecture` (zones + register) · `evidence-chain` · `risk-matrix` |
+| Message | `exec-summary` (SCR, key messages) · `key-points` (columns, cards, list) · `big-statement` (statement, quote, hero number) · `text-image` · `text` · `before-after` · `composition` (several exhibits in regions) · `native-canvas` (bespoke, editable shapes) · `freeform` · `freeform-canvas` (HTML/CSS, checked like any slide) |
+| Numbers | `kpi-tiles` · `chart-takeaway` (bar, column, stacked, line, combo bar + line) · `evidence-panorama` · `waterfall` · `bubble-chart` (bubble, scatter, growth-share portfolio) · `marimekko` · `tornado` · `football-field` · `funnel` (funnel, pyramid) · `data-table` |
+| Decide | `options-comparison` (text, Harvey-ball rating, up to 5 options) · `matrix-2x2` · `swot` · `five-forces` · `pestel` · `business-model-canvas` · `value-chain` · `seven-s` (McKinsey 7S) · `issue-tree` (issue, driver) · `maturity-model` (grid, staircase) · `coverage-map` · `architecture` (zones + register) · `evidence-chain` · `risk-matrix` |
 | Sequence | `process-steps` (chevrons, numbered) · `timeline` (milestones, gantt) · `gate-matrix` · `process-compare` (current vs proposed) · `cadence` (role calendar) · `callout` (numbered callouts on a screenshot) |
 | People · Close | `team-cards` · `org-chart` · `raci` · `next-steps` (decision, actions) |
 
@@ -279,8 +281,11 @@ Shipped in 0.5:
 Shipped in 0.7:
 - **pictures and icons:** licensed stock photos (Openverse, Pexels, Pixabay) with credits on the slide, in the notes and the manifest; 114 editable icons;
 - **a theme from a sample:** colours, fonts and margins from a PDF, a screenshot or a website;
-- **more frameworks:** value chain, McKinsey 7S, combo bar + line chart (42 layouts);
-- **numbers that add up:** totals, periods and units checked across the deck.
+- **more frameworks:** value chain, McKinsey 7S, combo bar + line chart (46 layouts now);
+- **numbers that add up:** totals, periods and units checked across the deck;
+- **covers you choose:** 2–3 cover options compared before building; a cover without a visual is flagged;
+- **sharp, well-cropped photos:** Wikimedia Commons and Openverse without a key, download sizes measured, `imageFocus` keeps the subject in view;
+- **tested from one prompt:** the README prompt run unedited in Codex and Claude Code, with an independent review of each.
 
 Shipped in 0.6:
 - **PowerPoint-exact text:** measured Office rules shared by HTML and PPTX, a calibration mode and a 10-deck corpus gate;
@@ -292,7 +297,7 @@ Next: live preview, table sync, presenter tools. See [ROADMAP.md](ROADMAP.md).
 
 ## Contributing
 
-Issues and PRs welcome — new layouts, themes and storylines especially. Start with [CONTRIBUTING.md](CONTRIBUTING.md); `npm run check` runs lint, types and 1,100+ tests, including pixel-hash visual regression of every layout.
+Issues and PRs welcome — new layouts, themes and storylines especially. Start with [CONTRIBUTING.md](CONTRIBUTING.md); `npm run check` runs lint, types and 1,200+ tests, including pixel-hash visual regression of every layout.
 
 ## License
 

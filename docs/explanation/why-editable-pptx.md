@@ -23,7 +23,7 @@ model lacks:
 
 - a method — answer first, action titles, one message per slide, the right exhibit for the
   claim, 14 storylines for common tasks;
-- contracts — 42 layouts with measured limits, so text fits without truncating;
+- contracts — 46 layouts with measured limits, so text fits without truncating;
 - PowerPoint's own text rules, calibrated against real Office output, so the HTML preview and
   the PPTX break lines the same way;
 - checks — sources on every number, the same number everywhere, totals that add up, contrast;

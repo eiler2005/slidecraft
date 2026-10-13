@@ -145,7 +145,7 @@ ${[
   files.push([
     'ph-5-library.png',
     page(
-      `${text('42 layouts · 14 storylines · 7 themes — or your brand', 60, 80, 32, INK, 'bold')}
+      `${text('46 layouts · 14 storylines · 7 themes — or your brand', 60, 80, 32, INK, 'bold')}
 ${text('Value chain, 7S, waterfall, Marimekko, gantt, 2×2, combo charts… Icons, stock photos, a theme from any PDF or website.', 60, 116, 18, MUTED)}
 <image x="60" y="150" width="1150" height="560" preserveAspectRatio="xMidYMid meet" href="${png('docs/gallery/strategy-recommendation--consulting-classic.png')}"/>`,
     ),

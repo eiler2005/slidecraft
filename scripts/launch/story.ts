@@ -6,6 +6,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { rasterPixels } from '../../src/backends/resvg.ts';
+import { LAYOUTS } from '../../src/layouts/index.ts';
 import type { Frame } from './gif.ts';
 
 const W = 960;
@@ -339,7 +340,7 @@ export async function storyFrames(s: StoryInput, scale = 4 / 3): Promise<Frame[]
         slideImg(png(p), gx + (i % 4) * (gw + 16), 88 + Math.floor(i / 4) * (gh + 14), gw),
       )
       .join('');
-  const cap4 = '42 measured layouts — text fits, nothing is shrunk';
+  const cap4 = `${LAYOUTS.length} measured layouts — text fits, nothing is shrunk`;
   await add(stage(grid(4), 3, cap4), 650);
   await add(stage(grid(8), 3, cap4), 650, false);
   await add(stage(grid(s.slides.length), 3, cap4), 2400, false);

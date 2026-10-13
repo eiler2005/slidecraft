@@ -2,6 +2,12 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+- **Gallery site is a landing page:** the tagline, the explainer GIF, the one prompt with a Copy button (read from the README at build time, so the two never disagree), three featured decks, then the gallery; Open Graph and Twitter card tags with a 1280×640 social preview, and a favicon.
+- **README** opens with the GIF, a one-line pitch and the one-prompt section; the longer description follows under "What SlideCraft is".
+
 ## [0.7.3] — 2026-10-13
 
 ### Added

@@ -39,3 +39,13 @@ describe('docs links', () => {
     });
   }
 });
+
+describe('gallery site landing', () => {
+  it('takes the one-prompt block from the README, so the two never disagree', async () => {
+    const { onePrompt } = await import('../src/site.ts');
+    const p = onePrompt();
+    expect(p).toMatch(/^Study the repository https:\/\/github\.com\/eiler2005\/slidecraft/);
+    expect(p).toContain('Topic: [');
+    expect(p).not.toContain('```');
+  });
+});

@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="docs/media/hero.png" alt="SlideCraft — six slides from the example decks in six themes: an executive summary, a hero number, a revenue waterfall, a 2×2 competition matrix, a gantt roadmap and a lessons slide" width="100%">
-</p>
+<p align="center"><img src="docs/media/launch/slidecraft-story.gif" alt="SlideCraft in 30 seconds: the problem with AI slides, one prompt, the action-title chain, cover options, the built deck, a total that does not add up being caught, and the editable PowerPoint with native chart and sources in the notes" width="100%"></p>
 
 <p align="center">
   <a href="https://github.com/eiler2005/slidecraft/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/eiler2005/slidecraft/ci.yml?branch=main&label=CI&style=flat&labelColor=0B1F3A&color=1F5FBF"></a>
@@ -12,25 +10,13 @@
 </p>
 
 <p align="center">
-  <b>Describe the goal. Pick a look. Ship a partner-ready deck.</b><br>
+  <b>Editable PowerPoint decks from one prompt.</b> Describe the goal, pick a look, ship a partner-ready deck.<br>
   <a href="#the-easiest-way-one-prompt">One prompt</a> · <a href="#install">Install</a> · <a href="docs/tutorials/first-deck-in-10-minutes.md">First deck in 10 minutes</a> · <a href="https://eiler2005.github.io/slidecraft/">Gallery site</a> · <a href="docs/README.md">Docs</a> · <a href="ROADMAP.md">Roadmap</a> · <a href="CHANGELOG.md">Changelog</a>
 </p>
 
 ---
 
-**SlideCraft** turns a goal into a consulting-grade presentation. You say what the deck must achieve and for whom. SlideCraft proposes templates for the task, builds the storyline and a ghost deck of action titles for you to approve, then writes the slides and renders them to an **editable PowerPoint, an accessible vector PDF and a self-contained HTML deck** — plus a one-pager and a Word memo when readers read rather than watch. A partner-style review closes the loop.
-
-It works with **any AI agent or LLM that can run a command**:
-- **Claude Code** — a plugin with skills and model-tiered agents;
-- **OpenAI Codex** — installable skills;
-- **Claude Desktop, Cursor, VS Code, Windsurf, Gemini CLI** — an MCP server, connected with one `install` command;
-- **Aider or your own scripts** — through [`AGENTS.md`](AGENTS.md) and a JSON CLI.
-
-It works from **your material**: numbers come from your Excel or CSV files and are written once, sources cite the page of the report they come from, and text a colleague edits in PowerPoint flows back into the deck.
-
-Underneath is one **zero-install CLI**. Every layout is measured with metric-compatible fonts, so text that fits in SlideCraft fits in PowerPoint — verified line by line against real PowerPoint output.
-
-<p align="center"><img src="docs/media/launch/slidecraft-story.gif" alt="SlideCraft in 30 seconds: the problem with AI slides, one prompt, the action-title chain, cover options, the built deck, a total that does not add up being caught, and the editable PowerPoint with native chart and sources in the notes" width="100%"></p>
+Paste [one prompt](#the-easiest-way-one-prompt) into ChatGPT, Claude or Codex and get an **editable PowerPoint** — action titles, sourced numbers and a review before hand-off. Not a picture of slides.
 
 ## The easiest way: one prompt
 
@@ -52,6 +38,24 @@ building, cite a source for every number, then give me the .pptx and a PDF.
 ```
 
 The assistant runs `npx @eiler2005/slidecraft` on its side, writes the deck, checks it and hands you an editable PowerPoint. **Tested with Codex and Claude Code** on exactly this prompt — see what each made, unedited, with an independent review: [Codex](examples/llm-concepts/README.md) · [Claude Code](examples/llm-concepts-claude/README.md). ChatGPT in agent mode and Claude.ai with code execution follow the same `AGENTS.md`; we have not run them ourselves yet. The content can be in any language. A chat without code execution can still write the `deck.yaml`; build it yourself with `npx @eiler2005/slidecraft build deck.yaml`. For repeat work, install it into your assistant ([install](#install)).
+
+## What SlideCraft is
+
+<p align="center">
+  <img src="docs/media/hero.png" alt="SlideCraft — six slides from the example decks in six themes: an executive summary, a hero number, a revenue waterfall, a 2×2 competition matrix, a gantt roadmap and a lessons slide" width="100%">
+</p>
+
+**SlideCraft** turns a goal into a consulting-grade presentation. You say what the deck must achieve and for whom. SlideCraft proposes templates for the task, builds the storyline and a ghost deck of action titles for you to approve, then writes the slides and renders them to an **editable PowerPoint, an accessible vector PDF and a self-contained HTML deck** — plus a one-pager and a Word memo when readers read rather than watch. A partner-style review closes the loop.
+
+It works with **any AI agent or LLM that can run a command**:
+- **Claude Code** — a plugin with skills and model-tiered agents;
+- **OpenAI Codex** — installable skills;
+- **Claude Desktop, Cursor, VS Code, Windsurf, Gemini CLI** — an MCP server, connected with one `install` command;
+- **Aider or your own scripts** — through [`AGENTS.md`](AGENTS.md) and a JSON CLI.
+
+It works from **your material**: numbers come from your Excel or CSV files and are written once, sources cite the page of the report they come from, and text a colleague edits in PowerPoint flows back into the deck.
+
+Underneath is one **zero-install CLI**. Every layout is measured with metric-compatible fonts, so text that fits in SlideCraft fits in PowerPoint — verified line by line against real PowerPoint output.
 
 ## Why an editable PowerPoint from one prompt
 

@@ -1,5 +1,6 @@
 /**
- * Launch media: Product Hunt gallery images (1270×760) and the icon (240×240), composed from
+ * Launch media: Product Hunt gallery images (1270×760), the social preview (1280×640, GitHub card
+ * and og:image) and the icon (240×240), composed from
  * real renders in docs/showcase. The README GIF comes from scripts/launch/gif-story.ts. Run after the example decks are built:
  *   npx tsx scripts/launch/media.ts
  */
@@ -152,12 +153,28 @@ ${text('Value chain, 7S, waterfall, Marimekko, gantt, 2×2, combo charts… Icon
 
   for (const [name, svg] of files) writeFileSync(join(OUT, name), await rasterize(svg, 1270));
 
+  // social preview (GitHub repository card, og:image of the site): 1280×640
+  const social = page(
+    `${text('SlideCraft', 64, 92, 28, '#8FB3E8', 'bold')}
+${text('Editable PowerPoint decks', 64, 158, 50, '#FFFFFF', 'bold')}
+${text('from one prompt', 64, 220, 50, '#FFFFFF', 'bold')}
+${text('ChatGPT · Claude · Codex — action titles, sourced numbers, a review before hand-off', 64, 268, 21, '#C7D3E3')}
+${slide(png(`${v2}/01-cover.png`), 64, 318, 360)}
+${slide(png(`${v2}/03-value-chain.png`), 460, 318, 360)}
+${slide(png(`${v2}/07-pilot-plan.png`), 856, 318, 360)}
+${text('github.com/eiler2005/slidecraft', 64, 600, 20, '#8FB3E8')}`,
+    true,
+    1280,
+    640,
+  );
+  writeFileSync(join(OUT, 'social-preview.png'), await rasterize(social, 1280));
+
   // icon: a slide with a rising chevron, in the brand blue
   const icon = `<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240"><rect width="240" height="240" rx="52" fill="${NAVY}"/><rect x="44" y="64" width="152" height="112" rx="10" fill="#FFFFFF"/><rect x="60" y="82" width="64" height="9" rx="4" fill="${NAVY}"/><rect x="60" y="98" width="44" height="6" rx="3" fill="#B9C7DA"/><rect x="62" y="140" width="18" height="22" fill="#B9C7DA"/><rect x="88" y="128" width="18" height="34" fill="#7F9CC4"/><rect x="114" y="114" width="18" height="48" fill="${BLUE}"/><polyline points="146,150 162,132 178,112" fill="none" stroke="${BLUE}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   writeFileSync(join(OUT, 'icon-240.png'), await rasterize(icon, 240));
 
   // the explainer GIF is scripts/launch/gif-story.ts
-  console.log(`✔ ${files.length} gallery images and the icon`);
+  console.log(`✔ ${files.length} gallery images, the social preview and the icon`);
 }
 
 await main(process.argv[2] ?? 'llm-concepts');

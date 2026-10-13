@@ -62,6 +62,7 @@
     "test:digital-ruble": "tsx scripts/digital-ruble-regression.ts",
     "calibrate": "tsx scripts/calibrate.ts",
     "icons": "tsx scripts/icons.ts",
+    "launch:gif": "tsx scripts/launch/gif-story.ts",
     "comparison": "tsx scripts/comparison.ts"
   },
   "devDependencies": {

@@ -101,8 +101,9 @@ function lzw(index: Uint8Array): number[] {
   if (bits > 0) out.push(acc & 0xff);
   const blocks: number[] = [];
   for (let i = 0; i < out.length; i += 255) {
-    const chunk = out.slice(i, i + 255);
-    blocks.push(chunk.length, ...chunk);
+    const n = Math.min(255, out.length - i);
+    blocks.push(n);
+    for (let j = 0; j < n; j++) blocks.push(out[i + j]!);
   }
   blocks.push(0);
   return blocks;
@@ -130,7 +131,8 @@ export function encodeGif(frames: Frame[]): Uint8Array {
     u16(H);
     bytes.push(0x87); // local colour table, 256 entries
     for (const p of palette) bytes.push(p[0]!, p[1]!, p[2]!);
-    bytes.push(8, ...lzw(index));
+    bytes.push(8);
+    for (const b of lzw(index)) bytes.push(b);
   }
   bytes.push(0x3b);
   return Uint8Array.from(bytes);

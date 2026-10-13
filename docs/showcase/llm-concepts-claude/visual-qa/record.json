@@ -1,0 +1,51 @@
+[
+  {
+    "reviewer": "visual-reviewer (Claude Opus 5.5)",
+    "verdict": "ready-with-notes",
+    "summary": "Independent review of the deck Claude Code made from one prompt on its second run (the first run delivered ghost slides): 12 sourced slides with a clear title chain, dense on two slides, a plain cover, and specific numbers whose sources the user should confirm.",
+    "findings": [
+      {
+        "slide": "rag, agents-loop",
+        "severity": "major",
+        "area": "color",
+        "issue": "Numbers of the steps that are not highlighted had 2.46:1 contrast (SC-CONTRAST-001)",
+        "fix": "shared: numbered process steps keep their large numbers at 3:1 while they recede",
+        "status": "fixed"
+      },
+      {
+        "slide": "cover",
+        "severity": "minor",
+        "area": "template",
+        "issue": "The cover has no visual: the cover choice step was skipped",
+        "fix": "Run `slidecraft covers` and choose; the rule is in AGENTS.md",
+        "status": "needs-user"
+      },
+      {
+        "slide": "hallucinations, evaluation",
+        "severity": "minor",
+        "area": "layout",
+        "issue": "172 and 174 words on one slide (SC-DENSITY-001)",
+        "fix": "Move detail to the notes or split the slide",
+        "status": "needs-user"
+      },
+      {
+        "slide": "why-now, tokens-context, ship-gates",
+        "severity": "minor",
+        "area": "meaning",
+        "issue": "Specific figures (token sizes, context windows, a 44% survey figure, OWASP ranking) are attributed to vendor pages and reports the reviewer cannot verify",
+        "fix": "Check each figure against its source before external use",
+        "status": "needs-user"
+      },
+      {
+        "slide": "all",
+        "severity": "minor",
+        "area": "parity",
+        "issue": "Key-point headings sit about 1 px apart in PowerPoint and the browser",
+        "fix": "known shared gap (calibration open item)",
+        "status": "open"
+      }
+    ],
+    "round": 1,
+    "changes": []
+  }
+]

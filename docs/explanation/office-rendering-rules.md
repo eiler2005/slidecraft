@@ -56,6 +56,8 @@ explicit extension.
 
 ## Open items (measured, not yet modelled)
 
+- **Key-point headings** (18 pt bold, two lines) sit about 1 px apart in PowerPoint and the browser in every generated deck reviewed in October 2026 (FDE v2, both LLM-concepts examples). Visible at 100 % zoom; next calibration probe should include bold multi-line headings at 16–20 pt.
+
 - Native chart text (axis and data labels) is placed by PowerPoint's chart engine and sits
   up to ~1 px away from the Scene primitives.
 - Authored exact spacing in imported decks: the typo-ascent model leaves ±1 pt on some

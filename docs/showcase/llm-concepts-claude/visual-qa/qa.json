@@ -1,0 +1,1633 @@
+{
+  "dir": "docs/showcase/llm-concepts-claude/visual-qa",
+  "deck": "examples/llm-concepts-claude/deck.yaml",
+  "theme": "consulting-classic",
+  "renderer": "Microsoft PowerPoint via AppleScript (jobs run in its sandbox container: no access prompts)",
+  "target": 0.95,
+  "slides": [
+    {
+      "slide": 1,
+      "id": "cover",
+      "title": "Key concepts for LLMs and AI agents: the shared vocabulary your first project needs",
+      "layout": "title",
+      "images": {
+        "html": "01-cover-html.png",
+        "pptx": "01-cover-pptx.png",
+        "diff": "01-cover-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.7810457516339869,
+        "hotspots": [
+          {
+            "region": "row 1, column 1",
+            "score": 0.941,
+            "box": {
+              "x": 0,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 2",
+            "score": 0.891,
+            "box": {
+              "x": 239.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 3",
+            "score": 0.781,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 4",
+            "score": 0.781,
+            "box": {
+              "x": 719.98,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 1",
+            "score": 0.921,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 2",
+            "score": 0.939,
+            "box": {
+              "x": 239.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 1",
+            "score": 0.921,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 2",
+            "score": 0.931,
+            "box": {
+              "x": 239.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "A one-hour session for mixed project teams befor [subtitle]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Strategy & Engineering   ·   October 2026 [meta]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 2,
+      "id": "why-now",
+      "title": "Agree on ten concepts before kickoff, or re-litigate them in change-requests later",
+      "layout": "exec-summary",
+      "images": {
+        "html": "02-why-now-html.png",
+        "pptx": "02-why-now-pptx.png",
+        "diff": "02-why-now-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8219971827444161,
+        "hotspots": [
+          {
+            "region": "row 1, column 2",
+            "score": 0.941,
+            "box": {
+              "x": 239.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 1",
+            "score": 0.924,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 2",
+            "score": 0.867,
+            "box": {
+              "x": 239.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 3",
+            "score": 0.87,
+            "box": {
+              "x": 479.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 4",
+            "score": 0.878,
+            "box": {
+              "x": 719.98,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.822,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "SITUATION [label]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "COMPLICATION [label]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Source:  McKinsey Global Survey on AI 2024 (2024 [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "SITUATION [label]",
+          "b": "Our team is preparing its first AI project. Mana [body]",
+          "edge": "top",
+          "deltaPt": 2.9
+        },
+        {
+          "a": "COMPLICATION [label]",
+          "b": "The same words mean different things across the  [body]",
+          "edge": "top",
+          "deltaPt": 2.9
+        },
+        {
+          "a": "RESOLUTION [label]",
+          "b": "Spend one hour now aligning on ten concepts — ea [answer]",
+          "edge": "top",
+          "deltaPt": 2.9
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 3,
+      "id": "how-to-read",
+      "title": "One concept per slide, each tied to the project decision it drives",
+      "layout": "exec-summary",
+      "images": {
+        "html": "03-how-to-read-html.png",
+        "pptx": "03-how-to-read-pptx.png",
+        "diff": "03-how-to-read-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8856224653049075,
+        "hotspots": [
+          {
+            "region": "row 1, column 3",
+            "score": 0.886,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 4",
+            "score": 0.925,
+            "box": {
+              "x": 719.98,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.929,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.941,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Slides 4–5 cover the context window and training [detail]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Slides 6–8 cover RAG, fine-tuning versus prompti [detail]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Slides 9–10 cover function calling and the agent [detail]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Slides 11–12 cover test-set evaluation, guardrai [detail]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Source:  The Minto Pyramid Principle: Logic in W [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "1 [number]",
+          "b": "How an LLM works: tokens and training shape what [headline]",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "1 [number]",
+          "b": "Slides 4–5 cover the context window and training [detail]",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "2 [number]",
+          "b": "How you shape its behaviour: retrieval, promptin [headline]",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "2 [number]",
+          "b": "Slides 6–8 cover RAG, fine-tuning versus prompti [detail]",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "3 [number]",
+          "b": "How you extend it into an agent: function calls  [headline]",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "3 [number]",
+          "b": "Slides 9–10 cover function calling and the agent [detail]",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "4 [number]",
+          "b": "How you ship it responsibly: evaluation, guardra [headline]",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "4 [number]",
+          "b": "Slides 11–12 cover test-set evaluation, guardrai [detail]",
+          "edge": "top",
+          "deltaPt": 1.4
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 4,
+      "id": "tokens-context",
+      "title": "The context window caps what the model reads at once, so it caps your document and prompt design",
+      "layout": "key-points",
+      "images": {
+        "html": "04-tokens-context-html.png",
+        "pptx": "04-tokens-context-pptx.png",
+        "diff": "04-tokens-context-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.7205212012108997,
+        "hotspots": [
+          {
+            "region": "row 1, column 2",
+            "score": 0.937,
+            "box": {
+              "x": 239.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 3",
+            "score": 0.949,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 1",
+            "score": 0.801,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 2",
+            "score": 0.8,
+            "box": {
+              "x": 239.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 3",
+            "score": 0.724,
+            "box": {
+              "x": 479.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 4",
+            "score": 0.721,
+            "box": {
+              "x": 719.98,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.826,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.826,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 3",
+            "score": 0.823,
+            "box": {
+              "x": 479.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 4",
+            "score": 0.943,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Source:  OpenAI platform documentation — models  [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 5,
+      "id": "train-vs-inference",
+      "title": "Training is a sunk cost you rarely pay; inference is the per-request bill you always pay",
+      "layout": "key-points",
+      "images": {
+        "html": "05-train-vs-inference-html.png",
+        "pptx": "05-train-vs-inference-pptx.png",
+        "diff": "05-train-vs-inference-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.6511941004471964,
+        "hotspots": [
+          {
+            "region": "row 1, column 2",
+            "score": 0.935,
+            "box": {
+              "x": 239.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 1",
+            "score": 0.787,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 2",
+            "score": 0.807,
+            "box": {
+              "x": 239.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 3",
+            "score": 0.724,
+            "box": {
+              "x": 479.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 4",
+            "score": 0.651,
+            "box": {
+              "x": 719.98,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.826,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.825,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 3",
+            "score": 0.818,
+            "box": {
+              "x": 479.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Source:  OpenAI platform documentation — models  [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 6,
+      "id": "rag",
+      "title": "Retrieval, not re-training, is the default way to put your data in front of the model",
+      "layout": "process-steps",
+      "images": {
+        "html": "06-rag-html.png",
+        "pptx": "06-rag-pptx.png",
+        "diff": "06-rag-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8326158292363348,
+        "hotspots": [
+          {
+            "region": "row 1, column 3",
+            "score": 0.927,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.833,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.835,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 3",
+            "score": 0.835,
+            "box": {
+              "x": 479.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 4",
+            "score": 0.844,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "01",
+          "ratio": 3.02,
+          "needs": 3,
+          "fg": "#7796C6",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Data pipeline",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "02",
+          "ratio": 3.02,
+          "needs": 3,
+          "fg": "#7796C6",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Application",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "03",
+          "ratio": 3.02,
+          "needs": 3,
+          "fg": "#7796C6",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Application",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Application",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "05",
+          "ratio": 3.02,
+          "needs": 3,
+          "fg": "#7796C6",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Application",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Source:  Retrieval-Augmented Generation for Know [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [
+        "#7796C6"
+      ],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 7,
+      "id": "ft-vs-prompting",
+      "title": "Try prompting first; fine-tune only when prompting plateaus on a stable task",
+      "layout": "options-comparison",
+      "images": {
+        "html": "07-ft-vs-prompting-html.png",
+        "pptx": "07-ft-vs-prompting-pptx.png",
+        "diff": "07-ft-vs-prompting-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.9012175152056484,
+        "hotspots": [
+          {
+            "region": "row 3, column 2",
+            "score": 0.901,
+            "box": {
+              "x": 239.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 3",
+            "score": 0.948,
+            "box": {
+              "x": 479.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 4",
+            "score": 0.906,
+            "box": {
+              "x": 719.98,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.916,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.912,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "RECOMMENDED",
+          "ratio": 5.11,
+          "needs": 4.5,
+          "fg": "#1F5FBF",
+          "bg": "#E3ECF9"
+        },
+        {
+          "text": "Instructions in text only",
+          "ratio": 4.57,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#E3ECF9"
+        },
+        {
+          "text": "Retrieval adds live data to each prompt",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Model weights updated on your examples",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Source:  OpenAI platform documentation — models  [source]",
+          "ratio": 1.12,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#1F5FBF"
+        }
+      ],
+      "offPalette": [
+        "#23364F"
+      ],
+      "nearMisalignments": [
+        {
+          "a": "What it changes",
+          "b": "Instructions and examples in text",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "What it changes",
+          "b": "Adds relevant docs at request time",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "What it changes",
+          "b": "Model weights retrained on labelled pairs",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "Setup time",
+          "b": "Hours to days",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "Setup time",
+          "b": "Days to weeks (pipeline build)",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "Setup time",
+          "b": "Weeks (labelling + training run)",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "Update cost when data changes",
+          "b": "Edit a text file; instant",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "Update cost when data changes",
+          "b": "Re-embed changed documents",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "Update cost when data changes",
+          "b": "Re-run training; high cost",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "When to use",
+          "b": "Always try first",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "When to use",
+          "b": "Data changes; facts must stay current",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "When to use",
+          "b": "Prompting plateaued; stable high-volume task",
+          "edge": "top",
+          "deltaPt": 1.4
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 8,
+      "id": "hallucinations",
+      "title": "Treat confident wrong answers as a product risk and mitigate with retrieval, structure and checks",
+      "layout": "key-points",
+      "images": {
+        "html": "08-hallucinations-html.png",
+        "pptx": "08-hallucinations-pptx.png",
+        "diff": "08-hallucinations-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.845332310593349,
+        "hotspots": [
+          {
+            "region": "row 3, column 1",
+            "score": 0.948,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 4",
+            "score": 0.945,
+            "box": {
+              "x": 719.98,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.845,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.853,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [
+        {
+          "code": "SC-DENSITY-001",
+          "severity": "warning",
+          "message": "172 words on one slide (aim for under 120)"
+        }
+      ],
+      "contrast": [
+        {
+          "text": "Source:  OpenAI platform documentation — models  [source]",
+          "ratio": 4.98,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#F2F5F9"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 9,
+      "id": "tools-function-calling",
+      "title": "Function calling turns the model from a writer into an actor on your systems",
+      "layout": "process-steps",
+      "images": {
+        "html": "09-tools-function-calling-html.png",
+        "pptx": "09-tools-function-calling-pptx.png",
+        "diff": "09-tools-function-calling-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8558783801679158,
+        "hotspots": [
+          {
+            "region": "row 1, column 3",
+            "score": 0.942,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 4",
+            "score": 0.908,
+            "box": {
+              "x": 719.98,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 1",
+            "score": 0.945,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 4",
+            "score": 0.948,
+            "box": {
+              "x": 719.98,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.856,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.86,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "User",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Model",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Application",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Application",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Model",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Source:  OpenAI platform documentation — models  [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "HOW YOU EXTEND IT [tracker]",
+          "b": "A user asks something requiring live data or an ",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "HOW YOU EXTEND IT [tracker]",
+          "b": "User",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "Function calling turns the model from a writer i [title]",
+          "b": "A user asks something requiring live data or an ",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "Function calling turns the model from a writer i [title]",
+          "b": "User",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "A user asks something requiring live data or an ",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "User",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "A user asks something requiring live data or an ",
+          "b": "Source:  OpenAI platform documentation — models  [source]",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "User",
+          "b": "Source:  OpenAI platform documentation — models  [source]",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Given available functions with descriptions, the",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Model",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Your application code receives the call, validat",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Application",
+          "edge": "left",
+          "deltaPt": 3.6
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 10,
+      "id": "agents-loop",
+      "title": "An agent is a loop that plans, acts and checks itself; memory decides how far it can go",
+      "layout": "process-steps",
+      "images": {
+        "html": "10-agents-loop-html.png",
+        "pptx": "10-agents-loop-pptx.png",
+        "diff": "10-agents-loop-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8230557361796161,
+        "hotspots": [
+          {
+            "region": "row 1, column 3",
+            "score": 0.885,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.823,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.824,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 3",
+            "score": 0.823,
+            "box": {
+              "x": 479.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "01",
+          "ratio": 3.02,
+          "needs": 3,
+          "fg": "#7796C6",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "02",
+          "ratio": 3.02,
+          "needs": 3,
+          "fg": "#7796C6",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "03",
+          "ratio": 3.02,
+          "needs": 3,
+          "fg": "#7796C6",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "05",
+          "ratio": 3.02,
+          "needs": 3,
+          "fg": "#7796C6",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Source:  ReAct: Synergizing Reasoning and Acting [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [
+        "#7796C6"
+      ],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 11,
+      "id": "evaluation",
+      "title": "If you cannot measure quality on a fixed test set, you cannot ship or improve the system",
+      "layout": "key-points",
+      "images": {
+        "html": "11-evaluation-html.png",
+        "pptx": "11-evaluation-pptx.png",
+        "diff": "11-evaluation-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.9204033047417101,
+        "hotspots": [
+          {
+            "region": "row 1, column 2",
+            "score": 0.949,
+            "box": {
+              "x": 239.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 3",
+            "score": 0.941,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.92,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.935,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [
+        {
+          "code": "SC-DENSITY-001",
+          "severity": "warning",
+          "message": "174 words on one slide (aim for under 120)"
+        }
+      ],
+      "contrast": [
+        {
+          "text": "Source:  Stanford HAI AI Index Report 2024 (2024 [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "Build a frozen test set before writing any promp [heading]",
+          "b": "Fixed Q&A pairs created before build are your on [body]",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "Mix automated metrics with human review [heading]",
+          "b": "Automated checks — exact match, semantic similar [body]",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "Run the test set before every change, not just a [heading]",
+          "b": "Prompt changes, model upgrades and new data can  [body]",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "Monitor production quality after launch [heading]",
+          "b": "A static test set cannot cover the full distribu [body]",
+          "edge": "top",
+          "deltaPt": 1.4
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 12,
+      "id": "ship-gates",
+      "title": "Guardrails, cost and latency are the three gates every AI feature passes before launch",
+      "layout": "next-steps",
+      "images": {
+        "html": "12-ship-gates-html.png",
+        "pptx": "12-ship-gates-pptx.png",
+        "diff": "12-ship-gates-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.845332310593349,
+        "hotspots": [
+          {
+            "region": "row 1, column 2",
+            "score": 0.939,
+            "box": {
+              "x": 239.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 1",
+            "score": 0.852,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 2",
+            "score": 0.912,
+            "box": {
+              "x": 239.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.845,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.887,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 3",
+            "score": 0.919,
+            "box": {
+              "x": 479.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Product lead · Before kickoff [meta]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Engineering lead · Before kickoff [meta]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Engineering lead · Before kickoff [meta]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Project sponsor · Before launch [meta]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "To be named · At launch [meta]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Source:  OpenAI platform documentation — models  [source]",
+          "ratio": 1.12,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#1F5FBF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "Confirm alignment on these ten concepts, assign  [decision]",
+          "b": "Set inference cost budget per request; configure [action]",
+          "edge": "top",
+          "deltaPt": 2.4
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [
+        {
+          "text": "Define guardrails: prompt injection tests, PII m [action]",
+          "fill": 1
+        },
+        {
+          "text": "Set inference cost budget per request; configure [action]",
+          "fill": 1
+        },
+        {
+          "text": "Agree latency SLA and identify caching or fallba [action]",
+          "fill": 1
+        },
+        {
+          "text": "Schedule pre-launch eval review against frozen t [action]",
+          "fill": 1
+        },
+        {
+          "text": "Assign on-call owner for post-launch monitoring  [action]",
+          "fill": 1
+        }
+      ],
+      "fonts": [
+        "Arial"
+      ]
+    }
+  ],
+  "deckFacts": {
+    "titleTopSpreadPt": 0,
+    "paletteSize": 9,
+    "pagesBelowTarget": 12
+  }
+}

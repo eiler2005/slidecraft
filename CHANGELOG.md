@@ -2,6 +2,19 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.7.1] — 2026-10-13
+
+### Fixed
+- **Ghost decks no longer pass silently:** every slide still marked `status: ghost` reports `SC-GHOST-001` (and says when its content is already written); AGENTS.md defines when a deck is done. Found by running the README prompt in Claude Code, which handed over a deck of sketches.
+- **Cover options** render as finished covers, also while the deck is still a ghost deck.
+- **Template recommender:** explainer, primer and key-concepts briefs rank `training-workshop` first; with no matching words, general storylines lead instead of alphabetical order.
+- **Stock photos:** large photos first, ≥ 1600 px preferred for full-height panels; when no photo is found, `--stock` generates from the slide's `imagePrompt` or explains how to.
+- `rasterPixels` renders text (fonts loaded).
+
+### Added
+- `examples/llm-concepts` — a deck Codex made from the README prompt alone, unedited, with an independent review; the one-prompt path is verified with Codex and Claude Code.
+- Launch kit (`docs/launch/`), gallery images and the README GIF (`scripts/launch/`, own GIF encoder); example covers on the site open the HTML deck; Discussions and a feature-request template.
+
 ## [0.7.0] — 2026-10-12
 
 ### Added

@@ -16,6 +16,7 @@
       "!docs/showcase/orchestration-run",
       "!docs/showcase/fde-engineer",
       "!docs/showcase/llm-concepts",
+      "!docs/showcase/llm-concepts-claude",
       "!comparison"
     ]
   },

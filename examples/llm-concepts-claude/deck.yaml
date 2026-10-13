@@ -1,0 +1,320 @@
+# SlideCraft deck — schema: schemas/deck.v1.json
+schemaVersion: 1
+id: llm-ai-agents-vocabulary
+title: "Key concepts for LLMs and AI agents: the shared vocabulary your first project needs"
+storyline: research-readout
+theme: consulting-classic
+status: final
+language: en
+sources:
+  - id: openai-docs
+    title: "OpenAI platform documentation — models and pricing"
+    publisher: OpenAI
+    date: "2024"
+    url: "https://platform.openai.com/docs/models"
+    illustrative: false
+  - id: anthropic-docs
+    title: "Anthropic Claude model documentation"
+    publisher: Anthropic
+    date: "2024"
+    url: "https://docs.anthropic.com/claude"
+    illustrative: false
+  - id: lewis-2020
+    title: "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+    publisher: "Lewis et al., arXiv"
+    date: "2020"
+    url: "https://arxiv.org/abs/2005.11401"
+    illustrative: false
+  - id: hf-docs
+    title: "Hugging Face fine-tuning and embeddings documentation"
+    publisher: "Hugging Face"
+    date: "2024"
+    url: "https://huggingface.co/docs"
+    illustrative: false
+  - id: react-2022
+    title: "ReAct: Synergizing Reasoning and Acting in Language Models"
+    publisher: "Yao et al., arXiv"
+    date: "2022"
+    url: "https://arxiv.org/abs/2210.03629"
+    illustrative: false
+  - id: mckinsey-2024
+    title: "McKinsey Global Survey on AI 2024"
+    publisher: McKinsey
+    date: "2024"
+    url: "https://www.mckinsey.com/capabilities/quantumblack/our-insights/state-of-ai"
+    illustrative: false
+  - id: stanford-2024
+    title: "Stanford HAI AI Index Report 2024"
+    publisher: "Stanford HAI"
+    date: "2024"
+    url: "https://aiindex.stanford.edu/report/"
+    illustrative: false
+  - id: google-ai-docs
+    title: "Google AI — Gemini and long context documentation"
+    publisher: "Google DeepMind"
+    date: "2024"
+    url: "https://ai.google.dev/models"
+    illustrative: false
+  - id: owasp-llm-2025
+    title: "OWASP LLM Top 10 2025"
+    publisher: "OWASP Foundation"
+    date: "2025"
+    url: "https://owasp.org/www-project-top-10-for-large-language-model-applications/"
+    illustrative: false
+  - id: minto-1987
+    title: "The Minto Pyramid Principle: Logic in Writing, Thinking and Problem Solving"
+    publisher: "Barbara Minto"
+    date: "1987"
+    illustrative: false
+slides:
+  - id: cover
+    layout: title
+    variant: cover
+    title: "Key concepts for LLMs and AI agents: the shared vocabulary your first project needs"
+    status: draft
+    kicker: "Pre-kickoff alignment · AI fundamentals"
+    subtitle: "A one-hour session for mixed project teams before writing the first prompt or line of code"
+    presenter: "Strategy & Engineering"
+    date: "October 2026"
+    notes: |-
+      Welcome the room and set expectations: this session covers ten concepts that will appear in every AI project conversation. The goal is not to make everyone an AI engineer but to ensure managers and engineers use the same words to mean the same things. Each slide introduces one concept and ties it to a concrete project decision. Expect questions; the vocabulary is new but the underlying logic is familiar.
+
+  - id: why-now
+    layout: exec-summary
+    variant: scr
+    title: "Agree on ten concepts before kickoff, or re-litigate them in change-requests later"
+    status: draft
+    tracker: Framing
+    sources: [mckinsey-2024]
+    situation: "Our team is preparing its first AI project. Managers own scope, risk and budget; engineers own the build. Both sides have read vendor material and feel ready."
+    complication: "The same words mean different things across the table. 'Fine-tuning' is rarely the right first move; 'token' is a billing unit to one person and a model internal to another. These gaps become change-requests once the build starts."
+    resolution: "Spend one hour now aligning on ten concepts — each tied to a project decision — so scope, cost and acceptance criteria rest on shared ground before a single line of code is written."
+    notes: |-
+      Open with this slide to earn the room's attention. The complication is the real hook: misaligned vocabulary is not a soft problem — it shows up as change-requests and cost overruns. The ten concepts we will cover are: tokens and context window, training vs inference, embeddings and RAG, fine-tuning vs prompting, hallucinations, function calling, agents, evaluation, guardrails, and cost and latency. Each one maps to a project decision the team will face.
+
+  - id: how-to-read
+    layout: exec-summary
+    variant: key-messages
+    title: "One concept per slide, each tied to the project decision it drives"
+    status: draft
+    tracker: Framing
+    sources: [minto-1987]
+    messages:
+      - headline: "How an LLM works: tokens and training shape what the model holds and when costs land"
+        detail: "Slides 4–5 cover the context window and training versus inference — the two facts that govern prompt design and per-request budgeting."
+      - headline: "How you shape its behaviour: retrieval, prompting and hallucination controls are your levers"
+        detail: "Slides 6–8 cover RAG, fine-tuning versus prompting, and hallucination mitigation — the decisions that determine data pipeline design and quality controls."
+      - headline: "How you extend it into an agent: function calls and loops turn answers into actions"
+        detail: "Slides 9–10 cover function calling and the agent plan-act-observe loop — the decisions that open your internal APIs and set automation boundaries."
+      - headline: "How you ship it responsibly: evaluation, guardrails and economics decide what goes live"
+        detail: "Slides 11–12 cover test-set evaluation, guardrails, cost and latency — the gate criteria every AI feature must clear before launch."
+    notes: |-
+      Use this slide as the deck map. The four branches form a logical build: you must understand what the model is before you shape it, shape it before you extend it, and extend it before you ship it. Point to each branch and name the slides it covers so the audience can follow along. This also sets the expectation that every concept will end with a 'decision this drives' statement.
+
+  - id: tokens-context
+    layout: key-points
+    variant: columns
+    title: "The context window caps what the model reads at once, so it caps your document and prompt design"
+    status: draft
+    tracker: How an LLM works
+    sources: [openai-docs, anthropic-docs, google-ai-docs]
+    points:
+      - heading: "A token is roughly four characters of English text"
+        body: "Models read tokens, not words. One token is about four characters in English. A 1,000-word document is roughly 1,300 tokens. This determines how much text fits in a single request."
+        metric: "~4 chars"
+      - heading: "Context windows span 8K to 1M tokens across vendors"
+        body: "GPT-4o: 128K; Claude: 200K; Gemini: 1M tokens. The window holds your system prompt, retrieved docs and question. Larger windows enable bigger documents and longer histories."
+        metric: "8K–1M"
+      - heading: "Overflow forces a choice: chunk, summarise or retrieve"
+        body: "When content exceeds the window, choose: compress via summarisation, split into chunks, or retrieve only relevant passages. This choice is the first architectural decision in your data pipeline."
+    notes: |-
+      Anchor this with a physical analogy: the context window is a whiteboard in the room — the model can only reason about what is written on it right now, not what is in a filing cabinet. Everything the model will use in this request must fit on that whiteboard. The practical implication: long contracts, large codebases or big datasets cannot be handed to the model wholesale. The data pipeline must be designed around the window size. Source: OpenAI platform docs, Anthropic docs for vendor-specific window sizes.
+
+  - id: train-vs-inference
+    layout: key-points
+    variant: columns
+    title: "Training is a sunk cost you rarely pay; inference is the per-request bill you always pay"
+    status: draft
+    tracker: How an LLM works
+    sources: [openai-docs, anthropic-docs, stanford-2024]
+    points:
+      - heading: "Training is a one-off cost already paid by the vendor"
+        body: "Frontier models are trained on trillions of tokens at a cost of tens of millions of dollars (Stanford HAI AI Index 2024). That cost is built into vendor pricing — your team does not re-run training on a typical project."
+        metric: "One-off"
+      - heading: "Inference bills on every API call you make"
+        body: "You pay per token — input and output priced separately — on every user request. GPT-4o and Claude both operate this way (OpenAI, Anthropic pricing pages; vendor-dependent). Volume drives cost."
+        metric: "$/token"
+      - heading: "Budget for inference, not training"
+        body: "Retrieving your data at request time (RAG) is faster, cheaper and easier to update than fine-tuning. Model your inference cost: tokens per request times volume times per-token price."
+    notes: |-
+      This slide neutralises the most common misconception: that the team will need to train a model on company data. Almost no first project requires this. The decision this drives is budget: model inference costs — tokens per request multiplied by volume — and do not confuse that with a training investment. Source: Stanford HAI AI Index 2024 for training scale; OpenAI and Anthropic pricing pages for inference billing model.
+
+  - id: rag
+    layout: process-steps
+    variant: numbered
+    title: "Retrieval, not re-training, is the default way to put your data in front of the model"
+    status: draft
+    tracker: How you shape it
+    sources: [lewis-2020, openai-docs, hf-docs]
+    steps:
+      - title: "Embed your documents"
+        body: "Convert each document chunk into a vector capturing its meaning. An embedding model (e.g. OpenAI text-embedding-3-small) processes your corpus once."
+        owner: "Data pipeline"
+      - title: "Embed the user's question"
+        body: "At request time, convert the user's question into a vector using the same model. Semantic similarity is now measurable across all chunks."
+        owner: "Application"
+      - title: "Retrieve the closest chunks"
+        body: "Find chunks whose vectors are closest to the question vector. A vector database returns the top-k most relevant passages in milliseconds."
+        owner: "Application"
+      - title: "Add chunks to the prompt"
+        body: "Put retrieved passages and the question into the context window. The model reads only the relevant content and answers from your data — no retraining."
+        owner: "Application"
+      - title: "Return and cite the answer"
+        body: "The model responds grounded in retrieved text. Ask it to cite sources, giving users a path to the original. Re-embed when documents change."
+        owner: "Application"
+    highlight: 3
+    notes: |-
+      RAG is the pattern that solves 'how do we use our internal documents without re-training?' Highlight step 4 as the insight: the model never stores your data — it reads it on each request from the context window. This means you can update documents without touching the model, and you can apply access controls at the retrieval layer. The practical decision this drives: do you have a document corpus, and what format is it in? RAG requires a chunking strategy, a refresh cadence and access control at retrieval. Source: Lewis et al. 2020 is the foundational RAG paper.
+
+  - id: ft-vs-prompting
+    layout: options-comparison
+    variant: text
+    title: "Try prompting first; fine-tune only when prompting plateaus on a stable task"
+    status: draft
+    tracker: How you shape it
+    sources: [openai-docs, hf-docs]
+    options:
+      - name: "Prompting"
+        summary: "Instructions in text only"
+      - name: "RAG"
+        summary: "Retrieval adds live data to each prompt"
+      - name: "Fine-tuning"
+        summary: "Model weights updated on your examples"
+    criteria:
+      - name: "What it changes"
+      - name: "Setup time"
+      - name: "Update cost when data changes"
+      - name: "When to use"
+    cells:
+      - ["Instructions and examples in text", "Adds relevant docs at request time", "Model weights retrained on labelled pairs"]
+      - ["Hours to days", "Days to weeks (pipeline build)", "Weeks (labelling + training run)"]
+      - ["Edit a text file; instant", "Re-embed changed documents", "Re-run training; high cost"]
+      - ["Always try first", "Data changes; facts must stay current", "Prompting plateaued; stable high-volume task"]
+    recommended: 0
+    verdict: "Start with prompting; add RAG when you need live data; fine-tune only on a stable proven task"
+    notes: |-
+      The key message is sequencing, not a permanent hierarchy. The audience often arrives expecting to fine-tune from day one because vendor marketing emphasises it. This slide reframes fine-tuning as a last resort after prompting and retrieval are exhausted. The practical gate for fine-tuning: you need hundreds of labelled examples, a stable task definition, and evidence that prompting has truly plateaued. Source: OpenAI and Anthropic official guides both recommend this sequence explicitly.
+
+  - id: hallucinations
+    layout: key-points
+    variant: cards
+    title: "Treat confident wrong answers as a product risk and mitigate with retrieval, structure and checks"
+    status: draft
+    tracker: How you shape it
+    sources: [openai-docs, anthropic-docs]
+    points:
+      - heading: "Ground answers in retrieved sources"
+        body: "RAG constrains the model to facts in the retrieved text. Ask it to cite passages. If no relevant source is found, the system should say so rather than improvise. Grounding is the most effective single mitigation."
+      - heading: "Constrain the output with schemas"
+        body: "Structured outputs (JSON schema, enum choices) remove space for invented values. Supply allowed labels for classification; supply field names and types for extraction. The model cannot hallucinate what it cannot choose."
+      - heading: "Check with a second pass or external lookup"
+        body: "For high-stakes outputs, a second model call asks: 'Is this answer supported by the provided sources?' Validate extracted values against a database. Adds cost and latency but is right for regulated decisions."
+      - heading: "Surface uncertainty honestly in the UX"
+        body: "When confidence is low, show it. Labels like 'not found in our documents' or 'consult a specialist' shift accountability appropriately. Hiding uncertainty is a product design choice that amplifies risk."
+    notes: |-
+      Hallucination is the concept that most worries managers and most surprises engineers the first time they see it. The frame here is product risk, not model failure: every product team ships with known defect rates; the question is how you measure and bound hallucination rates for this specific task. The mitigation list is ordered by effectiveness and cost: retrieval-grounding is free if you already have RAG; structured output is a small prompt change; the second-pass check is a deliberate cost decision. Source: OpenAI and Anthropic system cards acknowledge hallucination risk in their own documentation.
+
+  - id: tools-function-calling
+    layout: process-steps
+    variant: chevrons
+    title: "Function calling turns the model from a writer into an actor on your systems"
+    status: draft
+    tracker: How you extend it
+    sources: [openai-docs, anthropic-docs]
+    steps:
+      - title: "User sends a request"
+        body: "A user asks something requiring live data or an action — e.g. 'What is the status of order #4821?' The model cannot answer from memory alone."
+        owner: "User"
+      - title: "Model selects a tool"
+        body: "Given available functions with descriptions, the model decides which to call and what arguments to pass. It outputs structured JSON, not prose."
+        owner: "Model"
+      - title: "Application executes the call"
+        body: "Your application code receives the call, validates it, and runs the real function — a database query, API call, or file read. The model waits."
+        owner: "Application"
+      - title: "Result is returned to the model"
+        body: "The function result enters the conversation context. The model now has real, current data — a live order status, account balance or calendar slot."
+        owner: "Application"
+      - title: "Model writes the final answer"
+        body: "With the result in context, the model composes a natural-language response grounded in real data. The user sees an answer, not raw JSON."
+        owner: "Model"
+    highlight: 1
+    notes: |-
+      Highlight step 2 as the architectural shift: the model is making a decision about which tool to call and what arguments to pass. This is not the model executing code directly — your application retains control of execution. The practical decision this drives: which internal APIs or data sources will you expose as tools? Each tool needs authentication, authorisation, rate limiting and an audit log. Start with read-only tools; add write tools only after the loop is validated. Source: OpenAI introduced function calling June 2023; Anthropic and Google followed with equivalent tool-use APIs.
+
+  - id: agents-loop
+    layout: process-steps
+    variant: numbered
+    title: "An agent is a loop that plans, acts and checks itself; memory decides how far it can go"
+    status: draft
+    tracker: How you extend it
+    sources: [react-2022, anthropic-docs]
+    steps:
+      - title: "Receive goal"
+        body: "The agent receives a multi-step goal, e.g., 'Research vendors and draft a comparison.' Held in working context."
+      - title: "Plan next action"
+        body: "The model reasons about the next action given the goal and prior observations. It selects a tool or judges it has enough to produce output."
+      - title: "Act with a tool"
+        body: "The agent calls a function — web search, database query, file write — and waits for the result. Multiple actions may occur before the goal is reached."
+      - title: "Observe and update"
+        body: "The result enters the context. The model reads it and decides: goal met or another action needed? The loop runs until done or a step cap is reached."
+      - title: "Return result or escalate"
+        body: "When the goal is complete, the agent delivers the result. If it hits a step cap or needs human judgement, it escalates to a human-in-the-loop gate."
+    highlight: 3
+    notes: |-
+      The ReAct pattern — reason, act, observe — is the standard framework for agent design and is cited in virtually all agent tutorials and research. Highlight step 4 as the design crux: the context window is the agent's short-term memory. When the context fills, the agent loses track of earlier steps unless you implement external memory (a database of past observations). The decisions this drives are: maximum steps before a human reviews, what memory store persists between sessions, and where human approval is required before an action executes. Source: Yao et al. 2022 coined ReAct.
+
+  - id: evaluation
+    layout: key-points
+    variant: list
+    title: "If you cannot measure quality on a fixed test set, you cannot ship or improve the system"
+    status: draft
+    tracker: How you ship it
+    sources: [stanford-2024, openai-docs]
+    points:
+      - heading: "Build a frozen test set before writing any prompts"
+        body: "Fixed Q&A pairs created before build are your only honest measure. Tuning on your test examples measures memorisation, not generalisation. Target 50–200 examples depending on task complexity."
+      - heading: "Mix automated metrics with human review"
+        body: "Automated checks — exact match, semantic similarity, factual consistency — run fast in CI. Human review catches errors automation misses: tone, coherence, unsafe outputs. Both are needed; neither is sufficient."
+      - heading: "Run the test set before every change, not just at launch"
+        body: "Prompt changes, model upgrades and new data can degrade quality silently. Treating the test set as a regression gate — like unit tests in software — catches regressions before they reach users."
+      - heading: "Monitor production quality after launch"
+        body: "A static test set cannot cover the full distribution of real queries. Sample production outputs and route a fraction to human review. Track metrics over time; plan for model deprecations that force re-evaluation."
+    notes: |-
+      This slide often surprises engineering teams who assume that because the model 'feels right' during development it is ready to ship. The frozen test set is the acceptance criterion: the team agrees in advance on the pass threshold, and the system does not go live until it meets it. For managers, frame this as the equivalent of a UAT sign-off. The number of examples depends on the task — a narrow extraction task may need only 50; an open-ended Q&A system may need hundreds. Source: Stanford AI Index 2024 cites evaluation gaps as a top barrier.
+
+  - id: ship-gates
+    layout: next-steps
+    variant: decision
+    title: "Guardrails, cost and latency are the three gates every AI feature passes before launch"
+    status: draft
+    tracker: How you ship it
+    sources: [openai-docs, anthropic-docs, mckinsey-2024, owasp-llm-2025]
+    decision: "Confirm alignment on these ten concepts, assign owners for guardrails, cost and latency, and schedule the project kickoff"
+    steps:
+      - action: "Define guardrails: prompt injection tests, PII masking, content policy thresholds"
+        owner: "Product lead"
+        due: "Before kickoff"
+      - action: "Set inference cost budget per request; configure usage alerts (44% cite cost unpredictability)"
+        owner: "Engineering lead"
+        due: "Before kickoff"
+      - action: "Agree latency SLA and identify caching or fallback strategy when the model is slow"
+        owner: "Engineering lead"
+        due: "Before kickoff"
+      - action: "Schedule pre-launch eval review against frozen test set and the three gate criteria"
+        owner: "Project sponsor"
+        due: "Before launch"
+      - action: "Assign on-call owner for post-launch monitoring of quality, cost and guardrail alerts"
+        owner: "To be named"
+        due: "At launch"
+    notes: |-
+      Close with the three gates as a checklist, not a warning. Guardrails cover the safety and policy surface: prompt injection (OWASP LLM Top 10 #1, 2025), PII in outputs, content that violates your policy. Cost covers per-request economics and the cumulative monthly bill. Latency covers the user experience: what is an acceptable wait time, and what happens when the model is slow or unavailable. If the team can answer all three before launch, the feature is ready.

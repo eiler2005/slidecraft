@@ -51,7 +51,7 @@ Follow the SlideCraft workflow: show me the action-title chain and 2–3 cover o
 building, cite a source for every number, then give me the .pptx and a PDF.
 ```
 
-The assistant runs `npx @eiler2005/slidecraft` on its side, writes the deck, checks it and hands you an editable PowerPoint. The content can be in any language. A chat without code execution can still write the `deck.yaml`; build it yourself with `npx @eiler2005/slidecraft build deck.yaml`. For repeat work, install it into your assistant ([install](#install)).
+The assistant runs `npx @eiler2005/slidecraft` on its side, writes the deck, checks it and hands you an editable PowerPoint. **Tested with Codex and Claude Code** on exactly this prompt — see what each made, unedited, with an independent review: [Codex](examples/llm-concepts/README.md) · [Claude Code](examples/llm-concepts-claude/README.md). ChatGPT in agent mode and Claude.ai with code execution follow the same `AGENTS.md`; we have not run them ourselves yet. The content can be in any language. A chat without code execution can still write the `deck.yaml`; build it yourself with `npx @eiler2005/slidecraft build deck.yaml`. For repeat work, install it into your assistant ([install](#install)).
 
 ## Why an editable PowerPoint from one prompt
 

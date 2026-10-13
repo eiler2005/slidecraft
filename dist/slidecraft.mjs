@@ -209112,7 +209112,7 @@ var processSteps = {
     colsB.forEach((b, i) => {
       const s2 = c.steps[i];
       const hl = c.highlight === void 0 || c.highlight === i;
-      const numColor = hl ? colors.accent : mix(colors.accent, colors.background, 0.45);
+      const numColor = hl ? colors.accent : ensureContrast(mix(colors.accent, colors.background, 0.45), colors.background, 3);
       ctx.text(
         String(i + 1).padStart(2, "0"),
         { x: b.x, y: b.y, w: 1.1, h: numH },

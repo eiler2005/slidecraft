@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { mix } from '../engine/color.ts';
+import { ensureContrast, mix } from '../engine/color.ts';
 import { columns } from '../engine/format.ts';
 import { Icon } from '../engine/icons.ts';
 import type { LayoutDef } from './types.ts';
@@ -227,7 +227,10 @@ export const processSteps: LayoutDef<typeof schema> = {
     colsB.forEach((b, i) => {
       const s = c.steps[i]!;
       const hl = c.highlight === undefined || c.highlight === i;
-      const numColor = hl ? colors.accent : mix(colors.accent, colors.background, 0.45);
+      // steps that are not highlighted recede, but their large numbers still read (3:1)
+      const numColor = hl
+        ? colors.accent
+        : ensureContrast(mix(colors.accent, colors.background, 0.45), colors.background, 3);
       ctx.text(
         String(i + 1).padStart(2, '0'),
         { x: b.x, y: b.y, w: 1.1, h: numH },

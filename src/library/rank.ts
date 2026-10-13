@@ -66,8 +66,27 @@ export function rankStorylines(
       }
       return { storyline: s, score, matched };
     })
-    .sort((a, b) => b.score - a.score || a.storyline.id.localeCompare(b.storyline.id));
+    .sort(
+      (a, b) =>
+        b.score - a.score ||
+        fallbackRank(a.storyline.id) - fallbackRank(b.storyline.id) ||
+        a.storyline.id.localeCompare(b.storyline.id),
+    );
 }
+
+/** When the brief names no task word, general-purpose storylines come first — never an
+ * alphabetical accident such as a post-mortem for an explainer. */
+const FALLBACK = [
+  'strategy-recommendation',
+  'research-readout',
+  'executive-update',
+  'training-workshop',
+  'product-overview',
+];
+const fallbackRank = (id: string) => {
+  const i = FALLBACK.indexOf(id);
+  return i < 0 ? FALLBACK.length : i;
+};
 
 export interface TemplateOption {
   option: 'A' | 'B' | 'C';

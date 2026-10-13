@@ -144,7 +144,16 @@ export async function rasterPixels(
   width: number,
 ): Promise<{ width: number; height: number; pixels: Uint8Array }> {
   await ensureResvg();
-  const r = new Resvg(svg, { fitTo: { mode: 'width', value: Math.round(width) } });
+  const r = new Resvg(svg, {
+    fitTo: { mode: 'width', value: Math.round(width) },
+    font: {
+      fontBuffers: fontBuffers!,
+      loadSystemFonts: false,
+      defaultFontFamily: 'Liberation Sans',
+    },
+    shapeRendering: 2,
+    textRendering: 1,
+  });
   const img = r.render();
   return { width: img.width, height: img.height, pixels: new Uint8Array(img.pixels) };
 }

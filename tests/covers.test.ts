@@ -54,3 +54,53 @@ describe('cover options', () => {
     expect(yaml).not.toContain('image:');
   });
 });
+
+describe('cover options in a ghost deck', () => {
+  it('renders finished covers, not ghost sketches', async () => {
+    const { mkdtempSync, writeFileSync, rmSync } = await import('node:fs');
+    const { tmpdir } = await import('node:os');
+    const { join } = await import('node:path');
+    const { coverOptions } = await import('../src/library/covers.ts');
+    const { loadDeck } = await import('../src/library/load.ts');
+    const { composeDeck } = await import('../src/engine/compose.ts');
+    const dir = mkdtempSync(join(tmpdir(), 'sc-ghost-cover-'));
+    const deck = join(dir, 'deck.yaml');
+    writeFileSync(
+      deck,
+      `schemaVersion: 1
+id: g
+title: G
+theme: consulting-classic
+status: ghost
+slides:
+  - id: cover
+    layout: title
+    variant: cover
+    title: An AI platform lets the claims team grow revenue without new hires
+    ghost: { exhibit: Cover }
+`,
+    );
+    const r = await coverOptions(deck);
+    expect(r.options.length).toBeGreaterThanOrEqual(2);
+    // the same composition the options use has no ghost frame
+    const l = loadDeck(deck);
+    const slide = {
+      ...(l.slides[0] as object),
+      status: 'draft',
+      art: r.options[0]!.fields.art,
+    } as never;
+    const { scene } = composeDeck({
+      ...l,
+      deck: { ...l.deck, status: 'draft' },
+      slides: [slide],
+      diagnostics: [],
+    });
+    rmSync(dir, { recursive: true, force: true });
+    expect(scene.slides[0]!.nodes.some((n) => (n as { role?: string }).role === 'ghost')).toBe(
+      false,
+    );
+    expect(scene.slides[0]!.nodes.some((n) => (n as { role?: string }).role === 'cover-art')).toBe(
+      true,
+    );
+  });
+});

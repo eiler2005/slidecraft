@@ -1,0 +1,39 @@
+{
+  "reviewer": "visual-reviewer (Claude Opus 5.5)",
+  "verdict": "ready-with-notes",
+  "summary": "Independent review of the deck Codex made from one prompt, unedited: 12 slides as asked, an action-title chain, every concept sourced, icons and native exhibits, no check findings. Notes are about choices, not defects.",
+  "findings": [
+    {
+      "slide": "all",
+      "severity": "minor",
+      "area": "parity",
+      "issue": "Key-point headings sit about 1 px apart in PowerPoint and the browser; glyph-edge fringes elsewhere",
+      "fix": "known shared gap (calibration open item); invisible at normal size",
+      "status": "open"
+    },
+    {
+      "slide": "deck",
+      "severity": "minor",
+      "area": "template",
+      "issue": "Codex chose the project-kickoff storyline for an explainer — the recommender of 0.7.0 had no explainer words",
+      "fix": "shared: explainer, primer and key-concepts words now rank training-workshop first",
+      "status": "fixed"
+    },
+    {
+      "slide": "tokens-context, training-inference, hallucinations, evals-guardrails",
+      "severity": "minor",
+      "area": "layout",
+      "issue": "Key points fill the upper half; the lower half is empty",
+      "fix": "Accept as whitespace, or add one example per concept",
+      "status": "needs-user"
+    },
+    {
+      "slide": "cover",
+      "severity": "minor",
+      "area": "template",
+      "issue": "Network motif chosen over a 97 ppi stock photo",
+      "fix": "Right call: the photo was soft and generic",
+      "status": "fixed"
+    }
+  ]
+}

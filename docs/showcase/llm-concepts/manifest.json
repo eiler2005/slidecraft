@@ -1,0 +1,218 @@
+{
+  "tool": "slidecraft",
+  "version": "0.7.0",
+  "deck": {
+    "id": "llm-ai-agents-vocabulary",
+    "title": "Shared vocabulary turns AI ambition into sound project choices",
+    "status": "review",
+    "theme": "consulting-classic",
+    "storyline": "project-kickoff",
+    "slides": 12
+  },
+  "input": {
+    "path": "../../../examples/llm-concepts/deck.yaml",
+    "sha256": "c4e5a5e92203a1dd28150517a71fe15d3f383fd81f1ca922fa2a6d28583dc411"
+  },
+  "epoch": "2026-01-01T00:00:00.000Z",
+  "engines": {
+    "pptx": {
+      "id": "pptxgenjs",
+      "reason": "requested (v4.0.1)",
+      "license": "MIT"
+    },
+    "png": {
+      "id": "resvg",
+      "reason": "auto: default",
+      "license": "MPL-2.0 (resvg), MIT (SlideCraft)"
+    },
+    "html": {
+      "id": "html",
+      "reason": "auto: default",
+      "license": "MIT"
+    },
+    "pdf": {
+      "id": "native",
+      "reason": "requested",
+      "license": "MIT"
+    }
+  },
+  "outputs": [
+    {
+      "path": "llm-ai-agents-vocabulary.pptx",
+      "kind": "pptx",
+      "engine": "pptxgenjs",
+      "sha256": "61bdbce9797f59cc1b5c2ce78bc47a709ae4e808733804e5d5388cd167517afc"
+    },
+    {
+      "path": "previews/01-cover.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "3a3458f09b216baa08fef8e866d512739d35e4140bfb044193655a49d42d2af1"
+    },
+    {
+      "path": "previews/02-system.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "05cd1f88d2246f038ed7118ac72972e781c79a83fadf6cf193e0b94c7d97aa78"
+    },
+    {
+      "path": "previews/03-tokens-context.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "373ff7e79448feca06b7a4f24fcb133b91ba021e2bf30f9e624bb2be1d138916"
+    },
+    {
+      "path": "previews/04-training-inference.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "aa89a2b94724f59fa76029bab025605bc8cb112e9235b88c05b94922f201420f"
+    },
+    {
+      "path": "previews/05-rag.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "2626bbde964d8cf0fcf5e2b38871bed4e33d01281fd73f7bd3370d7cacb087ae"
+    },
+    {
+      "path": "previews/06-prompting-finetuning.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "415870b7796c1fcd817d3ec69d3757afcbf9fc63905f2005e5bbe2c8a88d4dac"
+    },
+    {
+      "path": "previews/07-hallucinations.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "3b171ce9aad8821d09eb7f003e15e970f9e55409068292b31b1e6d1529dabaeb"
+    },
+    {
+      "path": "previews/08-tools.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "5d0215f33c2b03141eab0cf8f2ca3b76d6bd32405bf57703e561f4b71d62e4aa"
+    },
+    {
+      "path": "previews/09-agents.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "b1fcd78d6fd01555c08e80a9f6717ecceb7262bc1f9e2c74520a2be72c863736"
+    },
+    {
+      "path": "previews/10-evals-guardrails.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "d1a4acdff283d6be6532bc44dc44ace062acf1f325e8706811b190a06b6fc2a8"
+    },
+    {
+      "path": "previews/11-tradeoffs.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "030fe4105c02965cfe915c885321396240b6643c2710fe772d901a1b42f8f786"
+    },
+    {
+      "path": "previews/12-next-steps.png",
+      "kind": "png",
+      "engine": "resvg",
+      "sha256": "01703116285450eae773e959a8604c94cb537bf4568af5c59ab921d987f13cd8"
+    },
+    {
+      "path": "llm-ai-agents-vocabulary.html",
+      "kind": "html",
+      "engine": "html",
+      "sha256": "b388917663eaa67d83f96f662aa089d7ee985787c1382226e397fe686fed3b29"
+    },
+    {
+      "path": "llm-ai-agents-vocabulary.pdf",
+      "kind": "pdf",
+      "engine": "native",
+      "sha256": "7cca192ee5295df7739fac24a97ad5ffd524836f6c82a095247989b3899e07cc"
+    }
+  ],
+  "checks": {
+    "errors": 0,
+    "warnings": 0,
+    "info": 0,
+    "codes": []
+  },
+  "visual_review": false,
+  "limitations": [
+    "Waterfall labels and stacked totals are text boxes placed over the native chart; edit them if you change the data.",
+    "Scene previews rendered by resvg, not by PowerPoint. Font support and text rendering may differ; use --png-engine pptx-convert for actual Office previews.",
+    "HTML slides are inline SVG drawn with embedded metric-compatible fonts (Liberation/Gelasio), not editable text boxes.",
+    "Same layout as the PPTX; glyph rendering uses bundled metric-compatible fonts, not Arial/Georgia."
+  ],
+  "slides": [
+    {
+      "id": "cover",
+      "layout": "title",
+      "variant": "cover",
+      "title": "Shared vocabulary turns AI ambition into sound project choices"
+    },
+    {
+      "id": "system",
+      "layout": "exec-summary",
+      "variant": "key-messages",
+      "title": "A successful AI project designs the full system, not only the model"
+    },
+    {
+      "id": "tokens-context",
+      "layout": "key-points",
+      "variant": "columns",
+      "title": "Tokens and the context window set what the model can process in one interaction"
+    },
+    {
+      "id": "training-inference",
+      "layout": "key-points",
+      "variant": "columns",
+      "title": "Training builds a model; inference applies it to each request"
+    },
+    {
+      "id": "rag",
+      "layout": "process-steps",
+      "variant": "chevrons",
+      "title": "Embeddings make meaning searchable, and RAG uses that search to ground answers"
+    },
+    {
+      "id": "prompting-finetuning",
+      "layout": "options-comparison",
+      "variant": "text",
+      "title": "Prompting steers a model now, while fine-tuning changes behavior through training"
+    },
+    {
+      "id": "hallucinations",
+      "layout": "key-points",
+      "variant": "cards",
+      "title": "Hallucinations are plausible but unsupported outputs, so systems need multiple reduction layers"
+    },
+    {
+      "id": "tools",
+      "layout": "process-steps",
+      "variant": "numbered",
+      "title": "Tool use lets a model act, and function calling supplies the controlled contract"
+    },
+    {
+      "id": "agents",
+      "layout": "process-steps",
+      "variant": "chevrons",
+      "title": "Agents repeat plan–act–observe loops, with memory treated as managed state"
+    },
+    {
+      "id": "evals-guardrails",
+      "layout": "key-points",
+      "variant": "columns",
+      "title": "Evaluation and guardrails make quality, safety, and operational control testable"
+    },
+    {
+      "id": "tradeoffs",
+      "layout": "matrix-2x2",
+      "variant": "quadrants",
+      "title": "Capability, cost, and latency form a design trade-off to optimize deliberately"
+    },
+    {
+      "id": "next-steps",
+      "layout": "next-steps",
+      "variant": "actions",
+      "title": "A short discovery sequence turns the vocabulary into an AI project charter"
+    }
+  ]
+}

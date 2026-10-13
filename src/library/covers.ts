@@ -135,7 +135,15 @@ export async function coverOptions(
       else slide[key] = key === 'image' ? resolve(base, String(v)) : v;
     }
     if (d.kind === 'photo') delete slide.art;
-    const variant = { ...loaded, slides: [slide] as never, diagnostics: [] };
+    // options are judged as finished covers, even while the deck is still a ghost deck
+    slide.status = 'draft';
+    delete slide.ghost;
+    const variant = {
+      ...loaded,
+      deck: { ...loaded.deck, status: 'draft' as const },
+      slides: [slide] as never,
+      diagnostics: [],
+    };
     const { scene } = composeDeck(variant);
     const preview = join(out, `option-${LETTERS[i]}.png`);
     writeFileSync(preview, await rasterize(slideSvg(scene, scene.slides[0]!), 1200));

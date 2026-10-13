@@ -4,7 +4,7 @@ schemaVersion: 1
 id: research-readout
 name: Research readout
 summary: Findings readout for a survey, user research or analysis — the question, method and sample, one finding per slide, implications, recommendations and an appendix.
-bestFor: [research readout, findings, survey results, user research, market research, customer research, insights, analysis results, usability study, interview findings, study results]
+bestFor: [research readout, findings, survey results, user research, market research, customer research, insights, analysis results, usability study, interview findings, study results, briefing, landscape, trend report, state of, what is, role, trends]
 audiences: [product team, leadership team, stakeholders, marketing team, client, research community]
 themes: [editorial, consulting-classic, corporate-blue]
 ordered: true

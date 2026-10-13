@@ -1,0 +1,13 @@
+Study the repository https://github.com/eiler2005/slidecraft (read AGENTS.md first) and use
+SlideCraft to make me an editable PowerPoint deck.
+
+Topic: Key concepts for understanding LLMs and AI agents
+For whom and why: managers and engineers new to AI who need a shared vocabulary before they start AI projects; after the deck they should know what each concept means and why it matters for their project
+Length: 10–12 slides
+Language: English
+Content: tokens and context window, training vs inference, embeddings and retrieval (RAG), fine-tuning vs prompting, hallucinations and how to reduce them, tool use and function calling, AI agents (the plan–act–observe loop, memory), evaluation, guardrails and safety, cost and latency trade-offs
+Style: calm consulting look
+
+Follow the SlideCraft workflow: show me the action-title chain and 2–3 cover options before
+building, cite a source for every number, then give me the .pptx and a PDF.
+I can't answer questions in this session: at every checkpoint choose yourself, tell me what you chose and why, and continue.

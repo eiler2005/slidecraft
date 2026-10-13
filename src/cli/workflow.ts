@@ -663,7 +663,24 @@ export function registerBrandCommands(program: Command): void {
             );
             r.failed.forEach((f) => console.log(`✗ ${f.job.slideId}: ${f.error}`));
           }
-          process.exitCode = r.failed.length ? 1 : 0;
+          // no stock photo fits: generate one for slides that also describe the picture
+          const missing = new Set(r.failed.map((f) => f.job.slideId));
+          const gen = planImages(deck, { force: !!o.force }).filter((j) => missing.has(j.slideId));
+          if (gen.length && process.env.OPENAI_API_KEY) {
+            const g = await generateImages(gen, openAiProvider());
+            for (const j of g.generated) missing.delete(j.slideId);
+            if (!wantsJson(o.json))
+              g.generated.forEach((j) =>
+                console.log(`${green('✔')} generated instead: ${describeJob(j)}`),
+              );
+          }
+          if (missing.size && !wantsJson(o.json))
+            console.log(
+              dim(
+                `No stock photo for ${[...missing].join(', ')}: add imagePrompt and run \`slidecraft images\` (OPENAI_API_KEY), or generate it with your assistant's image tool and save it as assets/<slide-id>.png.`,
+              ),
+            );
+          process.exitCode = missing.size ? 1 : 0;
           return;
         }
         const jobs = planImages(deck, { force: !!o.force });

@@ -30,6 +30,8 @@ It works from **your material**: numbers come from your Excel or CSV files and a
 
 Underneath is one **zero-install CLI**. Every layout is measured with metric-compatible fonts, so text that fits in SlideCraft fits in PowerPoint — verified line by line against real PowerPoint output.
 
+<p align="center"><img src="docs/media/slidecraft-demo.gif" alt="SlideCraft in 20 seconds: one prompt, the action-title chain, three cover options, then the editable PowerPoint deck slide by slide" width="100%"></p>
+
 ## The easiest way: one prompt
 
 No install, no YAML. Paste this into **ChatGPT (agent mode), Codex, Claude or Claude Code** — any assistant that can run code and open a link — and fill in the brackets:

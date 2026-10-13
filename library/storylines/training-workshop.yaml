@@ -3,7 +3,7 @@ schemaVersion: 1
 id: training-workshop
 name: Training / workshop
 summary: Teach one method or tool so participants can use it tomorrow — objectives, the idea, a worked example, practice and a recap.
-bestFor: [training, workshop, onboarding session, masterclass, tutorial, course, teach, enablement, lunch and learn]
+bestFor: [training, workshop, onboarding session, masterclass, tutorial, course, teach, enablement, lunch and learn, explainer, primer, key concepts, concepts, basics, introduction, glossary, fundamentals, "101", learn, understand]
 audiences: [new joiners, practitioners, team, partners, customers]
 themes: [modern-pitch, editorial, corporate-blue]
 ordered: true

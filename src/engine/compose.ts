@@ -298,6 +298,38 @@ export function composeDeck(loaded: LoadedDeck): ComposeResult {
     }
 
     if (isGhost) {
+      // a ghost is a sketch; say so loudly, especially when the content is already written
+      const filled = Object.keys(slide).some(
+        (k) =>
+          ![
+            'id',
+            'layout',
+            'variant',
+            'title',
+            'lead',
+            'tracker',
+            'status',
+            'ghost',
+            'notes',
+            'sources',
+            'source',
+            'frame',
+          ].includes(k),
+      );
+      ctx.issue(
+        diag(
+          'SC-GHOST-001',
+          filled
+            ? 'Slide has content but is still marked as a ghost, so it renders as a sketch'
+            : 'Slide is still a ghost: only the planned exhibit is shown',
+          {
+            pointer: ctx.ptr('status'),
+            hint: filled
+              ? 'Remove `status: ghost` (here and on the deck) and the `ghost:` block to render the content.'
+              : 'Write the content against `slidecraft layouts <layout> --json`, then remove `status: ghost`.',
+          },
+        ),
+      );
       const g = slide.ghost;
       const box = frame === 'standard' ? body : { x: 1, y: 3.2, w: format.w - 2, h: 2.6 };
       ctx.rect(box, {

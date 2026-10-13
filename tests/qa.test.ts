@@ -190,3 +190,36 @@ describe('contrast background lookup', () => {
     expect(bgAt(nodes, 2, 3.05, 0.05, '#FFFFFF')).toBe('#FFFFFF');
   });
 });
+
+describe('ghost slides are not deliverables (SC-GHOST-001)', () => {
+  it('flags every ghost and says so when the content is already written', async () => {
+    const { mkdtempSync, writeFileSync, rmSync } = await import('node:fs');
+    const { tmpdir } = await import('node:os');
+    const { checkDeck } = await import('../src/build.ts');
+    const dir = mkdtempSync(join(tmpdir(), 'sc-ghost-'));
+    const deck = join(dir, 'deck.yaml');
+    writeFileSync(
+      deck,
+      `schemaVersion: 1
+id: g
+title: Ghosts
+theme: consulting-classic
+status: ghost
+slides:
+  - id: planned
+    layout: key-points
+    title: Three levers cut onboarding cost by a third
+    ghost: { exhibit: Three levers with their savings }
+  - id: written
+    layout: big-statement
+    variant: statement
+    title: Shared vocabulary comes before the first AI project
+    statement: Teams that share the words decide faster
+`,
+    );
+    const ghosts = checkDeck(deck).diagnostics.filter((d) => d.code === 'SC-GHOST-001');
+    rmSync(dir, { recursive: true, force: true });
+    expect(ghosts.map((d) => d.slide)).toEqual(['planned', 'written']);
+    expect(ghosts[1]!.message).toContain('has content but is still marked as a ghost');
+  });
+});

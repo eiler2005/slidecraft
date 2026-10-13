@@ -198,6 +198,22 @@ const CC = (license: string, version?: string) =>
       : 'CC0'
     : `CC ${license.toUpperCase()}${version ? ` ${version}` : ''}`;
 
+interface OpenverseResults {
+  results: {
+    url: string;
+    width?: number;
+    height?: number;
+    title?: string;
+    creator?: string;
+    license: string;
+    license_version?: string;
+    license_url?: string;
+    provider?: string;
+    source?: string;
+    foreign_landing_url?: string;
+  }[];
+}
+
 /** Openverse: openly licensed photos, no key; only licences that allow commercial use and edits. */
 export function openverseProvider(fetchImpl: Fetch = fetch): StockProvider {
   return {
@@ -210,23 +226,16 @@ export function openverseProvider(fetchImpl: Fetch = fetch): StockProvider {
         mature: 'false',
         page_size: '20',
       });
-      const res = await fetchImpl(`https://api.openverse.org/v1/images/?${q}`);
-      if (!res.ok) throw new Error(`Openverse ${res.status}`);
-      const json = (await res.json()) as {
-        results: {
-          url: string;
-          width?: number;
-          height?: number;
-          title?: string;
-          creator?: string;
-          license: string;
-          license_version?: string;
-          license_url?: string;
-          provider?: string;
-          source?: string;
-          foreign_landing_url?: string;
-        }[];
+      // large photos first (sharp on a full-height cover panel), then everything else
+      const get = async (extra: string) => {
+        const res = await fetchImpl(`https://api.openverse.org/v1/images/?${q}${extra}`);
+        if (!res.ok) throw new Error(`Openverse ${res.status}`);
+        return (await res.json()) as OpenverseResults;
       };
+      const large = await get('&size=large');
+      const all = await get('');
+      const seen = new Set(large.results.map((r) => r.url));
+      const json = { results: [...large.results, ...all.results.filter((r) => !seen.has(r.url))] };
       return json.results.map((r) => ({
         url: r.url,
         width: r.width ?? 0,
@@ -350,10 +359,14 @@ export interface StockRunResult {
   failed: { job: StockJob; error: string }[];
 }
 
-/** First landscape hit wide enough for a slide panel (≥ 1000 px), else the widest one. */
+/** The first landscape hit sharp on a full-height panel (≥ 1600 px), else ≥ 1000 px, else the widest. */
 export function pickHit(hits: StockHit[]): StockHit | undefined {
-  const wide = hits.filter((h) => h.width >= 1000 && h.width >= h.height);
-  return wide[0] ?? [...hits].sort((a, b) => b.width - a.width)[0];
+  const landscape = hits.filter((h) => h.width >= h.height);
+  return (
+    landscape.find((h) => h.width >= 1600) ??
+    landscape.find((h) => h.width >= 1000) ??
+    [...hits].sort((a, b) => b.width - a.width)[0]
+  );
 }
 
 /** Candidate photos for each job, best first, for a person or an agent to choose from. */

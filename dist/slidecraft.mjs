@@ -167698,6 +167698,12 @@ var CODES = {
     why: "The named PowerPoint shape no longer has the geometry or font size declared by the shared Scene.",
     fix: "Repair the renderer mapping; do not compensate by changing the reference sizes."
   },
+  "SC-GHOST-001": {
+    severity: "warning",
+    title: "Slide is still a ghost (a sketch, not a deliverable)",
+    why: "Ghost slides render as dashed placeholders with the planned exhibit; a deck with ghosts is not ready to hand over.",
+    fix: "Write the slide content against the layout contract and remove `status: ghost` (on the slide and on the deck) and the `ghost:` block."
+  },
   "SC-SPEC-001": {
     severity: "error",
     title: "Deck does not match the schema",
@@ -169578,7 +169584,16 @@ var resvgEngine = {
 };
 async function rasterPixels(svg, width) {
   await ensureResvg();
-  const r = new Resvg2(svg, { fitTo: { mode: "width", value: Math.round(width) } });
+  const r = new Resvg2(svg, {
+    fitTo: { mode: "width", value: Math.round(width) },
+    font: {
+      fontBuffers,
+      loadSystemFonts: false,
+      defaultFontFamily: "Liberation Sans"
+    },
+    shapeRendering: 2,
+    textRendering: 1
+  });
   const img = r.render();
   return { width: img.width, height: img.height, pixels: new Uint8Array(img.pixels) };
 }
@@ -213096,6 +213111,32 @@ function composeDeck(loaded) {
       composeHeader(ctx, slide, index);
     }
     if (isGhost) {
+      const filled = Object.keys(slide).some(
+        (k) => ![
+          "id",
+          "layout",
+          "variant",
+          "title",
+          "lead",
+          "tracker",
+          "status",
+          "ghost",
+          "notes",
+          "sources",
+          "source",
+          "frame"
+        ].includes(k)
+      );
+      ctx.issue(
+        diag(
+          "SC-GHOST-001",
+          filled ? "Slide has content but is still marked as a ghost, so it renders as a sketch" : "Slide is still a ghost: only the planned exhibit is shown",
+          {
+            pointer: ctx.ptr("status"),
+            hint: filled ? "Remove `status: ghost` (here and on the deck) and the `ghost:` block to render the content." : "Write the content against `slidecraft layouts <layout> --json`, then remove `status: ghost`."
+          }
+        )
+      );
       const g = slide.ghost;
       const box2 = frame === "standard" ? body : { x: 1, y: 3.2, w: format.w - 2, h: 2.6 };
       ctx.rect(box2, {
@@ -216916,9 +216957,15 @@ function openverseProvider(fetchImpl = fetch) {
         mature: "false",
         page_size: "20"
       });
-      const res = await fetchImpl(`https://api.openverse.org/v1/images/?${q}`);
-      if (!res.ok) throw new Error(`Openverse ${res.status}`);
-      const json2 = await res.json();
+      const get = async (extra) => {
+        const res = await fetchImpl(`https://api.openverse.org/v1/images/?${q}${extra}`);
+        if (!res.ok) throw new Error(`Openverse ${res.status}`);
+        return await res.json();
+      };
+      const large = await get("&size=large");
+      const all = await get("");
+      const seen = new Set(large.results.map((r) => r.url));
+      const json2 = { results: [...large.results, ...all.results.filter((r) => !seen.has(r.url))] };
       return json2.results.map((r) => ({
         url: r.url,
         width: r.width ?? 0,
@@ -217012,8 +217059,8 @@ function fallbackQueries(q) {
   ];
 }
 function pickHit(hits) {
-  const wide = hits.filter((h) => h.width >= 1e3 && h.width >= h.height);
-  return wide[0] ?? [...hits].sort((a, b) => b.width - a.width)[0];
+  const landscape = hits.filter((h) => h.width >= h.height);
+  return landscape.find((h) => h.width >= 1600) ?? landscape.find((h) => h.width >= 1e3) ?? [...hits].sort((a, b) => b.width - a.width)[0];
 }
 async function listStock(jobs, provider, limit = 6) {
   const out = [];
@@ -217153,7 +217200,14 @@ async function coverOptions(deckPath2, opts = {}) {
       else slide[key] = key === "image" ? resolve19(base, String(v)) : v;
     }
     if (d.kind === "photo") delete slide.art;
-    const variant = { ...loaded, slides: [slide], diagnostics: [] };
+    slide.status = "draft";
+    delete slide.ghost;
+    const variant = {
+      ...loaded,
+      deck: { ...loaded.deck, status: "draft" },
+      slides: [slide],
+      diagnostics: []
+    };
     const { scene } = composeDeck(variant);
     const preview = join24(out, `option-${LETTERS2[i]}.png`);
     writeFileSync17(preview, await rasterize(slideSvg(scene, scene.slides[0]), 1200));
@@ -218058,8 +218112,21 @@ function rankStorylines(brief, all = loadStorylines()) {
       }
     }
     return { storyline: s2, score, matched };
-  }).sort((a, b) => b.score - a.score || a.storyline.id.localeCompare(b.storyline.id));
+  }).sort(
+    (a, b) => b.score - a.score || fallbackRank(a.storyline.id) - fallbackRank(b.storyline.id) || a.storyline.id.localeCompare(b.storyline.id)
+  );
 }
+var FALLBACK = [
+  "strategy-recommendation",
+  "research-readout",
+  "executive-update",
+  "training-workshop",
+  "product-overview"
+];
+var fallbackRank = (id) => {
+  const i = FALLBACK.indexOf(id);
+  return i < 0 ? FALLBACK.length : i;
+};
 function templateOptions(brief, themes = loadThemes()) {
   const ranked = rankStorylines(brief);
   const best = ranked[0];
@@ -219398,9 +219465,16 @@ function page(d) {
     )
   ).join("");
   const ex = d.examples.map(
-    (e) => `<figure class="card"><img loading="lazy" src="examples/${e.id}/cover.png" alt="${esc5(e.title)}"><figcaption><b>${esc5(e.title)}</b><br>${e.files.map((f) => `<a href="${f.path}">${KIND_LABEL[f.kind] ?? f.kind}</a>`).join(
-      " \xB7 "
-    )} \xB7 <a href="${REPO}/blob/main/examples/${e.id}/deck.yaml">deck.yaml</a></figcaption></figure>`
+    (e) => (
+      // the cover opens the HTML deck: page through it in the browser (← →, N for notes)
+      `<figure class="card">${(() => {
+        const html = e.files.find((f) => f.kind === "html");
+        const img = `<img loading="lazy" src="examples/${e.id}/cover.png" alt="${esc5(e.title)}">`;
+        return html ? `<a href="${html.path}" title="Open in the browser">${img}</a>` : img;
+      })()}<figcaption><b>${esc5(e.title)}</b><br>${e.files.map((f) => `<a href="${f.path}">${KIND_LABEL[f.kind] ?? f.kind}</a>`).join(
+        " \xB7 "
+      )} \xB7 <a href="${REPO}/blob/main/examples/${e.id}/deck.yaml">deck.yaml</a></figcaption></figure>`
+    )
   ).join("");
   return `<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -219423,9 +219497,9 @@ footer{color:var(--muted);font-size:13px;border-top:1px solid var(--rule);margin
 code{font-size:13px}
 </style></head><body><main>
 <header><h1>SlideCraft</h1><p>Describe the goal. Pick a look. Ship a partner-ready deck. One spec becomes editable PowerPoint, vector PDF, an HTML deck, a one-pager and a Word memo.</p>
-<nav><a href="${REPO}">GitHub</a><a href="${REPO}#quick-start">Quick start</a><a href="${REPO}/tree/main/docs">Documentation</a><a href="#examples">Examples</a><a href="#storylines">Storylines \xD7 themes</a><a href="#layouts">Layouts</a></nav>
+<nav><a href="${REPO}">GitHub</a><a href="${REPO}#the-easiest-way-one-prompt">One prompt</a><a href="${REPO}/tree/main/docs">Documentation</a><a href="#examples">Examples</a><a href="#storylines">Storylines \xD7 themes</a><a href="#layouts">Layouts</a></nav>
 <img class="hero" src="${d.hero}" alt="Slides from SlideCraft example decks"></header>
-<h2 id="examples">Example decks</h2><p>Built in CI from <code>examples/</code> with SlideCraft ${VERSION2}. Download any format.</p><div class="grid">${ex}</div>
+<h2 id="examples">Example decks</h2><p>Built in CI from <code>examples/</code> with SlideCraft ${VERSION2}. Click a cover to page through the deck in your browser, or download any format.</p><div class="grid">${ex}</div>
 <h2 id="storylines">Storylines \xD7 themes</h2><p>${d.storylines.length} storylines in all ${d.themes.length} themes \u2014 the storyline is the task, the theme is the look; any pair works.</p>${matrix}
 <h2 id="layouts">Layouts</h2><p>${LAYOUTS.length} layouts \u2014 each one a content contract with capacity limits. Shown in consulting-classic.</p><div class="grid">${layouts}</div>
 <footer>SlideCraft ${VERSION2} \xB7 PolyForm Shield 1.0.0 \xB7 generated by <code>slidecraft site</code> \xB7 <a href="${REPO}">${basename8(REPO)}</a></footer>
@@ -219879,7 +219953,23 @@ Use it: theme: ${relative13(process.cwd(), r.themePath)}   (path relative to dec
           );
           r2.failed.forEach((f) => console.log(`\u2717 ${f.job.slideId}: ${f.error}`));
         }
-        process.exitCode = r2.failed.length ? 1 : 0;
+        const missing = new Set(r2.failed.map((f) => f.job.slideId));
+        const gen = planImages(deck, { force: !!o.force }).filter((j) => missing.has(j.slideId));
+        if (gen.length && process.env.OPENAI_API_KEY) {
+          const g = await generateImages(gen, openAiProvider());
+          for (const j of g.generated) missing.delete(j.slideId);
+          if (!wantsJson(o.json))
+            g.generated.forEach(
+              (j) => console.log(`${green("\u2714")} generated instead: ${describeJob(j)}`)
+            );
+        }
+        if (missing.size && !wantsJson(o.json))
+          console.log(
+            dim(
+              `No stock photo for ${[...missing].join(", ")}: add imagePrompt and run \`slidecraft images\` (OPENAI_API_KEY), or generate it with your assistant's image tool and save it as assets/<slide-id>.png.`
+            )
+          );
+        process.exitCode = missing.size ? 1 : 0;
         return;
       }
       const jobs = planImages(deck, { force: !!o.force });

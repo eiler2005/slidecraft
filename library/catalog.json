@@ -936,7 +936,14 @@
         "analysis results",
         "usability study",
         "interview findings",
-        "study results"
+        "study results",
+        "briefing",
+        "landscape",
+        "trend report",
+        "state of",
+        "what is",
+        "role",
+        "trends"
       ],
       "themes": [
         "editorial",
@@ -1034,7 +1041,18 @@
         "course",
         "teach",
         "enablement",
-        "lunch and learn"
+        "lunch and learn",
+        "explainer",
+        "primer",
+        "key concepts",
+        "concepts",
+        "basics",
+        "introduction",
+        "glossary",
+        "fundamentals",
+        "101",
+        "learn",
+        "understand"
       ],
       "themes": [
         "modern-pitch",

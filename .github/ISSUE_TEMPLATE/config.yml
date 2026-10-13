@@ -1,5 +1,11 @@
 blank_issues_enabled: false
 contact_links:
+  - name: Questions and help
+    url: https://github.com/eiler2005/slidecraft/discussions/categories/q-a
+    about: How do I…? Ask in Discussions — answers help the next person too.
+  - name: Show your deck
+    url: https://github.com/eiler2005/slidecraft/discussions/categories/show-and-tell
+    about: Share a deck you made with SlideCraft (no client material).
   - name: Documentation
     url: https://github.com/eiler2005/slidecraft/tree/main/docs
     about: How-to guides and reference. Check here first, especially for adding a layout.

@@ -1,0 +1,1747 @@
+{
+  "dir": "docs/showcase/llm-concepts/visual-qa",
+  "deck": "examples/llm-concepts/deck.yaml",
+  "theme": "consulting-classic",
+  "renderer": "Microsoft PowerPoint via AppleScript (jobs run in its sandbox container: no access prompts)",
+  "target": 0.95,
+  "slides": [
+    {
+      "slide": 1,
+      "id": "cover",
+      "title": "Shared vocabulary turns AI ambition into sound project choices",
+      "layout": "title",
+      "images": {
+        "html": "01-cover-html.png",
+        "pptx": "01-cover-pptx.png",
+        "diff": "01-cover-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.7810457516339869,
+        "hotspots": [
+          {
+            "region": "row 1, column 1",
+            "score": 0.93,
+            "box": {
+              "x": 0,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 2",
+            "score": 0.781,
+            "box": {
+              "x": 239.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 3",
+            "score": 0.836,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 1",
+            "score": 0.921,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 2",
+            "score": 0.931,
+            "box": {
+              "x": 239.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 3",
+            "score": 0.94,
+            "box": {
+              "x": 479.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 1",
+            "score": 0.925,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 2",
+            "score": 0.912,
+            "box": {
+              "x": 239.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 3",
+            "score": 0.927,
+            "box": {
+              "x": 479.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Key concepts for understanding LLMs and AI agent [subtitle]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Strategy and engineering enablement   ·   Octobe [meta]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 2,
+      "id": "system",
+      "title": "A successful AI project designs the full system, not only the model",
+      "layout": "exec-summary",
+      "images": {
+        "html": "02-system-html.png",
+        "pptx": "02-system-pptx.png",
+        "diff": "02-system-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8521766273715246,
+        "hotspots": [
+          {
+            "region": "row 1, column 3",
+            "score": 0.887,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 4",
+            "score": 0.872,
+            "box": {
+              "x": 719.98,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 1",
+            "score": 0.891,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.888,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.853,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 3",
+            "score": 0.852,
+            "box": {
+              "x": 479.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 4",
+            "score": 0.889,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Select a model and define what it can see in eac [detail]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Retrieve trusted, current enterprise information [detail]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Give the model narrow, observable tools instead  [detail]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Evaluate quality, enforce guardrails, and monito [detail]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Source:  OpenAI — Tokens and tokenization ;  Lew [source]",
+          "ratio": 1.12,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#1F5FBF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "1 [number]",
+          "b": "Model capability [headline]",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "1 [number]",
+          "b": "Select a model and define what it can see in eac [detail]",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "2 [number]",
+          "b": "Grounded knowledge [headline]",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "2 [number]",
+          "b": "Retrieve trusted, current enterprise information [detail]",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "3 [number]",
+          "b": "Controlled action [headline]",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "3 [number]",
+          "b": "Give the model narrow, observable tools instead  [detail]",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "4 [number]",
+          "b": "Measurement and control [headline]",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "4 [number]",
+          "b": "Evaluate quality, enforce guardrails, and monito [detail]",
+          "edge": "top",
+          "deltaPt": 1.4
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 3,
+      "id": "tokens-context",
+      "title": "Tokens and the context window set what the model can process in one interaction",
+      "layout": "key-points",
+      "images": {
+        "html": "03-tokens-context-html.png",
+        "pptx": "03-tokens-context-pptx.png",
+        "diff": "03-tokens-context-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.757614796384103,
+        "hotspots": [
+          {
+            "region": "row 2, column 1",
+            "score": 0.758,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 2",
+            "score": 0.764,
+            "box": {
+              "x": 239.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 3",
+            "score": 0.764,
+            "box": {
+              "x": 479.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 4",
+            "score": 0.763,
+            "box": {
+              "x": 719.98,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.898,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 4",
+            "score": 0.948,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Source:  OpenAI — Tokens and tokenization [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "MODEL FUNDAMENTALS [tracker]",
+          "b": "path [icon]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "Tokens and the context window set what the model [title]",
+          "b": "path [icon]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "Tokens are model-readable pieces of text [heading]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 1.3
+        },
+        {
+          "a": "path [icon]",
+          "b": "Text is split into tokens before processing; tok [body]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "Source:  OpenAI — Tokens and tokenization [source]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 1.3
+        },
+        {
+          "a": "path [icon]",
+          "b": "Context is a product design constraint [heading]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "Decide what to include, summarize, retrieve, or  [body]",
+          "edge": "left",
+          "deltaPt": 3.8
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 4,
+      "id": "training-inference",
+      "title": "Training builds a model; inference applies it to each request",
+      "layout": "key-points",
+      "images": {
+        "html": "04-training-inference-html.png",
+        "pptx": "04-training-inference-pptx.png",
+        "diff": "04-training-inference-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.7430471603846216,
+        "hotspots": [
+          {
+            "region": "row 1, column 4",
+            "score": 0.945,
+            "box": {
+              "x": 719.98,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 1",
+            "score": 0.767,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 2",
+            "score": 0.781,
+            "box": {
+              "x": 239.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 3",
+            "score": 0.784,
+            "box": {
+              "x": 479.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 4",
+            "score": 0.743,
+            "box": {
+              "x": 719.98,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.892,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.824,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 4",
+            "score": 0.943,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Source:  Vaswani et al. — Attention Is All You N [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "MODEL LIFECYCLE [tracker]",
+          "b": "path [icon]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "Training builds a model; inference applies it to [title]",
+          "b": "path [icon]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "Training changes model parameters [heading]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 1.3
+        },
+        {
+          "a": "path [icon]",
+          "b": "The learning process adjusts parameters from dat [body]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "Source:  Vaswani et al. — Attention Is All You N [source]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 1.3
+        },
+        {
+          "a": "path [icon]",
+          "b": "The distinction changes project choices [heading]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "Most enterprise work improves inference through  [body]",
+          "edge": "left",
+          "deltaPt": 3.8
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 5,
+      "id": "rag",
+      "title": "Embeddings make meaning searchable, and RAG uses that search to ground answers",
+      "layout": "process-steps",
+      "images": {
+        "html": "05-rag-html.png",
+        "pptx": "05-rag-pptx.png",
+        "diff": "05-rag-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.824604816091528,
+        "hotspots": [
+          {
+            "region": "row 1, column 2",
+            "score": 0.948,
+            "box": {
+              "x": 239.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 3",
+            "score": 0.937,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 1",
+            "score": 0.914,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 2",
+            "score": 0.917,
+            "box": {
+              "x": 239.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 4",
+            "score": 0.912,
+            "box": {
+              "x": 719.98,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.882,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.825,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Source:  Lewis et al. — Retrieval-Augmented Gene [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "GROUNDING [tracker]",
+          "b": "Chunk approved documents and attach permissions,",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "Embeddings make meaning searchable, and RAG uses [title]",
+          "b": "Chunk approved documents and attach permissions,",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Chunk approved documents and attach permissions,",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "Prepare knowledge",
+          "b": "path [icon]",
+          "edge": "left",
+          "deltaPt": 3.7
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 1.1
+        },
+        {
+          "a": "Chunk approved documents and attach permissions,",
+          "b": "Source:  Lewis et al. — Retrieval-Augmented Gene [source]",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Encode chunks as vectors so related meanings are",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 1.1
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Match the request to relevant, authorized chunks",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "path [icon]",
+          "b": "Match the request to relevant, authorized chunks",
+          "edge": "left",
+          "deltaPt": 3.4
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 1.1
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Give the model retrieved evidence and ask it to ",
+          "edge": "left",
+          "deltaPt": 3.6
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 6,
+      "id": "prompting-finetuning",
+      "title": "Prompting steers a model now, while fine-tuning changes behavior through training",
+      "layout": "options-comparison",
+      "images": {
+        "html": "06-prompting-finetuning-html.png",
+        "pptx": "06-prompting-finetuning-pptx.png",
+        "diff": "06-prompting-finetuning-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8919763152785867,
+        "hotspots": [
+          {
+            "region": "row 3, column 1",
+            "score": 0.915,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 2",
+            "score": 0.926,
+            "box": {
+              "x": 239.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 3",
+            "score": 0.895,
+            "box": {
+              "x": 479.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 4",
+            "score": 0.892,
+            "box": {
+              "x": 719.98,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.937,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "RECOMMENDED",
+          "ratio": 5.11,
+          "needs": 4.5,
+          "fg": "#1F5FBF",
+          "bg": "#E3ECF9"
+        },
+        {
+          "text": "Instructions and examples at request time",
+          "ratio": 4.57,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#E3ECF9"
+        },
+        {
+          "text": "Additional training on representative examples",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Source:  OpenAI — Prompt engineering ;  OpenAI — [source]",
+          "ratio": 1.12,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#1F5FBF"
+        }
+      ],
+      "offPalette": [
+        "#23364F"
+      ],
+      "nearMisalignments": [
+        {
+          "a": "Best when",
+          "b": "The task or policy changes often",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "Best when",
+          "b": "Behavior needs a stable, repeatable pattern",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "Changes",
+          "b": "Input context and instructions",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "Changes",
+          "b": "Learned model behavior",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "Typical project work",
+          "b": "Design prompts, templates, retrieval",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "Typical project work",
+          "b": "Curate, label, split, and test a training set",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "Main governance need",
+          "b": "Version prompts and test regressions",
+          "edge": "top",
+          "deltaPt": 1.4
+        },
+        {
+          "a": "Main governance need",
+          "b": "Manage data quality, privacy, and evaluation",
+          "edge": "top",
+          "deltaPt": 1.4
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 7,
+      "id": "hallucinations",
+      "title": "Hallucinations are plausible but unsupported outputs, so systems need multiple reduction layers",
+      "layout": "key-points",
+      "images": {
+        "html": "07-hallucinations-html.png",
+        "pptx": "07-hallucinations-pptx.png",
+        "diff": "07-hallucinations-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8492056809469978,
+        "hotspots": [
+          {
+            "region": "row 1, column 2",
+            "score": 0.946,
+            "box": {
+              "x": 239.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 3",
+            "score": 0.925,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.891,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.849,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 3",
+            "score": 0.862,
+            "box": {
+              "x": 479.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Source:  Lewis et al. — Retrieval-Augmented Gene [source]",
+          "ratio": 4.98,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#F2F5F9"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "path [icon]",
+          "b": "Ground each answer in approved evidence [heading]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 1.3
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 1.3
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 0.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "Retrieve trusted sources and require citations w [body]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "Clarify or escalate ambiguity [heading]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "Ask for missing context and route high-consequen [body]",
+          "edge": "left",
+          "deltaPt": 3.8
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 8,
+      "id": "tools",
+      "title": "Tool use lets a model act, and function calling supplies the controlled contract",
+      "layout": "process-steps",
+      "images": {
+        "html": "08-tools-html.png",
+        "pptx": "08-tools-pptx.png",
+        "diff": "08-tools-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8208468572614231,
+        "hotspots": [
+          {
+            "region": "row 4, column 1",
+            "score": 0.894,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.821,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 4",
+            "score": 0.942,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Source:  OpenAI — Function calling guide ;  NIST [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "CONTROLLED ACTION [tracker]",
+          "b": "path [icon]",
+          "edge": "left",
+          "deltaPt": 2.7
+        },
+        {
+          "a": "Tool use lets a model act, and function calling  [title]",
+          "b": "path [icon]",
+          "edge": "left",
+          "deltaPt": 2.7
+        },
+        {
+          "a": "01",
+          "b": "path [icon]",
+          "edge": "left",
+          "deltaPt": 2.7
+        },
+        {
+          "a": "path [icon]",
+          "b": "Declare allowed tools",
+          "edge": "left",
+          "deltaPt": 2.7
+        },
+        {
+          "a": "path [icon]",
+          "b": "Describe each operation with a name, purpose, an",
+          "edge": "left",
+          "deltaPt": 2.7
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 1.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 0.7
+        },
+        {
+          "a": "path [icon]",
+          "b": "Source:  OpenAI — Function calling guide ;  NIST [source]",
+          "edge": "left",
+          "deltaPt": 2.7
+        },
+        {
+          "a": "02",
+          "b": "path [icon]",
+          "edge": "left",
+          "deltaPt": 3.4
+        },
+        {
+          "a": "path [icon]",
+          "b": "Request a structured call",
+          "edge": "left",
+          "deltaPt": 3.4
+        },
+        {
+          "a": "path [icon]",
+          "b": "The model selects a tool and produces arguments ",
+          "edge": "left",
+          "deltaPt": 3.4
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 1.1
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 9,
+      "id": "agents",
+      "title": "Agents repeat plan–act–observe loops, with memory treated as managed state",
+      "layout": "process-steps",
+      "images": {
+        "html": "09-agents-html.png",
+        "pptx": "09-agents-pptx.png",
+        "diff": "09-agents-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8225312640964364,
+        "hotspots": [
+          {
+            "region": "row 3, column 1",
+            "score": 0.892,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 3",
+            "score": 0.898,
+            "box": {
+              "x": 479.99,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 3, column 4",
+            "score": 0.916,
+            "box": {
+              "x": 719.98,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.891,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.823,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 4",
+            "score": 0.944,
+            "box": {
+              "x": 719.98,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Source:  Anthropic — Building effective agents ; [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "AI AGENTS [tracker]",
+          "b": "Interpret the goal, choose the next step, and de",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "Agents repeat plan–act–observe loops, with memor [title]",
+          "b": "Interpret the goal, choose the next step, and de",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Interpret the goal, choose the next step, and de",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "path [icon]",
+          "b": "Interpret the goal, choose the next step, and de",
+          "edge": "left",
+          "deltaPt": 3.4
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 1.1
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 3.4
+        },
+        {
+          "a": "Interpret the goal, choose the next step, and de",
+          "b": "Source:  Anthropic — Building effective agents ; [source]",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Generate a response or invoke an approved tool w",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 2.3
+        },
+        {
+          "a": "path [icon]",
+          "b": "path [icon]",
+          "edge": "top",
+          "deltaPt": 1.1
+        },
+        {
+          "a": "polygon [chevron]",
+          "b": "Read the tool result or user feedback and decide",
+          "edge": "left",
+          "deltaPt": 3.6
+        },
+        {
+          "a": "path [icon]",
+          "b": "Read the tool result or user feedback and decide",
+          "edge": "left",
+          "deltaPt": 3.4
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 10,
+      "id": "evals-guardrails",
+      "title": "Evaluation and guardrails make quality, safety, and operational control testable",
+      "layout": "key-points",
+      "images": {
+        "html": "10-evals-guardrails-html.png",
+        "pptx": "10-evals-guardrails-pptx.png",
+        "diff": "10-evals-guardrails-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8202299991726649,
+        "hotspots": [
+          {
+            "region": "row 3, column 1",
+            "score": 0.926,
+            "box": {
+              "x": 0,
+              "y": 270,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.889,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.82,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Source:  OpenAI — Evaluation best practices ;  N [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [
+        {
+          "a": "QUALITY AND SAFETY [tracker]",
+          "b": "path [icon]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "Evaluation and guardrails make quality, safety,  [title]",
+          "b": "path [icon]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "Define success and failure [heading]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "Build representative tasks, expected outcomes, a [body]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "Source:  OpenAI — Evaluation best practices ;  N [source]",
+          "edge": "left",
+          "deltaPt": 3.8
+        },
+        {
+          "a": "path [icon]",
+          "b": "Guard at run time [heading]",
+          "edge": "left",
+          "deltaPt": 2.1
+        },
+        {
+          "a": "path [icon]",
+          "b": "Apply access controls, content policies, schemas [body]",
+          "edge": "left",
+          "deltaPt": 2.1
+        }
+      ],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 11,
+      "id": "tradeoffs",
+      "title": "Capability, cost, and latency form a design trade-off to optimize deliberately",
+      "layout": "matrix-2x2",
+      "images": {
+        "html": "11-tradeoffs-html.png",
+        "pptx": "11-tradeoffs-pptx.png",
+        "diff": "11-tradeoffs-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.9064058796071719,
+        "hotspots": [
+          {
+            "region": "row 2, column 1",
+            "score": 0.941,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 2",
+            "score": 0.93,
+            "box": {
+              "x": 239.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 3",
+            "score": 0.95,
+            "box": {
+              "x": 479.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.906,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.935,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "HIGH CAPABILITY, LOW PRESSURE",
+          "ratio": 4.98,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#F2F5F9"
+        },
+        {
+          "text": "HIGH CAPABILITY, HIGH PRESSURE",
+          "ratio": 5.11,
+          "needs": 4.5,
+          "fg": "#1F5FBF",
+          "bg": "#E3ECF9"
+        },
+        {
+          "text": "ROUTINE, LOW PRESSURE",
+          "ratio": 4.98,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#F2F5F9"
+        },
+        {
+          "text": "ROUTINE, HIGH PRESSURE",
+          "ratio": 4.98,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#F2F5F9"
+        },
+        {
+          "text": "High",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Low",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Low",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "High",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        },
+        {
+          "text": "Source:  OpenAI — Latency optimization ;  OpenAI [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    },
+    {
+      "slide": 12,
+      "id": "next-steps",
+      "title": "A short discovery sequence turns the vocabulary into an AI project charter",
+      "layout": "next-steps",
+      "images": {
+        "html": "12-next-steps-html.png",
+        "pptx": "12-next-steps-pptx.png",
+        "diff": "12-next-steps-diff.png"
+      },
+      "parity": {
+        "worstRegion": 0.8180216864552587,
+        "hotspots": [
+          {
+            "region": "row 1, column 3",
+            "score": 0.923,
+            "box": {
+              "x": 479.99,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 1, column 4",
+            "score": 0.891,
+            "box": {
+              "x": 719.98,
+              "y": 0,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 1",
+            "score": 0.933,
+            "box": {
+              "x": 0,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 2",
+            "score": 0.9,
+            "box": {
+              "x": 239.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 2, column 3",
+            "score": 0.9,
+            "box": {
+              "x": 479.99,
+              "y": 135,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 1",
+            "score": 0.889,
+            "box": {
+              "x": 0,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          },
+          {
+            "region": "row 4, column 2",
+            "score": 0.818,
+            "box": {
+              "x": 239.99,
+              "y": 405,
+              "w": 239.99,
+              "h": 135
+            }
+          }
+        ]
+      },
+      "diagnostics": [],
+      "contrast": [
+        {
+          "text": "Source:  OpenAI — Evaluation best practices ;  N [source]",
+          "ratio": 5.45,
+          "needs": 4.5,
+          "fg": "#5B6B7F",
+          "bg": "#FFFFFF"
+        }
+      ],
+      "offPalette": [],
+      "nearMisalignments": [],
+      "outsideSafeArea": [],
+      "tightText": [],
+      "fonts": [
+        "Arial"
+      ]
+    }
+  ],
+  "deckFacts": {
+    "titleTopSpreadPt": 0,
+    "paletteSize": 11,
+    "pagesBelowTarget": 12
+  }
+}

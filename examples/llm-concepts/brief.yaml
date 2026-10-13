@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/eiler2005/slidecraft/main/schemas/brief.v1.json
+# SlideCraft brief — fill the TODOs or let your assistant ask you
+schemaVersion: 1
+id: llm-ai-agents-vocabulary
+goal: Build a shared, practical vocabulary for managers and engineers starting
+  AI projects
+ask: "Align on a shared vocabulary and the project choices each concept informs
+  before beginning an AI initiative."
+audience:
+  who: Managers and engineers new to AI
+  knows: "General software and business terminology; little or no hands-on
+    experience with LLMs or AI agents."
+  cares: "Making good scope, risk, architecture, budget, and delivery choices for
+    an AI project."
+task: "A concise onboarding presentation that aligns cross-functional AI project
+  teams."
+materials: []
+length:
+  slides: 12
+language: en
+usage:
+  - codex
+choice:
+  storyline: project-kickoff
+  theme: consulting-classic
+  option: B

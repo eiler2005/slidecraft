@@ -1,0 +1,265 @@
+schemaVersion: 1
+id: llm-ai-agents-vocabulary
+title: Shared vocabulary turns AI ambition into sound project choices
+storyline: project-kickoff
+theme: consulting-classic
+status: review
+language: en
+footer: AI project onboarding · Shared vocabulary
+sources:
+  - id: openai-tokens
+    title: OpenAI — Tokens and tokenization
+    publisher: OpenAI
+    url: https://platform.openai.com/docs/concepts/tokens
+  - id: attention-paper
+    title: Vaswani et al. — Attention Is All You Need
+    publisher: arXiv
+    url: https://arxiv.org/abs/1706.03762
+  - id: rag-paper
+    title: Lewis et al. — Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks
+    publisher: arXiv
+    url: https://arxiv.org/abs/2005.11401
+  - id: openai-prompting
+    title: OpenAI — Prompt engineering
+    publisher: OpenAI
+    url: https://platform.openai.com/docs/guides/prompt-engineering
+  - id: openai-finetuning
+    title: OpenAI — Fine-tuning guide
+    publisher: OpenAI
+    url: https://platform.openai.com/docs/guides/fine-tuning
+  - id: openai-functions
+    title: OpenAI — Function calling guide
+    publisher: OpenAI
+    url: https://platform.openai.com/docs/guides/function-calling
+  - id: anthropic-agents
+    title: Anthropic — Building effective agents
+    publisher: Anthropic
+    url: https://www.anthropic.com/engineering/building-effective-agents
+  - id: openai-evals
+    title: OpenAI — Evaluation best practices
+    publisher: OpenAI
+    url: https://platform.openai.com/docs/guides/evals
+  - id: nist-rmf
+    title: NIST — AI Risk Management Framework
+    publisher: NIST
+    url: https://www.nist.gov/itl/ai-risk-management-framework
+  - id: openai-latency
+    title: OpenAI — Latency optimization
+    publisher: OpenAI
+    url: https://platform.openai.com/docs/guides/latency-optimization
+slides:
+  - id: cover
+    layout: title
+    variant: cover
+    kicker: AI project onboarding
+    title: Shared vocabulary turns AI ambition into sound project choices
+    subtitle: Key concepts for understanding LLMs and AI agents
+    presenter: Strategy and engineering enablement
+    date: October 2026
+    art: network
+  - id: system
+    layout: exec-summary
+    variant: key-messages
+    tracker: The whole system
+    title: A successful AI project designs the full system, not only the model
+    messages:
+      - headline: Model capability
+        detail: Select a model and define what it can see in each interaction.
+      - headline: Grounded knowledge
+        detail: Retrieve trusted, current enterprise information rather than relying on model memory alone.
+      - headline: Controlled action
+        detail: Give the model narrow, observable tools instead of unrestricted system access.
+      - headline: Measurement and control
+        detail: Evaluate quality, enforce guardrails, and monitor cost and latency in production.
+    ask: Use this vocabulary to frame scope, owners, evidence, and trade-offs before selecting a solution.
+    sources: [openai-tokens, rag-paper, openai-functions, nist-rmf]
+  - id: tokens-context
+    layout: key-points
+    variant: columns
+    tracker: Model fundamentals
+    title: Tokens and the context window set what the model can process in one interaction
+    points:
+      - icon: components
+        heading: Tokens are model-readable pieces of text
+        body: Text is split into tokens before processing; tokenization varies by model and language.
+      - icon: stack-2
+        heading: The context window is the model's working set
+        body: Instructions, conversation history, retrieved knowledge, and output all compete for the same finite window.
+      - icon: target
+        heading: Context is a product design constraint
+        body: Decide what to include, summarize, retrieve, or omit so the model sees the relevant evidence.
+    sources: [openai-tokens]
+  - id: training-inference
+    layout: key-points
+    variant: columns
+    tracker: Model lifecycle
+    title: Training builds a model; inference applies it to each request
+    points:
+      - icon: brain
+        heading: Training changes model parameters
+        body: The learning process adjusts parameters from data to create general capabilities.
+      - icon: player-play
+        heading: Inference applies the trained model
+        body: Each request combines an input and context with the existing model to produce an output.
+      - icon: target
+        heading: The distinction changes project choices
+        body: Most enterprise work improves inference through prompts, retrieval, tools, and controls rather than training a model.
+    sources: [attention-paper, openai-finetuning]
+  - id: rag
+    layout: process-steps
+    variant: chevrons
+    tracker: Grounding
+    title: Embeddings make meaning searchable, and RAG uses that search to ground answers
+    steps:
+      - title: Prepare knowledge
+        body: Chunk approved documents and attach permissions, provenance, and update rules.
+        icon: file-text
+      - title: Create embeddings
+        body: Encode chunks as vectors so related meanings are located near each other.
+        icon: database
+      - title: Retrieve evidence
+        body: Match the request to relevant, authorized chunks at run time.
+        icon: search
+      - title: Generate with citations
+        body: Give the model retrieved evidence and ask it to answer from that evidence.
+        icon: message
+    sources: [rag-paper]
+  - id: prompting-finetuning
+    layout: options-comparison
+    variant: text
+    tracker: Adaptation choice
+    title: Prompting steers a model now, while fine-tuning changes behavior through training
+    options:
+      - name: Prompting
+        summary: Instructions and examples at request time
+      - name: Fine-tuning
+        summary: Additional training on representative examples
+    criteria:
+      - name: Best when
+      - name: Changes
+      - name: Typical project work
+      - name: Main governance need
+    cells:
+      - ["The task or policy changes often", "Behavior needs a stable, repeatable pattern"]
+      - ["Input context and instructions", "Learned model behavior"]
+      - ["Design prompts, templates, retrieval", "Curate, label, split, and test a training set"]
+      - ["Version prompts and test regressions", "Manage data quality, privacy, and evaluation"]
+    recommended: 0
+    verdict: Start with prompting and retrieval; fine-tune only when evidence shows a persistent gap.
+    sources: [openai-prompting, openai-finetuning]
+  - id: hallucinations
+    layout: key-points
+    variant: cards
+    tracker: Reliability
+    title: Hallucinations are plausible but unsupported outputs, so systems need multiple reduction layers
+    points:
+      - icon: search
+        heading: Ground each answer in approved evidence
+        body: Retrieve trusted sources and require citations where users need to verify an answer.
+      - icon: checklist
+        heading: Constrain important outputs
+        body: Use structured schemas, validation, and policy checks before a response or action is accepted.
+      - icon: message
+        heading: Clarify or escalate ambiguity
+        body: Ask for missing context and route high-consequence cases to a qualified person.
+      - icon: refresh
+        heading: Govern the knowledge base
+        body: Set provenance, access, freshness, and review rules for the sources used at run time.
+    sources: [rag-paper, openai-functions, nist-rmf]
+  - id: tools
+    layout: process-steps
+    variant: numbered
+    tracker: Controlled action
+    title: Tool use lets a model act, and function calling supplies the controlled contract
+    steps:
+      - title: Declare allowed tools
+        body: Describe each operation with a name, purpose, and typed input schema.
+        icon: tool
+      - title: Request a structured call
+        body: The model selects a tool and produces arguments that match the schema.
+        icon: code
+      - title: Validate and execute
+        body: The application checks authorization, policy, and inputs before acting.
+        icon: shield-check
+      - title: Observe the result
+        body: Return a bounded result to the model and log the action for review.
+        icon: eye
+    sources: [openai-functions, nist-rmf]
+  - id: agents
+    layout: process-steps
+    variant: chevrons
+    tracker: AI agents
+    title: Agents repeat plan–act–observe loops, with memory treated as managed state
+    steps:
+      - title: Plan
+        body: Interpret the goal, choose the next step, and define what success looks like.
+        icon: route
+      - title: Act
+        body: Generate a response or invoke an approved tool within explicit limits.
+        icon: player-play
+      - title: Observe
+        body: Read the tool result or user feedback and decide whether more work is needed.
+        icon: eye
+      - title: Manage memory
+        body: Keep only useful state; separate short-lived context from durable, governed records.
+        icon: database
+    sources: [anthropic-agents, nist-rmf]
+  - id: evals-guardrails
+    layout: key-points
+    variant: columns
+    tracker: Quality and safety
+    title: Evaluation and guardrails make quality, safety, and operational control testable
+    points:
+      - icon: target
+        heading: Define success and failure
+        body: Build representative tasks, expected outcomes, and unacceptable failure modes into an evaluation set.
+      - icon: microscope
+        heading: Test before release
+        body: Compare quality, safety, and tool-use behavior against agreed acceptance criteria.
+      - icon: shield-check
+        heading: Guard at run time
+        body: Apply access controls, content policies, schemas, approvals, and human escalation.
+      - icon: report-analytics
+        heading: Monitor in production
+        body: Log outcomes, analyze failures, and refresh evaluations as the product and knowledge change.
+    sources: [openai-evals, nist-rmf]
+  - id: tradeoffs
+    layout: matrix-2x2
+    variant: quadrants
+    tracker: Operating trade-offs
+    title: Capability, cost, and latency form a design trade-off to optimize deliberately
+    xAxis: { label: Cost and latency sensitivity, low: Low, high: High }
+    yAxis: { label: Required capability and judgment, low: Low, high: High }
+    quadrants:
+      - name: High capability, low pressure
+        note: Use the best fit model; allow deeper reasoning and richer context.
+      - name: High capability, high pressure
+        note: Route selectively, cache reusable work, and keep agent loops bounded.
+      - name: Routine, low pressure
+        note: Prefer simpler models and batch work where the experience permits.
+      - name: Routine, high pressure
+        note: Use narrow tasks, compact context, and fast deterministic controls.
+    takeaway: Set a service-level target first; then choose a model, context strategy, and control loop to meet it.
+    sources: [openai-latency, openai-tokens]
+  - id: next-steps
+    layout: next-steps
+    variant: actions
+    tracker: From vocabulary to charter
+    title: A short discovery sequence turns the vocabulary into an AI project charter
+    steps:
+      - action: Select a narrow user problem and define the decision or outcome it should improve
+        owner: Business sponsor
+        due: Discovery start
+      - action: Specify the context, trusted knowledge, tools, and permissions the system may use
+        owner: Product and engineering
+        due: Solution design
+      - action: Define evaluation cases, failure thresholds, guardrails, and escalation paths
+        owner: Product and risk owner
+        due: Before pilot
+      - action: Set quality, cost, and latency targets before choosing the production architecture
+        owner: Technology lead
+        due: Before build
+    sources: [openai-evals, nist-rmf, openai-latency]
+output:
+  formats: [pptx, pdf, png]
+  engines: { pptx: pptxgenjs, pdf: native }

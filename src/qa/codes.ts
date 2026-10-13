@@ -37,6 +37,12 @@ export const CODES = {
     why: 'The named PowerPoint shape no longer has the geometry or font size declared by the shared Scene.',
     fix: 'Repair the renderer mapping; do not compensate by changing the reference sizes.',
   },
+  'SC-GHOST-001': {
+    severity: 'warning',
+    title: 'Slide is still a ghost (a sketch, not a deliverable)',
+    why: 'Ghost slides render as dashed placeholders with the planned exhibit; a deck with ghosts is not ready to hand over.',
+    fix: 'Write the slide content against the layout contract and remove `status: ghost` (on the slide and on the deck) and the `ghost:` block.',
+  },
   'SC-SPEC-001': {
     severity: 'error',
     title: 'Deck does not match the schema',

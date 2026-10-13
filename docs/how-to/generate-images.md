@@ -62,6 +62,12 @@ the photo) back into the YAML. The credit then appears:
 - in the speaker notes' `[Sources]` block, with the photo page;
 - in `dist/manifest.json` under `imageCredits`.
 
+**When no photo fits, generate one.** Give the slot both `imageQuery` and `imagePrompt`: if the
+stock search finds nothing, `--stock` generates from the prompt (with `OPENAI_API_KEY`). If the
+candidates are wrong — off-topic, soft, private people or logos — drop the photo and run
+`slidecraft images deck.yaml` for the prompt, or let your assistant's image tool make it and
+save it as `assets/<slide-id>.png`. Generated pictures are illustrations, never evidence.
+
 **Look before you keep.** The first hit is not always right: check `--list`, open the links,
 avoid identifiable private people and brand logos, then `--pick`. A long phrase is shortened word
 by word until something matches; the result says which query matched. Photos narrower than about

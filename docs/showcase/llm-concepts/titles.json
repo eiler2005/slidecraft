@@ -1,0 +1,14 @@
+[
+ "Shared vocabulary turns AI ambition into sound project choices",
+ "A successful AI project designs the full system, not only the model",
+ "Tokens and the context window set what the model can process in one interaction",
+ "Training builds a model; inference applies it to each request",
+ "Embeddings make meaning searchable, and RAG uses that search to ground answers",
+ "Prompting steers a model now, while fine-tuning changes behavior through training",
+ "Hallucinations are plausible but unsupported outputs, so systems need multiple reduction layers",
+ "Tool use lets a model act, and function calling supplies the controlled contract",
+ "Agents repeat plan–act–observe loops, with memory treated as managed state",
+ "Evaluation and guardrails make quality, safety, and operational control testable",
+ "Capability, cost, and latency form a design trade-off to optimize deliberately",
+ "A short discovery sequence turns the vocabulary into an AI project charter"
+]

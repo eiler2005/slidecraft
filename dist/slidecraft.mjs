@@ -169361,7 +169361,7 @@ function textSvg(t) {
       if (s2.link) out += `<a href="${esc(s2.link)}" target="_blank">`;
       const x0 = t.box.x + s2.x;
       const xs = glyphOffsetsPt(t.style, faceOf(s2.bold, s2.italic), s2.text).map((o) => px(x0 + o / 72)).join(" ");
-      out += `<text x="${xs}" y="${y}" font-family="${fam}" font-size="${size2}"${s2.bold ? ' font-weight="bold"' : ""}${s2.italic ? ' font-style="italic"' : ""}${s2.underline ? ' text-decoration="underline"' : ""} fill="${s2.color}" xml:space="preserve" style="white-space:pre">${esc(s2.text)}</text>`;
+      out += `<text x="${xs}" y="${y}" font-family="${fam}" font-size="${size2}"${s2.bold ? ' font-weight="bold"' : ""}${s2.italic ? ' font-style="italic"' : ""}${s2.underline || s2.link ? ' text-decoration="underline"' : ""} fill="${s2.color}" xml:space="preserve" style="white-space:pre${s2.underline || s2.link ? ";text-decoration-skip-ink:none" : ""}">${esc(s2.text)}</text>`;
       if (s2.link) out += "</a>";
     }
   }
@@ -181164,7 +181164,8 @@ function drawText(doc, t) {
         lineBreak: false,
         baseline: "alphabetic",
         features: { kern: t.style.kerning === true, liga: false, clig: false },
-        ...s2.underline ? { underline: true } : {}
+        // PowerPoint always underlines hyperlinks: so does every other engine
+        ...s2.underline || s2.link ? { underline: true } : {}
       });
       if (s2.link)
         doc.link(

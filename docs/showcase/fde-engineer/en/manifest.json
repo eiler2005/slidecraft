@@ -1,6 +1,6 @@
 {
   "tool": "slidecraft",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "deck": {
     "id": "fde-engineer-en",
     "title": "Forward Deployed Engineers turn AI pilots into working products",
@@ -41,7 +41,7 @@
       "path": "fde-engineer-en.pptx",
       "kind": "pptx",
       "engine": "pptxgenjs",
-      "sha256": "a671914c4ffdc9eb7fd08df8328859277bfd8e309fe951efdb401c44c5cc0421"
+      "sha256": "e3f41e8d9b0d29383aec9a37730d6f5af99251633a458128fccce2458dfcb438"
     },
     {
       "path": "previews/01-cover.png",
@@ -53,25 +53,25 @@
       "path": "previews/02-why-now.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "da8e41a0ced165b9758f8538e2fc90a2a5dd1b061bff9975952c71a1b5da5ccc"
+      "sha256": "632f0dc6401fbb4e1425323d66fa1275fd3de627da957fd40c6b85b9e9b867cb"
     },
     {
       "path": "previews/03-definition.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "656a3272d6bf5c7f9babc1df4b712430209de36d74f34e94871da6d9853459e6"
+      "sha256": "d02d2995c84f05122ad0d33b8c5bbd8c28ee86312c2308cc6e02e734862cb970"
     },
     {
       "path": "previews/04-cycle.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "668b1478dea28f8518bcfb5c351aee2ac53c76ad6f8c94ca5f53c4fdba767bfe"
+      "sha256": "5e6bf8ce80349eb85d6148d1b203bc27cfd75193b8cec752932b8ba499615719"
     },
     {
       "path": "previews/05-profile.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "d4843584ee713ef8c3d730490bc09132c2d1b3c3ad658b145b517b19e273e79d"
+      "sha256": "c3a222186132f5d00585a1efd3cfc51729681b01b4ac34ed8a55ccbe7d023a1d"
     },
     {
       "path": "previews/06-ask.png",
@@ -83,13 +83,13 @@
       "path": "fde-engineer-en.html",
       "kind": "html",
       "engine": "html",
-      "sha256": "e0339fb84e2f0aa31170fd037bc3718251f683dd6c4a72a5d990d38dbb8436c8"
+      "sha256": "b1372257eb174d90ac2483892ad159a3853816ea13dab81ef1be7b88ca7e3743"
     },
     {
       "path": "fde-engineer-en.pdf",
       "kind": "pdf",
       "engine": "native",
-      "sha256": "16ec0035ffc810329ed8fbdaa2ea45c7782eebe25d79f2236294f176c29fa0dd"
+      "sha256": "a75fecd1660d213f013034f4b5243ddf605b4217e37bae6b309fc4f17e692afc"
     }
   ],
   "checks": {

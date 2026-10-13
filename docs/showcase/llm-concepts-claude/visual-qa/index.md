@@ -21,7 +21,7 @@ Parity 78.1%; hotspots: row 1, column 1 (94.1%), row 1, column 2 (89.1%), row 1,
 Layout `exec-summary`. Fonts: Arial.
 
 Images: [PowerPoint](02-why-now-pptx.png) · [HTML](02-why-now-html.png) · [difference](02-why-now-diff.png)
-Parity 82.2%; hotspots: row 1, column 2 (94.1%), row 3, column 1 (92.4%), row 3, column 2 (86.7%), row 3, column 3 (87.0%), row 3, column 4 (87.8%), row 4, column 1 (82.2%).
+Parity 83.4%; hotspots: row 1, column 2 (94.1%), row 3, column 1 (92.4%), row 3, column 2 (86.7%), row 3, column 3 (87.0%), row 3, column 4 (87.8%), row 4, column 1 (83.4%).
 
 - contrast 5.45:1 (needs 4.5:1) — SITUATION [label]
 - contrast 5.45:1 (needs 4.5:1) — COMPLICATION [label]
@@ -56,7 +56,7 @@ Parity 88.6%; hotspots: row 1, column 3 (88.6%), row 1, column 4 (92.5%), row 4,
 Layout `key-points`. Fonts: Arial.
 
 Images: [PowerPoint](04-tokens-context-pptx.png) · [HTML](04-tokens-context-html.png) · [difference](04-tokens-context-diff.png)
-Parity 82.3%; hotspots: row 1, column 2 (93.7%), row 1, column 3 (94.9%), row 4, column 1 (82.6%), row 4, column 2 (82.6%), row 4, column 3 (82.3%), row 4, column 4 (94.3%).
+Parity 83.5%; hotspots: row 1, column 2 (93.7%), row 1, column 3 (94.9%), row 4, column 1 (83.8%), row 4, column 2 (83.8%), row 4, column 3 (83.5%), row 4, column 4 (94.3%).
 
 - contrast 5.45:1 (needs 4.5:1) — Source:  OpenAI platform documentation — models  [source]
 
@@ -65,7 +65,7 @@ Parity 82.3%; hotspots: row 1, column 2 (93.7%), row 1, column 3 (94.9%), row 4,
 Layout `key-points`. Fonts: Arial.
 
 Images: [PowerPoint](05-train-vs-inference-pptx.png) · [HTML](05-train-vs-inference-html.png) · [difference](05-train-vs-inference-diff.png)
-Parity 81.8%; hotspots: row 1, column 2 (93.5%), row 4, column 1 (82.6%), row 4, column 2 (82.5%), row 4, column 3 (81.8%).
+Parity 83.3%; hotspots: row 1, column 2 (93.5%), row 4, column 1 (83.8%), row 4, column 2 (83.7%), row 4, column 3 (83.3%).
 
 - contrast 5.45:1 (needs 4.5:1) — Source:  OpenAI platform documentation — models  [source]
 
@@ -74,7 +74,7 @@ Parity 81.8%; hotspots: row 1, column 2 (93.5%), row 4, column 1 (82.6%), row 4,
 Layout `process-steps`. Fonts: Arial.
 
 Images: [PowerPoint](06-rag-pptx.png) · [HTML](06-rag-html.png) · [difference](06-rag-diff.png)
-Parity 83.3%; hotspots: row 1, column 3 (92.7%), row 4, column 1 (83.3%), row 4, column 2 (83.5%), row 4, column 3 (83.5%), row 4, column 4 (84.4%).
+Parity 84.1%; hotspots: row 1, column 3 (92.7%), row 4, column 1 (84.1%), row 4, column 2 (84.5%), row 4, column 3 (84.5%), row 4, column 4 (85.2%).
 
 - contrast 3.02:1 (needs 3:1) — 01
 - contrast 5.45:1 (needs 4.5:1) — Data pipeline
@@ -93,7 +93,7 @@ Parity 83.3%; hotspots: row 1, column 3 (92.7%), row 4, column 1 (83.3%), row 4,
 Layout `options-comparison`. Fonts: Arial.
 
 Images: [PowerPoint](07-ft-vs-prompting-pptx.png) · [HTML](07-ft-vs-prompting-html.png) · [difference](07-ft-vs-prompting-diff.png)
-Parity 90.1%; hotspots: row 3, column 2 (90.1%), row 3, column 3 (94.8%), row 3, column 4 (90.6%), row 4, column 1 (91.6%), row 4, column 2 (91.2%).
+Parity 90.1%; hotspots: row 3, column 2 (90.1%), row 3, column 3 (94.8%), row 3, column 4 (90.6%), row 4, column 1 (92.1%), row 4, column 2 (91.7%).
 
 - contrast 5.11:1 (needs 4.5:1) — RECOMMENDED
 - contrast 4.57:1 (needs 4.5:1) — Instructions in text only
@@ -119,7 +119,7 @@ Parity 90.1%; hotspots: row 3, column 2 (90.1%), row 3, column 3 (94.8%), row 3,
 Layout `key-points`. Fonts: Arial.
 
 Images: [PowerPoint](08-hallucinations-pptx.png) · [HTML](08-hallucinations-html.png) · [difference](08-hallucinations-diff.png)
-Parity 84.5%; hotspots: row 3, column 1 (94.8%), row 3, column 4 (94.5%), row 4, column 1 (84.5%), row 4, column 2 (85.3%).
+Parity 85.6%; hotspots: row 3, column 1 (94.8%), row 3, column 4 (94.5%), row 4, column 1 (85.6%), row 4, column 2 (86.2%).
 
 - warning SC-DENSITY-001: 172 words on one slide (aim for under 120)
 - contrast 4.98:1 (needs 4.5:1) — Source:  OpenAI platform documentation — models  [source]
@@ -129,7 +129,7 @@ Parity 84.5%; hotspots: row 3, column 1 (94.8%), row 3, column 4 (94.5%), row 4,
 Layout `process-steps`. Fonts: Arial.
 
 Images: [PowerPoint](09-tools-function-calling-pptx.png) · [HTML](09-tools-function-calling-html.png) · [difference](09-tools-function-calling-diff.png)
-Parity 85.6%; hotspots: row 1, column 3 (94.2%), row 1, column 4 (90.8%), row 2, column 1 (94.5%), row 2, column 4 (94.8%), row 4, column 1 (85.6%), row 4, column 2 (86.0%).
+Parity 86.5%; hotspots: row 1, column 3 (94.2%), row 1, column 4 (90.8%), row 2, column 1 (94.5%), row 2, column 4 (94.8%), row 4, column 1 (86.5%), row 4, column 2 (86.8%).
 
 - contrast 5.45:1 (needs 4.5:1) — User
 - contrast 5.45:1 (needs 4.5:1) — Model
@@ -155,7 +155,7 @@ Parity 85.6%; hotspots: row 1, column 3 (94.2%), row 1, column 4 (90.8%), row 2,
 Layout `process-steps`. Fonts: Arial.
 
 Images: [PowerPoint](10-agents-loop-pptx.png) · [HTML](10-agents-loop-html.png) · [difference](10-agents-loop-diff.png)
-Parity 82.3%; hotspots: row 1, column 3 (88.5%), row 4, column 1 (82.3%), row 4, column 2 (82.4%), row 4, column 3 (82.3%).
+Parity 83.3%; hotspots: row 1, column 3 (88.5%), row 4, column 1 (83.3%), row 4, column 2 (83.5%), row 4, column 3 (83.5%).
 
 - contrast 3.02:1 (needs 3:1) — 01
 - contrast 3.02:1 (needs 3:1) — 02
@@ -169,7 +169,7 @@ Parity 82.3%; hotspots: row 1, column 3 (88.5%), row 4, column 1 (82.3%), row 4,
 Layout `key-points`. Fonts: Arial.
 
 Images: [PowerPoint](11-evaluation-pptx.png) · [HTML](11-evaluation-html.png) · [difference](11-evaluation-diff.png)
-Parity 92.0%; hotspots: row 1, column 2 (94.9%), row 1, column 3 (94.1%), row 4, column 1 (92.0%), row 4, column 2 (93.5%).
+Parity 92.3%; hotspots: row 1, column 2 (94.9%), row 1, column 3 (94.1%), row 4, column 1 (92.3%), row 4, column 2 (93.9%).
 
 - warning SC-DENSITY-001: 174 words on one slide (aim for under 120)
 - contrast 5.45:1 (needs 4.5:1) — Source:  Stanford HAI AI Index Report 2024 (2024 [source]
@@ -183,7 +183,7 @@ Parity 92.0%; hotspots: row 1, column 2 (94.9%), row 1, column 3 (94.1%), row 4,
 Layout `next-steps`. Fonts: Arial.
 
 Images: [PowerPoint](12-ship-gates-pptx.png) · [HTML](12-ship-gates-html.png) · [difference](12-ship-gates-diff.png)
-Parity 84.5%; hotspots: row 1, column 2 (93.9%), row 3, column 1 (85.2%), row 3, column 2 (91.7%), row 4, column 1 (84.5%), row 4, column 2 (88.1%), row 4, column 3 (91.9%).
+Parity 85.2%; hotspots: row 1, column 2 (93.9%), row 3, column 1 (85.2%), row 3, column 2 (91.7%), row 4, column 1 (85.6%), row 4, column 2 (88.7%), row 4, column 3 (92.1%).
 
 - contrast 5.45:1 (needs 4.5:1) — Product lead · Before kickoff [meta]
 - contrast 5.45:1 (needs 4.5:1) — Engineering lead · Before kickoff [meta]

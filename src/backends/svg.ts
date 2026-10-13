@@ -65,13 +65,14 @@ export function textSvg(t: TextNode): string {
       out += `<text x="${px(t.box.x + line.bulletX)}" y="${y}" font-family="${fam}" font-size="${size}" fill="${line.segments[0]?.color ?? t.style.color}">•</text>`;
     }
     for (const s of line.segments) {
+      // PowerPoint always underlines hyperlinks, through descenders: so does the browser
       if (s.link) out += `<a href="${esc(s.link)}" target="_blank">`;
       // Every glyph sits where the shared layout measured it, so browsers cannot drift.
       const x0 = t.box.x + s.x;
       const xs = glyphOffsetsPt(t.style, faceOf(s.bold, s.italic), s.text)
         .map((o) => px(x0 + o / 72))
         .join(' ');
-      out += `<text x="${xs}" y="${y}" font-family="${fam}" font-size="${size}"${s.bold ? ' font-weight="bold"' : ''}${s.italic ? ' font-style="italic"' : ''}${s.underline ? ' text-decoration="underline"' : ''} fill="${s.color}" xml:space="preserve" style="white-space:pre">${esc(s.text)}</text>`;
+      out += `<text x="${xs}" y="${y}" font-family="${fam}" font-size="${size}"${s.bold ? ' font-weight="bold"' : ''}${s.italic ? ' font-style="italic"' : ''}${s.underline || s.link ? ' text-decoration="underline"' : ''} fill="${s.color}" xml:space="preserve" style="white-space:pre${s.underline || s.link ? ';text-decoration-skip-ink:none' : ''}">${esc(s.text)}</text>`;
       if (s.link) out += '</a>';
     }
   }

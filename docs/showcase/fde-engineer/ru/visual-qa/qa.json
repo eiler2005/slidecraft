@@ -146,7 +146,7 @@
         "diff": "02-why-now-diff.png"
       },
       "parity": {
-        "worstRegion": 0.8416511410765857,
+        "worstRegion": 0.8517048929197625,
         "hotspots": [
           {
             "region": "row 2, column 1",
@@ -160,7 +160,7 @@
           },
           {
             "region": "row 4, column 1",
-            "score": 0.901,
+            "score": 0.904,
             "box": {
               "x": 0,
               "y": 405,
@@ -170,7 +170,7 @@
           },
           {
             "region": "row 4, column 2",
-            "score": 0.86,
+            "score": 0.861,
             "box": {
               "x": 239.99,
               "y": 405,
@@ -180,7 +180,7 @@
           },
           {
             "region": "row 4, column 3",
-            "score": 0.842,
+            "score": 0.852,
             "box": {
               "x": 479.99,
               "y": 405,
@@ -240,7 +240,7 @@
         "diff": "03-definition-diff.png"
       },
       "parity": {
-        "worstRegion": 0.8215043394406943,
+        "worstRegion": 0.8315410012802371,
         "hotspots": [
           {
             "region": "row 1, column 4",
@@ -304,7 +304,7 @@
           },
           {
             "region": "row 4, column 1",
-            "score": 0.894,
+            "score": 0.899,
             "box": {
               "x": 0,
               "y": 405,
@@ -314,7 +314,7 @@
           },
           {
             "region": "row 4, column 2",
-            "score": 0.822,
+            "score": 0.832,
             "box": {
               "x": 239.99,
               "y": 405,
@@ -353,7 +353,7 @@
         "diff": "04-cycle-diff.png"
       },
       "parity": {
-        "worstRegion": 0.8215043394406943,
+        "worstRegion": 0.8315410012802371,
         "hotspots": [
           {
             "region": "row 2, column 1",
@@ -367,7 +367,7 @@
           },
           {
             "region": "row 4, column 1",
-            "score": 0.894,
+            "score": 0.899,
             "box": {
               "x": 0,
               "y": 405,
@@ -377,7 +377,7 @@
           },
           {
             "region": "row 4, column 2",
-            "score": 0.822,
+            "score": 0.832,
             "box": {
               "x": 239.99,
               "y": 405,
@@ -475,11 +475,11 @@
         "diff": "05-profile-diff.png"
       },
       "parity": {
-        "worstRegion": 0.8215043394406943,
+        "worstRegion": 0.8315410012802371,
         "hotspots": [
           {
             "region": "row 4, column 1",
-            "score": 0.894,
+            "score": 0.899,
             "box": {
               "x": 0,
               "y": 405,
@@ -489,7 +489,7 @@
           },
           {
             "region": "row 4, column 2",
-            "score": 0.822,
+            "score": 0.832,
             "box": {
               "x": 239.99,
               "y": 405,

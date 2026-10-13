@@ -1,6 +1,6 @@
 {
   "tool": "slidecraft",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "deck": {
     "id": "llm-ai-agents-vocabulary",
     "title": "Key concepts for LLMs and AI agents: the shared vocabulary your first project needs",
@@ -41,7 +41,7 @@
       "path": "llm-ai-agents-vocabulary.pptx",
       "kind": "pptx",
       "engine": "pptxgenjs",
-      "sha256": "781784eb578ce4459fcc1c91fa323aa379e06c8bccf10a205fa790aa580b99d0"
+      "sha256": "c6ab5d867e77d0e714d0397012fb9a86660c3f8ba2029410de1b78184b4f4c00"
     },
     {
       "path": "previews/01-cover.png",
@@ -53,7 +53,7 @@
       "path": "previews/02-why-now.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "9030d5c0a8b45ca3cca3bc240e4b8e68448804e9553ec50d6f22dfe080345831"
+      "sha256": "182d8a7fb58d87902716709aee6bd7cf090975af7ef41af469e582283ce21c78"
     },
     {
       "path": "previews/03-how-to-read.png",
@@ -65,67 +65,67 @@
       "path": "previews/04-tokens-context.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "ac0507e307fb21884139bf218d5e192d036a902ec62d60a51d7f99bbcafd289c"
+      "sha256": "5e69078135f56c874ee25b983c74bd192a95d36a9650d586326bee1bf50b8487"
     },
     {
       "path": "previews/05-train-vs-inference.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "47e0bd255eebdfc62f7590f966c8c667718dcdcb32ab041bc7aa2f40f404e500"
+      "sha256": "5e423c29a2af2ca285feed2e0d1c55040df062f16fe46b91a00dc158e2bc2c56"
     },
     {
       "path": "previews/06-rag.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "172ee2455be52d0604de6f92607fa3de904d5e171fb561b2cf3fea5d3e002d4b"
+      "sha256": "dee95c03827bfe120f601b14c9c666bf0cc20c80aaf951934120c5f0d40ef943"
     },
     {
       "path": "previews/07-ft-vs-prompting.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "7f40bffd722f8e1157529a99a03167fcfc25049b944fba87923fdef6f66d4c77"
+      "sha256": "16dee52651e3cd6de5cf21b515c3fbda797ab927d4c53fedcfaf01a0c0e95d8e"
     },
     {
       "path": "previews/08-hallucinations.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "75a835ca362fcba125701eb23876a4729eb86ebfa8cd32e5d71dab50cab8c59f"
+      "sha256": "cb4aa5c00386075e3cd39e3c8f4c20a64a31f843ebd28f21befe17b18528be93"
     },
     {
       "path": "previews/09-tools-function-calling.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "3bdfa27c828d4799eaa17fffccf2ff0dcf9225868d8bb62bc9d2ce5d383c7235"
+      "sha256": "d0e2b28367b074ee3029eb9b0903ceb86d0c39c7090519c522033e6afdc93401"
     },
     {
       "path": "previews/10-agents-loop.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "813fa7bfb0b0a28439565bebcbcbbf7fe57d45774db9a85efd2d75b0d79c249c"
+      "sha256": "d34079b3cc766f3449a322864b2395e6c3682329582c2dd89ce851ad145c915c"
     },
     {
       "path": "previews/11-evaluation.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "66f523c7cd10374bc21eb4ebac5b5e5ed068f9d864e14b897cc11796349a00d7"
+      "sha256": "7cfa1dafbd82fa909221333fb28d7ec599a4c4ba839e1754c6640f63ccb1dfc1"
     },
     {
       "path": "previews/12-ship-gates.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "5801744013254cc210d21e92dc367631b8add1d66ffdb565329eb7cccc74655d"
+      "sha256": "09975cc549423abbc5890fc9568c1077b4889b310152e25dd73abba2a3341dad"
     },
     {
       "path": "llm-ai-agents-vocabulary.html",
       "kind": "html",
       "engine": "html",
-      "sha256": "3f6c7947058f184ab4bb0c935d71823d244c4204e9e085c169fa4a9590bcf765"
+      "sha256": "66dc9f73e989632cffe111e1a6077fc08df3573b6f8a70e69b6c95a9767ca8ea"
     },
     {
       "path": "llm-ai-agents-vocabulary.pdf",
       "kind": "pdf",
       "engine": "native",
-      "sha256": "f4e1aba7884346447d4ce590539f76f71da68bb9e8e646aac96e814d03d3d1ef"
+      "sha256": "9eb96a0591d12031d2d8288ecdfb9b6895577f31a19f0dce2e30910c7c67820d"
     }
   ],
   "checks": {

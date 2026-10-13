@@ -1,6 +1,6 @@
 {
   "tool": "slidecraft",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "deck": {
     "id": "llm-ai-agents-vocabulary",
     "title": "Shared vocabulary turns AI ambition into sound project choices",
@@ -41,7 +41,7 @@
       "path": "llm-ai-agents-vocabulary.pptx",
       "kind": "pptx",
       "engine": "pptxgenjs",
-      "sha256": "2eca2c1dbfddcd30223b520d6222ce950b6306fab242eea2f87bf52eb3f2e353"
+      "sha256": "a5c5e2882438ad058bffb19791327604b1eacff793e11ea2de1cc344fb41b20d"
     },
     {
       "path": "previews/01-cover.png",
@@ -53,79 +53,79 @@
       "path": "previews/02-system.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "5c26d5e3e243c6daf4c6a6e5beb77fb97d312e5e198d8637be6bd6c62b1f42d8"
+      "sha256": "f03b5c95d607c81e8d56fb07ebe7e7bfb975f2e145c768ed2e5c08b29abd800e"
     },
     {
       "path": "previews/03-tokens-context.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "af4eea3f0b7b9035e3736f6ad0984622eee8e586bf2b0139a707d20ecb30d9d2"
+      "sha256": "6bb9781fceec091b6266124a4dec01af164ed6a987828776273037960d6140f7"
     },
     {
       "path": "previews/04-training-inference.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "5391515a8e5045aa7e849902e6b7ce2e6082a5d71a4112dc459bfac30f22851a"
+      "sha256": "b8c802886c137bf7a47487046c6a27061d8e5b608149540b1443e64d456aeb80"
     },
     {
       "path": "previews/05-rag.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "2626bbde964d8cf0fcf5e2b38871bed4e33d01281fd73f7bd3370d7cacb087ae"
+      "sha256": "20293b1a55a2329dac23fe5086ad63ed76bdeb7e5ed1419adb01450021a10ef0"
     },
     {
       "path": "previews/06-prompting-finetuning.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "415870b7796c1fcd817d3ec69d3757afcbf9fc63905f2005e5bbe2c8a88d4dac"
+      "sha256": "07e3d5307a8c858b62b143005b48fe1f881a3254f0f2815839bcfa0d38a2fed0"
     },
     {
       "path": "previews/07-hallucinations.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "3b171ce9aad8821d09eb7f003e15e970f9e55409068292b31b1e6d1529dabaeb"
+      "sha256": "e39ac4bad9eb21b1111c37ce34d220a6dcee3697c3ea9c08f6b66929e09fc2f0"
     },
     {
       "path": "previews/08-tools.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "5d0215f33c2b03141eab0cf8f2ca3b76d6bd32405bf57703e561f4b71d62e4aa"
+      "sha256": "053a5f5b70dcebfee806e796ce4d444292ec6ccc013a361ede5b7d4f62fc7b5e"
     },
     {
       "path": "previews/09-agents.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "b1fcd78d6fd01555c08e80a9f6717ecceb7262bc1f9e2c74520a2be72c863736"
+      "sha256": "3cbf36d1ad3028070f8c6cc3e7c592f968ee79173307e31c02fa8afb4388d28c"
     },
     {
       "path": "previews/10-evals-guardrails.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "d1a4acdff283d6be6532bc44dc44ace062acf1f325e8706811b190a06b6fc2a8"
+      "sha256": "636a676bd629d7064c3cb3f70ad4d783a612d4b33bcae3bb0e97141c85a43374"
     },
     {
       "path": "previews/11-tradeoffs.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "030fe4105c02965cfe915c885321396240b6643c2710fe772d901a1b42f8f786"
+      "sha256": "fcc3f5d0a18005652653cb7de921326c2e1beff459dcb0508dca61d058d1b940"
     },
     {
       "path": "previews/12-next-steps.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "01703116285450eae773e959a8604c94cb537bf4568af5c59ab921d987f13cd8"
+      "sha256": "e1c1b31e441429971c5d48435ecc6e25cdac00909cbf9a0d58ca3fb3ebcd67db"
     },
     {
       "path": "llm-ai-agents-vocabulary.html",
       "kind": "html",
       "engine": "html",
-      "sha256": "0913460dcbf6a00e74f9851b97be083a9889a957f7a40e20aaace5c2526c384f"
+      "sha256": "be4cde16c6f7e8bb5c885afcf200943f2404ad8fafb79b83a385e4e5da70f17e"
     },
     {
       "path": "llm-ai-agents-vocabulary.pdf",
       "kind": "pdf",
       "engine": "native",
-      "sha256": "7b916a06fd0c2ed4111922e1134d8b1a32ab59ab139905bb916fa313b7879052"
+      "sha256": "8253f174975293ce75ff529c762d5ec12a0b3867b475d363903a95ad799ab230"
     }
   ],
   "checks": {

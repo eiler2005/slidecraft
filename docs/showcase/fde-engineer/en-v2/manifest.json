@@ -1,6 +1,6 @@
 {
   "tool": "slidecraft",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "deck": {
     "id": "fde-engineer-en-v2",
     "title": "Forward Deployed Engineers turn AI pilots into working products",
@@ -41,7 +41,7 @@
       "path": "fde-engineer-en-v2.pptx",
       "kind": "pptx",
       "engine": "pptxgenjs",
-      "sha256": "aceec4ba4e667566dc53db39b1bd3a814b268ab0f20e1acd763bed616cceb4b5"
+      "sha256": "6499b813dda2e9e02eb509add53a89257f608a181ee7a63f530e0dc14ae8bc9c"
     },
     {
       "path": "previews/01-cover.png",
@@ -53,25 +53,25 @@
       "path": "previews/02-why-now.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "e66e1d72b86aacbdad1d6a6c8c269e70ec54629161869fa6ba37fbe93c409772"
+      "sha256": "ea1f6ab57e79b0dd9f480e4b74154ad4abe28682f3370d8df62343b5396f9295"
     },
     {
       "path": "previews/03-value-chain.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "88985f12080175c943c1457bb81a9d5a15b204d42408841b1b4d593847b55a45"
+      "sha256": "0ca53aa59788e64caa75968a0535c313b000d1deb3c44adf0d8a93f134c92a09"
     },
     {
       "path": "previews/04-cycle.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "61861b36e474ec962d21b9dc8f90506252aa72cebefcbb60126fac28b450dce1"
+      "sha256": "e24e74d2bf9f6604601f2aeeaff7fd362db47ec750ee5fdbbd8061630ccacaa3"
     },
     {
       "path": "previews/05-profile.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "b163b019ac68cc19861e8ae561dc529bba9863178e3d6668a3f9079485bff54c"
+      "sha256": "c2c294bd635b4df731566c0008414753c54142dde0e5a98f953db1c2ffdedf81"
     },
     {
       "path": "previews/06-organisation.png",
@@ -101,13 +101,13 @@
       "path": "fde-engineer-en-v2.html",
       "kind": "html",
       "engine": "html",
-      "sha256": "c619f7ad26215753f8aa30a4b99f66691f2bdd4ed429b56a59527d25a017dc71"
+      "sha256": "a05bc8ee2dd4e52c30ce6a60149773f2d3ddc57d35b30b842da8c175e51f9c66"
     },
     {
       "path": "fde-engineer-en-v2.pdf",
       "kind": "pdf",
       "engine": "native",
-      "sha256": "696d1038cee6629b5e0bfec7668d26249024861b61c84e9791c6dec407a6f737"
+      "sha256": "5ccba49324103a67c3567040ff217d7f1d83742a3a548c45bf497746fbbbfc1e"
     }
   ],
   "checks": {

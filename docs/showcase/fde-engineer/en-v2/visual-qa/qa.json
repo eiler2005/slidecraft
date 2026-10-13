@@ -101,7 +101,7 @@
         "diff": "02-why-now-diff.png"
       },
       "parity": {
-        "worstRegion": 0.810890952872377,
+        "worstRegion": 0.8242432286942607,
         "hotspots": [
           {
             "region": "row 1, column 3",
@@ -135,7 +135,7 @@
           },
           {
             "region": "row 4, column 1",
-            "score": 0.893,
+            "score": 0.897,
             "box": {
               "x": 0,
               "y": 405,
@@ -145,7 +145,7 @@
           },
           {
             "region": "row 4, column 2",
-            "score": 0.831,
+            "score": 0.833,
             "box": {
               "x": 239.99,
               "y": 405,
@@ -155,7 +155,7 @@
           },
           {
             "region": "row 4, column 3",
-            "score": 0.811,
+            "score": 0.824,
             "box": {
               "x": 479.99,
               "y": 405,
@@ -309,7 +309,7 @@
           },
           {
             "region": "row 4, column 1",
-            "score": 0.927,
+            "score": 0.929,
             "box": {
               "x": 0,
               "y": 405,
@@ -489,7 +489,7 @@
         "diff": "04-cycle-diff.png"
       },
       "parity": {
-        "worstRegion": 0.8274509803921568,
+        "worstRegion": 0.8346591970121382,
         "hotspots": [
           {
             "region": "row 1, column 3",
@@ -543,7 +543,7 @@
           },
           {
             "region": "row 4, column 1",
-            "score": 0.89,
+            "score": 0.894,
             "box": {
               "x": 0,
               "y": 405,
@@ -553,7 +553,7 @@
           },
           {
             "region": "row 4, column 2",
-            "score": 0.827,
+            "score": 0.835,
             "box": {
               "x": 239.99,
               "y": 405,
@@ -675,11 +675,11 @@
         "diff": "05-profile-diff.png"
       },
       "parity": {
-        "worstRegion": 0.8274509803921568,
+        "worstRegion": 0.8346591970121382,
         "hotspots": [
           {
             "region": "row 4, column 1",
-            "score": 0.89,
+            "score": 0.894,
             "box": {
               "x": 0,
               "y": 405,
@@ -689,7 +689,7 @@
           },
           {
             "region": "row 4, column 2",
-            "score": 0.827,
+            "score": 0.835,
             "box": {
               "x": 239.99,
               "y": 405,

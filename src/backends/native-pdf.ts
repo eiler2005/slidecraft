@@ -63,7 +63,8 @@ function drawText(doc: Doc, t: TextNode) {
         lineBreak: false,
         baseline: 'alphabetic',
         features: { kern: t.style.kerning === true, liga: false, clig: false } as never,
-        ...(s.underline ? { underline: true } : {}),
+        // PowerPoint always underlines hyperlinks: so does every other engine
+        ...(s.underline || s.link ? { underline: true } : {}),
       });
       if (s.link)
         doc.link(

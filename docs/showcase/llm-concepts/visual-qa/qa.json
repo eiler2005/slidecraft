@@ -146,7 +146,7 @@
         "diff": "02-system-diff.png"
       },
       "parity": {
-        "worstRegion": 0.8521766273715246,
+        "worstRegion": 0.8572995752734315,
         "hotspots": [
           {
             "region": "row 1, column 3",
@@ -180,7 +180,7 @@
           },
           {
             "region": "row 4, column 1",
-            "score": 0.888,
+            "score": 0.891,
             "box": {
               "x": 0,
               "y": 405,
@@ -190,7 +190,7 @@
           },
           {
             "region": "row 4, column 2",
-            "score": 0.853,
+            "score": 0.859,
             "box": {
               "x": 239.99,
               "y": 405,
@@ -200,7 +200,7 @@
           },
           {
             "region": "row 4, column 3",
-            "score": 0.852,
+            "score": 0.857,
             "box": {
               "x": 479.99,
               "y": 405,
@@ -210,7 +210,7 @@
           },
           {
             "region": "row 4, column 4",
-            "score": 0.889,
+            "score": 0.892,
             "box": {
               "x": 719.98,
               "y": 405,
@@ -326,11 +326,11 @@
         "diff": "03-tokens-context-diff.png"
       },
       "parity": {
-        "worstRegion": 0.8980982277664791,
+        "worstRegion": 0.902085699678039,
         "hotspots": [
           {
             "region": "row 4, column 1",
-            "score": 0.898,
+            "score": 0.902,
             "box": {
               "x": 0,
               "y": 405,
@@ -434,7 +434,7 @@
         "diff": "04-training-inference-diff.png"
       },
       "parity": {
-        "worstRegion": 0.8235148874364561,
+        "worstRegion": 0.8376891024437854,
         "hotspots": [
           {
             "region": "row 1, column 4",
@@ -448,7 +448,7 @@
           },
           {
             "region": "row 4, column 1",
-            "score": 0.892,
+            "score": 0.896,
             "box": {
               "x": 0,
               "y": 405,
@@ -458,7 +458,7 @@
           },
           {
             "region": "row 4, column 2",
-            "score": 0.824,
+            "score": 0.838,
             "box": {
               "x": 239.99,
               "y": 405,
@@ -562,7 +562,7 @@
         "diff": "05-rag-diff.png"
       },
       "parity": {
-        "worstRegion": 0.824604816091528,
+        "worstRegion": 0.8371044890021294,
         "hotspots": [
           {
             "region": "row 1, column 2",
@@ -616,7 +616,7 @@
           },
           {
             "region": "row 4, column 1",
-            "score": 0.882,
+            "score": 0.889,
             "box": {
               "x": 0,
               "y": 405,
@@ -626,7 +626,7 @@
           },
           {
             "region": "row 4, column 2",
-            "score": 0.825,
+            "score": 0.837,
             "box": {
               "x": 239.99,
               "y": 405,
@@ -782,7 +782,7 @@
           },
           {
             "region": "row 4, column 1",
-            "score": 0.937,
+            "score": 0.939,
             "box": {
               "x": 0,
               "y": 405,
@@ -893,7 +893,7 @@
         "diff": "07-hallucinations-diff.png"
       },
       "parity": {
-        "worstRegion": 0.8492056809469978,
+        "worstRegion": 0.8595711438981205,
         "hotspots": [
           {
             "region": "row 1, column 2",
@@ -917,7 +917,7 @@
           },
           {
             "region": "row 4, column 1",
-            "score": 0.891,
+            "score": 0.897,
             "box": {
               "x": 0,
               "y": 405,
@@ -927,7 +927,7 @@
           },
           {
             "region": "row 4, column 2",
-            "score": 0.849,
+            "score": 0.86,
             "box": {
               "x": 239.99,
               "y": 405,
@@ -937,7 +937,7 @@
           },
           {
             "region": "row 4, column 3",
-            "score": 0.862,
+            "score": 0.871,
             "box": {
               "x": 479.99,
               "y": 405,
@@ -1019,11 +1019,11 @@
         "diff": "08-tools-diff.png"
       },
       "parity": {
-        "worstRegion": 0.8208468572614231,
+        "worstRegion": 0.8344256236526024,
         "hotspots": [
           {
             "region": "row 4, column 1",
-            "score": 0.894,
+            "score": 0.899,
             "box": {
               "x": 0,
               "y": 405,
@@ -1033,7 +1033,7 @@
           },
           {
             "region": "row 4, column 2",
-            "score": 0.821,
+            "score": 0.834,
             "box": {
               "x": 239.99,
               "y": 405,
@@ -1155,7 +1155,7 @@
         "diff": "09-agents-diff.png"
       },
       "parity": {
-        "worstRegion": 0.8225312640964364,
+        "worstRegion": 0.8364415919659117,
         "hotspots": [
           {
             "region": "row 3, column 1",
@@ -1189,7 +1189,7 @@
           },
           {
             "region": "row 4, column 1",
-            "score": 0.891,
+            "score": 0.895,
             "box": {
               "x": 0,
               "y": 405,
@@ -1199,7 +1199,7 @@
           },
           {
             "region": "row 4, column 2",
-            "score": 0.823,
+            "score": 0.836,
             "box": {
               "x": 239.99,
               "y": 405,
@@ -1321,7 +1321,7 @@
         "diff": "10-evals-guardrails-diff.png"
       },
       "parity": {
-        "worstRegion": 0.8202299991726649,
+        "worstRegion": 0.8344102723413068,
         "hotspots": [
           {
             "region": "row 3, column 1",
@@ -1335,7 +1335,7 @@
           },
           {
             "region": "row 4, column 1",
-            "score": 0.889,
+            "score": 0.894,
             "box": {
               "x": 0,
               "y": 405,
@@ -1345,7 +1345,7 @@
           },
           {
             "region": "row 4, column 2",
-            "score": 0.82,
+            "score": 0.834,
             "box": {
               "x": 239.99,
               "y": 405,
@@ -1427,7 +1427,7 @@
         "diff": "11-tradeoffs-diff.png"
       },
       "parity": {
-        "worstRegion": 0.9064058796071719,
+        "worstRegion": 0.9093804879101646,
         "hotspots": [
           {
             "region": "row 2, column 1",
@@ -1461,7 +1461,7 @@
           },
           {
             "region": "row 4, column 1",
-            "score": 0.906,
+            "score": 0.909,
             "box": {
               "x": 0,
               "y": 405,
@@ -1471,7 +1471,7 @@
           },
           {
             "region": "row 4, column 2",
-            "score": 0.935,
+            "score": 0.937,
             "box": {
               "x": 239.99,
               "y": 405,
@@ -1566,7 +1566,7 @@
         "diff": "12-next-steps-diff.png"
       },
       "parity": {
-        "worstRegion": 0.8180216864552587,
+        "worstRegion": 0.8322378318618814,
         "hotspots": [
           {
             "region": "row 1, column 3",
@@ -1620,7 +1620,7 @@
           },
           {
             "region": "row 4, column 1",
-            "score": 0.889,
+            "score": 0.894,
             "box": {
               "x": 0,
               "y": 405,
@@ -1630,7 +1630,7 @@
           },
           {
             "region": "row 4, column 2",
-            "score": 0.818,
+            "score": 0.832,
             "box": {
               "x": 239.99,
               "y": 405,

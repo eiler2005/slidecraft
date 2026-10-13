@@ -20,7 +20,7 @@ Parity 78.1%; hotspots: row 1, column 1 (93.0%), row 1, column 2 (78.1%), row 1,
 Layout `exec-summary`. Fonts: Arial.
 
 Images: [PowerPoint](02-system-pptx.png) · [HTML](02-system-html.png) · [difference](02-system-diff.png)
-Parity 85.2%; hotspots: row 1, column 3 (88.7%), row 1, column 4 (87.2%), row 3, column 1 (90.3%), row 4, column 1 (88.8%), row 4, column 2 (85.3%), row 4, column 3 (85.2%), row 4, column 4 (88.9%).
+Parity 85.7%; hotspots: row 1, column 3 (88.7%), row 1, column 4 (87.2%), row 3, column 1 (90.3%), row 4, column 1 (89.1%), row 4, column 2 (85.9%), row 4, column 3 (85.7%), row 4, column 4 (89.2%).
 
 - contrast 5.45:1 (needs 4.5:1) — Select a model and define what it can see in eac [detail]
 - contrast 5.45:1 (needs 4.5:1) — Retrieve trusted, current enterprise information [detail]
@@ -41,7 +41,7 @@ Parity 85.2%; hotspots: row 1, column 3 (88.7%), row 1, column 4 (87.2%), row 3,
 Layout `key-points`. Fonts: Arial.
 
 Images: [PowerPoint](03-tokens-context-pptx.png) · [HTML](03-tokens-context-html.png) · [difference](03-tokens-context-diff.png)
-Parity 89.8%; hotspots: row 4, column 1 (89.8%), row 4, column 4 (94.8%).
+Parity 90.2%; hotspots: row 4, column 1 (90.2%), row 4, column 4 (94.8%).
 
 - contrast 5.45:1 (needs 4.5:1) — Source:  OpenAI — Tokens and tokenization [source]
 - almost aligned (left, 3.8 pt): MODEL FUNDAMENTALS [tracker] ↔ path [icon]
@@ -59,7 +59,7 @@ Parity 89.8%; hotspots: row 4, column 1 (89.8%), row 4, column 4 (94.8%).
 Layout `key-points`. Fonts: Arial.
 
 Images: [PowerPoint](04-training-inference-pptx.png) · [HTML](04-training-inference-html.png) · [difference](04-training-inference-diff.png)
-Parity 82.4%; hotspots: row 1, column 4 (94.5%), row 4, column 1 (89.2%), row 4, column 2 (82.4%), row 4, column 4 (94.3%).
+Parity 83.8%; hotspots: row 1, column 4 (94.5%), row 4, column 1 (89.6%), row 4, column 2 (83.8%), row 4, column 4 (94.3%).
 
 - contrast 5.45:1 (needs 4.5:1) — Source:  Vaswani et al. — Attention Is All You N [source]
 - almost aligned (left, 3.8 pt): MODEL LIFECYCLE [tracker] ↔ path [icon]
@@ -77,7 +77,7 @@ Parity 82.4%; hotspots: row 1, column 4 (94.5%), row 4, column 1 (89.2%), row 4,
 Layout `process-steps`. Fonts: Arial.
 
 Images: [PowerPoint](05-rag-pptx.png) · [HTML](05-rag-html.png) · [difference](05-rag-diff.png)
-Parity 82.5%; hotspots: row 1, column 2 (94.8%), row 1, column 3 (93.7%), row 3, column 1 (91.4%), row 3, column 2 (91.7%), row 3, column 4 (91.2%), row 4, column 1 (88.2%), row 4, column 2 (82.5%).
+Parity 83.7%; hotspots: row 1, column 2 (94.8%), row 1, column 3 (93.7%), row 3, column 1 (91.4%), row 3, column 2 (91.7%), row 3, column 4 (91.2%), row 4, column 1 (88.9%), row 4, column 2 (83.7%).
 
 - contrast 5.45:1 (needs 4.5:1) — Source:  Lewis et al. — Retrieval-Augmented Gene [source]
 - almost aligned (left, 3.6 pt): GROUNDING [tracker] ↔ Chunk approved documents and attach permissions,
@@ -98,7 +98,7 @@ Parity 82.5%; hotspots: row 1, column 2 (94.8%), row 1, column 3 (93.7%), row 3,
 Layout `options-comparison`. Fonts: Arial.
 
 Images: [PowerPoint](06-prompting-finetuning-pptx.png) · [HTML](06-prompting-finetuning-html.png) · [difference](06-prompting-finetuning-diff.png)
-Parity 89.2%; hotspots: row 3, column 1 (91.5%), row 3, column 2 (92.6%), row 3, column 3 (89.5%), row 3, column 4 (89.2%), row 4, column 1 (93.7%).
+Parity 89.2%; hotspots: row 3, column 1 (91.5%), row 3, column 2 (92.6%), row 3, column 3 (89.5%), row 3, column 4 (89.2%), row 4, column 1 (93.9%).
 
 - contrast 5.11:1 (needs 4.5:1) — RECOMMENDED
 - contrast 4.57:1 (needs 4.5:1) — Instructions and examples at request time
@@ -119,7 +119,7 @@ Parity 89.2%; hotspots: row 3, column 1 (91.5%), row 3, column 2 (92.6%), row 3,
 Layout `key-points`. Fonts: Arial.
 
 Images: [PowerPoint](07-hallucinations-pptx.png) · [HTML](07-hallucinations-html.png) · [difference](07-hallucinations-diff.png)
-Parity 84.9%; hotspots: row 1, column 2 (94.6%), row 1, column 3 (92.5%), row 4, column 1 (89.1%), row 4, column 2 (84.9%), row 4, column 3 (86.2%).
+Parity 86.0%; hotspots: row 1, column 2 (94.6%), row 1, column 3 (92.5%), row 4, column 1 (89.7%), row 4, column 2 (86.0%), row 4, column 3 (87.1%).
 
 - contrast 4.98:1 (needs 4.5:1) — Source:  Lewis et al. — Retrieval-Augmented Gene [source]
 - almost aligned (left, 3.8 pt): path [icon] ↔ Ground each answer in approved evidence [heading]
@@ -135,7 +135,7 @@ Parity 84.9%; hotspots: row 1, column 2 (94.6%), row 1, column 3 (92.5%), row 4,
 Layout `process-steps`. Fonts: Arial.
 
 Images: [PowerPoint](08-tools-pptx.png) · [HTML](08-tools-html.png) · [difference](08-tools-diff.png)
-Parity 82.1%; hotspots: row 4, column 1 (89.4%), row 4, column 2 (82.1%), row 4, column 4 (94.2%).
+Parity 83.4%; hotspots: row 4, column 1 (89.9%), row 4, column 2 (83.4%), row 4, column 4 (94.2%).
 
 - contrast 5.45:1 (needs 4.5:1) — Source:  OpenAI — Function calling guide ;  NIST [source]
 - almost aligned (left, 2.7 pt): CONTROLLED ACTION [tracker] ↔ path [icon]
@@ -156,7 +156,7 @@ Parity 82.1%; hotspots: row 4, column 1 (89.4%), row 4, column 2 (82.1%), row 4,
 Layout `process-steps`. Fonts: Arial.
 
 Images: [PowerPoint](09-agents-pptx.png) · [HTML](09-agents-html.png) · [difference](09-agents-diff.png)
-Parity 82.3%; hotspots: row 3, column 1 (89.2%), row 3, column 3 (89.8%), row 3, column 4 (91.6%), row 4, column 1 (89.1%), row 4, column 2 (82.3%), row 4, column 4 (94.4%).
+Parity 83.6%; hotspots: row 3, column 1 (89.2%), row 3, column 3 (89.8%), row 3, column 4 (91.6%), row 4, column 1 (89.5%), row 4, column 2 (83.6%), row 4, column 4 (94.4%).
 
 - contrast 5.45:1 (needs 4.5:1) — Source:  Anthropic — Building effective agents ; [source]
 - almost aligned (left, 3.6 pt): AI AGENTS [tracker] ↔ Interpret the goal, choose the next step, and de
@@ -177,7 +177,7 @@ Parity 82.3%; hotspots: row 3, column 1 (89.2%), row 3, column 3 (89.8%), row 3,
 Layout `key-points`. Fonts: Arial.
 
 Images: [PowerPoint](10-evals-guardrails-pptx.png) · [HTML](10-evals-guardrails-html.png) · [difference](10-evals-guardrails-diff.png)
-Parity 82.0%; hotspots: row 3, column 1 (92.6%), row 4, column 1 (88.9%), row 4, column 2 (82.0%).
+Parity 83.4%; hotspots: row 3, column 1 (92.6%), row 4, column 1 (89.4%), row 4, column 2 (83.4%).
 
 - contrast 5.45:1 (needs 4.5:1) — Source:  OpenAI — Evaluation best practices ;  N [source]
 - almost aligned (left, 3.8 pt): QUALITY AND SAFETY [tracker] ↔ path [icon]
@@ -193,7 +193,7 @@ Parity 82.0%; hotspots: row 3, column 1 (92.6%), row 4, column 1 (88.9%), row 4,
 Layout `matrix-2x2`. Fonts: Arial.
 
 Images: [PowerPoint](11-tradeoffs-pptx.png) · [HTML](11-tradeoffs-html.png) · [difference](11-tradeoffs-diff.png)
-Parity 90.6%; hotspots: row 2, column 1 (94.1%), row 2, column 2 (93.0%), row 2, column 3 (95.0%), row 4, column 1 (90.6%), row 4, column 2 (93.5%).
+Parity 90.9%; hotspots: row 2, column 1 (94.1%), row 2, column 2 (93.0%), row 2, column 3 (95.0%), row 4, column 1 (90.9%), row 4, column 2 (93.7%).
 
 - contrast 4.98:1 (needs 4.5:1) — HIGH CAPABILITY, LOW PRESSURE
 - contrast 5.11:1 (needs 4.5:1) — HIGH CAPABILITY, HIGH PRESSURE
@@ -210,7 +210,7 @@ Parity 90.6%; hotspots: row 2, column 1 (94.1%), row 2, column 2 (93.0%), row 2,
 Layout `next-steps`. Fonts: Arial.
 
 Images: [PowerPoint](12-next-steps-pptx.png) · [HTML](12-next-steps-html.png) · [difference](12-next-steps-diff.png)
-Parity 81.8%; hotspots: row 1, column 3 (92.3%), row 1, column 4 (89.1%), row 2, column 1 (93.3%), row 2, column 2 (90.0%), row 2, column 3 (90.0%), row 4, column 1 (88.9%), row 4, column 2 (81.8%).
+Parity 83.2%; hotspots: row 1, column 3 (92.3%), row 1, column 4 (89.1%), row 2, column 1 (93.3%), row 2, column 2 (90.0%), row 2, column 3 (90.0%), row 4, column 1 (89.4%), row 4, column 2 (83.2%).
 
 - contrast 5.45:1 (needs 4.5:1) — Source:  OpenAI — Evaluation best practices ;  N [source]
 

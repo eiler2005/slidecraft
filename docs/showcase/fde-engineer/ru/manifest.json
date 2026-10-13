@@ -1,6 +1,6 @@
 {
   "tool": "slidecraft",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "deck": {
     "id": "fde-engineer-ru",
     "title": "FDE-инженеры превращают ИИ-пилоты в работающие продукты",
@@ -41,7 +41,7 @@
       "path": "fde-engineer-ru.pptx",
       "kind": "pptx",
       "engine": "pptxgenjs",
-      "sha256": "e5e5203f29218a49ef018ebe78e7fe9f683604dfebd811e11d7b2b2fa649cb3f"
+      "sha256": "05db0e617fbd64a87bf0c2002a911cdf560632b74636aa6d1a9dfb59c049f2ee"
     },
     {
       "path": "previews/01-cover.png",
@@ -53,25 +53,25 @@
       "path": "previews/02-why-now.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "478019bd620e2b43055b4ad6af3ea44e385a1dbb5d4a86168e8ed7508e66bc17"
+      "sha256": "d42c7c7bea2484473d9f5c2678e75085e19561e654efbc6ab3bfefd6079f98c7"
     },
     {
       "path": "previews/03-definition.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "a34e2d5ae9a2cb6f8256201e60cbd1b45a17048cbda18ad4a53846e8a3248650"
+      "sha256": "8e85bd02852aa4219ae013367ec56855be109f4c928cf76a80018596f36ec01f"
     },
     {
       "path": "previews/04-cycle.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "3a8858595f4dec4c53de0a6dc4883679766953204dbeaa93d6a83cd7d7caab6d"
+      "sha256": "23ac1e2b0f4409b93b41142e87cf6a5ad9c3246c5094f37b87fb3a0b7a145719"
     },
     {
       "path": "previews/05-profile.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "cb67a5ca3214f19dc58b847c7e3771284dee7996505b9b494d08cbc471676716"
+      "sha256": "27cdeca8a70960590f43a0b904cb8b3253ddd4e88575a9c87612bfcf180401d0"
     },
     {
       "path": "previews/06-ask.png",
@@ -83,13 +83,13 @@
       "path": "fde-engineer-ru.html",
       "kind": "html",
       "engine": "html",
-      "sha256": "846d66f8341ee95fbb1b8ef2070a1da6ef42a6a30f71e4ec1bc179370206f365"
+      "sha256": "8aa6fdd5a28b355392319571c89abc6aa90ec0b1d322290ad085c5578c1fb0ca"
     },
     {
       "path": "fde-engineer-ru.pdf",
       "kind": "pdf",
       "engine": "native",
-      "sha256": "1ffba6cd0d45870570861ea5126b579124effbee4b4da293ee053c5301823ede"
+      "sha256": "bcd8b8535eb723a337ebf55875a10f9eea9039e2da6c5a1d9a25bce76fe1d942"
     }
   ],
   "checks": {

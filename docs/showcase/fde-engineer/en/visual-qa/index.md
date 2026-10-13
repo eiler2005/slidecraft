@@ -20,7 +20,7 @@ Parity 78.1%; hotspots: row 1, column 1 (90.3%), row 1, column 2 (78.1%), row 1,
 Layout `kpi-tiles`. Fonts: Arial.
 
 Images: [PowerPoint](02-why-now-pptx.png) · [HTML](02-why-now-html.png) · [difference](02-why-now-diff.png)
-Parity 84.5%; hotspots: row 1, column 3 (88.5%), row 1, column 4 (92.0%), row 2, column 1 (92.3%), row 4, column 1 (90.3%), row 4, column 2 (85.6%), row 4, column 3 (84.5%).
+Parity 85.5%; hotspots: row 1, column 3 (88.5%), row 1, column 4 (92.0%), row 2, column 1 (92.3%), row 4, column 1 (90.7%), row 4, column 2 (85.7%), row 4, column 3 (85.5%).
 
 - contrast 4.98:1 (needs 4.5:1) — Financial Times data reported by Fast Company [kpi-note]
 - contrast 4.98:1 (needs 4.5:1) — MIT NANDA, The GenAI Divide [kpi-note]
@@ -32,7 +32,7 @@ Parity 84.5%; hotspots: row 1, column 3 (88.5%), row 1, column 4 (92.0%), row 2,
 Layout `data-table`. Fonts: Arial.
 
 Images: [PowerPoint](03-definition-pptx.png) · [HTML](03-definition-html.png) · [difference](03-definition-diff.png)
-Parity 82.4%; hotspots: row 1, column 2 (94.7%), row 1, column 3 (91.6%), row 1, column 4 (91.4%), row 2, column 1 (94.8%), row 2, column 2 (93.5%), row 4, column 1 (89.4%), row 4, column 2 (82.4%).
+Parity 83.2%; hotspots: row 1, column 2 (94.7%), row 1, column 3 (91.6%), row 1, column 4 (91.4%), row 2, column 1 (94.8%), row 2, column 2 (93.5%), row 4, column 1 (89.8%), row 4, column 2 (83.2%).
 
 - contrast 5.45:1 (needs 4.5:1) — Source:  What is a Forward Deployed AI Engineer? [source]
 
@@ -41,7 +41,7 @@ Parity 82.4%; hotspots: row 1, column 2 (94.7%), row 1, column 3 (91.6%), row 1,
 Layout `process-steps`. Fonts: Arial.
 
 Images: [PowerPoint](04-cycle-pptx.png) · [HTML](04-cycle-html.png) · [difference](04-cycle-diff.png)
-Parity 82.4%; hotspots: row 1, column 3 (94.3%), row 2, column 1 (92.6%), row 2, column 2 (92.6%), row 2, column 4 (93.4%), row 4, column 1 (89.4%), row 4, column 2 (82.4%), row 4, column 4 (94.3%).
+Parity 83.2%; hotspots: row 1, column 3 (94.3%), row 2, column 1 (92.6%), row 2, column 2 (92.6%), row 2, column 4 (93.4%), row 4, column 1 (89.8%), row 4, column 2 (83.2%), row 4, column 4 (94.3%).
 
 - contrast 5.45:1 (needs 4.5:1) — Source:  What is a Forward Deployed AI Engineer? [source]
 - almost aligned (left, 3.6 pt): WHAT THEY DO [tracker] ↔ Sit with the people who do the work and map the 
@@ -58,7 +58,7 @@ Parity 82.4%; hotspots: row 1, column 3 (94.3%), row 2, column 1 (92.6%), row 2,
 Layout `key-points`. Fonts: Arial.
 
 Images: [PowerPoint](05-profile-pptx.png) · [HTML](05-profile-html.png) · [difference](05-profile-diff.png)
-Parity 82.4%; hotspots: row 4, column 1 (89.4%), row 4, column 2 (82.4%).
+Parity 83.2%; hotspots: row 4, column 1 (89.8%), row 4, column 2 (83.2%).
 
 - contrast 5.45:1 (needs 4.5:1) — Source:  What is a Forward Deployed AI Engineer? [source]
 

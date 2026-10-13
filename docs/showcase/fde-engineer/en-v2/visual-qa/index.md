@@ -20,7 +20,7 @@ Parity 76.8%; hotspots: row 1, column 1 (93.6%), row 1, column 2 (76.8%), row 2,
 Layout `kpi-tiles`. Fonts: Arial.
 
 Images: [PowerPoint](02-why-now-pptx.png) · [HTML](02-why-now-html.png) · [difference](02-why-now-diff.png)
-Parity 81.1%; hotspots: row 1, column 3 (88.5%), row 1, column 4 (92.0%), row 2, column 1 (91.5%), row 4, column 1 (89.3%), row 4, column 2 (83.1%), row 4, column 3 (81.1%), row 4, column 4 (95.0%).
+Parity 82.4%; hotspots: row 1, column 3 (88.5%), row 1, column 4 (92.0%), row 2, column 1 (91.5%), row 4, column 1 (89.7%), row 4, column 2 (83.3%), row 4, column 3 (82.4%), row 4, column 4 (95.0%).
 
 - contrast 5.08:1 (needs 4.5:1) — WHY NOW [tracker]
 - contrast 5.83:1 (needs 4.5:1) — Financial Times data reported by Fast Company [kpi-note]
@@ -32,7 +32,7 @@ Parity 81.1%; hotspots: row 1, column 3 (88.5%), row 1, column 4 (92.0%), row 2,
 Layout `value-chain`. Fonts: Arial.
 
 Images: [PowerPoint](03-value-chain-pptx.png) · [HTML](03-value-chain-html.png) · [difference](03-value-chain-diff.png)
-Parity 87.1%; hotspots: row 1, column 2 (90.9%), row 1, column 3 (89.9%), row 2, column 1 (89.0%), row 2, column 2 (87.1%), row 3, column 1 (87.1%), row 3, column 2 (89.2%), row 3, column 3 (87.6%), row 3, column 4 (88.4%), row 4, column 1 (92.7%), row 4, column 2 (92.1%).
+Parity 87.1%; hotspots: row 1, column 2 (90.9%), row 1, column 3 (89.9%), row 2, column 1 (89.0%), row 2, column 2 (87.1%), row 3, column 1 (87.1%), row 3, column 2 (89.2%), row 3, column 3 (87.6%), row 3, column 4 (88.4%), row 4, column 1 (92.9%), row 4, column 2 (92.1%).
 
 - contrast 5.08:1 (needs 4.5:1) — WHERE IT FITS [tracker]
 - contrast 4.54:1 (needs 4.5:1) — MARGIN
@@ -62,7 +62,7 @@ Parity 87.1%; hotspots: row 1, column 2 (90.9%), row 1, column 3 (89.9%), row 2,
 Layout `process-steps`. Fonts: Arial.
 
 Images: [PowerPoint](04-cycle-pptx.png) · [HTML](04-cycle-html.png) · [difference](04-cycle-diff.png)
-Parity 82.7%; hotspots: row 1, column 3 (94.3%), row 3, column 1 (88.7%), row 3, column 2 (91.3%), row 3, column 3 (88.7%), row 3, column 4 (92.4%), row 4, column 1 (89.0%), row 4, column 2 (82.7%), row 4, column 4 (94.0%).
+Parity 83.5%; hotspots: row 1, column 3 (94.3%), row 3, column 1 (88.7%), row 3, column 2 (91.3%), row 3, column 3 (88.7%), row 3, column 4 (92.4%), row 4, column 1 (89.4%), row 4, column 2 (83.5%), row 4, column 4 (94.0%).
 
 - contrast 5.08:1 (needs 4.5:1) — WHAT THEY DO [tracker]
 - almost aligned (left, 3.6 pt): WHAT THEY DO [tracker] ↔ Sit with the people who do the work and map the 
@@ -83,7 +83,7 @@ Parity 82.7%; hotspots: row 1, column 3 (94.3%), row 3, column 1 (88.7%), row 3,
 Layout `key-points`. Fonts: Arial.
 
 Images: [PowerPoint](05-profile-pptx.png) · [HTML](05-profile-html.png) · [difference](05-profile-diff.png)
-Parity 82.7%; hotspots: row 4, column 1 (89.0%), row 4, column 2 (82.7%).
+Parity 83.5%; hotspots: row 4, column 1 (89.4%), row 4, column 2 (83.5%).
 
 - contrast 5.08:1 (needs 4.5:1) — WHO TO HIRE [tracker]
 - almost aligned (left, 3.8 pt): WHO TO HIRE [tracker] ↔ path [icon]

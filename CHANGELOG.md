@@ -2,7 +2,7 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
-## [Unreleased]
+## [0.7.3] — 2026-10-13
 
 ### Added
 - **`imageFocus`** on the cover (`title`) and `text-image`: which part of a cropped picture stays in view — `left`, `center`, `right`, `top`, `bottom` or `{ x, y }` from 0 to 1. PowerPoint gets an exact crop window (still an editable picture), the PDF and HTML the same crop.
@@ -11,6 +11,7 @@ All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachang
 - **Stock photo sizes are measured:** a listing can report the original's size while its link serves a 1024 px preview (Rawpixel on Openverse). Each download is now measured; if it is narrower than 1600 px the next candidate is tried (up to four) and the widest download is kept.
 - **Wikimedia Commons:** renditions are requested at a standard width (1920 px) and their real width is read from the link; downloads send a User-Agent as Commons asks.
 - **Gallery site:** a deck's own theme (e.g. `fde-desk` next to an example) no longer joins the library theme list, which added a row of broken "FDE desk" images to every storyline on the site.
+- **Hyperlinks look the same in every engine:** PowerPoint always underlines links (sources line), through descenders; the HTML, SVG and PDF now do too. The remaining ~83 % on the sources strip is anti-aliasing of 8–9 pt text in a nearly empty region, not a visible difference.
 - **`theme from` a dark photograph:** a dark, muted photo could fill one colour cluster and be taken for a screenshot (dark page, low contrast). Flatness now decides too: a screenshot's background is one exact colour, a photo's most common colour covers under a tenth of it.
 - FDE v2 example: sharp 1920 px cover photo (was 1024 px); showcase decks re-rendered and re-checked in PowerPoint; calibration corpus re-run (all pages 90.0 %, generated decks 87.4 %).
 

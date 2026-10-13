@@ -1,6 +1,6 @@
 {
   "tool": "slidecraft",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "deck": {
     "id": "fabrikam-seed",
     "title": "Fabrikam turns idle truck space into same-day freight",
@@ -51,7 +51,7 @@
       "path": "fabrikam-seed.pptx",
       "kind": "pptx",
       "engine": "pptxgenjs",
-      "sha256": "8ec4ef43597e1b8a826140e61692517952dd5a1b1a774af84944360257a7e4c2"
+      "sha256": "a0a40ad10ba809dced82851dd3589c4c0e09c6e662de2a13f4192c2e5277cb94"
     },
     {
       "path": "previews/01-cover.png",
@@ -135,7 +135,7 @@
       "path": "fabrikam-seed.docx",
       "kind": "docx",
       "engine": "docx",
-      "sha256": "da2a106f85976ef31197ead78bbe2539c3061f6bbca9a908f87ef2b93a168bc5"
+      "sha256": "e8baa1b29b7b1c808a621324c59373c6e066458c03ebcc10c94f3955874f9440"
     }
   ],
   "checks": {

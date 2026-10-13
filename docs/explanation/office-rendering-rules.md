@@ -39,6 +39,7 @@ imported. A client deck that reveals a defect is only evidence; the fix always l
 | E7 | **Pictures** are exported with their own aspect so `cover` and `contain` crop the same as HTML and PDF | pptxgenjs crops from the box's aspect, which stretched photos to the box | `addImage` (pptxgenjs backend) |
 | E8 | **Combo charts** keep both value axes (invisible: no labels, line or ticks), give the line its own label position (`t`) and drop pptxgenjs' third axis id | a deleted axis makes PowerPoint plot the series on the other axis; `outEnd` labels corrupt a line chart; a 2D chart takes exactly two axis ids | `addChart`, `normalizeZip` |
 | E9 | **Icons** are freeforms (cubic Béziers from the SVG path, arcs converted) with round caps and joins | the same geometry in every engine, editable and recolourable in PowerPoint | `svg-path.ts`, `roundIconStrokes` |
+| E11 | The **spacing multiple is rounded to PPTX precision** (1/1000 %) before the ≤ 1 / > 1 placement rule | 21.6 pt over a 1.2 × 18 pt pitch computed as 1.0000000000000002, which chose the "above one" rule and set 18 pt bold headings 1–2 pt too high in every generated deck | `spacingMultiple`, `layoutText` |
 | E10 | Text runs, notes and charts carry the **deck's proofing language** | pptxgenjs writes en-US everywhere, so PowerPoint underlined every Russian word | `proofingLanguage` |
 
 Known traps that still hold: PptxGenJS shape margins are `[left, right, bottom, top]`
@@ -56,7 +57,6 @@ explicit extension.
 
 ## Open items (measured, not yet modelled)
 
-- **Key-point headings** (18 pt bold, two lines) sit about 1 px apart in PowerPoint and the browser in every generated deck reviewed in October 2026 (FDE v2, both LLM-concepts examples). Visible at 100 % zoom; next calibration probe should include bold multi-line headings at 16–20 pt.
 
 - Native chart text (axis and data labels) is placed by PowerPoint's chart engine and sits
   up to ~1 px away from the Scene primitives.

@@ -63,7 +63,9 @@ slidecraft covers deck.yaml --stock    # plus a stock photo for the cover's imag
 slidecraft covers deck.yaml --choose B # write option B into deck.yaml
 ```
 
-The command writes `.slidecraft/covers/option-A|B|C.png`, a picker page `covers.html` and
+A cover left without a visual reports `SC-COVER-001` in `slidecraft check`, so the step cannot be
+skipped silently. When no motif matches the title's words, the command offers three different
+motifs. The command writes `.slidecraft/covers/option-A|B|C.png`, a picker page `covers.html` and
 `options.json` with the facts for each option: which words of the title a motif stands for, a
 photo's author, licence and sharpness on the panel (ppi). The assistant compares the options
 against the deck's message and look — does the cover say what the deck is about, does it fit

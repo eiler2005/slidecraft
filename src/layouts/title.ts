@@ -100,6 +100,13 @@ export const title: LayoutDef<typeof schema> = {
       ctx.variant === 'closing'
         ? page.w - 2 * left
         : Math.min(8.8, page.w * 0.66, visual ? panelX - left - 0.4 : Infinity);
+    if (ctx.variant !== 'closing' && !visual)
+      ctx.issue(
+        diag('SC-COVER-001', 'The cover has no visual — it was not chosen from options', {
+          pointer: ctx.ptr('art'),
+          hint: 'Run `slidecraft covers <deck>`, compare the 2–3 options and `--choose` one.',
+        }),
+      );
     if (visual) {
       const panel = { x: panelX, y: 0, w: page.w - panelX, h: page.h };
       const file = c.image && (isAbsolute(c.image) ? c.image : resolve(ctx.baseDir, c.image));

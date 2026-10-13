@@ -608,7 +608,7 @@ export function registerBrandCommands(program: Command): void {
     .option('--force', 'replace images that already exist')
     .option(
       '--stock [provider]',
-      'stock photos for imageQuery: openverse (default, no key), pexels (PEXELS_API_KEY), pixabay (PIXABAY_API_KEY)',
+      'stock photos for imageQuery: auto (default: Openverse + Wikimedia Commons, no key), openverse, wikimedia, pexels (PEXELS_API_KEY), pixabay (PIXABAY_API_KEY)',
     )
     .option(
       '--list',
@@ -636,7 +636,7 @@ export function registerBrandCommands(program: Command): void {
             else jobs.forEach((j) => console.log(`  ${describeStock(j)}`));
             return;
           }
-          const provider = stockProvider(typeof o.stock === 'string' ? o.stock : 'openverse');
+          const provider = stockProvider(typeof o.stock === 'string' ? o.stock : 'auto');
           if (o.list) {
             const lists = await listStock(jobs, provider);
             if (wantsJson(o.json)) printJson({ candidates: lists });
@@ -711,7 +711,7 @@ export function registerBrandCommands(program: Command): void {
     .argument('<deck>', 'path to deck.yaml')
     .option(
       '--stock [provider]',
-      'include a stock photo for the cover imageQuery: openverse (default), pexels, pixabay',
+      'include a stock photo for the cover imageQuery: auto (default), openverse, wikimedia, pexels, pixabay',
     )
     .option('--choose <letter>', 'write option A, B or C into the cover slide')
     .option('--json', 'machine-readable output')
@@ -725,7 +725,7 @@ export function registerBrandCommands(program: Command): void {
         }
         const r = await coverOptions(deck, {
           ...(o.stock
-            ? { provider: stockProvider(typeof o.stock === 'string' ? o.stock : 'openverse') }
+            ? { provider: stockProvider(typeof o.stock === 'string' ? o.stock : 'auto') }
             : {}),
         });
         if (wantsJson(o.json)) {

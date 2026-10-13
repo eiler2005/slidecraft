@@ -25,6 +25,7 @@ slides:
     presenter: SlideCraft travel desk
     date: "2026"
     notes: Promise the audience a decision, not a ranking. By the end they should know which city fits them.
+    art: flow
 
   - id: value-map
     layout: matrix-2x2

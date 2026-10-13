@@ -336,11 +336,108 @@ export function pixabayProvider(env = process.env, fetchImpl: Fetch = fetch): St
   };
 }
 
+/** Licences that allow commercial use and changes (cropping); NC and ND are refused. */
+const OPEN_LICENCE = /^(cc0( 1\.0)?|public domain|pd|cc by(-sa)?( [\d.]+)?)$/i;
+
+/** Wikimedia Commons: original files (often 3000–7000 px), no key; free licences only. */
+export function wikimediaProvider(fetchImpl: Fetch = fetch): StockProvider {
+  return {
+    id: 'wikimedia',
+    async search(query) {
+      const q = new URLSearchParams({
+        action: 'query',
+        format: 'json',
+        generator: 'search',
+        gsrnamespace: '6',
+        gsrsearch: `${query} filetype:bitmap`,
+        gsrlimit: '20',
+        prop: 'imageinfo',
+        iiprop: 'url|size|extmetadata',
+        iiurlwidth: '2400',
+      });
+      const res = await fetchImpl(`https://commons.wikimedia.org/w/api.php?${q}`, {
+        headers: { 'user-agent': 'SlideCraft (https://github.com/eiler2005/slidecraft)' },
+      });
+      if (!res.ok) throw new Error(`Wikimedia ${res.status}`);
+      const json = (await res.json()) as {
+        query?: {
+          pages?: Record<
+            string,
+            {
+              title: string;
+              index?: number;
+              imageinfo?: {
+                url: string;
+                thumburl?: string;
+                width: number;
+                height: number;
+                descriptionurl: string;
+                extmetadata?: Record<string, { value?: string }>;
+              }[];
+            }
+          >;
+        };
+      };
+      const plain = (html?: string) =>
+        (html ?? '')
+          .replace(/<[^>]+>/g, '')
+          .replace(/\s+/g, ' ')
+          .trim();
+      return Object.values(json.query?.pages ?? {})
+        .sort((a, b) => (a.index ?? 0) - (b.index ?? 0))
+        .flatMap((p) => {
+          const ii = p.imageinfo?.[0];
+          const m = ii?.extmetadata ?? {};
+          const licence = plain(m.LicenseShortName?.value);
+          if (!ii || !OPEN_LICENCE.test(licence)) return [];
+          const author = plain(m.Artist?.value) || 'Unknown author';
+          return [
+            {
+              // a 2400 px rendition keeps downloads small and is sharp on any slide panel
+              url: ii.thumburl ?? ii.url,
+              width: ii.thumburl ? Math.min(ii.width, 2400) : ii.width,
+              height: ii.thumburl
+                ? Math.round((ii.height * Math.min(ii.width, 2400)) / ii.width)
+                : ii.height,
+              credit: {
+                author: author.length > 80 ? `${author.slice(0, 78)}…` : author,
+                provider: 'Wikimedia Commons',
+                license: licence,
+                ...(m.LicenseUrl?.value ? { licenseUrl: m.LicenseUrl.value } : {}),
+                source: ii.descriptionurl,
+                title:
+                  plain(m.ObjectName?.value) || p.title.replace(/^File:/, '').replace(/\.\w+$/, ''),
+              },
+            },
+          ];
+        });
+    },
+  };
+}
+
+/** Openverse and Wikimedia together: sharp landscape photos first, each in its own order. */
+export function autoProvider(fetchImpl: Fetch = fetch): StockProvider {
+  const sources = [openverseProvider(fetchImpl), wikimediaProvider(fetchImpl)];
+  return {
+    id: 'auto',
+    async search(query) {
+      const lists = await Promise.all(
+        sources.map((s) => s.search(query).catch(() => [] as StockHit[])),
+      );
+      const all = lists.flat();
+      const sharp = (h: StockHit) => h.width >= 1600 && h.width >= h.height;
+      return [...all.filter(sharp), ...all.filter((h) => !sharp(h))];
+    },
+  };
+}
+
 export function stockProvider(id: string, env = process.env): StockProvider {
   if (id === 'pexels') return pexelsProvider(env);
   if (id === 'pixabay') return pixabayProvider(env);
   if (id === 'openverse') return openverseProvider();
-  throw new Error(`unknown stock provider "${id}" (openverse, pexels, pixabay)`);
+  if (id === 'wikimedia') return wikimediaProvider();
+  if (id === 'auto') return autoProvider();
+  throw new Error(`unknown stock provider "${id}" (auto, openverse, wikimedia, pexels, pixabay)`);
 }
 
 /** The query, then its first four, three and two words. */

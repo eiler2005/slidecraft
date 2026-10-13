@@ -166750,7 +166750,7 @@ function spacingMultiple(s2) {
   if (s2.lineSpacingAuto) return 1;
   if (s2.lineSpacingMultiple !== void 0) return s2.lineSpacingMultiple;
   if (s2.lineSpacingExact || OFFICE_RULES.exactSpacing.export !== "percent") return void 0;
-  return s2.lineSpacing / (autoPitchEm(s2.family) * s2.size);
+  return Math.round(s2.lineSpacing / (autoPitchEm(s2.family) * s2.size) * 1e5) / 1e5;
 }
 function glyphOffsetsPt(s2, face, text4) {
   const out = [];
@@ -166788,7 +166788,7 @@ function layoutText(paragraphs4, style, width, bulletIndentPt = 14) {
   const centered = (ls - sizeIn * (asc + desc)) / 2 + sizeIn * asc;
   const ratios = ascentRatios(style.measure, faceOf(style.bold, style.italic));
   const autoRatio = autoSpacing.ratioByFamily[style.family] ?? ratios[autoSpacing.ratio];
-  const baseOffset = !office ? centered : proportional ? multiple <= 1 ? ls - (1 - autoRatio) * autoPitchEm(style.family) * sizeIn : ls * autoSpacing.aboveOneFraction : exactSpacing.ratio === "centered" ? centered : ls * (exactSpacing.ratioByFamily[style.family] ?? ratios[exactSpacing.ratio]);
+  const baseOffset = !office ? centered : proportional ? multiple <= 1 + 1e-9 ? ls - (1 - autoRatio) * autoPitchEm(style.family) * sizeIn : ls * autoSpacing.aboveOneFraction : exactSpacing.ratio === "centered" ? centered : ls * (exactSpacing.ratioByFamily[style.family] ?? ratios[exactSpacing.ratio]);
   const snap = office ? proportional ? autoSpacing.snapPt : exactSpacing.snapPt : 0;
   const baselineAt = (v) => snap ? Math.round(v * 72 / snap + 1e-6) * (snap / 72) : v;
   const lines = [];
@@ -167697,6 +167697,12 @@ var CODES = {
     title: "Editable object geometry or typography changed during export",
     why: "The named PowerPoint shape no longer has the geometry or font size declared by the shared Scene.",
     fix: "Repair the renderer mapping; do not compensate by changing the reference sizes."
+  },
+  "SC-COVER-001": {
+    severity: "warning",
+    title: "Cover without a visual",
+    why: "The cover is the first impression; the workflow chooses it from 2\u20133 options instead of leaving it plain.",
+    fix: "Run `slidecraft covers <deck>` (add `--stock` with an `imageQuery`), compare the options and `--choose` one \u2014 or set `art:`, `image:` or `imagePrompt:` on the cover."
   },
   "SC-GHOST-001": {
     severity: "warning",
@@ -210960,6 +210966,13 @@ var title = {
     const visual = ctx.variant !== "closing" && (c.art || c.image || c.imagePrompt || c.imageQuery);
     const panelX = Math.round(page2.w * 0.7 * 100) / 100;
     const width = ctx.variant === "closing" ? page2.w - 2 * left : Math.min(8.8, page2.w * 0.66, visual ? panelX - left - 0.4 : Infinity);
+    if (ctx.variant !== "closing" && !visual)
+      ctx.issue(
+        diag("SC-COVER-001", "The cover has no visual \u2014 it was not chosen from options", {
+          pointer: ctx.ptr("art"),
+          hint: "Run `slidecraft covers <deck>`, compare the 2\u20133 options and `--choose` one."
+        })
+      );
     if (visual) {
       const panel3 = { x: panelX, y: 0, w: page2.w - panelX, h: page2.h };
       const file2 = c.image && (isAbsolute4(c.image) ? c.image : resolve7(ctx.baseDir, c.image));
@@ -217043,11 +217056,75 @@ function pixabayProvider(env = process.env, fetchImpl = fetch) {
     }
   };
 }
+var OPEN_LICENCE = /^(cc0( 1\.0)?|public domain|pd|cc by(-sa)?( [\d.]+)?)$/i;
+function wikimediaProvider(fetchImpl = fetch) {
+  return {
+    id: "wikimedia",
+    async search(query) {
+      const q = new URLSearchParams({
+        action: "query",
+        format: "json",
+        generator: "search",
+        gsrnamespace: "6",
+        gsrsearch: `${query} filetype:bitmap`,
+        gsrlimit: "20",
+        prop: "imageinfo",
+        iiprop: "url|size|extmetadata",
+        iiurlwidth: "2400"
+      });
+      const res = await fetchImpl(`https://commons.wikimedia.org/w/api.php?${q}`, {
+        headers: { "user-agent": "SlideCraft (https://github.com/eiler2005/slidecraft)" }
+      });
+      if (!res.ok) throw new Error(`Wikimedia ${res.status}`);
+      const json2 = await res.json();
+      const plain = (html) => (html ?? "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+      return Object.values(json2.query?.pages ?? {}).sort((a, b) => (a.index ?? 0) - (b.index ?? 0)).flatMap((p) => {
+        const ii = p.imageinfo?.[0];
+        const m = ii?.extmetadata ?? {};
+        const licence = plain(m.LicenseShortName?.value);
+        if (!ii || !OPEN_LICENCE.test(licence)) return [];
+        const author = plain(m.Artist?.value) || "Unknown author";
+        return [
+          {
+            // a 2400 px rendition keeps downloads small and is sharp on any slide panel
+            url: ii.thumburl ?? ii.url,
+            width: ii.thumburl ? Math.min(ii.width, 2400) : ii.width,
+            height: ii.thumburl ? Math.round(ii.height * Math.min(ii.width, 2400) / ii.width) : ii.height,
+            credit: {
+              author: author.length > 80 ? `${author.slice(0, 78)}\u2026` : author,
+              provider: "Wikimedia Commons",
+              license: licence,
+              ...m.LicenseUrl?.value ? { licenseUrl: m.LicenseUrl.value } : {},
+              source: ii.descriptionurl,
+              title: plain(m.ObjectName?.value) || p.title.replace(/^File:/, "").replace(/\.\w+$/, "")
+            }
+          }
+        ];
+      });
+    }
+  };
+}
+function autoProvider(fetchImpl = fetch) {
+  const sources = [openverseProvider(fetchImpl), wikimediaProvider(fetchImpl)];
+  return {
+    id: "auto",
+    async search(query) {
+      const lists = await Promise.all(
+        sources.map((s2) => s2.search(query).catch(() => []))
+      );
+      const all = lists.flat();
+      const sharp = (h) => h.width >= 1600 && h.width >= h.height;
+      return [...all.filter(sharp), ...all.filter((h) => !sharp(h))];
+    }
+  };
+}
 function stockProvider(id, env = process.env) {
   if (id === "pexels") return pexelsProvider(env);
   if (id === "pixabay") return pixabayProvider(env);
   if (id === "openverse") return openverseProvider();
-  throw new Error(`unknown stock provider "${id}" (openverse, pexels, pixabay)`);
+  if (id === "wikimedia") return wikimediaProvider();
+  if (id === "auto") return autoProvider();
+  throw new Error(`unknown stock provider "${id}" (auto, openverse, wikimedia, pexels, pixabay)`);
 }
 function fallbackQueries(q) {
   const w = q.trim().split(/\s+/);
@@ -217182,8 +217259,9 @@ async function coverOptions(deckPath2, opts = {}) {
   }
   const motifs = ranked.filter((r) => r.score > 0);
   const pool = [...motifs, ...ranked.filter((r) => r.score === 0)];
+  const noMatch = motifs.length === 0;
   for (const r of pool) {
-    if (drafts.length >= 3 || drafts.length >= 2 && r.score === 0) break;
+    if (drafts.length >= 3 || !noMatch && drafts.length >= 2 && r.score === 0) break;
     drafts.push({
       kind: "motif",
       label: `Motif: ${r.art}`,
@@ -217283,17 +217361,23 @@ function chooseCover(deckPath2, letter, optionsFile) {
     copyFileSync6(o.file, dest);
     fields.image = relative8(base, dest);
   }
-  const doc = import_yaml7.default.parseDocument(readFileSync29(path2, "utf8"));
+  const text4 = readFileSync29(path2, "utf8");
+  const doc = import_yaml7.default.parseDocument(text4);
   const slides = doc.get("slides", true);
   if (!(0, import_yaml7.isSeq)(slides)) throw new Error("deck.yaml has no slides list");
   const k = slides.items.findIndex((m) => (0, import_yaml7.isMap)(m) && m.get("id") === r.slideId);
   if (k < 0)
     throw new Error(`cover slide "${r.slideId}" is not in deck.yaml itself (an included file?)`);
-  for (const [key, v] of Object.entries(fields)) {
-    if (v === null) doc.deleteIn(["slides", k, key]);
-    else doc.setIn(["slides", k, key], v);
+  const slide = slides.items[k];
+  const removals = Object.entries(fields).filter(([key, v]) => v === null && slide.has(key));
+  if (removals.length) {
+    for (const [key] of removals) doc.deleteIn(["slides", k, key]);
+    for (const [key, v] of Object.entries(fields)) if (v !== null) doc.setIn(["slides", k, key], v);
+    writeFileSync17(path2, doc.toString({ lineWidth: 0 }));
+  } else {
+    const edits = Object.entries(fields).filter(([, v]) => v !== null).map(([key, value]) => ({ path: ["slides", k, key], value }));
+    writeFileSync17(path2, editYaml(text4, edits));
   }
-  writeFileSync17(path2, doc.toString({ lineWidth: 0 }));
   return { ...o, fields };
 }
 
@@ -219910,7 +219994,7 @@ Use it: theme: ${relative13(process.cwd(), r.themePath)}   (path relative to dec
     "Fill empty image slots: generate pictures for imagePrompt (OpenAI-compatible API), or find licensed stock photos for imageQuery (--stock)"
   ).argument("<deck>", "path to deck.yaml").option("--dry-run", "list the prompts or searches that would be sent; send nothing").option("--force", "replace images that already exist").option(
     "--stock [provider]",
-    "stock photos for imageQuery: openverse (default, no key), pexels (PEXELS_API_KEY), pixabay (PIXABAY_API_KEY)"
+    "stock photos for imageQuery: auto (default: Openverse + Wikimedia Commons, no key), openverse, wikimedia, pexels (PEXELS_API_KEY), pixabay (PIXABAY_API_KEY)"
   ).option(
     "--list",
     "with --stock: show candidate photos (title, author, licence, link); download nothing"
@@ -219924,7 +220008,7 @@ Use it: theme: ${relative13(process.cwd(), r.themePath)}   (path relative to dec
           else jobs2.forEach((j) => console.log(`  ${describeStock(j)}`));
           return;
         }
-        const provider2 = stockProvider(typeof o.stock === "string" ? o.stock : "openverse");
+        const provider2 = stockProvider(typeof o.stock === "string" ? o.stock : "auto");
         if (o.list) {
           const lists = await listStock(jobs2, provider2);
           if (wantsJson(o.json)) printJson({ candidates: lists });
@@ -219995,7 +220079,7 @@ Use it: theme: ${relative13(process.cwd(), r.themePath)}   (path relative to dec
     "Render 2\u20133 cover options (topic motifs, a photo) with facts to compare; --choose writes the chosen one into deck.yaml"
   ).argument("<deck>", "path to deck.yaml").option(
     "--stock [provider]",
-    "include a stock photo for the cover imageQuery: openverse (default), pexels, pixabay"
+    "include a stock photo for the cover imageQuery: auto (default), openverse, wikimedia, pexels, pixabay"
   ).option("--choose <letter>", "write option A, B or C into the cover slide").option("--json", "machine-readable output").action(
     async (deck, o) => {
       if (o.choose) {
@@ -220005,7 +220089,7 @@ Use it: theme: ${relative13(process.cwd(), r.themePath)}   (path relative to dec
         return;
       }
       const r = await coverOptions(deck, {
-        ...o.stock ? { provider: stockProvider(typeof o.stock === "string" ? o.stock : "openverse") } : {}
+        ...o.stock ? { provider: stockProvider(typeof o.stock === "string" ? o.stock : "auto") } : {}
       });
       if (wantsJson(o.json)) {
         printJson(r);

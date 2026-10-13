@@ -45,12 +45,14 @@ Real photos instead of generated ones: give the slot a search phrase, not a prom
 ```sh
 slidecraft images deck.yaml --stock --list            # candidates per slot: title, author, licence, size, link
 slidecraft images deck.yaml --stock --pick 1          # download the chosen one to assets/<slide-id>.jpg
-slidecraft images deck.yaml --stock pexels --pick 2   # other providers
+slidecraft images deck.yaml --stock wikimedia          # one provider: openverse, wikimedia, pexels, pixabay
 ```
 
 | Provider | Key | Licence filter |
 |---|---|---|
-| `openverse` (default) | none | Creative Commons and public domain that allow **commercial use and changes** (crop); no NC/ND |
+| `auto` (default) | none | Openverse and Wikimedia Commons together; photos ≥ 1600 px wide come first |
+| `openverse` | none | Creative Commons and public domain that allow **commercial use and changes** (crop); no NC/ND |
+| `wikimedia` | none | Wikimedia Commons originals (a 2400 px rendition is downloaded): CC0, public domain, CC BY, CC BY-SA only |
 | `pexels` | `PEXELS_API_KEY` | Pexels License |
 | `pixabay` | `PIXABAY_API_KEY` | Pixabay Content License |
 

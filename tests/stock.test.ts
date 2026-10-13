@@ -72,6 +72,47 @@ describe('stock photos', () => {
     });
   });
 
+  it('maps Wikimedia Commons results and refuses non-commercial licences', async () => {
+    const { wikimediaProvider } = await import('../src/library/images.ts');
+    const page = (title: string, licence: string, w: number) => ({
+      title,
+      index: w,
+      imageinfo: [
+        {
+          url: `https://upload/${title}`,
+          thumburl: `https://upload/2400/${title}`,
+          width: w,
+          height: Math.round(w / 1.5),
+          descriptionurl: `https://commons/${title}`,
+          extmetadata: {
+            LicenseShortName: { value: licence },
+            Artist: { value: '<a href="x">Ada Lovelace</a>' },
+            ObjectName: { value: title },
+          },
+        },
+      ],
+    });
+    const p = wikimediaProvider((async () =>
+      json({
+        query: {
+          pages: {
+            1: page('Desk', 'CC BY-SA 4.0', 4000),
+            2: page('Office', 'CC BY-NC 2.0', 5000),
+            3: page('Laptop', 'Public domain', 1200),
+          },
+        },
+      })) as typeof fetch);
+    const hits = await p.search('desk');
+    expect(hits.map((h) => h.credit.title)).toEqual(['Laptop', 'Desk']);
+    const desk = hits.find((h) => h.credit.title === 'Desk')!;
+    expect(desk).toMatchObject({ url: 'https://upload/2400/Desk', width: 2400 });
+    expect(desk.credit).toMatchObject({
+      author: 'Ada Lovelace',
+      provider: 'Wikimedia Commons',
+      license: 'CC BY-SA 4.0',
+    });
+  });
+
   it('needs a key for Pexels', async () => {
     await expect(pexelsProvider({}).search('x')).rejects.toThrow('PEXELS_API_KEY');
   });

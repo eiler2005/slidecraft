@@ -37,6 +37,12 @@ export const CODES = {
     why: 'The named PowerPoint shape no longer has the geometry or font size declared by the shared Scene.',
     fix: 'Repair the renderer mapping; do not compensate by changing the reference sizes.',
   },
+  'SC-COVER-001': {
+    severity: 'warning',
+    title: 'Cover without a visual',
+    why: 'The cover is the first impression; the workflow chooses it from 2–3 options instead of leaving it plain.',
+    fix: 'Run `slidecraft covers <deck>` (add `--stock` with an `imageQuery`), compare the options and `--choose` one — or set `art:`, `image:` or `imagePrompt:` on the cover.',
+  },
   'SC-GHOST-001': {
     severity: 'warning',
     title: 'Slide is still a ghost (a sketch, not a deliverable)',

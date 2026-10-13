@@ -2,6 +2,18 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.7.2] — 2026-10-13
+
+### Fixed
+- **Line placement in generated decks:** a spacing multiple of exactly 1 could be computed as 1.0000000000000002 (21.6 pt over 1.2 × 18 pt) and placed with the "above one" rule — 18 pt bold headings sat 1–2 pt too high in the HTML/PDF against PowerPoint in every generated deck. The multiple is now rounded to PPTX precision; on the key-points test slide the worst-region parity rose from 0.85 to 0.92 and the headings match PowerPoint to the pixel.
+- The calibration probe now measures generated point spacing (exported as a multiple) as its own mode, so this path is covered on every calibration.
+- `slidecraft covers --choose` keeps the deck's formatting when it only adds fields; with no topic match it offers three different motifs.
+
+### Added
+- **`SC-COVER-001`:** a cover without a visual is reported, so the cover choice cannot be skipped silently; the plain covers of five examples were chosen with `slidecraft covers`.
+- **Sharper stock photos without a key:** `--stock auto` (default) searches Openverse and **Wikimedia Commons** (free licences only, 2400 px renditions) and puts photos ≥ 1600 px first; `--stock wikimedia` on its own.
+- README shows the 30-second explainer GIF; its storyboard and a review prompt are in `docs/launch/`.
+
 ## [0.7.1] — 2026-10-13
 
 ### Fixed

@@ -16,6 +16,7 @@ import { rankCoverArt } from '../layouts/cover-art.ts';
 import { pngSize } from '../qa/pptx-verify.ts';
 import { type ImageCredit, listStock, type StockProvider } from './images.ts';
 import { loadDeck } from './load.ts';
+import { editYaml } from './yaml-edit.ts';
 
 export interface CoverOption {
   option: string;
@@ -113,8 +114,11 @@ export async function coverOptions(
   // motifs that answer the deck's words, best first; at least two options in total
   const motifs = ranked.filter((r) => r.score > 0);
   const pool = [...motifs, ...ranked.filter((r) => r.score === 0)];
+  // with topic words: the motifs that answer them (at least two options); without any match,
+  // three different motifs so there is a real choice
+  const noMatch = motifs.length === 0;
   for (const r of pool) {
-    if (drafts.length >= 3 || (drafts.length >= 2 && r.score === 0)) break;
+    if (drafts.length >= 3 || (!noMatch && drafts.length >= 2 && r.score === 0)) break;
     drafts.push({
       kind: 'motif',
       label: `Motif: ${r.art}`,
@@ -231,16 +235,26 @@ export function chooseCover(deckPath: string, letter: string, optionsFile?: stri
     copyFileSync(o.file, dest);
     fields.image = relative(base, dest);
   }
-  const doc = YAML.parseDocument(readFileSync(path, 'utf8'));
+  const text = readFileSync(path, 'utf8');
+  const doc = YAML.parseDocument(text);
   const slides = doc.get('slides', true);
   if (!isSeq(slides)) throw new Error('deck.yaml has no slides list');
   const k = slides.items.findIndex((m) => isMap(m) && m.get('id') === r.slideId);
   if (k < 0)
     throw new Error(`cover slide "${r.slideId}" is not in deck.yaml itself (an included file?)`);
-  for (const [key, v] of Object.entries(fields)) {
-    if (v === null) doc.deleteIn(['slides', k, key]);
-    else doc.setIn(['slides', k, key], v);
+  const slide = slides.items[k] as YAML.YAMLMap;
+  const removals = Object.entries(fields).filter(([key, v]) => v === null && slide.has(key));
+  if (removals.length) {
+    // removing fields needs the document model (formatting of flow lists may change)
+    for (const [key] of removals) doc.deleteIn(['slides', k, key]);
+    for (const [key, v] of Object.entries(fields)) if (v !== null) doc.setIn(['slides', k, key], v);
+    writeFileSync(path, doc.toString({ lineWidth: 0 }));
+  } else {
+    // only additions: edit in place and keep the author's formatting and comments
+    const edits = Object.entries(fields)
+      .filter(([, v]) => v !== null)
+      .map(([key, value]) => ({ path: ['slides', k, key], value }));
+    writeFileSync(path, editYaml(text, edits));
   }
-  writeFileSync(path, doc.toString({ lineWidth: 0 }));
   return { ...o, fields };
 }

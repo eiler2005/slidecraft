@@ -115,7 +115,9 @@ export function spacingMultiple(s: TextStyle): number | undefined {
   if (s.lineSpacingAuto) return 1;
   if (s.lineSpacingMultiple !== undefined) return s.lineSpacingMultiple;
   if (s.lineSpacingExact || OFFICE_RULES.exactSpacing.export !== 'percent') return undefined;
-  return s.lineSpacing / (autoPitchEm(s.family) * s.size);
+  // PPTX stores the multiple in 1/1000 % (lnSpcPct); round to that, so 21.6 pt over a
+  // 1.2 × 18 pt pitch is exactly 1 and not 1.0000000000000002
+  return Math.round((s.lineSpacing / (autoPitchEm(s.family) * s.size)) * 1e5) / 1e5;
 }
 
 /** Pen offsets (pt, from the segment start) of every code point, exactly as layout measured
@@ -184,7 +186,7 @@ export function layoutText(
   const baseOffset = !office
     ? centered
     : proportional
-      ? multiple <= 1
+      ? multiple <= 1 + 1e-9
         ? ls - (1 - autoRatio) * autoPitchEm(style.family) * sizeIn
         : ls * autoSpacing.aboveOneFraction
       : exactSpacing.ratio === 'centered'

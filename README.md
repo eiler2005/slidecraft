@@ -30,7 +30,7 @@ It works from **your material**: numbers come from your Excel or CSV files and a
 
 Underneath is one **zero-install CLI**. Every layout is measured with metric-compatible fonts, so text that fits in SlideCraft fits in PowerPoint — verified line by line against real PowerPoint output.
 
-<p align="center"><img src="docs/media/slidecraft-demo.gif" alt="SlideCraft in 20 seconds: one prompt, the action-title chain, three cover options, then the editable PowerPoint deck slide by slide" width="100%"></p>
+<p align="center"><img src="docs/media/launch/slidecraft-story.gif" alt="SlideCraft in 30 seconds: the problem with AI slides, one prompt, the action-title chain, cover options, the built deck, a total that does not add up being caught, and the editable PowerPoint with native chart and sources in the notes" width="100%"></p>
 
 ## The easiest way: one prompt
 

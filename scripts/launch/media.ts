@@ -1,12 +1,11 @@
 /**
- * Launch media: Product Hunt gallery images (1270×760), the icon (240×240) and the README
- * GIF, composed from real renders in docs/showcase. Run after the example decks are built:
+ * Launch media: Product Hunt gallery images (1270×760) and the icon (240×240), composed from
+ * real renders in docs/showcase. The README GIF comes from scripts/launch/gif-story.ts. Run after the example decks are built:
  *   npx tsx scripts/launch/media.ts
  */
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { rasterize, rasterPixels } from '../../src/backends/resvg.ts';
-import { encodeGif, type Frame } from './gif.ts';
+import { rasterize } from '../../src/backends/resvg.ts';
 
 const ROOT = join(import.meta.dirname, '..', '..');
 const OUT = join(ROOT, 'docs/media/launch');
@@ -157,84 +156,8 @@ ${text('Value chain, 7S, waterfall, Marimekko, gantt, 2×2, combo charts… Icon
   const icon = `<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240"><rect width="240" height="240" rx="52" fill="${NAVY}"/><rect x="44" y="64" width="152" height="112" rx="10" fill="#FFFFFF"/><rect x="60" y="82" width="64" height="9" rx="4" fill="${NAVY}"/><rect x="60" y="98" width="44" height="6" rx="3" fill="#B9C7DA"/><rect x="62" y="140" width="18" height="22" fill="#B9C7DA"/><rect x="88" y="128" width="18" height="34" fill="#7F9CC4"/><rect x="114" y="114" width="18" height="48" fill="${BLUE}"/><polyline points="146,150 162,132 178,112" fill="none" stroke="${BLUE}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   writeFileSync(join(OUT, 'icon-240.png'), await rasterize(icon, 240));
 
-  // GIF: prompt → title chain → cover options → the deck, PowerPoint renders
-  const W = 960;
-  const frames: Frame[] = [];
-  const add = async (svg: string, delay: number) => {
-    const p = await rasterPixels(svg, W);
-    frames.push({ width: p.width, height: p.height, rgba: p.pixels, delay });
-  };
-  const caption = (s: string) =>
-    `<rect x="0" y="490" width="960" height="50" fill="${NAVY}"/>${text(s, 480, 523, 22, '#FFFFFF', 'bold', 'middle')}`;
-  await add(
-    page(
-      `${text('1 · One prompt', 40, 70, 30, INK, 'bold')}${promptCard(40, 100, 880, PROMPT, 22)}${caption('Codex · Claude Code · any assistant that runs code')}`,
-      false,
-      960,
-      540,
-    ),
-    2600,
-  );
-  const titles = JSON.parse(
-    readFileSync(join(ROOT, `docs/showcase/${example}/titles.json`), 'utf8'),
-  ) as string[];
-  await add(
-    page(
-      `${text('2 · The argument first: action titles', 40, 60, 28, INK, 'bold')}${titles
-        .slice(0, 11)
-        .map((t, i) =>
-          text(
-            `${String(i + 1).padStart(2, '0')}  ${t.length > 82 ? `${t.slice(0, 80)}…` : t}`,
-            40,
-            105 + i * 34,
-            17,
-            i === 0 ? INK : MUTED,
-            i === 0 ? 'bold' : 'normal',
-          ),
-        )
-        .join('')}${caption('You approve the title chain before any slide is built')}`,
-      false,
-      960,
-      540,
-    ),
-    3000,
-  );
-  const covers = `docs/showcase/${example}/covers`;
-  if (existsSync(join(ROOT, covers)))
-    await add(
-      page(
-        `${text('3 · Pick a cover', 40, 60, 28, INK, 'bold')}${['A', 'B', 'C']
-          .filter((l) => existsSync(join(ROOT, covers, `option-${l}.png`)))
-          .map(
-            (l, i) =>
-              `${slide(png(`${covers}/option-${l}.png`), 40 + i * 300, 110, 280)}${text(l, 40 + i * 300, 290, 22, BLUE, 'bold')}`,
-          )
-          .join('')}${caption('2–3 cover options, compared and recommended')}`,
-        false,
-        960,
-        540,
-      ),
-      2600,
-    );
-  for (const s of exSlides.slice(0, 8))
-    await add(
-      `<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540"><image width="960" height="540" href="${png(s)}"/>${caption('4 · An editable PowerPoint, rendered by PowerPoint')}</svg>`,
-      1500,
-    );
-  writeFileSync(join(ROOT, 'docs/media/slidecraft-demo.gif'), encodeGif(frames));
-  if (process.env.GIF_FRAMES) {
-    const { encodePng } = await import('../../src/qa/raster.ts');
-    frames.forEach((f, i) => {
-      const rgb = new Uint8Array((f.rgba.length / 4) * 3);
-      for (let a = 0, b = 0; a < f.rgba.length; a += 4, b += 3)
-        rgb.set(f.rgba.subarray(a, a + 3), b);
-      writeFileSync(
-        join(process.env.GIF_FRAMES!, `frame-${i}.png`),
-        encodePng({ width: f.width, height: f.height, rgb }),
-      );
-    });
-  }
-  console.log(`✔ ${files.length} gallery images, icon and GIF (${frames.length} frames)`);
+  // the explainer GIF is scripts/launch/gif-story.ts
+  console.log(`✔ ${files.length} gallery images and the icon`);
 }
 
 await main(process.argv[2] ?? 'llm-concepts');

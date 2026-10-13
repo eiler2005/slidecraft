@@ -5,7 +5,7 @@
   "type": "module",
   "license": "PolyForm-Shield-1.0.0",
   "author": "Denis Ermilov",
-  "homepage": "https://github.com/eiler2005/slidecraft",
+  "homepage": "https://eiler2005.github.io/slidecraft/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eiler2005/slidecraft.git"
@@ -14,9 +14,13 @@
     "presentations",
     "slides",
     "pptx",
+    "powerpoint",
     "pdf",
+    "presentation-generator",
     "consulting",
     "claude-code-plugin",
+    "codex",
+    "mcp",
     "ai-agents"
   ],
   "engines": {

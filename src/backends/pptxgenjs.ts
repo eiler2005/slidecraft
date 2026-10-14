@@ -667,6 +667,7 @@ export async function normalizeZip(
   const entries = Object.keys(zin.files)
     .map((o) => [o, rename(o)] as const)
     .sort((a, b) => (a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : 0));
+  const written = new Set(entries.map(([, name]) => name));
   for (const [original, name] of entries) {
     const f = zin.files[original]!;
     if (f.dir) continue;
@@ -674,6 +675,16 @@ export async function normalizeZip(
     if (renames.size && /\.(xml|rels)$/.test(name))
       data = rename(Buffer.from(data).toString('utf8'));
     if (name.endsWith('.xlsx')) data = await normalizeZip(Buffer.from(data), epoch);
+    // pptxgenjs 4.0.1 declares /ppt/slideMasters/slideMasterN.xml for every slide but writes
+    // only slideMaster1.xml. Drop exactly those declarations; any other declared-but-missing
+    // part stays and fails SC-PPTX-004, so this clean-up cannot hide a different defect.
+    if (name === '[Content_Types].xml')
+      data = Buffer.from(data)
+        .toString('utf8')
+        .replace(
+          /<Override PartName="\/(ppt\/slideMasters\/slideMaster\d+\.xml)"[^>]*\/>/g,
+          (tag, part) => (written.has(part) ? tag : ''),
+        );
     if (/^ppt\/(slideLayouts|slideMasters)\/[^/]+\.xml$/.test(name))
       data = markDecorative(Buffer.from(data).toString('utf8'));
     if (/^ppt\/notesSlides\/[^/]+\.xml$/.test(name))

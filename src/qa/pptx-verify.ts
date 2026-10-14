@@ -48,12 +48,24 @@ export function pngSize(buf: Uint8Array): { w: number; h: number } | undefined {
   return undefined;
 }
 
+/** Every part [Content_Types].xml declares must be in the package (SC-PPTX-004). */
+export async function declaredPartsExist(zip: JSZip): Promise<Diagnostic[]> {
+  const types = (await zip.file('[Content_Types].xml')?.async('string')) ?? '';
+  return [...types.matchAll(/<Override\b[^>]*\bPartName="\/([^"]+)"/g)]
+    .map((m) => decodeURIComponent(m[1]!))
+    .filter((part) => !zip.files[part])
+    .map((part) =>
+      diag('SC-PPTX-004', `[Content_Types].xml declares /${part}, which is not in the file`),
+    );
+}
+
 export async function verifyPptx(
   path: string,
   scene: Scene,
 ): Promise<{ diagnostics: Diagnostic[]; checked: number }> {
   const zip = await JSZip.loadAsync(readFileSync(path));
   const out: Diagnostic[] = checkChrome(scene);
+  out.push(...(await declaredPartsExist(zip)));
   const xmlOf = async (part: string) => (await zip.file(part)?.async('string')) ?? '';
   const linkedPart = async (part: string, type: string): Promise<string | undefined> => {
     const rels = await xmlOf(

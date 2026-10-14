@@ -31,6 +31,12 @@ export const CODES = {
     why: 'Titles, section labels, source lines, page numbers and theme decoration are part of the slide contract, not optional exporter embellishments.',
     fix: 'Restore the shared frame or the required native object. Do not remove the requirement or rasterise the slide to make validation pass.',
   },
+  'SC-PPTX-004': {
+    severity: 'error',
+    title: 'Package declares a part that is not in the file',
+    why: '[Content_Types].xml names a part the PPTX does not contain. Strict Office readers and package validators treat such a file as damaged and may offer to repair it.',
+    fix: 'Engine bug: the exporter must declare only the parts it writes. Report it with the deck that triggers it.',
+  },
   'SC-PPTX-003': {
     severity: 'error',
     title: 'Editable object geometry or typography changed during export',

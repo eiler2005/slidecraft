@@ -164330,6 +164330,12 @@ var CODES = {
     why: "Titles, section labels, source lines, page numbers and theme decoration are part of the slide contract, not optional exporter embellishments.",
     fix: "Restore the shared frame or the required native object. Do not remove the requirement or rasterise the slide to make validation pass."
   },
+  "SC-PPTX-004": {
+    severity: "error",
+    title: "Package declares a part that is not in the file",
+    why: "[Content_Types].xml names a part the PPTX does not contain. Strict Office readers and package validators treat such a file as damaged and may offer to repair it.",
+    fix: "Engine bug: the exporter must declare only the parts it writes. Report it with the deck that triggers it."
+  },
   "SC-PPTX-003": {
     severity: "error",
     title: "Editable object geometry or typography changed during export",
@@ -164645,9 +164651,16 @@ function pngSize(buf) {
   }
   return void 0;
 }
+async function declaredPartsExist(zip) {
+  const types = await zip.file("[Content_Types].xml")?.async("string") ?? "";
+  return [...types.matchAll(/<Override\b[^>]*\bPartName="\/([^"]+)"/g)].map((m) => decodeURIComponent(m[1])).filter((part) => !zip.files[part]).map(
+    (part) => diag("SC-PPTX-004", `[Content_Types].xml declares /${part}, which is not in the file`)
+  );
+}
 async function verifyPptx(path2, scene) {
   const zip = await import_jszip2.default.loadAsync(readFileSync3(path2));
   const out = checkChrome(scene);
+  out.push(...await declaredPartsExist(zip));
   const xmlOf = async (part) => await zip.file(part)?.async("string") ?? "";
   const linkedPart = async (part, type) => {
     const rels4 = await xmlOf(
@@ -166795,6 +166808,7 @@ async function normalizeZip(buf, epoch, opts = {}) {
     return out;
   };
   const entries = Object.keys(zin.files).map((o) => [o, rename(o)]).sort((a, b) => a[1] < b[1] ? -1 : a[1] > b[1] ? 1 : 0);
+  const written = new Set(entries.map(([, name]) => name));
   for (const [original, name] of entries) {
     const f = zin.files[original];
     if (f.dir) continue;
@@ -166802,6 +166816,11 @@ async function normalizeZip(buf, epoch, opts = {}) {
     if (renames.size && /\.(xml|rels)$/.test(name))
       data = rename(Buffer.from(data).toString("utf8"));
     if (name.endsWith(".xlsx")) data = await normalizeZip(Buffer.from(data), epoch);
+    if (name === "[Content_Types].xml")
+      data = Buffer.from(data).toString("utf8").replace(
+        /<Override PartName="\/(ppt\/slideMasters\/slideMaster\d+\.xml)"[^>]*\/>/g,
+        (tag, part) => written.has(part) ? tag : ""
+      );
     if (/^ppt\/(slideLayouts|slideMasters)\/[^/]+\.xml$/.test(name))
       data = markDecorative(Buffer.from(data).toString("utf8"));
     if (/^ppt\/notesSlides\/[^/]+\.xml$/.test(name))

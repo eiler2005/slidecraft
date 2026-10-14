@@ -2,6 +2,12 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+- **No phantom slide masters in the PPTX package.** pptxgenjs 4.0.1 declares `slideMaster2.xml … slideMasterN.xml` in `[Content_Types].xml` (one per slide) but writes only `slideMaster1.xml`; a 12-slide deck carried 11 declarations of missing parts. The export now drops exactly those declarations. Found in a ChatGPT agent-mode run.
+- **New check `SC-PPTX-004`:** every part `[Content_Types].xml` declares must exist in the file. Any other missing part is reported as an error instead of being cleaned up silently.
+
 ## [0.7.6] — 2026-10-14
 
 ### Added

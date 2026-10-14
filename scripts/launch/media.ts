@@ -189,6 +189,8 @@ ${text('github.com/eiler2005/slidecraft', 64, 600, 20, '#8FB3E8')}`,
   // icon: a slide with a rising chevron, in the brand blue
   const icon = `<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240"><rect width="240" height="240" rx="52" fill="${NAVY}"/><rect x="44" y="64" width="152" height="112" rx="10" fill="#FFFFFF"/><rect x="60" y="82" width="64" height="9" rx="4" fill="${NAVY}"/><rect x="60" y="98" width="44" height="6" rx="3" fill="#B9C7DA"/><rect x="62" y="140" width="18" height="22" fill="#B9C7DA"/><rect x="88" y="128" width="18" height="34" fill="#7F9CC4"/><rect x="114" y="114" width="18" height="48" fill="${BLUE}"/><polyline points="146,150 162,132 178,112" fill="none" stroke="${BLUE}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
   writeFileSync(join(OUT, 'icon-240.png'), await rasterize(icon, 240));
+  // the Claude plugin directory listing icon: a square PNG, 512–2048 px, read from this path
+  writeFileSync(join(ROOT, '.claude-plugin/icon.png'), await rasterize(icon, 1024));
 
   // the explainer GIF is scripts/launch/gif-story.ts
   console.log(`✔ ${files.length} gallery images, the social preview and the icon`);

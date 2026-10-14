@@ -1,5 +1,6 @@
 {
   "name": "slidecraft",
+  "version": "0.7.7",
   "description": "Describe the goal, pick a look, ship a partner-ready deck: guided storyline → ghost deck → editable PPTX, vector PDF and HTML, with partner-grade review.",
   "author": {
     "name": "Denis Ermilov",

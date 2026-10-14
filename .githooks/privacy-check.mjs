@@ -39,6 +39,8 @@ const ALLOWLIST = [
   // the showcase deck built from examples/slidecraft-overview (npm run showcase)
   { dir: 'docs/showcase/', exts: ['pptx', 'pdf', 'png'] },
   { dir: 'tests/fixtures/', exts: '*' },
+  // the Claude plugin directory reads the listing icon from .claude-plugin/icon.png
+  { dir: /^\.claude-plugin\/icon\.png$/, exts: ['png'] },
   { dir: 'tests/__snapshots__/', exts: ['png', 'pdf', 'pptx'] },
   // original artwork used by the fictional example decks
   { dir: /^examples\/[^/]+\/assets\//, exts: ['png', 'jpg', 'jpeg', 'webp'] },

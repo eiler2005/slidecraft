@@ -135,6 +135,13 @@ describe('privacy-check index', () => {
     expect(check('index').code).toBe(0);
   });
 
+  it('allows the plugin icon in .claude-plugin/, and no other binary there', () => {
+    stage('.claude-plugin/icon.png', Buffer.from([0x89, 0x50, 0x4e, 0x47]));
+    expect(check('index').code).toBe(0);
+    stage('.claude-plugin/screenshot.png', Buffer.from([0x89, 0x50, 0x4e, 0x47]));
+    expect(check('index').code).toBe(1);
+  });
+
   it('allows images in docs/gallery and fixtures but never pem/env', () => {
     stage('docs/gallery/a.png', Buffer.from([1, 2, 3]));
     stage('tests/fixtures/a.pptx', Buffer.from('PK'));

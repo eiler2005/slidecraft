@@ -1,5 +1,6 @@
 {
   "name": "slidecraft",
+  "displayName": "SlideCraft",
   "version": "0.7.7",
   "description": "Describe the goal, pick a look, ship a partner-ready deck: guided storyline → ghost deck → editable PPTX, vector PDF and HTML, with partner-grade review.",
   "author": {
@@ -7,8 +8,20 @@
     "email": "denis.ermilov@gmail.com",
     "url": "https://github.com/eiler2005"
   },
-  "homepage": "https://github.com/eiler2005/slidecraft",
+  "homepage": "https://eiler2005.github.io/slidecraft/",
   "repository": "https://github.com/eiler2005/slidecraft",
   "license": "PolyForm-Shield-1.0.0",
-  "keywords": ["presentations", "slides", "pptx", "pdf", "consulting", "storytelling", "pitch-deck"]
+  "keywords": [
+    "presentations",
+    "slides",
+    "pptx",
+    "pdf",
+    "consulting",
+    "storytelling",
+    "pitch-deck"
+  ],
+  "documentationUrl": "https://github.com/eiler2005/slidecraft/tree/main/docs",
+  "supportUrl": "https://github.com/eiler2005/slidecraft/issues",
+  "privacyPolicyUrl": "https://github.com/eiler2005/slidecraft#privacy-and-network-access",
+  "termsOfServiceUrl": "https://github.com/eiler2005/slidecraft/blob/main/LICENSE"
 }

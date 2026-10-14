@@ -2,6 +2,17 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- **Claude plugin directory listing:** `.claude-plugin/plugin.json` carries `displayName` (SlideCraft), `version`, the site as `homepage`, and links to docs, support (issues), privacy (README "Privacy and network access") and terms (LICENSE); `.claude-plugin/icon.png` is a 1024 px icon rendered by `scripts/launch/media.ts`. Tests keep the plugin and MCP Registry versions equal to `package.json`.
+- README: the MCP server is listed in the official MCP Registry as `io.github.eiler2005/slidecraft`.
+
+### Changed
+- **`.gitattributes`:** `* -text` instead of `* text=auto eol=lf` — files are checked out exactly as committed, whatever `core.autocrlf` says; the plugin directory rejects attributes that rewrite content.
+- **Repository under 50 MiB** (the plugin directory's limit; was 57.9 MiB): showcase PNGs recompressed losslessly (decoded pixels identical, manifest sha256 updated) and a stray `eiler2005-slidecraft-0.2.0.tgz` removed; `*.tgz` is ignored.
+- The privacy hook allows exactly `.claude-plugin/icon.png` besides the existing binary folders.
+
 ## [0.7.7] — 2026-10-14
 
 ### Fixed

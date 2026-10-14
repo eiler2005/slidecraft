@@ -211,6 +211,8 @@ node dist/slidecraft.mjs build examples/strategy-recommendation/deck.yaml
 open examples/strategy-recommendation/dist/northwind-germany.pptx
 ```
 
+**MCP server:** `npx @eiler2005/slidecraft mcp` (stdio). Listed in the official [MCP Registry](https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.eiler2005/slidecraft) as `io.github.eiler2005/slidecraft`, so registry-aware clients can find and install it.
+
 Write `deck.yaml` by hand: [tutorial](docs/tutorials/cli-without-agent.md) · [deck spec](docs/reference/deck-spec.md) · [CLI reference](docs/reference/cli.gen.md).
 
 ## What you get

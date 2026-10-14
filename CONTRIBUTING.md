@@ -16,7 +16,7 @@ Node ≥ 22.12. Run the CLI from source with `npx tsx src/cli/main.ts <command>`
 ## Ground rules
 
 - **New behaviour needs a test.** Rules in `check` get a test that triggers them; layouts are covered by the harness automatically.
-- **No client material in the repo.** Work in `./slidecraft/` or `./work/` (git-ignored). The privacy hook blocks binaries outside allowlisted folders, secrets and non-example email addresses.
+- **No client material in the repo.** Work in `./slidecraft/` or `./work/` (git-ignored). The privacy hook blocks binaries outside allowlisted folders, secrets and email addresses other than example domains and the maintainer's published contact.
 - **Keep the layers independent.** Layouts never hard-code colours or fonts; themes never contain geometry; storylines reference layouts by id only.
 - **Generated files are generated.** After changing layouts, themes, storylines, CLI or codes run `npm run gen` (reference docs, schemas, catalog) and, if previews changed, `npx tsx src/cli/main.ts gallery --hero`.
 - **The bundle is committed.** Run `npm run build` before your final commit; CI fails if `dist/` is stale.

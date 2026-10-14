@@ -119,6 +119,15 @@ describe('privacy-check index', () => {
     expect(check('index').code).toBe(0);
   });
 
+  it("allows the maintainer's published contact, not other addresses on that domain", () => {
+    stage('COMMERCIAL.md', `Contact: denis.ermilov@${'gmail'}.com\n`);
+    expect(check('index').code).toBe(0);
+    stage('docs/contact.md', `Write to jane.doe@${'gmail'}.com\n`);
+    const r = check('index');
+    expect(r.code).toBe(1);
+    expect(r.out).toContain('docs/contact.md');
+  });
+
   it('allows ttf in fonts/ and wasm in dist/', () => {
     stage('fonts/x/Font-Regular.ttf', Buffer.from([0, 1, 2, 3]));
     stage('fonts/x/OFL.txt', 'SIL Open Font License\n');

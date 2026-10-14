@@ -55,6 +55,9 @@ const ALLOWED_EMAIL_DOMAINS = [
   'anthropic.com',
   'users.noreply.github.com',
 ];
+// Individual public addresses on other domains: the maintainer's published contact
+// (LICENSE Required Notice, COMMERCIAL.md). Anyone else's address on the same domain stays blocked.
+const ALLOWED_EMAILS = ['denis.ermilov@gmail.com'];
 // "icon@2x.png" and friends are file names, not mailboxes.
 const FILE_LIKE_TLDS = new Set([
   'png',
@@ -189,6 +192,7 @@ function contentViolations(path, buf) {
     if (RE_SECRET.test(line))
       out.push(`${at}: likely secret (api key / token / password assignment)`);
     for (const m of line.matchAll(RE_EMAIL)) {
+      if (ALLOWED_EMAILS.includes(m[0].toLowerCase())) continue;
       if (!emailAllowed(m[1], m[2])) {
         out.push(`${at}: email address on a non-allowlisted domain "@${m[1]}"`);
       }

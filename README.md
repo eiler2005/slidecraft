@@ -91,7 +91,7 @@ New here? [**Start here**](docs/start-here.md) — your first deck in ten minute
 
 ## Why it exists
 
-SlideCraft is built by **[Denis Ermilov](https://github.com/eiler2005)**. Denis has 20 years in B2B FinTech and enterprise platforms and is Director of Product at Cinimex Group. Much of that time went into decks for joint projects with consulting firms such as **McKinsey & Company, Accenture and IBM**: board papers, strategy recommendations, steering-committee updates, proposals. That work taught a short list of rules: answer first, one claim per slide, every number sourced, never shrink text until it is unreadable. Most of those rules are mechanical, so this project turns that consulting practice into software an AI agent follows every time.
+SlideCraft is built by **[Denis Ermilov](https://github.com/eiler2005)**. Denis has 20 years in B2B FinTech and enterprise platforms — payment systems at national scale, a cross-border payment hub with direct links to China, India and Southeast Asia, a dealer-network platform with Volkswagen Group's team in Berlin — and is Director of Product at Cinimex Group. Much of that time went into decks for joint projects with consulting firms such as **McKinsey & Company, Accenture and IBM**: board papers, strategy recommendations, steering-committee updates, proposals. That work taught a short list of rules: answer first, one claim per slide, every number sourced, never shrink text until it is unreadable. Most of those rules are mechanical, so this project turns that consulting practice into software an AI agent follows every time.
 
 Denis also writes about AI beyond the hype: *Digital Bank* (2023) and *When Intelligence Became Cheap* (2026), part of a three-book series on people, companies and trust once intelligence becomes cheap. → [Books on Amazon](https://www.amazon.de/-/en/stores/author/B0HGYCXBVP/about) · [GitHub profile](https://github.com/eiler2005)
 
@@ -301,10 +301,13 @@ Issues and PRs welcome — new layouts, themes and storylines especially. Start 
 
 ## License
 
-SlideCraft is **source-available** under the [PolyForm Shield License 1.0.0](LICENSE):
+SlideCraft is **source-available** (not OSI open source) under the [PolyForm Shield License 1.0.0](LICENSE):
 
-- **Use it freely** — personally, at work, in a company or for clients: make decks, change the code, build it into your own workflow. The decks you make are yours, for any purpose.
-- **Do not compete with it** — you may not sell, redistribute or offer SlideCraft, or a product built from it, as a product or service that competes with SlideCraft.
-- **Commercial licence** — for anything the licence does not cover (reselling, white-label, a hosted service), [contact the author](https://github.com/eiler2005).
+- **Free for individuals and companies** — personally, at work, in a company or for clients: make decks, change the code, build it into your own workflow, share copies with the licence attached. The decks you make are yours, for any purpose.
+- **Don't compete with it** — you may not offer SlideCraft, or a product built from it, as a product or service that competes with SlideCraft.
+- **Commercial licence** — to sell, host, white-label or embed SlideCraft in a competing product, or for enterprise terms and support, write to [denis.ermilov@gmail.com](mailto:denis.ermilov@gmail.com). Details: [COMMERCIAL.md](COMMERCIAL.md).
+- **The name** — "SlideCraft" and its logo are not licensed under PolyForm; a fork needs a different name.
+
+**Using SlideCraft at a company?** [Teams & brand-kit early access](mailto:denis.ermilov@gmail.com?subject=SlideCraft%20Teams%20early%20access) — your corporate template set up for you, shared brand kits for a team.
 
 Versions up to and including 0.6.0 were released under the MIT License and stay under it. Bundled fonts are SIL OFL ([fonts/SOURCES.md](fonts/SOURCES.md)), icons are Tabler Icons (MIT), and third-party libraries keep their own licences ([NOTICE](NOTICE)). The consulting methodology generalises the author's earlier internal work.

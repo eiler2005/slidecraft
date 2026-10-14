@@ -2,7 +2,11 @@
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "slidecraft",
   "description": "SlideCraft — consulting-grade decks from a brief, as a Claude Code plugin.",
-  "owner": { "name": "Denis Ermilov", "url": "https://github.com/eiler2005" },
+  "owner": {
+    "name": "Denis Ermilov",
+    "email": "denis.ermilov@gmail.com",
+    "url": "https://github.com/eiler2005"
+  },
   "plugins": [
     {
       "name": "slidecraft",

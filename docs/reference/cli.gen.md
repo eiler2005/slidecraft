@@ -3,7 +3,7 @@
 
 > **Audience:** deck authors, agents and contributors · **Generated from:** src/cli/*.ts · **Version:** 0.7.4
 
-Run from a clone with `node dist/slidecraft.mjs <command>` (zero install) or `npx tsx src/cli/main.ts <command>` during development. When stdout is not a terminal, commands that support `--json` print JSON.
+Run from a clone with `node dist/slidecraft.mjs <command>` (zero install) or `npx tsx src/cli/main.ts <command>` during development. Every command accepts `--json`; when stdout is not a terminal, commands with structured results print JSON (the others ignore the flag and print plain text).
 
 ## `rebuild`
 
@@ -199,6 +199,8 @@ Write JSON Schemas (deck, brief, theme, storyline) for editors and agents
 
 Options:
   -o, --out <dir>  output directory (default: <slidecraft>/schemas)
+  --json           accepted for scripts and agents; this command prints plain
+                   text
   -h, --help       display help for command
 ```
 
@@ -282,6 +284,7 @@ Options:
   --option <A|B|C>    one of the suggested options
   --storyline <id>
   --theme <id>
+  --json              machine-readable output
   -h, --help          display help for command
 ```
 
@@ -298,6 +301,7 @@ Options:
   -b, --brief <path>  brief.yaml
   -o, --out <path>    deck.yaml path (default: next to the brief)
   --force             overwrite an existing deck.yaml
+  --json              machine-readable output
   -h, --help          display help for command
 ```
 
@@ -317,6 +321,8 @@ Options:
                        recommended themes)
   --storylines <list>  comma-separated storyline ids (default: all)
   --hero               also render docs/media/hero.png for the README
+  --json               accepted for scripts and agents; this command prints
+                       plain text
   -h, --help           display help for command
 ```
 
@@ -332,6 +338,8 @@ to docs
 
 Options:
   -o, --out <dir>  output directory (default: "site")
+  --json           accepted for scripts and agents; this command prints plain
+                   text
   -h, --help       display help for command
 ```
 
@@ -345,6 +353,7 @@ Usage: slidecraft slidecraft gen [options]
 Regenerate reference docs, JSON Schemas and the catalog (CI checks for drift)
 
 Options:
+  --json      accepted for scripts and agents; this command prints plain text
   -h, --help  display help for command
 ```
 
@@ -374,6 +383,7 @@ Install SlideCraft skills into Codex (~/.codex/skills)
 Options:
   --dir <dir>  Codex skills directory (default: $CODEX_HOME/skills or
                ~/.codex/skills)
+  --json       machine-readable output
   -h, --help   display help for command
 ```
 
@@ -388,6 +398,7 @@ Remove SlideCraft skills from Codex
 
 Options:
   --dir <dir>  Codex skills directory
+  --json       machine-readable output
   -h, --help   display help for command
 ```
 
@@ -619,5 +630,53 @@ Options:
   -o, --out <dir>    output folder (default: "slidecraft/calibration")
   --json             machine-readable output
   -h, --help         display help for command
+```
+
+## `install`
+
+Connect SlideCraft to the AI apps on this machine (Claude Code, Codex, Claude Desktop, Cursor, VS Code, Windsurf, Gemini CLI)
+
+```
+Usage: slidecraft slidecraft install [options]
+
+Connect SlideCraft to the AI apps on this machine (Claude Code, Codex, Claude
+Desktop, Cursor, VS Code, Windsurf, Gemini CLI)
+
+Options:
+  --only <apps>  comma-separated:
+                 claude-code,codex,claude-desktop,cursor,vscode,windsurf,gemini
+  --dry-run      show what would change
+  --json         machine-readable output
+  -h, --help     display help for command
+```
+
+## `uninstall`
+
+Remove SlideCraft from the AI apps it was connected to
+
+```
+Usage: slidecraft slidecraft uninstall [options]
+
+Remove SlideCraft from the AI apps it was connected to
+
+Options:
+  --only <apps>  comma-separated app ids
+  --json         machine-readable output
+  -h, --help     display help for command
+```
+
+## `mcp`
+
+Run the SlideCraft MCP server on stdio (for Claude Desktop, Cursor, VS Code and other MCP clients)
+
+```
+Usage: slidecraft slidecraft mcp [options]
+
+Run the SlideCraft MCP server on stdio (for Claude Desktop, Cursor, VS Code and
+other MCP clients)
+
+Options:
+  --json      accepted for scripts and agents; this command prints plain text
+  -h, --help  display help for command
 ```
 

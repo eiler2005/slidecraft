@@ -2,6 +2,22 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [Unreleased]
+
+Found in a full run of the one prompt in ChatGPT agent mode (Linux sandbox, no PowerPoint).
+
+### Fixed
+- **Numbered labels are not data:** "1 · Decision", "2. Storyline", "Step 2", "Phase 3", "Неделя 4" no longer need a source (`SC-SRC-001/002`); figures such as "40%", "$69k" or "Phase 2.5" still do. The agent had attached an unrelated source to a proposed checklist to pass the check.
+- **Every command accepts `--json`,** as AGENTS.md promises: `choose`, `scaffold`, `codex install/uninstall` and `uninstall` print JSON results; the rest accept the flag and print plain text.
+- **Visual QA rasters always match in size:** pages are rasterised to the slide's exact pixel size, so a LibreOffice PDF (959.98 × 540 pt for a 960 × 540 slide) no longer stops the comparison with "Raster dimensions differ".
+- **Contrast is sampled where the text is drawn:** a bottom-anchored source line under a takeaway band is no longer reported at 1.12:1.
+- Review records name the allowed `severity`, `area` and `status` values when one is wrong.
+
+### Changed
+- **LibreOffice is not PowerPoint:** a visual QA pack rendered by LibreOffice says so (`reference: libreoffice`) and explains why parity sits below the 95 % target.
+- **Chrome in Linux containers** gets `--disable-dev-shm-usage` (and `--no-sandbox` as root); a time-out explains how to point `CHROME_PATH` at a working Chromium.
+- **AGENTS.md:** inside a clone use `node dist/slidecraft.mjs` (npx resolves the local package and fails); what to do when visual QA has no PowerPoint or no browser.
+
 ## [0.7.4] — 2026-10-13
 
 ### Changed

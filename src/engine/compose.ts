@@ -77,11 +77,25 @@ const NON_CLAIM_KEYS = new Set([
   'kicker',
 ]);
 
+/** A list index at the start of a label: "1 · Decision", "2. Storyline", "(3) Evidence". */
+const ENUMERATOR = /^\s*\(?\d{1,2}\s*[.)·:–—-]\s+/;
+/** A position in a sequence, not a measured quantity: "Step 2", "Phase 3", "Неделя 4". */
+const SEQUENCE =
+  /(?<![\p{L}\d])(?:step|phase|stage|wave|week|day|month|quarter|sprint|round|option|check|part|section|chapter|slide|level|tier|шаг|этап|фаза|волна|неделя|день|месяц|квартал|спринт|вариант|раздел|часть|уровень)\s+\d{1,2}(?![\d.,%])/giu;
+
+/** Strips numbers that order or name things (years, quarters, list indices, steps) and keeps data. */
+function claimDigits(s: string): string {
+  return s
+    .replace(ENUMERATOR, '')
+    .replace(SEQUENCE, '')
+    .replace(/\b(19|20)\d\d\b/g, '')
+    .replace(/\bQ[1-4]\b/g, '');
+}
+
 function hasNumbers(v: unknown, key = ''): boolean {
   if (NON_CLAIM_KEYS.has(key)) return false;
   if (typeof v === 'number') return true;
-  if (typeof v === 'string')
-    return /\d/.test(v.replace(/\b(19|20)\d\d\b/g, '').replace(/\bQ[1-4]\b/g, ''));
+  if (typeof v === 'string') return /\d/.test(claimDigits(v));
   if (Array.isArray(v)) return v.some((x) => hasNumbers(x, key));
   if (v && typeof v === 'object') return Object.entries(v).some(([k, x]) => hasNumbers(x, k));
   return false;

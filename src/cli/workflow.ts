@@ -225,28 +225,46 @@ export function registerWorkflowCommands(program: Command): void {
     .option('--option <A|B|C>', 'one of the suggested options')
     .option('--storyline <id>')
     .option('--theme <id>')
-    .action((o: { brief: string; option?: string; storyline?: string; theme?: string }) => {
-      const brief = requireBrief(o.brief);
-      let storyline = o.storyline;
-      let theme = o.theme;
-      if (o.option) {
-        const opt = templateOptions(brief).find((x) => x.option === o.option!.toUpperCase());
-        if (!opt) throw new Error(`no option ${o.option}`);
-        storyline ??= opt.storyline;
-        theme ??= opt.theme;
-      }
-      if (!storyline || !getStoryline(storyline))
-        throw new Error(`unknown storyline "${storyline ?? ''}"`);
-      if (!theme || !getTheme(theme)) throw new Error(`unknown theme "${theme ?? ''}"`);
-      const doc = YAML.parseDocument(readFileSync(o.brief, 'utf8'));
-      doc.set('choice', {
-        storyline,
-        theme,
-        ...(o.option ? { option: o.option.toUpperCase() } : {}),
-      });
-      writeFileSync(o.brief, String(doc));
-      console.log(`${green('✔')} choice: ${storyline} · ${theme}`);
-    });
+    .option('--json', 'machine-readable output')
+    .action(
+      (o: {
+        brief: string;
+        option?: string;
+        storyline?: string;
+        theme?: string;
+        json?: boolean;
+      }) => {
+        const brief = requireBrief(o.brief);
+        let storyline = o.storyline;
+        let theme = o.theme;
+        if (o.option) {
+          const opt = templateOptions(brief).find((x) => x.option === o.option!.toUpperCase());
+          if (!opt) throw new Error(`no option ${o.option}`);
+          storyline ??= opt.storyline;
+          theme ??= opt.theme;
+        }
+        if (!storyline || !getStoryline(storyline))
+          throw new Error(`unknown storyline "${storyline ?? ''}"`);
+        if (!theme || !getTheme(theme)) throw new Error(`unknown theme "${theme ?? ''}"`);
+        const doc = YAML.parseDocument(readFileSync(o.brief, 'utf8'));
+        const choice = {
+          storyline,
+          theme,
+          ...(o.option ? { option: o.option.toUpperCase() } : {}),
+        };
+        doc.set('choice', choice);
+        writeFileSync(o.brief, String(doc));
+        if (wantsJson(o.json)) {
+          printJson({
+            ok: true,
+            brief: relative(process.cwd(), resolve(o.brief)) || o.brief,
+            choice,
+          });
+          return;
+        }
+        console.log(`${green('✔')} choice: ${storyline} · ${theme}`);
+      },
+    );
 
   program
     .command('scaffold')
@@ -254,7 +272,8 @@ export function registerWorkflowCommands(program: Command): void {
     .requiredOption('-b, --brief <path>', 'brief.yaml')
     .option('-o, --out <path>', 'deck.yaml path (default: next to the brief)')
     .option('--force', 'overwrite an existing deck.yaml')
-    .action(async (o: { brief: string; out?: string; force?: boolean }) => {
+    .option('--json', 'machine-readable output')
+    .action(async (o: { brief: string; out?: string; force?: boolean; json?: boolean }) => {
       const brief = requireBrief(o.brief);
       if (!brief.choice) throw new Error('brief has no choice yet — run `slidecraft choose` first');
       const out = resolve(o.out ?? join(dirname(resolve(o.brief)), 'deck.yaml'));
@@ -271,9 +290,12 @@ export function registerWorkflowCommands(program: Command): void {
         out,
         `${SCHEMA_LINE('deck')}# Ghost deck: write the action titles first, review the title chain, then fill content.\n${YAML.stringify(deck, { lineWidth: 0 })}`,
       );
-      console.log(
-        `${green('✔')} ${relative(process.cwd(), out)} (${(deck.slides as unknown[]).length} ghost slides)`,
-      );
+      const slides = (deck.slides as unknown[]).length;
+      if (wantsJson(o.json)) {
+        printJson({ ok: true, deck: relative(process.cwd(), out) || out, slides });
+        return;
+      }
+      console.log(`${green('✔')} ${relative(process.cwd(), out)} (${slides} ghost slides)`);
     });
 
   program

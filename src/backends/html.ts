@@ -333,6 +333,13 @@ function detectChrome(): Detection {
  * (background services, first-run work), so we stop it ourselves as soon as it reports
  * "bytes written to file" or the PDF size is stable, instead of waiting for exit.
  */
+/** Flags Chrome needs in Linux containers (agent sandboxes, CI): no sandbox as root, and no
+ * reliance on a small /dev/shm, which makes headless printing hang. */
+export function containerChromeArgs(): string[] {
+  if (process.platform !== 'linux') return [];
+  return [...(process.getuid?.() === 0 ? ['--no-sandbox'] : []), '--disable-dev-shm-usage'];
+}
+
 export function runChrome(
   bin: string,
   args: string[],
@@ -382,7 +389,12 @@ export function runChrome(
       lastSize = size;
     }, 400);
     const timer = setTimeout(
-      () => finish(new Error(`Chrome timed out after ${Math.round(timeoutMs / 1000)}s`)),
+      () =>
+        finish(
+          new Error(
+            `Chrome timed out after ${Math.round(timeoutMs / 1000)}s. In a container, point CHROME_PATH at a Chromium that prints headless (for example a Playwright Chromium); PPTX output does not need Chrome`,
+          ),
+        ),
       timeoutMs,
     );
   });
@@ -428,7 +440,7 @@ export const htmlPdfEngine: Engine = {
           '--hide-scrollbars',
           '--no-pdf-header-footer',
           `--user-data-dir=${join(tmp, 'profile')}`,
-          ...(process.platform === 'linux' && process.getuid?.() === 0 ? ['--no-sandbox'] : []),
+          ...containerChromeArgs(),
           `--print-to-pdf=${tmpPdf}`,
           '--virtual-time-budget=5000',
           pathToFileURL(htmlPath).href,

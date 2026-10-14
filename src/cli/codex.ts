@@ -11,7 +11,7 @@ import { homedir } from 'node:os';
 import { join, relative, resolve } from 'node:path';
 import type { Command } from 'commander';
 import { ROOT } from '../paths.ts';
-import { dim, green } from './output.ts';
+import { dim, green, printJson, wantsJson } from './output.ts';
 
 /** Knowledge skills shared with the Claude plugin (the Claude-only entry skills are replaced by `slidecraft`). */
 export const CODEX_SHARED = [
@@ -92,9 +92,15 @@ export function registerCodexCommands(program: Command): void {
       '--dir <dir>',
       'Codex skills directory (default: $CODEX_HOME/skills or ~/.codex/skills)',
     )
-    .action((o: { dir?: string }) => {
+    .option('--json', 'machine-readable output')
+    .action((o: { dir?: string; json?: boolean }) => {
       const dir = resolve(o.dir ?? defaultDir());
-      for (const d of installCodex(dir)) console.log(`${green('✔')} ${d}`);
+      const installed = installCodex(dir);
+      if (wantsJson(o.json)) {
+        printJson({ ok: true, dir, installed });
+        return;
+      }
+      for (const d of installed) console.log(`${green('✔')} ${d}`);
       console.log(
         dim(
           `\nSkills point at ${ROOT}. Re-run after moving or updating SlideCraft.\nIn Codex: "Using SlideCraft, make a deck that …"`,
@@ -105,9 +111,15 @@ export function registerCodexCommands(program: Command): void {
     .command('uninstall')
     .description('Remove SlideCraft skills from Codex')
     .option('--dir <dir>', 'Codex skills directory')
-    .action((o: { dir?: string }) => {
+    .option('--json', 'machine-readable output')
+    .action((o: { dir?: string; json?: boolean }) => {
       const dir = resolve(o.dir ?? defaultDir());
-      for (const d of uninstallCodex(dir))
+      const removed = uninstallCodex(dir);
+      if (wantsJson(o.json)) {
+        printJson({ ok: true, dir, removed });
+        return;
+      }
+      for (const d of removed)
         console.log(`${green('✔')} removed ${relative(process.cwd(), d) || d}`);
     });
 }

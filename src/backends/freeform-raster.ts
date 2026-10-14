@@ -20,7 +20,7 @@ import type {
 } from '../engine/scene.ts';
 import { layoutText, makeTextNode, para } from '../engine/text.ts';
 import { type Diagnostic, diag } from '../qa/codes.ts';
-import { findChrome, fontFaceCss, runChrome } from './html.ts';
+import { containerChromeArgs, findChrome, fontFaceCss, runChrome } from './html.ts';
 import { rasterize } from './resvg.ts';
 
 const PX = 96;
@@ -95,7 +95,7 @@ function chromeArgs(tmp: string): string[] {
     '--disable-extensions',
     '--hide-scrollbars',
     `--user-data-dir=${join(tmp, 'profile')}`,
-    ...(process.platform === 'linux' && process.getuid?.() === 0 ? ['--no-sandbox'] : []),
+    ...containerChromeArgs(),
   ];
 }
 

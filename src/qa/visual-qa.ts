@@ -26,9 +26,12 @@ import { getTheme } from '../library/load.ts';
 import type { Diagnostic } from './codes.ts';
 import { diffOverlay, encodePng, type Raster, readPpm, visualMetrics } from './raster.ts';
 import { appendReviewLog, diffAgainstSnapshot, snapshotSources } from './review-log.ts';
-import { bgAt } from './scene-checks.ts';
+import { bgAt, inkMidY } from './scene-checks.ts';
 
 export const VISUAL_QA_TARGET = 0.95;
+/** Why a LibreOffice render scores below the target without a defect in the deck. */
+export const LIBREOFFICE_NOTE =
+  'rendered by LibreOffice, not PowerPoint: glyph shapes and some line breaks differ, so parity below the target is expected; judge wrapping, overflow and alignment by eye';
 
 export interface SlideFacts {
   slide: number;
@@ -51,6 +54,8 @@ export interface VisualQaPack {
   deck: string;
   theme: string;
   renderer: string;
+  /** What the PPTX side was rendered by: parity is a fidelity measure only against PowerPoint. */
+  reference: 'powerpoint' | 'libreoffice' | 'none';
   target: number;
   slides: SlideFacts[];
   deckFacts: { titleTopSpreadPt: number; paletteSize: number; pagesBelowTarget: number };
@@ -103,13 +108,7 @@ export function slideFacts(scene: Scene, slide: SceneSlide, palette: Set<string>
     if (!art(n)) colorsOf(n, used);
     if (n.kind !== 'text') return;
     fonts.add(n.style.family);
-    const back = bgAt(
-      slide.nodes,
-      i,
-      n.box.x + 0.05,
-      n.box.y + Math.min(n.contentHeight, n.box.h) / 2,
-      bg,
-    );
+    const back = bgAt(slide.nodes, i, n.box.x + 0.05, inkMidY(n), bg);
     const fg = n.lines[0]?.segments[0]?.color ?? n.style.color;
     const ratio = contrast(fg, back);
     const needs = n.style.size >= 18 || (n.style.size >= 14 && n.style.bold) ? 3 : 4.5;
@@ -161,12 +160,15 @@ export function slideFacts(scene: Scene, slide: SceneSlide, palette: Set<string>
   };
 }
 
-function rasterPages(pdf: string, width: number): Raster[] {
+/** Rasterises every page to exactly width × height. PDF page sizes differ by a fraction of a
+ * point between renderers (LibreOffice writes 959.98 × 540 pt for a 960 × 540 slide), and a
+ * height derived from the page would then differ by a pixel and break the comparison. */
+export function rasterPages(pdf: string, width: number, height: number): Raster[] {
   const dir = mkdtempSync(join(tmpdir(), 'slidecraft-vqa-'));
   try {
     execFileSync(
       'pdftoppm',
-      ['-scale-to-x', String(width), '-scale-to-y', '-1', pdf, join(dir, 'p')],
+      ['-scale-to-x', String(width), '-scale-to-y', String(height), pdf, join(dir, 'p')],
       {
         timeout: 300000,
         stdio: ['ignore', 'pipe', 'pipe'],
@@ -206,13 +208,14 @@ export async function visualQaPack(
   if (!scene || !file('pdf')) throw new Error('Build failed; run `slidecraft check` first');
   const sources = snapshotSources(deckPath, join(dir, 'baseline'));
   const width = opts.width ?? 1600;
-  const html = rasterPages(file('pdf')!, width);
+  const height = Math.round((width * scene.format.h) / scene.format.w);
+  const html = rasterPages(file('pdf')!, width, height);
   const office = await pptxConvertEngine.detect();
   let pptx: Raster[] | undefined;
   if (office.available && file('pptx')) {
     const pdf = join(dir, 'pptx-office.pdf');
     convertToPdf(file('pptx')!, pdf);
-    pptx = rasterPages(pdf, width);
+    pptx = rasterPages(pdf, width, height);
   }
   const theme = getTheme(scene.themeId);
   const palette = new Set(
@@ -277,6 +280,11 @@ export async function visualQaPack(
     renderer: pptx
       ? (office.detail ?? 'Office')
       : 'none (HTML only — install PowerPoint or LibreOffice for parity)',
+    reference: !pptx
+      ? 'none'
+      : /PowerPoint/.test(office.detail ?? '')
+        ? 'powerpoint'
+        : 'libreoffice',
     target: VISUAL_QA_TARGET,
     slides,
     deckFacts: {
@@ -292,7 +300,7 @@ export async function visualQaPack(
   writeFileSync(join(dir, 'index.md'), packMarkdown(pack));
   appendReviewLog(deckPath, {
     stage: 'visual-qa',
-    summary: `Review pack for ${slides.length} slides (${pack.renderer}); ${pack.deckFacts.pagesBelowTarget} page(s) below ${Math.round(VISUAL_QA_TARGET * 100)} % PowerPoint↔HTML parity. Sources snapshotted: ${sources.join(', ')}.`,
+    summary: `Review pack for ${slides.length} slides (${pack.renderer}); ${pack.deckFacts.pagesBelowTarget} page(s) below ${Math.round(VISUAL_QA_TARGET * 100)} % PowerPoint↔HTML parity${pack.reference === 'libreoffice' ? ` (${LIBREOFFICE_NOTE})` : ''}. Sources snapshotted: ${sources.join(', ')}.`,
     data: {
       parity: Object.fromEntries(slides.map((s) => [s.id, s.parity?.worstRegion ?? null])),
     },
@@ -309,6 +317,7 @@ function packMarkdown(p: VisualQaPack): string {
     `Checklist: \`library/references/visual-qa.md\` in the SlideCraft package. Record findings with \`slidecraft visual-qa <deck> --record findings.json\`.`,
     '',
     `Deck facts: title top spread ${p.deckFacts.titleTopSpreadPt} pt · ${p.deckFacts.paletteSize} colours in use · ${p.deckFacts.pagesBelowTarget} page(s) below ${pct(p.target)} PowerPoint↔HTML parity.`,
+    ...(p.reference === 'libreoffice' ? ['', `**Renderer:** ${LIBREOFFICE_NOTE}.`] : []),
     '',
   ];
   for (const s of p.slides) {
@@ -395,9 +404,13 @@ export function validateRound(r: ReviewRound): string[] {
   if (!r.summary?.trim()) errors.push('summary is required');
   if (!Array.isArray(r.findings)) errors.push('findings must be an array');
   for (const [i, f] of (r.findings ?? []).entries()) {
-    if (!SEVERITY.includes(f.severity)) errors.push(`findings[${i}].severity`);
-    if (!AREAS.includes(f.area)) errors.push(`findings[${i}].area`);
-    if (!STATUS.includes(f.status)) errors.push(`findings[${i}].status`);
+    // name the allowed values: agents guess otherwise ("verification", "qa-diagnostic")
+    if (!SEVERITY.includes(f.severity))
+      errors.push(`findings[${i}].severity must be one of ${SEVERITY.join(' | ')}`);
+    if (!AREAS.includes(f.area))
+      errors.push(`findings[${i}].area must be one of ${AREAS.join(' | ')}`);
+    if (!STATUS.includes(f.status))
+      errors.push(`findings[${i}].status must be one of ${STATUS.join(' | ')}`);
     if (!f.issue?.trim()) errors.push(`findings[${i}].issue`);
   }
   if (

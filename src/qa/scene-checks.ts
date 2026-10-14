@@ -36,6 +36,13 @@ function overlap(a: Box, b: Box): number {
 }
 
 /** Background color under a point: topmost filled rect containing it, else slide background. */
+/** Vertical middle of the drawn text (its ink, after anchoring): a bottom-anchored source line
+ * sits at the foot of its box, not at the top where a band above may overlap the box. */
+export function inkMidY(t: TextNode): number {
+  const e = textExtent(t);
+  return e.h ? e.y + e.h / 2 : t.box.y + Math.min(t.contentHeight, t.box.h) / 2;
+}
+
 export function bgAt(
   nodes: SceneNode[],
   upto: number,
@@ -171,13 +178,7 @@ export function checkScene(scene: Scene): Diagnostic[] {
     }
     // contrast
     for (const { t, i } of texts) {
-      const back = bgAt(
-        s.nodes,
-        i,
-        t.box.x + 0.05,
-        t.box.y + Math.min(t.contentHeight, t.box.h) / 2,
-        bg,
-      );
+      const back = bgAt(s.nodes, i, t.box.x + 0.05, inkMidY(t), bg);
       const fg = t.lines[0]?.segments[0]?.color ?? t.style.color;
       const ratio = contrast(fg, back);
       const large = t.style.size >= 18 || (t.style.size >= 14 && t.style.bold);

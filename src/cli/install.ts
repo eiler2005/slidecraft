@@ -183,7 +183,7 @@ export function registerInstallCommands(program: Command): void {
         ...(o.dryRun ? { dryRun: true } : {}),
         ...(o.only ? { only: o.only.split(',') } : {}),
       });
-      if (wantsJson(o.json)) return printJson({ steps, server: serverCommand() });
+      if (wantsJson(o.json)) return printJson({ ok: true, steps, server: serverCommand() });
       if (!steps.length)
         console.log('No supported AI app found. See docs/how-to/use-with-any-agent.md');
       for (const s of steps)
@@ -198,9 +198,11 @@ export function registerInstallCommands(program: Command): void {
     .command('uninstall')
     .description('Remove SlideCraft from the AI apps it was connected to')
     .option('--only <apps>', 'comma-separated app ids')
-    .action((o: { only?: string }) => {
-      for (const s of install({ uninstall: true, ...(o.only ? { only: o.only.split(',') } : {}) }))
-        console.log(`${green('✔')} ${s.target} — ${s.action}`);
+    .option('--json', 'machine-readable output')
+    .action((o: { only?: string; json?: boolean }) => {
+      const steps = install({ uninstall: true, ...(o.only ? { only: o.only.split(',') } : {}) });
+      if (wantsJson(o.json)) return printJson({ ok: true, steps });
+      for (const s of steps) console.log(`${green('✔')} ${s.target} — ${s.action}`);
     });
 
   program

@@ -1,6 +1,15 @@
-import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import {
+  cpSync,
+  createWriteStream,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import PDFDocument from 'pdfkit';
 import { afterEach, describe, expect, it } from 'vitest';
 import { checkDeck } from '../src/build.ts';
 import { applyFixes } from '../src/library/fix.ts';
@@ -11,7 +20,13 @@ import {
   readReviewLog,
   snapshotSources,
 } from '../src/qa/review-log.ts';
-import { type ReviewRound, recordReview, slideFacts, validateRound } from '../src/qa/visual-qa.ts';
+import {
+  type ReviewRound,
+  rasterPages,
+  recordReview,
+  slideFacts,
+  validateRound,
+} from '../src/qa/visual-qa.ts';
 
 const dirs: string[] = [];
 const work = () => {
@@ -172,5 +187,76 @@ describe('speaker notes say where the facts come from', () => {
       '[Sources]',
       '- A — B',
     ]);
+  });
+});
+
+/** A one-page PDF of the given size in points. */
+async function pdfOfSize(path: string, w: number, h: number): Promise<void> {
+  const doc = new PDFDocument({ size: [w, h], margin: 0 });
+  const done = new Promise<void>((ok) =>
+    doc.pipe(createWriteStream(path)).on('finish', () => ok()),
+  );
+  doc.rect(10, 10, 100, 50).fill('#1F5FBF');
+  doc.end();
+  await done;
+}
+
+// Found in a ChatGPT agent-mode run: LibreOffice writes a 960 × 540 pt slide as 959.98 × 540,
+// so a height derived from the page came out 901 px against Chrome's 900 and visual QA stopped
+// with "Raster dimensions differ".
+describe('visual QA rasters', () => {
+  it.skipIf(spawnSync('pdftoppm', ['-v']).status !== 0)(
+    'have the same size whatever page size the renderer wrote',
+    async () => {
+      const d = mkdtempSync(join(tmpdir(), 'sc-raster-'));
+      dirs.push(d);
+      await pdfOfSize(join(d, 'chrome.pdf'), 960, 540);
+      await pdfOfSize(join(d, 'office.pdf'), 959.981, 540);
+      const [a] = rasterPages(join(d, 'chrome.pdf'), 1600, 900);
+      const [b] = rasterPages(join(d, 'office.pdf'), 1600, 900);
+      expect([a!.width, a!.height]).toEqual([1600, 900]);
+      expect([b!.width, b!.height]).toEqual([1600, 900]);
+      expect(() => visualMetrics(a!, b!)).not.toThrow();
+    },
+    60_000,
+  );
+});
+
+// Found in a ChatGPT agent-mode run: a source line anchored to the bottom of a box that overlaps
+// the takeaway band above was sampled at the box top and reported at 1.12:1 on the band's accent.
+describe('contrast is sampled where the text is drawn', () => {
+  it('reads a bottom-anchored source line against the white below a takeaway band', () => {
+    const d = mkdtempSync(join(tmpdir(), 'sc-contrast-'));
+    dirs.push(d);
+    const deck = join(d, 'deck.yaml');
+    writeFileSync(
+      deck,
+      `schemaVersion: 1
+id: contrast
+title: Faster AI writing still needs evidence and a clear board decision
+theme: consulting-classic
+status: review
+language: en
+sources:
+  - { id: study, title: "Noy & Zhang, Science (2023)" }
+slides:
+  - id: evidence
+    layout: kpi-tiles
+    variant: tiles
+    title: Faster AI writing still needs evidence and a clear board decision
+    lead: These studies cover writing tasks and board packs.
+    tiles:
+      - { value: "40%", label: Lower mean writing time }
+      - { value: "18%", label: Higher rated output quality }
+      - { value: "13%", label: Packs rated extremely effective }
+    bottomLine: Retain AI drafting gains and require evidence for every board decision.
+    sources: [study]
+`,
+    );
+    const { scene } = checkDeck(deck);
+    const facts = slideFacts(scene!, scene!.slides[0]!, new Set());
+    const source = facts.contrast.find((c) => c.text.includes('[source]'));
+    if (source) expect(source.bg).toBe('#FFFFFF');
+    expect(facts.contrast.filter((c) => c.ratio < c.needs)).toEqual([]);
   });
 });

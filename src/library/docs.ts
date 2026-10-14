@@ -4,13 +4,11 @@
  */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { Command } from 'commander';
+import type { Command } from 'commander';
 import YAML from 'yaml';
 import { z } from 'zod';
 import { detect, engines } from '../backends/registry.ts';
-import { registerCodexCommands } from '../cli/codex.ts';
-import { registerCommands } from '../cli/commands.ts';
-import { registerBrandCommands, registerWorkflowCommands } from '../cli/workflow.ts';
+import { buildProgram } from '../cli/program.ts';
 import { LAYOUTS } from '../layouts/index.ts';
 import { DOCS_DIR, LIBRARY_DIR, SCHEMAS_DIR, VERSION } from '../paths.ts';
 import { CODES } from '../qa/codes.ts';
@@ -179,14 +177,10 @@ function codesDoc(): string {
 }
 
 function cliDoc(): string {
-  const program = new Command().name('slidecraft');
-  registerCommands(program);
-  registerWorkflowCommands(program);
-  registerCodexCommands(program);
-  registerBrandCommands(program);
+  const program = buildProgram();
   let md = HEADER('CLI reference', 'src/cli/*.ts');
   md +=
-    'Run from a clone with `node dist/slidecraft.mjs <command>` (zero install) or `npx tsx src/cli/main.ts <command>` during development. When stdout is not a terminal, commands that support `--json` print JSON.\n\n';
+    'Run from a clone with `node dist/slidecraft.mjs <command>` (zero install) or `npx tsx src/cli/main.ts <command>` during development. Every command accepts `--json`; when stdout is not a terminal, commands with structured results print JSON (the others ignore the flag and print plain text).\n\n';
   const walk = (cmd: Command, prefix: string) => {
     for (const c of cmd.commands) {
       const name = `${prefix} ${c.name()}`.trim();

@@ -2,7 +2,7 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
-## [Unreleased]
+## [0.7.5] — 2026-10-14
 
 Found in a full run of the one prompt in ChatGPT agent mode (Linux sandbox, no PowerPoint).
 
@@ -17,6 +17,7 @@ Found in a full run of the one prompt in ChatGPT agent mode (Linux sandbox, no P
 - **LibreOffice is not PowerPoint:** a visual QA pack rendered by LibreOffice says so (`reference: libreoffice`) and explains why parity sits below the 95 % target.
 - **Chrome in Linux containers** gets `--disable-dev-shm-usage` (and `--no-sandbox` as root); a time-out explains how to point `CHROME_PATH` at a working Chromium.
 - **AGENTS.md:** inside a clone use `node dist/slidecraft.mjs` (npx resolves the local package and fails); what to do when visual QA has no PowerPoint or no browser.
+- **README:** the assembly diagram is the workflow picture (npm does not draw Mermaid, so the flowchart showed as code there); the layout count in the table is 46; the ChatGPT agent-mode run is noted.
 
 ## [0.7.4] — 2026-10-13
 

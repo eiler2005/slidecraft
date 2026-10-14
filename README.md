@@ -37,7 +37,7 @@ Follow the SlideCraft workflow: show me the action-title chain and 2–3 cover o
 building, cite a source for every number, then give me the .pptx and a PDF.
 ```
 
-The assistant runs `npx @eiler2005/slidecraft` on its side, writes the deck, checks it and hands you an editable PowerPoint. **Tested with Codex and Claude Code** on exactly this prompt — see what each made, unedited, with an independent review: [Codex](examples/llm-concepts/README.md) · [Claude Code](examples/llm-concepts-claude/README.md). ChatGPT in agent mode and Claude.ai with code execution follow the same `AGENTS.md`; we have not run them ourselves yet. The content can be in any language. A chat without code execution can still write the `deck.yaml`; build it yourself with `npx @eiler2005/slidecraft build deck.yaml`. For repeat work, install it into your assistant ([install](#install)).
+The assistant runs `npx @eiler2005/slidecraft` on its side, writes the deck, checks it and hands you an editable PowerPoint. **Tested with Codex and Claude Code** on exactly this prompt — see what each made, unedited, with an independent review: [Codex](examples/llm-concepts/README.md) · [Claude Code](examples/llm-concepts-claude/README.md). ChatGPT in agent mode made a five-slide deck end to end from a shorter version of this prompt; the tool errors it hit on the way are fixed in 0.7.5. Claude.ai with code execution follows the same `AGENTS.md`; we have not run it ourselves yet. The content can be in any language. A chat without code execution can still write the `deck.yaml`; build it yourself with `npx @eiler2005/slidecraft build deck.yaml`. For repeat work, install it into your assistant ([install](#install)).
 
 ## What SlideCraft is
 
@@ -124,29 +124,14 @@ agent   › Built 11 slides. Review: 0 blockers, 2 majors fixed, 1 minor left.  
 |---|---|---|
 | Brief | `brief.yaml` | goal, ask, audience, how the deck will be used → which outputs |
 | Storyline × theme | chosen from 14 × 7 | the shape of the argument for the task, and the look |
-| Content | `deck.yaml` (+ `sections/*.yaml`) | action titles and slide content against 42 layout contracts; `sources:`, `facts:` from Excel/CSV, cover visual, `language:` |
+| Content | `deck.yaml` (+ `sections/*.yaml`) | action titles and slide content against 46 layout contracts; `sources:`, `facts:` from Excel/CSV, cover visual, `language:` |
 | Your material | `materials/`, `assets/` | reports cited by page, data files, pictures |
 
 Layouts turn the content into one **Scene IR**; engines translate it into editable PPTX, PDF,
 HTML, a one-pager and a Word memo. Text is laid out with PowerPoint's measured rules, so the
 HTML and the PPTX break lines the same way.
 
-**How it is assembled** — eight stages, four checkpoints you approve:
-
-```mermaid
-flowchart LR
-  B["1 · Brief"] -->|✅ CP1| P["2 · Pick<br/>3 templates"]
-  P -->|✅ CP2| S["3 · Storyline"]
-  S --> G["4 · Ghost deck<br/>action titles"]
-  G -->|✅ CP3| W["5 · Build<br/>slides, cover, sources"]
-  W --> R["6 · Review<br/>checks, copy-fit,<br/>partner review"]
-  R --> V["6b · Visual QA<br/>PowerPoint vs HTML,<br/>reviewer model"]
-  V -->|✅ CP4| D["7 · Deliver<br/>PPTX · PDF · HTML<br/>+ report"]
-  classDef opus fill:#5B3FD1,color:#fff,stroke:#5B3FD1;
-  classDef sonnet fill:#1F5FBF,color:#fff,stroke:#1F5FBF;
-  classDef main fill:#0B1F3A,color:#fff,stroke:#0B1F3A;
-  class S,G,V opus; class W sonnet; class B,P,D,R main;
-```
+**How it is assembled** — eight stages, four checkpoints you approve (the top row of the picture above): brief → pick a template → storyline → ghost deck of action titles → build → review → visual QA → deliver.
 
 **How it is checked.** Automatic checks after every build (fit without truncation, sources for
 every number, the same number everywhere, contrast, geometry); a copy-fit loop and a partner

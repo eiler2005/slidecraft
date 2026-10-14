@@ -47,73 +47,73 @@
       "path": "previews/01-cover.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "fbb891cc75080372f474c84b9fa98726c1d15d91d0cc66283d1db99ab9d13783"
+      "sha256": "f6d0c7b4854bb46e8e9030008ee73dd6d1ed5721ee3ea126f1ebef014f70acac"
     },
     {
       "path": "previews/02-why-now.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "182d8a7fb58d87902716709aee6bd7cf090975af7ef41af469e582283ce21c78"
+      "sha256": "110209a44a3f023d89901ee5e881d35d90b4b3baa002ab2c543dac19f33a0083"
     },
     {
       "path": "previews/03-how-to-read.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "91e383d0605122e421ff07b8d7fc2cc6b7ffa78ccf82dccfc1b47dd31b992cc2"
+      "sha256": "2baed7a2fe23748b7d851f7e545ec4d5e9229fa7031cff8590d0f22c9560e5e1"
     },
     {
       "path": "previews/04-tokens-context.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "5e69078135f56c874ee25b983c74bd192a95d36a9650d586326bee1bf50b8487"
+      "sha256": "abf1d34132e7998e2114e15257c44763107bb0293e0a861be8237676736c684b"
     },
     {
       "path": "previews/05-train-vs-inference.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "5e423c29a2af2ca285feed2e0d1c55040df062f16fe46b91a00dc158e2bc2c56"
+      "sha256": "79e04c8903d2a08c1388c9c1f1a832839554a7b4e9bc9528c3ec58abe8b2de64"
     },
     {
       "path": "previews/06-rag.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "dee95c03827bfe120f601b14c9c666bf0cc20c80aaf951934120c5f0d40ef943"
+      "sha256": "f247b3f123e2af8bfc851ddeaa91b5354bd3e040656bc3e71aac64a167c6d93a"
     },
     {
       "path": "previews/07-ft-vs-prompting.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "16dee52651e3cd6de5cf21b515c3fbda797ab927d4c53fedcfaf01a0c0e95d8e"
+      "sha256": "9cff4419dff6c9f18b6f0097cc673c1e5daa42c3323d3a0393df65a85fa92340"
     },
     {
       "path": "previews/08-hallucinations.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "cb4aa5c00386075e3cd39e3c8f4c20a64a31f843ebd28f21befe17b18528be93"
+      "sha256": "026125daab7092ffcc1b79befdc07b39b49f5d9359b7335f05e4ea3f8eb1b1f0"
     },
     {
       "path": "previews/09-tools-function-calling.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "d0e2b28367b074ee3029eb9b0903ceb86d0c39c7090519c522033e6afdc93401"
+      "sha256": "f395795c0b2bbe6d0fb3011ff36ea098ebcb2d0e73146b1626bc8f2f1bbf0982"
     },
     {
       "path": "previews/10-agents-loop.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "d34079b3cc766f3449a322864b2395e6c3682329582c2dd89ce851ad145c915c"
+      "sha256": "56b29efbce34cfd11ce441096b6f075df8ee448289e1fab7bdf3fc2175fbabd4"
     },
     {
       "path": "previews/11-evaluation.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "7cfa1dafbd82fa909221333fb28d7ec599a4c4ba839e1754c6640f63ccb1dfc1"
+      "sha256": "9dc3e84cde7657084291b41385dc688343f225975797f1110c8d3374b8051809"
     },
     {
       "path": "previews/12-ship-gates.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "09975cc549423abbc5890fc9568c1077b4889b310152e25dd73abba2a3341dad"
+      "sha256": "fd4f870924472b97a6ddc4c55abab0c4449676d731f069ec0607cf4ff3860c5a"
     },
     {
       "path": "llm-ai-agents-vocabulary.html",

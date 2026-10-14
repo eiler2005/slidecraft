@@ -1,4 +1,6 @@
-* text=auto eol=lf
+# No line-ending conversion: files are checked out exactly as committed (LF), whatever
+# core.autocrlf says. The Claude plugin directory rejects attributes that rewrite content.
+* -text
 *.ttf binary
 *.png binary
 *.wasm binary

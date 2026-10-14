@@ -47,73 +47,73 @@
       "path": "previews/01-cover.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "3a3458f09b216baa08fef8e866d512739d35e4140bfb044193655a49d42d2af1"
+      "sha256": "b867e8e95f104c88f2424e241f32b92ad16caf9d70c9ff85bdd65e0ea3a3f8e8"
     },
     {
       "path": "previews/02-system.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "f03b5c95d607c81e8d56fb07ebe7e7bfb975f2e145c768ed2e5c08b29abd800e"
+      "sha256": "03756f3026b54d7ca667f28f18253b30240f25db8131d9d6d91cedffcbec9519"
     },
     {
       "path": "previews/03-tokens-context.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "6bb9781fceec091b6266124a4dec01af164ed6a987828776273037960d6140f7"
+      "sha256": "3f865fb704fcbaad214523770bfb9e3c682919a044546ddf9b0685a13494f0f4"
     },
     {
       "path": "previews/04-training-inference.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "b8c802886c137bf7a47487046c6a27061d8e5b608149540b1443e64d456aeb80"
+      "sha256": "a53f9f422cc937a85e14472939eae21c669fca3c7305452adc479e347cbfb38c"
     },
     {
       "path": "previews/05-rag.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "20293b1a55a2329dac23fe5086ad63ed76bdeb7e5ed1419adb01450021a10ef0"
+      "sha256": "6ff4743d2c1e634b375a109bdaabb88e3f2cf7d6f1e3893653fe43af7954bd1c"
     },
     {
       "path": "previews/06-prompting-finetuning.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "07e3d5307a8c858b62b143005b48fe1f881a3254f0f2815839bcfa0d38a2fed0"
+      "sha256": "35be634be61b90102d5402634c072539d4a219ce67ce83d32406be6f0929e21b"
     },
     {
       "path": "previews/07-hallucinations.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "e39ac4bad9eb21b1111c37ce34d220a6dcee3697c3ea9c08f6b66929e09fc2f0"
+      "sha256": "b1e9771591bfb9e1e4b36cc112f55bd298738bc9ac8431c5611c121c41366b66"
     },
     {
       "path": "previews/08-tools.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "053a5f5b70dcebfee806e796ce4d444292ec6ccc013a361ede5b7d4f62fc7b5e"
+      "sha256": "553a38dfd2343fe890e0a51193e5dc9ef8953888165dfd97d7e0f7c3c0be2bb4"
     },
     {
       "path": "previews/09-agents.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "3cbf36d1ad3028070f8c6cc3e7c592f968ee79173307e31c02fa8afb4388d28c"
+      "sha256": "91a7af61cc237b79b4f227d36e6b92fa8fcc89299eb00cac4d9449a1b0a4fe5e"
     },
     {
       "path": "previews/10-evals-guardrails.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "636a676bd629d7064c3cb3f70ad4d783a612d4b33bcae3bb0e97141c85a43374"
+      "sha256": "e6b50eddf73a1a9c717831adc69f6ee633c6619c94f50ef10c243e34f8e684cb"
     },
     {
       "path": "previews/11-tradeoffs.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "fcc3f5d0a18005652653cb7de921326c2e1beff459dcb0508dca61d058d1b940"
+      "sha256": "a0d4d9defe3e24d39e0d14d8ec3b9ea31990f9a2b42267a8e6c891c411777fea"
     },
     {
       "path": "previews/12-next-steps.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "e1c1b31e441429971c5d48435ecc6e25cdac00909cbf9a0d58ca3fb3ebcd67db"
+      "sha256": "b637fbaa672c3dd323bc2b3311b3dbd09ec73bd68e7614a225f39ed857f3a857"
     },
     {
       "path": "llm-ai-agents-vocabulary.html",

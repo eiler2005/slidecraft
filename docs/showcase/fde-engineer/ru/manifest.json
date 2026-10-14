@@ -47,37 +47,37 @@
       "path": "previews/01-cover.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "c2d2a688e5669fea88aaae4f4f04b742a499c16c6efbca65af937e9452437555"
+      "sha256": "a6e03e9f8076595227bc9d9662843b82d332eb09575b2007ef9a69254bf7d9fb"
     },
     {
       "path": "previews/02-why-now.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "d42c7c7bea2484473d9f5c2678e75085e19561e654efbc6ab3bfefd6079f98c7"
+      "sha256": "7443cd57b5d537b0aeca6ef53970ed426a76e6acbbbad155a0292624a91fc603"
     },
     {
       "path": "previews/03-definition.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "8e85bd02852aa4219ae013367ec56855be109f4c928cf76a80018596f36ec01f"
+      "sha256": "983071c263de108a7e50d3b8f0b890a6954e96d67aaaf36cc8c20f1e1fc77f6b"
     },
     {
       "path": "previews/04-cycle.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "23ac1e2b0f4409b93b41142e87cf6a5ad9c3246c5094f37b87fb3a0b7a145719"
+      "sha256": "64d3c8dd018eb488609d1630913a210610c1d901705336e71aa3ad1ceca89073"
     },
     {
       "path": "previews/05-profile.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "27cdeca8a70960590f43a0b904cb8b3253ddd4e88575a9c87612bfcf180401d0"
+      "sha256": "48a13021be7e56ace6fc8871a632e202bb9ffd7a7355d564a2777e8a137c9053"
     },
     {
       "path": "previews/06-ask.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "053c781a104ee2bcb180f1e3923aaf6a242b239e920332cf373ec3398516753d"
+      "sha256": "07e0922a02d0c36edd9841d030aedf89482dfc0e897c87a645dbded4355641dd"
     },
     {
       "path": "fde-engineer-ru.html",

@@ -47,55 +47,55 @@
       "path": "previews/01-cover.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "9b1c36d788e8b43f7613aa4d1fdcf4ee4bccffe46c788614c486f8d1b03b9edf"
+      "sha256": "8a6168d208435503ad98d9fdb34b7fc7f1fb3a523e46b50f9fc8a4db5b0e588a"
     },
     {
       "path": "previews/02-why-now.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "ea1f6ab57e79b0dd9f480e4b74154ad4abe28682f3370d8df62343b5396f9295"
+      "sha256": "c699b96c6bbdec208ed6e42e83e8c04e189f390acdbb8061d3fccda93655d0f9"
     },
     {
       "path": "previews/03-value-chain.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "0ca53aa59788e64caa75968a0535c313b000d1deb3c44adf0d8a93f134c92a09"
+      "sha256": "3a75d28161784b49b187d62d3fc41405f05874438b037bd293688fa407218b75"
     },
     {
       "path": "previews/04-cycle.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "e24e74d2bf9f6604601f2aeeaff7fd362db47ec750ee5fdbbd8061630ccacaa3"
+      "sha256": "f6c5bbe7057856e37f9df7df8a07c6b319f799e4a80aa2a71381c8378ef1f0c2"
     },
     {
       "path": "previews/05-profile.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "c2c294bd635b4df731566c0008414753c54142dde0e5a98f953db1c2ffdedf81"
+      "sha256": "2e93a98babb1e0b833ce811d7fa227cd5519c0c9e20d440b006f9541319cf034"
     },
     {
       "path": "previews/06-organisation.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "ff02d4a6ef0c40b64f6e8f0f4700deaaab511351dddb08a888c26789fed24f0e"
+      "sha256": "fd81fcab4a7db91be5331bc2d7ca3efadcc65e45cbcb4a126bdf78a6ff7edc67"
     },
     {
       "path": "previews/07-pilot-plan.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "87be045d38d222eb9bbbd87e04a4e281006eb453904936808cd44f2e44f05e7a"
+      "sha256": "b1a33ce6634a745a1256e65341d3694cee0ea464053b2d68ff8f2aa23d36f4d3"
     },
     {
       "path": "previews/08-budget.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "0a0e2ab1a6b597ba9de4e56ffc35266d1e4d23d1b49573d69679691a3c30af92"
+      "sha256": "9f616cd4d2ce097091e89ad23af47da09fe496a97751502fccb10b36dc6a94a5"
     },
     {
       "path": "previews/09-ask.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "b2fcb4a781960c1f388223da7784839496f721fe99002af13d99c0a4a3e8a50f"
+      "sha256": "19d3e3f0e88d5f40c227cb11dca344a13d802a62e7ad8beaea6c029f329c0fc4"
     },
     {
       "path": "fde-engineer-en-v2.html",

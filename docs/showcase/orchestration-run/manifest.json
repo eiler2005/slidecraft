@@ -57,61 +57,61 @@
       "path": "previews/01-cover.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "1aecc390f5cc96a75b22fef199e3e68854d9f07806b462092f3bdafd9efc5cb8"
+      "sha256": "c181cab9ac54b3c419b589073dd86594a14f70c3de62c669e6f5df36e603e4cd"
     },
     {
       "path": "previews/02-problem.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "84da0e870cf20f2a3dfe05877fc9e3a96031a63948def3838f6f00bf4bfed0ce"
+      "sha256": "7ff05a6110cef81aa9535c9935f5b4946cc048b8d8e27dd4cf110fa4d61fc6df"
     },
     {
       "path": "previews/03-solution.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "ef5408bf2d9054d6aeaa14f95fb5795b46394708dd6cfd8790b648aa32f3d126"
+      "sha256": "08dfe93d540530de1577d98e5f93c2ed22d8126456e4560ba8b8f38776eaf2bc"
     },
     {
       "path": "previews/04-market.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "eb6d53229204b930a4e7376424baceeac41c9dc6daf50989efc26e0fc25d51e6"
+      "sha256": "48166559245c71586f6845f576a7c00e56d3031a866340b563e546b37d157ffb"
     },
     {
       "path": "previews/05-traction.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "240ab620f42fd786aa1b8eabf4385356e1185cf4e6eed1de52de13bb7eec7f90"
+      "sha256": "ed4e6500f83b4051f15f5fc2d66ec93935a752d3fccacae88533caddbd36cdce"
     },
     {
       "path": "previews/06-competition.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "a516b66ad3591acc904877cd4dc12cdcb6382f25e0eb479bb38e4d6a1adc9a67"
+      "sha256": "e8f6f83f3a4e770a715aabd26992b76c3b132a62b46f128ddffd233ada17e6de"
     },
     {
       "path": "previews/07-model.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "a805f2c63e9d77c429f0bf53460b3382a93e7527cb7ba809d9d04c3b86d55e67"
+      "sha256": "e24ed82d26064d8dd1b365c0146d60f010834d2a1cd574c4d439d60c290c0f4b"
     },
     {
       "path": "previews/08-team.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "4d2b21d4f9d30f62ec386aa30b48373c79de8ea8b9dbe0f492943e14522d63fb"
+      "sha256": "f963fc85c8803b3695e833689aa98c22d0f0f4f2828d25dd0fa070c93bfe06d8"
     },
     {
       "path": "previews/09-ask.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "25d1529cafc92abde86b7abb856a9d137612f38fb9747246288e43e8a81d56a9"
+      "sha256": "784718840b8661f64c19b023bc95e7315d71191e633e87c91d630a2ec8e8a2eb"
     },
     {
       "path": "previews/10-close.png",
       "kind": "png",
       "engine": "resvg",
-      "sha256": "799656ad573094ac0a53612b030237fd2494864391923b404d4b697d82d27383"
+      "sha256": "9fbb6fe4a3abb41376a29bc42ea3de7c46b632a244366f9981170a8ec5e54fa8"
     },
     {
       "path": "fabrikam-seed.html",

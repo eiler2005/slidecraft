@@ -4,6 +4,8 @@ node_modules/
 /slidecraft/
 /out/
 *.log
+# npm pack output
+*.tgz
 .DS_Store
 .env
 .env.*

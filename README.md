@@ -280,6 +280,17 @@ Shipped in 0.6:
 
 Next: live preview, table sync, presenter tools. See [ROADMAP.md](ROADMAP.md).
 
+## Privacy and network access
+
+SlideCraft runs on your machine, or in your assistant's sandbox. It has no account and no telemetry, and it sends your deck content nowhere. It goes online only for what you ask for:
+
+- `npx @eiler2005/slidecraft` downloads the package from npm;
+- **stock photos** (`imageQuery`, `slidecraft images --stock`) search and download from Openverse and Wikimedia Commons, or from Pexels and Pixabay when you set `PEXELS_API_KEY` / `PIXABAY_API_KEY`; the search words leave your machine;
+- **generated pictures** (`imagePrompt`, `slidecraft images`) send the prompt to an OpenAI-compatible API with your `OPENAI_API_KEY`;
+- `slidecraft theme from https://…` opens that page in your local Chrome to read its colours and fonts.
+
+`--dry-run` lists every prompt or search before anything is sent. Rendering uses your local PowerPoint, LibreOffice or Chrome. Your material stays in `slidecraft/`, which is git-ignored.
+
 ## Contributing
 
 Issues and PRs welcome — new layouts, themes and storylines especially. Start with [CONTRIBUTING.md](CONTRIBUTING.md); `npm run check` runs lint, types and 1,200+ tests, including pixel-hash visual regression of every layout.

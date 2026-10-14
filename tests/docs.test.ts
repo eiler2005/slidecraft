@@ -7,7 +7,18 @@ import { dirname, join, relative, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 const ROOT = resolve(import.meta.dirname, '..');
-const SKIP = new Set(['node_modules', '.git', '.output', 'dist', 'slidecraft', 'work']);
+// local-only folders (see .githooks/privacy-check.mjs): never part of the published docs
+const SKIP = new Set([
+  'node_modules',
+  '.git',
+  '.output',
+  'dist',
+  'slidecraft',
+  'work',
+  'out',
+  'private',
+  'clients',
+]);
 
 function markdownFiles(dir: string, out: string[] = []): string[] {
   for (const name of readdirSync(dir)) {

@@ -1,8 +1,9 @@
 /**
  * Renders the explainer GIF (scripts/launch/story.ts) from vector slides of the example decks:
  *   npx tsx scripts/launch/gif-story.ts
- * Writes docs/media/launch/slidecraft-story.gif and one key frame per scene to
- * docs/media/launch/gif-frames/. The "checks" scene uses the FDE v2 budget slide with its
+ * Writes docs/media/launch/slidecraft-story.gif (16:9, README), docs/media/launch/ph-story.gif
+ * (the same story at 5:3 for the Product Hunt gallery, 1270×760 there) and one key frame per
+ * scene to docs/media/launch/gif-frames/. The "checks" scene uses the FDE v2 budget slide with its
  * month-2 total set wrong, as in the review that caught it.
  */
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
@@ -13,7 +14,7 @@ import { checkDeck } from '../../src/build.ts';
 import { composeDeck } from '../../src/engine/compose.ts';
 import type { Scene } from '../../src/engine/scene.ts';
 import { encodePng } from '../../src/qa/raster.ts';
-import { encodeGif } from './gif.ts';
+import { encodeGif, type Frame } from './gif.ts';
 import { storyFrames } from './story.ts';
 
 const ROOT = join(import.meta.dirname, '..', '..');
@@ -76,6 +77,26 @@ const frames = await storyFrames({
 });
 mkdirSync(join(OUT, 'gif-frames'), { recursive: true });
 writeFileSync(join(OUT, 'slidecraft-story.gif'), encodeGif(frames));
+
+/** Grows a frame to `height` by repeating its top and bottom rows, so the bands match the scene. */
+function letterbox(f: Frame, height: number): Frame {
+  const row = f.width * 4;
+  const top = Math.floor((height - f.height) / 2);
+  const rgba = new Uint8Array(row * height);
+  const first = f.rgba.subarray(0, row);
+  const last = f.rgba.subarray(row * (f.height - 1), row * f.height);
+  for (let y = 0; y < height; y++) {
+    const src = y - top;
+    rgba.set(
+      src < 0 ? first : src >= f.height ? last : f.rgba.subarray(row * src, row * (src + 1)),
+      row * y,
+    );
+  }
+  return { ...f, height, rgba };
+}
+// Product Hunt shows gallery media at 1270×760 (5:3); a 16:9 GIF there loses its edges
+const ph = frames.map((f) => letterbox(f, Math.round((f.width * 3) / 5)));
+writeFileSync(join(OUT, 'ph-story.gif'), encodeGif(ph));
 // one key frame per scene: the last frame before each cross-fade
 const keys = frames.filter((f, i) => f.delay >= 2000 || i === frames.length - 1);
 const names = ['problem', 'prompt', 'storyline', 'cover', 'build', 'checks', 'editable', 'result'];

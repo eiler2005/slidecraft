@@ -69,18 +69,35 @@ async function main(example: string) {
   const qa = 'docs/showcase/fde-engineer/en-v2/visual-qa';
   const files: [string, string][] = [];
 
-  // 1 · hero
+  // 1 · hero: one slide large enough to read, its parts numbered. The page above it already shows
+  // the name and tagline, so the image makes a different point instead of repeating them.
+  const heroW = 820;
+  const heroY = 200;
+  const heroH = (heroW * 9) / 16;
+  // marker heights as fractions of the slide: action title, chart, source line
+  const parts: [number, string, string][] = [
+    [0.117, 'Action title', 'states the point, not the topic'],
+    [0.55, 'Native chart', 'edit the numbers, the bars move'],
+    [0.903, 'Every number sourced', 'totals checked before you see it'],
+  ];
+  const marker = (n: number, cx: number, cy: number) =>
+    `<circle cx="${cx}" cy="${cy}" r="17" fill="#3D7BE0" stroke="#FFFFFF" stroke-width="3"/>${text(String(n), cx, cy + 7, 19, '#FFFFFF', 'bold', 'middle')}`;
   files.push([
     'ph-1-hero.png',
     page(
-      `${text('SlideCraft', 70, 110, 30, '#8FB3E8', 'bold')}
-${text('Consulting-grade, editable PowerPoint', 70, 175, 46, '#FFFFFF', 'bold')}
-${text('decks from one prompt', 70, 232, 46, '#FFFFFF', 'bold')}
-${text('Tested in Codex and Claude Code · native text, charts and shapes · every number sourced', 70, 282, 20, '#C7D3E3')}
-${slide(png(`${v2}/01-cover.png`), 70, 340, 360)}
-${slide(png(`${v2}/03-value-chain.png`), 455, 340, 360)}
-${slide(png(`${v2}/07-pilot-plan.png`), 840, 340, 360)}
-${text('github.com/eiler2005/slidecraft', 70, 700, 20, '#8FB3E8')}`,
+      `${text('SlideCraft', 60, 62, 24, '#8FB3E8', 'bold')}
+${text('One prompt in your AI assistant,', 60, 116, 40, '#FFFFFF', 'bold')}
+${text('this slide out — editable in PowerPoint', 60, 166, 40, '#FFFFFF', 'bold')}
+${slide(png(`${v2}/07-pilot-plan.png`), 60, heroY, heroW)}
+${parts
+  .map(([f, a, b], i) => {
+    const y = heroY + f * heroH;
+    const ty = heroY + 40 + i * 150;
+    return `${marker(i + 1, 60, y)}${marker(i + 1, 935, ty - 8)}${text(a, 965, ty, 24, '#FFFFFF', 'bold')}${text(b, 965, ty + 30, 18, '#C7D3E3')}`;
+  })
+  .join('')}
+${text('ChatGPT · Claude · Codex  →  .pptx · PDF · HTML', 60, 720, 20, '#8FB3E8')}
+${text('github.com/eiler2005/slidecraft', 1210, 720, 20, '#8FB3E8', 'normal', 'end')}`,
       true,
     ),
   ]);

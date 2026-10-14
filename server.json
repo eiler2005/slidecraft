@@ -3,7 +3,7 @@
   "name": "io.github.eiler2005/slidecraft",
   "title": "SlideCraft",
   "description": "Builds editable PowerPoint, PDF and HTML decks from a deck spec, with fit, source and visual checks.",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "websiteUrl": "https://eiler2005.github.io/slidecraft/",
   "repository": {
     "url": "https://github.com/eiler2005/slidecraft",
@@ -13,7 +13,7 @@
     {
       "registryType": "npm",
       "identifier": "@eiler2005/slidecraft",
-      "version": "0.7.6",
+      "version": "0.7.7",
       "runtimeHint": "npx",
       "transport": {
         "type": "stdio"

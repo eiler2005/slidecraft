@@ -32,7 +32,7 @@ All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachang
 ### Added
 - **`SC-COVER-001`:** a cover without a visual is reported, so the cover choice cannot be skipped silently; the plain covers of five examples were chosen with `slidecraft covers`.
 - **Sharper stock photos without a key:** `--stock auto` (default) searches Openverse and **Wikimedia Commons** (free licences only, 2400 px renditions) and puts photos ≥ 1600 px first; `--stock wikimedia` on its own.
-- README shows the 30-second explainer GIF; its storyboard and a review prompt are in `docs/launch/`.
+- README shows the 30-second explainer GIF (`scripts/launch/gif-story.ts`).
 
 ## [0.7.1] — 2026-10-13
 
@@ -45,7 +45,7 @@ All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachang
 
 ### Added
 - `examples/llm-concepts` — a deck Codex made from the README prompt alone, unedited, with an independent review; the one-prompt path is verified with Codex and Claude Code.
-- Launch kit (`docs/launch/`), gallery images and the README GIF (`scripts/launch/`, own GIF encoder); example covers on the site open the HTML deck; Discussions and a feature-request template.
+- Gallery images and the README GIF (`scripts/launch/`, own GIF encoder); example covers on the site open the HTML deck; Discussions and a feature-request template.
 
 ## [0.7.0] — 2026-10-12
 

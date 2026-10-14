@@ -2,6 +2,15 @@
 
 All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.7.6] — 2026-10-14
+
+### Added
+- **Listed in the official MCP Registry** as `io.github.eiler2005/slidecraft`: `server.json` (stdio, `npx @eiler2005/slidecraft mcp`) and `mcpName` in `package.json`; `glama.json` names the maintainer for Glama.
+- **README: "Privacy and network access"** — no account, no telemetry; what goes online and when (npm, stock photos, generated pictures, a theme read from a website), and `--dry-run` to see every prompt or search before it is sent.
+
+### Fixed
+- The docs test skips local-only folders (`private/`, `out/`, `clients/`), as the privacy hook does.
+
 ## [0.7.5] — 2026-10-14
 
 Found in a full run of the one prompt in ChatGPT agent mode (Linux sandbox, no PowerPoint).

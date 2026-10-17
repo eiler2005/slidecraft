@@ -82,7 +82,7 @@
     "esbuild": "0.28.2",
     "fontkit": "2.0.4",
     "jszip": "3.10.2",
-    "pdfjs-dist": "4.10.38",
+    "pdfjs-dist": "6.4.299",
     "pdfkit": "0.20.2",
     "pptxgenjs": "4.0.1",
     "tsx": "4.23.15",

@@ -219642,7 +219642,8 @@ var TAGLINE = "Editable PowerPoint decks from one prompt";
 var SUMMARY = "Paste one prompt into ChatGPT, Claude or Codex and get an editable PowerPoint \u2014 action titles, sourced numbers and a review before hand-off. Not a picture of slides.";
 var FEATURED = ["fde-engineer-en-v2", "llm-concepts", "slidecraft-overview"];
 var MEDIA = [
-  ["docs/media/launch/slidecraft-story.gif", "slidecraft-story.gif"],
+  ["docs/media/launch/slidecraft-launch.mp4", "slidecraft-launch.mp4"],
+  ["docs/media/launch/slidecraft-launch-poster.png", "slidecraft-launch-poster.png"],
   ["docs/media/launch/social-preview.png", "og.png"],
   ["docs/media/launch/icon-240.png", "icon.png"]
 ];
@@ -219749,7 +219750,9 @@ header{padding:56px 0 24px}h1{font-size:clamp(28px,5vw,48px);line-height:1.1;mar
 nav{display:flex;gap:16px;flex-wrap:wrap;margin:16px 0}h2{margin:56px 0 8px;font-size:26px}h2+p{color:var(--muted);margin-top:0}
 .hero{width:100%;border-radius:10px;border:1px solid var(--rule)}
 .cta{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0 28px}.btn{display:inline-block;padding:10px 18px;border-radius:8px;border:1px solid var(--accent);font-weight:600;text-decoration:none}
-.btn.primary{background:var(--accent);color:var(--bg)}.gif{width:100%;height:auto;display:block;border-radius:10px;border:1px solid var(--rule)}
+.btn.primary{background:var(--accent);color:var(--bg)}
+.demo{scroll-margin-top:24px}.demo video{width:100%;height:auto;display:block;aspect-ratio:16/9;background:#0b1f3a;border-radius:10px;border:1px solid var(--rule)}
+.demo figcaption{display:flex;gap:8px 16px;flex-wrap:wrap;font-size:14px;padding-top:10px}
 .prompt{position:relative;background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px 16px 12px}.prompt pre{margin:0;white-space:pre-wrap;font:14px/1.5 ui-monospace,Menlo,Consolas,monospace;color:var(--ink)}
 .prompt button{position:absolute;top:10px;right:10px;font:600 13px/1 -apple-system,"Segoe UI",Arial,sans-serif;padding:8px 12px;border-radius:6px;border:1px solid var(--accent);background:var(--accent);color:var(--bg);cursor:pointer}
 .points{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:24px 0 0;padding:0;list-style:none}.points li{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:14px 16px}.points b{display:block;margin-bottom:4px}
@@ -219763,10 +219766,13 @@ figcaption{font-size:13px;color:var(--muted);padding-top:6px}figcaption b{color:
 footer{color:var(--muted);font-size:13px;border-top:1px solid var(--rule);margin-top:64px;padding-top:16px}
 code{font-size:13px}
 </style></head><body><main>
-<header><nav><a href="#start">One prompt</a><a href="#examples">Examples</a><a href="#storylines">Storylines \xD7 themes</a><a href="#layouts">Layouts</a><a href="${REPO}/tree/main/docs">Documentation</a><a href="${REPO}">GitHub</a></nav>
+<header><nav><a href="#start">One prompt</a><a href="#demo">Watch demo</a><a href="#examples">Examples</a><a href="#storylines">Storylines \xD7 themes</a><a href="#layouts">Layouts</a><a href="${REPO}/tree/main/docs">Documentation</a><a href="${REPO}">GitHub</a></nav>
 <h1>SlideCraft \u2014 ${esc5(TAGLINE)}</h1><p>${esc5(SUMMARY)}</p>
 <div class="cta"><a class="btn primary" href="#start">Copy the prompt</a><a class="btn" href="#examples">See example decks</a><a class="btn" href="${REPO}">GitHub</a></div>
-<img class="gif" src="slidecraft-story.gif" width="1280" height="720" alt="SlideCraft in 30 seconds: one prompt, the action-title chain, cover options, the built deck, a wrong total caught, and the editable PowerPoint"></header>
+<figure class="demo" id="demo"><video controls playsinline preload="none" width="1920" height="1080" poster="slidecraft-launch-poster.png" aria-label="SlideCraft demo: editable PowerPoint decks from one prompt">
+<source src="slidecraft-launch.mp4" type="video/mp4">
+<a href="slidecraft-launch.mp4">Watch or download the SlideCraft demo (MP4)</a>.
+</video><figcaption><span>SlideCraft in 65 seconds \xB7 English audio and on-screen captions</span><a href="slidecraft-launch.mp4" download>Download MP4</a><a href="https://www.youtube.com/watch?v=vNpDca4648Q">Watch on YouTube</a></figcaption></figure></header>
 <h2 id="start">Start with one prompt</h2><p>No install, no YAML. Paste this into ChatGPT (agent mode), Codex, Claude or Claude Code \u2014 any assistant that can run code and open a link \u2014 and fill in the brackets.</p>
 <div class="prompt"><button type="button" id="copy">Copy</button><pre id="prompt">${esc5(d.prompt)}</pre></div>
 <p class="note">The assistant runs <code>npx @eiler2005/slidecraft</code> on its side, shows you the titles and covers to approve, then hands you the .pptx and a PDF. Tested with Codex and Claude Code. For repeat work, <a href="${REPO}#install">install it into your assistant</a>.</p>

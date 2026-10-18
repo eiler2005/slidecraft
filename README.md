@@ -1,4 +1,6 @@
-<p align="center"><img src="docs/media/launch/slidecraft-story.gif" alt="SlideCraft in 30 seconds: the problem with AI slides, one prompt, the action-title chain, cover options, the built deck, a total that does not add up being caught, and the editable PowerPoint with native chart and sources in the notes" width="100%"></p>
+<p align="center"><a href="https://eiler2005.github.io/slidecraft/#demo"><img src="docs/media/launch/slidecraft-launch-poster.png" alt="Watch the SlideCraft demo: editable PowerPoint decks from one prompt" width="100%"></a></p>
+
+<p align="center"><b><a href="https://eiler2005.github.io/slidecraft/#demo">▶ Watch the 65-second demo</a></b> · <a href="https://www.youtube.com/watch?v=vNpDca4648Q">YouTube</a> · <a href="https://eiler2005.github.io/slidecraft/slidecraft-launch.mp4">MP4</a></p>
 
 <p align="center">
   <a href="https://github.com/eiler2005/slidecraft/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/eiler2005/slidecraft/ci.yml?branch=main&label=CI&style=flat&labelColor=0B1F3A&color=1F5FBF"></a>

@@ -1,4 +1,4 @@
-<p align="center"><a href="https://www.youtube.com/watch?v=vNpDca4648Q"><img src="docs/media/launch/slidecraft-launch-poster.png" alt="Watch the SlideCraft demo: editable PowerPoint decks from one prompt" width="100%"></a></p>
+<p align="center"><a href="https://www.youtube.com/watch?v=vNpDca4648Q"><img src="https://raw.githubusercontent.com/eiler2005/slidecraft/46b53a13d7960afdcd261f6b1d77755f213388d9/docs/media/launch/slidecraft-launch-poster.png" alt="Watch the SlideCraft demo: editable PowerPoint decks from one prompt" width="100%"></a></p>
 
 <p align="center"><b><a href="https://www.youtube.com/watch?v=vNpDca4648Q">▶ Watch the 65-second demo</a></b> · <a href="https://github.com/eiler2005/Storygro/releases/download/slidecraft-launch-2026-10-18/slidecraft-launch.mp4">MP4</a> · made with <a href="https://github.com/eiler2005/Storygro">Storygro</a></p>
 

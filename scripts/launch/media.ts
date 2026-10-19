@@ -1,7 +1,8 @@
 /**
  * Launch media: Product Hunt gallery images (1270×760), the social preview (1280×640, GitHub card
  * and og:image) and the icon (240×240), composed from
- * real renders in docs/showcase. The README GIF comes from scripts/launch/gif-story.ts. Run after the example decks are built:
+ * real renders in docs/showcase. The launch film and the old explainer GIF are made with Storygro
+ * (github.com/eiler2005/Storygro, examples/slidecraft-launch). Run after the example decks are built:
  *   npx tsx scripts/launch/media.ts
  */
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -192,7 +193,6 @@ ${text('github.com/eiler2005/slidecraft', 64, 600, 20, '#8FB3E8')}`,
   // the Claude plugin directory listing icon: a square PNG, 512–2048 px, read from this path
   writeFileSync(join(ROOT, '.claude-plugin/icon.png'), await rasterize(icon, 1024));
 
-  // the explainer GIF is scripts/launch/gif-story.ts
   console.log(`✔ ${files.length} gallery images, the social preview and the icon`);
 }
 

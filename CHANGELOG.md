@@ -4,6 +4,9 @@ All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachang
 
 ## [Unreleased]
 
+### Removed
+- **Video tooling moved to [Storygro](https://github.com/eiler2005/Storygro).** The untracked `reelcraft/` prototype, the explainer-GIF generator (`scripts/launch/story.ts`, `gif-story.ts`, `gif.ts`, `npm run launch:gif`), the GIFs and their key frames, and the 23 MB launch MP4 left this repository; Storygro keeps their source and history (`examples/slidecraft-launch`, `docs/history/slidecraft-launch.md`). The README and the site show the poster and link to the film on YouTube; the MP4 is a Storygro release asset. Future SlideCraft videos are made with Storygro.
+
 ### Added
 - **Claude plugin directory listing:** `.claude-plugin/plugin.json` carries `displayName` (SlideCraft), `version`, the site as `homepage`, and links to docs, support (issues), privacy (README "Privacy and network access") and terms (LICENSE); `.claude-plugin/icon.png` is a 1024 px icon rendered by `scripts/launch/media.ts`. Tests keep the plugin and MCP Registry versions equal to `package.json`.
 - README: the MCP server is listed in the official MCP Registry as `io.github.eiler2005/slidecraft`.

@@ -71,7 +71,7 @@
     "comparison": "tsx scripts/comparison.ts"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.15",
+    "@biomejs/biome": "2.6.2",
     "@resvg/resvg-wasm": "2.6.2",
     "@tabler/icons": "3.49.0",
     "@types/fontkit": "2.0.9",
@@ -86,8 +86,8 @@
     "pptxgenjs": "4.0.1",
     "tsx": "4.23.15",
     "typescript": "7.0.2",
-    "vitest": "5.0.3",
+    "vitest": "5.0.5",
     "yaml": "2.9.1",
-    "zod": "4.6.5"
+    "zod": "4.6.7"
   }
 }

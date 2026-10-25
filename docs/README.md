@@ -39,6 +39,7 @@
 | See every stage's hand-off and a full run in all formats | [Orchestration templates and example run](../examples/orchestration/README.md) |
 | Re-measure PowerPoint and regenerate the rendering rules | [Calibrate rendering](how-to/calibrate-rendering.md) |
 | Something is wrong | [Troubleshooting](how-to/troubleshooting.md) · [FAQ](how-to/faq.md) |
+| Publish a new version as maintainer | [Release guide](how-to/release.md) |
 
 ## Reference
 

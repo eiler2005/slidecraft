@@ -1,7 +1,7 @@
 {
   "name": "@eiler2005/slidecraft",
   "mcpName": "io.github.eiler2005/slidecraft",
-  "version": "0.7.8",
+  "version": "0.8.0",
   "description": "Describe the goal. Pick a look. Ship a partner-ready deck. A Claude Code plugin and CLI that turns a brief into editable PPTX, vector PDF and HTML decks.",
   "type": "module",
   "license": "PolyForm-Shield-1.0.0",
@@ -59,6 +59,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "biome check .",
     "format": "biome check --write .",
+    "version:sync": "node scripts/version.mjs",
     "test": "vitest run",
     "gen": "tsx src/cli/main.ts gen",
     "check": "npm run lint && npm run typecheck && npm run test",

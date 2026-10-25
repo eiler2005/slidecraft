@@ -44,6 +44,8 @@ Biome checks source code, JSON and supported syntax. Markdown and YAML formattin
 
 ## Pull requests
 
+Maintainer releases follow the [release guide](docs/how-to/release.md): synchronize versions, regenerate outputs, verify the package, then publish through the tagged GitHub workflow.
+
 - One topic per PR; describe the user-visible change.
 - Fill the checklist in the PR template.
 - Commits: conventional style (`feat(layouts): …`, `fix(engine): …`, `docs: …`).

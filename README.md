@@ -87,7 +87,7 @@ This deck explains SlideCraft — and SlideCraft made it from [one `deck.yaml`](
 
 <p align="center"><b><a href="docs/showcase/slidecraft-overview.pdf">PDF</a></b> · <b><a href="docs/showcase/slidecraft-overview.pptx">PowerPoint</a></b> · <a href="docs/showcase/slidecraft-overview-onepager.pdf">one-page summary</a> · <a href="docs/examples.md">all examples</a></p>
 
-New here? [**Start here**](docs/start-here.md) — your first deck in ten minutes · [**What you can do**](docs/features.md) — capabilities by job to be done · [**Example library**](docs/examples.md) — eleven finished decks to copy
+New here? [**Start here**](docs/start-here.md) — your first deck in ten minutes · [**What you can do**](docs/features.md) — capabilities by job to be done · [**Example library**](docs/examples.md) — thirteen finished decks to copy
 
 **See the results yourself:** a full run in every format with its review report in [`docs/showcase/orchestration-run/`](docs/showcase/orchestration-run/) · one deck in English and Russian made through the whole workflow in [`docs/showcase/fde-engineer/`](docs/showcase/fde-engineer/) ([example](examples/fde-engineer-en/README.md)) · originals next to SlideCraft's rebuilds and HTML, slide by slide, with `npm run comparison` → `comparison/index.html` · [where to find what](docs/how-to/see-results.md)
 
@@ -167,7 +167,7 @@ A template is **a storyline (the shape of the argument for a task) × a theme (t
 
 Storyline is the task, theme is the look: **14 storylines × 7 themes**, independently selectable. Within each slide, route the message through `slidecraft exhibits`, reuse native library components with `slidecraft components`, and combine them using `layout: composition`. Shared design elements and content feed HTML and editable PowerPoint engines through one Scene IR. [Constructor guide](docs/how-to/compose-components.md) · [Architecture diagrams and verification limits](docs/explanation/architecture.md).
 
-**Native diagrams (development branch).** Heatmaps, treemaps, Sankey flows, architecture changes, swimlanes, journeys, sequence/state diagrams and data models use editable PowerPoint shapes and text. Six additional chart variants cover paired comparisons, ranks and distributions. Import a bounded Mermaid, draw.io or Excalidraw diagram with `node dist/slidecraft.mjs import-diagram input.mmd -o imported-diagram`; review its loss ledger before using it. These additions are in the repository and are not yet an npm release. [Diagram guide](docs/how-to/create-diagrams.md) · [Light example](examples/diagram-gallery/deck.yaml) · [Dark example](examples/diagram-gallery-midnight/deck.yaml) · [Research and implementation report](docs/research/diagram-design-implementation-2026-10.md).
+**Native diagrams (0.8.0).** Heatmaps, treemaps, Sankey flows, architecture changes, swimlanes, journeys, sequence/state diagrams and data models use editable PowerPoint shapes and text. Six additional chart variants cover paired comparisons, ranks and distributions. Import a bounded Mermaid, draw.io or Excalidraw diagram with `npx @eiler2005/slidecraft import-diagram input.mmd -o imported-diagram`; review its loss ledger before using it. [Diagram guide](docs/how-to/create-diagrams.md) · [Light example](examples/diagram-gallery/deck.yaml) · [Dark example](examples/diagram-gallery-midnight/deck.yaml) · [Research and implementation report](docs/research/diagram-design-implementation-2026-10.md).
 
 Also included: **business case**, **product overview**, **case study**, **project kickoff**, **post-mortem**, **training / workshop**, **sales / customer QBR**, **investment memo**. Bring your own outline and SlideCraft maps it onto layouts.
 
@@ -246,7 +246,7 @@ Methodology: [writing standard](library/references/writing-standard.md) · [visu
 
 ## Layout library
 
-46 layouts in six groups.
+73 layouts, including 27 native diagram layouts.
 
 | Group | Layouts |
 |---|---|
@@ -256,10 +256,19 @@ Methodology: [writing standard](library/references/writing-standard.md) · [visu
 | Decide | `options-comparison` (text, Harvey-ball rating, up to 5 options) · `matrix-2x2` · `swot` · `five-forces` · `pestel` · `business-model-canvas` · `value-chain` · `seven-s` (McKinsey 7S) · `issue-tree` (issue, driver) · `maturity-model` (grid, staircase) · `coverage-map` · `architecture` (zones + register) · `evidence-chain` · `risk-matrix` |
 | Sequence | `process-steps` (chevrons, numbered) · `timeline` (milestones, gantt) · `gate-matrix` · `process-compare` (current vs proposed) · `cadence` (role calendar) · `callout` (numbered callouts on a screenshot) |
 | People · Close | `team-cards` · `org-chart` · `raci` · `next-steps` (decision, actions) |
+| Native diagrams | `heatmap` · `treemap` · `sankey` · `fishbone` · `architecture-delta` · graph, process, journey, data-model and spatial diagrams — [all diagram contracts](docs/how-to/create-diagrams.md) |
+
+Additional chart variants: `chart-takeaway` supports dumbbell, slopegraph, bump, ridgeline and streamgraph; `bubble-chart` supports beeswarm.
 
 Contracts, limits and thumbnails: [layouts reference](docs/reference/layouts.gen.md). Add your own: [add a layout](docs/how-to/add-layout.md).
 
 ## Roadmap
+
+Shipped in 0.8:
+- **native diagram library:** 27 new layouts and six analytical variants, bringing the library to 73 layouts;
+- **diagram import:** bounded Mermaid, draw.io and Excalidraw subsets with a loss ledger;
+- **presentation readability:** larger type through `readability: present`;
+- **PDF compatibility:** PDF.js 6 text and theme extraction; Node ≥ 22.13.
 
 Shipped in 0.5:
 - **your numbers, once:** `facts:` with `{{id}}`, and charts and tables read straight from Excel and CSV;
@@ -272,7 +281,7 @@ Shipped in 0.5:
 Shipped in 0.7:
 - **pictures and icons:** licensed stock photos (Openverse, Pexels, Pixabay) with credits on the slide, in the notes and the manifest; 114 editable icons;
 - **a theme from a sample:** colours, fonts and margins from a PDF, a screenshot or a website;
-- **more frameworks:** value chain, McKinsey 7S, combo bar + line chart (46 layouts now);
+- **more frameworks:** value chain, McKinsey 7S, combo bar + line chart (46 layouts at that release);
 - **numbers that add up:** totals, periods and units checked across the deck;
 - **covers you choose:** 2–3 cover options compared before building; a cover without a visual is flagged;
 - **sharp, well-cropped photos:** Wikimedia Commons and Openverse without a key, download sizes measured, `imageFocus` keeps the subject in view;
@@ -299,7 +308,7 @@ SlideCraft runs on your machine, or in your assistant's sandbox. It has no accou
 
 ## Contributing
 
-Issues and PRs welcome — new layouts, themes and storylines especially. Start with [CONTRIBUTING.md](CONTRIBUTING.md); `npm run check` runs lint, types and 1,200+ tests, including pixel-hash visual regression of every layout.
+Issues and PRs welcome — new layouts, themes and storylines especially. Start with [CONTRIBUTING.md](CONTRIBUTING.md); `npm run check` runs lint, types and 1,600+ tests, including pixel-hash visual regression of every layout. [Release guide](docs/how-to/release.md).
 
 ## License
 

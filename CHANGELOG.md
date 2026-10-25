@@ -4,6 +4,8 @@ All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachang
 
 ## [Unreleased]
 
+## [0.8.0] — 2026-10-25
+
 ### Changed
 - Minimum Node.js version is now 22.13, matching PDF.js 6.4.299. Rebuilds include the updated PDF reader in the standalone bundle.
 

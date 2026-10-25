@@ -70,6 +70,6 @@ Grouped by what you are trying to get done. Each item says what it means for you
 | Aider and other assistants | The same workflow via `AGENTS.md` |
 | No assistant | Write `deck.yaml` yourself and build it |
 
-The diagram additions and `readability` setting described here are available in the development repository; they have not yet been published to npm. New diagrams export as editable shapes and text, rather than Office charts with an embedded data sheet. Office rendering remains subject to actual-render verification; [current evidence and limits](research/diagram-design-implementation-2026-10.md).
+The diagram additions and `readability` setting are part of SlideCraft 0.8.0. New diagrams export as editable shapes and text, rather than Office charts with an embedded data sheet. Office rendering remains subject to actual-render verification; [current evidence and limits](research/diagram-design-implementation-2026-10.md).
 
 Source-available under the PolyForm Shield licence: free to use, also at work and for clients; not to be resold or offered as a competing product. SlideCraft runs on your machine and sends nothing anywhere; your AI assistant sees what you give it.

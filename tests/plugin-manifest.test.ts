@@ -9,6 +9,14 @@ describe('Claude plugin manifest', () => {
     expect(json('.claude-plugin/plugin.json').version).toBe(json('package.json').version);
   });
 
+  it('keeps the npm lockfile and generated catalogue at the package version', () => {
+    const version = json('package.json').version;
+    const lock = json('package-lock.json');
+    expect(lock.version).toBe(version);
+    expect(lock.packages[''].version).toBe(version);
+    expect(json('library/catalog.json').version).toBe(version);
+  });
+
   it('ships a square PNG icon of 512–2048 px under 2 MB', () => {
     const png = readFileSync('.claude-plugin/icon.png');
     expect(png.subarray(1, 4).toString('latin1')).toBe('PNG');

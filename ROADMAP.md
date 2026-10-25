@@ -70,7 +70,15 @@ Your material in, your edits back, every AI app.
 - ✅ **Theme from a sample** — PDF, screenshot or website (0.7).
 - ✅ **Value chain, McKinsey 7S, combo bar + line** (0.7) and **totals, periods and units checks** (0.7).
 
-## v0.8 — next
+## v0.8 — native diagrams
+
+- 27 new native diagram layouts and six analytical variants, with quantitative geometry and graph checks.
+- Bounded Mermaid, draw.io and Excalidraw import, with a loss ledger.
+- Report and presentation readability modes; synthetic light and dark galleries.
+- PDF.js 6 compatibility, synchronized release metadata and minimum Node 22.13 smoke coverage.
+- Actual Office fidelity acceptance for the new galleries remains open; [evidence and limitations](docs/research/diagram-design-implementation-2026-10.md).
+
+## Next — planned
 
 | Item | Why | Notes |
 |---|---|---|

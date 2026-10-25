@@ -1,6 +1,6 @@
 # Create native PowerPoint diagrams
 
-> **Audience:** deck authors and agents · **Last reviewed:** 2026-10-25 · **Availability:** repository development version; see [Unreleased](../../CHANGELOG.md)
+> **Audience:** deck authors and agents · **Last reviewed:** 2026-10-25 · **Availability:** SlideCraft 0.8.0; see [changelog](../../CHANGELOG.md)
 
 Choose a diagram from the relationship in your action title. Run `slidecraft layouts <id> --json` for its actual schema, limits and examples. Every layout below composes native Scene objects: text, rectangles, lines, polygons and editable cubic freeforms. Advanced chart variants use editable shapes rather than an embedded Office chart worksheet.
 

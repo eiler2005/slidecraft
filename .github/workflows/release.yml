@@ -1,0 +1,53 @@
+name: npm release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag, for example v0.8.0
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.tag || github.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - run: npm --version
+      - run: npm ci
+      - name: Verify release identity
+        run: node scripts/verify-release.mjs
+      - name: Check generated files and showcase
+        run: |
+          npm run gen
+          npm run showcase
+          git diff --exit-code
+      - name: Check sources, rebuild and verify committed bundle
+        run: npm run prepublishOnly
+      - name: Check standalone PDF reader
+        run: node scripts/smoke-pdf-reader.mjs
+      - name: Publish with npm trusted publishing
+        run: npm publish --access public --provenance --ignore-scripts

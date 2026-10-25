@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../schemas/deck.v1.json
-# The deck about SlideCraft, made with SlideCraft. Every number is a fact about the 0.4 release.
+# The deck about SlideCraft, made with SlideCraft. Product counts describe the 0.8 release.
 schemaVersion: 1
 id: slidecraft-overview
 title: SlideCraft turns a goal into a partner-ready deck you can edit
@@ -13,7 +13,7 @@ date: "2026"
 footer: SlideCraft · github.com/eiler2005/slidecraft
 sources:
   - id: release
-    title: SlideCraft 0.4 release notes and test suite
+    title: SlideCraft 0.8 release notes and layout registry
     date: Oct 2026
     url: https://github.com/eiler2005/slidecraft/blob/main/CHANGELOG.md
   - id: calibration
@@ -125,13 +125,13 @@ slides:
     tracker: What you get
     title: One brief gives you a complete kit, not just slides
     tiles:
-      - value: "32"
+      - value: "73"
         label: Slide layouts
-        note: From executive summaries to waterfalls, risk matrices and org charts
+        note: From executive summaries to charts, architecture and editable diagrams
       - value: "14"
         label: Storylines
         note: Strategy, board update, proposal, pitch, story talk and more
-      - value: "6"
+      - value: "7"
         label: Themes
         note: Plus your own brand, imported from a PowerPoint template
       - value: "6"

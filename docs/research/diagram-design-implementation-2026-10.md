@@ -1,6 +1,6 @@
 # Реализация диаграмм SlideCraft
 
-> 25 октября 2026 · Development repository, без npm-релиза · [Research](diagram-design-review-2026-10.md) · [Исходный план](diagram-design-adoption-plan-2026-10.md) · [Дизайн](diagram-design-visual-spec-2026-10.md)
+> 25 октября 2026 · Релиз SlideCraft 0.8.0 · [Research](diagram-design-review-2026-10.md) · [Исходный план](diagram-design-adoption-plan-2026-10.md) · [Дизайн](diagram-design-visual-spec-2026-10.md)
 
 ## Что добавлено
 

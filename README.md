@@ -8,7 +8,7 @@
   <a href="#license"><img alt="PolyForm Shield license" src="https://img.shields.io/badge/license-PolyForm_Shield_1.0.0-1F5FBF?style=flat&labelColor=0B1F3A"></a>
   <a href="#install"><img alt="Works with Claude Code, Codex and any LLM agent" src="https://img.shields.io/badge/agents-Claude_Code_·_Codex_·_any_LLM-1F5FBF?style=flat&labelColor=0B1F3A"></a>
   <a href="https://eiler2005.github.io/slidecraft/"><img alt="Gallery site" src="https://img.shields.io/badge/gallery-GitHub_Pages-1F5FBF?style=flat&labelColor=0B1F3A"></a>
-  <img alt="Node 22+" src="https://img.shields.io/badge/node-%E2%89%A522.12-1F5FBF?style=flat&labelColor=0B1F3A">
+  <img alt="Node 22+" src="https://img.shields.io/badge/node-%E2%89%A522.13-1F5FBF?style=flat&labelColor=0B1F3A">
 </p>
 
 <p align="center">
@@ -199,7 +199,7 @@ One spec, several engines — you choose, SlideCraft recommends based on what yo
 
 ## Install
 
-Pick your agent. All of them drive the same CLI, the committed bundle `dist/slidecraft.mjs` (Node ≥ 22.12, no `npm install`).
+Pick your agent. All of them drive the same CLI, the committed bundle `dist/slidecraft.mjs` (Node ≥ 22.13, no `npm install`).
 
 | You use | Set up | Then |
 |---|---|---|

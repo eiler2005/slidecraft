@@ -1,6 +1,6 @@
 # Build a deck with the CLI only
 
-> **Audience:** people who prefer writing YAML, CI pipelines, other agents · **Prerequisites:** Node ≥ 22.12, a clone of the repo · **Last reviewed:** 2026-10-10
+> **Audience:** people who prefer writing YAML, CI pipelines, other agents · **Prerequisites:** Node ≥ 22.13, a clone of the repo · **Last reviewed:** 2026-10-10
 
 ```sh
 git clone https://github.com/eiler2005/slidecraft && cd slidecraft

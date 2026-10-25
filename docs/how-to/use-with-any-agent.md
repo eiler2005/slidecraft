@@ -1,6 +1,6 @@
 # Use SlideCraft with any AI agent
 
-> **Audience:** people using Cursor, Gemini CLI, Aider, Copilot agents, Windsurf, Continue, or their own LLM scripts · **Prerequisites:** Node ≥ 22.12 and a clone of the repo · **Last reviewed:** 2026-10-11
+> **Audience:** people using Cursor, Gemini CLI, Aider, Copilot agents, Windsurf, Continue, or their own LLM scripts · **Prerequisites:** Node ≥ 22.13 and a clone of the repo · **Last reviewed:** 2026-10-11
 
 SlideCraft is a CLI with machine-readable output. An agent that can run shell commands and read files can drive the whole workflow. Claude Code and Codex get packaged skills on top of this; everything else uses [`AGENTS.md`](../../AGENTS.md).
 

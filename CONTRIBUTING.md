@@ -40,6 +40,8 @@ Implement `Engine` (`src/backends/types.ts`), register it in `src/backends/extra
 ### Docs
 Docs follow [Diátaxis](docs/adr/0007-docs-diataxis-and-generated-reference.md): tutorials, how-to, reference, explanation. Every page starts with audience · prerequisites · last reviewed.
 
+Biome checks source code, JSON and supported syntax. Markdown and YAML formatting are explicitly disabled: generated references, calibration reports and authored deck templates retain their own formatting. New YAML examples must still parse correctly; quote values containing `: `.
+
 ## Pull requests
 
 - One topic per PR; describe the user-visible change.

@@ -8,6 +8,7 @@ import type { OutputKind } from '../backends/types.ts';
 import { buildDeck, checkDeck } from '../build.ts';
 import { isComposable } from '../layouts/composition.ts';
 import { LAYOUTS } from '../layouts/index.ts';
+import { importDiagram } from '../library/diagram-import.ts';
 import { exhibitRoutes } from '../library/exhibits.ts';
 import { loadStorylines, loadThemes } from '../library/load.ts';
 import { rebuildPptx } from '../library/pptx-rebuild.ts';
@@ -31,6 +32,7 @@ import {
 
 function layoutContract(l: (typeof LAYOUTS)[number]) {
   return {
+    tags: l.tags ?? [],
     id: l.id,
     name: l.name,
     group: l.group,
@@ -95,6 +97,19 @@ export function slugFrom(text: string): string {
 }
 
 export function registerCommands(program: Command): void {
+  program
+    .command('import-diagram')
+    .description(
+      'Redesign a bounded Mermaid, draw.io or Excalidraw diagram as native editable slide objects, with an import ledger',
+    )
+    .argument('<file>', 'source diagram file')
+    .option('-o, --out <dir>', 'new deck folder', 'slidecraft/imported-diagram')
+    .option('--json', 'machine-readable output')
+    .action((file: string, o: { out: string; json?: boolean }) => {
+      const result = importDiagram(file, o.out);
+      if (wantsJson(o.json)) printJson(result);
+      else console.log(`Created ${result.deck}\nImport ledger: ${result.ledger}`);
+    });
   program
     .command('rebuild')
     .description(

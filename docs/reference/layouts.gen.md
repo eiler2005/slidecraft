@@ -21,9 +21,36 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 | [`native-canvas`](#native-canvas) | message | `body` | Use for bespoke compositions that must remain editable in PowerPoint: every rectangle, line and text block is a native PPTX object. |
 | [`kpi-tiles`](#kpi-tiles) | numbers | `tiles`, `strip` | Use for 2–4 headline numbers that prove the title at a glance, each with its label, change and context. |
 | [`evidence-panorama`](#evidence-panorama) | numbers | `metric-and-cards` | Connect one sourced headline metric to four parallel models, implications or use cases; equal cards express categories, not relative magnitude. |
-| [`chart-takeaway`](#chart-takeaway) | numbers | `bar`, `column`, `stacked`, `line`, `combo` | Use for one chart that proves the title, with the interpretation in a side panel. |
+| [`chart-takeaway`](#chart-takeaway) | numbers | `bar`, `column`, `stacked`, `line`, `combo`, `dumbbell`, `slopegraph`, `bump`, `ridgeline`, `streamgraph` | Use for one chart that proves the title, with the interpretation in a side panel. |
+| [`heatmap`](#heatmap) | numbers | `diagram` | Use for a numeric row-by-column pattern on one explicit scale; missing observations remain distinct from zero. |
+| [`treemap`](#treemap) | numbers | `diagram` | Use for comparing parts of one positive total by area, with deterministic squarified geometry. |
+| [`fishbone`](#fishbone) | decide | `diagram` | Use for investigating grouped causes of one observed effect, with explicit evidence status. |
+| [`sankey`](#sankey) | numbers | `diagram` | Use for a conserved quantity that splits and merges across three stages on one shared scale. |
+| [`architecture-delta`](#architecture-delta) | decide | `diagram` | Use for two synchronized system topologies with stable identities and a computed change ledger. |
+| [`swimlane`](#swimlane) | sequence | `diagram` | Use for a process whose steps cross named owners through explicit handoffs. |
+| [`dependency-graph`](#dependency-graph) | decide | `diagram` | Use for directed dependencies with shared parents and explicitly represented cycles. |
+| [`flowchart`](#flowchart) | sequence | `diagram` | Use for decision logic with labelled branches, merges and bounded return paths. |
+| [`state-machine`](#state-machine) | sequence | `diagram` | Use for one subject progressing through named states, guarded transitions and terminal outcomes. |
+| [`loop`](#loop) | sequence | `diagram` | Use for a closed reinforcing cycle, with an optional accumulated result and explicit evidence. |
+| [`layer-stack`](#layer-stack) | decide | `diagram` | Use for ordered abstraction or control layers; band thickness carries no quantitative meaning. |
+| [`kanban`](#kanban) | sequence | `diagram` | Use for a static work-in-progress census by state, with visible limits and blocked items. |
+| [`user-journey`](#user-journey) | sequence | `diagram` | Use for one persona across experience stages, with sourced ordinal sentiment and explicit pain points. |
+| [`service-blueprint`](#service-blueprint) | sequence | `diagram` | Use for customer, frontstage and backstage actions on one shared stage grid with a line of visibility. |
+| [`sequence`](#sequence) | sequence | `diagram` | Use for ordered messages between participants, including returns and self-calls; unsupported fragments require a detail view. |
+| [`er-diagram`](#er-diagram) | decide | `diagram` | Use for entities, attributes and explicit cardinality; physical foreign keys use database-schema. |
+| [`database-schema`](#database-schema) | decide | `diagram` | Use for physical tables and exact column-to-column foreign-key relationships. |
+| [`uml-class`](#uml-class) | decide | `diagram` | Use for classes with attributes, operations and typed inheritance or ownership relationships. |
+| [`radar`](#radar) | numbers | `diagram` | Use for a small number of entities assessed on the same bounded quantitative criteria. |
+| [`polar`](#polar) | numbers | `diagram` | Use for one nonnegative quantitative series over ordered cyclic categories; radius is linear. |
+| [`nested`](#nested) | decide | `diagram` | Use for qualitative scope and containment through up to three nested levels. |
+| [`venn`](#venn) | decide | `diagram` | Use for qualitative overlap between sets; circle and overlap areas do not encode quantities. |
+| [`wardley-map`](#wardley-map) | decide | `diagram` | Use for a value chain positioned by visibility and evolution, with dependencies and explicit movement. |
+| [`story-map`](#story-map) | sequence | `diagram` | Use for a narrative activity backbone crossed by explicit release slices and a scope cut line. |
+| [`security-matrix`](#security-matrix) | decide | `diagram` | Use for explicit per-role resource permissions; access rights are distinct from RACI responsibility. |
+| [`exploded-axonometric`](#exploded-axonometric) | decide | `diagram` | Use for parts pulled apart along one projection axis; levels determine the assembly separation. |
+| [`axonometric-plan`](#axonometric-plan) | decide | `diagram` | Use for non-overlapping spatial footprints on one shared dimetric plan, preserving relative positions. |
 | [`waterfall`](#waterfall) | numbers | `full`, `with-takeaway` | Use for a bridge that explains how a starting total becomes an ending total through positive and negative drivers. |
-| [`bubble-chart`](#bubble-chart) | numbers | `bubble`, `scatter`, `portfolio` | Use for items positioned on two measured dimensions — with bubble size for a third, or quadrant dividers for a portfolio (growth-share) view. |
+| [`bubble-chart`](#bubble-chart) | numbers | `bubble`, `scatter`, `portfolio`, `beeswarm` | Use for items positioned on two measured dimensions — with bubble size for a third, or quadrant dividers for a portfolio (growth-share) view. |
 | [`marimekko`](#marimekko) | numbers | `shares` | Use for market structure in one picture: segment size as column width and each player’s share as the stack within it. |
 | [`tornado`](#tornado) | numbers | `bars` | Use for showing which assumptions move a result most: each driver’s downside and upside around the base case, widest on top. |
 | [`football-field`](#football-field) | numbers | `ranges` | Use for comparing value ranges from several methods on one axis — valuation, price corridors or estimates — against a reference such as the offer. |
@@ -697,7 +724,7 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 
 **Chart with takeaway** — Use for one chart that proves the title, with the interpretation in a side panel.
 
-![chart-takeaway · bar](../gallery/layouts/chart-takeaway--bar.png) ![chart-takeaway · line](../gallery/layouts/chart-takeaway--line.png) ![chart-takeaway · stacked](../gallery/layouts/chart-takeaway--stacked.png) ![chart-takeaway · column](../gallery/layouts/chart-takeaway--column.png) ![chart-takeaway · combo](../gallery/layouts/chart-takeaway--combo.png)
+![chart-takeaway · bar](../gallery/layouts/chart-takeaway--bar.png) ![chart-takeaway · line](../gallery/layouts/chart-takeaway--line.png) ![chart-takeaway · stacked](../gallery/layouts/chart-takeaway--stacked.png) ![chart-takeaway · column](../gallery/layouts/chart-takeaway--column.png) ![chart-takeaway · combo](../gallery/layouts/chart-takeaway--combo.png) ![chart-takeaway · bump](../gallery/layouts/chart-takeaway--bump.png) ![chart-takeaway · ridgeline](../gallery/layouts/chart-takeaway--ridgeline.png) ![chart-takeaway · streamgraph](../gallery/layouts/chart-takeaway--streamgraph.png) ![chart-takeaway · dumbbell](../gallery/layouts/chart-takeaway--dumbbell.png) ![chart-takeaway · slopegraph](../gallery/layouts/chart-takeaway--slopegraph.png)
 
 - **Use when:** Comparing items (bar), a trend over time (column or line), or composition (stacked); A volume and a rate over the same periods — bars plus a line on its own scale (combo); Any slide whose title carries a number from the data
 - **Avoid when:** A bridge from one total to another — use waterfall; Fewer than three data points — use kpi-tiles
@@ -753,6 +780,1583 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
     points:
       - SMB revenue is large but margin is thin after support costs
       - Growth investment should follow profit, not revenue
+```
+
+</details>
+
+## heatmap
+
+**Numeric heatmap** — Use for a numeric row-by-column pattern on one explicit scale; missing observations remain distinct from zero.
+
+![heatmap · diagram](../gallery/layouts/heatmap--diagram.png)
+
+- **Use when:** Use for a numeric row-by-column pattern on one explicit scale; missing observations remain distinct from zero.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `rows` | string[] | yes | 2–6 items, each ≤ 28 chars | Row categories in reading order |
+| `columns` | string[] | yes | 2–6 items, each ≤ 24 chars | Column categories; retain chronological order |
+| `values` | number,null[][] | yes | 2–6 items | Row-major observations; null means missing, never zero |
+| `unit` | string | yes | ≤ 12 chars |  |
+| `decimals` | integer | yes | 0…2 |  |
+| `scale` | `sequential` \| `diverging` | yes |  |  |
+| `domain` | any[] |  | 2–2 items | Shared explicit minimum and maximum |
+| `focal` | object |  |  |  |
+| `focal.row` | integer | yes | 0…9007199254740991 |  |
+| `focal.column` | integer | yes | 0…9007199254740991 |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: heatmap
+  title: Support delays concentrate in billing and the renewal stage
+  sources:
+    - illustrative
+  rows:
+    - Onboarding
+    - Billing
+    - Renewal
+  columns:
+    - Email
+    - Chat
+    - Phone
+    - Self-service
+  values:
+    - - 12
+      - 8
+      - 10
+      - 3
+    - - 28
+      - 15
+      - 24
+      - 8
+    - - 34
+      - 22
+      - 18
+      - null
+  unit: min
+  focal:
+    row: 2
+    column: 0
+```
+
+</details>
+
+## treemap
+
+**Treemap** — Use for comparing parts of one positive total by area, with deterministic squarified geometry.
+
+![treemap · diagram](../gallery/layouts/treemap--diagram.png)
+
+- **Use when:** Use for comparing parts of one positive total by area, with deterministic squarified geometry.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `items` | object[] | yes | 2–8 items |  |
+| `items[].id` | string | yes | ≤ 32 chars |  |
+| `items[].label` | string | yes | ≤ 48 chars | Short human-readable name |
+| `items[].value` | number | yes | 0…∞ |  |
+| `unit` | string | yes | ≤ 12 chars |  |
+| `focal` | string |  | ≤ 32 chars |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: treemap
+  title: The platform and support account for most operating spend
+  sources:
+    - illustrative
+  items:
+    - id: platform
+      label: Platform
+      value: 42
+    - id: support
+      label: Support
+      value: 26
+    - id: sales
+      label: Sales
+      value: 18
+    - id: admin
+      label: Admin
+      value: 14
+  unit: $M
+  focal: platform
+```
+
+</details>
+
+## fishbone
+
+**Fishbone cause analysis** — Use for investigating grouped causes of one observed effect, with explicit evidence status.
+
+![fishbone · diagram](../gallery/layouts/fishbone--diagram.png)
+
+- **Use when:** Use for investigating grouped causes of one observed effect, with explicit evidence status.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `effect` | string | yes | ≤ 48 chars |  |
+| `categories` | object[] | yes | 2–5 items |  |
+| `categories[].label` | string | yes | ≤ 24 chars |  |
+| `categories[].causes` | object[] | yes | 1–3 items |  |
+| `categories[].causes[].label` | string | yes | ≤ 28 chars |  |
+| `categories[].causes[].status` | `hypothesis` \| `supported` \| `confirmed` | yes |  |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: fishbone
+  title: Handoff and data gaps explain the onboarding delays
+  sources:
+    - illustrative
+  effect: Slow onboarding
+  categories:
+    - label: People
+      causes:
+        - label: Unclear owner
+          status: supported
+    - label: Process
+      causes:
+        - label: Repeated approval
+          status: confirmed
+    - label: Data
+      causes:
+        - label: Missing records
+          status: hypothesis
+    - label: Systems
+      causes:
+        - label: Manual transfer
+          status: supported
+```
+
+</details>
+
+## sankey
+
+**Sankey flow quantities** — Use for a conserved quantity that splits and merges across three stages on one shared scale.
+
+![sankey · diagram](../gallery/layouts/sankey--diagram.png)
+
+- **Use when:** Use for a conserved quantity that splits and merges across three stages on one shared scale.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `stages` | any[] | yes | 3–3 items |  |
+| `nodes` | object[] | yes | 3–8 items |  |
+| `nodes[].id` | string | yes | ≤ 32 chars |  |
+| `nodes[].label` | string | yes | ≤ 28 chars |  |
+| `nodes[].stage` | integer | yes | 0…2 |  |
+| `flows` | object[] | yes | 2–12 items |  |
+| `flows[].from` | string | yes | ≤ 32 chars |  |
+| `flows[].to` | string | yes | ≤ 32 chars |  |
+| `flows[].value` | number | yes | 0…∞ |  |
+| `flows[].highlight` | boolean |  |  |  |
+| `unit` | string | yes | ≤ 12 chars |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: sankey
+  title: Most service effort reaches delivery through the platform team
+  sources:
+    - illustrative
+  stages:
+    - Demand
+    - Team
+    - Outcome
+  nodes:
+    - id: demand
+      label: Service effort
+      stage: 0
+    - id: platform
+      label: Platform
+      stage: 1
+    - id: support
+      label: Support
+      stage: 1
+    - id: delivery
+      label: Delivered
+      stage: 2
+    - id: rework
+      label: Rework
+      stage: 2
+  flows:
+    - from: demand
+      to: platform
+      value: 70
+    - from: demand
+      to: support
+      value: 30
+    - from: platform
+      to: delivery
+      value: 60
+      highlight: true
+    - from: platform
+      to: rework
+      value: 10
+    - from: support
+      to: delivery
+      value: 20
+    - from: support
+      to: rework
+      value: 10
+  unit: days
+```
+
+</details>
+
+## architecture-delta
+
+**Architecture delta** — Use for two synchronized system topologies with stable identities and a computed change ledger.
+
+![architecture-delta · diagram](../gallery/layouts/architecture-delta--diagram.png)
+
+- **Use when:** Use for two synchronized system topologies with stable identities and a computed change ledger.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `before` | object | yes |  |  |
+| `before.nodes` | object[] | yes | 2–12 items |  |
+| `before.nodes[].id` | string | yes | ≤ 32 chars |  |
+| `before.nodes[].label` | string | yes | ≤ 28 chars | Short human-readable name |
+| `before.nodes[].detail` | string |  | ≤ 60 chars |  |
+| `before.nodes[].column` | integer | yes | 0…3 |  |
+| `before.nodes[].row` | integer | yes | 0…5 |  |
+| `before.nodes[].highlight` | boolean |  |  |  |
+| `before.nodes[].shape` | `process` \| `decision` \| `terminal` \| `state` \| `external` |  |  |  |
+| `before.edges` | object[] | yes | 0–16 items |  |
+| `before.edges[].id` | string |  | ≤ 32 chars |  |
+| `before.edges[].from` | string | yes | ≤ 32 chars |  |
+| `before.edges[].to` | string | yes | ≤ 32 chars |  |
+| `before.edges[].label` | string |  | ≤ 24 chars |  |
+| `before.edges[].dashed` | boolean |  |  |  |
+| `after` | object | yes |  |  |
+| `after.nodes` | object[] | yes | 2–12 items |  |
+| `after.nodes[].id` | string | yes | ≤ 32 chars |  |
+| `after.nodes[].label` | string | yes | ≤ 28 chars | Short human-readable name |
+| `after.nodes[].detail` | string |  | ≤ 60 chars |  |
+| `after.nodes[].column` | integer | yes | 0…3 |  |
+| `after.nodes[].row` | integer | yes | 0…5 |  |
+| `after.nodes[].highlight` | boolean |  |  |  |
+| `after.nodes[].shape` | `process` \| `decision` \| `terminal` \| `state` \| `external` |  |  |  |
+| `after.edges` | object[] | yes | 0–16 items |  |
+| `after.edges[].id` | string |  | ≤ 32 chars |  |
+| `after.edges[].from` | string | yes | ≤ 32 chars |  |
+| `after.edges[].to` | string | yes | ≤ 32 chars |  |
+| `after.edges[].label` | string |  | ≤ 24 chars |  |
+| `after.edges[].dashed` | boolean |  |  |  |
+| `beforeLabel` | string | yes | ≤ 30 chars |  |
+| `afterLabel` | string | yes | ≤ 30 chars |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: architecture-delta
+  title: A durable queue separates order acceptance from fulfilment
+  sources:
+    - illustrative
+  before:
+    nodes:
+      - id: web
+        label: Storefront
+        column: 0
+        row: 0
+      - id: api
+        label: Order API
+        column: 1
+        row: 0
+      - id: worker
+        label: Worker
+        column: 1
+        row: 1
+    edges:
+      - id: call
+        from: web
+        to: api
+      - id: dispatch
+        from: api
+        to: worker
+  after:
+    nodes:
+      - id: web
+        label: Storefront
+        column: 0
+        row: 0
+      - id: api
+        label: Order API
+        column: 1
+        row: 0
+      - id: worker
+        label: Worker
+        column: 1
+        row: 1
+      - id: queue
+        label: Queue
+        column: 0
+        row: 1
+        highlight: true
+    edges:
+      - id: call
+        from: web
+        to: api
+      - id: dispatch
+        from: api
+        to: queue
+      - id: consume
+        from: queue
+        to: worker
+```
+
+</details>
+
+## swimlane
+
+**Cross-functional swimlane** — Use for a process whose steps cross named owners through explicit handoffs.
+
+![swimlane · diagram](../gallery/layouts/swimlane--diagram.png)
+
+- **Use when:** Use for a process whose steps cross named owners through explicit handoffs.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `lanes` | object[] | yes | 2–4 items |  |
+| `lanes[].id` | string | yes | ≤ 32 chars |  |
+| `lanes[].label` | string | yes | ≤ 28 chars | Short human-readable name |
+| `steps` | object[] | yes | 2–10 items |  |
+| `steps[].id` | string | yes | ≤ 32 chars |  |
+| `steps[].label` | string | yes | ≤ 48 chars | Short human-readable name |
+| `steps[].lane` | string | yes | ≤ 32 chars |  |
+| `steps[].stage` | integer | yes | 0…4 |  |
+| `steps[].highlight` | boolean |  |  |  |
+| `edges` | object[] | yes | 0–12 items |  |
+| `edges[].id` | string |  | ≤ 32 chars |  |
+| `edges[].from` | string | yes | ≤ 32 chars |  |
+| `edges[].to` | string | yes | ≤ 32 chars |  |
+| `edges[].label` | string |  | ≤ 24 chars |  |
+| `edges[].dashed` | boolean |  |  |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: swimlane
+  title: Operations takes ownership after the sales handoff
+  sources:
+    - illustrative
+  lanes:
+    - id: sales
+      label: Sales
+    - id: ops
+      label: Operations
+    - id: finance
+      label: Finance
+  steps:
+    - id: request
+      label: Confirm scope
+      lane: sales
+      stage: 0
+    - id: deliver
+      label: Deliver service
+      lane: ops
+      stage: 1
+      highlight: true
+    - id: bill
+      label: Issue invoice
+      lane: finance
+      stage: 2
+  edges:
+    - from: request
+      to: deliver
+    - from: deliver
+      to: bill
+```
+
+</details>
+
+## dependency-graph
+
+**Dependency graph** — Use for directed dependencies with shared parents and explicitly represented cycles.
+
+![dependency-graph · diagram](../gallery/layouts/dependency-graph--diagram.png)
+
+- **Use when:** Use for directed dependencies with shared parents and explicitly represented cycles.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `nodes` | object[] | yes | 2–12 items |  |
+| `nodes[].id` | string | yes | ≤ 32 chars |  |
+| `nodes[].label` | string | yes | ≤ 28 chars | Short human-readable name |
+| `nodes[].detail` | string |  | ≤ 60 chars |  |
+| `nodes[].column` | integer | yes | 0…3 |  |
+| `nodes[].row` | integer | yes | 0…5 |  |
+| `nodes[].highlight` | boolean |  |  |  |
+| `nodes[].shape` | `process` \| `decision` \| `terminal` \| `state` \| `external` |  |  |  |
+| `edges` | object[] | yes | 0–16 items |  |
+| `edges[].id` | string |  | ≤ 32 chars |  |
+| `edges[].from` | string | yes | ≤ 32 chars |  |
+| `edges[].to` | string | yes | ≤ 32 chars |  |
+| `edges[].label` | string |  | ≤ 24 chars |  |
+| `edges[].dashed` | boolean |  |  |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: dependency-graph
+  title: The application and reporting both depend on the shared data service
+  sources:
+    - illustrative
+  nodes:
+    - id: app
+      label: Application
+      column: 0
+      row: 0
+    - id: report
+      label: Reporting
+      column: 0
+      row: 1
+    - id: data
+      label: Data service
+      column: 1
+      row: 0
+      highlight: true
+    - id: store
+      label: Database
+      column: 2
+      row: 0
+  edges:
+    - from: app
+      to: data
+    - from: report
+      to: data
+    - from: data
+      to: store
+```
+
+</details>
+
+## flowchart
+
+**Decision flowchart** — Use for decision logic with labelled branches, merges and bounded return paths.
+
+![flowchart · diagram](../gallery/layouts/flowchart--diagram.png)
+
+- **Use when:** Use for decision logic with labelled branches, merges and bounded return paths.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `nodes` | object[] | yes | 2–12 items |  |
+| `nodes[].id` | string | yes | ≤ 32 chars |  |
+| `nodes[].label` | string | yes | ≤ 28 chars | Short human-readable name |
+| `nodes[].detail` | string |  | ≤ 60 chars |  |
+| `nodes[].column` | integer | yes | 0…3 |  |
+| `nodes[].row` | integer | yes | 0…5 |  |
+| `nodes[].highlight` | boolean |  |  |  |
+| `nodes[].shape` | `process` \| `decision` \| `terminal` \| `state` \| `external` |  |  |  |
+| `edges` | object[] | yes | 0–16 items |  |
+| `edges[].id` | string |  | ≤ 32 chars |  |
+| `edges[].from` | string | yes | ≤ 32 chars |  |
+| `edges[].to` | string | yes | ≤ 32 chars |  |
+| `edges[].label` | string |  | ≤ 24 chars |  |
+| `edges[].dashed` | boolean |  |  |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: flowchart
+  title: An explicit approval decision separates standard and exceptional orders
+  sources:
+    - illustrative
+  nodes:
+    - id: start
+      label: Receive order
+      column: 0
+      row: 0
+      shape: terminal
+    - id: check
+      label: Approved?
+      column: 1
+      row: 0
+      shape: decision
+    - id: ship
+      label: Ship order
+      column: 2
+      row: 0
+    - id: review
+      label: Manual review
+      column: 1
+      row: 1
+  edges:
+    - from: start
+      to: check
+    - from: check
+      to: ship
+      label: Yes
+    - from: check
+      to: review
+      label: No
+```
+
+</details>
+
+## state-machine
+
+**State machine** — Use for one subject progressing through named states, guarded transitions and terminal outcomes.
+
+![state-machine · diagram](../gallery/layouts/state-machine--diagram.png)
+
+- **Use when:** Use for one subject progressing through named states, guarded transitions and terminal outcomes.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `nodes` | object[] | yes | 2–12 items |  |
+| `nodes[].id` | string | yes | ≤ 32 chars |  |
+| `nodes[].label` | string | yes | ≤ 28 chars | Short human-readable name |
+| `nodes[].detail` | string |  | ≤ 60 chars |  |
+| `nodes[].column` | integer | yes | 0…3 |  |
+| `nodes[].row` | integer | yes | 0…5 |  |
+| `nodes[].highlight` | boolean |  |  |  |
+| `nodes[].shape` | `process` \| `decision` \| `terminal` \| `state` \| `external` |  |  |  |
+| `edges` | object[] | yes | 0–16 items |  |
+| `edges[].id` | string |  | ≤ 32 chars |  |
+| `edges[].from` | string | yes | ≤ 32 chars |  |
+| `edges[].to` | string | yes | ≤ 32 chars |  |
+| `edges[].label` | string |  | ≤ 24 chars |  |
+| `edges[].dashed` | boolean |  |  |  |
+| `initial` | string | yes | ≤ 32 chars |  |
+| `terminal` | string[] | yes | 1–4 items, each ≤ 32 chars |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: state-machine
+  title: An order ends only after fulfilment or explicit cancellation
+  sources:
+    - illustrative
+  initial: new
+  terminal:
+    - done
+    - cancelled
+  nodes:
+    - id: new
+      label: New
+      column: 0
+      row: 0
+    - id: processing
+      label: Processing
+      column: 1
+      row: 0
+    - id: done
+      label: Completed
+      column: 2
+      row: 0
+    - id: cancelled
+      label: Cancelled
+      column: 1
+      row: 1
+  edges:
+    - from: new
+      to: processing
+      label: Accept
+    - from: processing
+      to: done
+      label: Fulfil
+    - from: processing
+      to: cancelled
+      label: Cancel
+```
+
+</details>
+
+## loop
+
+**Loop and flywheel** — Use for a closed reinforcing cycle, with an optional accumulated result and explicit evidence.
+
+![loop · diagram](../gallery/layouts/loop--diagram.png)
+
+- **Use when:** Use for a closed reinforcing cycle, with an optional accumulated result and explicit evidence.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `steps` | object[] | yes | 3–6 items |  |
+| `steps[].label` | string | yes | ≤ 28 chars | Short human-readable name |
+| `steps[].detail` | string |  | ≤ 60 chars |  |
+| `hub` | string |  | ≤ 60 chars |  |
+| `evidence` | string | yes | ≤ 100 chars | Evidence or explicit hypothesis for reinforcement |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: loop
+  title: Customer learning improves the service and encourages repeat use
+  sources:
+    - illustrative
+  steps:
+    - label: Use service
+    - label: Share feedback
+    - label: Improve product
+    - label: Return
+  hub: Shared learning
+  evidence: Illustrative hypothesis
+```
+
+</details>
+
+## layer-stack
+
+**Layer stack** — Use for ordered abstraction or control layers; band thickness carries no quantitative meaning.
+
+![layer-stack · diagram](../gallery/layouts/layer-stack--diagram.png)
+
+- **Use when:** Use for ordered abstraction or control layers; band thickness carries no quantitative meaning.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `layers` | object[] | yes | 2–5 items |  |
+| `layers[].label` | string | yes | ≤ 48 chars | Short human-readable name |
+| `layers[].detail` | string | yes | ≤ 100 chars |  |
+| `layers[].highlight` | boolean |  |  |  |
+| `direction` | string |  | ≤ 70 chars |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: layer-stack
+  title: Shared controls support every layer of the service
+  sources:
+    - illustrative
+  layers:
+    - label: Experience
+      detail: Customer channels and service interactions
+    - label: Services
+      detail: Business capabilities and orchestration
+      highlight: true
+    - label: Data
+      detail: Trusted records and governed access
+    - label: Platform
+      detail: Identity, observability and infrastructure
+  direction: Higher layers depend on the foundation
+```
+
+</details>
+
+## kanban
+
+**Kanban snapshot** — Use for a static work-in-progress census by state, with visible limits and blocked items.
+
+![kanban · diagram](../gallery/layouts/kanban--diagram.png)
+
+- **Use when:** Use for a static work-in-progress census by state, with visible limits and blocked items.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `columns` | object[] | yes | 2–5 items |  |
+| `columns[].id` | string | yes | ≤ 32 chars |  |
+| `columns[].label` | string | yes | ≤ 48 chars | Short human-readable name |
+| `columns[].limit` | integer |  | −∞…20 |  |
+| `columns[].items` | object[] | yes | 0–4 items |  |
+| `columns[].items[].id` | string | yes | ≤ 32 chars |  |
+| `columns[].items[].label` | string | yes | ≤ 48 chars | Short human-readable name |
+| `columns[].items[].blocked` | boolean |  |  |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: kanban
+  title: Blocked review work constrains the next delivery batch
+  sources:
+    - illustrative
+  columns:
+    - id: todo
+      label: Ready
+      items:
+        - id: docs
+          label: Update guide
+    - id: doing
+      label: In progress
+      limit: 2
+      items:
+        - id: api
+          label: API contract
+        - id: tests
+          label: Integration tests
+    - id: review
+      label: Review
+      limit: 2
+      items:
+        - id: security
+          label: Security review
+          blocked: true
+    - id: done
+      label: Done
+      items:
+        - id: scope
+          label: Agreed scope
+```
+
+</details>
+
+## user-journey
+
+**User journey** — Use for one persona across experience stages, with sourced ordinal sentiment and explicit pain points.
+
+![user-journey · diagram](../gallery/layouts/user-journey--diagram.png)
+
+- **Use when:** Use for one persona across experience stages, with sourced ordinal sentiment and explicit pain points.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `persona` | string | yes | ≤ 40 chars |  |
+| `evidence` | string | yes | ≤ 100 chars |  |
+| `stages` | object[] | yes | 3–6 items |  |
+| `stages[].label` | string | yes | ≤ 24 chars |  |
+| `stages[].action` | string | yes | ≤ 45 chars |  |
+| `stages[].touchpoint` | string | yes | ≤ 30 chars |  |
+| `stages[].sentiment` | `low` \| `medium-low` \| `neutral` \| `medium-high` \| `high` | yes |  |  |
+| `stages[].pain` | string |  | ≤ 40 chars |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: user-journey
+  title: Billing friction interrupts an otherwise smooth customer journey
+  sources:
+    - illustrative
+  persona: New subscriber
+  evidence: Illustrative research hypothesis
+  stages:
+    - label: Discover
+      action: Compare plans
+      touchpoint: Website
+      sentiment: medium-high
+    - label: Sign up
+      action: Create account
+      touchpoint: App
+      sentiment: high
+    - label: First bill
+      action: Resolve mismatch
+      touchpoint: Support
+      sentiment: low
+      pain: Unexpected charge
+    - label: Continue
+      action: Resume use
+      touchpoint: App
+      sentiment: neutral
+```
+
+</details>
+
+## service-blueprint
+
+**Service blueprint** — Use for customer, frontstage and backstage actions on one shared stage grid with a line of visibility.
+
+![service-blueprint · diagram](../gallery/layouts/service-blueprint--diagram.png)
+
+- **Use when:** Use for customer, frontstage and backstage actions on one shared stage grid with a line of visibility.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `stages` | string[] | yes | 3–6 items, each ≤ 24 chars |  |
+| `layers` | object[] | yes | 3–5 items |  |
+| `layers[].kind` | `evidence` \| `customer` \| `frontstage` \| `backstage` \| `support` | yes |  |  |
+| `layers[].label` | string | yes | ≤ 24 chars |  |
+| `layers[].actions` | string[] | yes | 3–6 items, each ≤ 45 chars |  |
+| `focal` | object |  |  |  |
+| `focal.layer` | string | yes |  |  |
+| `focal.stage` | integer | yes | 0…9007199254740991 |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: service-blueprint
+  title: A hidden billing job causes the visible retry experience
+  sources:
+    - illustrative
+  stages:
+    - Sign up
+    - Use
+    - Upgrade
+    - First bill
+  layers:
+    - kind: customer
+      label: Customer
+      actions:
+        - Create account
+        - Use product
+        - Choose plan
+        - Read bill
+    - kind: frontstage
+      label: Frontstage
+      actions:
+        - Welcome
+        - Usage view
+        - Checkout
+        - Receipt
+    - kind: backstage
+      label: Backstage
+      actions:
+        - CRM write
+        - Meter usage
+        - Payment check
+        - Billing job
+    - kind: support
+      label: Support
+      actions:
+        - Email
+        - Analytics
+        - Card processor
+        - Ledger
+  focal:
+    layer: backstage
+    stage: 3
+```
+
+</details>
+
+## sequence
+
+**Sequence diagram** — Use for ordered messages between participants, including returns and self-calls; unsupported fragments require a detail view.
+
+![sequence · diagram](../gallery/layouts/sequence--diagram.png)
+
+- **Use when:** Use for ordered messages between participants, including returns and self-calls; unsupported fragments require a detail view.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `participants` | object[] | yes | 2–6 items |  |
+| `participants[].id` | string | yes | ≤ 32 chars |  |
+| `participants[].label` | string | yes | ≤ 48 chars | Short human-readable name |
+| `messages` | object[] | yes | 1–10 items |  |
+| `messages[].from` | string | yes | ≤ 32 chars |  |
+| `messages[].to` | string | yes | ≤ 32 chars |  |
+| `messages[].label` | string | yes | ≤ 48 chars |  |
+| `messages[].kind` | `call` \| `return` | yes |  |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: sequence
+  title: Payment confirmation precedes order acceptance
+  sources:
+    - illustrative
+  participants:
+    - id: client
+      label: Customer
+    - id: api
+      label: Order service
+    - id: payment
+      label: Payment gateway
+  messages:
+    - from: client
+      to: api
+      label: Place order
+    - from: api
+      to: payment
+      label: Authorize payment
+    - from: payment
+      to: api
+      label: Payment confirmed
+      kind: return
+    - from: api
+      to: client
+      label: Order accepted
+      kind: return
+```
+
+</details>
+
+## er-diagram
+
+**Entity relationship model** — Use for entities, attributes and explicit cardinality; physical foreign keys use database-schema.
+
+![er-diagram · diagram](../gallery/layouts/er-diagram--diagram.png)
+
+- **Use when:** Use for entities, attributes and explicit cardinality; physical foreign keys use database-schema.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `entities` | object[] | yes | 2–4 items |  |
+| `entities[].id` | string | yes | ≤ 32 chars |  |
+| `entities[].label` | string | yes | ≤ 48 chars | Short human-readable name |
+| `entities[].fields` | object[] | yes | 1–6 items |  |
+| `entities[].fields[].id` | string | yes | ≤ 32 chars |  |
+| `entities[].fields[].label` | string | yes | ≤ 26 chars |  |
+| `entities[].fields[].type` | string |  | ≤ 18 chars |  |
+| `entities[].fields[].key` | `PK` \| `FK` \| `PK/FK` |  |  |  |
+| `entities[].operations` | string[] | yes | 0–3 items, each ≤ 38 chars |  |
+| `relationships` | object[] | yes | 0–6 items |  |
+| `relationships[].from` | object | yes |  |  |
+| `relationships[].from.entity` | string | yes | ≤ 32 chars |  |
+| `relationships[].from.field` | string |  | ≤ 32 chars |  |
+| `relationships[].to` | object | yes |  |  |
+| `relationships[].to.entity` | string | yes | ≤ 32 chars |  |
+| `relationships[].to.field` | string |  | ≤ 32 chars |  |
+| `relationships[].kind` | `one-one` \| `one-many` \| `many-many` \| `association` \| `inheritance` \| `composition` \| `aggregation` | yes |  |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: er-diagram
+  title: Each order references one customer through its customer key
+  sources:
+    - illustrative
+  entities:
+    - id: customer
+      label: Customer
+      fields:
+        - id: id
+          label: customer_id
+          type: UUID
+          key: PK
+        - id: name
+          label: name
+          type: TEXT
+    - id: order
+      label: Order
+      fields:
+        - id: id
+          label: order_id
+          type: UUID
+          key: PK
+        - id: customer
+          label: customer_id
+          type: UUID
+          key: FK
+  relationships:
+    - from:
+        entity: customer
+      to:
+        entity: order
+      kind: one-many
+```
+
+</details>
+
+## database-schema
+
+**Physical database schema** — Use for physical tables and exact column-to-column foreign-key relationships.
+
+![database-schema · diagram](../gallery/layouts/database-schema--diagram.png)
+
+- **Use when:** Use for physical tables and exact column-to-column foreign-key relationships.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `entities` | object[] | yes | 2–4 items |  |
+| `entities[].id` | string | yes | ≤ 32 chars |  |
+| `entities[].label` | string | yes | ≤ 48 chars | Short human-readable name |
+| `entities[].fields` | object[] | yes | 1–6 items |  |
+| `entities[].fields[].id` | string | yes | ≤ 32 chars |  |
+| `entities[].fields[].label` | string | yes | ≤ 26 chars |  |
+| `entities[].fields[].type` | string |  | ≤ 18 chars |  |
+| `entities[].fields[].key` | `PK` \| `FK` \| `PK/FK` |  |  |  |
+| `entities[].operations` | string[] | yes | 0–3 items, each ≤ 38 chars |  |
+| `relationships` | object[] | yes | 0–6 items |  |
+| `relationships[].from` | object | yes |  |  |
+| `relationships[].from.entity` | string | yes | ≤ 32 chars |  |
+| `relationships[].from.field` | string |  | ≤ 32 chars |  |
+| `relationships[].to` | object | yes |  |  |
+| `relationships[].to.entity` | string | yes | ≤ 32 chars |  |
+| `relationships[].to.field` | string |  | ≤ 32 chars |  |
+| `relationships[].kind` | `one-one` \| `one-many` \| `many-many` \| `association` \| `inheritance` \| `composition` \| `aggregation` | yes |  |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: database-schema
+  title: Each order references one customer through its customer key
+  sources:
+    - illustrative
+  entities:
+    - id: customer
+      label: Customer
+      fields:
+        - id: id
+          label: customer_id
+          type: UUID
+          key: PK
+        - id: name
+          label: name
+          type: TEXT
+    - id: order
+      label: Order
+      fields:
+        - id: id
+          label: order_id
+          type: UUID
+          key: PK
+        - id: customer
+          label: customer_id
+          type: UUID
+          key: FK
+  relationships:
+    - from:
+        entity: customer
+        field: id
+      to:
+        entity: order
+        field: customer
+      kind: one-many
+```
+
+</details>
+
+## uml-class
+
+**UML class model** — Use for classes with attributes, operations and typed inheritance or ownership relationships.
+
+![uml-class · diagram](../gallery/layouts/uml-class--diagram.png)
+
+- **Use when:** Use for classes with attributes, operations and typed inheritance or ownership relationships.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `entities` | object[] | yes | 2–4 items |  |
+| `entities[].id` | string | yes | ≤ 32 chars |  |
+| `entities[].label` | string | yes | ≤ 48 chars | Short human-readable name |
+| `entities[].fields` | object[] | yes | 1–6 items |  |
+| `entities[].fields[].id` | string | yes | ≤ 32 chars |  |
+| `entities[].fields[].label` | string | yes | ≤ 26 chars |  |
+| `entities[].fields[].type` | string |  | ≤ 18 chars |  |
+| `entities[].fields[].key` | `PK` \| `FK` \| `PK/FK` |  |  |  |
+| `entities[].operations` | string[] | yes | 0–3 items, each ≤ 38 chars |  |
+| `relationships` | object[] | yes | 0–6 items |  |
+| `relationships[].from` | object | yes |  |  |
+| `relationships[].from.entity` | string | yes | ≤ 32 chars |  |
+| `relationships[].from.field` | string |  | ≤ 32 chars |  |
+| `relationships[].to` | object | yes |  |  |
+| `relationships[].to.entity` | string | yes | ≤ 32 chars |  |
+| `relationships[].to.field` | string |  | ≤ 32 chars |  |
+| `relationships[].kind` | `one-one` \| `one-many` \| `many-many` \| `association` \| `inheritance` \| `composition` \| `aggregation` | yes |  |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: uml-class
+  title: Order and customer classes expose different operations
+  sources:
+    - illustrative
+  entities:
+    - id: customer
+      label: Customer
+      fields:
+        - id: id
+          label: customer_id
+          type: UUID
+          key: PK
+        - id: name
+          label: name
+          type: TEXT
+      operations:
+        - updateProfile()
+    - id: order
+      label: Order
+      fields:
+        - id: id
+          label: order_id
+          type: UUID
+          key: PK
+        - id: customer
+          label: customer_id
+          type: UUID
+          key: FK
+      operations:
+        - submit()
+        - cancel()
+  relationships:
+    - from:
+        entity: customer
+      to:
+        entity: order
+      kind: one-many
+```
+
+</details>
+
+## radar
+
+**Radar comparison** — Use for a small number of entities assessed on the same bounded quantitative criteria.
+
+![radar · diagram](../gallery/layouts/radar--diagram.png)
+
+- **Use when:** Use for a small number of entities assessed on the same bounded quantitative criteria.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `axes` | string[] | yes | 3–5 items, each ≤ 24 chars |  |
+| `maximum` | number | yes |  |  |
+| `unit` | string | yes | ≤ 12 chars |  |
+| `series` | object[] | yes | 1–3 items |  |
+| `series[].name` | string | yes | ≤ 48 chars | Short human-readable name |
+| `series[].values` | number[] | yes | 3–5 items |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: radar
+  title: The target model improves coverage across every assessed capability
+  sources:
+    - illustrative
+  axes:
+    - Data
+    - People
+    - Process
+    - Systems
+    - Controls
+  maximum: 5
+  series:
+    - name: Today
+      values:
+        - 2
+        - 3
+        - 2
+        - 3
+        - 2
+    - name: Target
+      values:
+        - 4
+        - 4
+        - 4
+        - 4
+        - 5
+```
+
+</details>
+
+## polar
+
+**Polar radial lollipop** — Use for one nonnegative quantitative series over ordered cyclic categories; radius is linear.
+
+![polar · diagram](../gallery/layouts/polar--diagram.png)
+
+- **Use when:** Use for one nonnegative quantitative series over ordered cyclic categories; radius is linear.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `items` | object[] | yes | 4–8 items |  |
+| `items[].label` | string | yes | ≤ 24 chars |  |
+| `items[].value` | number | yes | 0…∞ |  |
+| `unit` | string | yes | ≤ 12 chars |  |
+| `maximum` | number |  |  |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: polar
+  title: Demand peaks in the afternoon within the daily cycle
+  sources:
+    - illustrative
+  items:
+    - label: Morning
+      value: 30
+    - label: Midday
+      value: 55
+    - label: Afternoon
+      value: 80
+    - label: Evening
+      value: 45
+  unit: requests
+```
+
+</details>
+
+## nested
+
+**Nested containment** — Use for qualitative scope and containment through up to three nested levels.
+
+![nested · diagram](../gallery/layouts/nested--diagram.png)
+
+- **Use when:** Use for qualitative scope and containment through up to three nested levels.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `items` | object[] | yes | 2–10 items |  |
+| `items[].id` | string | yes | ≤ 32 chars |  |
+| `items[].label` | string | yes | ≤ 48 chars | Short human-readable name |
+| `items[].parent` | string |  | ≤ 32 chars |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: nested
+  title: The service boundary contains the application and its data domain
+  sources:
+    - illustrative
+  items:
+    - id: service
+      label: Service boundary
+    - id: app
+      label: Application
+      parent: service
+    - id: data
+      label: Data domain
+      parent: service
+    - id: orders
+      label: Orders
+      parent: data
+    - id: customers
+      label: Customers
+      parent: data
+```
+
+</details>
+
+## venn
+
+**Qualitative set overlap** — Use for qualitative overlap between sets; circle and overlap areas do not encode quantities.
+
+![venn · diagram](../gallery/layouts/venn--diagram.png)
+
+- **Use when:** Use for qualitative overlap between sets; circle and overlap areas do not encode quantities.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `sets` | string[] | yes | 2–3 items, each ≤ 36 chars |  |
+| `intersection` | string | yes | ≤ 36 chars |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: venn
+  title: The opportunity combines customer need and delivery capability
+  sources:
+    - illustrative
+  sets:
+    - Customer need
+    - Delivery capability
+  intersection: Viable opportunity
+```
+
+</details>
+
+## wardley-map
+
+**Wardley map** — Use for a value chain positioned by visibility and evolution, with dependencies and explicit movement.
+
+![wardley-map · diagram](../gallery/layouts/wardley-map--diagram.png)
+
+- **Use when:** Use for a value chain positioned by visibility and evolution, with dependencies and explicit movement.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `nodes` | object[] | yes | 2–8 items |  |
+| `nodes[].id` | string | yes | ≤ 32 chars |  |
+| `nodes[].label` | string | yes | ≤ 30 chars |  |
+| `nodes[].evolution` | number | yes | 0…1 |  |
+| `nodes[].visibility` | number | yes | 0…1 |  |
+| `nodes[].moveTo` | number |  | 0…1 |  |
+| `edges` | object[] | yes | 0–10 items |  |
+| `edges[].id` | string |  | ≤ 32 chars |  |
+| `edges[].from` | string | yes | ≤ 32 chars |  |
+| `edges[].to` | string | yes | ≤ 32 chars |  |
+| `edges[].label` | string |  | ≤ 24 chars |  |
+| `edges[].dashed` | boolean |  |  |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: wardley-map
+  title: Commodity infrastructure supports the differentiated customer experience
+  sources:
+    - illustrative
+  nodes:
+    - id: experience
+      label: Experience
+      evolution: 0.25
+      visibility: 0.85
+    - id: service
+      label: Service logic
+      evolution: 0.5
+      visibility: 0.55
+      moveTo: 0.7
+    - id: compute
+      label: Compute
+      evolution: 0.85
+      visibility: 0.2
+  edges:
+    - from: experience
+      to: service
+    - from: service
+      to: compute
+```
+
+</details>
+
+## story-map
+
+**User story map** — Use for a narrative activity backbone crossed by explicit release slices and a scope cut line.
+
+![story-map · diagram](../gallery/layouts/story-map--diagram.png)
+
+- **Use when:** Use for a narrative activity backbone crossed by explicit release slices and a scope cut line.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `releases` | string[] | yes | 2–4 items, each ≤ 24 chars |  |
+| `activities` | object[] | yes | 3–6 items |  |
+| `activities[].label` | string | yes | ≤ 28 chars |  |
+| `activities[].slices` | string[] | yes | 2–4 items, each ≤ 65 chars |  |
+| `cutAfter` | integer |  | 0…9007199254740991 |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: story-map
+  title: The first release covers the complete customer backbone at a smaller scope
+  sources:
+    - illustrative
+  releases:
+    - Release 1
+    - Release 2
+  activities:
+    - label: Discover
+      slices:
+        - Search catalogue
+        - Saved preferences
+    - label: Choose
+      slices:
+        - Compare options
+        - Recommendations
+    - label: Buy
+      slices:
+        - Basic checkout
+        - Multiple payment methods
+    - label: Use
+      slices:
+        - Order tracking
+        - Service history
+  cutAfter: 0
+```
+
+</details>
+
+## security-matrix
+
+**Access permissions matrix** — Use for explicit per-role resource permissions; access rights are distinct from RACI responsibility.
+
+![security-matrix · diagram](../gallery/layouts/security-matrix--diagram.png)
+
+- **Use when:** Use for explicit per-role resource permissions; access rights are distinct from RACI responsibility.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `roles` | string[] | yes | 2–6 items, each ≤ 28 chars |  |
+| `resources` | string[] | yes | 2–6 items, each ≤ 28 chars |  |
+| `permissions` | `none` \| `read` \| `write` \| `admin`[][] | yes | 2–6 items |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: security-matrix
+  title: Operational access is limited to the resources each role needs
+  sources:
+    - illustrative
+  roles:
+    - Analyst
+    - Operator
+    - Administrator
+  resources:
+    - Reports
+    - Pipeline
+    - Identity
+  permissions:
+    - - read
+      - none
+      - none
+    - - read
+      - write
+      - none
+    - - admin
+      - admin
+      - admin
+```
+
+</details>
+
+## exploded-axonometric
+
+**Exploded axonometric** — Use for parts pulled apart along one projection axis; levels determine the assembly separation.
+
+![exploded-axonometric · diagram](../gallery/layouts/exploded-axonometric--diagram.png)
+
+- **Use when:** Use for parts pulled apart along one projection axis; levels determine the assembly separation.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `parts` | object[] | yes | 2–6 items |  |
+| `parts[].id` | string | yes | ≤ 32 chars |  |
+| `parts[].label` | string | yes | ≤ 24 chars |  |
+| `parts[].x` | number | yes | 0…10 |  |
+| `parts[].y` | number | yes | 0…10 |  |
+| `parts[].width` | number | yes | −∞…10 |  |
+| `parts[].depth` | number | yes | −∞…10 |  |
+| `parts[].height` | number | yes | −∞…5 |  |
+| `parts[].level` | integer | yes | 0…5 |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: exploded-axonometric
+  title: Separate layers make the product assembly easier to inspect
+  sources:
+    - illustrative
+  parts:
+    - id: base
+      label: Foundation
+      x: 0
+      y: 0
+      width: 4
+      depth: 3
+      height: 0.3
+      level: 0
+    - id: service
+      label: Service layer
+      x: 0
+      y: 0
+      width: 4
+      depth: 3
+      height: 0.3
+      level: 1
+    - id: experience
+      label: Experience
+      x: 0
+      y: 0
+      width: 4
+      depth: 3
+      height: 0.3
+      level: 2
+```
+
+</details>
+
+## axonometric-plan
+
+**Axonometric plan** — Use for non-overlapping spatial footprints on one shared dimetric plan, preserving relative positions.
+
+![axonometric-plan · diagram](../gallery/layouts/axonometric-plan--diagram.png)
+
+- **Use when:** Use for non-overlapping spatial footprints on one shared dimetric plan, preserving relative positions.
+- **Avoid when:** A simpler existing chart or table answers the question
+- **Frame:** standard (action title, tracker, lead and source line are drawn for you)
+
+| Field | Type | Required | Limits | Description |
+|---|---|---|---|---|
+| `parts` | object[] | yes | 2–6 items |  |
+| `parts[].id` | string | yes | ≤ 32 chars |  |
+| `parts[].label` | string | yes | ≤ 24 chars |  |
+| `parts[].x` | number | yes | 0…10 |  |
+| `parts[].y` | number | yes | 0…10 |  |
+| `parts[].width` | number | yes | −∞…10 |  |
+| `parts[].depth` | number | yes | −∞…10 |  |
+| `parts[].height` | number | yes | −∞…5 |  |
+| `parts[].level` | integer | yes | 0…5 |  |
+
+<details><summary>Example</summary>
+
+```yaml
+- id: example
+  layout: axonometric-plan
+  title: The plan preserves the relative positions of the service areas
+  sources:
+    - illustrative
+  parts:
+    - id: work
+      label: Workspace
+      x: 0
+      y: 0
+      width: 4
+      depth: 3
+      height: 1
+    - id: support
+      label: Support
+      x: 4.3
+      y: 0
+      width: 2
+      depth: 3
+      height: 1
+    - id: entry
+      label: Entry
+      x: 0
+      y: 3.3
+      width: 2
+      depth: 1.5
+      height: 0.5
 ```
 
 </details>
@@ -818,7 +2422,7 @@ Every layout is an exhibit type with a typed content contract. Common slide fiel
 
 **Bubble and scatter chart** — Use for items positioned on two measured dimensions — with bubble size for a third, or quadrant dividers for a portfolio (growth-share) view.
 
-![bubble-chart · bubble](../gallery/layouts/bubble-chart--bubble.png) ![bubble-chart · scatter](../gallery/layouts/bubble-chart--scatter.png) ![bubble-chart · portfolio](../gallery/layouts/bubble-chart--portfolio.png)
+![bubble-chart · bubble](../gallery/layouts/bubble-chart--bubble.png) ![bubble-chart · scatter](../gallery/layouts/bubble-chart--scatter.png) ![bubble-chart · portfolio](../gallery/layouts/bubble-chart--portfolio.png) ![bubble-chart · beeswarm](../gallery/layouts/bubble-chart--beeswarm.png)
 
 - **Use when:** Portfolio of business units or products: growth vs share, size = revenue; Correlation between two metrics across markets, stores or customers; Competitor positioning on real numbers
 - **Avoid when:** Positions are judgements, not numbers — use matrix-2x2; One dimension only — use chart-takeaway (bar)

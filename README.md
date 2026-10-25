@@ -126,7 +126,7 @@ agent   › Built 11 slides. Review: 0 blockers, 2 majors fixed, 1 minor left.  
 |---|---|---|
 | Brief | `brief.yaml` | goal, ask, audience, how the deck will be used → which outputs |
 | Storyline × theme | chosen from 14 × 7 | the shape of the argument for the task, and the look |
-| Content | `deck.yaml` (+ `sections/*.yaml`) | action titles and slide content against 46 layout contracts; `sources:`, `facts:` from Excel/CSV, cover visual, `language:` |
+| Content | `deck.yaml` (+ `sections/*.yaml`) | action titles and slide content against 73 layout contracts; `sources:`, `facts:` from Excel/CSV, cover visual, `language:` |
 | Your material | `materials/`, `assets/` | reports cited by page, data files, pictures |
 
 Layouts turn the content into one **Scene IR**; engines translate it into editable PPTX, PDF,
@@ -148,7 +148,7 @@ Full process: [workflow](docs/explanation/workflow.md) · [architecture](docs/ex
 
 ## Template gallery
 
-A template is **a storyline (the shape of the argument for a task) × a theme (the look)**. Any storyline works in any theme. Fourteen storylines × six themes (or your own brand theme), built from forty-two layouts. The [gallery site](https://eiler2005.github.io/slidecraft/) shows every storyline in every theme and the example decks in every format.
+A template is **a storyline (the shape of the argument for a task) × a theme (the look)**. Any storyline works in any theme. Fourteen storylines × seven themes (or your own brand theme), built from 73 layouts. The [gallery site](https://eiler2005.github.io/slidecraft/) shows every storyline in every theme and the example decks in every format.
 
 <table>
   <tr>
@@ -166,6 +166,8 @@ A template is **a storyline (the shape of the argument for a task) × a theme (t
 <p align="center"><a href="docs/reference/storylines.gen.md">All storylines →</a> · <a href="docs/reference/themes.gen.md">All themes →</a> · <a href="docs/reference/layouts.gen.md">All layouts →</a></p>
 
 Storyline is the task, theme is the look: **14 storylines × 7 themes**, independently selectable. Within each slide, route the message through `slidecraft exhibits`, reuse native library components with `slidecraft components`, and combine them using `layout: composition`. Shared design elements and content feed HTML and editable PowerPoint engines through one Scene IR. [Constructor guide](docs/how-to/compose-components.md) · [Architecture diagrams and verification limits](docs/explanation/architecture.md).
+
+**Native diagrams (development branch).** Heatmaps, treemaps, Sankey flows, architecture changes, swimlanes, journeys, sequence/state diagrams and data models use editable PowerPoint shapes and text. Six additional chart variants cover paired comparisons, ranks and distributions. Import a bounded Mermaid, draw.io or Excalidraw diagram with `node dist/slidecraft.mjs import-diagram input.mmd -o imported-diagram`; review its loss ledger before using it. These additions are in the repository and are not yet an npm release. [Diagram guide](docs/how-to/create-diagrams.md) · [Light example](examples/diagram-gallery/deck.yaml) · [Dark example](examples/diagram-gallery-midnight/deck.yaml) · [Research and implementation report](docs/research/diagram-design-implementation-2026-10.md).
 
 Also included: **business case**, **product overview**, **case study**, **project kickoff**, **post-mortem**, **training / workshop**, **sales / customer QBR**, **investment memo**. Bring your own outline and SlideCraft maps it onto layouts.
 

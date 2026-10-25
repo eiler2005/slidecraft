@@ -13,6 +13,12 @@ export interface CodeInfo {
 }
 
 export const CODES = {
+  'SC-DIAGRAM-001': {
+    severity: 'error',
+    title: 'Diagram semantics or geometry are inconsistent',
+    why: 'A diagram must preserve identities, endpoint relationships, scales and quantities.',
+    fix: 'Correct the pointed data or enlarge/split the diagram. Never drop a connection or change a value to fit.',
+  },
   'SC-IMPORT-001': {
     severity: 'error',
     title: 'Original PowerPoint object needs an editable equivalent',

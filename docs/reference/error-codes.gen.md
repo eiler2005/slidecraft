@@ -7,6 +7,7 @@
 
 | Code | Severity | Meaning | Why | Fix |
 |---|---|---|---|---|
+| `SC-DIAGRAM-001` | error | Diagram semantics or geometry are inconsistent | A diagram must preserve identities, endpoint relationships, scales and quantities. | Correct the pointed data or enlarge/split the diagram. Never drop a connection or change a value to fit. |
 | `SC-IMPORT-001` | error | Original PowerPoint object needs an editable equivalent | A source object or typography setting cannot yet be represented by the shared Scene importer. | Implement the corresponding editable primitive or source-font mapping before rebuilding; never drop the object or rasterise the slide. |
 | `SC-HTML-002` | error | Required slide element missing from HTML | Serialized HTML did not preserve the shared slide frame contract. | Repair the HTML/SVG renderer. Titles, numbering, sources and visual frame elements must survive in every output. |
 | `SC-CHROME-001` | error | Required slide chrome missing or duplicated | Titles, section labels, source lines, page numbers and theme decoration are part of the slide contract, not optional exporter embellishments. | Restore the shared frame or the required native object. Do not remove the requirement or rasterise the slide to make validation pass. |

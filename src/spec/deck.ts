@@ -128,6 +128,12 @@ export const Deck = z
     language: z.string().default('en').describe('BCP-47 language tag of the content'),
     storyline: z.string().optional().describe('Storyline id from the library'),
     theme: z.string().default('consulting-classic'),
+    readability: z
+      .enum(['report', 'present'])
+      .default('report')
+      .describe(
+        'Report preserves theme sizes; present raises readable type sizes for screen delivery and may require fewer elements',
+      ),
     format: z
       .string()
       .default('wide-16x9')

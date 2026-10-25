@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { cols } from '../engine/format.ts';
 import { diag } from '../qa/codes.ts';
+import { advancedChart } from './advanced-charts.ts';
+import { pairedComparison } from './paired-comparison.ts';
 import type { LayoutDef } from './types.ts';
 
 export const ChartData = z
@@ -56,7 +58,18 @@ export const chartTakeaway: LayoutDef<typeof schema> = {
     'A bridge from one total to another — use waterfall',
     'Fewer than three data points — use kpi-tiles',
   ],
-  variants: ['bar', 'column', 'stacked', 'line', 'combo'],
+  variants: [
+    'bar',
+    'column',
+    'stacked',
+    'line',
+    'combo',
+    'dumbbell',
+    'slopegraph',
+    'bump',
+    'ridgeline',
+    'streamgraph',
+  ],
   frame: 'standard',
   master: 'content',
   schema,
@@ -159,6 +172,55 @@ export const chartTakeaway: LayoutDef<typeof schema> = {
       },
       sources: ['finance-fy25'],
     },
+    ...(['bump', 'ridgeline', 'streamgraph'] as const).map((variant) => ({
+      title:
+        variant === 'bump'
+          ? 'Product adoption ranks change after the launch'
+          : variant === 'ridgeline'
+            ? 'Response-time distributions differ across the two service groups'
+            : 'The service mix shifts across the observed periods',
+      variant,
+      sources: ['illustrative'],
+      content: {
+        chart: {
+          categories: variant === 'ridgeline' ? ['10', '20', '30', '40'] : ['Q1', 'Q2', 'Q3', 'Q4'],
+          series:
+            variant === 'bump'
+              ? [
+                  { name: 'Core', values: [1, 2, 1, 1] },
+                  { name: 'New', values: [2, 1, 2, 2] },
+                ]
+              : [
+                  { name: 'Core', values: [5, 12, 18, 8] },
+                  { name: 'New', values: [2, 6, 14, 16] },
+                ],
+        },
+        takeaway: {
+          headline: 'The pattern guides the next investigation',
+          points: ['Illustrative observations use the same definition.'],
+        },
+      },
+    })),
+    ...(['dumbbell', 'slopegraph'] as const).map((variant) => ({
+      title: 'Response times fall across every service after the redesign',
+      variant,
+      sources: ['illustrative'],
+      content: {
+        chart: {
+          categories: ['Billing', 'Orders', 'Accounts', 'Returns'],
+          series: [
+            { name: 'Before', values: [42, 35, 28, 20] },
+            { name: 'After', values: [24, 22, 18, 15] },
+          ],
+          unit: 'm',
+          highlight: ['Billing'],
+        },
+        takeaway: {
+          headline: 'Billing improves the most',
+          points: ['Both periods use the same definition and scale.'],
+        },
+      },
+    })),
   ],
   compose(ctx, c) {
     const { body, colors } = ctx;
@@ -213,20 +275,25 @@ export const chartTakeaway: LayoutDef<typeof schema> = {
           combo: 'combo',
         } as const
       )[ctx.variant as 'bar'] ?? 'column';
-    ctx.chart(
-      {
-        type,
-        categories: c.chart.categories,
-        series: c.chart.series,
-        ...(hl.length ? { highlight: hl } : {}),
-        ...(c.chart.unit ? { unit: c.chart.unit } : {}),
-        ...(c.chart.decimals !== undefined ? { decimals: c.chart.decimals } : {}),
-        ...(c.chart.lineUnit ? { lineUnit: c.chart.lineUnit } : {}),
-        ...(c.chart.lineDecimals !== undefined ? { lineDecimals: c.chart.lineDecimals } : {}),
-        field: 'chart',
-      },
-      chartBox,
-    );
+    if (ctx.variant === 'dumbbell' || ctx.variant === 'slopegraph')
+      pairedComparison(ctx, chartBox, c.chart, ctx.variant);
+    else if (['bump', 'ridgeline', 'streamgraph'].includes(ctx.variant))
+      advancedChart(ctx, chartBox, c.chart, ctx.variant);
+    else
+      ctx.chart(
+        {
+          type,
+          categories: c.chart.categories,
+          series: c.chart.series,
+          ...(hl.length ? { highlight: hl } : {}),
+          ...(c.chart.unit ? { unit: c.chart.unit } : {}),
+          ...(c.chart.decimals !== undefined ? { decimals: c.chart.decimals } : {}),
+          ...(c.chart.lineUnit ? { lineUnit: c.chart.lineUnit } : {}),
+          ...(c.chart.lineDecimals !== undefined ? { lineDecimals: c.chart.lineDecimals } : {}),
+          field: 'chart',
+        },
+        chartBox,
+      );
 
     const panel = right!;
     ctx.rect(panel, { fill: colors.surface, role: 'panel' });

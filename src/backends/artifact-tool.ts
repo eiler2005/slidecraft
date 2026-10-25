@@ -171,6 +171,10 @@ function pathShape(
 async function addNode(slide: Any, n: SceneNode, slideId?: string): Promise<void> {
   const name = shapeName(n, slideId);
   switch (n.kind) {
+    case 'path':
+      throw new Error(
+        'artifact-tool does not support editable native paths; use the default pptxgenjs engine',
+      );
     case 'text':
       return addText(slide, n, slideId);
     case 'rect': {

@@ -11,3 +11,4 @@ Short records of decisions that shape SlideCraft. Status: **Accepted** unless no
 | [0005](0005-metric-compatible-fonts.md) | Measure text with metric-compatible open fonts; never truncate |
 | [0006](0006-model-tiering-and-checkpoints.md) | Model tiering for agents; user checkpoints stay in the main session |
 | [0007](0007-docs-diataxis-and-generated-reference.md) | Diátaxis docs; reference generated from code |
+| [0008](0008-native-diagrams-and-semantic-import.md) | Native diagram semantics, shared geometry, quantitative QA and bounded imports |

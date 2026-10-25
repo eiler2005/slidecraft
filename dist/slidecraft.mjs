@@ -327,7 +327,7 @@ var require_BufferList = __commonJS({
         this.head = this.tail = null;
         this.length = 0;
       };
-      BufferList.prototype.join = function join33(s2) {
+      BufferList.prototype.join = function join34(s2) {
         if (this.length === 0) return "";
         var p = this.head;
         var ret = "" + p.data;
@@ -1538,9 +1538,9 @@ var require_stream_readable = __commonJS({
       if (state.endEmitted) pna.nextTick(endFn);
       else src.once("end", endFn);
       dest.on("unpipe", onunpipe);
-      function onunpipe(readable, unpipeInfo) {
+      function onunpipe(readable2, unpipeInfo) {
         debug("onunpipe");
-        if (readable === src) {
+        if (readable2 === src) {
           if (unpipeInfo && unpipeInfo.hasUnpiped === false) {
             unpipeInfo.hasUnpiped = true;
             cleanup();
@@ -2302,8 +2302,8 @@ var require_lib2 = __commonJS({
         return this;
       }
       var p = this.constructor;
-      return this.then(resolve28, reject2);
-      function resolve28(value) {
+      return this.then(resolve29, reject2);
+      function resolve29(value) {
         function yes() {
           return value;
         }
@@ -2456,8 +2456,8 @@ var require_lib2 = __commonJS({
       }
       return out;
     }
-    Promise2.resolve = resolve27;
-    function resolve27(value) {
+    Promise2.resolve = resolve28;
+    function resolve28(value) {
       if (value instanceof this) {
         return value;
       }
@@ -2719,17 +2719,17 @@ var require_utils = __commonJS({
       }
       return stringToArrayLike(str, result);
     }
-    exports.newBlob = function(part, type) {
+    exports.newBlob = function(part2, type) {
       exports.checkSupport("blob");
       try {
-        return new Blob([part], {
+        return new Blob([part2], {
           type
         });
       } catch (e) {
         try {
           var Builder = self.BlobBuilder || self.WebKitBlobBuilder || self.MozBlobBuilder || self.MSBlobBuilder;
           var builder = new Builder();
-          builder.append(part);
+          builder.append(part2);
           return builder.getBlob(type);
         } catch (e2) {
           throw new Error("Bug : can't construct the Blob.");
@@ -2918,13 +2918,13 @@ var require_utils = __commonJS({
       var parts = path2.split("/");
       var result = [];
       for (var index = 0; index < parts.length; index++) {
-        var part = parts[index];
-        if (part === "." || part === "" && index !== 0 && index !== parts.length - 1) {
+        var part2 = parts[index];
+        if (part2 === "." || part2 === "" && index !== 0 && index !== parts.length - 1) {
           continue;
-        } else if (part === "..") {
+        } else if (part2 === "..") {
           result.pop();
         } else {
-          result.push(part);
+          result.push(part2);
         }
       }
       return result.join("/");
@@ -2992,10 +2992,10 @@ var require_utils = __commonJS({
           if (typeof Blob.prototype.arrayBuffer !== "undefined") {
             return data.arrayBuffer();
           } else if (typeof FileReader !== "undefined") {
-            return new external.Promise(function(resolve27, reject) {
+            return new external.Promise(function(resolve28, reject) {
               var reader = new FileReader();
               reader.onload = function(e) {
-                resolve27(e.target.result);
+                resolve28(e.target.result);
               };
               reader.onerror = function(e) {
                 reject(e.target.error);
@@ -3554,7 +3554,7 @@ var require_StreamHelper = __commonJS({
       }
     }
     function accumulate(helper, updateCallback) {
-      return new external.Promise(function(resolve27, reject) {
+      return new external.Promise(function(resolve28, reject) {
         var dataArray = [];
         var chunkType = helper._internalType, resultType = helper._outputType, mimeType = helper._mimeType;
         helper.on("data", function(data, meta3) {
@@ -3568,7 +3568,7 @@ var require_StreamHelper = __commonJS({
         }).on("end", function() {
           try {
             var result = transformZipOutput(resultType, concat2(chunkType, dataArray), mimeType);
-            resolve27(result);
+            resolve28(result);
           } catch (e) {
             reject(e);
           }
@@ -4029,9 +4029,9 @@ var require_common = __commonJS({
       return Object.prototype.hasOwnProperty.call(obj2, key);
     }
     exports.assign = function(obj2) {
-      var sources = Array.prototype.slice.call(arguments, 1);
-      while (sources.length) {
-        var source = sources.shift();
+      var sources7 = Array.prototype.slice.call(arguments, 1);
+      while (sources7.length) {
+        var source = sources7.shift();
         if (!source) {
           continue;
         }
@@ -6997,7 +6997,7 @@ var require_inflate = __commonJS({
       }
       return 0;
     }
-    function inflate2(strm, flush) {
+    function inflate3(strm, flush) {
       var state;
       var input2, output2;
       var next;
@@ -7980,7 +7980,7 @@ var require_inflate = __commonJS({
     exports.inflateResetKeep = inflateResetKeep;
     exports.inflateInit = inflateInit;
     exports.inflateInit2 = inflateInit2;
-    exports.inflate = inflate2;
+    exports.inflate = inflate3;
     exports.inflateEnd = inflateEnd;
     exports.inflateGetHeader = inflateGetHeader;
     exports.inflateSetDictionary = inflateSetDictionary;
@@ -8209,7 +8209,7 @@ var require_inflate2 = __commonJS({
       this.err = status;
       this.msg = this.strm.msg;
     };
-    function inflate2(input2, options) {
+    function inflate3(input2, options) {
       var inflator = new Inflate(options);
       inflator.push(input2, true);
       if (inflator.err) {
@@ -8220,12 +8220,12 @@ var require_inflate2 = __commonJS({
     function inflateRaw(input2, options) {
       options = options || {};
       options.raw = true;
-      return inflate2(input2, options);
+      return inflate3(input2, options);
     }
     exports.Inflate = Inflate;
-    exports.inflate = inflate2;
+    exports.inflate = inflate3;
     exports.inflateRaw = inflateRaw;
-    exports.ungzip = inflate2;
+    exports.ungzip = inflate3;
   }
 });
 
@@ -8235,10 +8235,10 @@ var require_pako = __commonJS({
     "use strict";
     var assign = require_common().assign;
     var deflate = require_deflate2();
-    var inflate2 = require_inflate2();
+    var inflate3 = require_inflate2();
     var constants2 = require_constants();
     var pako = {};
-    assign(pako, deflate, inflate2, constants2);
+    assign(pako, deflate, inflate3, constants2);
     module.exports = pako;
   }
 });
@@ -8594,13 +8594,13 @@ var require_ZipFileWorker = __commonJS({
       }
     };
     ZipFileWorker.prototype.error = function(e) {
-      var sources = this._sources;
+      var sources7 = this._sources;
       if (!GenericWorker.prototype.error.call(this, e)) {
         return false;
       }
-      for (var i = 0; i < sources.length; i++) {
+      for (var i = 0; i < sources7.length; i++) {
         try {
-          sources[i].error(e);
+          sources7[i].error(e);
         } catch (e2) {
         }
       }
@@ -8608,9 +8608,9 @@ var require_ZipFileWorker = __commonJS({
     };
     ZipFileWorker.prototype.lock = function() {
       GenericWorker.prototype.lock.call(this);
-      var sources = this._sources;
-      for (var i = 0; i < sources.length; i++) {
-        sources[i].lock();
+      var sources7 = this._sources;
+      for (var i = 0; i < sources7.length; i++) {
+        sources7[i].lock();
       }
     };
     module.exports = ZipFileWorker;
@@ -9681,7 +9681,7 @@ var require_load = __commonJS({
     var Crc32Probe = require_Crc32Probe();
     var nodejsUtils = require_nodejsUtils();
     function checkEntryCRC32(zipEntry) {
-      return new external.Promise(function(resolve27, reject) {
+      return new external.Promise(function(resolve28, reject) {
         var worker = zipEntry.decompressed.getContentWorker().pipe(new Crc32Probe());
         worker.on("error", function(e) {
           reject(e);
@@ -9689,7 +9689,7 @@ var require_load = __commonJS({
           if (worker.streamInfo.crc32 !== zipEntry.decompressed.crc32) {
             reject(new Error("Corrupted zip : CRC32 mismatch"));
           } else {
-            resolve27();
+            resolve28();
           }
         }).resume();
       });
@@ -10195,7 +10195,7 @@ var require_swap = __commonJS({
 // node_modules/unicode-trie/index.js
 var require_unicode_trie = __commonJS({
   "node_modules/unicode-trie/index.js"(exports, module) {
-    var inflate2 = require_tiny_inflate();
+    var inflate3 = require_tiny_inflate();
     var { swap32LE } = require_swap();
     var SHIFT_1 = 6 + 5;
     var SHIFT_2 = 5;
@@ -10230,8 +10230,8 @@ var require_unicode_trie = __commonJS({
             uncompressedLength = view.getUint32(8, true);
             data = data.subarray(12);
           }
-          data = inflate2(data, new Uint8Array(uncompressedLength));
-          data = inflate2(data, new Uint8Array(uncompressedLength));
+          data = inflate3(data, new Uint8Array(uncompressedLength));
+          data = inflate3(data, new Uint8Array(uncompressedLength));
           swap32LE(data);
           this.data = new Uint32Array(data.buffer);
         } else {
@@ -10392,9 +10392,9 @@ var require_clone = __commonJS({
           } else if (_instanceof2(parent2, nativeSet)) {
             child2 = new nativeSet();
           } else if (_instanceof2(parent2, nativePromise)) {
-            child2 = new nativePromise(function(resolve27, reject) {
+            child2 = new nativePromise(function(resolve28, reject) {
               parent2.then(function(value) {
-                resolve27(_clone(value, depth2 - 1));
+                resolve28(_clone(value, depth2 - 1));
               }, function(err) {
                 reject(_clone(err, depth2 - 1));
               });
@@ -10447,11 +10447,11 @@ var require_clone = __commonJS({
             });
           }
           for (var i in parent2) {
-            var attrs;
+            var attrs2;
             if (proto) {
-              attrs = Object.getOwnPropertyDescriptor(proto, i);
+              attrs2 = Object.getOwnPropertyDescriptor(proto, i);
             }
-            if (attrs && attrs.set == null) {
+            if (attrs2 && attrs2.set == null) {
               continue;
             }
             child2[i] = _clone(parent2[i], depth2 - 1);
@@ -136651,7 +136651,7 @@ var require_b64 = __commonJS({
       var UPPER = "A".charCodeAt(0);
       var PLUS_URL_SAFE = "-".charCodeAt(0);
       var SLASH_URL_SAFE = "_".charCodeAt(0);
-      function decode7(elt) {
+      function decode8(elt) {
         var code = elt.charCodeAt(0);
         if (code === PLUS || code === PLUS_URL_SAFE)
           return 62;
@@ -136680,16 +136680,16 @@ var require_b64 = __commonJS({
           arr[L++] = v;
         }
         for (i = 0, j = 0; i < l; i += 4, j += 3) {
-          tmp = decode7(b64.charAt(i)) << 18 | decode7(b64.charAt(i + 1)) << 12 | decode7(b64.charAt(i + 2)) << 6 | decode7(b64.charAt(i + 3));
+          tmp = decode8(b64.charAt(i)) << 18 | decode8(b64.charAt(i + 1)) << 12 | decode8(b64.charAt(i + 2)) << 6 | decode8(b64.charAt(i + 3));
           push((tmp & 16711680) >> 16);
           push((tmp & 65280) >> 8);
           push(tmp & 255);
         }
         if (placeHolders === 2) {
-          tmp = decode7(b64.charAt(i)) << 2 | decode7(b64.charAt(i + 1)) >> 4;
+          tmp = decode8(b64.charAt(i)) << 2 | decode8(b64.charAt(i + 1)) >> 4;
           push(tmp & 255);
         } else if (placeHolders === 1) {
-          tmp = decode7(b64.charAt(i)) << 10 | decode7(b64.charAt(i + 1)) << 4 | decode7(b64.charAt(i + 2)) >> 2;
+          tmp = decode8(b64.charAt(i)) << 10 | decode8(b64.charAt(i + 1)) << 4 | decode8(b64.charAt(i + 2)) >> 2;
           push(tmp >> 8 & 255);
           push(tmp & 255);
         }
@@ -139128,9 +139128,9 @@ var require_float = __commonJS({
       test: /^[-+]?(?:\.[0-9]+|[0-9]+\.[0-9]*)$/,
       resolve(str) {
         const node2 = new Scalar.Scalar(parseFloat(str));
-        const dot = str.indexOf(".");
-        if (dot !== -1 && str[str.length - 1] === "0")
-          node2.minFractionDigits = str.length - dot - 1;
+        const dot2 = str.indexOf(".");
+        if (dot2 !== -1 && str[str.length - 1] === "0")
+          node2.minFractionDigits = str.length - dot2 - 1;
         return node2;
       },
       stringify: stringifyNumber.stringifyNumber
@@ -139568,9 +139568,9 @@ var require_float2 = __commonJS({
       test: /^[-+]?(?:[0-9][0-9_]*)?\.[0-9_]*$/,
       resolve(str) {
         const node2 = new Scalar.Scalar(parseFloat(str.replace(/_/g, "")));
-        const dot = str.indexOf(".");
-        if (dot !== -1) {
-          const f = str.substring(dot + 1).replace(/_/g, "");
+        const dot2 = str.indexOf(".");
+        if (dot2 !== -1) {
+          const f = str.substring(dot2 + 1).replace(/_/g, "");
           if (f[f.length - 1] === "0")
             node2.minFractionDigits = f.length;
         }
@@ -142270,8 +142270,8 @@ var require_cst_visit = __commonJS({
     visit2.REMOVE = REMOVE;
     visit2.itemAtPath = (cst, path2) => {
       let item2 = cst;
-      for (const [field, index] of path2) {
-        const tok = item2?.[field];
+      for (const [field2, index] of path2) {
+        const tok = item2?.[field2];
         if (tok && "items" in tok) {
           item2 = tok.items[index];
         } else
@@ -142281,8 +142281,8 @@ var require_cst_visit = __commonJS({
     };
     visit2.parentCollection = (cst, path2) => {
       const parent = visit2.itemAtPath(cst, path2.slice(0, -1));
-      const field = path2[path2.length - 1][0];
-      const coll = parent?.[field];
+      const field2 = path2[path2.length - 1][0];
+      const coll = parent?.[field2];
       if (coll && "items" in coll)
         return coll;
       throw new Error("Parent collection not found");
@@ -142291,11 +142291,11 @@ var require_cst_visit = __commonJS({
       let ctrl = visitor(item2, path2);
       if (typeof ctrl === "symbol")
         return ctrl;
-      for (const field of ["key", "value"]) {
-        const token = item2[field];
+      for (const field2 of ["key", "value"]) {
+        const token = item2[field2];
         if (token && "items" in token) {
           for (let i = 0; i < token.items.length; ++i) {
-            const ci = _visit(Object.freeze(path2.concat([[field, i]])), token.items[i], visitor);
+            const ci = _visit(Object.freeze(path2.concat([[field2, i]])), token.items[i], visitor);
             if (typeof ci === "number")
               i = ci - 1;
             else if (ci === BREAK)
@@ -142305,7 +142305,7 @@ var require_cst_visit = __commonJS({
               i -= 1;
             }
           }
-          if (typeof ctrl === "function" && field === "key")
+          if (typeof ctrl === "function" && field2 === "key")
             ctrl = ctrl(item2, path2);
         }
       }
@@ -144138,10 +144138,10 @@ function markDecorative(xml2) {
     if (!open2 || pic.includes("adec:decorative")) return pic;
     const d = /descr="([^"]*)"/.exec(open2[1])?.[1] ?? "";
     if (!notAlt(d)) return pic;
-    const attrs = open2[1].replace(/\s*descr="[^"]*"/, "").trimEnd();
+    const attrs2 = open2[1].replace(/\s*descr="[^"]*"/, "").trimEnd();
     if (open2[2])
-      return pic.replace(open2[0], `<p:cNvPr ${attrs} descr="">${DECORATIVE_EXT}</p:cNvPr>`);
-    return pic.replace(open2[0], `<p:cNvPr ${attrs} descr="">`).replace("</p:cNvPr>", `${DECORATIVE_EXT}</p:cNvPr>`);
+      return pic.replace(open2[0], `<p:cNvPr ${attrs2} descr="">${DECORATIVE_EXT}</p:cNvPr>`);
+    return pic.replace(open2[0], `<p:cNvPr ${attrs2} descr="">`).replace("</p:cNvPr>", `${DECORATIVE_EXT}</p:cNvPr>`);
   });
 }
 
@@ -144154,11 +144154,11 @@ import { join as join4 } from "node:path";
 var import_jszip = __toESM(require_lib3());
 function __awaiter(thisArg, _arguments, P3, generator) {
   function adopt(value) {
-    return value instanceof P3 ? value : new P3(function(resolve27) {
-      resolve27(value);
+    return value instanceof P3 ? value : new P3(function(resolve28) {
+      resolve28(value);
     });
   }
-  return new (P3 || (P3 = Promise))(function(resolve27, reject) {
+  return new (P3 || (P3 = Promise))(function(resolve28, reject) {
     function fulfilled(value) {
       try {
         step(generator.next(value));
@@ -144174,7 +144174,7 @@ function __awaiter(thisArg, _arguments, P3, generator) {
       }
     }
     function step(result) {
-      result.done ? resolve27(result.value) : adopt(result.value).then(fulfilled, rejected);
+      result.done ? resolve28(result.value) : adopt(result.value).then(fulfilled, rejected);
     }
     step((generator = generator.apply(thisArg, _arguments || [])).next());
   });
@@ -145254,8 +145254,8 @@ function genTableToSlides(pptx, tabEleId, options = {}, masterSlide) {
     console.log(`| arrColW ......................................... = [${arrColW.join(", ")}]`);
   }
   const tableParts = ["thead", "tbody", "tfoot"];
-  tableParts.forEach((part) => {
-    document.querySelectorAll(`#${tabEleId} ${part} tr`).forEach((row) => {
+  tableParts.forEach((part2) => {
+    document.querySelectorAll(`#${tabEleId} ${part2} tr`).forEach((row) => {
       const htmlRow = row;
       const arrObjTabCells = [];
       Array.from(htmlRow.cells).forEach((cell) => {
@@ -145313,7 +145313,7 @@ function genTableToSlides(pptx, tabEleId, options = {}, masterSlide) {
           options: cellOpts
         });
       });
-      switch (part) {
+      switch (part2) {
         case "thead":
           arrObjTabHeadRows.push(arrObjTabCells);
           break;
@@ -145324,7 +145324,7 @@ function genTableToSlides(pptx, tabEleId, options = {}, masterSlide) {
           arrObjTabFootRows.push(arrObjTabCells);
           break;
         default:
-          console.log(`table parsing: unexpected table part: ${part}`);
+          console.log(`table parsing: unexpected table part: ${part2}`);
           break;
       }
     });
@@ -146335,7 +146335,7 @@ var Slide = class {
 function createExcelWorksheet(chartObject, zip) {
   return __awaiter(this, void 0, void 0, function* () {
     const data = chartObject.data;
-    return yield new Promise((resolve27, reject) => {
+    return yield new Promise((resolve28, reject) => {
       var _a3, _b;
       const zipExcel = new import_jszip.default();
       const intBubbleCols = (data.length - 1) * 2 + 1;
@@ -146366,7 +146366,7 @@ function createExcelWorksheet(chartObject, zip) {
           strSharedStrings += `<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" count="${data.length}" uniqueCount="${data.length}">`;
         } else if (IS_MULTI_CAT_AXES) {
           let totCount = data.length;
-          data[0].labels.forEach((arrLabel) => totCount += arrLabel.filter((label4) => label4 && label4 !== "").length);
+          data[0].labels.forEach((arrLabel) => totCount += arrLabel.filter((label5) => label5 && label5 !== "").length);
           strSharedStrings += `<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" count="${totCount}" uniqueCount="${totCount}">`;
           strSharedStrings += "<si><t/></si>";
         } else {
@@ -146391,8 +146391,8 @@ function createExcelWorksheet(chartObject, zip) {
         }
         if (chartObject.opts._type !== CHART_TYPE.BUBBLE && chartObject.opts._type !== CHART_TYPE.BUBBLE3D && chartObject.opts._type !== CHART_TYPE.SCATTER) {
           data[0].labels.slice().reverse().forEach((labelsGroup) => {
-            labelsGroup.filter((label4) => label4 && label4 !== "").forEach((label4) => {
-              strSharedStrings += `<si><t>${encodeXmlEntities(label4)}</t></si>`;
+            labelsGroup.filter((label5) => label5 && label5 !== "").forEach((label5) => {
+              strSharedStrings += `<si><t>${encodeXmlEntities(label5)}</t></si>`;
             });
           });
         }
@@ -146524,7 +146524,7 @@ function createExcelWorksheet(chartObject, zip) {
               revLabelGroups.forEach((labelsGroup, idy) => {
                 const colLabel = labelsGroup[idx];
                 if (colLabel) {
-                  const totGrpLbls = idy === 0 ? 1 : revLabelGroups[idy - 1].filter((label4) => label4 && label4 !== "").length;
+                  const totGrpLbls = idy === 0 ? 1 : revLabelGroups[idy - 1].filter((label5) => label5 && label5 !== "").length;
                   totLabels += totGrpLbls;
                   strSheetXml += `<c r="${getExcelColName(idx + 1 + idy)}${idx + 2}" t="s"><v>${totLabels}</v></c>`;
                 }
@@ -146545,7 +146545,7 @@ function createExcelWorksheet(chartObject, zip) {
         zip.file(`ppt/embeddings/Microsoft_Excel_Worksheet${chartObject.globalId}.xlsx`, content, { base64: true });
         zip.file("ppt/charts/_rels/" + chartObject.fileName + ".rels", `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/package" Target="../embeddings/Microsoft_Excel_Worksheet${chartObject.globalId}.xlsx"/></Relationships>`);
         zip.file(`ppt/charts/${chartObject.fileName}`, makeXmlCharts(chartObject));
-        resolve27("");
+        resolve28("");
       }).catch((strErr) => {
         reject(strErr);
       });
@@ -146829,7 +146829,7 @@ function makeChartType(chartType2, data, opts, valAxisId, catAxisId, isMultiType
             strXml += "    <c:numCache>";
             strXml += "      <c:formatCode>" + (opts.catLabelFormatCode || "General") + "</c:formatCode>";
             strXml += `      <c:ptCount val="${obj2.labels[0].length}"/>`;
-            obj2.labels[0].forEach((label4, idx) => strXml += `<c:pt idx="${idx}"><c:v>${encodeXmlEntities(label4)}</c:v></c:pt>`);
+            obj2.labels[0].forEach((label5, idx) => strXml += `<c:pt idx="${idx}"><c:v>${encodeXmlEntities(label5)}</c:v></c:pt>`);
             strXml += "    </c:numCache>";
             strXml += "  </c:numRef>";
           } else {
@@ -146839,7 +146839,7 @@ function makeChartType(chartType2, data, opts, valAxisId, catAxisId, isMultiType
             strXml += `      <c:ptCount val="${obj2.labels[0].length}"/>`;
             obj2.labels.forEach((labelsGroup) => {
               strXml += "<c:lvl>";
-              labelsGroup.forEach((label4, idx) => strXml += `<c:pt idx="${idx}"><c:v>${encodeXmlEntities(label4)}</c:v></c:pt>`);
+              labelsGroup.forEach((label5, idx) => strXml += `<c:pt idx="${idx}"><c:v>${encodeXmlEntities(label5)}</c:v></c:pt>`);
               strXml += "</c:lvl>";
             });
             strXml += "    </c:multiLvlStrCache>";
@@ -146952,7 +146952,7 @@ function makeChartType(chartType2, data, opts, valAxisId, catAxisId, isMultiType
           const chartUuid = getUuid("-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
           if (obj2.labels[0] && (opts.dataLabelFormatScatter === "custom" || opts.dataLabelFormatScatter === "customXY")) {
             strXml += "<c:dLbls>";
-            obj2.labels[0].forEach((label4, idx2) => {
+            obj2.labels[0].forEach((label5, idx2) => {
               if (opts.dataLabelFormatScatter === "custom" || opts.dataLabelFormatScatter === "customXY") {
                 strXml += "  <c:dLbl>";
                 strXml += `    <c:idx val="${idx2}"/>`;
@@ -146968,9 +146968,9 @@ function makeChartType(chartType2, data, opts, valAxisId, catAxisId, isMultiType
                 strXml += "                </a:pPr>";
                 strXml += "              <a:r>";
                 strXml += '                    <a:rPr lang="' + (opts.lang || "en-US") + '" dirty="0"/>';
-                strXml += "                    <a:t>" + encodeXmlEntities(label4) + "</a:t>";
+                strXml += "                    <a:t>" + encodeXmlEntities(label5) + "</a:t>";
                 strXml += "              </a:r>";
-                if (opts.dataLabelFormatScatter === "customXY" && !/^ *$/.test(label4)) {
+                if (opts.dataLabelFormatScatter === "customXY" && !/^ *$/.test(label5)) {
                   strXml += "              <a:r>";
                   strXml += '                  <a:rPr lang="' + (opts.lang || "en-US") + '" baseline="0" dirty="0"/>';
                   strXml += "                  <a:t> (</a:t>";
@@ -147333,8 +147333,8 @@ function makeChartType(chartType2, data, opts, valAxisId, catAxisId, isMultiType
       strXml += `    <c:f>Sheet1!$A$2:$A$${optsChartData.labels[0].length + 1}</c:f>`;
       strXml += "    <c:strCache>";
       strXml += `         <c:ptCount val="${optsChartData.labels[0].length}"/>`;
-      optsChartData.labels[0].forEach((label4, idx) => {
-        strXml += `<c:pt idx="${idx}"><c:v>${encodeXmlEntities(label4)}</c:v></c:pt>`;
+      optsChartData.labels[0].forEach((label5, idx) => {
+        strXml += `<c:pt idx="${idx}"><c:v>${encodeXmlEntities(label5)}</c:v></c:pt>`;
       });
       strXml += "    </c:strCache>";
       strXml += "  </c:strRef>";
@@ -147750,7 +147750,7 @@ ${String(ex)}`);
         }
       }
       if (isNode && https && rel.path.startsWith("http")) {
-        return yield new Promise((resolve27, reject) => {
+        return yield new Promise((resolve28, reject) => {
           https.get(rel.path, (res) => {
             let raw = "";
             res.setEncoding("binary");
@@ -147758,7 +147758,7 @@ ${String(ex)}`);
             res.on("end", () => {
               rel.data = Buffer.from(raw, "binary").toString("base64");
               candidateRels.filter((dupe) => dupe.isDuplicate && dupe.path === rel.path).forEach((dupe) => dupe.data = rel.data);
-              resolve27("done");
+              resolve28("done");
             });
             res.on("error", () => {
               rel.data = IMG_BROKEN;
@@ -147768,7 +147768,7 @@ ${String(ex)}`);
           });
         });
       }
-      return yield new Promise((resolve27, reject) => {
+      return yield new Promise((resolve28, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.onload = () => {
           const reader = new FileReader();
@@ -147776,9 +147776,9 @@ ${String(ex)}`);
             rel.data = reader.result;
             candidateRels.filter((dupe) => dupe.isDuplicate && dupe.path === rel.path).forEach((dupe) => dupe.data = rel.data);
             if (!rel.isSvgPng) {
-              resolve27("done");
+              resolve28("done");
             } else {
-              createSvgPngPreview(rel).then(() => resolve27("done")).catch(reject);
+              createSvgPngPreview(rel).then(() => resolve28("done")).catch(reject);
             }
           };
           reader.readAsDataURL(xhr.response);
@@ -147810,7 +147810,7 @@ ${String(ex)}`);
 }
 function createSvgPngPreview(rel) {
   return __awaiter(this, void 0, void 0, function* () {
-    return yield new Promise((resolve27, reject) => {
+    return yield new Promise((resolve28, reject) => {
       const image = new Image();
       image.onload = () => {
         if (image.width + image.height === 0) {
@@ -147823,7 +147823,7 @@ function createSvgPngPreview(rel) {
         ctx.drawImage(image, 0, 0);
         try {
           rel.data = canvas.toDataURL(rel.type);
-          resolve27("done");
+          resolve28("done");
         } catch (ex) {
           image.onerror(ex.toString());
         }
@@ -149507,7 +149507,7 @@ function onColor(bg, dark = "#111111", light = "#FFFFFF") {
 }
 function ensureContrast(fg, bg, ratio = 4.5) {
   if (contrast(fg, bg) >= ratio) return fg;
-  const target = luminance(bg) > 0.4 ? "#000000" : "#FFFFFF";
+  const target = onColor(bg, "#000000", "#FFFFFF");
   for (let t = 0.05; t <= 1; t += 0.05) {
     const c = mix(fg, target, t);
     if (contrast(c, bg) >= ratio) return c;
@@ -151944,19 +151944,19 @@ var $61aa549f16d58b9b$export$2e2bcd8739ae039 = class {
       }
     });
     for (let key in this.fields) {
-      let field = this.fields[key];
-      ret[field[1]] = field[3];
+      let field2 = this.fields[key];
+      ret[field2[1]] = field2[3];
     }
     while (stream2.pos < end) {
       let b = stream2.readUInt8();
       if (b < 28) {
         if (b === 12) b = b << 8 | stream2.readUInt8();
-        let field = this.fields[b];
-        if (!field) throw new Error(`Unknown operator ${b}`);
-        let val = this.decodeOperands(field[2], stream2, ret, operands);
+        let field2 = this.fields[b];
+        if (!field2) throw new Error(`Unknown operator ${b}`);
+        let val = this.decodeOperands(field2[2], stream2, ret, operands);
         if (val != null) {
-          if (val instanceof (0, PropertyDescriptor)) Object.defineProperty(ret, field[1], val);
-          else ret[field[1]] = val;
+          if (val instanceof (0, PropertyDescriptor)) Object.defineProperty(ret, field2[1], val);
+          else ret[field2[1]] = val;
         }
         operands = [];
       } else operands.push((0, $c2d28e92708f99da$export$2e2bcd8739ae039).decode(stream2, b));
@@ -151972,13 +151972,13 @@ var $61aa549f16d58b9b$export$2e2bcd8739ae039 = class {
     };
     let len = 0;
     for (let k in this.fields) {
-      let field = this.fields[k];
-      let val = dict[field[1]];
-      if (val == null || (0, import_fast_deep_equal.default)(val, field[3])) continue;
-      let operands = this.encodeOperands(field[2], null, ctx, val);
+      let field2 = this.fields[k];
+      let val = dict[field2[1]];
+      if (val == null || (0, import_fast_deep_equal.default)(val, field2[3])) continue;
+      let operands = this.encodeOperands(field2[2], null, ctx, val);
       for (let op of operands) len += (0, $c2d28e92708f99da$export$2e2bcd8739ae039).size(op);
-      let key = Array.isArray(field[0]) ? field[0] : [
-        field[0]
+      let key = Array.isArray(field2[0]) ? field2[0] : [
+        field2[0]
       ];
       len += key.length;
     }
@@ -151994,13 +151994,13 @@ var $61aa549f16d58b9b$export$2e2bcd8739ae039 = class {
       pointerSize: 0
     };
     ctx.pointerOffset = stream2.pos + this.size(dict, ctx, false);
-    for (let field of this.ops) {
-      let val = dict[field[1]];
-      if (val == null || (0, import_fast_deep_equal.default)(val, field[3])) continue;
-      let operands = this.encodeOperands(field[2], stream2, ctx, val);
+    for (let field2 of this.ops) {
+      let val = dict[field2[1]];
+      if (val == null || (0, import_fast_deep_equal.default)(val, field2[3])) continue;
+      let operands = this.encodeOperands(field2[2], stream2, ctx, val);
       for (let op of operands) (0, $c2d28e92708f99da$export$2e2bcd8739ae039).encode(stream2, op);
-      let key = Array.isArray(field[0]) ? field[0] : [
-        field[0]
+      let key = Array.isArray(field2[0]) ? field2[0] : [
+        field2[0]
       ];
       for (let op of key) stream2.writeUInt8(op);
     }
@@ -152014,9 +152014,9 @@ var $61aa549f16d58b9b$export$2e2bcd8739ae039 = class {
   constructor(ops = []) {
     this.ops = ops;
     this.fields = {};
-    for (let field of ops) {
-      let key = Array.isArray(field[0]) ? field[0][0] << 8 | field[0][1] : field[0];
-      this.fields[key] = field;
+    for (let field2 of ops) {
+      let key = Array.isArray(field2[0]) ? field2[0][0] << 8 | field2[0][1] : field2[0];
+      this.fields[key] = field2;
     }
   }
 };
@@ -157307,10 +157307,10 @@ var $55f71433a605c87d$export$2e2bcd8739ae039 = class {
     this.firstGlyph = null;
     this.lastGlyph = null;
     this.markedIndex = null;
-    let stateMachine = this.getStateMachine(subtable);
+    let stateMachine2 = this.getStateMachine(subtable);
     let process3 = this.getProcessor();
     let reverse = !!(this.subtable.coverage & $55f71433a605c87d$var$REVERSE_DIRECTION);
-    return stateMachine.process(this.glyphs, reverse, process3);
+    return stateMachine2.process(this.glyphs, reverse, process3);
   }
   getStateMachine(subtable) {
     return new (0, $50c7aac9316f2948$export$2e2bcd8739ae039)(subtable.table.stateTable);
@@ -157443,12 +157443,12 @@ var $55f71433a605c87d$export$2e2bcd8739ae039 = class {
     if (reverse) throw new Error("Reverse subtable, not supported.");
     this.subtable = subtable;
     this.ligatureStack = [];
-    let stateMachine = this.getStateMachine(subtable);
+    let stateMachine2 = this.getStateMachine(subtable);
     let process3 = this.getProcessor();
     let input2 = [];
     let stack = [];
     this.glyphs = [];
-    stateMachine.traverse({
+    stateMachine2.traverse({
       enter: (glyph, entry2) => {
         let glyphs = this.glyphs;
         stack.push({
@@ -158322,30 +158322,30 @@ var $a83b9c36aaa94fd3$export$2e2bcd8739ae039 = class {
     }
     return -1;
   }
-  match(sequenceIndex, sequence, fn, matched) {
+  match(sequenceIndex, sequence2, fn, matched) {
     let pos = this.glyphIterator.index;
     let glyph = this.glyphIterator.increment(sequenceIndex);
     let idx = 0;
-    while (idx < sequence.length && glyph && fn(sequence[idx], glyph)) {
+    while (idx < sequence2.length && glyph && fn(sequence2[idx], glyph)) {
       if (matched) matched.push(this.glyphIterator.index);
       idx++;
       glyph = this.glyphIterator.next();
     }
     this.glyphIterator.index = pos;
-    if (idx < sequence.length) return false;
+    if (idx < sequence2.length) return false;
     return matched || true;
   }
-  sequenceMatches(sequenceIndex, sequence) {
-    return this.match(sequenceIndex, sequence, (component, glyph) => component === glyph.id);
+  sequenceMatches(sequenceIndex, sequence2) {
+    return this.match(sequenceIndex, sequence2, (component, glyph) => component === glyph.id);
   }
-  sequenceMatchIndices(sequenceIndex, sequence) {
-    return this.match(sequenceIndex, sequence, (component, glyph) => {
+  sequenceMatchIndices(sequenceIndex, sequence2) {
+    return this.match(sequenceIndex, sequence2, (component, glyph) => {
       if (!(this.currentFeature in glyph.features)) return false;
       return component === glyph.id;
     }, []);
   }
-  coverageSequenceMatches(sequenceIndex, sequence) {
-    return this.match(sequenceIndex, sequence, (coverage, glyph) => this.coverageIndex(coverage, glyph.id) >= 0);
+  coverageSequenceMatches(sequenceIndex, sequence2) {
+    return this.match(sequenceIndex, sequence2, (coverage, glyph) => this.coverageIndex(coverage, glyph.id) >= 0);
   }
   getClassID(glyph, classDef) {
     switch (classDef.version) {
@@ -158361,8 +158361,8 @@ var $a83b9c36aaa94fd3$export$2e2bcd8739ae039 = class {
     }
     return 0;
   }
-  classSequenceMatches(sequenceIndex, sequence, classDef) {
-    return this.match(sequenceIndex, sequence, (classID, glyph) => classID === this.getClassID(glyph.id, classDef));
+  classSequenceMatches(sequenceIndex, sequence2, classDef) {
+    return this.match(sequenceIndex, sequence2, (classID, glyph) => classID === this.getClassID(glyph.id, classDef));
   }
   applyContext(table) {
     let index, set2;
@@ -159608,16 +159608,16 @@ var $0a876c45f1f7c41c$export$2e2bcd8739ae039 = class extends (0, $a83b9c36aaa94f
       case 2: {
         let index = this.coverageIndex(table.coverage);
         if (index !== -1) {
-          let sequence = table.sequences.get(index);
-          if (sequence.length === 0) {
+          let sequence2 = table.sequences.get(index);
+          if (sequence2.length === 0) {
             this.glyphs.splice(this.glyphIterator.index, 1);
             return true;
           }
-          this.glyphIterator.cur.id = sequence[0];
+          this.glyphIterator.cur.id = sequence2[0];
           this.glyphIterator.cur.ligatureComponent = 0;
           let features = this.glyphIterator.cur.features;
           let curGlyph = this.glyphIterator.cur;
-          let replacement = sequence.slice(1).map((gid, i) => {
+          let replacement = sequence2.slice(1).map((gid, i) => {
             let glyph = new (0, $10e7b257e1a9a756$export$2e2bcd8739ae039)(this.font, gid, void 0, features);
             glyph.shaperInfo = curGlyph.shaperInfo;
             glyph.isLigated = curGlyph.isLigated;
@@ -160606,8 +160606,8 @@ var $f92906be28e61769$export$2e2bcd8739ae039 = class {
   * @return {Path}
   */
   getScaledPath(size2) {
-    let scale = 1 / this._font.unitsPerEm * size2;
-    return this.path.scale(scale);
+    let scale2 = 1 / this._font.unitsPerEm * size2;
+    return this.path.scale(scale2);
   }
   /**
   * The glyph's advance width.
@@ -160655,8 +160655,8 @@ var $f92906be28e61769$export$2e2bcd8739ae039 = class {
   */
   render(ctx, size2) {
     ctx.save();
-    let scale = 1 / this._font.head.unitsPerEm * size2;
-    ctx.scale(scale, scale);
+    let scale2 = 1 / this._font.head.unitsPerEm * size2;
+    ctx.scale(scale2, scale2);
     let fn = this.path.toFunction();
     fn(ctx);
     ctx.fill();
@@ -161429,11 +161429,11 @@ var $25d8f049c222084c$export$2e2bcd8739ae039 = class extends (0, $69aac160299686
   render(ctx, size2) {
     let img = this.getImageForSize(size2);
     if (img != null) {
-      let scale = size2 / this._font.unitsPerEm;
+      let scale2 = size2 / this._font.unitsPerEm;
       ctx.image(img.data, {
         height: size2,
         x: img.originX,
-        y: (this.bbox.minY - img.originY) * scale
+        y: (this.bbox.minY - img.originY) * scale2
       });
     }
     if (this._font.sbix.flags.renderOutlines) super.render(ctx, size2);
@@ -161726,12 +161726,12 @@ var $0bb840cac04e911b$export$2e2bcd8739ae039 = class {
       let out1 = outPoints[ref1][k];
       let out2 = outPoints[ref2][k];
       if (in1 !== in2 || out1 === out2) {
-        let scale = in1 === in2 ? 0 : (out2 - out1) / (in2 - in1);
+        let scale2 = in1 === in2 ? 0 : (out2 - out1) / (in2 - in1);
         for (let p3 = p1; p3 <= p2; p3++) {
           let out = inPoints[p3][k];
           if (out <= in1) out += out1 - in1;
           else if (out >= in2) out += out2 - in2;
-          else out = out1 + (out - in1) * scale;
+          else out = out1 + (out - in1) * scale2;
           outPoints[p3][k] = out;
         }
       }
@@ -163273,20 +163273,20 @@ function glyphAdvancesPt(font, face, size2, text4, kerning = false, grid2) {
   if (hit) return hit;
   const f = load(font, face);
   const opts = { liga: false, clig: false };
-  const plain = f.font.layout(text4, { ...opts, kern: false });
-  const run = kerning ? f.font.layout(text4, { ...opts, kern: true }) : plain;
+  const plain2 = f.font.layout(text4, { ...opts, kern: false });
+  const run = kerning ? f.font.layout(text4, { ...opts, kern: true }) : plain2;
   const chars = [...text4];
-  const scale = size2 / f.upm;
+  const scale2 = size2 / f.upm;
   const snap = (pt2) => grid2 ? Math.round(pt2 * grid2 / 72) * (72 / grid2) : pt2;
   let out;
-  if (plain.positions.length === chars.length && run.positions.length === chars.length) {
-    out = plain.positions.map((p, i) => {
-      const base = p.xAdvance * scale;
-      const kern = run.positions[i].xAdvance * scale - base;
+  if (plain2.positions.length === chars.length && run.positions.length === chars.length) {
+    out = plain2.positions.map((p, i) => {
+      const base = p.xAdvance * scale2;
+      const kern = run.positions[i].xAdvance * scale2 - base;
       return snap(base) + (OFFICE_RULES.advance.snapKerning ? snap(kern) : kern);
     });
   } else {
-    const total = snap(run.advanceWidth * scale);
+    const total = snap(run.advanceWidth * scale2);
     out = chars.map((_, i) => i === 0 ? total : 0);
   }
   advanceCache.set(key, out);
@@ -163321,9 +163321,9 @@ function missingGlyphs(font, text4) {
 
 // src/engine/scene.ts
 function coverPlacement(img, box2, focus = { x: 0.5, y: 0.5 }) {
-  const scale = Math.max(box2.w / img.w, box2.h / img.h);
-  const w = img.w * scale;
-  const h = img.h * scale;
+  const scale2 = Math.max(box2.w / img.w, box2.h / img.h);
+  const w = img.w * scale2;
+  const h = img.h * scale2;
   return { x: box2.x - (w - box2.w) * focus.x, y: box2.y - (h - box2.h) * focus.y, w, h };
 }
 var PT_PER_IN = 72;
@@ -163363,14 +163363,14 @@ function tokenize(p, style) {
       ...r.link ? { link: r.link } : {},
       ...r.underline !== void 0 ? { underline: r.underline } : {}
     };
-    for (const part of r.text.split(BREAKS)) {
-      if (!part) continue;
-      if (part === "\n")
+    for (const part2 of r.text.split(BREAKS)) {
+      if (!part2) continue;
+      if (part2 === "\n")
         out.push({ text: "", space: false, newline: true, bold: bold2, italic, color: color4, ...link });
       else
         out.push({
-          text: part,
-          space: /^[ \t]+$/.test(part),
+          text: part2,
+          space: /^[ \t]+$/.test(part2),
           newline: false,
           bold: bold2,
           italic,
@@ -163393,9 +163393,9 @@ function spacingMultiple(s2) {
 function glyphOffsetsPt(s2, face, text4) {
   const out = [];
   let x2 = 0;
-  for (const part of text4.split(BREAKS)) {
-    if (!part) continue;
-    const measured = /^[ \t]+$/.test(part) ? part.replace(/\t/g, " ") : part;
+  for (const part2 of text4.split(BREAKS)) {
+    if (!part2) continue;
+    const measured = /^[ \t]+$/.test(part2) ? part2.replace(/\t/g, " ") : part2;
     for (const a of glyphAdvancesPt(s2.measure, face, s2.size, measured, s2.kerning, advanceGrid(s2))) {
       out.push(x2);
       x2 += a;
@@ -164312,6 +164312,12 @@ import { posix } from "node:path";
 
 // src/qa/codes.ts
 var CODES = {
+  "SC-DIAGRAM-001": {
+    severity: "error",
+    title: "Diagram semantics or geometry are inconsistent",
+    why: "A diagram must preserve identities, endpoint relationships, scales and quantities.",
+    fix: "Correct the pointed data or enlarge/split the diagram. Never drop a connection or change a value to fit."
+  },
   "SC-IMPORT-001": {
     severity: "error",
     title: "Original PowerPoint object needs an editable equivalent",
@@ -164653,25 +164659,25 @@ function pngSize(buf) {
 }
 async function declaredPartsExist(zip) {
   const types = await zip.file("[Content_Types].xml")?.async("string") ?? "";
-  return [...types.matchAll(/<Override\b[^>]*\bPartName="\/([^"]+)"/g)].map((m) => decodeURIComponent(m[1])).filter((part) => !zip.files[part]).map(
-    (part) => diag("SC-PPTX-004", `[Content_Types].xml declares /${part}, which is not in the file`)
+  return [...types.matchAll(/<Override\b[^>]*\bPartName="\/([^"]+)"/g)].map((m) => decodeURIComponent(m[1])).filter((part2) => !zip.files[part2]).map(
+    (part2) => diag("SC-PPTX-004", `[Content_Types].xml declares /${part2}, which is not in the file`)
   );
 }
 async function verifyPptx(path2, scene) {
   const zip = await import_jszip2.default.loadAsync(readFileSync3(path2));
   const out = checkChrome(scene);
   out.push(...await declaredPartsExist(zip));
-  const xmlOf = async (part) => await zip.file(part)?.async("string") ?? "";
-  const linkedPart = async (part, type) => {
+  const xmlOf = async (part2) => await zip.file(part2)?.async("string") ?? "";
+  const linkedPart = async (part2, type) => {
     const rels4 = await xmlOf(
-      posix.join(posix.dirname(part), "_rels", `${posix.basename(part)}.rels`)
+      posix.join(posix.dirname(part2), "_rels", `${posix.basename(part2)}.rels`)
     );
     for (const relationship of rels4.matchAll(/<Relationship\b[^>]*\/>/g)) {
       const tag = relationship[0];
       if (!new RegExp(`Type="[^"]*/${type}"`).test(tag)) continue;
       const target = /Target="([^"]+)"/.exec(tag)?.[1];
       if (target)
-        return target.startsWith("/") ? target.slice(1) : posix.normalize(posix.join(posix.dirname(part), target));
+        return target.startsWith("/") ? target.slice(1) : posix.normalize(posix.join(posix.dirname(part2), target));
     }
     return void 0;
   };
@@ -164684,7 +164690,7 @@ async function verifyPptx(path2, scene) {
       continue;
     }
     const hay = norm([...xml2.matchAll(/<a:t>([^<]*)<\/a:t>/g)].map((m) => m[1]).join(""));
-    const part = `ppt/slides/slide${s2.index + 1}.xml`;
+    const part2 = `ppt/slides/slide${s2.index + 1}.xml`;
     for (const node2 of s2.nodes) {
       if (!node2.role?.startsWith("chrome-") && !node2.role?.startsWith("ppt:")) continue;
       const name = shapeName(node2, s2.id);
@@ -164729,7 +164735,7 @@ async function verifyPptx(path2, scene) {
           );
       }
     }
-    const layoutPart = await linkedPart(part, "slideLayout");
+    const layoutPart = await linkedPart(part2, "slideLayout");
     const masterPart = layoutPart ? await linkedPart(layoutPart, "slideMaster") : void 0;
     const inherited = `${layoutPart ? await xmlOf(layoutPart) : ""}${masterPart ? await xmlOf(masterPart) : ""}`;
     const masterText = [];
@@ -164745,7 +164751,7 @@ async function verifyPptx(path2, scene) {
         diag("SC-PPTX-002", "Page-number field missing from slide/layout/master", { slide: s2.id })
       );
     if (s2.notes) {
-      const notesPart = await linkedPart(part, "notesSlide");
+      const notesPart = await linkedPart(part2, "notesSlide");
       if (!notesPart || !visibleText(await xmlOf(notesPart)).includes(norm(s2.notes)))
         out.push(
           diag("SC-PPTX-002", "Speaker notes missing or incomplete after export", { slide: s2.id })
@@ -164809,7 +164815,7 @@ async function verifyPptx(path2, scene) {
 // src/backends/pptx-template.ts
 var import_jszip3 = __toESM(require_lib3(), 1);
 import { posix as posix2 } from "node:path";
-var relsPath = (part) => `${posix2.dirname(part)}/_rels/${posix2.basename(part)}.rels`;
+var relsPath = (part2) => `${posix2.dirname(part2)}/_rels/${posix2.basename(part2)}.rels`;
 function parseRels(xml2) {
   return [...xml2.matchAll(/<Relationship\b([^>]*?)\/?>/g)].map((m) => {
     const a = m[1];
@@ -164831,8 +164837,8 @@ function writeRels(rels4) {
 var resolveTarget = (from, target) => target.startsWith("/") ? target.slice(1) : posix2.normalize(posix2.join(posix2.dirname(from), target));
 var relative = (from, to) => posix2.relative(posix2.dirname(from), to);
 var typeOf = (t) => t.slice(t.lastIndexOf("/") + 1);
-async function rels(zip, part) {
-  const f = zip.file(relsPath(part));
+async function rels(zip, part2) {
+  const f = zip.file(relsPath(part2));
   return f ? parseRels(await f.async("string")) : [];
 }
 function parseTypes(xml2) {
@@ -164855,10 +164861,10 @@ function writeTypes(ct) {
 var ext = (p) => p.slice(p.lastIndexOf(".") + 1).toLowerCase();
 async function reachable(zip) {
   const seen = /* @__PURE__ */ new Set();
-  const walk2 = async (part, list) => {
+  const walk2 = async (part2, list) => {
     for (const r of list) {
       if (r.external) continue;
-      const t = resolveTarget(part, r.target);
+      const t = resolveTarget(part2, r.target);
       if (seen.has(t) || !zip.file(t)) continue;
       seen.add(t);
       await walk2(t, await rels(zip, t));
@@ -165946,8 +165952,8 @@ function transformPath(segs, s2, dx, dy) {
     } : { op: g.op, x: g.x * s2 + dx, y: g.y * s2 + dy }
   );
 }
-function pathData(segs, scale = 1) {
-  const f = (v) => +(v * scale).toFixed(3);
+function pathData(segs, scale2 = 1) {
+  const f = (v) => +(v * scale2).toFixed(3);
   return segs.map(
     (g) => g.op === "Z" ? "Z" : g.op === "C" ? `C${f(g.x1)} ${f(g.y1)} ${f(g.x2)} ${f(g.y2)} ${f(g.x)} ${f(g.y)}` : `${g.op}${f(g.x)} ${f(g.y)}`
   ).join("");
@@ -166044,7 +166050,7 @@ function nodeBodySvg(n) {
       return `<polygon points="${pts}" ${fill} ${strokeAttrs(n.stroke)}/>`;
     }
     case "path": {
-      const fill = n.fill ? `fill="${n.fill}"` : 'fill="none"';
+      const fill = n.fill ? `fill="${n.fill}"${n.fillOpacity !== void 0 ? ` fill-opacity="${n.fillOpacity}"` : ""}` : 'fill="none"';
       const round = n.round ? ' stroke-linecap="round" stroke-linejoin="round"' : "";
       return `<path d="${pathData(n.segments, PX_PER_IN)}" ${fill} ${strokeAttrs(n.stroke)}${round}/>`;
     }
@@ -166099,8 +166105,8 @@ function nodeBodySvg(n) {
       return n.primitives.map(nodeSvg).join("");
   }
 }
-function placeholderSvg(b, label4) {
-  return `<rect x="${px(b.x)}" y="${px(b.y)}" width="${px(b.w)}" height="${px(b.h)}" fill="#E9ECF0" stroke="#AEB6C1" stroke-width="1" stroke-dasharray="6 4"/><line x1="${px(b.x)}" y1="${px(b.y)}" x2="${px(b.x + b.w)}" y2="${px(b.y + b.h)}" stroke="#C5CBD3" stroke-width="1"/><line x1="${px(b.x + b.w)}" y1="${px(b.y)}" x2="${px(b.x)}" y2="${px(b.y + b.h)}" stroke="#C5CBD3" stroke-width="1"/><text x="${px(b.x + b.w / 2)}" y="${px(b.y + b.h / 2) + 5}" text-anchor="middle" font-family="Liberation Sans" font-size="14" fill="#6B7480">${esc(label4)}</text>`;
+function placeholderSvg(b, label5) {
+  return `<rect x="${px(b.x)}" y="${px(b.y)}" width="${px(b.w)}" height="${px(b.h)}" fill="#E9ECF0" stroke="#AEB6C1" stroke-width="1" stroke-dasharray="6 4"/><line x1="${px(b.x)}" y1="${px(b.y)}" x2="${px(b.x + b.w)}" y2="${px(b.y + b.h)}" stroke="#C5CBD3" stroke-width="1"/><line x1="${px(b.x + b.w)}" y1="${px(b.y)}" x2="${px(b.x)}" y2="${px(b.y + b.h)}" stroke="#C5CBD3" stroke-width="1"/><text x="${px(b.x + b.w / 2)}" y="${px(b.y + b.h / 2) + 5}" text-anchor="middle" font-family="Liberation Sans" font-size="14" fill="#6B7480">${esc(label5)}</text>`;
 }
 function masterSvg(m, slideNo) {
   let out = m.nodes.map(nodeSvg).join("");
@@ -166300,7 +166306,7 @@ function roundIconStrokes(xml2) {
     /<p:sp>[\s\S]*?<\/p:sp>/g,
     (sp) => sp.includes(`name="${ROUND_SHAPE}"`) ? sp.replace(
       /<a:ln\b([^>]*)>([\s\S]*?)<\/a:ln>/,
-      (_, attrs, body) => `<a:ln${attrs.replace(/\s+cap="[^"]*"/, "")} cap="rnd">${body.replace(/<a:(?:round|miter|bevel)\b[^>]*\/>/g, "")}<a:round/></a:ln>`
+      (_, attrs2, body) => `<a:ln${attrs2.replace(/\s+cap="[^"]*"/, "")} cap="rnd">${body.replace(/<a:(?:round|miter|bevel)\b[^>]*\/>/g, "")}<a:round/></a:ln>`
     ) : sp
   );
 }
@@ -166647,7 +166653,7 @@ function addNode(pptx, slide, n, slideId) {
         // round caps and joins are added in post-processing (pptxgenjs has no option)
         objectName: shapeName(n, slideId) ?? (n.round ? ROUND_SHAPE : "Freeform")
       };
-      o.fill = n.fill ? { color: hex(n.fill) } : { type: "none" };
+      o.fill = n.fill ? { color: hex(n.fill), transparency: Math.round((1 - (n.fillOpacity ?? 1)) * 100) } : { type: "none" };
       slide.addShape(pptx.ShapeType.custGeom, o);
       return;
     }
@@ -166819,7 +166825,7 @@ async function normalizeZip(buf, epoch, opts = {}) {
     if (name === "[Content_Types].xml")
       data = Buffer.from(data).toString("utf8").replace(
         /<Override PartName="\/(ppt\/slideMasters\/slideMaster\d+\.xml)"[^>]*\/>/g,
-        (tag, part) => written.has(part) ? tag : ""
+        (tag, part2) => written.has(part2) ? tag : ""
       );
     if (/^ppt\/(slideLayouts|slideMasters)\/[^/]+\.xml$/.test(name))
       data = markDecorative(Buffer.from(data).toString("utf8"));
@@ -167056,6 +167062,10 @@ function pathShape(slide, pts, close, fill, stroke, name) {
 async function addNode2(slide, n, slideId) {
   const name = shapeName(n, slideId);
   switch (n.kind) {
+    case "path":
+      throw new Error(
+        "artifact-tool does not support editable native paths; use the default pptxgenjs engine"
+      );
     case "text":
       return addText2(slide, n, slideId);
     case "rect": {
@@ -167337,9 +167347,9 @@ async function pinPlotAreas(buf, list) {
     return norm3("ppt", t?.[1] ?? t?.[2] ?? "");
   });
   let k = 0;
-  for (const part of slideParts) {
-    const xml2 = await zip.file(part)?.async("string") ?? "";
-    const relsPath2 = part.replace(/slides\/(slide\d+\.xml)$/, "slides/_rels/$1.rels");
+  for (const part2 of slideParts) {
+    const xml2 = await zip.file(part2)?.async("string") ?? "";
+    const relsPath2 = part2.replace(/slides\/(slide\d+\.xml)$/, "slides/_rels/$1.rels");
     const rels4 = await zip.file(relsPath2)?.async("string") ?? "";
     let j = k;
     const withAlt = xml2.replace(/<p:graphicFrame>([\s\S]*?)<\/p:graphicFrame>/g, (g) => {
@@ -167348,10 +167358,10 @@ async function pinPlotAreas(buf, list) {
       const esc6 = alt.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
       return g.replace(
         /<p:cNvPr ([^>]*?)(\/?)>/,
-        (_m, attrs, sc) => `<p:cNvPr ${attrs.replace(/\s*descr="[^"]*"/, "").trimEnd()} descr="${esc6}"${sc}>`
+        (_m, attrs2, sc) => `<p:cNvPr ${attrs2.replace(/\s*descr="[^"]*"/, "").trimEnd()} descr="${esc6}"${sc}>`
       );
     });
-    if (withAlt !== xml2) zip.file(part, withAlt);
+    if (withAlt !== xml2) zip.file(part2, withAlt);
     for (const m of xml2.matchAll(/<c:chart [^>]*r:id="([^"]+)"/g)) {
       const t = target(rels4, m[1]);
       const chartPart = norm3("ppt/slides", t?.[1] ?? t?.[2] ?? "");
@@ -167655,9 +167665,9 @@ var SCRIPT = `
 function buildHtml(scene) {
   const { w, h } = scene.format;
   const sections = scene.slides.map((s2, i) => {
-    const label4 = `Slide ${i + 1}: ${s2.title}`;
+    const label5 = `Slide ${i + 1}: ${s2.title}`;
     const notes = s2.notes?.trim();
-    return `<section class="slide${i === 0 ? " active" : ""}" id="slide-${i + 1}" aria-label="${esc(label4)}" data-slide="${i + 1}">${slideSvg(scene, s2)}<div class="notes" role="note" aria-label="Presenter notes"${notes ? "" : " data-empty"}>${notes ? esc(notes) : ""}</div></section>`;
+    return `<section class="slide${i === 0 ? " active" : ""}" id="slide-${i + 1}" aria-label="${esc(label5)}" data-slide="${i + 1}">${slideSvg(scene, s2)}<div class="notes" role="note" aria-label="Presenter notes"${notes ? "" : " data-empty"}>${notes ? esc(notes) : ""}</div></section>`;
   });
   const body = sections.join("\n");
   const css = fontFaceCss(body);
@@ -167810,7 +167820,7 @@ function containerChromeArgs() {
   return [...process.getuid?.() === 0 ? ["--no-sandbox"] : [], "--disable-dev-shm-usage"];
 }
 function runChrome(bin, args, timeoutMs, pdfPath) {
-  return new Promise((resolve27, reject) => {
+  return new Promise((resolve28, reject) => {
     const child2 = spawn(bin, args, { stdio: ["ignore", "pipe", "pipe"] });
     let stderr = "";
     let done = false;
@@ -167820,7 +167830,7 @@ function runChrome(bin, args, timeoutMs, pdfPath) {
       done = true;
       clearInterval(poll);
       clearTimeout(timer);
-      const settle2 = () => err ? reject(err) : resolve27({ stderr });
+      const settle2 = () => err ? reject(err) : resolve28({ stderr });
       if (child2.exitCode !== null) return settle2();
       const force = setTimeout(() => child2.kill("SIGKILL"), 3e3);
       child2.once("exit", () => {
@@ -168222,9 +168232,9 @@ var Doc = class {
   text(t) {
     for (const p of t.paragraphs) {
       if (!p.runs.some((r) => r.text.trim())) continue;
-      const plain = p.runs.map((r) => r.text).join("");
-      const label4 = /^[\p{Lu}\d][\p{Lu}\d &/·–-]{2,40}$/u.test(plain);
-      const style = t.role === "lead" ? "Lead" : label4 ? "Tracker" : p.bullet ? "ListBullet" : "BodyText";
+      const plain2 = p.runs.map((r) => r.text).join("");
+      const label5 = /^[\p{Lu}\d][\p{Lu}\d &/·–-]{2,40}$/u.test(plain2);
+      const style = t.role === "lead" ? "Lead" : label5 ? "Tracker" : p.bullet ? "ListBullet" : "BodyText";
       this.para(style, this.runs(p));
     }
   }
@@ -172693,9 +172703,9 @@ var ColorMixin = {
     }
     if (Array.isArray(color4)) {
       if (color4.length === 3) {
-        color4 = color4.map((part) => part / 255);
+        color4 = color4.map((part2) => part2 / 255);
       } else if (color4.length === 4) {
-        color4 = color4.map((part) => part / 100);
+        color4 = color4.map((part2) => part2 / 100);
       }
       return color4;
     }
@@ -173928,8 +173938,8 @@ var StandardFont = class extends PDFFont {
     for (let advance of advances) {
       width += advance;
     }
-    const scale = size2 / 1e3;
-    return width * scale;
+    const scale2 = size2 / 1e3;
+    return width * scale2;
   }
 };
 var toHex = function(num3) {
@@ -174029,8 +174039,8 @@ var EmbeddedFont = class extends PDFFont {
   }
   widthOfString(string4, size2, features) {
     const width = this.layout(string4, features, true).advanceWidth;
-    const scale = size2 / 1e3;
-    return width * scale;
+    const scale2 = size2 / 1e3;
+    return width * scale2;
   }
   embed() {
     const isCFF = this.subset.cff != null;
@@ -175151,7 +175161,7 @@ var TextMixin = {
     } else {
       [encoded, positions] = this._font.encode(text4, options.features);
     }
-    const scale = this._fontSize / 1e3;
+    const scale2 = this._fontSize / 1e3;
     const commands = [];
     let last2 = 0;
     let hadOffset = false;
@@ -175174,7 +175184,7 @@ var TextMixin = {
       const pos = positions[i];
       if (pos.xOffset || pos.yOffset) {
         flush(i);
-        this.addContent(`1 0 0 1 ${number(x2 + pos.xOffset * scale)} ${number(y + pos.yOffset * scale)} Tm`);
+        this.addContent(`1 0 0 1 ${number(x2 + pos.xOffset * scale2)} ${number(y + pos.yOffset * scale2)} Tm`);
         flush(i + 1);
         hadOffset = true;
       } else {
@@ -175186,7 +175196,7 @@ var TextMixin = {
           addSegment(i + 1);
         }
       }
-      x2 += pos.xAdvance * scale;
+      x2 += pos.xAdvance * scale2;
     }
     flush(i);
     this.addContent("ET");
@@ -175241,10 +175251,10 @@ var COLOR_SPACE_MAP = {
   4: "DeviceCMYK"
 };
 var JPEG = class {
-  constructor(data, label4) {
+  constructor(data, label5) {
     let marker;
     this.data = data;
-    this.label = label4;
+    this.label = label5;
     if (readUInt16BE(this.data, 0) !== 65496) {
       throw "SOI not found in JPEG";
     }
@@ -175294,8 +175304,8 @@ var JPEG = class {
   }
 };
 var PNGImage = class {
-  constructor(data, label4) {
-    this.label = label4;
+  constructor(data, label5) {
+    this.label = label5;
     this.image = new PNG(data);
     this.width = this.image.width;
     this.height = this.image.height;
@@ -175427,7 +175437,7 @@ var PNGImage = class {
   }
 };
 var PDFImage = class {
-  static open(src, label4) {
+  static open(src, label5) {
     let data;
     if (src instanceof Uint8Array) {
       data = src;
@@ -175445,9 +175455,9 @@ var PDFImage = class {
       }
     }
     if (data[0] === 255 && data[1] === 216) {
-      return new JPEG(data, label4);
+      return new JPEG(data, label5);
     } else if (data[0] === 137 && data[1] === 80 && data[2] === 78 && data[3] === 71) {
-      return new PNGImage(data, label4);
+      return new PNGImage(data, label5);
     } else {
       throw new Error("Unknown image format.");
     }
@@ -175940,15 +175950,15 @@ var PDFStructureElement = class _PDFStructureElement {
     const hasBbox = Array.isArray(options.bbox) && options.bbox.length === 4;
     const hasPlacement = typeof options.placement === "string";
     if (hasBbox || hasPlacement) {
-      const attrs = {
+      const attrs2 = {
         O: "Layout"
       };
-      attrs.Placement = hasPlacement ? options.placement : "Block";
+      attrs2.Placement = hasPlacement ? options.placement : "Block";
       if (hasBbox) {
         const height = document2.page.height;
-        attrs.BBox = [options.bbox[0], height - options.bbox[3], options.bbox[2], height - options.bbox[1]];
+        attrs2.BBox = [options.bbox[0], height - options.bbox[3], options.bbox[2], height - options.bbox[1]];
       }
-      data.A = attrs;
+      data.A = attrs2;
     }
     if (options.scope) {
       data.A = {
@@ -176767,10 +176777,10 @@ function memoize(fn, maxSize) {
 function isObject(item2) {
   return item2 && typeof item2 === "object" && !Array.isArray(item2);
 }
-function deepMerge(target, ...sources) {
+function deepMerge(target, ...sources7) {
   if (!isObject(target)) return target;
   target = deepClone(target);
-  for (const source of sources) {
+  for (const source of sources7) {
     if (isObject(source)) {
       for (const key in source) {
         if (isObject(source[key])) {
@@ -177881,7 +177891,7 @@ async function drawNode(doc, n) {
     case "path": {
       doc.save();
       doc.path(pathData(n.segments, P));
-      if (n.fill) doc.fillColor(n.fill);
+      if (n.fill) doc.fillOpacity(n.fillOpacity ?? 1).fillColor(n.fill);
       if (n.stroke) applyStroke(doc, n.stroke);
       if (n.round) doc.lineCap("round").lineJoin("round");
       if (n.fill && n.stroke) doc.fillAndStroke();
@@ -181870,9 +181880,9 @@ In Codex: "Using SlideCraft, make a deck that \u2026"`
 }
 
 // src/cli/commands.ts
-var import_yaml4 = __toESM(require_dist(), 1);
-import { existsSync as existsSync17, mkdirSync as mkdirSync15, readFileSync as readFileSync24, writeFileSync as writeFileSync12 } from "node:fs";
-import { dirname as dirname7, join as join20, relative as relative6, resolve as resolve15 } from "node:path";
+var import_yaml5 = __toESM(require_dist(), 1);
+import { existsSync as existsSync18, mkdirSync as mkdirSync16, readFileSync as readFileSync25, writeFileSync as writeFileSync13 } from "node:fs";
+import { dirname as dirname7, join as join21, relative as relative6, resolve as resolve16 } from "node:path";
 
 // node_modules/zod/v4/classic/external.js
 var external_exports = {};
@@ -185384,14 +185394,14 @@ var $ZodObject = /* @__PURE__ */ $constructor("$ZodObject", (inst, def) => {
     const shape = zod.def.shape;
     const propValues = {};
     for (const key in shape) {
-      const field = shape[key]._zod;
-      if (field.values) {
+      const field2 = shape[key]._zod;
+      if (field2.values) {
         if (!Object.prototype.hasOwnProperty.call(propValues, key)) {
           assignProp(propValues, key, /* @__PURE__ */ new Set());
         }
-        for (const v of field.values)
+        for (const v of field2.values)
           propValues[key].add(v);
-        if (field.optin !== void 0)
+        if (field2.optin !== void 0)
           propValues[key].add(void 0);
       }
     }
@@ -186700,26 +186710,26 @@ function partPattern(schema46) {
     return own2;
   }
   if (def.options) {
-    const sources = def.options.map(partPattern);
-    if (sources.every(Boolean))
-      return `^(${sources.map((s2) => cleanRegex(s2)).join("|")})$`;
+    const sources7 = def.options.map(partPattern);
+    if (sources7.every(Boolean))
+      return `^(${sources7.map((s2) => cleanRegex(s2)).join("|")})$`;
   }
   return leafPattern(schema46);
 }
 var $ZodTemplateLiteral = /* @__PURE__ */ $constructor("$ZodTemplateLiteral", (inst, def) => {
   $ZodType.init(inst, def);
   const regexParts = [];
-  for (const part of def.parts) {
-    if (typeof part === "object" && part !== null) {
-      const source = partPattern(part);
+  for (const part2 of def.parts) {
+    if (typeof part2 === "object" && part2 !== null) {
+      const source = partPattern(part2);
       if (!source) {
-        throw new Error(`Invalid template literal part, no pattern found: ${[...part._zod.traits].shift()}`);
+        throw new Error(`Invalid template literal part, no pattern found: ${[...part2._zod.traits].shift()}`);
       }
       regexParts.push(cleanRegex(source));
-    } else if (part === null || primitiveTypes.has(typeof part)) {
-      regexParts.push(escapeRegex(`${part}`));
+    } else if (part2 === null || primitiveTypes.has(typeof part2)) {
+      regexParts.push(escapeRegex(`${part2}`));
     } else {
-      throw new Error(`Invalid template literal part: ${part}`);
+      throw new Error(`Invalid template literal part: ${part2}`);
     }
   }
   inst._zod.pattern = new RegExp(`^${regexParts.join("")}$`);
@@ -186900,7 +186910,7 @@ var recursive = /* @__PURE__ */ new WeakMap();
 var NONE = 0;
 var ASSUMED = 1;
 var PROVEN = 2;
-function isRecursive(inst, stack, resolve27) {
+function isRecursive(inst, stack, resolve28) {
   const cached2 = recursive.get(inst);
   if (cached2 !== void 0)
     return cached2 ? PROVEN : NONE;
@@ -186910,7 +186920,7 @@ function isRecursive(inst, stack, resolve27) {
   let result = NONE;
   const check2 = (child2) => {
     if (result !== PROVEN && child2?._zod) {
-      const answer = isRecursive(child2, stack, resolve27);
+      const answer = isRecursive(child2, stack, resolve28);
       if (answer > result)
         result = answer;
     }
@@ -186921,7 +186931,7 @@ function isRecursive(inst, stack, resolve27) {
       const desc = Object.getOwnPropertyDescriptor(sh, key);
       if (spread && !desc.enumerable)
         continue;
-      const child2 = desc.get ? ASSUMED : desc.value?._zod ? isRecursive(desc.value, stack, resolve27) : NONE;
+      const child2 = desc.get ? ASSUMED : desc.value?._zod ? isRecursive(desc.value, stack, resolve28) : NONE;
       if (child2 > answer)
         answer = child2;
     }
@@ -186985,7 +186995,7 @@ function isRecursive(inst, stack, resolve27) {
       break;
     // `$ZodLazy` caches its inner on the def, so a resolved edge is followed exactly
     case "lazy": {
-      const inner = def._cachedInner ?? (resolve27 ? inst._zod.innerType : void 0);
+      const inner = def._cachedInner ?? (resolve28 ? inst._zod.innerType : void 0);
       merge2(inner ? isRecursive(inner, stack, false) : ASSUMED);
       break;
     }
@@ -195054,9 +195064,9 @@ function codePointLengthVar(doc, ctx, accessor, inDoubt) {
   doc.write(`const ${v} = typeof ${accessor} === "string" && ${inDoubt} ? ${cpLen}(${accessor}) : ${accessor}.length;`);
   return v;
 }
-function numericOperand(value, label4) {
+function numericOperand(value, label5) {
   if (typeof value !== "number" || !Number.isFinite(value)) {
-    throw new ZodCompileUnsupportedError(`${label4} bound of type ${typeof value}`);
+    throw new ZodCompileUnsupportedError(`${label5} bound of type ${typeof value}`);
   }
   return `${value}`;
 }
@@ -197437,8 +197447,8 @@ function _stringFormat(Class2, format, fnOrRegex, _params = {}) {
 }
 
 // node_modules/zod/v4/core/to-json-schema.js
-function assignProps(target, ...sources) {
-  for (const source of sources) {
+function assignProps(target, ...sources7) {
+  for (const source of sources7) {
     for (const key of Reflect.ownKeys(source)) {
       if (Object.prototype.propertyIsEnumerable.call(source, key)) {
         assignProp(target, key, source[key]);
@@ -197683,11 +197693,11 @@ function foldObjects(members2) {
         continue;
       const parts = [];
       for (const other of objects) {
-        const part = other.properties?.[key] ?? undeclaredConstraint(other);
-        if (part === null || part === void 0)
+        const part2 = other.properties?.[key] ?? undeclaredConstraint(other);
+        if (part2 === null || part2 === void 0)
           continue;
-        if (!parts.some((seen) => JSON.stringify(seen) === JSON.stringify(part)))
-          parts.push(part);
+        if (!parts.some((seen) => JSON.stringify(seen) === JSON.stringify(part2)))
+          parts.push(part2);
       }
       const merged = parts.length === 1 ? parts[0] : foldObjects(parts) ?? { allOf: parts };
       assignProp(properties, key, merged);
@@ -198319,8 +198329,8 @@ var objectProcessor = (schema46, ctx, _json, params) => {
   }
   const requiredKeys = [];
   for (const key of Object.keys(shape)) {
-    const field = def.shape[key];
-    if (ctx.io === "input" ? inputOptin(field) === void 0 : field._zod.optout === void 0) {
+    const field2 = def.shape[key];
+    if (ctx.io === "input" ? inputOptin(field2) === void 0 : field2._zod.optout === void 0) {
       requiredKeys.push(key);
     }
   }
@@ -201582,13 +201592,13 @@ function chromeArgs(tmp) {
   ];
 }
 function dumpDom(bin, args, timeoutMs = 6e4) {
-  return new Promise((resolve27, reject) => {
+  return new Promise((resolve28, reject) => {
     const child2 = spawn2(bin, args, { stdio: ["ignore", "pipe", "pipe"] });
     let out = "";
     const done = (err) => {
       clearTimeout(timer);
       if (child2.exitCode === null) child2.kill("SIGKILL");
-      err ? reject(err) : resolve27(out);
+      err ? reject(err) : resolve28(out);
     };
     child2.stdout.on("data", (d) => {
       out += d.toString();
@@ -201961,6 +201971,766 @@ function creditLine(c, photoLabel) {
   return `${photoLabel}: ${c.author} / ${c.provider}, ${c.license}`;
 }
 
+// src/engine/diagram-geometry.ts
+function extent(values, includeZero = false) {
+  if (!values.length || values.some((v) => !Number.isFinite(v)))
+    throw new Error("A numeric exhibit requires finite observations");
+  let lo = Math.min(...values), hi = Math.max(...values);
+  if (includeZero) {
+    lo = Math.min(lo, 0);
+    hi = Math.max(hi, 0);
+  }
+  if (lo === hi) {
+    const d = Math.abs(lo) * 0.1 || 1;
+    lo -= d;
+    hi += d;
+  }
+  if (!Number.isFinite(hi - lo)) throw new Error("Numeric range exceeds finite geometry");
+  return [lo, hi];
+}
+function scale(domain2, a, b) {
+  const [lo, hi] = domain2;
+  if (![lo, hi, a, b].every(Number.isFinite) || hi <= lo)
+    throw new Error("A scale requires a finite increasing domain");
+  return (v) => a + (v - lo) / (hi - lo) * (b - a);
+}
+function squarify(items, area) {
+  if (new Set(items.map((v) => v.id)).size !== items.length)
+    throw new Error("Treemap item IDs must be unique");
+  if (items.some((v) => !Number.isFinite(v.value) || v.value < 0))
+    throw new Error("Treemap values must be finite and nonnegative");
+  const total = items.reduce((a, v) => a + v.value, 0);
+  if (!Number.isFinite(total) || total <= 0)
+    throw new Error("Treemap needs a positive finite total");
+  const k = area.w * area.h / total;
+  if (!Number.isFinite(k) || k <= 0 || items.some((v) => v.value > 0 && v.value * k === 0))
+    throw new Error("Treemap values exceed finite drawable geometry");
+  const pending = items.map((v, i) => ({ ...v, a: v.value * k, i })).filter((v) => v.a > 0).sort((a, b) => b.a - a.a || a.i - b.i);
+  const out = /* @__PURE__ */ new Map();
+  let rest = { ...area };
+  const worst = (row, side) => {
+    if (!row.length) return Infinity;
+    const sum = row.reduce((s2, v) => s2 + v.a, 0);
+    return Math.max(
+      side * side * row[0].a / (sum * sum),
+      sum * sum / (side * side * row.at(-1).a)
+    );
+  };
+  while (pending.length) {
+    const row = [pending.shift()];
+    const side = Math.min(rest.w, rest.h);
+    while (pending.length && worst([...row, pending[0]], side) <= worst(row, side))
+      row.push(pending.shift());
+    const sum = row.reduce((s2, v) => s2 + v.a, 0);
+    if (rest.w >= rest.h) {
+      const w = sum / rest.h;
+      let y = rest.y;
+      for (const v of row) {
+        const h = v.a / w;
+        out.set(v.id, { x: rest.x, y, w, h });
+        y += h;
+      }
+      rest = { ...rest, x: rest.x + w, w: Math.max(0, rest.w - w) };
+    } else {
+      const h = sum / rest.w;
+      let x2 = rest.x;
+      for (const v of row) {
+        const w = v.a / h;
+        out.set(v.id, { x: x2, y: rest.y, w, h });
+        x2 += w;
+      }
+      rest = { ...rest, y: rest.y + h, h: Math.max(0, rest.h - h) };
+    }
+  }
+  return out;
+}
+function ribbon(x0, y0, x1, y1, thickness) {
+  const mid = (x0 + x1) / 2;
+  return [
+    { op: "M", x: x0, y: y0 },
+    { op: "C", x1: mid, y1: y0, x2: mid, y2: y1, x: x1, y: y1 },
+    { op: "L", x: x1, y: y1 + thickness },
+    { op: "C", x1: mid, y1: y1 + thickness, x2: mid, y2: y0 + thickness, x: x0, y: y0 + thickness },
+    { op: "Z" }
+  ];
+}
+function spreadLabels(positions, lo, hi, gap) {
+  if (Math.max(0, positions.length - 1) * gap > hi - lo + 1e-9)
+    throw new Error("Labels need a taller region or fewer observations");
+  const sorted = positions.map((y, i) => ({ y, i })).sort((a, b) => a.y - b.y || a.i - b.i);
+  const ys = [];
+  sorted.forEach((v, i) => {
+    ys[i] = Math.max(lo, v.y, i ? ys[i - 1] + gap : lo);
+  });
+  if (ys.length && ys.at(-1) > hi) {
+    ys[ys.length - 1] = hi;
+    for (let i = ys.length - 2; i >= 0; i--) ys[i] = Math.min(ys[i], ys[i + 1] - gap);
+  }
+  const out = [];
+  sorted.forEach((v, i) => {
+    out[v.i] = ys[i];
+  });
+  return out;
+}
+
+// src/engine/diagram-routing.ts
+var EPS = 1e-7;
+function segmentHitsBox(a, b, box2) {
+  if (Math.abs(a[0] - b[0]) < EPS)
+    return a[0] > box2.x + EPS && a[0] < box2.x + box2.w - EPS && Math.max(a[1], b[1]) > box2.y + EPS && Math.min(a[1], b[1]) < box2.y + box2.h - EPS;
+  if (Math.abs(a[1] - b[1]) < EPS)
+    return a[1] > box2.y + EPS && a[1] < box2.y + box2.h - EPS && Math.max(a[0], b[0]) > box2.x + EPS && Math.min(a[0], b[0]) < box2.x + box2.w - EPS;
+  return true;
+}
+var inflate2 = (b, d) => ({
+  x: b.x - d,
+  y: b.y - d,
+  w: b.w + 2 * d,
+  h: b.h + 2 * d
+});
+var inside = (p, b) => p[0] > b.x + EPS && p[0] < b.x + b.w - EPS && p[1] > b.y + EPS && p[1] < b.y + b.h - EPS;
+function routeOrthogonal(start, end, obstacles, region2) {
+  const blocks = obstacles.map((b) => inflate2(b, 0.06));
+  const coordinates = (axis) => [
+    ...new Set(
+      [
+        start[axis],
+        end[axis],
+        axis === 0 ? region2.x + 0.02 : region2.y + 0.02,
+        axis === 0 ? region2.x + region2.w - 0.02 : region2.y + region2.h - 0.02,
+        ...blocks.flatMap((b) => axis === 0 ? [b.x, b.x + b.w] : [b.y, b.y + b.h])
+      ].filter(
+        (v) => v >= (axis === 0 ? region2.x : region2.y) - EPS && v <= (axis === 0 ? region2.x + region2.w : region2.y + region2.h) + EPS
+      )
+    )
+  ].sort((a, b) => a - b);
+  const xs = coordinates(0), ys = coordinates(1);
+  const points = xs.flatMap((x2) => ys.map((y) => [x2, y]));
+  const valid = points.map((p) => !blocks.some((b) => inside(p, b)));
+  const index = (p) => xs.indexOf(p[0]) * ys.length + ys.indexOf(p[1]);
+  const first2 = index(start), last2 = index(end);
+  const dist2 = Array(points.length).fill(Infinity);
+  const prev = Array(points.length).fill(-1);
+  const done = /* @__PURE__ */ new Set();
+  dist2[first2] = 0;
+  for (; ; ) {
+    let best = -1;
+    for (let i = 0; i < points.length; i++)
+      if (valid[i] && !done.has(i) && (best < 0 || dist2[i] < dist2[best])) best = i;
+    if (best < 0 || !Number.isFinite(dist2[best]))
+      throw new Error("No clear connector route; enlarge the region or split the diagram");
+    if (best === last2) break;
+    done.add(best);
+    const xi = Math.floor(best / ys.length), yi = best % ys.length;
+    const candidates = [
+      xi > 0 ? best - ys.length : -1,
+      xi + 1 < xs.length ? best + ys.length : -1,
+      yi > 0 ? best - 1 : -1,
+      yi + 1 < ys.length ? best + 1 : -1
+    ];
+    for (const next of candidates) {
+      if (next < 0 || !valid[next] || done.has(next)) continue;
+      const a = points[best], b = points[next];
+      if (blocks.some((box2) => segmentHitsBox(a, b, box2))) continue;
+      const d = dist2[best] + Math.abs(a[0] - b[0]) + Math.abs(a[1] - b[1]);
+      if (d < dist2[next] - EPS) {
+        dist2[next] = d;
+        prev[next] = best;
+      }
+    }
+  }
+  const path2 = [];
+  for (let i = last2; i >= 0; i = prev[i]) {
+    path2.unshift(points[i]);
+    if (i === first2) break;
+  }
+  return path2.filter(
+    (p, i) => i === 0 || i === path2.length - 1 || !(Math.abs(path2[i - 1][0] - p[0]) < EPS && Math.abs(path2[i + 1][0] - p[0]) < EPS || Math.abs(path2[i - 1][1] - p[1]) < EPS && Math.abs(path2[i + 1][1] - p[1]) < EPS)
+  );
+}
+function roundedRoute(points, radius = 0.06) {
+  const out = [{ op: "M", x: points[0][0], y: points[0][1] }];
+  for (let i = 1; i < points.length; i++) {
+    const a = points[i - 1], b = points[i], c = points[i + 1];
+    if (!c) {
+      out.push({ op: "L", x: b[0], y: b[1] });
+      continue;
+    }
+    const l0 = Math.hypot(b[0] - a[0], b[1] - a[1]), l1 = Math.hypot(c[0] - b[0], c[1] - b[1]);
+    const r = Math.min(radius, l0 / 2, l1 / 2);
+    if (!r) continue;
+    const p = [b[0] - (b[0] - a[0]) * r / l0, b[1] - (b[1] - a[1]) * r / l0];
+    const q = [b[0] + (c[0] - b[0]) * r / l1, b[1] + (c[1] - b[1]) * r / l1];
+    out.push(
+      { op: "L", x: p[0], y: p[1] },
+      { op: "C", x1: b[0], y1: b[1], x2: b[0], y2: b[1], x: q[0], y: q[1] }
+    );
+  }
+  return out;
+}
+
+// src/layouts/diagram-kit.ts
+var DiagramId = external_exports.string().regex(/^[a-z][a-z0-9-]*$/).max(32);
+var DiagramLabel = external_exports.string().min(1).max(48).describe("Short human-readable name");
+var GraphNode = external_exports.object({
+  id: DiagramId,
+  label: DiagramLabel.max(28),
+  detail: external_exports.string().max(60).optional(),
+  column: external_exports.number().int().min(0).max(3),
+  row: external_exports.number().int().min(0).max(5),
+  highlight: external_exports.boolean().optional(),
+  shape: external_exports.enum(["process", "decision", "terminal", "state", "external"]).optional()
+}).strict();
+var GraphEdge = external_exports.object({
+  id: DiagramId.optional(),
+  from: DiagramId,
+  to: DiagramId,
+  label: external_exports.string().max(24).optional(),
+  dashed: external_exports.boolean().optional()
+}).strict();
+var Graph = external_exports.object({ nodes: external_exports.array(GraphNode).min(2).max(12), edges: external_exports.array(GraphEdge).max(16) }).strict();
+function problem(ctx, message, field2 = "") {
+  ctx.issue(diag("SC-DIAGRAM-001", message, { pointer: ctx.ptr(field2) }));
+}
+function label3(ctx, text4, box2, field2, opts = {}) {
+  return ctx.text(text4, box2, {
+    size: "body",
+    valign: "middle",
+    maxLines: 2,
+    ...field2 ? { field: field2 } : {},
+    ...opts
+  });
+}
+function caption(ctx, text4, box2, field2) {
+  return label3(ctx, text4, box2, field2, { size: "small", color: ctx.colors.muted });
+}
+function panel(ctx, box2, focal = false, role = "diagram-node") {
+  return ctx.rect(box2, {
+    fill: focal ? ctx.colors.accentSoft : ctx.colors.surface,
+    stroke: { color: focal ? ctx.colors.accent : ctx.colors.rule, width: focal ? 1.25 : 0.75 },
+    radius: 0.05,
+    role
+  });
+}
+function dot(ctx, x2, y, r = 0.06, focal = false, open2 = false) {
+  return ctx.ellipse(
+    { x: x2 - r, y: y - r, w: r * 2, h: r * 2 },
+    {
+      fill: open2 ? ctx.colors.background : focal ? ctx.colors.accent : ctx.colors.muted,
+      stroke: { color: focal ? ctx.colors.accent : ctx.colors.muted, width: 1.2 },
+      role: "data-point"
+    }
+  );
+}
+function valueFill(ctx, t) {
+  return mix(ctx.colors.background, ctx.colors.ink, 0.06 + Math.max(0, Math.min(1, t)) * 0.65);
+}
+function readable(ctx, fill) {
+  return ensureContrast(ctx.colors.ink, fill, 5);
+}
+function graphBoxes(area, nodes) {
+  const columns2 = Math.max(...nodes.map((n) => n.column)) + 1, rows2 = Math.max(...nodes.map((n) => n.row)) + 1;
+  const pitchX = area.w / columns2, pitchY = area.h / rows2;
+  const w = Math.min(2.4, pitchX - 0.65), h = Math.min(0.9, pitchY - 0.4);
+  if (w < 0.75 || h < 0.45)
+    throw new Error(
+      "Graph exceeds readable node capacity; enlarge the region or split the diagram"
+    );
+  return new Map(
+    nodes.map((n) => [
+      n.id,
+      {
+        x: area.x + n.column * pitchX + (pitchX - w) / 2,
+        y: area.y + n.row * pitchY + (pitchY - h) / 2,
+        w,
+        h
+      }
+    ])
+  );
+}
+function drawGraph(ctx, area, graph, prefix = "graph", supplied) {
+  if (new Set(graph.nodes.map((n) => n.id)).size !== graph.nodes.length) {
+    problem(ctx, "Graph node IDs must be unique", prefix);
+    return;
+  }
+  if (new Set(graph.nodes.map((n) => `${n.column}:${n.row}`)).size !== graph.nodes.length) {
+    problem(ctx, "Two nodes share a grid position", prefix);
+    return;
+  }
+  if (graph.edges.some(
+    (e) => !graph.nodes.some((n) => n.id === e.from) || !graph.nodes.some((n) => n.id === e.to)
+  )) {
+    problem(ctx, "A connection names an unknown endpoint", prefix);
+    return;
+  }
+  if (new Set(graph.edges.filter((e) => e.id).map((e) => e.id)).size !== graph.edges.filter((e) => e.id).length) {
+    problem(ctx, "Edge IDs must be unique", prefix);
+    return;
+  }
+  let boxes;
+  try {
+    boxes = supplied ?? graphBoxes(area, graph.nodes);
+  } catch (e) {
+    problem(ctx, e.message, prefix);
+    return;
+  }
+  const identity = (id) => ctx.ptr(`${prefix}/${id}`);
+  const ports = /* @__PURE__ */ new Map();
+  const sides = graph.edges.map((e, i) => {
+    const a = boxes.get(e.from), b = boxes.get(e.to);
+    const horizontal = Math.abs(a.x - b.x) > 0.01;
+    const forward = horizontal ? b.x > a.x : b.y > a.y;
+    const pair = horizontal ? forward ? ["right", "left"] : ["left", "right"] : forward ? ["bottom", "top"] : ["top", "bottom"];
+    ["from", "to"].forEach((end, k) => {
+      const key = `${e[end]}:${pair[k]}`;
+      ports.set(key, [...ports.get(key) ?? [], { edge: i, end, side: pair[k] }]);
+    });
+    return pair;
+  });
+  const port = (id, side, i, end) => {
+    const b = boxes.get(id), list = ports.get(`${id}:${side}`);
+    const slot = list.findIndex((p) => p.edge === i && p.end === end), f = (slot + 1) / (list.length + 1), d = 0.12;
+    if (side === "left") return { p: [b.x, b.y + b.h * f], outer: [b.x - d, b.y + b.h * f] };
+    if (side === "right")
+      return { p: [b.x + b.w, b.y + b.h * f], outer: [b.x + b.w + d, b.y + b.h * f] };
+    if (side === "top") return { p: [b.x + b.w * f, b.y], outer: [b.x + b.w * f, b.y - d] };
+    return { p: [b.x + b.w * f, b.y + b.h], outer: [b.x + b.w * f, b.y + b.h + d] };
+  };
+  graph.edges.forEach((e, i) => {
+    const a = port(e.from, sides[i][0], i, "from"), b = port(e.to, sides[i][1], i, "to");
+    try {
+      const route = [
+        a.p,
+        ...routeOrthogonal(a.outer, b.outer, [...boxes.values()], area),
+        b.p
+      ];
+      ctx.path(roundedRoute(route), {
+        stroke: {
+          color: ctx.colors.muted,
+          width: 1,
+          ...e.dashed ? { dash: "dash" } : {}
+        },
+        round: true,
+        role: "diagram-edge",
+        pointer: ctx.ptr(`${prefix}/edges/${i}`),
+        diagram: {
+          kind: "edge",
+          id: identity(e.id ?? `edge-${i}`),
+          from: identity(e.from),
+          to: identity(e.to),
+          route
+        }
+      });
+      const end = route.at(-1), before = route.at(-2), angle = Math.atan2(end[1] - before[1], end[0] - before[0]), s2 = 0.075;
+      ctx.polygon(
+        [
+          end,
+          [
+            end[0] - s2 * Math.cos(angle) + s2 * 0.48 * Math.sin(angle),
+            end[1] - s2 * Math.sin(angle) - s2 * 0.48 * Math.cos(angle)
+          ],
+          [
+            end[0] - s2 * Math.cos(angle) - s2 * 0.48 * Math.sin(angle),
+            end[1] - s2 * Math.sin(angle) + s2 * 0.48 * Math.cos(angle)
+          ]
+        ],
+        { fill: ctx.colors.muted, role: "diagram-arrow" }
+      );
+      if (e.label) {
+        const segments = route.slice(1).map((p, k) => ({
+          a: route[k],
+          b: p,
+          len: Math.hypot(p[0] - route[k][0], p[1] - route[k][1])
+        })).sort((x2, y) => y.len - x2.len);
+        const seg = segments[0], mx = (seg.a[0] + seg.b[0]) / 2, my = (seg.a[1] + seg.b[1]) / 2;
+        const horizontal = Math.abs(seg.a[1] - seg.b[1]) < 1e-3;
+        const w = Math.min(1.4, Math.max(0.65, e.label.length * 0.075));
+        const lb = {
+          x: horizontal ? mx - w / 2 : mx + 0.12,
+          y: horizontal ? my - 0.32 : my - 0.13,
+          w,
+          h: 0.26
+        };
+        if ([...boxes.values()].some(
+          (n) => lb.x < n.x + n.w && lb.x + lb.w > n.x && lb.y < n.y + n.h && lb.y + lb.h > n.y
+        ))
+          problem(
+            ctx,
+            "Edge label has no clear space; shorten it or split the graph",
+            `${prefix}/edges/${i}/label`
+          );
+        else {
+          ctx.rect(lb, { fill: ctx.colors.background, role: "diagram-label-mask" });
+          label3(ctx, e.label, lb, `${prefix}/edges/${i}/label`, {
+            size: "small",
+            align: "center",
+            maxLines: 1
+          });
+        }
+      }
+    } catch (err) {
+      problem(ctx, err.message, `${prefix}/edges/${i}`);
+    }
+  });
+  graph.nodes.forEach((n, i) => {
+    const b = boxes.get(n.id);
+    const node2 = n.shape === "decision" ? ctx.polygon(
+      [
+        [b.x + b.w / 2, b.y],
+        [b.x + b.w, b.y + b.h / 2],
+        [b.x + b.w / 2, b.y + b.h],
+        [b.x, b.y + b.h / 2]
+      ],
+      {
+        fill: ctx.colors.surface,
+        stroke: { color: ctx.colors.rule, width: 1 },
+        role: "diagram-decision"
+      }
+    ) : panel(ctx, b, n.highlight);
+    if (node2.kind === "rect" && (n.shape === "terminal" || n.shape === "state"))
+      node2.radius = n.shape === "terminal" ? b.h / 2 : 0.13;
+    node2.diagram = { kind: "node", id: identity(n.id) };
+    const inset2 = n.shape === "decision" ? b.w * 0.22 : 0.12;
+    label3(
+      ctx,
+      n.label,
+      { x: b.x + inset2, y: b.y + 0.07, w: b.w - 2 * inset2, h: n.detail ? b.h * 0.48 : b.h - 0.14 },
+      `${prefix}/nodes/${i}/label`,
+      { bold: true, align: "center" }
+    );
+    if (n.detail)
+      caption(
+        ctx,
+        n.detail,
+        { x: b.x + 0.12, y: b.y + b.h * 0.55, w: b.w - 0.24, h: b.h * 0.35 },
+        `${prefix}/nodes/${i}/detail`
+      );
+  });
+}
+function diagramDef(id, name, schema46, examples, compose, purpose, group = "decide") {
+  return {
+    id,
+    name,
+    group,
+    tags: ["diagram"],
+    purpose,
+    useWhen: [purpose],
+    avoidWhen: ["A simpler existing chart or table answers the question"],
+    variants: ["diagram"],
+    frame: "standard",
+    master: "content",
+    schema: schema46,
+    examples,
+    compose
+  };
+}
+
+// src/layouts/advanced-charts.ts
+var sources = ["illustrative"];
+var radarSchema = external_exports.object({
+  axes: external_exports.array(external_exports.string().min(1).max(24)).min(3).max(5),
+  maximum: external_exports.number().positive(),
+  unit: external_exports.string().max(12).default(""),
+  series: external_exports.array(
+    external_exports.object({ name: DiagramLabel, values: external_exports.array(external_exports.number().nonnegative()).min(3).max(5) }).strict()
+  ).min(1).max(3)
+}).strict();
+var radar = diagramDef(
+  "radar",
+  "Radar comparison",
+  radarSchema,
+  [
+    {
+      title: "The target model improves coverage across every assessed capability",
+      sources,
+      content: {
+        axes: ["Data", "People", "Process", "Systems", "Controls"],
+        maximum: 5,
+        series: [
+          { name: "Today", values: [2, 3, 2, 3, 2] },
+          { name: "Target", values: [4, 4, 4, 4, 5] }
+        ]
+      }
+    }
+  ],
+  (ctx, c) => {
+    if (c.series.some((s2) => s2.values.length !== c.axes.length || s2.values.some((v) => v > c.maximum))) {
+      problem(ctx, "Radar series must match axes and remain within the common maximum", "series");
+      return;
+    }
+    const b = ctx.body, cx2 = b.x + b.w / 2, cy2 = b.y + (b.h - 0.5) / 2, r = Math.min(b.h * 0.34, b.w * 0.3);
+    const point = (i, v) => {
+      const a = -Math.PI / 2 + i * 2 * Math.PI / c.axes.length;
+      return [cx2 + Math.cos(a) * r * v / c.maximum, cy2 + Math.sin(a) * r * v / c.maximum];
+    };
+    [0.25, 0.5, 0.75, 1].forEach(
+      (f) => ctx.polygon(
+        c.axes.map((_, i) => point(i, c.maximum * f)),
+        { stroke: { color: ctx.colors.rule, width: 0.6 }, role: "radar-grid" }
+      )
+    );
+    c.axes.forEach((a, i) => {
+      const p = point(i, c.maximum);
+      ctx.line(cx2, cy2, p[0], p[1], { color: ctx.colors.rule, width: 0.6 });
+      const q = point(i, c.maximum * 1.19);
+      label3(ctx, a, { x: q[0] - 0.9, y: q[1] - 0.2, w: 1.8, h: 0.4 }, `axes/${i}`, {
+        size: "small",
+        align: "center"
+      });
+    });
+    c.series.forEach((s2, i) => {
+      const color4 = i === c.series.length - 1 ? ctx.colors.accent : ctx.colors.chart[i + 1] ?? ctx.colors.muted;
+      ctx.polygon(
+        s2.values.map((v, j) => point(j, v)),
+        {
+          fill: color4,
+          fillOpacity: 0.1,
+          stroke: { color: color4, width: i === c.series.length - 1 ? 1.6 : 1 },
+          role: "radar-series"
+        }
+      );
+      caption(
+        ctx,
+        `${s2.name}: ${s2.values.join(" / ")} ${c.unit}`,
+        {
+          x: b.x + i * b.w / c.series.length,
+          y: b.y + b.h - 0.32,
+          w: b.w / c.series.length - 0.12,
+          h: 0.32
+        },
+        `series/${i}/name`
+      );
+    });
+  },
+  "Use for a small number of entities assessed on the same bounded quantitative criteria.",
+  "numbers"
+);
+var polarSchema = external_exports.object({
+  items: external_exports.array(
+    external_exports.object({ label: external_exports.string().min(1).max(24), value: external_exports.number().nonnegative() }).strict()
+  ).min(4).max(8),
+  unit: external_exports.string().max(12).default(""),
+  maximum: external_exports.number().positive().optional()
+}).strict();
+var polar = diagramDef(
+  "polar",
+  "Polar radial lollipop",
+  polarSchema,
+  [
+    {
+      title: "Demand peaks in the afternoon within the daily cycle",
+      sources,
+      content: {
+        items: [
+          { label: "Morning", value: 30 },
+          { label: "Midday", value: 55 },
+          { label: "Afternoon", value: 80 },
+          { label: "Evening", value: 45 }
+        ],
+        unit: "requests"
+      }
+    }
+  ],
+  (ctx, c) => {
+    const maximum = c.maximum ?? Math.max(...c.items.map((v) => v.value));
+    if (maximum <= 0 || c.items.some((v) => v.value > maximum)) {
+      problem(ctx, "Polar scale must have a positive maximum containing every value", "maximum");
+      return;
+    }
+    const b = ctx.body, cx2 = b.x + b.w / 2, cy2 = b.y + b.h / 2, r = Math.min(b.w * 0.32, b.h * 0.33);
+    [0.5, 1].forEach(
+      (f) => ctx.ellipse(
+        { x: cx2 - r * f, y: cy2 - r * f, w: 2 * r * f, h: 2 * r * f },
+        { stroke: { color: ctx.colors.rule, width: 0.65 }, role: "polar-grid" }
+      )
+    );
+    c.items.forEach((v, i) => {
+      const a = -Math.PI / 2 + i * 2 * Math.PI / c.items.length, rr = r * v.value / maximum, x2 = cx2 + Math.cos(a) * rr, y = cy2 + Math.sin(a) * rr;
+      ctx.line(cx2, cy2, x2, y, { color: ctx.colors.muted, width: 1.2 }, { role: "polar-value" });
+      dot(ctx, x2, y, 0.06, v.value === maximum);
+      label3(
+        ctx,
+        `${v.label}
+${v.value} ${c.unit}`,
+        {
+          x: cx2 + Math.cos(a) * (r + 0.5) - 0.85,
+          y: cy2 + Math.sin(a) * (r + 0.4) - 0.25,
+          w: 1.7,
+          h: 0.5
+        },
+        `items/${i}/label`,
+        { size: "small", align: "center" }
+      );
+    });
+  },
+  "Use for one nonnegative quantitative series over ordered cyclic categories; radius is linear.",
+  "numbers"
+);
+function advancedChart(ctx, b, c, variant) {
+  const vals = c.series.flatMap((s2) => s2.values), plot = { x: b.x + 0.9, y: b.y + 0.45, w: b.w - 1.4, h: b.h - 1 };
+  if (variant !== "bump" && vals.some((v) => v < 0)) {
+    problem(ctx, "Distribution and streamgraph values must be nonnegative", "chart/series");
+    return;
+  }
+  const x2 = (i) => plot.x + i * plot.w / (c.categories.length - 1);
+  const col2 = (i) => i === 0 ? ctx.colors.accent : ctx.colors.chart[i + 1] ?? ctx.colors.muted;
+  if (variant === "bump") {
+    if (vals.some((v) => !Number.isInteger(v) || v < 1)) {
+      problem(ctx, "Bump charts require positive integer ranks", "chart/series");
+      return;
+    }
+    const max = Math.max(2, ...vals), y = scale([1, max], plot.y, plot.y + plot.h);
+    const ranks = max <= 8 ? Array.from({ length: max }, (_, i) => i + 1) : [1, max];
+    for (const rank of ranks)
+      caption(ctx, `${rank}`, { x: b.x, y: y(rank) - 0.14, w: 0.65, h: 0.28 }, void 0);
+    c.series.forEach((s2, i) => {
+      for (let j = 1; j < s2.values.length; j++)
+        ctx.line(
+          x2(j - 1),
+          y(s2.values[j - 1]),
+          x2(j),
+          y(s2.values[j]),
+          { color: col2(i), width: i === 0 ? 2 : 1.2 },
+          { role: "rank-series" }
+        );
+      s2.values.forEach((v, j) => dot(ctx, x2(j), y(v), 0.045, i === 0));
+      caption(
+        ctx,
+        s2.name,
+        { x: plot.x + plot.w + 0.08, y: y(s2.values.at(-1)) - 0.14, w: 0.8, h: 0.28 },
+        `chart/series/${i}/name`
+      );
+    });
+  } else if (variant === "ridgeline") {
+    const bins = c.categories.map(Number);
+    if (bins.some((v, i) => !Number.isFinite(v) || i > 0 && v <= bins[i - 1])) {
+      problem(
+        ctx,
+        "Ridgeline categories must be increasing numeric bin centres; values are observed bin counts",
+        "chart/categories"
+      );
+      return;
+    }
+    const max = Math.max(...vals);
+    if (max <= 0) {
+      problem(ctx, "Ridgeline needs positive observed counts", "chart/series");
+      return;
+    }
+    const sx2 = scale(extent(bins), plot.x, plot.x + plot.w), h = plot.h / c.series.length;
+    caption(
+      ctx,
+      `Observed bin counts \xB7 shared height scale 0\u2013${max}`,
+      { x: plot.x, y: b.y, w: plot.w, h: 0.3 },
+      void 0
+    );
+    c.series.forEach((s2, i) => {
+      const baseline = plot.y + (i + 1) * h, points = s2.values.map((v, j) => [
+        sx2(bins[j]),
+        baseline - v / max * h * 0.78
+      ]);
+      ctx.polygon([[plot.x, baseline], ...points, [plot.x + plot.w, baseline]], {
+        fill: col2(i),
+        fillOpacity: 0.12,
+        stroke: { color: col2(i), width: 1 },
+        role: "observed-distribution"
+      });
+      caption(
+        ctx,
+        s2.name,
+        { x: b.x, y: baseline - h * 0.6, w: 0.8, h: 0.35 },
+        `chart/series/${i}/name`
+      );
+    });
+  } else {
+    const totals = c.categories.map((_, j) => c.series.reduce((s2, v) => s2 + v.values[j], 0)), max = Math.max(...totals);
+    if (max <= 0) {
+      problem(ctx, "Streamgraph requires a positive total", "chart/series");
+      return;
+    }
+    const y = (v) => plot.y + plot.h / 2 - v / max * plot.h;
+    let lower = totals.map((v) => -v / 2);
+    c.series.forEach((s2, i) => {
+      const upper = lower.map((v, j) => v + s2.values[j]);
+      ctx.polygon(
+        [
+          ...lower.map((v, j) => [x2(j), y(v)]),
+          ...upper.map((v, j) => [x2(j), y(v)]).reverse()
+        ],
+        { fill: col2(i), fillOpacity: 0.65, role: "streamgraph-band" }
+      );
+      lower = upper;
+      const legendX = b.x + i * b.w / c.series.length;
+      ctx.rect(
+        { x: legendX, y: b.y + 0.07, w: 0.15, h: 0.12 },
+        { fill: col2(i), fillOpacity: 0.65, role: "series-key" }
+      );
+      caption(
+        ctx,
+        s2.name,
+        { x: legendX + 0.22, y: b.y, w: b.w / c.series.length - 0.22, h: 0.3 },
+        `chart/series/${i}/name`
+      );
+    });
+  }
+  c.categories.forEach(
+    (name, i) => caption(
+      ctx,
+      name,
+      { x: x2(i) - 0.35, y: b.y + b.h - 0.35, w: 0.7, h: 0.3 },
+      `chart/categories/${i}`
+    )
+  );
+}
+function beeswarm(ctx, b, c) {
+  const domain2 = extent(c.items.map((v) => v.x));
+  if (c.xAxis.min !== void 0) domain2[0] = c.xAxis.min;
+  if (c.xAxis.max !== void 0) domain2[1] = c.xAxis.max;
+  if (domain2[1] <= domain2[0] || c.items.some((v) => v.x < domain2[0] || v.x > domain2[1])) {
+    problem(ctx, "Beeswarm domain must contain every observation", "xAxis");
+    return;
+  }
+  const sx2 = scale(domain2, b.x + 0.4, b.x + b.w - 0.4), cy2 = b.y + b.h * 0.4, r = 0.07, placed = [];
+  const positions = c.items.map((item2) => {
+    const x2 = sx2(item2.x), candidates = [0];
+    for (const p2 of placed) {
+      const dx = Math.abs(x2 - p2.x);
+      if (dx < 2 * r) {
+        const dy = Math.sqrt(4 * r * r - dx * dx) + 4e-3;
+        candidates.push(p2.y + dy, p2.y - dy);
+      }
+    }
+    candidates.sort((a, d) => Math.abs(a) - Math.abs(d) || a - d);
+    const y = candidates.find(
+      (y2) => placed.every((p2) => Math.hypot(x2 - p2.x, y2 - p2.y) >= 2 * r - 1e-6)
+    );
+    if (y === void 0 || Math.abs(y) > b.h * 0.28) return null;
+    const p = { x: x2, y };
+    placed.push(p);
+    return p;
+  });
+  if (positions.some((v) => v === null)) {
+    problem(ctx, "Observations need more packing space; enlarge or split the swarm", "items");
+    return;
+  }
+  ctx.line(b.x + 0.4, cy2, b.x + b.w - 0.4, cy2, { color: ctx.colors.rule, width: 0.75 });
+  c.items.forEach((item2, i) => {
+    const p = positions[i];
+    dot(ctx, p.x, cy2 + p.y, r, item2.highlight);
+    caption(
+      ctx,
+      `${item2.label}: ${formatNumber(item2.x, 1, c.xAxis.unit ?? "", false, ctx.language)}`,
+      {
+        x: b.x + i % 3 * b.w / 3,
+        y: b.y + b.h * 0.7 + Math.floor(i / 3) * 0.28,
+        w: b.w / 3 - 0.15,
+        h: 0.27
+      },
+      `items/${i}/label`
+    );
+  });
+  label3(ctx, c.xAxis.label, { x: b.x, y: b.y, w: b.w, h: 0.35 }, "xAxis/label", { bold: true });
+}
+
 // src/layouts/agenda.ts
 var schema = external_exports.object({
   sections: external_exports.array(
@@ -202263,6 +203033,443 @@ var agenda = {
   }
 };
 
+// src/layouts/analytic-diagrams.ts
+var sources2 = ["illustrative"];
+var formatNumber2 = (value, language, decimals = 0) => formatNumber(value, decimals, "", false, language);
+var heatSchema = external_exports.object({
+  rows: external_exports.array(external_exports.string().min(1).max(28)).min(2).max(6).describe("Row categories in reading order"),
+  columns: external_exports.array(external_exports.string().min(1).max(24)).min(2).max(6).describe("Column categories; retain chronological order"),
+  values: external_exports.array(external_exports.array(external_exports.number().nullable()).min(2).max(6)).min(2).max(6).describe("Row-major observations; null means missing, never zero"),
+  unit: external_exports.string().max(12).default(""),
+  decimals: external_exports.number().int().min(0).max(2).default(0),
+  scale: external_exports.enum(["sequential", "diverging"]).default("sequential"),
+  domain: external_exports.tuple([external_exports.number(), external_exports.number()]).optional().describe("Shared explicit minimum and maximum"),
+  focal: external_exports.object({ row: external_exports.number().int().min(0), column: external_exports.number().int().min(0) }).strict().optional()
+}).strict();
+var heatmap = diagramDef(
+  "heatmap",
+  "Numeric heatmap",
+  heatSchema,
+  [
+    {
+      title: "Support delays concentrate in billing and the renewal stage",
+      sources: sources2,
+      content: {
+        rows: ["Onboarding", "Billing", "Renewal"],
+        columns: ["Email", "Chat", "Phone", "Self-service"],
+        values: [
+          [12, 8, 10, 3],
+          [28, 15, 24, 8],
+          [34, 22, 18, null]
+        ],
+        unit: "min",
+        focal: { row: 2, column: 0 }
+      }
+    }
+  ],
+  (ctx, c) => {
+    if (c.values.length !== c.rows.length || c.values.some((row) => row.length !== c.columns.length)) {
+      problem(ctx, "Heatmap dimensions must match row and column labels", "values");
+      return;
+    }
+    if (new Set(c.rows).size !== c.rows.length || new Set(c.columns).size !== c.columns.length) {
+      problem(ctx, "Heatmap category labels must be unique", "rows");
+      return;
+    }
+    const values = c.values.flat().filter((v) => v !== null);
+    if (!values.length) {
+      problem(ctx, "Heatmap needs at least one observed value", "values");
+      return;
+    }
+    if (c.scale === "sequential" && values.some((v) => v < 0)) {
+      problem(ctx, "Signed values require a diverging scale", "scale");
+      return;
+    }
+    const maxAbs = Math.max(...values.map(Math.abs)) || 1;
+    const domain2 = c.domain ?? (c.scale === "diverging" ? [-maxAbs, maxAbs] : extent(values, true));
+    if (domain2[1] <= domain2[0] || values.some((v) => v < domain2[0] || v > domain2[1]) || c.scale === "diverging" && !(domain2[0] < 0 && domain2[1] > 0)) {
+      problem(ctx, "Scale must contain all values and a meaningful zero for signed data", "domain");
+      return;
+    }
+    if (c.focal && (c.focal.row >= c.rows.length || c.focal.column >= c.columns.length)) {
+      problem(ctx, "Focal cell is outside the matrix", "focal");
+      return;
+    }
+    const b = ctx.body, left = Math.min(2, b.w * 0.23), top = 0.6, bottom = 0.48;
+    const w = (b.w - left) / c.columns.length, h = (b.h - top - bottom) / c.rows.length;
+    c.columns.forEach(
+      (name, i) => label3(ctx, name, { x: b.x + left + i * w, y: b.y, w, h: top - 0.1 }, `columns/${i}`, {
+        bold: true,
+        align: "center"
+      })
+    );
+    c.rows.forEach(
+      (name, i) => label3(ctx, name, { x: b.x, y: b.y + top + i * h, w: left - 0.18, h }, `rows/${i}`, {
+        bold: true
+      })
+    );
+    c.values.forEach(
+      (row, ri) => row.forEach((v, ci) => {
+        const focal = c.focal?.row === ri && c.focal.column === ci;
+        let fill = ctx.colors.surface;
+        if (v !== null)
+          fill = c.scale === "diverging" ? mix(
+            ctx.colors.background,
+            v < 0 ? ctx.colors.negative : ctx.colors.positive,
+            0.12 + 0.5 * Math.abs(v) / (v < 0 ? -domain2[0] : domain2[1])
+          ) : valueFill(ctx, (v - domain2[0]) / (domain2[1] - domain2[0]));
+        const cell = { x: b.x + left + ci * w, y: b.y + top + ri * h, w, h };
+        ctx.rect(cell, {
+          fill,
+          stroke: {
+            color: focal ? ctx.colors.accent : ctx.colors.background,
+            width: focal ? 2 : 2.5
+          },
+          role: "heatmap-cell"
+        });
+        label3(
+          ctx,
+          v === null ? "N/A" : `${formatNumber2(v, ctx.language, c.decimals)}${c.unit ? ` ${c.unit}` : ""}`,
+          { x: cell.x + 0.08, y: cell.y + 0.06, w: w - 0.16, h: h - 0.12 },
+          `values/${ri}/${ci}`,
+          { align: "center", bold: focal, color: readable(ctx, fill) }
+        );
+      })
+    );
+    caption(
+      ctx,
+      `${c.scale} \xB7 ${formatNumber2(domain2[0], ctx.language, c.decimals)} \u2026 ${formatNumber2(domain2[1], ctx.language, c.decimals)} ${c.unit} \xB7 N/A = missing`,
+      { x: b.x + left, y: b.y + b.h - bottom + 0.1, w: b.w - left, h: 0.28 },
+      "domain"
+    );
+  },
+  "Use for a numeric row-by-column pattern on one explicit scale; missing observations remain distinct from zero.",
+  "numbers"
+);
+var treeSchema = external_exports.object({
+  items: external_exports.array(
+    external_exports.object({ id: DiagramId, label: DiagramLabel, value: external_exports.number().nonnegative() }).strict()
+  ).min(2).max(8),
+  unit: external_exports.string().max(12).default(""),
+  focal: DiagramId.optional()
+}).strict();
+var treemap = diagramDef(
+  "treemap",
+  "Treemap",
+  treeSchema,
+  [
+    {
+      title: "The platform and support account for most operating spend",
+      sources: sources2,
+      content: {
+        items: [
+          { id: "platform", label: "Platform", value: 42 },
+          { id: "support", label: "Support", value: 26 },
+          { id: "sales", label: "Sales", value: 18 },
+          { id: "admin", label: "Admin", value: 14 }
+        ],
+        unit: "$M",
+        focal: "platform"
+      }
+    }
+  ],
+  (ctx, c) => {
+    const b = ctx.body, area = { ...b, h: b.h - 0.85 };
+    let boxes;
+    try {
+      boxes = squarify(c.items, area);
+    } catch (e) {
+      problem(ctx, e.message, "items");
+      return;
+    }
+    if (c.focal && !c.items.some((v) => v.id === c.focal)) {
+      problem(ctx, "Unknown focal item", "focal");
+      return;
+    }
+    const total = c.items.reduce((s2, v) => s2 + v.value, 0);
+    c.items.forEach((item2, i) => {
+      const box2 = boxes.get(item2.id), focal = item2.id === c.focal, fill = focal ? ctx.colors.accentSoft : mix(ctx.colors.background, ctx.colors.ink, 0.05 + 0.025 * i);
+      if (box2) {
+        ctx.rect(box2, {
+          fill,
+          stroke: {
+            color: focal ? ctx.colors.accent : ctx.colors.background,
+            width: focal ? 1.5 : 2
+          },
+          role: "treemap-cell",
+          encoding: { dimension: "area", value: item2.value, scale: area.w * area.h / total }
+        });
+        if (box2.w >= 1.25 && box2.h >= 0.72) {
+          label3(
+            ctx,
+            item2.label,
+            { x: box2.x + 0.14, y: box2.y + 0.08, w: box2.w - 0.28, h: Math.min(0.55, box2.h * 0.5) },
+            `items/${i}/label`,
+            { bold: true, color: readable(ctx, fill) }
+          );
+          label3(
+            ctx,
+            `${formatNumber2(item2.value, ctx.language)} ${c.unit} \xB7 ${formatNumber2(item2.value / total * 100, ctx.language, 1)}%`,
+            { x: box2.x + 0.14, y: box2.y + box2.h - 0.38, w: box2.w - 0.28, h: 0.28 },
+            `items/${i}/value`,
+            { size: "small", color: readable(ctx, fill) }
+          );
+        }
+      }
+      const colsN = Math.min(4, c.items.length), rows2 = Math.ceil(c.items.length / colsN), w = b.w / colsN;
+      caption(
+        ctx,
+        `${item2.label}: ${formatNumber2(item2.value, ctx.language)} ${c.unit}`,
+        {
+          x: b.x + i % colsN * w,
+          y: b.y + b.h - 0.7 + Math.floor(i / colsN) * 0.7 / rows2,
+          w: w - 0.16,
+          h: 0.7 / rows2
+        },
+        void 0
+      );
+    });
+  },
+  "Use for comparing parts of one positive total by area, with deterministic squarified geometry.",
+  "numbers"
+);
+var fishSchema = external_exports.object({
+  effect: external_exports.string().min(1).max(48),
+  categories: external_exports.array(
+    external_exports.object({
+      label: external_exports.string().min(1).max(24),
+      causes: external_exports.array(
+        external_exports.object({
+          label: external_exports.string().min(1).max(28),
+          status: external_exports.enum(["hypothesis", "supported", "confirmed"]).default("hypothesis")
+        }).strict()
+      ).min(1).max(3)
+    }).strict()
+  ).min(2).max(5)
+}).strict();
+var fishbone = diagramDef(
+  "fishbone",
+  "Fishbone cause analysis",
+  fishSchema,
+  [
+    {
+      title: "Handoff and data gaps explain the onboarding delays",
+      sources: sources2,
+      content: {
+        effect: "Slow onboarding",
+        categories: [
+          { label: "People", causes: [{ label: "Unclear owner", status: "supported" }] },
+          { label: "Process", causes: [{ label: "Repeated approval", status: "confirmed" }] },
+          { label: "Data", causes: [{ label: "Missing records", status: "hypothesis" }] },
+          { label: "Systems", causes: [{ label: "Manual transfer", status: "supported" }] }
+        ]
+      }
+    }
+  ],
+  (ctx, c) => {
+    const b = ctx.body, cy2 = b.y + b.h / 2, headW = Math.min(2, b.w * 0.2), headX = b.x + b.w - headW;
+    ctx.line(
+      b.x + 0.2,
+      cy2,
+      headX,
+      cy2,
+      { color: ctx.colors.ink, width: 1.25 },
+      { arrowEnd: true, role: "fishbone-spine" }
+    );
+    const span = headX - b.x - 1.6, topN = Math.ceil(c.categories.length / 2);
+    c.categories.forEach((cat, i) => {
+      const top = i % 2 === 0, k = Math.floor(i / 2), sign = top ? -1 : 1;
+      const ax = b.x + 1.4 + (topN === 1 ? 0 : k * span / (topN - 0.45)), bx = ax - 0.65, by = cy2 + sign * (b.h / 2 - 0.7);
+      const confirmed = cat.causes.some((v) => v.status === "confirmed");
+      ctx.line(
+        ax,
+        cy2,
+        bx,
+        by,
+        { color: confirmed ? ctx.colors.accent : ctx.colors.muted, width: confirmed ? 1.4 : 0.9 },
+        { role: "fishbone-bone" }
+      );
+      label3(
+        ctx,
+        cat.label,
+        { x: bx - 0.55, y: top ? by - 0.5 : by + 0.08, w: 1.5, h: 0.4 },
+        `categories/${i}/label`,
+        { bold: true, color: confirmed ? ctx.colors.accent : ctx.colors.ink }
+      );
+      cat.causes.forEach((cause, j) => {
+        const f = (j + 1) / (cat.causes.length + 1), x2 = ax + (bx - ax) * f, y = cy2 + (by - cy2) * f;
+        ctx.line(x2 - 0.3, y, x2, y, { color: ctx.colors.rule, width: 0.8 });
+        label3(
+          ctx,
+          `${cause.status === "confirmed" ? "C" : cause.status === "supported" ? "S" : "H"} \xB7 ${cause.label}`,
+          { x: x2 - 1.45, y: y - 0.2, w: 1.1, h: 0.4 },
+          `categories/${i}/causes/${j}/label`,
+          { size: "small", align: "right" }
+        );
+      });
+    });
+    panel(ctx, { x: headX, y: cy2 - 0.48, w: headW, h: 0.96 }, true);
+    label3(ctx, c.effect, { x: headX + 0.12, y: cy2 - 0.38, w: headW - 0.24, h: 0.76 }, "effect", {
+      bold: true,
+      align: "center"
+    });
+    const statuses = "H = hypothesis \xB7 S = supported \xB7 C = confirmed";
+    caption(ctx, `Evidence: ${statuses} \xB7 confirmed categories are accented`, {
+      x: b.x,
+      y: b.y + b.h - 0.25,
+      w: b.w,
+      h: 0.25
+    });
+  },
+  "Use for investigating grouped causes of one observed effect, with explicit evidence status."
+);
+var sankeySchema = external_exports.object({
+  stages: external_exports.tuple([external_exports.string().max(28), external_exports.string().max(28), external_exports.string().max(28)]),
+  nodes: external_exports.array(
+    external_exports.object({
+      id: DiagramId,
+      label: external_exports.string().max(28),
+      stage: external_exports.number().int().min(0).max(2)
+    }).strict()
+  ).min(3).max(8),
+  flows: external_exports.array(
+    external_exports.object({
+      from: DiagramId,
+      to: DiagramId,
+      value: external_exports.number().nonnegative(),
+      highlight: external_exports.boolean().optional()
+    }).strict()
+  ).min(2).max(12),
+  unit: external_exports.string().max(12).default("")
+}).strict();
+var sankey = diagramDef(
+  "sankey",
+  "Sankey flow quantities",
+  sankeySchema,
+  [
+    {
+      title: "Most service effort reaches delivery through the platform team",
+      sources: sources2,
+      content: {
+        stages: ["Demand", "Team", "Outcome"],
+        nodes: [
+          { id: "demand", label: "Service effort", stage: 0 },
+          { id: "platform", label: "Platform", stage: 1 },
+          { id: "support", label: "Support", stage: 1 },
+          { id: "delivery", label: "Delivered", stage: 2 },
+          { id: "rework", label: "Rework", stage: 2 }
+        ],
+        flows: [
+          { from: "demand", to: "platform", value: 70 },
+          { from: "demand", to: "support", value: 30 },
+          { from: "platform", to: "delivery", value: 60, highlight: true },
+          { from: "platform", to: "rework", value: 10 },
+          { from: "support", to: "delivery", value: 20 },
+          { from: "support", to: "rework", value: 10 }
+        ],
+        unit: "days"
+      }
+    }
+  ],
+  (ctx, c) => {
+    const ids = new Map(c.nodes.map((n) => [n.id, n]));
+    if (ids.size !== c.nodes.length) {
+      problem(ctx, "Sankey node IDs must be unique", "nodes");
+      return;
+    }
+    if ([0, 1, 2].some((s2) => !c.nodes.some((n) => n.stage === s2))) {
+      problem(ctx, "Sankey requires three nonempty stages", "nodes");
+      return;
+    }
+    const incoming = /* @__PURE__ */ new Map(), outgoing = /* @__PURE__ */ new Map();
+    for (const [i, f] of c.flows.entries()) {
+      const from = ids.get(f.from), to = ids.get(f.to);
+      if (!from || !to || to.stage !== from.stage + 1) {
+        problem(ctx, "Flows must connect known nodes in consecutive stages", `flows/${i}`);
+        return;
+      }
+      incoming.set(f.to, (incoming.get(f.to) ?? 0) + f.value);
+      outgoing.set(f.from, (outgoing.get(f.from) ?? 0) + f.value);
+    }
+    const total = c.nodes.filter((n) => n.stage === 0).reduce((s2, n) => s2 + (outgoing.get(n.id) ?? 0), 0);
+    if (!Number.isFinite(total) || total <= 0) {
+      problem(ctx, "Sankey requires a positive finite total", "flows");
+      return;
+    }
+    const quantities = new Map(
+      c.nodes.map((n) => [
+        n.id,
+        n.stage === 2 ? incoming.get(n.id) ?? 0 : outgoing.get(n.id) ?? 0
+      ])
+    );
+    if (c.nodes.some(
+      (n) => (quantities.get(n.id) ?? 0) <= 0 || n.stage === 1 && Math.abs((incoming.get(n.id) ?? 0) - (outgoing.get(n.id) ?? 0)) > total * 1e-9
+    )) {
+      problem(
+        ctx,
+        "Every node must carry a positive quantity and intermediate flows must balance",
+        "flows"
+      );
+      return;
+    }
+    const b = ctx.body, maxCount = Math.max(...[0, 1, 2].map((s2) => c.nodes.filter((n) => n.stage === s2).length)), gap = 0.62;
+    const k = (b.h - 0.65 - gap * (maxCount - 1)) / total;
+    if (!Number.isFinite(k) || k <= 0 || c.flows.some((f) => f.value > 0 && f.value * k < 0.025)) {
+      problem(ctx, "Tiny flows are unreadable; explicitly aggregate or split the Sankey", "flows");
+      return;
+    }
+    const boxes = /* @__PURE__ */ new Map();
+    const xs = [b.x + 1.6, b.x + b.w / 2, b.x + b.w - 1.7];
+    [0, 1, 2].forEach((stage) => {
+      const list = c.nodes.filter((n) => n.stage === stage), stackH = total * k + (list.length - 1) * gap;
+      let y = b.y + 0.5 + (b.h - 0.5 - stackH) / 2;
+      caption(
+        ctx,
+        c.stages[stage],
+        { x: xs[stage] - 1.2, y: b.y, w: 2.5, h: 0.32 },
+        `stages/${stage}`
+      );
+      for (const n of list) {
+        const h = quantities.get(n.id) * k;
+        boxes.set(n.id, { x: xs[stage], y, w: 0.12, h });
+        y += h + gap;
+      }
+    });
+    const srcOffset = /* @__PURE__ */ new Map(), dstOffset = /* @__PURE__ */ new Map();
+    for (const [i, f] of c.flows.entries()) {
+      if (!f.value) continue;
+      const a = boxes.get(f.from), d = boxes.get(f.to), so = srcOffset.get(f.from) ?? 0, doff = dstOffset.get(f.to) ?? 0;
+      ctx.path(ribbon(a.x + a.w, a.y + so, d.x, d.y + doff, f.value * k), {
+        fill: f.highlight ? ctx.colors.accent : ctx.colors.muted,
+        fillOpacity: f.highlight ? 0.3 : 0.16,
+        role: "sankey-ribbon",
+        encoding: { dimension: "ribbon", value: f.value, scale: k },
+        pointer: ctx.ptr(`flows/${i}/value`)
+      });
+      srcOffset.set(f.from, so + f.value * k);
+      dstOffset.set(f.to, doff + f.value * k);
+    }
+    c.nodes.forEach((n, i) => {
+      const box2 = boxes.get(n.id);
+      ctx.rect(box2, {
+        fill: ctx.colors.ink,
+        role: "sankey-node",
+        encoding: { dimension: "height", value: quantities.get(n.id), scale: k }
+      });
+      const text4 = `${n.label}
+${formatNumber2(quantities.get(n.id), ctx.language)} ${c.unit}`;
+      const lb = n.stage === 0 ? { x: box2.x - 1.55, y: box2.y + box2.h / 2 - 0.35, w: 1.4, h: 0.7 } : n.stage === 2 ? { x: box2.x + 0.25, y: box2.y + box2.h / 2 - 0.35, w: 1.4, h: 0.7 } : { x: box2.x - 1.2, y: box2.y - 0.52, w: 2.5, h: 0.46 };
+      label3(ctx, text4, lb, `nodes/${i}/label`, {
+        size: "small",
+        maxLines: 3,
+        align: n.stage === 0 ? "right" : n.stage === 2 ? "left" : "center"
+      });
+    });
+  },
+  "Use for a conserved quantity that splits and merges across three stages on one shared scale.",
+  "numbers"
+);
+
 // src/engine/format.ts
 var DEFAULT_MARGIN = { l: 0.6, r: 0.6, t: 0.42, b: 0.38 };
 function makeFormat(id, W, H, M2 = DEFAULT_MARGIN) {
@@ -202381,17 +203588,6 @@ function badge(ctx, cx2, cy2, n) {
     }
   );
 }
-function edge(b, tx, ty) {
-  const cx2 = b.x + b.w / 2;
-  const cy2 = b.y + b.h / 2;
-  const dx = tx - cx2;
-  const dy = ty - cy2;
-  const k = Math.min(
-    dx ? b.w / 2 / Math.abs(dx) : Infinity,
-    dy ? b.h / 2 / Math.abs(dy) : Infinity
-  );
-  return [cx2 + dx * k, cy2 + dy * k];
-}
 function diagram(ctx, area, c) {
   const { colors } = ctx;
   const most = Math.max(...c.zones.map((z2) => z2.components.length));
@@ -202425,12 +203621,13 @@ function diagram(ctx, area, c) {
     z2.components.forEach((comp, ci) => {
       const b = { x: zb.x + 0.2, y: y0 + ci * (h + Math.min(gap, 0.5)), w: zb.w - 0.4, h };
       boxes.set(comp.id, b);
-      ctx.rect(b, {
+      const shape = ctx.rect(b, {
         fill: comp.highlight ? colors.accent : colors.background,
         stroke: { color: comp.highlight ? colors.accent : colors.rule, width: 1 },
         radius: 0.05,
         role: "component"
       });
+      shape.diagram = { kind: "node", id: ctx.ptr(`architecture/${comp.id}`) };
       ctx.text(
         comp.label,
         { x: b.x + 0.1, y: b.y, w: b.w - 0.2, h: b.h },
@@ -202457,17 +203654,44 @@ function diagram(ctx, area, c) {
       );
       return;
     }
-    const [x1, y1] = edge(a, b.x + b.w / 2, b.y + b.h / 2);
-    const [x2, y2] = edge(b, a.x + a.w / 2, a.y + a.h / 2);
-    ctx.line(
-      x1,
-      y1,
-      x2,
-      y2,
-      { color: colors.ink, width: 1, ...l.dashed ? { dash: "dash" } : {} },
-      { arrowEnd: true, role: "link" }
-    );
-    if (l.marker) badge(ctx, (x1 + x2) / 2, (y1 + y2) / 2, l.marker);
+    const port = (id, box2, target) => {
+      const attached = c.links.map((v, j) => ({ v, j })).filter(({ v }) => v.from === id || v.to === id), f = (attached.findIndex((v) => v.j === i) + 1) / (attached.length + 1);
+      const horizontal = Math.abs(box2.x - target.x) > 0.01, forward = horizontal ? target.x > box2.x : target.y > box2.y, sign = forward ? 1 : -1;
+      const p2 = horizontal ? [forward ? box2.x + box2.w : box2.x, box2.y + box2.h * f] : [box2.x + box2.w * f, forward ? box2.y + box2.h : box2.y];
+      const outer = horizontal ? [p2[0] + sign * 0.12, p2[1]] : [p2[0], p2[1] + sign * 0.12];
+      return { p: p2, outer };
+    };
+    const p = port(l.from, a, b), q = port(l.to, b, a);
+    try {
+      const route = [p.p, ...routeOrthogonal(p.outer, q.outer, [...boxes.values()], area), q.p];
+      ctx.path(roundedRoute(route), {
+        stroke: { color: colors.ink, width: 1, ...l.dashed ? { dash: "dash" } : {} },
+        role: "link",
+        pointer: ctx.ptr(`links/${i}`),
+        diagram: {
+          kind: "edge",
+          id: ctx.ptr(`architecture/link-${i}`),
+          from: ctx.ptr(`architecture/${l.from}`),
+          to: ctx.ptr(`architecture/${l.to}`),
+          route
+        }
+      });
+      const last2 = route.at(-2);
+      ctx.line(
+        last2[0],
+        last2[1],
+        q.p[0],
+        q.p[1],
+        { color: colors.ink, width: 1 },
+        { arrowEnd: true, role: "link-arrow" }
+      );
+      if (l.marker) {
+        const m = route[Math.floor(route.length / 2)];
+        badge(ctx, m[0], m[1], l.marker);
+      }
+    } catch (e) {
+      ctx.issue(diag("SC-DIAGRAM-001", e.message, { pointer: ctx.ptr(`links/${i}`) }));
+    }
   });
   c.zones.forEach(
     (z2) => z2.components.forEach((comp) => {
@@ -202586,7 +203810,7 @@ var schema3 = external_exports.object({
   before: Side.describe("Today / the problem"),
   after: Side.describe("Tomorrow / the outcome")
 }).strict();
-function panel(ctx, b, s2, after, field) {
+function panel2(ctx, b, s2, after, field2) {
   const { colors, theme } = ctx;
   ctx.rect(b, { fill: after ? colors.accentSoft : colors.surface, role: "panel" });
   if (after)
@@ -202600,7 +203824,7 @@ function panel(ctx, b, s2, after, field) {
       bold: true,
       color: after ? colors.accent : colors.muted,
       maxLines: 1,
-      field: `${field}/label`
+      field: `${field2}/label`
     }
   );
   let bottom = b.y + b.h - pad3;
@@ -202617,7 +203841,7 @@ function panel(ctx, b, s2, after, field) {
         color: after ? colors.accent : colors.ink,
         maxLines: 1,
         fixed: true,
-        field: `${field}/metric/value`
+        field: `${field2}/metric/value`
       }
     );
     ctx.text(
@@ -202628,14 +203852,14 @@ function panel(ctx, b, s2, after, field) {
         color: colors.muted,
         valign: "middle",
         maxLines: 2,
-        field: `${field}/metric/label`
+        field: `${field2}/metric/label`
       }
     );
   }
   ctx.text(
     ctx.paragraphs(s2.items, { bullet: true, spaceBefore: 10 }),
     { x: b.x + pad3, y: b.y + 0.7, w: b.w - 2 * pad3, h: bottom - (b.y + 0.7) - 0.15 },
-    { size: "body", field: `${field}/items` }
+    { size: "body", field: `${field2}/items` }
   );
 }
 var beforeAfter = {
@@ -202686,7 +203910,7 @@ var beforeAfter = {
     const b = ctx.body;
     const arrowW = 0.7;
     const w = (b.w - arrowW) / 2;
-    panel(ctx, { x: b.x, y: b.y, w, h: b.h }, c.before, false, "before");
+    panel2(ctx, { x: b.x, y: b.y, w, h: b.h }, c.before, false, "before");
     const ax = b.x + w + 0.16;
     const ay = b.y + b.h / 2;
     ctx.polygon(
@@ -202697,7 +203921,7 @@ var beforeAfter = {
       ],
       { fill: ctx.colors.accent, role: "arrow" }
     );
-    panel(ctx, { x: b.x + w + arrowW, y: b.y, w, h: b.h }, c.after, true, "after");
+    panel2(ctx, { x: b.x + w + arrowW, y: b.y, w, h: b.h }, c.after, true, "after");
   }
 };
 
@@ -202911,7 +204135,7 @@ var bigStatement = {
       const beside = page2.w - left - 0.8 - (left + numW + 0.7) >= 3.6;
       const labelX = beside ? left + numW + 0.7 : left;
       const labelW = beside ? page2.w - 0.8 - labelX : page2.w - 2 * left;
-      const label4 = ctx.text(
+      const label5 = ctx.text(
         c.label,
         { x: labelX, y: 0, w: labelW, h: 1.6 },
         {
@@ -202935,7 +204159,7 @@ var bigStatement = {
           field: "context"
         }
       ) : void 0;
-      const textH = label4.contentHeight + (ctxt ? 0.2 + ctxt.contentHeight : 0);
+      const textH = label5.contentHeight + (ctxt ? 0.2 + ctxt.contentHeight : 0);
       const areaTop = 2.45;
       const areaBottom = page2.h - 0.9;
       if (beside) {
@@ -202945,14 +204169,14 @@ var bigStatement = {
         num3.box.h = num3.contentHeight + 0.02;
         const ty = top + (blockH - textH) / 2;
         ctx.line(labelX - 0.35, ty, labelX - 0.35, ty + textH, { color: colors.rule, width: 1.25 });
-        settle2(label4, ty);
-        if (ctxt) settle2(ctxt, ty + label4.contentHeight + 0.2);
+        settle2(label5, ty);
+        if (ctxt) settle2(ctxt, ty + label5.contentHeight + 0.2);
       } else {
         const blockH = capH + 0.45 + textH;
         const top = areaTop + (areaBottom - areaTop - blockH) / 2;
         settle2(num3, top - capTopInBox);
-        settle2(label4, top + capH + 0.45);
-        if (ctxt) settle2(ctxt, top + capH + 0.45 + label4.contentHeight + 0.2);
+        settle2(label5, top + capH + 0.45);
+        if (ctxt) settle2(ctxt, top + capH + 0.45 + label5.contentHeight + 0.2);
       }
       return;
     }
@@ -203029,7 +204253,7 @@ function card(ctx, b, o) {
       { size: o.size ?? "body", field: o.field }
     );
 }
-function pill(ctx, b, r, field) {
+function pill(ctx, b, r, field2) {
   const { colors } = ctx;
   const fill = r === "high" ? colors.accent : r === "medium" ? colors.rule : colors.background;
   const ink = r === "high" ? colors.accentText : r === "medium" ? colors.ink : colors.muted;
@@ -203047,7 +204271,7 @@ function pill(ctx, b, r, field) {
     valign: "middle",
     maxLines: 1,
     fixed: true,
-    ...field ? { field } : {}
+    ...field2 ? { field: field2 } : {}
   });
 }
 function takeawayPanel(ctx, side, text4) {
@@ -203152,7 +204376,7 @@ var bubbleChart = {
     "Positions are judgements, not numbers \u2014 use matrix-2x2",
     "One dimension only \u2014 use chart-takeaway (bar)"
   ],
-  variants: ["bubble", "scatter", "portfolio"],
+  variants: ["bubble", "scatter", "portfolio", "beeswarm"],
   frame: "standard",
   master: "content",
   schema: schema5,
@@ -203213,9 +204437,29 @@ var bubbleChart = {
         takeaway: "Back Analytics to reach share parity by 2028; harvest Insurance"
       },
       sources: ["fin-plan"]
+    },
+    {
+      title: "Most observations cluster around the typical response time",
+      variant: "beeswarm",
+      sources: ["illustrative"],
+      content: {
+        xAxis: { label: "Response time", unit: "ms" },
+        yAxis: { label: "Packing offset, not a second measure" },
+        items: [
+          { label: "A", x: 18, y: 0 },
+          { label: "B", x: 20, y: 0 },
+          { label: "C", x: 20, y: 0 },
+          { label: "D", x: 21, y: 0 },
+          { label: "E", x: 34, y: 0, highlight: true }
+        ]
+      }
     }
   ],
   compose(ctx, c) {
+    if (ctx.variant === "beeswarm") {
+      beeswarm(ctx, ctx.body, c);
+      return;
+    }
     const { colors, theme } = ctx;
     const sized = ctx.variant !== "scatter";
     if (sized && c.items.some((it) => it.size === void 0))
@@ -203461,8 +204705,8 @@ var businessModelCanvas = {
         { x: b.x + (b.w + gap) / 2, y: y + topH + gap, w: (b.w - gap) / 2, h: botH }
       ]
     ];
-    for (const [heading, items, field, box2, accent] of blocks)
-      card(ctx, box2, { heading, items, field, size: "small", tone: accent ? "accent" : "plain" });
+    for (const [heading, items, field2, box2, accent] of blocks)
+      card(ctx, box2, { heading, items, field: field2, size: "small", tone: accent ? "accent" : "plain" });
   }
 };
 
@@ -203658,7 +204902,7 @@ var cadence = {
       ["output", "Output"],
       ["work", "Work period"]
     ];
-    for (const [k, label4] of items) {
+    for (const [k, label5] of items) {
       const cy2 = ly + 0.13;
       if (k === "meeting")
         ctx.ellipse({ x: lx, y: cy2 - 0.1, w: 0.2, h: 0.2 }, { fill: colors.ink });
@@ -203683,7 +204927,7 @@ var cadence = {
           { fill: colors.accentSoft, stroke: { color: colors.accent, width: 0.75 }, radius: 0.03 }
         );
       ctx.text(
-        label4,
+        label5,
         { x: lx + 0.36, y: ly, w: 1.8, h: 0.26 },
         { size: "small", color: colors.muted, valign: "middle", maxLines: 1, fixed: true }
       );
@@ -203850,6 +205094,111 @@ var callout = {
   }
 };
 
+// src/layouts/paired-comparison.ts
+function pairedComparison(ctx, b, c, variant) {
+  if (c.series.length !== 2 || c.categories.length > 8) {
+    problem(
+      ctx,
+      "Paired comparisons require exactly two series and at most eight categories",
+      "chart/series"
+    );
+    return;
+  }
+  const [before, after] = c.series;
+  const values = [...before.values, ...after.values];
+  const fmt3 = (v) => formatNumber(v, c.decimals ?? 0, c.unit ?? "", false, ctx.language);
+  const focal = (i) => (c.highlight ?? []).some((v) => v === i || v === c.categories[i]);
+  const color4 = (i) => focal(i) ? ctx.colors.accent : ctx.colors.muted;
+  const domain2 = extent(values);
+  if (variant === "dumbbell") {
+    const x2 = scale(domain2, b.x + Math.min(2, b.w * 0.3), b.x + b.w - 0.6), row = (b.h - 0.6) / c.categories.length;
+    caption(
+      ctx,
+      `${before.name}: \u25CB    ${after.name}: \u25CF`,
+      { x: b.x, y: b.y, w: b.w, h: 0.35 },
+      "chart/series"
+    );
+    c.categories.forEach((name, i) => {
+      const y = b.y + 0.6 + (i + 0.5) * row, a = x2(before.values[i]), d = x2(after.values[i]);
+      label3(
+        ctx,
+        name,
+        { x: b.x, y: y - 0.22, w: Math.min(1.8, b.w * 0.27), h: 0.44 },
+        `chart/categories/${i}`,
+        { bold: focal(i) }
+      );
+      ctx.line(
+        a,
+        y,
+        d,
+        y,
+        { color: color4(i), width: focal(i) ? 2 : 1.2 },
+        { role: "data-comparison" }
+      );
+      dot(ctx, a, y, 0.065, focal(i), true);
+      dot(ctx, d, y, 0.055, focal(i));
+      caption(
+        ctx,
+        fmt3(before.values[i]),
+        { x: a - 0.4, y: y - 0.36, w: 0.8, h: 0.22 },
+        `chart/series/0/values/${i}`
+      );
+      caption(
+        ctx,
+        fmt3(after.values[i]),
+        { x: d - 0.4, y: y + 0.1, w: 0.8, h: 0.22 },
+        `chart/series/1/values/${i}`
+      );
+    });
+  } else {
+    const x0 = b.x + b.w * 0.32, x1 = b.x + b.w * 0.68, top = b.y + 0.65, bottom = b.y + b.h - 0.35;
+    const y = scale(domain2, bottom, top);
+    let left, right;
+    try {
+      left = spreadLabels(before.values.map(y), top, bottom, 0.42);
+      right = spreadLabels(after.values.map(y), top, bottom, 0.42);
+    } catch (e) {
+      problem(ctx, e.message, "chart/categories");
+      return;
+    }
+    caption(ctx, before.name, { x: x0 - 0.7, y: b.y, w: 1.4, h: 0.35 }, "chart/series/0/name");
+    caption(ctx, after.name, { x: x1 - 0.7, y: b.y, w: 1.4, h: 0.35 }, "chart/series/1/name");
+    ctx.line(x0, top, x0, bottom, { color: ctx.colors.rule, width: 0.8 });
+    ctx.line(x1, top, x1, bottom, { color: ctx.colors.rule, width: 0.8 });
+    c.categories.forEach((name, i) => {
+      const a = y(before.values[i]), d = y(after.values[i]);
+      ctx.line(
+        x0,
+        a,
+        x1,
+        d,
+        { color: color4(i), width: focal(i) ? 2 : 1 },
+        { role: "data-comparison" }
+      );
+      dot(ctx, x0, a, 0.045, focal(i));
+      dot(ctx, x1, d, 0.045, focal(i));
+      if (Math.abs(left[i] - a) > 0.02)
+        ctx.line(x0 - 0.1, left[i], x0, a, { color: ctx.colors.rule, width: 0.7 });
+      if (Math.abs(right[i] - d) > 0.02)
+        ctx.line(x1, d, x1 + 0.1, right[i], { color: ctx.colors.rule, width: 0.7 });
+      label3(
+        ctx,
+        `${name}  ${fmt3(before.values[i])}`,
+        { x: b.x, y: left[i] - 0.2, w: x0 - b.x - 0.14, h: 0.4 },
+        `chart/categories/${i}`,
+        { size: "small", align: "right", bold: focal(i) }
+      );
+      label3(
+        ctx,
+        `${fmt3(after.values[i])}  ${name}`,
+        { x: x1 + 0.14, y: right[i] - 0.2, w: b.x + b.w - x1 - 0.14, h: 0.4 },
+        `chart/series/1/values/${i}`,
+        { size: "small", bold: focal(i) }
+      );
+    });
+  }
+}
+
 // src/layouts/chart-takeaway.ts
 var ChartData = external_exports.object({
   label: external_exports.string().max(90).optional().describe('What is measured, with unit and period: "Revenue by segment, \u20ACM, FY2025"'),
@@ -203882,7 +205231,18 @@ var chartTakeaway = {
     "A bridge from one total to another \u2014 use waterfall",
     "Fewer than three data points \u2014 use kpi-tiles"
   ],
-  variants: ["bar", "column", "stacked", "line", "combo"],
+  variants: [
+    "bar",
+    "column",
+    "stacked",
+    "line",
+    "combo",
+    "dumbbell",
+    "slopegraph",
+    "bump",
+    "ridgeline",
+    "streamgraph"
+  ],
   frame: "standard",
   master: "content",
   schema: schema9,
@@ -203984,7 +205344,48 @@ var chartTakeaway = {
         }
       },
       sources: ["finance-fy25"]
-    }
+    },
+    ...["bump", "ridgeline", "streamgraph"].map((variant) => ({
+      title: variant === "bump" ? "Product adoption ranks change after the launch" : variant === "ridgeline" ? "Response-time distributions differ across the two service groups" : "The service mix shifts across the observed periods",
+      variant,
+      sources: ["illustrative"],
+      content: {
+        chart: {
+          categories: variant === "ridgeline" ? ["10", "20", "30", "40"] : ["Q1", "Q2", "Q3", "Q4"],
+          series: variant === "bump" ? [
+            { name: "Core", values: [1, 2, 1, 1] },
+            { name: "New", values: [2, 1, 2, 2] }
+          ] : [
+            { name: "Core", values: [5, 12, 18, 8] },
+            { name: "New", values: [2, 6, 14, 16] }
+          ]
+        },
+        takeaway: {
+          headline: "The pattern guides the next investigation",
+          points: ["Illustrative observations use the same definition."]
+        }
+      }
+    })),
+    ...["dumbbell", "slopegraph"].map((variant) => ({
+      title: "Response times fall across every service after the redesign",
+      variant,
+      sources: ["illustrative"],
+      content: {
+        chart: {
+          categories: ["Billing", "Orders", "Accounts", "Returns"],
+          series: [
+            { name: "Before", values: [42, 35, 28, 20] },
+            { name: "After", values: [24, 22, 18, 15] }
+          ],
+          unit: "m",
+          highlight: ["Billing"]
+        },
+        takeaway: {
+          headline: "Billing improves the most",
+          points: ["Both periods use the same definition and scale."]
+        }
+      }
+    }))
   ],
   compose(ctx, c) {
     const { body, colors } = ctx;
@@ -204034,27 +205435,32 @@ var chartTakeaway = {
       line: "line",
       combo: "combo"
     }[ctx.variant] ?? "column";
-    ctx.chart(
-      {
-        type,
-        categories: c.chart.categories,
-        series: c.chart.series,
-        ...hl.length ? { highlight: hl } : {},
-        ...c.chart.unit ? { unit: c.chart.unit } : {},
-        ...c.chart.decimals !== void 0 ? { decimals: c.chart.decimals } : {},
-        ...c.chart.lineUnit ? { lineUnit: c.chart.lineUnit } : {},
-        ...c.chart.lineDecimals !== void 0 ? { lineDecimals: c.chart.lineDecimals } : {},
-        field: "chart"
-      },
-      chartBox
-    );
-    const panel3 = right;
-    ctx.rect(panel3, { fill: colors.surface, role: "panel" });
+    if (ctx.variant === "dumbbell" || ctx.variant === "slopegraph")
+      pairedComparison(ctx, chartBox, c.chart, ctx.variant);
+    else if (["bump", "ridgeline", "streamgraph"].includes(ctx.variant))
+      advancedChart(ctx, chartBox, c.chart, ctx.variant);
+    else
+      ctx.chart(
+        {
+          type,
+          categories: c.chart.categories,
+          series: c.chart.series,
+          ...hl.length ? { highlight: hl } : {},
+          ...c.chart.unit ? { unit: c.chart.unit } : {},
+          ...c.chart.decimals !== void 0 ? { decimals: c.chart.decimals } : {},
+          ...c.chart.lineUnit ? { lineUnit: c.chart.lineUnit } : {},
+          ...c.chart.lineDecimals !== void 0 ? { lineDecimals: c.chart.lineDecimals } : {},
+          field: "chart"
+        },
+        chartBox
+      );
+    const panel4 = right;
+    ctx.rect(panel4, { fill: colors.surface, role: "panel" });
     ctx.rect(
-      { x: panel3.x, y: panel3.y, w: 0.06, h: panel3.h },
+      { x: panel4.x, y: panel4.y, w: 0.06, h: panel4.h },
       { fill: colors.accent, role: "panel-accent" }
     );
-    const inner = { x: panel3.x + 0.3, y: panel3.y + 0.3, w: panel3.w - 0.55, h: panel3.h - 0.6 };
+    const inner = { x: panel4.x + 0.3, y: panel4.y + 0.3, w: panel4.w - 0.55, h: panel4.h - 0.6 };
     const head = ctx.text(
       c.takeaway.headline,
       { ...inner, h: 1.1 },
@@ -204241,7 +205647,7 @@ function createContext(init) {
   const nodes = [];
   const diagnostics = [];
   const base = init.pointerPrefix ?? `/slides/${init.slideIndex}`;
-  const ptr = (field) => field ? `${base}/${field}` : base;
+  const ptr = (field2) => field2 ? `${base}/${field2}` : base;
   const colors = { ...theme.colors, chart: theme.chart };
   const semantic = (s2) => {
     if (typeof s2 === "number") return s2;
@@ -204382,6 +205788,14 @@ function createContext(init) {
         points,
         ...opts
       };
+      nodes.push(n);
+      return n;
+    },
+    path(segments, opts = {}) {
+      const box2 = pathBounds(segments);
+      if (!segments.length || Object.values(box2).some((v) => !Number.isFinite(v)))
+        throw new Error("A native path requires finite geometry");
+      const n = { kind: "path", box: box2, segments, ...opts };
       nodes.push(n);
       return n;
     },
@@ -204632,18 +206046,18 @@ var composition = {
     }
   ],
   compose(ctx, c) {
-    c.components.forEach((part, i) => {
+    c.components.forEach((part2, i) => {
       const pointer = ctx.ptr(`components/${i}`);
-      const def = getLayout(part.layout);
+      const def = getLayout(part2.layout);
       if (!def || !isComposable(def)) {
         ctx.issue(
-          diag("SC-SPEC-002", `Layout ${part.layout} is not a composable native body exhibit`, {
+          diag("SC-SPEC-002", `Layout ${part2.layout} is not a composable native body exhibit`, {
             pointer: `${pointer}/layout`
           })
         );
         return;
       }
-      const variant = part.variant ?? def.variants[0];
+      const variant = part2.variant ?? def.variants[0];
       if (!def.variants.includes(variant)) {
         ctx.issue(
           diag("SC-SPEC-002", `Unknown ${def.id} variant ${variant}`, {
@@ -204652,7 +206066,7 @@ var composition = {
         );
         return;
       }
-      const parsed2 = def.schema.safeParse(part.content);
+      const parsed2 = def.schema.safeParse(part2.content);
       if (!parsed2.success) {
         for (const issue2 of parsed2.error.issues)
           ctx.issue(
@@ -204662,7 +206076,7 @@ var composition = {
           );
         return;
       }
-      const b = part.box, parent = ctx.body;
+      const b = part2.box, parent = ctx.body;
       const body = {
         x: parent.x + b.x * parent.w,
         y: parent.y + b.y * parent.h,
@@ -204696,7 +206110,7 @@ var composition = {
           ctx.issue(
             diag(
               "SC-SPEC-001",
-              `Component ${part.id} exceeds its region; enlarge the region or choose a simpler exhibit`,
+              `Component ${part2.id} exceeds its region; enlarge the region or choose a simpler exhibit`,
               { pointer: `${pointer}/box` }
             )
           );
@@ -205484,13 +206898,13 @@ var execSummary = {
         );
       }
       const bands2 = rows(area, [1, 1, 1.15], 0);
-      parts.forEach(([label4, text4, field], i) => {
+      parts.forEach(([label5, text4, field2], i) => {
         const b = bands2[i];
         const [lab, txt] = cols(b, [1.6, 8], 0.3);
         if (i > 0) ctx.line(b.x, b.y, b.x + b.w, b.y, { color: colors.rule, width: 0.75 });
-        const isAnswer = field === "resolution";
+        const isAnswer = field2 === "resolution";
         ctx.text(
-          label4.toUpperCase(),
+          label5.toUpperCase(),
           { x: lab.x, y: lab.y + 0.16, w: lab.w, h: 0.3 },
           {
             role: "label",
@@ -205509,7 +206923,7 @@ var execSummary = {
             size: isAnswer ? theme.type.body + 1 : "body",
             bold: isAnswer,
             color: colors.ink,
-            field
+            field: field2
           }
         );
       });
@@ -206358,6 +207772,339 @@ var gateMatrix = {
   }
 };
 
+// src/layouts/graph-diagrams.ts
+var sources3 = ["illustrative"];
+var deltaSchema = external_exports.object({
+  before: Graph,
+  after: Graph,
+  beforeLabel: external_exports.string().max(30).default("Before"),
+  afterLabel: external_exports.string().max(30).default("After")
+}).strict();
+function topologyChanges(before, after) {
+  const changes = [];
+  for (const a of before.nodes) {
+    const b = after.nodes.find((n) => n.id === a.id);
+    if (!b) {
+      changes.push(`REMOVED \xB7 ${a.label}`);
+      continue;
+    }
+    if (a.label !== b.label || a.detail !== b.detail || a.shape !== b.shape)
+      changes.push(`CHANGED \xB7 ${a.label} \u2192 ${b.label}`);
+    if (a.column !== b.column || a.row !== b.row) changes.push(`MOVED \xB7 ${b.label}`);
+  }
+  for (const b of after.nodes)
+    if (!before.nodes.some((a) => a.id === b.id)) changes.push(`ADDED \xB7 ${b.label}`);
+  for (const a of before.edges) {
+    const b = after.edges.find((e) => e.id === a.id);
+    if (!b) changes.push(`REMOVED \xB7 ${a.id}`);
+    else if (a.from !== b.from || a.to !== b.to)
+      changes.push(`REWIRED \xB7 ${a.id}: ${b.from} \u2192 ${b.to}`);
+    else if (a.label !== b.label || a.dashed !== b.dashed) changes.push(`CHANGED \xB7 ${a.id}`);
+  }
+  for (const b of after.edges)
+    if (!before.edges.some((a) => a.id === b.id)) changes.push(`ADDED \xB7 ${b.id}`);
+  return changes;
+}
+var architectureDelta = diagramDef(
+  "architecture-delta",
+  "Architecture delta",
+  deltaSchema,
+  [
+    {
+      title: "A durable queue separates order acceptance from fulfilment",
+      sources: sources3,
+      content: {
+        before: {
+          nodes: [
+            { id: "web", label: "Storefront", column: 0, row: 0 },
+            { id: "api", label: "Order API", column: 1, row: 0 },
+            { id: "worker", label: "Worker", column: 1, row: 1 }
+          ],
+          edges: [
+            { id: "call", from: "web", to: "api" },
+            { id: "dispatch", from: "api", to: "worker" }
+          ]
+        },
+        after: {
+          nodes: [
+            { id: "web", label: "Storefront", column: 0, row: 0 },
+            { id: "api", label: "Order API", column: 1, row: 0 },
+            { id: "worker", label: "Worker", column: 1, row: 1 },
+            { id: "queue", label: "Queue", column: 0, row: 1, highlight: true }
+          ],
+          edges: [
+            { id: "call", from: "web", to: "api" },
+            { id: "dispatch", from: "api", to: "queue" },
+            { id: "consume", from: "queue", to: "worker" }
+          ]
+        }
+      }
+    }
+  ],
+  (ctx, c) => {
+    if ([...c.before.edges, ...c.after.edges].some((e) => !e.id)) {
+      problem(ctx, "Architecture delta requires stable IDs on every relationship", "before/edges");
+      return;
+    }
+    if (new Set([...c.before.nodes, ...c.after.nodes].map((n) => n.id)).size > 8) {
+      problem(ctx, "Compare at most eight unique components; split by subsystem", "after/nodes");
+      return;
+    }
+    const changes = topologyChanges(c.before, c.after);
+    if (changes.length > 8) {
+      problem(ctx, "More than eight changes require a detail slide", "after");
+      return;
+    }
+    const b = ctx.body, ledgerH = 0.35 + Math.ceil(Math.max(1, changes.length) / 3) * 0.36;
+    const regions = cols({ ...b, y: b.y + 0.45, h: b.h - ledgerH - 0.65 }, [1, 1], 0.5);
+    const all = [...c.before.nodes, ...c.after.nodes];
+    const maxCol = Math.max(...all.map((n) => n.column)), maxRow = Math.max(...all.map((n) => n.row));
+    [c.before, c.after].forEach((graph, i) => {
+      const area = regions[i];
+      label3(
+        ctx,
+        i === 0 ? c.beforeLabel : c.afterLabel,
+        { x: area.x, y: b.y, w: area.w, h: 0.35 },
+        i === 0 ? "beforeLabel" : "afterLabel",
+        { bold: true }
+      );
+      const grid2 = [
+        ...graph.nodes,
+        { id: "__grid-extent__", label: "", column: maxCol, row: maxRow }
+      ];
+      let boxes;
+      try {
+        boxes = graphBoxes(area, grid2);
+      } catch (e) {
+        problem(ctx, e.message);
+        return;
+      }
+      boxes.delete("__grid-extent__");
+      const other = i === 0 ? c.after : c.before;
+      drawGraph(
+        ctx,
+        area,
+        {
+          ...graph,
+          nodes: graph.nodes.map((n) => ({
+            ...n,
+            highlight: n.highlight || !other.nodes.some((v) => v.id === n.id)
+          }))
+        },
+        i === 0 ? "before" : "after",
+        boxes
+      );
+    });
+    const w = b.w / 3;
+    (changes.length ? changes : ["No structural changes"]).forEach(
+      (text4, i) => caption(ctx, text4, {
+        x: b.x + i % 3 * w,
+        y: b.y + b.h - ledgerH + Math.floor(i / 3) * 0.36,
+        w: w - 0.16,
+        h: 0.34
+      })
+    );
+  },
+  "Use for two synchronized system topologies with stable identities and a computed change ledger."
+);
+var laneSchema = external_exports.object({
+  lanes: external_exports.array(external_exports.object({ id: DiagramId, label: DiagramLabel.max(28) }).strict()).min(2).max(4),
+  steps: external_exports.array(
+    external_exports.object({
+      id: DiagramId,
+      label: DiagramLabel,
+      lane: DiagramId,
+      stage: external_exports.number().int().min(0).max(4),
+      highlight: external_exports.boolean().optional()
+    }).strict()
+  ).min(2).max(10),
+  edges: external_exports.array(GraphEdge).max(12)
+}).strict();
+var swimlane = diagramDef(
+  "swimlane",
+  "Cross-functional swimlane",
+  laneSchema,
+  [
+    {
+      title: "Operations takes ownership after the sales handoff",
+      sources: sources3,
+      content: {
+        lanes: [
+          { id: "sales", label: "Sales" },
+          { id: "ops", label: "Operations" },
+          { id: "finance", label: "Finance" }
+        ],
+        steps: [
+          { id: "request", label: "Confirm scope", lane: "sales", stage: 0 },
+          { id: "deliver", label: "Deliver service", lane: "ops", stage: 1, highlight: true },
+          { id: "bill", label: "Issue invoice", lane: "finance", stage: 2 }
+        ],
+        edges: [
+          { from: "request", to: "deliver" },
+          { from: "deliver", to: "bill" }
+        ]
+      }
+    }
+  ],
+  (ctx, c) => {
+    if (new Set(c.lanes.map((v) => v.id)).size !== c.lanes.length || c.steps.some((n) => !c.lanes.some((v) => v.id === n.lane))) {
+      problem(ctx, "Every step needs one unique known lane", "steps");
+      return;
+    }
+    const b = ctx.body, left = Math.min(1.5, b.w * 0.17), h = b.h / c.lanes.length;
+    c.lanes.forEach((lane2, i) => {
+      ctx.rect(
+        { x: b.x, y: b.y + i * h, w: b.w, h: h - 0.04 },
+        { fill: i % 2 ? ctx.colors.surface : ctx.colors.background, role: "swimlane-band" }
+      );
+      label3(
+        ctx,
+        lane2.label,
+        { x: b.x + 0.1, y: b.y + i * h, w: left - 0.2, h },
+        `lanes/${i}/label`,
+        { bold: true }
+      );
+    });
+    drawGraph(
+      ctx,
+      { x: b.x + left, y: b.y, w: b.w - left, h: b.h },
+      {
+        nodes: c.steps.map((n) => ({
+          id: n.id,
+          label: n.label,
+          column: n.stage,
+          row: c.lanes.findIndex((v) => v.id === n.lane),
+          highlight: n.highlight
+        })),
+        edges: c.edges
+      },
+      "flow"
+    );
+  },
+  "Use for a process whose steps cross named owners through explicit handoffs.",
+  "sequence"
+);
+var dependencyGraph = diagramDef(
+  "dependency-graph",
+  "Dependency graph",
+  Graph,
+  [
+    {
+      title: "The application and reporting both depend on the shared data service",
+      sources: sources3,
+      content: {
+        nodes: [
+          { id: "app", label: "Application", column: 0, row: 0 },
+          { id: "report", label: "Reporting", column: 0, row: 1 },
+          { id: "data", label: "Data service", column: 1, row: 0, highlight: true },
+          { id: "store", label: "Database", column: 2, row: 0 }
+        ],
+        edges: [
+          { from: "app", to: "data" },
+          { from: "report", to: "data" },
+          { from: "data", to: "store" }
+        ]
+      }
+    }
+  ],
+  (ctx, c) => drawGraph(ctx, ctx.body, c),
+  "Use for directed dependencies with shared parents and explicitly represented cycles."
+);
+var flowchart = diagramDef(
+  "flowchart",
+  "Decision flowchart",
+  Graph,
+  [
+    {
+      title: "An explicit approval decision separates standard and exceptional orders",
+      sources: sources3,
+      content: {
+        nodes: [
+          { id: "start", label: "Receive order", column: 0, row: 0, shape: "terminal" },
+          { id: "check", label: "Approved?", column: 1, row: 0, shape: "decision" },
+          { id: "ship", label: "Ship order", column: 2, row: 0 },
+          { id: "review", label: "Manual review", column: 1, row: 1 }
+        ],
+        edges: [
+          { from: "start", to: "check" },
+          { from: "check", to: "ship", label: "Yes" },
+          { from: "check", to: "review", label: "No" }
+        ]
+      }
+    }
+  ],
+  (ctx, c) => {
+    for (const node2 of c.nodes)
+      if (node2.shape === "decision") {
+        const choices = c.edges.filter((e) => e.from === node2.id);
+        if (choices.length < 2 || choices.some((e) => !e.label) || new Set(choices.map((e) => e.label)).size !== choices.length) {
+          problem(ctx, "Decisions require at least two distinctly labelled branches", "edges");
+          return;
+        }
+      }
+    drawGraph(ctx, ctx.body, c);
+  },
+  "Use for decision logic with labelled branches, merges and bounded return paths.",
+  "sequence"
+);
+var stateSchema = Graph.extend({
+  initial: DiagramId,
+  terminal: external_exports.array(DiagramId).min(1).max(4)
+}).strict();
+var stateMachine = diagramDef(
+  "state-machine",
+  "State machine",
+  stateSchema,
+  [
+    {
+      title: "An order ends only after fulfilment or explicit cancellation",
+      sources: sources3,
+      content: {
+        initial: "new",
+        terminal: ["done", "cancelled"],
+        nodes: [
+          { id: "new", label: "New", column: 0, row: 0 },
+          { id: "processing", label: "Processing", column: 1, row: 0 },
+          { id: "done", label: "Completed", column: 2, row: 0 },
+          { id: "cancelled", label: "Cancelled", column: 1, row: 1 }
+        ],
+        edges: [
+          { from: "new", to: "processing", label: "Accept" },
+          { from: "processing", to: "done", label: "Fulfil" },
+          { from: "processing", to: "cancelled", label: "Cancel" }
+        ]
+      }
+    }
+  ],
+  (ctx, c) => {
+    if (!c.nodes.some((n) => n.id === c.initial) || c.terminal.some((id) => !c.nodes.some((n) => n.id === id)) || c.edges.some((e) => c.terminal.includes(e.from))) {
+      problem(
+        ctx,
+        "Initial and terminal IDs must exist; terminals cannot have outgoing transitions",
+        "terminal"
+      );
+      return;
+    }
+    const reached = /* @__PURE__ */ new Set([c.initial]);
+    for (let i = 0; i < c.nodes.length; i++)
+      for (const e of c.edges) if (reached.has(e.from)) reached.add(e.to);
+    if (c.nodes.some((n) => !reached.has(n.id))) {
+      problem(ctx, "Every state must be reachable from the initial state", "nodes");
+      return;
+    }
+    drawGraph(ctx, ctx.body, {
+      nodes: c.nodes.map((n) => ({
+        ...n,
+        shape: c.terminal.includes(n.id) ? "terminal" : "state",
+        highlight: n.id === c.initial
+      })),
+      edges: c.edges
+    });
+  },
+  "Use for one subject progressing through named states, guarded transitions and terminal outcomes.",
+  "sequence"
+);
+
 // src/layouts/issue-tree.ts
 var Status2 = external_exports.enum(["confirmed", "rejected", "open"]).describe("Hypothesis status after analysis");
 var Leaf = external_exports.object({
@@ -206519,7 +208266,7 @@ var issueTree = {
     const leafW = area.x + area.w - leafX - (driver ? 0 : 0.3);
     const unit = area.h / nLeaves;
     const leafH = Math.min(0.62, unit * 0.82);
-    const node2 = (b, label4, value, opts) => {
+    const node2 = (b, label5, value, opts) => {
       ctx.rect(b, {
         fill: opts.fill ?? colors.surface,
         stroke: opts.strong ? void 0 : { color: colors.rule, width: 0.75 },
@@ -206543,7 +208290,7 @@ var issueTree = {
           }
         );
         ctx.text(
-          label4,
+          label5,
           { x: inner.x, y: inner.y + 0.42, w: inner.w, h: inner.h - 0.42 },
           {
             size: theme.type.body - 1,
@@ -206555,7 +208302,7 @@ var issueTree = {
       } else if (value) {
         const vw = 0.8;
         ctx.text(
-          label4,
+          label5,
           { ...inner, w: inner.w - vw - 0.08 },
           {
             size: theme.type.body - 1,
@@ -206583,7 +208330,7 @@ var issueTree = {
           }
         );
       } else {
-        ctx.text(label4, inner, {
+        ctx.text(label5, inner, {
           size: theme.type.body - 1,
           bold: !!opts.strong,
           color: ink,
@@ -206879,17 +208626,17 @@ var keyPoints = {
     const top = isCards ? 0.06 + 0.25 : 0;
     let heads = [];
     const heightsPass = c.points.map((p, i) => {
-      const part = parts[i];
+      const part2 = parts[i];
       if (isCards) {
-        ctx.rect(part, { fill: colors.surface, role: "card" });
+        ctx.rect(part2, { fill: colors.surface, role: "card" });
         ctx.rect(
-          { x: part.x, y: part.y, w: part.w, h: 0.06 },
+          { x: part2.x, y: part2.y, w: part2.w, h: 0.06 },
           { fill: colors.accent, role: "card-bar" }
         );
       } else {
-        ctx.line(part.x, part.y, part.x + part.w, part.y, { color: colors.accent, width: 2.5 });
+        ctx.line(part2.x, part2.y, part2.x + part2.w, part2.y, { color: colors.accent, width: 2.5 });
       }
-      const inner = { x: part.x + padX, y: part.y + (isCards ? top : 0.3), w: part.w - 2 * padX };
+      const inner = { x: part2.x + padX, y: part2.y + (isCards ? top : 0.3), w: part2.w - 2 * padX };
       let y = inner.y;
       if (p.icon)
         ctx.icon(
@@ -206965,7 +208712,7 @@ function valueSizes(longest, width, max) {
   for (let s2 = start; s2 >= 28; s2 -= 2) out.push(s2);
   return out;
 }
-function delta(ctx, t, at, field) {
+function delta(ctx, t, at, field2) {
   if (!t.delta) return;
   const { colors } = ctx;
   const trend = t.trend ?? "flat";
@@ -207004,7 +208751,7 @@ function delta(ctx, t, at, field) {
       valign: "middle",
       maxLines: 1,
       fixed: true,
-      field
+      field: field2
     }
   );
 }
@@ -207781,13 +209528,13 @@ function grid(ctx, body, c) {
   });
   const ly = area.y + area.h + 0.12;
   let lx = area.x;
-  for (const [fill, label4] of [
+  for (const [fill, label5] of [
     [colors.ink, "Today"],
     [colors.accent, c.targetLabel ?? "Target"]
   ]) {
     ctx.ellipse({ x: lx, y: ly + 0.04, w: 0.2, h: 0.2 }, { fill });
     ctx.text(
-      label4,
+      label5,
       { x: lx + 0.3, y: ly, w: 2.6, h: 0.28 },
       { size: "small", color: colors.muted, valign: "middle", maxLines: 1, fixed: true }
     );
@@ -207865,6 +209612,329 @@ var maturityModel = {
     else grid(ctx, ctx.body, c);
   }
 };
+
+// src/layouts/model-diagrams.ts
+var sources4 = ["illustrative"];
+var sequenceSchema = external_exports.object({
+  participants: external_exports.array(external_exports.object({ id: DiagramId, label: DiagramLabel }).strict()).min(2).max(6),
+  messages: external_exports.array(
+    external_exports.object({
+      from: DiagramId,
+      to: DiagramId,
+      label: external_exports.string().min(1).max(48),
+      kind: external_exports.enum(["call", "return"]).default("call")
+    }).strict()
+  ).min(1).max(10)
+}).strict();
+var sequence = diagramDef(
+  "sequence",
+  "Sequence diagram",
+  sequenceSchema,
+  [
+    {
+      title: "Payment confirmation precedes order acceptance",
+      sources: sources4,
+      content: {
+        participants: [
+          { id: "client", label: "Customer" },
+          { id: "api", label: "Order service" },
+          { id: "payment", label: "Payment gateway" }
+        ],
+        messages: [
+          { from: "client", to: "api", label: "Place order" },
+          { from: "api", to: "payment", label: "Authorize payment" },
+          { from: "payment", to: "api", label: "Payment confirmed", kind: "return" },
+          { from: "api", to: "client", label: "Order accepted", kind: "return" }
+        ]
+      }
+    }
+  ],
+  (ctx, c) => {
+    const ids = c.participants.map((p) => p.id);
+    if (new Set(ids).size !== ids.length || c.messages.some((m) => !ids.includes(m.from) || !ids.includes(m.to))) {
+      problem(
+        ctx,
+        "Sequence participants must be unique and every message must have known endpoints",
+        "messages"
+      );
+      return;
+    }
+    const b = ctx.body, pitch = b.w / c.participants.length, x2 = (id) => b.x + (ids.indexOf(id) + 0.5) * pitch;
+    c.participants.forEach((p, i) => {
+      const box2 = {
+        x: x2(p.id) - Math.min(1, pitch * 0.4),
+        y: b.y,
+        w: Math.min(2, pitch * 0.8),
+        h: 0.6
+      };
+      panel(ctx, box2);
+      label3(
+        ctx,
+        p.label,
+        { x: box2.x + 0.08, y: box2.y + 0.05, w: box2.w - 0.16, h: 0.5 },
+        `participants/${i}/label`,
+        { bold: true, align: "center" }
+      );
+      ctx.line(
+        x2(p.id),
+        b.y + 0.65,
+        x2(p.id),
+        b.y + b.h,
+        { color: ctx.colors.rule, width: 0.8, dash: "dash" },
+        { role: "sequence-lifeline" }
+      );
+    });
+    const row = (b.h - 1) / c.messages.length;
+    if (row < 0.34) {
+      problem(ctx, "Sequence needs fewer messages or a taller region", "messages");
+      return;
+    }
+    c.messages.forEach((m, i) => {
+      const a = x2(m.from), d = x2(m.to), y = b.y + 1 + i * row;
+      const stroke = {
+        color: m.kind === "return" ? ctx.colors.muted : ctx.colors.ink,
+        width: 1,
+        ...m.kind === "return" ? { dash: "dash" } : {}
+      };
+      if (m.from === m.to) {
+        const dx = Math.min(0.5, pitch * 0.3);
+        ctx.line(a, y, a + dx, y, stroke);
+        ctx.line(a + dx, y, a + dx, y + row * 0.45, stroke);
+        ctx.line(a + dx, y + row * 0.45, a, y + row * 0.45, stroke, { arrowEnd: true });
+        label3(
+          ctx,
+          m.label,
+          { x: a + 0.08, y: y - 0.3, w: Math.min(pitch * 0.8, 2.5), h: 0.28 },
+          `messages/${i}/label`,
+          { size: "small" }
+        );
+      } else {
+        ctx.line(a, y, d, y, stroke, { arrowEnd: true, role: "sequence-message" });
+        label3(
+          ctx,
+          m.label,
+          { x: Math.min(a, d) + 0.08, y: y - 0.32, w: Math.abs(d - a) - 0.16, h: 0.28 },
+          `messages/${i}/label`,
+          { size: "small", align: "center", maxLines: 1 }
+        );
+      }
+    });
+  },
+  "Use for ordered messages between participants, including returns and self-calls; unsupported fragments require a detail view.",
+  "sequence"
+);
+var field = external_exports.object({
+  id: DiagramId,
+  label: external_exports.string().min(1).max(26),
+  type: external_exports.string().max(18).optional(),
+  key: external_exports.enum(["PK", "FK", "PK/FK"]).optional()
+}).strict();
+var entity = external_exports.object({
+  id: DiagramId,
+  label: DiagramLabel,
+  fields: external_exports.array(field).min(1).max(6),
+  operations: external_exports.array(external_exports.string().max(38)).max(3).default([])
+}).strict();
+var endpoint = external_exports.object({ entity: DiagramId, field: DiagramId.optional() }).strict();
+var modelSchema = external_exports.object({
+  entities: external_exports.array(entity).min(2).max(4),
+  relationships: external_exports.array(
+    external_exports.object({
+      from: endpoint,
+      to: endpoint,
+      kind: external_exports.enum([
+        "one-one",
+        "one-many",
+        "many-many",
+        "association",
+        "inheritance",
+        "composition",
+        "aggregation"
+      ]).default("one-many")
+    }).strict()
+  ).max(6)
+}).strict();
+var entities = [
+  {
+    id: "customer",
+    label: "Customer",
+    fields: [
+      { id: "id", label: "customer_id", type: "UUID", key: "PK" },
+      { id: "name", label: "name", type: "TEXT" }
+    ]
+  },
+  {
+    id: "order",
+    label: "Order",
+    fields: [
+      { id: "id", label: "order_id", type: "UUID", key: "PK" },
+      { id: "customer", label: "customer_id", type: "UUID", key: "FK" }
+    ]
+  }
+];
+function model(id, name, physical = false, uml = false) {
+  return diagramDef(
+    id,
+    name,
+    modelSchema,
+    [
+      {
+        title: uml ? "Order and customer classes expose different operations" : "Each order references one customer through its customer key",
+        sources: sources4,
+        content: {
+          entities: uml ? entities.map((e) => ({
+            ...e,
+            operations: e.id === "order" ? ["submit()", "cancel()"] : ["updateProfile()"]
+          })) : entities,
+          relationships: [
+            {
+              from: { entity: "customer", ...physical ? { field: "id" } : {} },
+              to: { entity: "order", ...physical ? { field: "customer" } : {} },
+              kind: "one-many"
+            }
+          ]
+        }
+      }
+    ],
+    (ctx, c) => {
+      if (new Set(c.entities.map((e) => e.id)).size !== c.entities.length || c.entities.some((e) => new Set(e.fields.map((f) => f.id)).size !== e.fields.length)) {
+        problem(ctx, "Entity and field IDs must be unique within their scope", "entities");
+        return;
+      }
+      if (!uml && c.entities.some((e) => e.operations.length)) {
+        problem(ctx, "Operations belong in a UML class diagram", "entities");
+        return;
+      }
+      for (const r of c.relationships)
+        for (const end of [r.from, r.to]) {
+          const e = c.entities.find((v) => v.id === end.entity);
+          if (!e || physical && !end.field || end.field && !e.fields.some((f) => f.id === end.field)) {
+            problem(
+              ctx,
+              "Relationships must name known entities and, for physical schemas, exact fields",
+              "relationships"
+            );
+            return;
+          }
+        }
+      const b = ctx.body, regions = cols(
+        b,
+        c.entities.map(() => 1),
+        0.75
+      ), boxes = /* @__PURE__ */ new Map();
+      const rowH = 0.42;
+      c.entities.forEach((e, i) => {
+        const a = regions[i], h = 0.6 + e.fields.length * rowH + (uml && e.operations.length ? 0.2 + e.operations.length * rowH : 0);
+        if (h > b.h) {
+          problem(ctx, "Entity compartments exceed the available height", "entities");
+          return;
+        }
+        boxes.set(e.id, { x: a.x, y: b.y + (b.h - h) / 2, w: a.w, h });
+      });
+      if (boxes.size !== c.entities.length) return;
+      c.relationships.forEach((r, i) => {
+        const a = boxes.get(r.from.entity), d = boxes.get(r.to.entity), forward = d.x > a.x;
+        const py2 = (end, box2) => end.field ? box2.y + 0.6 + (c.entities.find((e) => e.id === end.entity).fields.findIndex((f) => f.id === end.field) + 0.5) * rowH : box2.y + 0.3;
+        const p = [forward ? a.x + a.w : a.x, py2(r.from, a)], q = [forward ? d.x : d.x + d.w, py2(r.to, d)];
+        const sign = forward ? 1 : -1;
+        try {
+          const route = [
+            p,
+            ...routeOrthogonal(
+              [p[0] + sign * 0.12, p[1]],
+              [q[0] - sign * 0.12, q[1]],
+              [...boxes.values()],
+              b
+            ),
+            q
+          ];
+          ctx.path(roundedRoute(route), {
+            stroke: { color: ctx.colors.muted, width: 1 },
+            role: "model-relationship",
+            pointer: ctx.ptr(`relationships/${i}`)
+          });
+        } catch (e) {
+          problem(ctx, e.message, `relationships/${i}`);
+        }
+        if (r.kind === "inheritance")
+          ctx.polygon([q, [q[0] - sign * 0.14, q[1] - 0.09], [q[0] - sign * 0.14, q[1] + 0.09]], {
+            fill: ctx.colors.background,
+            stroke: { color: ctx.colors.ink, width: 1 },
+            role: "inheritance-head"
+          });
+        else if (r.kind === "composition" || r.kind === "aggregation")
+          ctx.polygon(
+            [
+              p,
+              [p[0] + sign * 0.09, p[1] - 0.06],
+              [p[0] + sign * 0.18, p[1]],
+              [p[0] + sign * 0.09, p[1] + 0.06]
+            ],
+            {
+              fill: r.kind === "composition" ? ctx.colors.ink : ctx.colors.background,
+              stroke: { color: ctx.colors.ink, width: 1 },
+              role: "ownership-head"
+            }
+          );
+        else {
+          caption(ctx, r.kind === "many-many" ? "N" : "1", {
+            x: p[0] + (forward ? 0.05 : -0.3),
+            y: p[1] - 0.35,
+            w: 0.25,
+            h: 0.25
+          });
+          caption(ctx, r.kind === "one-one" ? "1" : r.kind === "association" ? "\u2014" : "N", {
+            x: q[0] + (forward ? -0.3 : 0.05),
+            y: q[1] - 0.35,
+            w: 0.25,
+            h: 0.25
+          });
+        }
+      });
+      c.entities.forEach((e, i) => {
+        const box2 = boxes.get(e.id);
+        panel(ctx, box2);
+        ctx.rect(
+          { x: box2.x, y: box2.y, w: box2.w, h: 0.55 },
+          { fill: ctx.colors.accentSoft, role: "entity-header" }
+        );
+        label3(
+          ctx,
+          e.label,
+          { x: box2.x + 0.12, y: box2.y + 0.05, w: box2.w - 0.24, h: 0.45 },
+          `entities/${i}/label`,
+          { bold: true }
+        );
+        e.fields.forEach(
+          (f, j) => label3(
+            ctx,
+            `${f.key ? `${f.key} \xB7 ` : ""}${f.label}${f.type ? ` : ${f.type}` : ""}`,
+            { x: box2.x + 0.12, y: box2.y + 0.6 + j * rowH, w: box2.w - 0.24, h: rowH },
+            `entities/${i}/fields/${j}/label`,
+            { size: "small" }
+          )
+        );
+        if (uml && e.operations.length) {
+          const y = box2.y + 0.6 + e.fields.length * rowH + 0.1;
+          ctx.line(box2.x, y, box2.x + box2.w, y, { color: ctx.colors.rule, width: 0.8 });
+          e.operations.forEach(
+            (op, j) => label3(
+              ctx,
+              op,
+              { x: box2.x + 0.12, y: y + 0.1 + j * rowH, w: box2.w - 0.24, h: rowH },
+              `entities/${i}/operations/${j}`,
+              { size: "small" }
+            )
+          );
+        }
+      });
+    },
+    physical ? "Use for physical tables and exact column-to-column foreign-key relationships." : uml ? "Use for classes with attributes, operations and typed inheritance or ownership relationships." : "Use for entities, attributes and explicit cardinality; physical foreign keys use database-schema."
+  );
+}
+var erDiagram = model("er-diagram", "Entity relationship model");
+var databaseSchema = model("database-schema", "Physical database schema", true);
+var umlClass = model("uml-class", "UML class model", false, true);
 
 // src/layouts/native-canvas.ts
 var position = external_exports.number().min(0).max(100);
@@ -208154,14 +210224,14 @@ var nextSteps = {
           })
         );
       } else {
-        const [panel3, rest] = cols(body, [0.38, 0.62], 0.5);
+        const [panel4, rest] = cols(body, [0.38, 0.62], 0.5);
         right = rest;
-        ctx.rect(panel3, { fill: colors.accent, role: "decision-panel" });
+        ctx.rect(panel4, { fill: colors.accent, role: "decision-panel" });
         const inner = {
-          x: panel3.x + 0.4,
-          y: panel3.y + 0.4,
-          w: panel3.w - 0.8,
-          h: panel3.h - 0.8
+          x: panel4.x + 0.4,
+          y: panel4.y + 0.4,
+          w: panel4.w - 0.8,
+          h: panel4.h - 0.8
         };
         ctx.text(
           ctx.t("decision").toUpperCase(),
@@ -208838,7 +210908,7 @@ var schema32 = external_exports.object({
   proposed: Lane.describe("The proposed process; mark steps that change with changed: true"),
   metricLabel: external_exports.string().max(36).optional().describe('What the lane metrics measure, e.g. "Order-to-cash time"')
 }).strict();
-function lane(ctx, b, l, proposed, field, metricLabel) {
+function lane(ctx, b, l, proposed, field2, metricLabel) {
   const { colors, theme } = ctx;
   const labelW = 1.6;
   const metricW = l.metric ? 1.7 : 0;
@@ -208851,7 +210921,7 @@ function lane(ctx, b, l, proposed, field, metricLabel) {
       color: proposed ? colors.accent : colors.muted,
       valign: "middle",
       maxLines: 2,
-      field: `${field}/label`
+      field: `${field2}/label`
     }
   );
   const n = l.steps.length;
@@ -208880,7 +210950,7 @@ function lane(ctx, b, l, proposed, field, metricLabel) {
         align: "center",
         valign: "middle",
         maxLines: 2,
-        field: `${field}/steps/${i}/label`
+        field: `${field2}/steps/${i}/label`
       }
     );
     if (i < n - 1)
@@ -208901,7 +210971,7 @@ function lane(ctx, b, l, proposed, field, metricLabel) {
           color: changed ? colors.ink : colors.muted,
           align: "center",
           maxLines: 2,
-          field: `${field}/steps/${i}/note`
+          field: `${field2}/steps/${i}/note`
         }
       );
   });
@@ -208918,7 +210988,7 @@ function lane(ctx, b, l, proposed, field, metricLabel) {
         align: "right",
         maxLines: 1,
         fixed: true,
-        field: `${field}/metric`
+        field: `${field2}/metric`
       }
     );
     if (metricLabel)
@@ -209409,7 +211479,7 @@ var raci = {
     ];
     let lx = area.x;
     const step = Math.min(2.85, area.w / items.length);
-    for (const [k, label4] of items) {
+    for (const [k, label5] of items) {
       const box2 = { x: lx, y: ly, w: 0.26, h: 0.26 };
       if (k === "A") ctx.ellipse(box2, { fill: colors.accent });
       else if (k === "R") ctx.ellipse(box2, { fill: colors.ink });
@@ -209429,7 +211499,7 @@ var raci = {
         }
       );
       ctx.text(
-        label4,
+        label5,
         { x: lx + 0.34, y: ly, w: step - 0.45, h: 0.26 },
         { size: "small", color: colors.muted, valign: "middle", maxLines: 1, fixed: true }
       );
@@ -209778,6 +211848,917 @@ var sevenS = {
   }
 };
 
+// src/layouts/stage-diagrams.ts
+var sources5 = ["illustrative"];
+var loopSchema = external_exports.object({
+  steps: external_exports.array(
+    external_exports.object({ label: DiagramLabel.max(28), detail: external_exports.string().max(60).optional() }).strict()
+  ).min(3).max(6),
+  hub: external_exports.string().max(60).optional(),
+  evidence: external_exports.string().min(1).max(100).describe("Evidence or explicit hypothesis for reinforcement")
+}).strict();
+var loop = diagramDef(
+  "loop",
+  "Loop and flywheel",
+  loopSchema,
+  [
+    {
+      title: "Customer learning improves the service and encourages repeat use",
+      sources: sources5,
+      content: {
+        steps: [
+          { label: "Use service" },
+          { label: "Share feedback" },
+          { label: "Improve product" },
+          { label: "Return" }
+        ],
+        hub: "Shared learning",
+        evidence: "Illustrative hypothesis"
+      }
+    }
+  ],
+  (ctx, c) => {
+    const b = ctx.body, cx2 = b.x + b.w / 2, cy2 = b.y + (b.h - 0.4) / 2, rx = b.w * 0.34, ry = (b.h - 1.1) * 0.37;
+    const points = c.steps.map((_, i) => {
+      const a = -Math.PI / 2 + i * 2 * Math.PI / c.steps.length;
+      return { x: cx2 + rx * Math.cos(a), y: cy2 + ry * Math.sin(a) };
+    });
+    points.forEach((p, i) => {
+      const q = points[(i + 1) % points.length];
+      const dx = q.x - p.x, dy = q.y - p.y;
+      const stop = Math.min(
+        Math.abs(dx) > 1e-9 ? 0.88 / Math.abs(dx) : Infinity,
+        Math.abs(dy) > 1e-9 ? 0.38 / Math.abs(dy) : Infinity
+      );
+      ctx.line(
+        p.x + dx * stop,
+        p.y + dy * stop,
+        q.x - dx * stop,
+        q.y - dy * stop,
+        { color: ctx.colors.muted, width: 1.3 },
+        { arrowEnd: true, role: "cycle-link" }
+      );
+    });
+    c.steps.forEach((step, i) => {
+      const p = points[i], box2 = { x: p.x - 0.85, y: p.y - 0.35, w: 1.7, h: 0.7 };
+      panel(ctx, box2, i === 0);
+      label3(
+        ctx,
+        step.label,
+        { x: box2.x + 0.1, y: box2.y + 0.06, w: box2.w - 0.2, h: box2.h - 0.12 },
+        `steps/${i}/label`,
+        { bold: true, align: "center" }
+      );
+    });
+    if (c.hub)
+      label3(ctx, c.hub, { x: cx2 - 1.1, y: cy2 - 0.3, w: 2.2, h: 0.6 }, "hub", {
+        bold: true,
+        align: "center",
+        color: ctx.colors.accent
+      });
+    caption(ctx, c.evidence, { x: b.x, y: b.y + b.h - 0.3, w: b.w, h: 0.3 }, "evidence");
+  },
+  "Use for a closed reinforcing cycle, with an optional accumulated result and explicit evidence.",
+  "sequence"
+);
+var layersSchema = external_exports.object({
+  layers: external_exports.array(
+    external_exports.object({
+      label: DiagramLabel,
+      detail: external_exports.string().max(100),
+      highlight: external_exports.boolean().optional()
+    }).strict()
+  ).min(2).max(5),
+  direction: external_exports.string().max(70).optional()
+}).strict();
+var layerStack = diagramDef(
+  "layer-stack",
+  "Layer stack",
+  layersSchema,
+  [
+    {
+      title: "Shared controls support every layer of the service",
+      sources: sources5,
+      content: {
+        layers: [
+          { label: "Experience", detail: "Customer channels and service interactions" },
+          { label: "Services", detail: "Business capabilities and orchestration", highlight: true },
+          { label: "Data", detail: "Trusted records and governed access" },
+          { label: "Platform", detail: "Identity, observability and infrastructure" }
+        ],
+        direction: "Higher layers depend on the foundation"
+      }
+    }
+  ],
+  (ctx, c) => {
+    const b = ctx.body, gap = 0.14, h = (b.h - (c.direction ? 0.45 : 0) - gap * (c.layers.length - 1)) / c.layers.length;
+    c.layers.forEach((item2, i) => {
+      const row = { x: b.x, y: b.y + i * (h + gap), w: b.w, h };
+      panel(ctx, row, item2.highlight);
+      label3(
+        ctx,
+        item2.label,
+        { x: row.x + 0.2, y: row.y + 0.08, w: row.w * 0.3 - 0.3, h: h - 0.16 },
+        `layers/${i}/label`,
+        { bold: true }
+      );
+      label3(
+        ctx,
+        item2.detail,
+        { x: row.x + row.w * 0.3, y: row.y + 0.08, w: row.w * 0.7 - 0.2, h: h - 0.16 },
+        `layers/${i}/detail`
+      );
+    });
+    if (c.direction)
+      caption(ctx, c.direction, { x: b.x, y: b.y + b.h - 0.32, w: b.w, h: 0.32 }, "direction");
+  },
+  "Use for ordered abstraction or control layers; band thickness carries no quantitative meaning."
+);
+var kanbanSchema = external_exports.object({
+  columns: external_exports.array(
+    external_exports.object({
+      id: DiagramId,
+      label: DiagramLabel,
+      limit: external_exports.number().int().positive().max(20).optional(),
+      items: external_exports.array(
+        external_exports.object({ id: DiagramId, label: DiagramLabel, blocked: external_exports.boolean().optional() }).strict()
+      ).max(4)
+    }).strict()
+  ).min(2).max(5)
+}).strict();
+var kanban = diagramDef(
+  "kanban",
+  "Kanban snapshot",
+  kanbanSchema,
+  [
+    {
+      title: "Blocked review work constrains the next delivery batch",
+      sources: sources5,
+      content: {
+        columns: [
+          { id: "todo", label: "Ready", items: [{ id: "docs", label: "Update guide" }] },
+          {
+            id: "doing",
+            label: "In progress",
+            limit: 2,
+            items: [
+              { id: "api", label: "API contract" },
+              { id: "tests", label: "Integration tests" }
+            ]
+          },
+          {
+            id: "review",
+            label: "Review",
+            limit: 2,
+            items: [{ id: "security", label: "Security review", blocked: true }]
+          },
+          { id: "done", label: "Done", items: [{ id: "scope", label: "Agreed scope" }] }
+        ]
+      }
+    }
+  ],
+  (ctx, c) => {
+    const items = c.columns.flatMap((col2) => col2.items), ids = items.map((v) => v.id);
+    if (new Set(ids).size !== ids.length || new Set(c.columns.map((v) => v.id)).size !== c.columns.length) {
+      problem(ctx, "Board column and item IDs must be unique", "columns");
+      return;
+    }
+    const b = ctx.body, gap = 0.2, w = (b.w - gap * (c.columns.length - 1)) / c.columns.length;
+    c.columns.forEach((col2, i) => {
+      const x2 = b.x + i * (w + gap);
+      ctx.rect({ x: x2, y: b.y, w, h: b.h }, { fill: ctx.colors.surface, role: "kanban-column" });
+      label3(
+        ctx,
+        col2.label,
+        { x: x2 + 0.12, y: b.y + 0.08, w: w - 0.24, h: 0.45 },
+        `columns/${i}/label`,
+        { bold: true }
+      );
+      caption(
+        ctx,
+        `${col2.items.length}${col2.limit ? ` / WIP ${col2.limit}` : ""}${col2.limit && col2.items.length > col2.limit ? " \xB7 over limit" : ""}`,
+        { x: x2 + 0.12, y: b.y + 0.55, w: w - 0.24, h: 0.3 }
+      );
+      const h = Math.min(0.75, (b.h - 1.15) / Math.max(1, col2.items.length) - 0.12);
+      col2.items.forEach((item2, j) => {
+        const box2 = { x: x2 + 0.12, y: b.y + 1 + j * (h + 0.12), w: w - 0.24, h };
+        panel(ctx, box2, item2.blocked);
+        label3(
+          ctx,
+          `${item2.blocked ? "Blocked \xB7 " : ""}${item2.label}`,
+          { x: box2.x + 0.1, y: box2.y + 0.06, w: box2.w - 0.2, h: h - 0.12 },
+          `columns/${i}/items/${j}/label`
+        );
+      });
+    });
+  },
+  "Use for a static work-in-progress census by state, with visible limits and blocked items.",
+  "sequence"
+);
+function stageGrid(ctx, b, stages, left = 1.45) {
+  const w = (b.w - left) / stages.length;
+  stages.forEach(
+    (s2, i) => label3(ctx, s2, { x: b.x + left + i * w, y: b.y, w: w - 0.08, h: 0.5 }, `stages/${i}`, {
+      bold: true,
+      align: "center"
+    })
+  );
+  return { left, w, x: (i) => b.x + left + i * w };
+}
+var sentiment = external_exports.enum(["low", "medium-low", "neutral", "medium-high", "high"]);
+var journeySchema = external_exports.object({
+  persona: external_exports.string().max(40),
+  evidence: external_exports.string().min(1).max(100),
+  stages: external_exports.array(
+    external_exports.object({
+      label: external_exports.string().max(24),
+      action: external_exports.string().max(45),
+      touchpoint: external_exports.string().max(30),
+      sentiment,
+      pain: external_exports.string().max(40).optional()
+    }).strict()
+  ).min(3).max(6)
+}).strict();
+var userJourney = diagramDef(
+  "user-journey",
+  "User journey",
+  journeySchema,
+  [
+    {
+      title: "Billing friction interrupts an otherwise smooth customer journey",
+      sources: sources5,
+      content: {
+        persona: "New subscriber",
+        evidence: "Illustrative research hypothesis",
+        stages: [
+          {
+            label: "Discover",
+            action: "Compare plans",
+            touchpoint: "Website",
+            sentiment: "medium-high"
+          },
+          { label: "Sign up", action: "Create account", touchpoint: "App", sentiment: "high" },
+          {
+            label: "First bill",
+            action: "Resolve mismatch",
+            touchpoint: "Support",
+            sentiment: "low",
+            pain: "Unexpected charge"
+          },
+          { label: "Continue", action: "Resume use", touchpoint: "App", sentiment: "neutral" }
+        ]
+      }
+    }
+  ],
+  (ctx, c) => {
+    const b = ctx.body, g = stageGrid(
+      ctx,
+      b,
+      c.stages.map((v) => v.label)
+    ), top = b.y + 0.7, band = Math.min(1.6, b.h * 0.33);
+    const levels = ["low", "medium-low", "neutral", "medium-high", "high"];
+    const ys = c.stages.map((s2) => top + band * (1 - levels.indexOf(s2.sentiment) / 4));
+    const min = Math.min(...c.stages.map((s2) => levels.indexOf(s2.sentiment)));
+    [0, 2, 4].forEach((level) => {
+      const y = top + band * (1 - level / 4);
+      ctx.line(b.x + g.left, y, b.x + b.w, y, { color: ctx.colors.rule, width: 0.6 });
+      caption(ctx, levels[level], { x: b.x, y: y - 0.15, w: g.left - 0.15, h: 0.3 });
+    });
+    c.stages.forEach((_s, i) => {
+      const x2 = g.x(i) + g.w / 2;
+      if (i)
+        ctx.line(
+          g.x(i - 1) + g.w / 2,
+          ys[i - 1],
+          x2,
+          ys[i],
+          { color: ctx.colors.muted, width: 1.2 },
+          { role: "sentiment-curve" }
+        );
+    });
+    c.stages.forEach((s2, i) => {
+      const x2 = g.x(i), focal = levels.indexOf(s2.sentiment) === min;
+      dot(ctx, x2 + g.w / 2, ys[i], 0.06, focal);
+      label3(
+        ctx,
+        s2.action,
+        { x: x2, y: top + band + 0.35, w: g.w - 0.1, h: 0.65 },
+        `stages/${i}/action`,
+        { align: "center" }
+      );
+      caption(
+        ctx,
+        s2.touchpoint,
+        { x: x2, y: top + band + 1.05, w: g.w - 0.1, h: 0.4 },
+        `stages/${i}/touchpoint`
+      );
+      if (s2.pain)
+        label3(ctx, s2.pain, { x: x2, y: top + band + 1.5, w: g.w - 0.1, h: 0.5 }, `stages/${i}/pain`, {
+          size: "small",
+          color: ctx.colors.accent
+        });
+    });
+    caption(
+      ctx,
+      `${c.persona} \xB7 ${c.evidence}`,
+      { x: b.x, y: b.y + b.h - 0.3, w: b.w, h: 0.3 },
+      "evidence"
+    );
+  },
+  "Use for one persona across experience stages, with sourced ordinal sentiment and explicit pain points.",
+  "sequence"
+);
+var blueprintSchema = external_exports.object({
+  stages: external_exports.array(external_exports.string().min(1).max(24)).min(3).max(6),
+  layers: external_exports.array(
+    external_exports.object({
+      kind: external_exports.enum(["evidence", "customer", "frontstage", "backstage", "support"]),
+      label: external_exports.string().min(1).max(24),
+      actions: external_exports.array(external_exports.string().min(1).max(45)).min(3).max(6)
+    }).strict()
+  ).min(3).max(5),
+  focal: external_exports.object({ layer: external_exports.string(), stage: external_exports.number().int().min(0) }).strict().optional()
+}).strict();
+var serviceBlueprint = diagramDef(
+  "service-blueprint",
+  "Service blueprint",
+  blueprintSchema,
+  [
+    {
+      title: "A hidden billing job causes the visible retry experience",
+      sources: sources5,
+      content: {
+        stages: ["Sign up", "Use", "Upgrade", "First bill"],
+        layers: [
+          {
+            kind: "customer",
+            label: "Customer",
+            actions: ["Create account", "Use product", "Choose plan", "Read bill"]
+          },
+          {
+            kind: "frontstage",
+            label: "Frontstage",
+            actions: ["Welcome", "Usage view", "Checkout", "Receipt"]
+          },
+          {
+            kind: "backstage",
+            label: "Backstage",
+            actions: ["CRM write", "Meter usage", "Payment check", "Billing job"]
+          },
+          {
+            kind: "support",
+            label: "Support",
+            actions: ["Email", "Analytics", "Card processor", "Ledger"]
+          }
+        ],
+        focal: { layer: "backstage", stage: 3 }
+      }
+    }
+  ],
+  (ctx, c) => {
+    const order = ["evidence", "customer", "frontstage", "backstage", "support"], kinds = c.layers.map((v) => v.kind);
+    if (!["customer", "frontstage", "backstage"].every(
+      (v) => kinds.includes(v)
+    ) || new Set(kinds).size !== kinds.length || c.layers.some((l) => l.actions.length !== c.stages.length) || kinds.some((k, i) => i > 0 && order.indexOf(k) < order.indexOf(kinds[i - 1]))) {
+      problem(
+        ctx,
+        "Blueprint needs ordered customer/frontstage/backstage rows and one explicit action or N/A per stage",
+        "layers"
+      );
+      return;
+    }
+    if (c.focal && (!kinds.includes(c.focal.layer) || c.focal.stage >= c.stages.length)) {
+      problem(ctx, "Unknown focal blueprint cell", "focal");
+      return;
+    }
+    const b = ctx.body, g = stageGrid(ctx, b, c.stages), h = (b.h - 0.65) / c.layers.length;
+    c.layers.forEach((row, ri) => {
+      const y = b.y + 0.65 + ri * h, hidden = order.indexOf(row.kind) >= 3;
+      label3(ctx, row.label, { x: b.x, y, w: g.left - 0.18, h: h - 0.08 }, `layers/${ri}/label`, {
+        bold: true,
+        size: "small"
+      });
+      if (row.kind === "backstage")
+        ctx.line(
+          b.x,
+          y - 0.06,
+          b.x + b.w,
+          y - 0.06,
+          { color: ctx.colors.ink, width: 1.5 },
+          { role: "line-of-visibility" }
+        );
+      row.actions.forEach((text4, ci) => {
+        const focal = c.focal?.layer === row.kind && c.focal.stage === ci, box2 = { x: g.x(ci), y, w: g.w - 0.1, h: h - 0.14 };
+        ctx.rect(box2, {
+          fill: focal ? ctx.colors.accentSoft : hidden ? ctx.colors.surface : ctx.colors.background,
+          stroke: { color: focal ? ctx.colors.accent : ctx.colors.rule, width: focal ? 1.4 : 0.7 },
+          radius: 0.04,
+          role: `blueprint-${row.kind}`
+        });
+        label3(
+          ctx,
+          text4,
+          { x: box2.x + 0.1, y: box2.y + 0.06, w: box2.w - 0.2, h: box2.h - 0.12 },
+          `layers/${ri}/actions/${ci}`,
+          { align: "center", bold: focal }
+        );
+      });
+    });
+  },
+  "Use for customer, frontstage and backstage actions on one shared stage grid with a line of visibility.",
+  "sequence"
+);
+
+// src/layouts/structure-diagrams.ts
+var sources6 = ["illustrative"];
+var nestedSchema = external_exports.object({
+  items: external_exports.array(
+    external_exports.object({ id: DiagramId, label: DiagramLabel, parent: DiagramId.optional() }).strict()
+  ).min(2).max(10)
+}).strict();
+var nested = diagramDef(
+  "nested",
+  "Nested containment",
+  nestedSchema,
+  [
+    {
+      title: "The service boundary contains the application and its data domain",
+      sources: sources6,
+      content: {
+        items: [
+          { id: "service", label: "Service boundary" },
+          { id: "app", label: "Application", parent: "service" },
+          { id: "data", label: "Data domain", parent: "service" },
+          { id: "orders", label: "Orders", parent: "data" },
+          { id: "customers", label: "Customers", parent: "data" }
+        ]
+      }
+    }
+  ],
+  (ctx, c) => {
+    const ids = new Set(c.items.map((v) => v.id));
+    if (ids.size !== c.items.length || c.items.some((v) => v.parent && !ids.has(v.parent))) {
+      problem(ctx, "Containment IDs must be unique with known parents", "items");
+      return;
+    }
+    for (const item2 of c.items) {
+      let p = item2;
+      const seen = /* @__PURE__ */ new Set();
+      while (p) {
+        if (seen.has(p.id)) {
+          problem(ctx, "Containment cannot contain cycles", "items");
+          return;
+        }
+        seen.add(p.id);
+        if (seen.size > 3) {
+          problem(ctx, "Containment supports three levels; split deeper structures", "items");
+          return;
+        }
+        p = c.items.find((v) => v.id === p.parent);
+      }
+    }
+    const draw = (items, area, depth) => {
+      const boxes = cols(
+        area,
+        items.map(() => 1),
+        0.2
+      );
+      items.forEach((item2, i) => {
+        const b = boxes[i];
+        ctx.rect(b, {
+          fill: depth % 2 ? ctx.colors.background : ctx.colors.surface,
+          stroke: { color: ctx.colors.rule, width: 1 },
+          radius: 0.06,
+          role: "containment-boundary"
+        });
+        label3(
+          ctx,
+          item2.label,
+          { x: b.x + 0.16, y: b.y + 0.08, w: b.w - 0.32, h: 0.5 },
+          `items/${c.items.indexOf(item2)}/label`,
+          { bold: true }
+        );
+        const children2 = c.items.filter((v) => v.parent === item2.id);
+        if (children2.length) {
+          if (b.h < 1.2 || b.w < 1.4) {
+            problem(ctx, "Containment needs a larger region or fewer branches", "items");
+            return;
+          }
+          draw(children2, { x: b.x + 0.18, y: b.y + 0.75, w: b.w - 0.36, h: b.h - 0.95 }, depth + 1);
+        }
+      });
+    };
+    draw(
+      c.items.filter((v) => !v.parent),
+      ctx.body,
+      0
+    );
+  },
+  "Use for qualitative scope and containment through up to three nested levels."
+);
+var vennSchema = external_exports.object({
+  sets: external_exports.array(external_exports.string().min(1).max(36)).min(2).max(3),
+  intersection: external_exports.string().min(1).max(36)
+}).strict();
+var venn = diagramDef(
+  "venn",
+  "Qualitative set overlap",
+  vennSchema,
+  [
+    {
+      title: "The opportunity combines customer need and delivery capability",
+      sources: sources6,
+      content: {
+        sets: ["Customer need", "Delivery capability"],
+        intersection: "Viable opportunity"
+      }
+    }
+  ],
+  (ctx, c) => {
+    const b = ctx.body, r = Math.min(b.h * (c.sets.length === 3 ? 0.26 : 0.33), b.w * 0.18), cx2 = b.x + b.w / 2, cy2 = b.y + b.h / 2;
+    const centers = c.sets.length === 2 ? [
+      [cx2 - r * 0.55, cy2],
+      [cx2 + r * 0.55, cy2]
+    ] : [
+      [cx2 - r * 0.55, cy2 - r * 0.3],
+      [cx2 + r * 0.55, cy2 - r * 0.3],
+      [cx2, cy2 + r * 0.55]
+    ];
+    centers.forEach(
+      ([x2, y], i) => ctx.ellipse(
+        { x: x2 - r, y: y - r, w: 2 * r, h: 2 * r },
+        {
+          fill: i === 0 ? ctx.colors.accent : ctx.colors.ink,
+          fillOpacity: 0.09,
+          stroke: { color: i === 0 ? ctx.colors.accent : ctx.colors.muted, width: 1 },
+          role: "qualitative-set"
+        }
+      )
+    );
+    c.sets.forEach((name, i) => {
+      const [x2, y] = centers[i];
+      label3(
+        ctx,
+        name,
+        {
+          x: x2 + (i < 2 ? (i === 0 ? -1 : 1) * r * 0.2 : 0) - 0.95,
+          y: i === 2 ? y + r + 0.03 : y - r - 0.45,
+          w: 1.9,
+          h: 0.4
+        },
+        `sets/${i}`,
+        { bold: true, align: "center" }
+      );
+    });
+    label3(ctx, c.intersection, { x: cx2 - 0.72, y: cy2 - 0.35, w: 1.44, h: 0.7 }, "intersection", {
+      align: "center",
+      size: "small"
+    });
+  },
+  "Use for qualitative overlap between sets; circle and overlap areas do not encode quantities."
+);
+var wardleySchema = external_exports.object({
+  nodes: external_exports.array(
+    external_exports.object({
+      id: DiagramId,
+      label: external_exports.string().min(1).max(30),
+      evolution: external_exports.number().min(0).max(1),
+      visibility: external_exports.number().min(0).max(1),
+      moveTo: external_exports.number().min(0).max(1).optional()
+    }).strict()
+  ).min(2).max(8),
+  edges: external_exports.array(GraphEdge).max(10)
+}).strict();
+var wardley = diagramDef(
+  "wardley-map",
+  "Wardley map",
+  wardleySchema,
+  [
+    {
+      title: "Commodity infrastructure supports the differentiated customer experience",
+      sources: sources6,
+      content: {
+        nodes: [
+          { id: "experience", label: "Experience", evolution: 0.25, visibility: 0.85 },
+          { id: "service", label: "Service logic", evolution: 0.5, visibility: 0.55, moveTo: 0.7 },
+          { id: "compute", label: "Compute", evolution: 0.85, visibility: 0.2 }
+        ],
+        edges: [
+          { from: "experience", to: "service" },
+          { from: "service", to: "compute" }
+        ]
+      }
+    }
+  ],
+  (ctx, c) => {
+    if (new Set(c.nodes.map((v) => v.id)).size !== c.nodes.length || c.edges.some(
+      (e) => !c.nodes.some((v) => v.id === e.from) || !c.nodes.some((v) => v.id === e.to)
+    )) {
+      problem(ctx, "Wardley dependencies require unique nodes and known endpoints", "edges");
+      return;
+    }
+    const b = ctx.body, a = { x: b.x + 1.1, y: b.y + 0.45, w: b.w - 2.1, h: b.h - 1.1 }, point = (id) => {
+      const n = c.nodes.find((v) => v.id === id);
+      return [a.x + n.evolution * a.w, a.y + (1 - n.visibility) * a.h];
+    };
+    ["Genesis", "Custom", "Product", "Commodity"].forEach((name, i) => {
+      ctx.rect(
+        { x: a.x + i * a.w / 4, y: a.y, w: a.w / 4, h: a.h },
+        {
+          fill: i % 2 ? ctx.colors.surface : ctx.colors.background,
+          role: "evolution-band",
+          textContainer: false
+        }
+      );
+      caption(ctx, name, { x: a.x + i * a.w / 4, y: a.y + a.h + 0.2, w: a.w / 4, h: 0.3 });
+    });
+    c.edges.forEach((e) => {
+      const p = point(e.from), q = point(e.to);
+      ctx.line(
+        p[0],
+        p[1],
+        q[0],
+        q[1],
+        { color: ctx.colors.muted, width: 1 },
+        { role: "value-chain-dependency" }
+      );
+    });
+    c.nodes.forEach((n, i) => {
+      const [x2, y] = point(n.id);
+      dot(ctx, x2, y, 0.06, n.moveTo !== void 0);
+      label3(ctx, n.label, { x: x2 - 0.8, y: y - 0.43, w: 1.6, h: 0.36 }, `nodes/${i}/label`, {
+        size: "small",
+        align: "center"
+      });
+      if (n.moveTo !== void 0)
+        ctx.line(
+          x2,
+          y,
+          a.x + n.moveTo * a.w,
+          y,
+          { color: ctx.colors.accent, width: 1.2, dash: "dash" },
+          { arrowEnd: true, role: "evolution-movement" }
+        );
+    });
+    caption(ctx, "Visible", { x: b.x, y: a.y, w: 1, h: 0.3 });
+    caption(ctx, "Foundation", { x: b.x, y: a.y + a.h - 0.3, w: 1, h: 0.3 });
+  },
+  "Use for a value chain positioned by visibility and evolution, with dependencies and explicit movement."
+);
+var storySchema = external_exports.object({
+  releases: external_exports.array(external_exports.string().min(1).max(24)).min(2).max(4),
+  activities: external_exports.array(
+    external_exports.object({
+      label: external_exports.string().min(1).max(28),
+      slices: external_exports.array(external_exports.string().min(1).max(65)).min(2).max(4)
+    }).strict()
+  ).min(3).max(6),
+  cutAfter: external_exports.number().int().min(0).optional()
+}).strict();
+var storyMap = diagramDef(
+  "story-map",
+  "User story map",
+  storySchema,
+  [
+    {
+      title: "The first release covers the complete customer backbone at a smaller scope",
+      sources: sources6,
+      content: {
+        releases: ["Release 1", "Release 2"],
+        activities: [
+          { label: "Discover", slices: ["Search catalogue", "Saved preferences"] },
+          { label: "Choose", slices: ["Compare options", "Recommendations"] },
+          { label: "Buy", slices: ["Basic checkout", "Multiple payment methods"] },
+          { label: "Use", slices: ["Order tracking", "Service history"] }
+        ],
+        cutAfter: 0
+      }
+    }
+  ],
+  (ctx, c) => {
+    if (c.activities.some((v) => v.slices.length !== c.releases.length) || c.cutAfter !== void 0 && c.cutAfter >= c.releases.length) {
+      problem(
+        ctx,
+        "Every activity needs one explicit slice per release and a valid cut line",
+        "activities"
+      );
+      return;
+    }
+    const b = ctx.body, left = 1.3, w = (b.w - left) / c.activities.length, h = (b.h - 0.7) / c.releases.length;
+    c.activities.forEach(
+      (a, i) => label3(
+        ctx,
+        a.label,
+        { x: b.x + left + i * w, y: b.y, w: w - 0.1, h: 0.55 },
+        `activities/${i}/label`,
+        { bold: true, align: "center" }
+      )
+    );
+    c.releases.forEach((r, ri) => {
+      const y = b.y + 0.7 + ri * h;
+      label3(ctx, r, { x: b.x, y, w: left - 0.15, h: h - 0.2 }, `releases/${ri}`, {
+        bold: true,
+        size: "small"
+      });
+      c.activities.forEach((a, ci) => {
+        const box2 = { x: b.x + left + ci * w, y, w: w - 0.12, h: h - 0.24 };
+        panel(ctx, box2, ri === 0);
+        label3(
+          ctx,
+          a.slices[ri],
+          { x: box2.x + 0.12, y: box2.y + 0.08, w: box2.w - 0.24, h: box2.h - 0.16 },
+          `activities/${ci}/slices/${ri}`
+        );
+      });
+      if (c.cutAfter === ri)
+        ctx.line(
+          b.x,
+          y + h - 0.1,
+          b.x + b.w,
+          y + h - 0.1,
+          { color: ctx.colors.accent, width: 1.5, dash: "dash" },
+          { role: "release-cut" }
+        );
+    });
+  },
+  "Use for a narrative activity backbone crossed by explicit release slices and a scope cut line.",
+  "sequence"
+);
+var access = external_exports.enum(["none", "read", "write", "admin"]);
+var securitySchema = external_exports.object({
+  roles: external_exports.array(external_exports.string().min(1).max(28)).min(2).max(6),
+  resources: external_exports.array(external_exports.string().min(1).max(28)).min(2).max(6),
+  permissions: external_exports.array(external_exports.array(access).min(2).max(6)).min(2).max(6)
+}).strict();
+var securityMatrix = diagramDef(
+  "security-matrix",
+  "Access permissions matrix",
+  securitySchema,
+  [
+    {
+      title: "Operational access is limited to the resources each role needs",
+      sources: sources6,
+      content: {
+        roles: ["Analyst", "Operator", "Administrator"],
+        resources: ["Reports", "Pipeline", "Identity"],
+        permissions: [
+          ["read", "none", "none"],
+          ["read", "write", "none"],
+          ["admin", "admin", "admin"]
+        ]
+      }
+    }
+  ],
+  (ctx, c) => {
+    if (c.permissions.length !== c.roles.length || c.permissions.some((v) => v.length !== c.resources.length) || new Set(c.roles).size !== c.roles.length || new Set(c.resources).size !== c.resources.length) {
+      problem(ctx, "Permissions must match unique role and resource axes", "permissions");
+      return;
+    }
+    const table = ctx.table(
+      {
+        header: ["Role", ...c.resources],
+        rows: c.roles.map((name, i) => [name, ...c.permissions[i]]),
+        field: "permissions"
+      },
+      ctx.body
+    );
+    table.cells.slice(1).forEach(
+      (row) => row.slice(1).forEach((cell) => {
+        const t = cell.text.paragraphs.flatMap((p) => p.runs.map((r) => r.text)).join("");
+        if (t !== "none")
+          cell.fill = mix(ctx.colors.background, ctx.colors.accent, t === "admin" ? 0.12 : 0.05);
+      })
+    );
+  },
+  "Use for explicit per-role resource permissions; access rights are distinct from RACI responsibility."
+);
+var part = external_exports.object({
+  id: DiagramId,
+  label: external_exports.string().min(1).max(24),
+  x: external_exports.number().min(0).max(10),
+  y: external_exports.number().min(0).max(10),
+  width: external_exports.number().positive().max(10),
+  depth: external_exports.number().positive().max(10),
+  height: external_exports.number().positive().max(5),
+  level: external_exports.number().int().min(0).max(5).default(0)
+}).strict();
+var spatialSchema = external_exports.object({ parts: external_exports.array(part).min(2).max(6) }).strict();
+function spatial(id, name, exploded) {
+  return diagramDef(
+    id,
+    name,
+    spatialSchema,
+    [
+      {
+        title: exploded ? "Separate layers make the product assembly easier to inspect" : "The plan preserves the relative positions of the service areas",
+        sources: sources6,
+        content: {
+          parts: exploded ? [
+            {
+              id: "base",
+              label: "Foundation",
+              x: 0,
+              y: 0,
+              width: 4,
+              depth: 3,
+              height: 0.3,
+              level: 0
+            },
+            {
+              id: "service",
+              label: "Service layer",
+              x: 0,
+              y: 0,
+              width: 4,
+              depth: 3,
+              height: 0.3,
+              level: 1
+            },
+            {
+              id: "experience",
+              label: "Experience",
+              x: 0,
+              y: 0,
+              width: 4,
+              depth: 3,
+              height: 0.3,
+              level: 2
+            }
+          ] : [
+            { id: "work", label: "Workspace", x: 0, y: 0, width: 4, depth: 3, height: 1 },
+            { id: "support", label: "Support", x: 4.3, y: 0, width: 2, depth: 3, height: 1 },
+            { id: "entry", label: "Entry", x: 0, y: 3.3, width: 2, depth: 1.5, height: 0.5 }
+          ]
+        }
+      }
+    ],
+    (ctx, c) => {
+      if (new Set(c.parts.map((p) => p.id)).size !== c.parts.length) {
+        problem(ctx, "Spatial part IDs must be unique", "parts");
+        return;
+      }
+      if (!exploded && c.parts.some(
+        (p, i) => c.parts.slice(0, i).some(
+          (q) => Math.min(p.x + p.width, q.x + q.width) > Math.max(p.x, q.x) && Math.min(p.y + p.depth, q.y + q.depth) > Math.max(p.y, q.y)
+        )
+      )) {
+        problem(ctx, "Plan footprints overlap; correct the spatial data", "parts");
+        return;
+      }
+      const project = (x2, y, z2) => [
+        x2 - y,
+        (x2 + y) / 2 - z2
+      ];
+      const shapes2 = c.parts.map((p, i) => {
+        const z2 = exploded ? p.level * (Math.max(...c.parts.map((v) => (v.width + v.depth) / 2 + v.height)) + 0.6) : 0;
+        const top = [
+          [p.x, p.y],
+          [p.x + p.width, p.y],
+          [p.x + p.width, p.y + p.depth],
+          [p.x, p.y + p.depth]
+        ].map(([x2, y]) => project(x2, y, z2 + p.height));
+        const base = [
+          [p.x, p.y],
+          [p.x + p.width, p.y],
+          [p.x + p.width, p.y + p.depth],
+          [p.x, p.y + p.depth]
+        ].map(([x2, y]) => project(x2, y, z2));
+        return { p, i, top, base };
+      });
+      const points = shapes2.flatMap((v) => [...v.top, ...v.base]), minX = Math.min(...points.map((p) => p[0])), maxX = Math.max(...points.map((p) => p[0])), minY = Math.min(...points.map((p) => p[1])), maxY = Math.max(...points.map((p) => p[1])), b = ctx.body, k = Math.min((b.w - 1) / (maxX - minX), (b.h - 0.4) / (maxY - minY));
+      const fit = ([x2, y]) => [
+        b.x + (b.w - (maxX - minX) * k) / 2 + (x2 - minX) * k,
+        b.y + 0.2 + (y - minY) * k
+      ];
+      shapes2.sort((a, d) => exploded ? a.p.level - d.p.level : a.p.x + a.p.y - d.p.x - d.p.y).forEach(({ p, i, top, base }) => {
+        const fill = i === 0 ? ctx.colors.accentSoft : ctx.colors.surface;
+        ctx.polygon([top[1], top[2], base[2], base[1]].map(fit), {
+          fill: mix(fill, ctx.colors.ink, 0.08),
+          stroke: { color: ctx.colors.rule, width: 0.7 }
+        });
+        ctx.polygon([top[2], top[3], base[3], base[2]].map(fit), {
+          fill: mix(fill, ctx.colors.ink, 0.04),
+          stroke: { color: ctx.colors.rule, width: 0.7 }
+        });
+        ctx.polygon(top.map(fit), {
+          fill,
+          stroke: { color: i === 0 ? ctx.colors.accent : ctx.colors.rule, width: 0.9 },
+          role: "axonometric-top"
+        });
+        const pts = top.map(fit), cx2 = pts.reduce((s2, v) => s2 + v[0], 0) / 4, cy2 = pts.reduce((s2, v) => s2 + v[1], 0) / 4;
+        label3(ctx, p.label, { x: cx2 - 0.95, y: cy2 - 0.18, w: 1.9, h: 0.36 }, `parts/${i}/label`, {
+          size: "small",
+          align: "center",
+          bold: true
+        });
+      });
+    },
+    exploded ? "Use for parts pulled apart along one projection axis; levels determine the assembly separation." : "Use for non-overlapping spatial footprints on one shared dimetric plan, preserving relative positions."
+  );
+}
+var explodedAxonometric = spatial("exploded-axonometric", "Exploded axonometric", true);
+var axonometricPlan = spatial("axonometric-plan", "Axonometric plan", false);
+
 // src/layouts/swot.ts
 var Items = (what) => external_exports.array(external_exports.string().max(90)).min(1).max(4).describe(`${what} \u2014 one specific, evidenced point each`);
 var schema37 = external_exports.object({
@@ -209882,10 +212863,10 @@ var swot = {
       ["Threats", c.threats, "threats"]
     ];
     quads.forEach(
-      ([heading, items, field], i) => card(
+      ([heading, items, field2], i) => card(
         ctx,
         { x: gx + i % 2 * (cw + gap), y: gy + Math.floor(i / 2) * (ch + gap), w: cw, h: ch },
-        { heading, items, field, tone: i === 0 || i === 2 ? "accent" : "plain" }
+        { heading, items, field: field2, tone: i === 0 || i === 2 ? "accent" : "plain" }
       )
     );
     if (side) {
@@ -210090,14 +213071,14 @@ var teamCards = {
     people.forEach((p, i) => {
       const cell = cells[i];
       const alt = `Portrait of ${p.name}`;
-      const label4 = "Photo";
+      const label5 = "Photo";
       if (rowCount === 1) {
         const imgH = cell.h * 0.55;
         ctx.rect(cell, { fill: colors.surface, role: "card" });
         ctx.image({ x: cell.x, y: cell.y, w: cell.w, h: imgH }, p.image, alt, {
           fit: "cover",
           field: `people/${i}/image`,
-          label: label4
+          label: label5
         });
         ctx.rect(
           { x: cell.x, y: cell.y + imgH, w: cell.w, h: 0.05 },
@@ -210115,7 +213096,7 @@ var teamCards = {
         ctx.image({ x: cell.x, y: cell.y, w: imgW, h: cell.h }, p.image, alt, {
           fit: "cover",
           field: `people/${i}/image`,
-          label: label4
+          label: label5
         });
         ctx.rect(
           { x: cell.x + imgW, y: cell.y, w: 0.05, h: cell.h },
@@ -210216,7 +213197,7 @@ var text2 = {
         return;
       }
       const [l, r] = cols(body, [1, 1], 0.6);
-      for (const [col2, box2, field] of [
+      for (const [col2, box2, field2] of [
         [c.left, l, "left"],
         [c.right, r, "right"]
       ]) {
@@ -210231,7 +213212,7 @@ var text2 = {
               size: "heading",
               bold: true,
               maxLines: 1,
-              field: `${field}/heading`
+              field: `${field2}/heading`
             }
           );
           y += 0.7;
@@ -210239,7 +213220,7 @@ var text2 = {
         ctx.text(
           ctx.paragraphs(col2.items, { bullet: true, spaceBefore: 8 }),
           { x: box2.x, y, w: box2.w, h: box2.y + box2.h - y },
-          { size: "body", field: `${field}/items` }
+          { size: "body", field: `${field2}/items` }
         );
       }
       return;
@@ -210602,15 +213583,15 @@ var timeline = {
         );
         if (b.label) {
           const tw = textWidthPt(ctx.fonts.body.measure, "regular", theme.type.small, b.label) / 72 + 0.2;
-          const inside2 = tw <= bw;
-          const lx = inside2 ? bx + 0.1 : bx + bw + 0.08;
-          const lw = inside2 ? bw - 0.15 : Math.max(0.5, gx + gw - lx);
+          const inside3 = tw <= bw;
+          const lx = inside3 ? bx + 0.1 : bx + bw + 0.08;
+          const lw = inside3 ? bw - 0.15 : Math.max(0.5, gx + gw - lx);
           ctx.text(
             b.label,
             { x: lx, y: by, w: lw, h: bh },
             {
               size: "small",
-              color: inside2 ? ink : colors.muted,
+              color: inside3 ? ink : colors.muted,
               valign: "middle",
               maxLines: 1,
               fixed: true,
@@ -210789,12 +213770,12 @@ function random(seed) {
   };
 }
 var ROLE = "cover-art";
-function drawCoverArt(ctx, panel3, art, seed) {
+function drawCoverArt(ctx, panel4, art, seed) {
   const accent = ctx.colors.accent;
   const tint = (k) => mix(accent, "#FFFFFF", k);
   const shade = (k) => mix(accent, "#000000", k);
   const rnd = random(`${art}:${seed}`);
-  const P3 = panel3;
+  const P3 = panel4;
   const role = { role: ROLE };
   ctx.rect(P3, { fill: accent, ...role });
   const inner = { x: P3.x + 0.45, y: P3.y + 0.7, w: P3.w - 0.9, h: P3.h - 1.4 };
@@ -211061,10 +214042,10 @@ var title = {
         })
       );
     if (visual) {
-      const panel3 = { x: panelX, y: 0, w: page2.w - panelX, h: page2.h };
+      const panel4 = { x: panelX, y: 0, w: page2.w - panelX, h: page2.h };
       const file2 = c.image && (isAbsolute4(c.image) ? c.image : resolve7(ctx.baseDir, c.image));
       if (file2 && existsSync10(file2)) {
-        const img = ctx.image(panel3, c.image, c.alt ?? "", {
+        const img = ctx.image(panel4, c.image, c.alt ?? "", {
           fit: "cover",
           field: "image",
           ...focusPoint(c.imageFocus) ? { focus: focusPoint(c.imageFocus) } : {}
@@ -211072,7 +214053,7 @@ var title = {
         if (!c.alt) img.decorative = true;
         if (c.imageCredit) {
           const h = 0.3;
-          const band = { x: panel3.x, y: panel3.y + panel3.h - h, w: panel3.w, h };
+          const band = { x: panel4.x, y: panel4.y + panel4.h - h, w: panel4.w, h };
           ctx.rect(band, { fill: "#000000", fillOpacity: 0.65, role: "photo-credit" });
           ctx.text(
             creditLine(c.imageCredit, ctx.t("photo")),
@@ -211101,7 +214082,7 @@ var title = {
             )
           );
         const art = c.art && c.art !== "auto" ? c.art : pickCoverArt([ctx.slide.title, c.kicker, c.subtitle].filter(Boolean).join(" "));
-        drawCoverArt(ctx, panel3, art, ctx.slide.title);
+        drawCoverArt(ctx, panel4, art, ctx.slide.title);
       }
     }
     const titleColor = colors.titleInk ?? colors.ink;
@@ -211344,11 +214325,11 @@ var tornado = {
       [c.highLabel ?? "Upside", colors.accent]
     ];
     let lx = a.x + a.w;
-    for (const [label4, fill] of [...legend].reverse()) {
-      const w = labelWidth(ctx, label4, theme.type.source) + 0.08;
+    for (const [label5, fill] of [...legend].reverse()) {
+      const w = labelWidth(ctx, label5, theme.type.source) + 0.08;
       lx -= w;
       ctx.text(
-        label4,
+        label5,
         { x: lx, y: a.y, w, h: 0.26 },
         { size: "source", color: colors.muted, maxLines: 1, fixed: true }
       );
@@ -211573,7 +214554,7 @@ var schema45 = external_exports.object({
     points: external_exports.array(external_exports.string().max(150)).max(3).default([])
   }).strict().optional().describe("Required for the with-takeaway variant: the interpretation in a side panel")
 }).strict();
-function panel2(ctx, box2, takeaway) {
+function panel3(ctx, box2, takeaway) {
   const { colors } = ctx;
   ctx.rect(box2, { fill: colors.surface, role: "panel" });
   ctx.rect(
@@ -211729,7 +214710,7 @@ var waterfall = {
       },
       chartBox
     );
-    if (withPanel && right && c.takeaway) panel2(ctx, right, c.takeaway);
+    if (withPanel && right && c.takeaway) panel3(ctx, right, c.takeaway);
   }
 };
 
@@ -211750,6 +214731,33 @@ var LAYOUTS = [
   kpiTiles,
   evidencePanorama,
   chartTakeaway,
+  heatmap,
+  treemap,
+  fishbone,
+  sankey,
+  architectureDelta,
+  swimlane,
+  dependencyGraph,
+  flowchart,
+  stateMachine,
+  loop,
+  layerStack,
+  kanban,
+  userJourney,
+  serviceBlueprint,
+  sequence,
+  erDiagram,
+  databaseSchema,
+  umlClass,
+  radar,
+  polar,
+  nested,
+  venn,
+  wardley,
+  storyMap,
+  securityMatrix,
+  explodedAxonometric,
+  axonometricPlan,
   waterfall,
   bubbleChart,
   marimekko,
@@ -211857,22 +214865,22 @@ function cellRef(ref) {
 function parseCsv(text4) {
   const rows2 = [];
   let row = [];
-  let field = "";
+  let field2 = "";
   let quoted = false;
   const delim = (text4.split("\n")[0] ?? "").split(";").length > (text4.split("\n")[0] ?? "").split(",").length ? ";" : ",";
   const push = () => {
-    const t = field.trim();
+    const t = field2.trim();
     row.push(t === "" ? null : /^-?\d+(\.\d+)?$/.test(t) ? Number(t) : t);
-    field = "";
+    field2 = "";
   };
   for (let i = 0; i < text4.length; i++) {
     const ch = text4[i];
     if (quoted) {
       if (ch === '"' && text4[i + 1] === '"') {
-        field += '"';
+        field2 += '"';
         i++;
       } else if (ch === '"') quoted = false;
-      else field += ch;
+      else field2 += ch;
     } else if (ch === '"') quoted = true;
     else if (ch === delim) push();
     else if (ch === "\n" || ch === "\r") {
@@ -211880,9 +214888,9 @@ function parseCsv(text4) {
       push();
       rows2.push(row);
       row = [];
-    } else field += ch;
+    } else field2 += ch;
   }
-  if (field || row.length) {
+  if (field2 || row.length) {
     push();
     rows2.push(row);
   }
@@ -211933,8 +214941,8 @@ function parseXlsx(buf) {
   for (const m of wb.matchAll(/<sheet [^>]*name="([^"]+)"[^>]*r:id="([^"]+)"/g)) {
     const t = target(m[2]);
     if (!t) continue;
-    const part = t.startsWith("/") ? t.slice(1) : `xl/${t.replace(/^\.\//, "")}`;
-    const xml2 = zip.file(part)?.text() ?? "";
+    const part2 = t.startsWith("/") ? t.slice(1) : `xl/${t.replace(/^\.\//, "")}`;
+    const xml2 = zip.file(part2)?.text() ?? "";
     const rows2 = [];
     for (const c of xml2.matchAll(/<c r="([A-Z]+\d+)"([^>]*?)(?:\/>|>([\s\S]*?)<\/c>)/g)) {
       const { r, c: col2 } = cellRef(c[1]);
@@ -212001,7 +215009,7 @@ var Fact = external_exports.object({
   label: external_exports.string().max(80).optional().describe("What the number is, for reviews and the manifest"),
   source: external_exports.string().optional().describe("Source id from the deck `sources:`")
 }).strict();
-function formatNumber2(v, format = "#,##0.##", language) {
+function formatNumber3(v, format = "#,##0.##", language) {
   const m = /^(.*?)([#0][#0,]*(?:\.[#0]+)?)(.*)$/.exec(format);
   if (!m) return String(v);
   const [, pre, pattern2, suf] = m;
@@ -212057,7 +215065,7 @@ function resolveData(facts, slides, baseDir, language) {
       diagnostics.push(diag("SC-DATA-002", `Fact "${id}" has no value`, { pointer }));
       continue;
     }
-    const shown = typeof v === "number" ? formatNumber2(f.divide ? v / f.divide : v, f.format, language) : String(v);
+    const shown = typeof v === "number" ? formatNumber3(f.divide ? v / f.divide : v, f.format, language) : String(v);
     display.set(id, shown);
     report.facts[id] = {
       value: v,
@@ -212066,7 +215074,7 @@ function resolveData(facts, slides, baseDir, language) {
       ...f.from ? { from: `${f.from.file}${f.from.sheet ? `!${f.from.sheet}` : ""}!${f.from.cell}` } : {}
     };
   }
-  const cellText = (c, fmt3) => c === null ? "" : typeof c === "number" ? fmt3 ? formatNumber2(c, fmt3, language) : String(c) : c;
+  const cellText = (c, fmt3) => c === null ? "" : typeof c === "number" ? fmt3 ? formatNumber3(c, fmt3, language) : String(c) : c;
   const num3 = (c, pointer) => {
     if (typeof c === "number") return c;
     const n = Number(String(c ?? "").replace(/[,\s]/g, ""));
@@ -212226,6 +215234,9 @@ var Deck = external_exports.object({
   language: external_exports.string().default("en").describe("BCP-47 language tag of the content"),
   storyline: external_exports.string().optional().describe("Storyline id from the library"),
   theme: external_exports.string().default("consulting-classic"),
+  readability: external_exports.enum(["report", "present"]).default("report").describe(
+    "Report preserves theme sizes; present raises readable type sizes for screen delivery and may require fewer elements"
+  ),
   format: external_exports.string().default("wide-16x9").describe(
     "Page format: wide-16x9 (default), a4-landscape, or a path to a format JSON (e.g. from `theme import`)"
   ),
@@ -213184,7 +216195,18 @@ function buildMasters(theme, format, fonts, footer) {
 function composeDeck(loaded) {
   const { deck, slides, baseDir } = loaded;
   const diagnostics = [];
-  const theme = getTheme(deck.theme) ?? getTheme("consulting-classic");
+  const baseTheme = getTheme(deck.theme) ?? getTheme("consulting-classic");
+  const theme = deck.readability === "present" ? {
+    ...baseTheme,
+    type: {
+      ...baseTheme.type,
+      title: Math.max(28, baseTheme.type.title),
+      heading: Math.max(18, baseTheme.type.heading),
+      body: Math.max(18, baseTheme.type.body),
+      small: Math.max(14, baseTheme.type.small),
+      minBody: Math.max(16, baseTheme.type.minBody)
+    }
+  } : baseTheme;
   const format = FORMATS[deck.format] ?? FORMATS["wide-16x9"];
   const strings = [deck.title, deck.subtitle ?? "", deck.footer ?? ""];
   slides.forEach((s2) => collectStrings(s2, strings));
@@ -213636,10 +216658,10 @@ function checkTotals(slide) {
       const rows2 = o.rows;
       const header = Array.isArray(o.header) ? o.header.map(String) : [];
       const cols2 = Math.max(0, ...rows2.map((r) => r.length));
-      const label4 = (r) => String(r[0] ?? "");
-      const totalRows = rows2.filter((r) => TOTAL.test(label4(r)));
-      const parts = rows2.filter((r) => !TOTAL.test(label4(r)) && !SUBTOTAL.test(label4(r)));
-      const subs = rows2.filter((r) => SUBTOTAL.test(label4(r)));
+      const label5 = (r) => String(r[0] ?? "");
+      const totalRows = rows2.filter((r) => TOTAL.test(label5(r)));
+      const parts = rows2.filter((r) => !TOTAL.test(label5(r)) && !SUBTOTAL.test(label5(r)));
+      const subs = rows2.filter((r) => SUBTOTAL.test(label5(r)));
       for (const tr of totalRows.slice(-1))
         for (let c = 1; c < cols2; c++) {
           const total = num(tr[c]);
@@ -213652,7 +216674,7 @@ function checkTotals(slide) {
           const okSubs = ss.length >= 2 && ss.every((x2) => x2 && x2.unit === total.unit) && addsUp(ss, total);
           if (!addsUp(ps, total) && !okSubs)
             report(
-              `${label4(tr)} row, ${header[c] ?? `column ${c + 1}`}`,
+              `${label5(tr)} row, ${header[c] ?? `column ${c + 1}`}`,
               String(tr[c]),
               ps.reduce((a, p) => a + p.value, 0)
             );
@@ -213665,7 +216687,7 @@ function checkTotals(slide) {
           const ps = r.map((x2, i) => i > 0 && i !== tc && !/%/.test(header[i] ?? "") ? num(x2) : void 0).filter((x2) => !!x2 && x2.unit === total.unit);
           if (ps.length >= 2 && !addsUp(ps, total))
             report(
-              `${label4(r)}, ${header[tc]} column`,
+              `${label5(r)}, ${header[tc]} column`,
               String(r[tc]),
               ps.reduce((a, p) => a + p.value, 0)
             );
@@ -213678,11 +216700,64 @@ function checkTotals(slide) {
   return out;
 }
 
+// src/qa/diagram-checks.ts
+function checkDiagrams(nodes, slide) {
+  const out = [];
+  for (const n of nodes)
+    if ((n.kind === "rect" || n.kind === "path") && n.encoding) {
+      const { dimension, value, scale: scale2 } = n.encoding, expected = value * scale2;
+      let actual = dimension === "area" ? n.box.w * n.box.h : n.box.h;
+      if (dimension === "ribbon" && n.kind === "path") {
+        const [a, b, c, d] = n.segments;
+        if (a?.op !== "M" || b?.op !== "C" || c?.op !== "L" || d?.op !== "C" || Math.abs(c.y - b.y - (d.y - a.y)) > 1e-7)
+          actual = NaN;
+        else actual = c.y - b.y;
+      }
+      if (!Number.isFinite(expected) || !Number.isFinite(actual) || value < 0 || scale2 <= 0 || Math.abs(actual - expected) > Math.max(1e-8, Math.abs(expected) * 1e-6))
+        out.push(
+          diag("SC-DIAGRAM-001", "Drawn quantity disagrees with its data scale", {
+            slide,
+            ..."pointer" in n && n.pointer ? { pointer: n.pointer } : {}
+          })
+        );
+    }
+  const graphNodes = nodes.filter(
+    (n) => (n.kind === "rect" || n.kind === "polygon" || n.kind === "ellipse") && n.diagram?.kind === "node"
+  );
+  const ids = /* @__PURE__ */ new Set();
+  for (const n of graphNodes)
+    if ((n.kind === "rect" || n.kind === "polygon" || n.kind === "ellipse") && n.diagram) {
+      if (ids.has(n.diagram.id))
+        out.push(diag("SC-DIAGRAM-001", `Duplicate diagram node ${n.diagram.id}`, { slide }));
+      ids.add(n.diagram.id);
+    }
+  for (const n of nodes)
+    if (n.kind === "path" && n.diagram?.kind === "edge") {
+      const e = n.diagram, route = e.route ?? [];
+      const issue2 = (message) => out.push(
+        diag("SC-DIAGRAM-001", message, { slide, ...n.pointer ? { pointer: n.pointer } : {} })
+      );
+      if (!e.from || !e.to || !ids.has(e.from) || !ids.has(e.to)) {
+        issue2("Connector has an unknown endpoint");
+        continue;
+      }
+      for (let i = 1; i < route.length; i++) {
+        const a = route[i - 1], b = route[i];
+        if (Math.abs(a[0] - b[0]) > 1e-6 && Math.abs(a[1] - b[1]) > 1e-6)
+          issue2("Graph connector must use an orthogonal route");
+        for (const node2 of graphNodes)
+          if ((node2.kind === "rect" || node2.kind === "polygon" || node2.kind === "ellipse") && node2.diagram?.id !== e.from && node2.diagram?.id !== e.to && segmentHitsBox(a, b, node2.box))
+            issue2("Connector crosses a non-endpoint node; reroute or split the diagram");
+      }
+    }
+  return out;
+}
+
 // src/qa/scene-checks.ts
-var EPS = 0.02;
+var EPS2 = 0.02;
 var DECORATIVE_TEXT = /* @__PURE__ */ new Set(["quote-mark"]);
-function inside(b, W, H) {
-  return b.x >= -EPS && b.y >= -EPS && b.x + b.w <= W + EPS && b.y + b.h <= H + EPS;
+function inside2(b, W, H) {
+  return b.x >= -EPS2 && b.y >= -EPS2 && b.x + b.w <= W + EPS2 && b.y + b.h <= H + EPS2;
 }
 function textExtent(t) {
   if (!t.lines.length) return { x: t.box.x, y: t.box.y, w: 0, h: 0 };
@@ -213723,14 +216798,14 @@ function bgAt(nodes, upto, x2, y, fallback) {
       const dy = (y - (b.y + b.h / 2)) / (b.h / 2);
       if (dx * dx + dy * dy <= 1) return n.fill;
     } else if (n.kind === "polygon") {
-      let inside2 = false;
+      let inside3 = false;
       const p = n.points;
       for (let a = 0, b = p.length - 1; a < p.length; b = a++) {
         const [xa, ya] = p[a];
         const [xb, yb] = p[b];
-        if (ya > y !== yb > y && x2 < (xb - xa) * (y - ya) / (yb - ya) + xa) inside2 = !inside2;
+        if (ya > y !== yb > y && x2 < (xb - xa) * (y - ya) / (yb - ya) + xa) inside3 = !inside3;
       }
-      if (inside2) return n.fill;
+      if (inside3) return n.fill;
     }
   }
   return fallback;
@@ -213739,6 +216814,7 @@ function checkScene(scene) {
   const out = [];
   const { w: W, h: H } = scene.format;
   for (const s2 of scene.slides) {
+    out.push(...checkDiagrams(s2.nodes, s2.id));
     const bg = s2.background ?? scene.masters[s2.master].background;
     const texts2 = [];
     s2.nodes.forEach((n, i) => {
@@ -213748,7 +216824,7 @@ function checkScene(scene) {
         w: Math.abs(n.x2 - n.x1),
         h: Math.abs(n.y2 - n.y1)
       } : n.box;
-      if (!inside(box2, W, H)) {
+      if (!inside2(box2, W, H)) {
         out.push(
           diag(
             "SC-GEOM-001",
@@ -213800,9 +216876,10 @@ function checkScene(scene) {
       if (ink.w <= 0 || t.role === "source" || t.role === "footer") continue;
       for (let j = i - 1; j >= 0; j--) {
         const n = s2.nodes[j];
-        if (n.kind !== "rect" || !n.fill || n.box.w < 0.6 || n.box.h < 0.4) continue;
+        if (n.kind !== "rect" || n.textContainer === false || !n.fill || n.box.w < 0.6 || n.box.h < 0.4)
+          continue;
         const b = n.box;
-        const startsInside = t.box.x >= b.x - EPS && t.box.y >= b.y - EPS && t.box.x <= b.x + b.w && t.box.y <= b.y + b.h;
+        const startsInside = t.box.x >= b.x - EPS2 && t.box.y >= b.y - EPS2 && t.box.x <= b.x + b.w && t.box.y <= b.y + b.h;
         if (!startsInside) continue;
         if (ink.x + ink.w > b.x + b.w + 0.03 || ink.y + ink.h > b.y + b.h + 0.03) {
           out.push(
@@ -214008,6 +217085,325 @@ async function buildDeck(path2, opts = {}) {
   return { loaded, scene, diagnostics: sorted, files, manifestPath, engines: engines2 };
 }
 
+// src/library/diagram-import.ts
+var import_yaml2 = __toESM(require_dist(), 1);
+import { existsSync as existsSync14, mkdirSync as mkdirSync12, readFileSync as readFileSync20, statSync as statSync3, writeFileSync as writeFileSync9 } from "node:fs";
+import { basename as basename2, extname as extname4, join as join16, resolve as resolve11 } from "node:path";
+import { inflateRawSync as inflateRawSync2 } from "node:zlib";
+var MAX_BYTES = 1024 * 1024;
+var plain = (s2) => s2.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/<[^>]*>/g, " ").replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'").replace(/&amp;/g, "&").replace(/<br\s*\/?\s*>/gi, " ").replace(/\s+/g, " ").trim();
+var decode4 = (s2) => s2.replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+var attrs = (s2) => Object.fromEntries(
+  [...s2.matchAll(/([\w:-]+)\s*=\s*(?:"([^"]*)"|'([^']*)')/g)].map((m) => [
+    m[1],
+    decode4(m[2] ?? m[3] ?? "")
+  ])
+);
+function graphSlide(nodes, edges, kind = "flowchart") {
+  if (nodes.length < 2 || nodes.length > 12 || edges.length > 16)
+    throw new Error("Imported graph needs 2\u201312 nodes and at most 16 edges; split the source");
+  if (new Set(nodes.map((n) => n.id)).size !== nodes.length || edges.some((e) => !nodes.some((n) => n.id === e.from) || !nodes.some((n) => n.id === e.to)))
+    throw new Error("Imported graph has duplicate identities or unknown endpoints");
+  const rank = new Map(nodes.map((n) => [n.id, 0])), indegree = new Map(nodes.map((n) => [n.id, edges.filter((e) => e.to === n.id).length])), queue = nodes.filter((n) => indegree.get(n.id) === 0).map((n) => n.id);
+  let visited = 0;
+  while (queue.length) {
+    const id = queue.shift();
+    visited++;
+    for (const e of edges.filter((e2) => e2.from === id)) {
+      rank.set(e.to, Math.max(rank.get(e.to), rank.get(id) + 1));
+      indegree.set(e.to, indegree.get(e.to) - 1);
+      if (indegree.get(e.to) === 0) queue.push(e.to);
+    }
+  }
+  const acyclic = visited === nodes.length && Math.max(...rank.values()) <= 3;
+  const rows2 = /* @__PURE__ */ new Map();
+  return {
+    layout: kind,
+    nodes: nodes.map((n, i) => {
+      const column = acyclic ? rank.get(n.id) : i % 3, row = acyclic ? rows2.get(column) ?? 0 : Math.floor(i / 3);
+      rows2.set(column, row + 1);
+      if (row > 5) throw new Error("Imported graph exceeds the row budget; split the source");
+      return { ...n, column, row };
+    }),
+    edges: edges.map((e, i) => ({ ...e, id: `edge-${i}` }))
+  };
+}
+function parseDiagram(text4, format) {
+  if (Buffer.byteLength(text4) > MAX_BYTES) throw new Error("Diagram input exceeds 1 MiB");
+  const ledger = {
+    preserved: [],
+    merged: [],
+    omitted: [],
+    unsupported: []
+  };
+  let content;
+  const nodes = [], edges = [], ids = /* @__PURE__ */ new Map();
+  const idFor = (id) => {
+    let mapped = ids.get(id);
+    if (!mapped) {
+      mapped = `node-${ids.size}`;
+      ids.set(id, mapped);
+    }
+    return mapped;
+  };
+  const add2 = (sourceId, label5, shape = "process") => {
+    const id = idFor(sourceId), old = nodes.find((n) => n.id === id);
+    if (old) {
+      if (label5 !== sourceId) old.label = label5;
+      if (shape !== "process") old.shape = shape;
+    } else nodes.push({ id, label: label5, shape });
+    return id;
+  };
+  if (format === "mermaid") {
+    const blocks = [...text4.matchAll(/```mermaid\s*\n([\s\S]*?)```/gi)];
+    if (blocks.length > 1) throw new Error("Select one Mermaid diagram per import");
+    const source = blocks[0]?.[1] ?? text4;
+    const lines = source.split(/\r?\n/).map((s2) => s2.trim()).filter((s2) => s2 && !s2.startsWith("%%"));
+    const header = lines.shift() ?? "";
+    const statements = lines.flatMap((line3) => line3.split(/;\s*(?=[A-Za-z_])/)).map((s2) => s2.trim()).filter(Boolean);
+    if (/^(flowchart|graph)\b/.test(header)) {
+      const node2 = (expression) => {
+        const m = /^([A-Za-z_][\w-]*)(.*)$/.exec(expression.trim());
+        if (!m) throw new Error(`Unsupported Mermaid node: ${expression}`);
+        const tail = m[2].trim();
+        let label5 = m[1], shape = "process";
+        if (tail) {
+          if (tail.startsWith("[") && tail.endsWith("]")) label5 = tail.slice(1, -1);
+          else if (tail.startsWith("{") && tail.endsWith("}")) {
+            label5 = tail.slice(1, -1);
+            shape = "decision";
+          } else if (tail.startsWith("(") && tail.endsWith(")")) {
+            label5 = tail.replace(/^\(+|\)+$/g, "");
+            shape = "terminal";
+          } else throw new Error(`Unsupported Mermaid node shape: ${expression}`);
+        }
+        return add2(m[1], plain(label5.replace(/^"|"$/g, "")), shape);
+      };
+      for (const line3 of statements) {
+        if (/^(style|classDef|class|linkStyle|click)\s/.test(line3)) {
+          ledger.omitted.push(`Styling or action: ${line3}`);
+          continue;
+        }
+        if (/^(subgraph|end)\b/.test(line3)) {
+          ledger.omitted.push(`Container grouping: ${line3}`);
+          continue;
+        }
+        const m = /^(.+?)\s*(-->|-\.->|==>|---)\s*(?:\|([^|]*)\|\s*)?(.+)$/.exec(line3);
+        if (m) {
+          if (/-->|-\.->|==>/.test(m[4]))
+            throw new Error("Expand chained Mermaid edges into one edge per line");
+          edges.push({
+            from: node2(m[1]),
+            to: node2(m[4]),
+            ...m[3] ? { label: plain(m[3]) } : {},
+            ...m[2] === "-.->" ? { dashed: true } : {}
+          });
+        } else node2(line3);
+      }
+      content = graphSlide(nodes, edges);
+    } else if (/^sequenceDiagram\b/.test(header)) {
+      const participants = [], messages = [];
+      const participant = (name, label5 = name) => {
+        const id = idFor(name);
+        if (!participants.some((p) => p.id === id)) participants.push({ id, label: plain(label5) });
+        return id;
+      };
+      for (const line3 of statements) {
+        const p = /^(?:participant|actor)\s+(\w+)(?:\s+as\s+(.+))?$/.exec(line3);
+        if (p) {
+          participant(p[1], p[2] ?? p[1]);
+          continue;
+        }
+        const m = /^(\w+)\s*(--?>>|--?>)\s*(\w+)\s*:\s*(.+)$/.exec(line3);
+        if (!m)
+          throw new Error(
+            `Unsupported sequence statement (fragments/notes are not imported): ${line3}`
+          );
+        messages.push({
+          from: participant(m[1]),
+          to: participant(m[3]),
+          label: plain(m[4]),
+          kind: m[2].startsWith("--") ? "return" : "call"
+        });
+      }
+      content = { layout: "sequence", participants, messages };
+    } else if (/^stateDiagram-v2\b/.test(header)) {
+      let initial;
+      const terminal = [];
+      for (const line3 of statements) {
+        const m = /^(\[\*\]|[A-Za-z_][\w-]*)\s*-->\s*(\[\*\]|[A-Za-z_][\w-]*)(?:\s*:\s*(.+))?$/.exec(line3);
+        if (!m) throw new Error(`Unsupported state statement: ${line3}`);
+        if (m[1] === "[*]") {
+          if (initial) throw new Error("Only one initial state is supported");
+          initial = add2(m[2], m[2], "state");
+          continue;
+        }
+        const from = add2(m[1], m[1], "state"), to = m[2] === "[*]" ? add2("__terminal__", "[*]", "terminal") : add2(m[2], m[2], "state");
+        if (m[2] === "[*]" && !terminal.includes(to)) terminal.push(to);
+        edges.push({ from, to, ...m[3] ? { label: plain(m[3]) } : {} });
+      }
+      if (!initial || !terminal.length)
+        throw new Error("State import needs explicit initial and terminal transitions");
+      content = { ...graphSlide(nodes, edges, "state-machine"), initial, terminal };
+    } else if (/^erDiagram\b/.test(header)) {
+      const entities2 = [], relationships2 = [];
+      let current;
+      const entity2 = (name) => {
+        let e = entities2.find((v) => v.label === name);
+        if (!e) {
+          e = { id: idFor(name), label: name, fields: [] };
+          entities2.push(e);
+        }
+        return e;
+      };
+      for (const line3 of statements) {
+        const open2 = /^(\w+)\s*\{$/.exec(line3);
+        if (open2) {
+          current = entity2(open2[1]);
+          continue;
+        }
+        if (line3 === "}") {
+          current = void 0;
+          continue;
+        }
+        if (current) {
+          const f = /^(\S+)\s+(\w+)(?:\s+(PK|FK|UK))?(?:\s+"[^"]*")?$/.exec(line3);
+          if (!f) throw new Error(`Unsupported ER attribute: ${line3}`);
+          current.fields.push({
+            id: `field-${current.fields.length}`,
+            label: f[2],
+            type: f[1],
+            ...f[3] === "PK" || f[3] === "FK" ? { key: f[3] } : {}
+          });
+          if (f[3] === "UK") ledger.omitted.push(`Unique constraint: ${current.label}.${f[2]}`);
+          continue;
+        }
+        const r = /^(\w+)\s+([|o}{]+)--([|o}{]+)\s+(\w+)\s*:\s*(.+)$/.exec(line3);
+        if (!r) throw new Error(`Unsupported ER relationship: ${line3}`);
+        const leftMany = /[{}]/.test(r[2]), rightMany = /[{}]/.test(r[3]);
+        const left = entity2(r[1]).id, right = entity2(r[4]).id;
+        relationships2.push({
+          from: { entity: leftMany && !rightMany ? right : left },
+          to: { entity: leftMany && !rightMany ? left : right },
+          kind: leftMany && rightMany ? "many-many" : leftMany || rightMany ? "one-many" : "one-one"
+        });
+        ledger.omitted.push(`ER relationship wording/optionality: ${r[5]}`);
+      }
+      if (entities2.some((e) => !e.fields.length))
+        throw new Error("ER entities need explicit attributes for the native entity contract");
+      content = { layout: "er-diagram", entities: entities2, relationships: relationships2 };
+    } else
+      throw new Error(
+        "Supported Mermaid kinds: flowchart/graph, sequenceDiagram, stateDiagram-v2, erDiagram"
+      );
+  } else if (format === "drawio") {
+    if (/<!DOCTYPE|<!ENTITY/i.test(text4))
+      throw new Error("Draw.io DTD/entity declarations are not supported");
+    let xml2 = text4;
+    if (!/<mxGraphModel\b/.test(xml2)) {
+      const pages = [...xml2.matchAll(/<diagram\b[^>]*>([\s\S]*?)<\/diagram>/g)];
+      if (pages.length !== 1) throw new Error("Select one draw.io page per import");
+      const body = pages[0][1].trim();
+      xml2 = body.startsWith("&lt;") ? decode4(body) : decodeURIComponent(
+        inflateRawSync2(Buffer.from(body, "base64"), { maxOutputLength: MAX_BYTES }).toString(
+          "utf8"
+        )
+      );
+    }
+    const cells = [...xml2.matchAll(/<mxCell\b([^>]*)>/g)].map((m) => attrs(m[1]));
+    for (const cell of cells)
+      if (cell.vertex === "1") {
+        if (!cell.id) throw new Error("Draw.io vertices require stable identities");
+        add2(
+          cell.id,
+          plain(cell.value ?? cell.id ?? ""),
+          (cell.style ?? "").includes("rhombus") ? "decision" : (cell.style ?? "").includes("ellipse") ? "terminal" : "process"
+        );
+      }
+    for (const cell of cells)
+      if (cell.edge === "1") {
+        if (!cell.source || !cell.target || !ids.has(cell.source) || !ids.has(cell.target))
+          throw new Error("Draw.io connectors require bound known endpoints");
+        edges.push({
+          from: ids.get(cell.source),
+          to: ids.get(cell.target),
+          ...cell.value ? { label: plain(cell.value) } : {}
+        });
+      }
+    for (const cell of cells)
+      if (cell.vertex === "1" && cell.parent && cell.parent !== "1" && ids.has(cell.parent))
+        ledger.omitted.push(`Container grouping: ${cell.parent} \u2192 ${cell.id}`);
+    content = graphSlide(nodes, edges);
+    ledger.omitted.push(
+      "Source coordinates, styles and connector routes replaced by native editorial layout"
+    );
+  } else {
+    const doc = JSON.parse(text4);
+    if (!Array.isArray(doc.elements)) throw new Error("Excalidraw needs an elements array");
+    const elements = doc.elements.filter((e) => !e.isDeleted);
+    for (const e of elements)
+      if (["rectangle", "diamond", "ellipse"].includes(e.type)) {
+        const t = elements.find((v) => v.type === "text" && v.containerId === e.id);
+        add2(
+          e.id,
+          plain(t?.text ?? e.id),
+          e.type === "diamond" ? "decision" : e.type === "ellipse" ? "terminal" : "process"
+        );
+      }
+    for (const e of elements) {
+      if (e.type === "arrow") {
+        const from = ids.get(e.startBinding?.elementId ?? ""), to = ids.get(e.endBinding?.elementId ?? "");
+        if (!from || !to) throw new Error("Excalidraw arrows require bound known endpoints");
+        const t = elements.find((v) => v.type === "text" && v.containerId === e.id);
+        edges.push({ from, to, ...t?.text ? { label: plain(t.text) } : {} });
+      } else if (!["rectangle", "diamond", "ellipse", "text"].includes(e.type))
+        ledger.omitted.push(`Unsupported decorative element: ${e.id} (${e.type})`);
+      else if (e.type === "text" && !e.containerId)
+        ledger.omitted.push(`Unbound annotation: ${e.text ?? e.id}`);
+      if (e.groupIds?.length) ledger.omitted.push(`Source grouping: ${e.id}`);
+    }
+    content = graphSlide(nodes, edges);
+    ledger.omitted.push(
+      "Source coordinates, styles and connector routes replaced by native editorial layout"
+    );
+  }
+  const raw = {
+    id: "imported-diagram",
+    title: "The imported diagram preserves the declared components and relationships",
+    status: "draft",
+    sources: ["diagram-source"],
+    ...content
+  };
+  Slide2.parse(raw);
+  ledger.preserved.push(...[...ids.entries()].map(([source, id]) => `${source} \u2192 ${id}`));
+  return { slide: raw, ledger };
+}
+function importDiagram(file2, out) {
+  const source = resolve11(file2);
+  if (statSync3(source).size > MAX_BYTES) throw new Error("Diagram input exceeds 1 MiB");
+  const suffix = extname4(source).toLowerCase(), format = suffix === ".drawio" || suffix === ".xml" ? "drawio" : suffix === ".excalidraw" || suffix === ".json" ? "excalidraw" : "mermaid";
+  const result = parseDiagram(readFileSync20(source, "utf8"), format), folder = resolve11(out), deckPath2 = join16(folder, "deck.yaml");
+  if (existsSync14(deckPath2))
+    throw new Error(`Refusing to overwrite ${deckPath2}; choose a new output folder`);
+  mkdirSync12(folder, { recursive: true });
+  writeFileSync9(
+    deckPath2,
+    import_yaml2.default.stringify({
+      schemaVersion: 1,
+      id: "imported-diagram",
+      title: basename2(source),
+      theme: "consulting-classic",
+      status: "draft",
+      sources: [{ id: "diagram-source", title: basename2(source), file: source }],
+      slides: [result.slide]
+    })
+  );
+  const ledgerPath = join16(folder, "import-ledger.json");
+  writeFileSync9(ledgerPath, `${JSON.stringify(result.ledger, null, 2)}
+`);
+  return { ok: true, deck: deckPath2, ledger: ledgerPath, report: result.ledger };
+}
+
 // src/library/exhibits.ts
 var EXHIBITS = [
   {
@@ -214031,7 +217427,7 @@ var EXHIBITS = [
   {
     id: "composition",
     question: "What makes up the whole?",
-    layouts: ["chart-takeaway", "marimekko", "funnel"],
+    layouts: ["chart-takeaway", "marimekko", "funnel", "treemap"],
     guard: "Use meaningful parts, consistent bases and a complete total."
   },
   {
@@ -214049,25 +217445,57 @@ var EXHIBITS = [
   {
     id: "process",
     question: "What happens in sequence and what changes?",
-    layouts: ["process-steps", "process-compare", "timeline", "gate-matrix", "cadence"],
+    layouts: [
+      "process-steps",
+      "process-compare",
+      "timeline",
+      "gate-matrix",
+      "cadence",
+      "swimlane",
+      "flowchart",
+      "sequence",
+      "state-machine",
+      "loop",
+      "kanban",
+      "story-map"
+    ],
     guard: "Distinguish steps, dates, hand-offs and decision gates."
   },
   {
     id: "architecture",
     question: "Which components connect, and across which boundaries?",
-    layouts: ["architecture", "coverage-map", "callout"],
+    layouts: [
+      "architecture",
+      "architecture-delta",
+      "dependency-graph",
+      "layer-stack",
+      "nested",
+      "coverage-map",
+      "callout",
+      "er-diagram",
+      "database-schema",
+      "uml-class"
+    ],
     guard: "Connections and identifiers must retain their meaning and endpoints."
   },
   {
     id: "causes-and-evidence",
     question: "What drives a result or supports an answer?",
-    layouts: ["issue-tree", "evidence-chain", "tornado"],
+    layouts: ["issue-tree", "evidence-chain", "tornado", "fishbone"],
     guard: "Distinguish a hypothesis, a measured contribution and verified evidence."
   },
   {
     id: "prioritisation",
     question: "Where should attention or investment go?",
-    layouts: ["matrix-2x2", "bubble-chart", "risk-matrix", "maturity-model", "football-field"],
+    layouts: [
+      "matrix-2x2",
+      "bubble-chart",
+      "risk-matrix",
+      "maturity-model",
+      "football-field",
+      "radar",
+      "wardley-map"
+    ],
     guard: "Define axes and scoring; label uncertainty and range assumptions."
   },
   {
@@ -214075,6 +217503,36 @@ var EXHIBITS = [
     question: "Who performs, decides or is accountable?",
     layouts: ["raci", "org-chart", "team-cards", "next-steps"],
     guard: "Reporting lines are not decision rights."
+  },
+  {
+    id: "flow-quantities",
+    question: "Where does a conserved quantity split and merge?",
+    layouts: ["sankey"],
+    guard: "Use one unit and scale, balance intermediate nodes, and name losses explicitly."
+  },
+  {
+    id: "matrix-pattern",
+    question: "Which categorical row and column combinations stand out?",
+    layouts: ["heatmap", "security-matrix"],
+    guard: "Distinguish numeric magnitude, missing observations and categorical access rights."
+  },
+  {
+    id: "experience",
+    question: "Where does an experience fail and what happens behind it?",
+    layouts: ["user-journey", "service-blueprint"],
+    guard: "Source sentiment and distinguish customer-visible from backstage actions."
+  },
+  {
+    id: "spatial-structure",
+    question: "How do parts fit in space or through containment?",
+    layouts: ["nested", "venn", "exploded-axonometric", "axonometric-plan"],
+    guard: "Do not imply quantitative areas for qualitative overlap; preserve spatial dimensions."
+  },
+  {
+    id: "cyclic-magnitude",
+    question: "How does magnitude vary across an ordered cycle?",
+    layouts: ["polar"],
+    guard: "Preserve category order and use a common linear radius; a circle alone does not establish a cycle."
   },
   {
     id: "strategic-framework",
@@ -214104,33 +217562,33 @@ function exhibitRoutes(id) {
 
 // src/library/pptx-rebuild.ts
 import { createHash as createHash4 } from "node:crypto";
-import { mkdirSync as mkdirSync12, readFileSync as readFileSync21, writeFileSync as writeFileSync9 } from "node:fs";
-import { basename as basename3, dirname as dirname4, extname as extname6, join as join17, resolve as resolve12 } from "node:path";
+import { mkdirSync as mkdirSync13, readFileSync as readFileSync22, writeFileSync as writeFileSync10 } from "node:fs";
+import { basename as basename4, dirname as dirname4, extname as extname7, join as join18, resolve as resolve13 } from "node:path";
 
 // src/library/pptx-scene-import.ts
 var import_jszip6 = __toESM(require_lib3(), 1);
 import { createHash as createHash3 } from "node:crypto";
-import { readFileSync as readFileSync20 } from "node:fs";
-import { basename as basename2, extname as extname5, posix as posix3, resolve as resolve11 } from "node:path";
+import { readFileSync as readFileSync21 } from "node:fs";
+import { basename as basename3, extname as extname6, posix as posix3, resolve as resolve12 } from "node:path";
 
 // src/engine/system-fonts.ts
-import { existsSync as existsSync14, readdirSync as readdirSync5 } from "node:fs";
+import { existsSync as existsSync15, readdirSync as readdirSync5 } from "node:fs";
 import { homedir as homedir5 } from "node:os";
-import { extname as extname4, join as join16 } from "node:path";
+import { extname as extname5, join as join17 } from "node:path";
 function fontDirs() {
   const env = process.env.SLIDECRAFT_FONT_DIRS?.split(":").filter(Boolean) ?? [];
   const office = "/Applications/Microsoft PowerPoint.app/Contents/Resources/DFonts";
-  const win2 = process.env.WINDIR ? [join16(process.env.WINDIR, "Fonts")] : [];
+  const win2 = process.env.WINDIR ? [join17(process.env.WINDIR, "Fonts")] : [];
   return [
     ...env,
     office,
     "/Library/Fonts/Microsoft",
-    join16(homedir5(), "Library/Fonts"),
+    join17(homedir5(), "Library/Fonts"),
     "/Library/Fonts",
     "/System/Library/Fonts/Supplemental",
     ...win2,
     "/usr/share/fonts",
-    join16(homedir5(), ".fonts")
+    join17(homedir5(), ".fonts")
   ];
 }
 var indexCache = /* @__PURE__ */ new Map();
@@ -214153,8 +217611,8 @@ function indexDir(dir) {
       return;
     }
     for (const name of names) {
-      const path2 = join16(d, name);
-      const ext2 = extname4(name).toLowerCase();
+      const path2 = join17(d, name);
+      const ext2 = extname5(name).toLowerCase();
       if (ext2 !== ".ttf" && ext2 !== ".otf") {
         if (!ext2 && depth < 3) walk2(path2, depth + 1);
         continue;
@@ -214174,7 +217632,7 @@ function indexDir(dir) {
 function findFontFiles(family, dirs = fontDirs()) {
   const want = family.toLowerCase();
   for (const dir of dirs) {
-    if (!existsSync14(dir)) continue;
+    if (!existsSync15(dir)) continue;
     const faces = indexDir(dir).filter((e) => e.family.toLowerCase() === want);
     const regular = faces.find((e) => e.face === "regular");
     if (!regular) continue;
@@ -214202,7 +217660,7 @@ function descendant(n, name) {
   }
 }
 var num2 = (n, key, fallback = 0) => Number(n?.attrs[key] ?? fallback);
-var decode4 = (s2) => s2.replace(/&(#x[\da-f]+|#\d+|amp|lt|gt|quot|apos);/gi, (_, e) => {
+var decode5 = (s2) => s2.replace(/&(#x[\da-f]+|#\d+|amp|lt|gt|quot|apos);/gi, (_, e) => {
   if (e.startsWith("#"))
     return String.fromCodePoint(
       Number.parseInt(e.slice(e[1] === "x" ? 2 : 1), e[1] === "x" ? 16 : 10)
@@ -214229,22 +217687,22 @@ function xml(source) {
       continue;
     }
     if (!t.startsWith("<")) {
-      current.text += decode4(t);
+      current.text += decode5(t);
       continue;
     }
     const tag = /^<([^\s/>]+)/.exec(t)?.[1];
     if (!tag) continue;
     const n = { name: tag.split(":").pop(), attrs: {}, children: [], text: "" };
     for (const a of t.matchAll(/([^\s=]+)\s*=\s*(?:"([^"]*)"|'([^']*)')/g))
-      n.attrs[a[1]] = decode4(a[2] ?? a[3] ?? "");
+      n.attrs[a[1]] = decode5(a[2] ?? a[3] ?? "");
     current.children.push(n);
     if (!t.endsWith("/>")) stack.push(n);
   }
   return root.children[0] ?? root;
 }
-async function relationships(zip, part) {
-  const dir = posix3.dirname(part);
-  const data = await zip.file(`${dir}/_rels/${posix3.basename(part)}.rels`)?.async("string");
+async function relationships(zip, part2) {
+  const dir = posix3.dirname(part2);
+  const data = await zip.file(`${dir}/_rels/${posix3.basename(part2)}.rels`)?.async("string");
   const out = /* @__PURE__ */ new Map();
   for (const r of children(data ? xml(data) : void 0, "Relationship")) {
     const raw = r.attrs.Target ?? "";
@@ -214690,16 +218148,16 @@ function tableNodes(shape, ctx) {
         ctx
       );
       if (p.fill) nodes.push({ kind: "rect", box: b, ...p, role });
-      for (const [edge2, points] of Object.entries({
+      for (const [edge, points] of Object.entries({
         lnL: [x2, y, x2, y + h],
         lnR: [x2 + w, y, x2 + w, y + h],
         lnT: [x2, y, x2 + w, y],
         lnB: [x2, y + h, x2 + w, y + h]
       })) {
-        const side = { lnL: "left", lnR: "right", lnT: "top", lnB: "bottom" }[edge2];
-        const inside2 = edge2 === "lnL" && colIndex > 0 || edge2 === "lnR" && colIndex < widths.length - 1 ? "insideV" : edge2 === "lnT" && rowIndex > 0 || edge2 === "lnB" && rowIndex < rows2.length - 1 ? "insideH" : side;
-        const inherited = [...styles2].reverse().map((s2) => child(child(s2, "tcBdr"), inside2) ?? child(child(s2, "tcBdr"), side)).find(Boolean);
-        const edgePr = child(pr, edge2) ?? child(inherited, "ln");
+        const side = { lnL: "left", lnR: "right", lnT: "top", lnB: "bottom" }[edge];
+        const inside3 = edge === "lnL" && colIndex > 0 || edge === "lnR" && colIndex < widths.length - 1 ? "insideV" : edge === "lnT" && rowIndex > 0 || edge === "lnB" && rowIndex < rows2.length - 1 ? "insideH" : side;
+        const inherited = [...styles2].reverse().map((s2) => child(child(s2, "tcBdr"), inside3) ?? child(child(s2, "tcBdr"), side)).find(Boolean);
+        const edgePr = child(pr, edge) ?? child(inherited, "ln");
         const stroke = edgePr ? child(edgePr, "noFill") || num2(edgePr, "w", 12700) === 0 ? void 0 : paint2({ ...empty(), children: [{ ...edgePr, name: "ln" }] }, ctx).stroke ?? {
           color: "#000000",
           width: num2(edgePr, "w", 12700) / 12700
@@ -214763,11 +218221,11 @@ function tableNodes(shape, ctx) {
   return [...nodes, ...continuous];
 }
 async function importPptxScene(file2, options = {}) {
-  const path2 = resolve11(file2);
-  const bytes = readFileSync20(path2);
+  const path2 = resolve12(file2);
+  const bytes = readFileSync21(path2);
   const zip = await import_jszip6.default.loadAsync(bytes);
-  const read = async (part) => {
-    const data = await zip.file(part)?.async("string");
+  const read = async (part2) => {
+    const data = await zip.file(part2)?.async("string");
     return data ? xml(data) : empty();
   };
   const presentation = await read("ppt/presentation.xml");
@@ -214779,10 +218237,10 @@ async function importPptxScene(file2, options = {}) {
     throw new Error("PPTX has no valid ordered slide relationships");
   const diagnostics = [];
   const shapes2 = [];
-  const id = options.id ?? (basename2(file2, extname5(file2)).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "imported");
+  const id = options.id ?? (basename3(file2, extname6(file2)).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "imported");
   const scene = {
     deckId: id,
-    title: basename2(file2, extname5(file2)),
+    title: basename3(file2, extname6(file2)),
     language: "en",
     format: {
       id: "imported",
@@ -214797,9 +218255,9 @@ async function importPptxScene(file2, options = {}) {
     throw new Error("PPTX has invalid slide dimensions");
   const fonts = /* @__PURE__ */ new Map();
   const tableStyles = await read("ppt/tableStyles.xml");
-  for (const [index, part] of parts.entries()) {
-    const root = await read(part);
-    const slideRels = await relationships(zip, part);
+  for (const [index, part2] of parts.entries()) {
+    const root = await read(part2);
+    const slideRels = await relationships(zip, part2);
     const layoutPart = [...slideRels.values()].find((r) => r.type.endsWith("/slideLayout"))?.target;
     const layout = layoutPart ? await read(layoutPart) : empty();
     const layoutRels = layoutPart ? await relationships(zip, layoutPart) : /* @__PURE__ */ new Map();
@@ -214828,10 +218286,10 @@ async function importPptxScene(file2, options = {}) {
     };
     const nodes = [];
     const explicitTitles = [];
-    const layers = root.attrs.showMasterSp === "0" ? [{ root, part }] : [
+    const layers = root.attrs.showMasterSp === "0" ? [{ root, part: part2 }] : [
       { root: master, part: masterPart ?? "" },
       { root: layout, part: layoutPart ?? "" },
-      { root, part }
+      { root, part: part2 }
     ];
     for (const layer of layers) {
       ctx.links = layer.root === root ? slideRels : layer.root === layout ? layoutRels : masterRels;
@@ -214926,14 +218384,14 @@ async function rebuildPptx(file2, opts = {}) {
   }
   diagnostics.push(...checkChrome(scene));
   const files = [];
-  const outDir = resolve12(opts.outDir ?? join17(dirname4(file2), "rebuilt"));
-  const baseName = `${basename3(file2, extname6(file2))}-rebuilt`;
+  const outDir = resolve13(opts.outDir ?? join18(dirname4(file2), "rebuilt"));
+  const baseName = `${basename4(file2, extname7(file2))}-rebuilt`;
   const formats = opts.formats ?? ["pptx", "html"];
   const engines2 = {};
   const limitations = [
     "Imported native geometry is rebuilt through shared Scene IR. Office-rendered visual verification remains required."
   ];
-  mkdirSync12(outDir, { recursive: true });
+  mkdirSync13(outDir, { recursive: true });
   let pptxPath;
   if (!diagnostics.some((d) => d.severity === "error")) {
     for (const kind of ["pptx", "html", "pdf", "png"].filter(
@@ -214958,7 +218416,7 @@ async function rebuildPptx(file2, opts = {}) {
       const result = await engine.render(scene, {
         outDir,
         baseName,
-        deckDir: dirname4(resolve12(file2)),
+        deckDir: dirname4(resolve13(file2)),
         epoch: epochDate(),
         pptxPath,
         previewWidth: opts.previewWidth
@@ -214973,12 +218431,12 @@ async function rebuildPptx(file2, opts = {}) {
       }
     }
   }
-  const manifestPath = join17(outDir, "manifest.json");
+  const manifestPath = join18(outDir, "manifest.json");
   const manifest = {
     tool: "slidecraft",
     version: VERSION2,
     mode: "native-reference-rebuild",
-    source: { file: basename3(file2), sha256: imported.source.sha256 },
+    source: { file: basename4(file2), sha256: imported.source.sha256 },
     slides: scene.slides.length,
     engines: engines2,
     diagnostics,
@@ -214986,31 +218444,31 @@ async function rebuildPptx(file2, opts = {}) {
     visual_review: false,
     outputs: files.map((f) => ({
       ...f,
-      sha256: createHash4("sha256").update(readFileSync21(f.path)).digest("hex")
+      sha256: createHash4("sha256").update(readFileSync22(f.path)).digest("hex")
     })),
     sourceObjects: imported.shapes
   };
-  writeFileSync9(manifestPath, `${JSON.stringify(manifest, null, 2)}
+  writeFileSync10(manifestPath, `${JSON.stringify(manifest, null, 2)}
 `);
-  writeFileSync9(join17(outDir, "scene.json"), `${JSON.stringify(scene, null, 2)}
+  writeFileSync10(join18(outDir, "scene.json"), `${JSON.stringify(scene, null, 2)}
 `);
   return { scene, files, diagnostics, manifestPath, engines: engines2 };
 }
 
 // src/qa/visual-qa.ts
-var import_yaml3 = __toESM(require_dist(), 1);
+var import_yaml4 = __toESM(require_dist(), 1);
 import { execFileSync as execFileSync4, spawnSync as spawnSync3 } from "node:child_process";
 import {
-  existsSync as existsSync16,
-  mkdirSync as mkdirSync14,
+  existsSync as existsSync17,
+  mkdirSync as mkdirSync15,
   mkdtempSync as mkdtempSync5,
   readdirSync as readdirSync6,
-  readFileSync as readFileSync23,
+  readFileSync as readFileSync24,
   rmSync as rmSync8,
-  writeFileSync as writeFileSync11
+  writeFileSync as writeFileSync12
 } from "node:fs";
 import { tmpdir as tmpdir5 } from "node:os";
-import { dirname as dirname6, join as join19, relative as relative5, resolve as resolve14 } from "node:path";
+import { dirname as dirname6, join as join20, relative as relative5, resolve as resolve15 } from "node:path";
 
 // src/qa/raster.ts
 import { deflateSync as deflateSync2 } from "node:zlib";
@@ -215131,42 +218589,42 @@ function diffOverlay(a, b) {
 }
 
 // src/qa/review-log.ts
-var import_yaml2 = __toESM(require_dist(), 1);
+var import_yaml3 = __toESM(require_dist(), 1);
 import {
   appendFileSync,
   copyFileSync as copyFileSync4,
-  existsSync as existsSync15,
-  mkdirSync as mkdirSync13,
-  readFileSync as readFileSync22,
+  existsSync as existsSync16,
+  mkdirSync as mkdirSync14,
+  readFileSync as readFileSync23,
   rmSync as rmSync7,
-  writeFileSync as writeFileSync10
+  writeFileSync as writeFileSync11
 } from "node:fs";
-import { dirname as dirname5, join as join18, relative as relative4, resolve as resolve13 } from "node:path";
-var logFile = (deckPath2) => join18(dirname5(resolve13(deckPath2)), "review-log.jsonl");
+import { dirname as dirname5, join as join19, relative as relative4, resolve as resolve14 } from "node:path";
+var logFile = (deckPath2) => join19(dirname5(resolve14(deckPath2)), "review-log.jsonl");
 function readReviewLog(deckPath2) {
   const f = logFile(deckPath2);
-  if (!existsSync15(f)) return [];
-  return readFileSync22(f, "utf8").split("\n").filter((l) => l.trim()).map((l) => JSON.parse(l));
+  if (!existsSync16(f)) return [];
+  return readFileSync23(f, "utf8").split("\n").filter((l) => l.trim()).map((l) => JSON.parse(l));
 }
 function appendReviewLog(deckPath2, entry2) {
   const full = { at: entry2.at ?? (/* @__PURE__ */ new Date()).toISOString(), ...entry2 };
   appendFileSync(logFile(deckPath2), `${JSON.stringify(full)}
 `);
-  writeFileSync10(
-    join18(dirname5(resolve13(deckPath2)), "REVIEW-LOG.md"),
+  writeFileSync11(
+    join19(dirname5(resolve14(deckPath2)), "REVIEW-LOG.md"),
     reviewLogMarkdown(readReviewLog(deckPath2))
   );
   return full;
 }
 function deckSourceFiles(deckPath2) {
-  const abs = resolve13(deckPath2);
+  const abs = resolve14(deckPath2);
   const files = [abs];
   try {
-    const doc = import_yaml2.default.parse(readFileSync22(abs, "utf8"));
+    const doc = import_yaml3.default.parse(readFileSync23(abs, "utf8"));
     for (const s2 of doc?.slides ?? [])
       if (s2 && typeof s2 === "object" && "include" in s2) {
-        const inc = resolve13(dirname5(abs), String(s2.include));
-        if (existsSync15(inc)) files.push(inc);
+        const inc = resolve14(dirname5(abs), String(s2.include));
+        if (existsSync16(inc)) files.push(inc);
       }
   } catch {
   }
@@ -215174,11 +218632,11 @@ function deckSourceFiles(deckPath2) {
 }
 function snapshotSources(deckPath2, dir) {
   rmSync7(dir, { recursive: true, force: true });
-  const base = dirname5(resolve13(deckPath2));
+  const base = dirname5(resolve14(deckPath2));
   const files = deckSourceFiles(deckPath2);
   for (const f of files) {
-    const target = join18(dir, relative4(base, f));
-    mkdirSync13(dirname5(target), { recursive: true });
+    const target = join19(dir, relative4(base, f));
+    mkdirSync14(dirname5(target), { recursive: true });
     copyFileSync4(f, target);
   }
   return files.map((f) => relative4(base, f));
@@ -215224,15 +218682,15 @@ function diffLines(file2, before, after) {
   };
 }
 function diffAgainstSnapshot(deckPath2, dir) {
-  const base = dirname5(resolve13(deckPath2));
+  const base = dirname5(resolve14(deckPath2));
   const out = [];
   for (const f of deckSourceFiles(deckPath2)) {
     const rel = relative4(base, f);
-    const snap = join18(dir, rel);
+    const snap = join19(dir, rel);
     const d = diffLines(
       rel,
-      existsSync15(snap) ? readFileSync22(snap, "utf8") : "",
-      readFileSync22(f, "utf8")
+      existsSync16(snap) ? readFileSync23(snap, "utf8") : "",
+      readFileSync23(f, "utf8")
     );
     if (d) out.push(d);
   }
@@ -215275,7 +218733,7 @@ function reviewLogMarkdown(entries) {
 var VISUAL_QA_TARGET = 0.95;
 var LIBREOFFICE_NOTE = "rendered by LibreOffice, not PowerPoint: glyph shapes and some line breaks differ, so parity below the target is expected; judge wrapping, overflow and alignment by eye";
 var pt = (inch) => Math.round(inch * 72 * 100) / 100;
-var label3 = (n) => (n.kind === "text" ? n.paragraphs.flatMap((p) => p.runs.map((r) => r.text)).join(" ").slice(0, 48) : `${n.kind}`) + (n.role ? ` [${n.role}]` : "");
+var label4 = (n) => (n.kind === "text" ? n.paragraphs.flatMap((p) => p.runs.map((r) => r.text)).join(" ").slice(0, 48) : `${n.kind}`) + (n.role ? ` [${n.role}]` : "");
 function boxOf2(n) {
   if (n.kind === "line")
     return {
@@ -215316,7 +218774,7 @@ function slideFacts(scene, slide, palette) {
     const needs = n.style.size >= 18 || n.style.size >= 14 && n.style.bold ? 3 : 4.5;
     if (ratio < needs + 1.5)
       contrastRows.push({
-        text: label3(n),
+        text: label4(n),
         ratio: Math.round(ratio * 100) / 100,
         needs,
         fg,
@@ -215324,7 +218782,7 @@ function slideFacts(scene, slide, palette) {
       });
     const fill = n.contentHeight / Math.max(1e-6, n.box.h);
     if (n.lines.length > 1 && fill > 0.97)
-      tight.push({ text: label3(n), fill: Math.round(fill * 100) / 100 });
+      tight.push({ text: label4(n), fill: Math.round(fill * 100) / 100 });
   });
   const boxes = slide.nodes.filter((n) => !art(n)).map((n) => ({ n, b: boxOf2(n) })).filter((x2) => !!x2.b && x2.b.w > 0.05 && x2.b.h > 0.05);
   const near = [];
@@ -215332,10 +218790,10 @@ function slideFacts(scene, slide, palette) {
     for (let j = i + 1; j < boxes.length; j++) {
       const a = boxes[i];
       const b = boxes[j];
-      for (const edge2 of ["left", "top"]) {
-        const d = Math.abs(edge2 === "left" ? a.b.x - b.b.x : a.b.y - b.b.y);
+      for (const edge of ["left", "top"]) {
+        const d = Math.abs(edge === "left" ? a.b.x - b.b.x : a.b.y - b.b.y);
         if (d * 72 > 0.5 && d * 72 < 4)
-          near.push({ a: label3(a.n), b: label3(b.n), edge: edge2, deltaPt: Math.round(d * 72 * 10) / 10 });
+          near.push({ a: label4(a.n), b: label4(b.n), edge, deltaPt: Math.round(d * 72 * 10) / 10 });
       }
     }
   const W = scene.format.w;
@@ -215343,7 +218801,7 @@ function slideFacts(scene, slide, palette) {
   const margin = 0.25;
   const outside = boxes.filter(({ b }) => !(b.w > W * 0.9 || b.h > H * 0.9)).filter(
     ({ b }) => b.x < margin || b.y < margin || b.x + b.w > W - margin || b.y + b.h > H - margin
-  ).filter(({ n }) => n.kind === "text").map(({ n }) => label3(n));
+  ).filter(({ n }) => n.kind === "text").map(({ n }) => label4(n));
   return {
     contrast: contrastRows,
     offPalette: [...used].filter((c) => !palette.has(c)),
@@ -215354,17 +218812,17 @@ function slideFacts(scene, slide, palette) {
   };
 }
 function rasterPages(pdf, width, height) {
-  const dir = mkdtempSync5(join19(tmpdir5(), "slidecraft-vqa-"));
+  const dir = mkdtempSync5(join20(tmpdir5(), "slidecraft-vqa-"));
   try {
     execFileSync4(
       "pdftoppm",
-      ["-scale-to-x", String(width), "-scale-to-y", String(height), pdf, join19(dir, "p")],
+      ["-scale-to-x", String(width), "-scale-to-y", String(height), pdf, join20(dir, "p")],
       {
         timeout: 3e5,
         stdio: ["ignore", "pipe", "pipe"]
       }
     );
-    return readdirSync6(dir).filter((f) => f.endsWith(".ppm")).sort((a, b) => Number(/\d+/.exec(a)[0]) - Number(/\d+/.exec(b)[0])).map((f) => readPpm(readFileSync23(join19(dir, f))));
+    return readdirSync6(dir).filter((f) => f.endsWith(".ppm")).sort((a, b) => Number(/\d+/.exec(a)[0]) - Number(/\d+/.exec(b)[0])).map((f) => readPpm(readFileSync24(join20(dir, f))));
   } finally {
     rmSync8(dir, { recursive: true, force: true });
   }
@@ -215372,28 +218830,28 @@ function rasterPages(pdf, width, height) {
 async function visualQaPack(deckPath2, opts = {}) {
   if (spawnSync3("pdftoppm", ["-v"]).status !== 0)
     throw new Error("Visual QA needs Poppler (pdftoppm) to rasterise the rendered pages");
-  const outDir = resolve14(opts.outDir ?? join19(dirname6(resolve14(deckPath2)), "dist"));
-  const dir = join19(outDir, "visual-qa");
-  mkdirSync14(dir, { recursive: true });
+  const outDir = resolve15(opts.outDir ?? join20(dirname6(resolve15(deckPath2)), "dist"));
+  const dir = join20(outDir, "visual-qa");
+  mkdirSync15(dir, { recursive: true });
   for (const f of readdirSync6(dir))
     if (/\.(png|pdf)$/.test(f) || f === "qa.json" || f === "index.md")
-      rmSync8(join19(dir, f), { force: true });
+      rmSync8(join20(dir, f), { force: true });
   const built = await buildDeck(deckPath2, {
     formats: ["pptx", "html", "pdf"],
     pdfEngine: "html",
-    outDir: join19(dir, "build")
+    outDir: join20(dir, "build")
   });
   const scene = built.scene;
   const file2 = (k) => built.files.find((f) => f.kind === k)?.path;
   if (!scene || !file2("pdf")) throw new Error("Build failed; run `slidecraft check` first");
-  const sources = snapshotSources(deckPath2, join19(dir, "baseline"));
+  const sources7 = snapshotSources(deckPath2, join20(dir, "baseline"));
   const width = opts.width ?? 1600;
   const height = Math.round(width * scene.format.h / scene.format.w);
   const html = rasterPages(file2("pdf"), width, height);
   const office = await pptxConvertEngine.detect();
   let pptx;
   if (office.available && file2("pptx")) {
-    const pdf = join19(dir, "pptx-office.pdf");
+    const pdf = join20(dir, "pptx-office.pdf");
     convertToPdf(file2("pptx"), pdf);
     pptx = rasterPages(pdf, width, height);
   }
@@ -215406,8 +218864,8 @@ async function visualQaPack(deckPath2, opts = {}) {
   const slides = scene.slides.map((slide, i) => {
     const stem = `${String(i + 1).padStart(2, "0")}-${slide.id}`;
     const save = (name, r) => {
-      const path2 = join19(dir, `${stem}-${name}.png`);
-      writeFileSync11(path2, encodePng(r));
+      const path2 = join20(dir, `${stem}-${name}.png`);
+      writeFileSync12(path2, encodePng(r));
       return relative5(dir, path2);
     };
     const images = { html: save("html", html[i]) };
@@ -215446,7 +218904,7 @@ async function visualQaPack(deckPath2, opts = {}) {
   for (const s2 of scene.slides) for (const n of s2.nodes) colorsOf(n, allColors);
   const pack = {
     dir: relative5(process.cwd(), dir) || ".",
-    deck: relative5(process.cwd(), resolve14(deckPath2)),
+    deck: relative5(process.cwd(), resolve15(deckPath2)),
     theme: scene.themeId,
     renderer: pptx ? office.detail ?? "Office" : "none (HTML only \u2014 install PowerPoint or LibreOffice for parity)",
     reference: !pptx ? "none" : /PowerPoint/.test(office.detail ?? "") ? "powerpoint" : "libreoffice",
@@ -215458,12 +218916,12 @@ async function visualQaPack(deckPath2, opts = {}) {
       pagesBelowTarget: slides.filter((s2) => s2.parity && s2.parity.worstRegion < VISUAL_QA_TARGET).length
     }
   };
-  writeFileSync11(join19(dir, "qa.json"), `${JSON.stringify(pack, null, 2)}
+  writeFileSync12(join20(dir, "qa.json"), `${JSON.stringify(pack, null, 2)}
 `);
-  writeFileSync11(join19(dir, "index.md"), packMarkdown(pack));
+  writeFileSync12(join20(dir, "index.md"), packMarkdown(pack));
   appendReviewLog(deckPath2, {
     stage: "visual-qa",
-    summary: `Review pack for ${slides.length} slides (${pack.renderer}); ${pack.deckFacts.pagesBelowTarget} page(s) below ${Math.round(VISUAL_QA_TARGET * 100)} % PowerPoint\u2194HTML parity${pack.reference === "libreoffice" ? ` (${LIBREOFFICE_NOTE})` : ""}. Sources snapshotted: ${sources.join(", ")}.`,
+    summary: `Review pack for ${slides.length} slides (${pack.renderer}); ${pack.deckFacts.pagesBelowTarget} page(s) below ${Math.round(VISUAL_QA_TARGET * 100)} % PowerPoint\u2194HTML parity${pack.reference === "libreoffice" ? ` (${LIBREOFFICE_NOTE})` : ""}. Sources snapshotted: ${sources7.join(", ")}.`,
     data: {
       parity: Object.fromEntries(slides.map((s2) => [s2.id, s2.parity?.worstRegion ?? null]))
     }
@@ -215550,9 +219008,9 @@ function validateRound(r) {
 function recordReview(deckPath2, packDir, round) {
   const errors = validateRound(round);
   if (errors.length) throw new Error(`Invalid review record: ${errors.join("; ")}`);
-  const path2 = join19(packDir, "record.json");
-  const rounds = existsSync16(path2) ? JSON.parse(readFileSync23(path2, "utf8")) : [];
-  const diffs = diffAgainstSnapshot(deckPath2, join19(packDir, "baseline"));
+  const path2 = join20(packDir, "record.json");
+  const rounds = existsSync17(path2) ? JSON.parse(readFileSync24(path2, "utf8")) : [];
+  const diffs = diffAgainstSnapshot(deckPath2, join20(packDir, "baseline"));
   rounds.push({
     ...round,
     round: rounds.length + 1,
@@ -215565,16 +219023,16 @@ function recordReview(deckPath2, packDir, round) {
     diffs,
     data: { findings: round.findings }
   });
-  writeFileSync11(path2, `${JSON.stringify(rounds, null, 2)}
+  writeFileSync12(path2, `${JSON.stringify(rounds, null, 2)}
 `);
   let language = "en";
   try {
-    language = import_yaml3.default.parse(readFileSync23(deckPath2, "utf8"))?.language ?? "en";
+    language = import_yaml4.default.parse(readFileSync24(deckPath2, "utf8"))?.language ?? "en";
   } catch {
   }
   const report = reviewReport(rounds, language);
-  writeFileSync11(join19(packDir, "REPORT.md"), report);
-  return { rounds: rounds.length, report: join19(packDir, "REPORT.md"), verdict: round.verdict };
+  writeFileSync12(join20(packDir, "REPORT.md"), report);
+  return { rounds: rounds.length, report: join20(packDir, "REPORT.md"), verdict: round.verdict };
 }
 var REPORT_TEXT = {
   en: {
@@ -215655,6 +219113,7 @@ function reviewReport(rounds, language = "en") {
 // src/cli/commands.ts
 function layoutContract(l) {
   return {
+    tags: l.tags ?? [],
     id: l.id,
     name: l.name,
     group: l.group,
@@ -215696,6 +219155,14 @@ function slugFrom(text4) {
   return [...text4.toLowerCase()].map((ch) => CYR[ch] ?? ch).join("").split(/\s+/).filter((w) => !CYR_STOP.has(w)).join(" ").normalize("NFKD").replace(/[^a-z0-9\s-]/g, " ").split(/\s+/).filter((w) => w && !STOP2.has(w)).slice(0, 5).join("-").replace(/-+/g, "-").replace(/^-|-$/g, "").slice(0, 48);
 }
 function registerCommands(program2) {
+  program2.command("import-diagram").description(
+    "Redesign a bounded Mermaid, draw.io or Excalidraw diagram as native editable slide objects, with an import ledger"
+  ).argument("<file>", "source diagram file").option("-o, --out <dir>", "new deck folder", "slidecraft/imported-diagram").option("--json", "machine-readable output").action((file2, o) => {
+    const result = importDiagram(file2, o.out);
+    if (wantsJson(o.json)) printJson(result);
+    else console.log(`Created ${result.deck}
+Import ledger: ${result.ledger}`);
+  });
   program2.command("rebuild").description(
     "Rebuild an original native PPTX through shared geometry into editable PPTX and HTML"
   ).argument("<pptx>", "authoritative original PowerPoint").option("-o, --out <dir>", "output directory; original is never overwritten").option("-f, --format <list>", "comma-separated: pptx,html,pdf,png", "pptx,html").option("--pdf-engine <id>", "native | html | pptx-convert").option("--png-engine <id>", "resvg | pptx-convert").option("--json", "machine-readable output").action(
@@ -215721,17 +219188,17 @@ function registerCommands(program2) {
   program2.command("visual-qa").description(
     "Final LLM review stage: render through PowerPoint and Chrome, write a review pack (images, differences, measured facts); --record stores the reviewer findings and a user report"
   ).argument("<deck>", "deck.yaml").option("-o, --out <dir>", "build output directory (default: <deck dir>/dist)").option("--width <px>", "raster width", "1600").option("--record <findings.json>", "append a review round and rewrite visual-qa/REPORT.md").option("--json", "machine-readable output").action(async (deck, o) => {
-    const out = resolve15(o.out ?? join20(dirname7(resolve15(deck)), "dist"));
+    const out = resolve16(o.out ?? join21(dirname7(resolve16(deck)), "dist"));
     if (o.record) {
-      const round = JSON.parse(readFileSync24(o.record, "utf8"));
-      printJson({ ok: true, ...recordReview(deck, join20(out, "visual-qa"), round) });
+      const round = JSON.parse(readFileSync25(o.record, "utf8"));
+      printJson({ ok: true, ...recordReview(deck, join21(out, "visual-qa"), round) });
       return;
     }
     const pack = await visualQaPack(deck, { outDir: out, width: Number(o.width) });
     printJson({
       ok: true,
-      pack: join20(pack.dir, "index.md"),
-      facts: join20(pack.dir, "qa.json"),
+      pack: join21(pack.dir, "index.md"),
+      facts: join21(pack.dir, "qa.json"),
       renderer: pack.renderer,
       slides: pack.slides.length,
       pagesBelowTarget: pack.deckFacts.pagesBelowTarget,
@@ -215822,7 +219289,7 @@ ${summary(r.diagnostics)}`);
         r.files.filter((f) => f.kind !== "png").forEach((f) => console.log(`  ${green("\u2714")} ${relative6(cwd, f.path)}`));
         if (pngs.length)
           console.log(
-            `  ${green("\u2714")} ${relative6(cwd, join20(pngs[0].path, ".."))}/ (${pngs.length} previews)`
+            `  ${green("\u2714")} ${relative6(cwd, join21(pngs[0].path, ".."))}/ (${pngs.length} previews)`
           );
         if (r.manifestPath) console.log(`  ${green("\u2714")} ${relative6(cwd, r.manifestPath)}`);
       }
@@ -215842,7 +219309,7 @@ ${summary(r.diagnostics)}`);
       list.forEach((l) => {
         console.log(`${bold(l.id.padEnd(20))} ${dim(`[${l.group}]`)} ${l.purpose}`);
         console.log(dim(`${" ".repeat(21)}variants: ${l.variants.join(", ")}`));
-        if (id) console.log(import_yaml4.default.stringify({ example: l.examples[0] }));
+        if (id) console.log(import_yaml5.default.stringify({ example: l.examples[0] }));
       });
   });
   program2.command("themes").description("List themes").option("--json", "machine-readable output").action((o) => {
@@ -215867,7 +219334,7 @@ ${dim(`${" ".repeat(27)}${x2.arc}`)}`)
   });
   program2.command("schema").description("Write JSON Schemas (deck, brief, theme, storyline) for editors and agents").option("-o, --out <dir>", "output directory (default: <slidecraft>/schemas)").action((o) => {
     const out = o.out ?? SCHEMAS_DIR;
-    mkdirSync15(out, { recursive: true });
+    mkdirSync16(out, { recursive: true });
     const opts = { target: "draft-2020-12", unrepresentable: "any" };
     const files = {
       "deck.v1.json": deckJsonSchema(),
@@ -215876,9 +219343,9 @@ ${dim(`${" ".repeat(27)}${x2.arc}`)}`)
       "storyline.v1.json": external_exports.toJSONSchema(Storyline, opts)
     };
     for (const [name, schema46] of Object.entries(files)) {
-      writeFileSync12(join20(out, name), `${JSON.stringify(schema46, null, 2)}
+      writeFileSync13(join21(out, name), `${JSON.stringify(schema46, null, 2)}
 `);
-      console.log(`${green("\u2714")} ${relative6(process.cwd(), join20(out, name))}`);
+      console.log(`${green("\u2714")} ${relative6(process.cwd(), join21(out, name))}`);
     }
   });
   program2.command("doctor").description("Show available output engines, versions and install hints").option("--json", "machine-readable output").action(async (o) => {
@@ -215926,13 +219393,13 @@ ${dim(`${" ".repeat(27)}${x2.arc}`)}`)
         }
         o.goal ??= goal;
       }
-      const dir = resolve15(o.dir, slug2);
-      if (existsSync17(join20(dir, "brief.yaml"))) {
+      const dir = resolve16(o.dir, slug2);
+      if (existsSync18(join21(dir, "brief.yaml"))) {
         console.error(`${relative6(process.cwd(), dir)}/brief.yaml already exists`);
         process.exitCode = EXIT.usage;
         return;
       }
-      mkdirSync15(join20(dir, "sections"), { recursive: true });
+      mkdirSync16(join21(dir, "sections"), { recursive: true });
       const brief = {
         schemaVersion: 1,
         id: slug2,
@@ -215949,10 +219416,10 @@ ${dim(`${" ".repeat(27)}${x2.arc}`)}`)
         language: "en",
         usage: ["edit-together"]
       };
-      writeFileSync12(
-        join20(dir, "brief.yaml"),
+      writeFileSync13(
+        join21(dir, "brief.yaml"),
         `${SCHEMA_LINE("brief")}# SlideCraft brief \u2014 fill the TODOs or let your assistant ask you
-${import_yaml4.default.stringify(brief)}`
+${import_yaml5.default.stringify(brief)}`
       );
       const deck = {
         schemaVersion: 1,
@@ -215977,17 +219444,17 @@ ${import_yaml4.default.stringify(brief)}`
           }
         ]
       };
-      writeFileSync12(
-        join20(dir, "deck.yaml"),
+      writeFileSync13(
+        join21(dir, "deck.yaml"),
         `${SCHEMA_LINE("deck")}# SlideCraft deck
-${import_yaml4.default.stringify(deck)}`
+${import_yaml5.default.stringify(deck)}`
       );
       if (wantsJson(o.json)) {
         printJson({
           ok: true,
           dir,
-          brief: join20(dir, "brief.yaml"),
-          deck: join20(dir, "deck.yaml")
+          brief: join21(dir, "brief.yaml"),
+          deck: join21(dir, "deck.yaml")
         });
         return;
       }
@@ -216001,30 +219468,30 @@ ${green("\u2714")} ${relative6(process.cwd(), dir)}/deck.yaml`
 
 // src/cli/install.ts
 import { spawnSync as spawnSync5 } from "node:child_process";
-import { copyFileSync as copyFileSync5, existsSync as existsSync19, mkdirSync as mkdirSync17, readFileSync as readFileSync26, writeFileSync as writeFileSync14 } from "node:fs";
+import { copyFileSync as copyFileSync5, existsSync as existsSync20, mkdirSync as mkdirSync18, readFileSync as readFileSync27, writeFileSync as writeFileSync15 } from "node:fs";
 import { homedir as homedir7 } from "node:os";
-import { dirname as dirname8, join as join22 } from "node:path";
+import { dirname as dirname8, join as join23 } from "node:path";
 
 // src/mcp/server.ts
 import { spawnSync as spawnSync4 } from "node:child_process";
 import {
-  existsSync as existsSync18,
-  mkdirSync as mkdirSync16,
+  existsSync as existsSync19,
+  mkdirSync as mkdirSync17,
   mkdtempSync as mkdtempSync6,
   readdirSync as readdirSync7,
-  readFileSync as readFileSync25,
+  readFileSync as readFileSync26,
   rmSync as rmSync9,
-  writeFileSync as writeFileSync13
+  writeFileSync as writeFileSync14
 } from "node:fs";
 import { homedir as homedir6, tmpdir as tmpdir6 } from "node:os";
-import { isAbsolute as isAbsolute6, join as join21, resolve as resolve16 } from "node:path";
+import { isAbsolute as isAbsolute6, join as join22, resolve as resolve17 } from "node:path";
 import { createInterface } from "node:readline";
-var workspace = () => resolve16(process.env.SLIDECRAFT_WORKSPACE ?? join21(homedir6(), "SlideCraft"));
+var workspace = () => resolve17(process.env.SLIDECRAFT_WORKSPACE ?? join22(homedir6(), "SlideCraft"));
 function deckPath(deck) {
-  const p = isAbsolute6(deck) ? deck : resolve16(workspace(), deck);
-  return /\.ya?ml$/i.test(p) ? p : join21(p, "deck.yaml");
+  const p = isAbsolute6(deck) ? deck : resolve17(workspace(), deck);
+  return /\.ya?ml$/i.test(p) ? p : join22(p, "deck.yaml");
 }
-var briefPath = (deck) => join21(deckPath(deck), "..", "brief.yaml");
+var briefPath = (deck) => join22(deckPath(deck), "..", "brief.yaml");
 function cli(args) {
   const r = spawnSync4(process.execPath, [...process.execArgv, process.argv[1], ...args], {
     encoding: "utf8",
@@ -216080,7 +219547,7 @@ Workspace: ${workspace()}`)
     inputSchema: obj({}),
     run: () => {
       const ws = workspace();
-      const decks = existsSync18(ws) ? readdirSync7(ws).filter((d) => existsSync18(join21(ws, d, "deck.yaml"))) : [];
+      const decks = existsSync19(ws) ? readdirSync7(ws).filter((d) => existsSync19(join22(ws, d, "deck.yaml"))) : [];
       return text3(decks.length ? decks.join("\n") : "No decks yet \u2014 use new_deck.");
     }
   },
@@ -216095,7 +219562,7 @@ Workspace: ${workspace()}`)
       ["goal"]
     ),
     run: (a) => {
-      mkdirSync16(workspace(), { recursive: true });
+      mkdirSync17(workspace(), { recursive: true });
       return text3(
         cli([
           "new",
@@ -216147,7 +219614,7 @@ Workspace: ${workspace()}`)
     name: "read_deck",
     description: "The deck.yaml text",
     inputSchema: obj({ deck: s("Deck folder name or path") }, ["deck"]),
-    run: (a) => text3(readFileSync25(deckPath(String(a.deck)), "utf8"))
+    run: (a) => text3(readFileSync26(deckPath(String(a.deck)), "utf8"))
   },
   {
     name: "write_deck",
@@ -216158,7 +219625,7 @@ Workspace: ${workspace()}`)
     ]),
     run: (a) => {
       const p = deckPath(String(a.deck));
-      writeFileSync13(p, String(a.yaml));
+      writeFileSync14(p, String(a.yaml));
       return text3(cli(["validate", p, "--json"]).out);
     }
   },
@@ -216194,9 +219661,9 @@ Workspace: ${workspace()}`)
       ["deck", "fixes"]
     ),
     run: (a) => {
-      const dir = mkdtempSync6(join21(tmpdir6(), "sc-mcp-"));
-      const f = join21(dir, "fixes.json");
-      writeFileSync13(f, JSON.stringify(a.fixes));
+      const dir = mkdtempSync6(join22(tmpdir6(), "sc-mcp-"));
+      const f = join22(dir, "fixes.json");
+      writeFileSync14(f, JSON.stringify(a.fixes));
       try {
         return text3(cli(["fix", deckPath(String(a.deck)), "--apply", f, "--json"]).out);
       } finally {
@@ -216220,9 +219687,9 @@ Workspace: ${workspace()}`)
       ["deck", "slide"]
     ),
     run: (a) => {
-      const dir = mkdtempSync6(join21(tmpdir6(), "sc-mcp-preview-"));
+      const dir = mkdtempSync6(join22(tmpdir6(), "sc-mcp-preview-"));
       const renderer = a.renderer === "pptx-convert" ? "pptx-convert" : "resvg";
-      const previewDir = join21(dir, renderer === "pptx-convert" ? "previews-office" : "previews");
+      const previewDir = join22(dir, renderer === "pptx-convert" ? "previews-office" : "previews");
       try {
         const r = cli([
           "build",
@@ -216237,7 +219704,7 @@ Workspace: ${workspace()}`)
           renderer,
           "--json"
         ]);
-        const files = existsSync18(previewDir) ? readdirSync7(previewDir).sort() : [];
+        const files = existsSync19(previewDir) ? readdirSync7(previewDir).sort() : [];
         const want = String(a.slide);
         const file2 = /^\d+$/.test(want) ? files[Number(want) - 1] : files.find((f) => f.replace(/^\d+-/, "").replace(/\.png$/, "") === want);
         if (!file2)
@@ -216245,7 +219712,7 @@ Workspace: ${workspace()}`)
         return [
           {
             type: "image",
-            data: readFileSync25(join21(previewDir, file2)).toString("base64"),
+            data: readFileSync26(join22(previewDir, file2)).toString("base64"),
             mimeType: "image/png"
           },
           {
@@ -216306,7 +219773,7 @@ Workspace: ${workspace()}`)
         "import",
         String(a.file),
         "--out",
-        join21(
+        join22(
           workspace(),
           String(a.file).split(/[\\/]/).pop().replace(/\.pptx$/i, "").toLowerCase().replace(/[^a-z0-9]+/g, "-")
         ),
@@ -216418,61 +219885,61 @@ function serve() {
 
 // src/cli/install.ts
 var home = () => homedir7();
-var userConfig = (...p) => process.platform === "darwin" ? join22(home(), "Library", "Application Support", ...p) : process.platform === "win32" ? join22(process.env.APPDATA ?? join22(home(), "AppData", "Roaming"), ...p) : join22(home(), ".config", ...p);
+var userConfig = (...p) => process.platform === "darwin" ? join23(home(), "Library", "Application Support", ...p) : process.platform === "win32" ? join23(process.env.APPDATA ?? join23(home(), "AppData", "Roaming"), ...p) : join23(home(), ".config", ...p);
 var win = process.platform === "win32";
 function mcpTargets() {
   return [
     {
       id: "claude-desktop",
       name: "Claude Desktop",
-      file: join22(userConfig("Claude"), "claude_desktop_config.json"),
+      file: join23(userConfig("Claude"), "claude_desktop_config.json"),
       detect: userConfig("Claude"),
       key: "mcpServers"
     },
     {
       id: "cursor",
       name: "Cursor",
-      file: join22(home(), ".cursor", "mcp.json"),
-      detect: join22(home(), ".cursor"),
+      file: join23(home(), ".cursor", "mcp.json"),
+      detect: join23(home(), ".cursor"),
       key: "mcpServers"
     },
     {
       id: "vscode",
       name: "VS Code (Copilot)",
-      file: join22(userConfig("Code", "User"), "mcp.json"),
+      file: join23(userConfig("Code", "User"), "mcp.json"),
       detect: userConfig("Code", "User"),
       key: "servers"
     },
     {
       id: "windsurf",
       name: "Windsurf",
-      file: join22(home(), ".codeium", "windsurf", "mcp_config.json"),
-      detect: join22(home(), ".codeium", "windsurf"),
+      file: join23(home(), ".codeium", "windsurf", "mcp_config.json"),
+      detect: join23(home(), ".codeium", "windsurf"),
       key: "mcpServers"
     },
     {
       id: "gemini",
       name: "Gemini CLI",
-      file: join22(home(), ".gemini", "settings.json"),
-      detect: join22(home(), ".gemini"),
+      file: join23(home(), ".gemini", "settings.json"),
+      detect: join23(home(), ".gemini"),
       key: "mcpServers"
     }
   ];
 }
 function serverCommand() {
-  const script = join22(ROOT, "dist", "slidecraft.mjs");
+  const script = join23(ROOT, "dist", "slidecraft.mjs");
   if (/[\\/]_npx[\\/]/.test(ROOT)) {
-    const npx = join22(dirname8(process.execPath), win ? "npx.cmd" : "npx");
-    return { command: existsSync19(npx) ? npx : "npx", args: ["-y", "@eiler2005/slidecraft", "mcp"] };
+    const npx = join23(dirname8(process.execPath), win ? "npx.cmd" : "npx");
+    return { command: existsSync20(npx) ? npx : "npx", args: ["-y", "@eiler2005/slidecraft", "mcp"] };
   }
   return { command: process.execPath, args: [script, "mcp"] };
 }
 function editJson(file2, edit) {
-  const j = existsSync19(file2) ? JSON.parse(readFileSync26(file2, "utf8") || "{}") : {};
-  if (existsSync19(file2)) copyFileSync5(file2, `${file2}.bak`);
+  const j = existsSync20(file2) ? JSON.parse(readFileSync27(file2, "utf8") || "{}") : {};
+  if (existsSync20(file2)) copyFileSync5(file2, `${file2}.bak`);
   edit(j);
-  mkdirSync17(dirname8(file2), { recursive: true });
-  writeFileSync14(file2, `${JSON.stringify(j, null, 2)}
+  mkdirSync18(dirname8(file2), { recursive: true });
+  writeFileSync15(file2, `${JSON.stringify(j, null, 2)}
 `);
 }
 function hasClaudeCli() {
@@ -216498,9 +219965,9 @@ function install(opts = {}) {
       detail: cmds.map((c) => `claude ${c.join(" ")}`).join(" && ")
     });
   }
-  const codexHome = process.env.CODEX_HOME ?? join22(home(), ".codex");
-  if (want("codex") && existsSync19(codexHome)) {
-    const dir = join22(codexHome, "skills");
+  const codexHome = process.env.CODEX_HOME ?? join23(home(), ".codex");
+  if (want("codex") && existsSync20(codexHome)) {
+    const dir = join23(codexHome, "skills");
     if (!opts.dryRun) {
       if (opts.uninstall) uninstallCodex(dir);
       else installCodex(dir);
@@ -216513,7 +219980,7 @@ function install(opts = {}) {
     });
   }
   for (const t of mcpTargets()) {
-    if (!want(t.id) || !existsSync19(t.detect)) continue;
+    if (!want(t.id) || !existsSync20(t.detect)) continue;
     if (!opts.dryRun)
       editJson(t.file, (j) => {
         const servers = j[t.key] ?? {};
@@ -216562,14 +220029,14 @@ function registerInstallCommands(program2) {
 }
 
 // src/cli/workflow.ts
-var import_yaml12 = __toESM(require_dist(), 1);
+var import_yaml13 = __toESM(require_dist(), 1);
 import { spawn as spawn3 } from "node:child_process";
-import { existsSync as existsSync27, mkdirSync as mkdirSync28, readFileSync as readFileSync38, writeFileSync as writeFileSync26 } from "node:fs";
-import { dirname as dirname15, join as join32, relative as relative13, resolve as resolve26 } from "node:path";
+import { existsSync as existsSync28, mkdirSync as mkdirSync29, readFileSync as readFileSync39, writeFileSync as writeFileSync27 } from "node:fs";
+import { dirname as dirname15, join as join33, relative as relative13, resolve as resolve27 } from "node:path";
 
 // src/gallery.ts
-import { existsSync as existsSync20, mkdirSync as mkdirSync18, readFileSync as readFileSync27, writeFileSync as writeFileSync15 } from "node:fs";
-import { dirname as dirname9, join as join23, resolve as resolve17 } from "node:path";
+import { existsSync as existsSync21, mkdirSync as mkdirSync19, readFileSync as readFileSync28, writeFileSync as writeFileSync16 } from "node:fs";
+import { dirname as dirname9, join as join24, resolve as resolve18 } from "node:path";
 async function flat(scene) {
   if (!scene.slides.some((sl) => sl.nodes.some((n) => n.kind === "html"))) return scene;
   return (await flattenFreeform(scene, 0)).scene;
@@ -216594,14 +220061,14 @@ async function contactSheetPng(scene, width = 2e3, cols2 = 4, max = 12) {
   return rasterize(contactSheetSvg(scene, cols2, max), width);
 }
 function previewDeck(storyline, themeId) {
-  const example = join23(ROOT, "examples", storyline.id, "deck.yaml");
-  if (existsSync20(example)) {
+  const example = join24(ROOT, "examples", storyline.id, "deck.yaml");
+  if (existsSync21(example)) {
     const l = loadDeck(example);
     l.deck = { ...l.deck, theme: themeId };
     return l;
   }
   const raws = [];
-  const sources = /* @__PURE__ */ new Set();
+  const sources7 = /* @__PURE__ */ new Set();
   const used = /* @__PURE__ */ new Map();
   for (const sec of storyline.sections) {
     for (const slot of sec.slots) {
@@ -216610,7 +220077,7 @@ function previewDeck(storyline, themeId) {
       const n = used.get(def.id) ?? 0;
       used.set(def.id, n + 1);
       const ex = def.examples[n % def.examples.length];
-      ex.sources?.forEach((s2) => sources.add(s2));
+      ex.sources?.forEach((s2) => sources7.add(s2));
       raws.push({
         id: `${slot.id}`,
         layout: def.id,
@@ -216628,7 +220095,7 @@ function previewDeck(storyline, themeId) {
     title: storyline.name,
     theme: themeId,
     storyline: storyline.id,
-    sources: [...sources].map((id) => ({
+    sources: [...sources7].map((id) => ({
       id,
       title: "Illustrative sample data",
       illustrative: true
@@ -216638,20 +220105,20 @@ function previewDeck(storyline, themeId) {
   return {
     deck,
     slides: raws.map((r) => Slide2.parse(r)),
-    path: join23(ROOT, "examples", `${storyline.id}.yaml`),
+    path: join24(ROOT, "examples", `${storyline.id}.yaml`),
     baseDir: ROOT,
     diagnostics: []
   };
 }
 async function buildGallery(opts) {
-  const out = resolve17(opts.out ?? join23(DOCS_DIR, "gallery"));
-  mkdirSync18(join23(out, "layouts"), { recursive: true });
+  const out = resolve18(opts.out ?? join24(DOCS_DIR, "gallery"));
+  mkdirSync19(join24(out, "layouts"), { recursive: true });
   const files = [];
   for (const s2 of opts.storylines) {
     for (const t of opts.themes ?? s2.themes) {
       const scene = await flat(composeDeck(previewDeck(s2, t)).scene);
-      const p = join23(out, `${s2.id}--${t}.png`);
-      writeFileSync15(p, await contactSheetPng(scene, opts.width ?? 1400));
+      const p = join24(out, `${s2.id}--${t}.png`);
+      writeFileSync16(p, await contactSheetPng(scene, opts.width ?? 1400));
       files.push(p);
     }
   }
@@ -216684,26 +220151,26 @@ async function buildGallery(opts) {
         baseDir: ROOT,
         diagnostics: []
       });
-      const p = join23(out, "layouts", `${def.id}--${ex.variant ?? def.variants[0]}.png`);
+      const p = join24(out, "layouts", `${def.id}--${ex.variant ?? def.variants[0]}.png`);
       const shown = await flat(scene);
-      writeFileSync15(p, await rasterize(slideSvg(shown, shown.slides[0]), 800));
+      writeFileSync16(p, await rasterize(slideSvg(shown, shown.slides[0]), 800));
       files.push(p);
     }
   }
   return { files };
 }
 async function writePicker(options, outPath, briefGoal) {
-  mkdirSync18(dirname9(outPath), { recursive: true });
+  mkdirSync19(dirname9(outPath), { recursive: true });
   const cards = [];
   for (const o of options) {
     const s2 = getStoryline(o.storyline);
     const t = getTheme(o.theme);
     if (!s2 || !t) continue;
-    const cached2 = join23(DOCS_DIR, "gallery", `${o.storyline}--${o.theme}.png`);
-    const png = existsSync20(cached2) ? readFileSync27(cached2) : await contactSheetPng(await flat(composeDeck(previewDeck(s2, o.theme)).scene), 1800);
+    const cached2 = join24(DOCS_DIR, "gallery", `${o.storyline}--${o.theme}.png`);
+    const png = existsSync21(cached2) ? readFileSync28(cached2) : await contactSheetPng(await flat(composeDeck(previewDeck(s2, o.theme)).scene), 1800);
     const img = `data:image/png;base64,${png.toString("base64")}`;
-    const sheet = join23(dirname9(outPath), `option-${o.option}.png`);
-    writeFileSync15(sheet, png);
+    const sheet = join24(dirname9(outPath), `option-${o.option}.png`);
+    writeFileSync16(sheet, png);
     o.preview = sheet;
     cards.push(`<article class="card"><header><span class="badge">${o.option}</span><div><h2>${esc(o.storylineName)}</h2><p class="theme">${esc(o.themeName)} theme</p></div></header>
 <img src="${img}" alt="Option ${o.option}: ${esc(o.storylineName)} in ${esc(o.themeName)}">
@@ -216724,11 +220191,11 @@ footer{margin-top:24px;color:var(--muted)}
 </style></head><body><main><h1>Pick a template</h1><p class="goal">${esc(briefGoal)}</p>
 <div class="grid">${cards.join("\n")}</div>
 <footer>Reply in Claude Code with A, B or C \u2014 or describe what you would change.</footer></main></body></html>`;
-  writeFileSync15(outPath, html);
+  writeFileSync16(outPath, html);
   return outPath;
 }
-async function buildHero(out = join23(DOCS_DIR, "media", "hero.png")) {
-  mkdirSync18(dirname9(out), { recursive: true });
+async function buildHero(out = join24(DOCS_DIR, "media", "hero.png")) {
+  mkdirSync19(dirname9(out), { recursive: true });
   const picks = [
     ["strategy-recommendation", "consulting-classic", 1],
     ["narrative-story", "midnight", 1],
@@ -216772,7 +220239,7 @@ async function buildHero(out = join23(DOCS_DIR, "media", "hero.png")) {
 <text x="124" y="600" font-family="Liberation Sans" font-size="44" fill="#C9D4E5">Ship a partner-ready deck.</text>
 <text x="124" y="700" font-family="Liberation Sans" font-size="28" fill="#8FA0B8">Editable PPTX \xB7 vector PDF \xB7 HTML  \u2014  a Claude Code plugin and CLI</text>
 ${thumbs}</svg>`;
-  writeFileSync15(out, await rasterize(svg, W));
+  writeFileSync16(out, await rasterize(svg, W));
   return out;
 }
 
@@ -216807,23 +220274,23 @@ function libraryCheck() {
 }
 
 // src/library/covers.ts
-var import_yaml7 = __toESM(require_dist(), 1);
-import { copyFileSync as copyFileSync6, existsSync as existsSync22, mkdirSync as mkdirSync20, readFileSync as readFileSync29, writeFileSync as writeFileSync17 } from "node:fs";
-import { dirname as dirname11, extname as extname7, join as join24, relative as relative8, resolve as resolve19 } from "node:path";
+var import_yaml8 = __toESM(require_dist(), 1);
+import { copyFileSync as copyFileSync6, existsSync as existsSync23, mkdirSync as mkdirSync21, readFileSync as readFileSync30, writeFileSync as writeFileSync18 } from "node:fs";
+import { dirname as dirname11, extname as extname8, join as join25, relative as relative8, resolve as resolve20 } from "node:path";
 
 // src/library/images.ts
-var import_yaml6 = __toESM(require_dist(), 1);
-import { existsSync as existsSync21, mkdirSync as mkdirSync19, readFileSync as readFileSync28, writeFileSync as writeFileSync16 } from "node:fs";
-import { dirname as dirname10, relative as relative7, resolve as resolve18 } from "node:path";
+var import_yaml7 = __toESM(require_dist(), 1);
+import { existsSync as existsSync22, mkdirSync as mkdirSync20, readFileSync as readFileSync29, writeFileSync as writeFileSync17 } from "node:fs";
+import { dirname as dirname10, relative as relative7, resolve as resolve19 } from "node:path";
 
 // src/library/yaml-edit.ts
-var import_yaml5 = __toESM(require_dist(), 1);
+var import_yaml6 = __toESM(require_dist(), 1);
 var col = (text4, at) => at - text4.lastIndexOf("\n", at - 1) - 1;
 function scalar(v, flow) {
   if (typeof v === "number" || typeof v === "boolean") return String(v);
   const s2 = String(v);
   if (s2 === "" || s2.includes("\n") || flow && /[,[\]{}]/.test(s2)) return JSON.stringify(s2);
-  const y = import_yaml5.default.stringify(s2, { lineWidth: 0 }).trimEnd();
+  const y = import_yaml6.default.stringify(s2, { lineWidth: 0 }).trimEnd();
   return y.includes("\n") ? JSON.stringify(s2) : y;
 }
 function block(v, indent) {
@@ -216857,16 +220324,16 @@ function splice(text4, from, to, s2) {
   return text4.slice(0, from) + s2 + text4.slice(to);
 }
 function inPlace(text4, e) {
-  const doc = import_yaml5.default.parseDocument(text4);
+  const doc = import_yaml6.default.parseDocument(text4);
   const node2 = doc.getIn(e.path, true);
   const parent = e.path.length > 1 ? doc.getIn(e.path.slice(0, -1), true) : doc.contents;
-  const flowParent = !!(parent && ((0, import_yaml5.isMap)(parent) || (0, import_yaml5.isSeq)(parent)) && parent.flow);
+  const flowParent = !!(parent && ((0, import_yaml6.isMap)(parent) || (0, import_yaml6.isSeq)(parent)) && parent.flow);
   if (node2?.range) {
     const [from] = node2.range;
     const to = contentEnd(text4, node2);
-    if ((0, import_yaml5.isScalar)(node2) && (e.value === null || typeof e.value !== "object"))
+    if ((0, import_yaml6.isScalar)(node2) && (e.value === null || typeof e.value !== "object"))
       return splice(text4, from, to, scalar(e.value, flowParent));
-    if ((0, import_yaml5.isSeq)(node2) && Array.isArray(e.value) && e.value.every((x2) => typeof x2 !== "object")) {
+    if ((0, import_yaml6.isSeq)(node2) && Array.isArray(e.value) && e.value.every((x2) => typeof x2 !== "object")) {
       if (node2.flow || flowParent) {
         const padded = text4[from + 1] === " ";
         const body = e.value.map((x2) => scalar(x2, true)).join(", ");
@@ -216878,7 +220345,7 @@ function inPlace(text4, e) {
     }
     return void 0;
   }
-  if ((0, import_yaml5.isMap)(parent) && !parent.flow && typeof e.path.at(-1) === "string" && parent.items.length) {
+  if ((0, import_yaml6.isMap)(parent) && !parent.flow && typeof e.path.at(-1) === "string" && parent.items.length) {
     const first2 = parent.items[0];
     const last2 = parent.items.at(-1);
     const end = last2.value?.range ? contentEnd(text4, last2.value) : contentEnd(text4, last2.key);
@@ -216891,7 +220358,7 @@ function inPlace(text4, e) {
 ${" ".repeat(indent)}${e.path.at(-1)}:${blockOrInline(e.value, indent + 2)}`
     );
   }
-  if ((0, import_yaml5.isSeq)(parent) && e.path.at(-1) === parent.items.length && parent.range) {
+  if ((0, import_yaml6.isSeq)(parent) && e.path.at(-1) === parent.items.length && parent.range) {
     if (!parent.flow && parent.items.length) {
       const lastItem = parent.items.at(-1);
       const end = contentEnd(text4, lastItem);
@@ -216921,7 +220388,7 @@ function editYaml(text4, edits) {
   for (const e of edits) {
     const next = inPlace(out, e);
     if (next !== void 0) {
-      const check2 = import_yaml5.default.parseDocument(next);
+      const check2 = import_yaml6.default.parseDocument(next);
       const got = check2.getIn(e.path);
       const json2 = (v) => JSON.stringify(
         v && typeof v === "object" && "toJSON" in v ? v.toJSON() : v
@@ -216931,7 +220398,7 @@ function editYaml(text4, edits) {
         continue;
       }
     }
-    const doc = import_yaml5.default.parseDocument(out);
+    const doc = import_yaml6.default.parseDocument(out);
     doc.setIn(e.path, e.value);
     out = doc.toString({ lineWidth: 0 });
   }
@@ -216941,16 +220408,16 @@ function editYaml(text4, edits) {
 // src/library/images.ts
 var IMAGE_STYLE = "Photographic, natural light, calm and uncluttered, generous negative space so it can be cropped to a slide panel. No text, no captions, no logos, no watermarks.";
 function slideMaps(file2) {
-  const doc = import_yaml6.default.parseDocument(readFileSync28(file2, "utf8"));
+  const doc = import_yaml7.default.parseDocument(readFileSync29(file2, "utf8"));
   const root = doc.contents;
-  const seq = (0, import_yaml6.isMap)(root) ? root.get("slides", true) : (0, import_yaml6.isSeq)(root) ? root : void 0;
+  const seq = (0, import_yaml7.isMap)(root) ? root.get("slides", true) : (0, import_yaml7.isSeq)(root) ? root : void 0;
   const items = [];
   const includes = [];
-  if ((0, import_yaml6.isSeq)(seq))
+  if ((0, import_yaml7.isSeq)(seq))
     for (const it of seq.items) {
-      if (!(0, import_yaml6.isMap)(it)) continue;
+      if (!(0, import_yaml7.isMap)(it)) continue;
       const inc = it.get("include");
-      if (typeof inc === "string") includes.push(resolve18(dirname10(file2), inc));
+      if (typeof inc === "string") includes.push(resolve19(dirname10(file2), inc));
       else items.push(it);
     }
   return { doc, items, includes };
@@ -216965,28 +220432,28 @@ function planImages(deckPath2, opts = {}) {
       if (typeof prompt !== "string" || !id) continue;
       const current = m.get("image");
       const base = dirname10(file2);
-      if (!opts.force && typeof current === "string" && existsSync21(resolve18(base, current)))
+      if (!opts.force && typeof current === "string" && existsSync22(resolve19(base, current)))
         continue;
       const image = typeof current === "string" && current ? current : `assets/${id}.png`;
-      jobs.push({ slideId: id, prompt, image, file: resolve18(base, image), yamlFile: file2 });
+      jobs.push({ slideId: id, prompt, image, file: resolve19(base, image), yamlFile: file2 });
     }
     includes.forEach(visit2);
   };
-  visit2(resolve18(deckPath2));
+  visit2(resolve19(deckPath2));
   return jobs;
 }
 function openAiProvider(env = process.env) {
   const key = env.OPENAI_API_KEY;
   const base = (env.OPENAI_BASE_URL ?? "https://api.openai.com/v1").replace(/\/$/, "");
-  const model = env.SLIDECRAFT_IMAGE_MODEL ?? "gpt-image-1";
+  const model2 = env.SLIDECRAFT_IMAGE_MODEL ?? "gpt-image-1";
   return {
-    id: `openai:${model}`,
+    id: `openai:${model2}`,
     async generate(prompt) {
       if (!key) throw new Error("OPENAI_API_KEY is not set");
       const res = await fetch(`${base}/images/generations`, {
         method: "POST",
         headers: { "content-type": "application/json", authorization: `Bearer ${key}` },
-        body: JSON.stringify({ model, prompt, size: "1536x1024", n: 1 })
+        body: JSON.stringify({ model: model2, prompt, size: "1536x1024", n: 1 })
       });
       if (!res.ok) throw new Error(`images API ${res.status}: ${(await res.text()).slice(0, 300)}`);
       const json2 = await res.json();
@@ -217004,8 +220471,8 @@ async function generateImages(jobs, provider) {
       const png = await provider.generate(`${job.prompt}
 
 ${IMAGE_STYLE}`);
-      mkdirSync19(dirname10(job.file), { recursive: true });
-      writeFileSync16(job.file, png);
+      mkdirSync20(dirname10(job.file), { recursive: true });
+      writeFileSync17(job.file, png);
       out.generated.push(job);
     } catch (e) {
       out.failed.push({ job, error: e.message });
@@ -217016,14 +220483,14 @@ ${IMAGE_STYLE}`);
   for (const [file2, js] of byFile) {
     const { doc } = slideMaps(file2);
     const root = doc.contents;
-    const inDeck = (0, import_yaml6.isMap)(root) && (0, import_yaml6.isSeq)(root.get("slides", true));
+    const inDeck = (0, import_yaml7.isMap)(root) && (0, import_yaml7.isSeq)(root.get("slides", true));
     const seq = inDeck ? root.get("slides", true) : root;
     const edits = [];
     for (const j of js) {
-      const k = seq.items.findIndex((m) => (0, import_yaml6.isMap)(m) && m.get("id") === j.slideId);
+      const k = seq.items.findIndex((m) => (0, import_yaml7.isMap)(m) && m.get("id") === j.slideId);
       if (k >= 0) edits.push({ path: [...inDeck ? ["slides"] : [], k, "image"], value: j.image });
     }
-    writeFileSync16(file2, editYaml(readFileSync28(file2, "utf8"), edits));
+    writeFileSync17(file2, editYaml(readFileSync29(file2, "utf8"), edits));
   }
   return out;
 }
@@ -217041,14 +220508,14 @@ function planStock(deckPath2, opts = {}) {
       if (typeof query !== "string" || !id) continue;
       const current = m.get("image");
       const base = dirname10(file2);
-      if (!opts.force && typeof current === "string" && existsSync21(resolve18(base, current)))
+      if (!opts.force && typeof current === "string" && existsSync22(resolve19(base, current)))
         continue;
       const image = `assets/${id}.jpg`;
-      jobs.push({ slideId: id, query, image, file: resolve18(base, image), yamlFile: file2 });
+      jobs.push({ slideId: id, query, image, file: resolve19(base, image), yamlFile: file2 });
     }
     includes.forEach(visit2);
   };
-  visit2(resolve18(deckPath2));
+  visit2(resolve19(deckPath2));
   return jobs;
 }
 var CC = (license, version2) => /^(cc0|pdm)$/i.test(license) ? license.toUpperCase() === "PDM" ? "Public Domain Mark" : "CC0" : `CC ${license.toUpperCase()}${version2 ? ` ${version2}` : ""}`;
@@ -217171,13 +220638,13 @@ function wikimediaProvider(fetchImpl = fetch) {
       });
       if (!res.ok) throw new Error(`Wikimedia ${res.status}`);
       const json2 = await res.json();
-      const plain = (html) => (html ?? "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+      const plain2 = (html) => (html ?? "").replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
       return Object.values(json2.query?.pages ?? {}).sort((a, b) => (a.index ?? 0) - (b.index ?? 0)).flatMap((p) => {
         const ii = p.imageinfo?.[0];
         const m = ii?.extmetadata ?? {};
-        const licence = plain(m.LicenseShortName?.value);
+        const licence = plain2(m.LicenseShortName?.value);
         if (!ii || !OPEN_LICENCE.test(licence)) return [];
-        const author = plain(m.Artist?.value) || "Unknown author";
+        const author = plain2(m.Artist?.value) || "Unknown author";
         return [
           {
             // a 1920 px rendition keeps downloads small and is sharp on any slide panel;
@@ -217191,7 +220658,7 @@ function wikimediaProvider(fetchImpl = fetch) {
               license: licence,
               ...m.LicenseUrl?.value ? { licenseUrl: m.LicenseUrl.value } : {},
               source: ii.descriptionurl,
-              title: plain(m.ObjectName?.value) || p.title.replace(/^File:/, "").replace(/\.\w+$/, "")
+              title: plain2(m.ObjectName?.value) || p.title.replace(/^File:/, "").replace(/\.\w+$/, "")
             }
           }
         ];
@@ -217201,12 +220668,12 @@ function wikimediaProvider(fetchImpl = fetch) {
 }
 var thumbWidth = (url2, original) => Math.min(original, Number(url2?.match(/\/(\d+)px-[^/]*$/)?.[1] ?? original));
 function autoProvider(fetchImpl = fetch) {
-  const sources = [openverseProvider(fetchImpl), wikimediaProvider(fetchImpl)];
+  const sources7 = [openverseProvider(fetchImpl), wikimediaProvider(fetchImpl)];
   return {
     id: "auto",
     async search(query) {
       const lists = await Promise.all(
-        sources.map((s2) => s2.search(query).catch(() => []))
+        sources7.map((s2) => s2.search(query).catch(() => []))
       );
       const all = lists.flat();
       const sharp = (h) => h.width >= 1600 && h.width >= h.height;
@@ -217291,8 +220758,8 @@ async function fetchStock(jobs, provider, fetchImpl = fetch, pick2 = 1) {
       const ext2 = buf[0] === 137 && buf[1] === 80 ? ".png" : ".jpg";
       const image = job.image.replace(/\.[a-z]+$/, ext2);
       const file2 = job.file.replace(/\.[a-z]+$/, ext2);
-      mkdirSync19(dirname10(file2), { recursive: true });
-      writeFileSync16(file2, buf);
+      mkdirSync20(dirname10(file2), { recursive: true });
+      writeFileSync17(file2, buf);
       out.found.push({ ...job, image, file: file2, credit: hit.credit, matched: used });
     } catch (e) {
       out.failed.push({ job, error: e.message });
@@ -217303,17 +220770,17 @@ async function fetchStock(jobs, provider, fetchImpl = fetch, pick2 = 1) {
   for (const [file2, js] of byFile) {
     const { doc } = slideMaps(file2);
     const root = doc.contents;
-    const inDeck = (0, import_yaml6.isMap)(root) && (0, import_yaml6.isSeq)(root.get("slides", true));
+    const inDeck = (0, import_yaml7.isMap)(root) && (0, import_yaml7.isSeq)(root.get("slides", true));
     const seq = inDeck ? root.get("slides", true) : root;
     const edits = [];
     for (const j of js) {
-      const k = seq.items.findIndex((m) => (0, import_yaml6.isMap)(m) && m.get("id") === j.slideId);
+      const k = seq.items.findIndex((m) => (0, import_yaml7.isMap)(m) && m.get("id") === j.slideId);
       if (k < 0) continue;
       const at = [...inDeck ? ["slides"] : [], k];
       edits.push({ path: [...at, "image"], value: j.image });
       edits.push({ path: [...at, "imageCredit"], value: j.credit });
     }
-    writeFileSync16(file2, editYaml(readFileSync28(file2, "utf8"), edits));
+    writeFileSync17(file2, editYaml(readFileSync29(file2, "utf8"), edits));
   }
   return out;
 }
@@ -217328,10 +220795,10 @@ function coverIndex(slides) {
   return slides.findIndex((s2) => s2.layout === "title" && (s2.variant ?? "cover") === "cover");
 }
 async function coverOptions(deckPath2, opts = {}) {
-  const path2 = resolve19(deckPath2);
+  const path2 = resolve20(deckPath2);
   const base = dirname11(path2);
-  const out = resolve19(opts.out ?? join24(base, ".slidecraft", "covers"));
-  mkdirSync20(out, { recursive: true });
+  const out = resolve20(opts.out ?? join25(base, ".slidecraft", "covers"));
+  mkdirSync21(out, { recursive: true });
   const loaded = loadDeck(path2);
   const k = coverIndex(loaded.slides);
   if (k < 0) throw new Error("the deck has no cover slide (layout: title, variant: cover)");
@@ -217344,8 +220811,8 @@ async function coverOptions(deckPath2, opts = {}) {
   const text4 = [message.title, message.kicker, message.subtitle].filter(Boolean).join(" ");
   const ranked = rankCoverArt(text4);
   const drafts = [];
-  const own2 = typeof cover.image === "string" ? resolve19(base, cover.image) : void 0;
-  if (own2 && existsSync22(own2)) {
+  const own2 = typeof cover.image === "string" ? resolve20(base, cover.image) : void 0;
+  if (own2 && existsSync23(own2)) {
     drafts.push({
       kind: "photo",
       label: "Current photo",
@@ -217364,8 +220831,8 @@ async function coverOptions(deckPath2, opts = {}) {
     if (hit) {
       const res = await (opts.fetchImpl ?? fetch)(hit.url);
       if (res.ok) {
-        const file2 = join24(out, `photo${extname7(new URL(hit.url).pathname) || ".jpg"}`);
-        writeFileSync17(file2, Buffer.from(await res.arrayBuffer()));
+        const file2 = join25(out, `photo${extname8(new URL(hit.url).pathname) || ".jpg"}`);
+        writeFileSync18(file2, Buffer.from(await res.arrayBuffer()));
         drafts.push({
           kind: "photo",
           label: `Stock photo: ${hit.credit.title ?? list.query}`,
@@ -217394,7 +220861,7 @@ async function coverOptions(deckPath2, opts = {}) {
     const slide = { ...cover };
     for (const [key, v] of Object.entries(d.fields)) {
       if (v === null) delete slide[key];
-      else slide[key] = key === "image" ? resolve19(base, String(v)) : v;
+      else slide[key] = key === "image" ? resolve20(base, String(v)) : v;
     }
     if (d.kind === "photo") delete slide.art;
     slide.status = "draft";
@@ -217406,12 +220873,12 @@ async function coverOptions(deckPath2, opts = {}) {
       diagnostics: []
     };
     const { scene } = composeDeck(variant);
-    const preview = join24(out, `option-${LETTERS2[i]}.png`);
-    writeFileSync17(preview, await rasterize(slideSvg(scene, scene.slides[0]), 1200));
+    const preview = join25(out, `option-${LETTERS2[i]}.png`);
+    writeFileSync18(preview, await rasterize(slideSvg(scene, scene.slides[0]), 1200));
     const facts = { ...d.facts };
     const pic = d.file ?? (d.kind === "photo" ? own2 : void 0);
     if (pic) {
-      const px4 = pngSize(readFileSync29(pic));
+      const px4 = pngSize(readFileSync30(pic));
       if (px4) {
         const panelW = scene.format.w * 0.3;
         const panelH = scene.format.h;
@@ -217426,18 +220893,18 @@ async function coverOptions(deckPath2, opts = {}) {
     slideId: cover.id,
     message,
     options,
-    picker: join24(out, "covers.html"),
+    picker: join25(out, "covers.html"),
     next: "Compare the options against the deck message and look (topic fit, legibility, photo sharpness and licence), recommend one, ask the user, then `slidecraft covers <deck> --choose <letter>`."
   };
-  writeFileSync17(join24(out, "options.json"), `${JSON.stringify(result, null, 2)}
+  writeFileSync18(join25(out, "options.json"), `${JSON.stringify(result, null, 2)}
 `);
-  writeFileSync17(result.picker, pickerHtml(result));
+  writeFileSync18(result.picker, pickerHtml(result));
   return result;
 }
 var esc3 = (s2) => s2.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 function pickerHtml(r) {
   const cards = r.options.map((o) => {
-    const img = `data:image/png;base64,${readFileSync29(o.preview).toString("base64")}`;
+    const img = `data:image/png;base64,${readFileSync30(o.preview).toString("base64")}`;
     const facts = [
       o.facts.topicWords?.length ? `stands for: ${o.facts.topicWords.join(", ")}` : "",
       o.facts.credit ? `${o.facts.credit.author} / ${o.facts.credit.provider}, ${o.facts.credit.license}` : "",
@@ -217462,12 +220929,12 @@ footer{margin-top:24px;color:var(--muted)}
 <footer>Reply with A, B or C \u2014 the assistant writes your choice into deck.yaml.</footer></main></body></html>`;
 }
 function chooseCover(deckPath2, letter, optionsFile) {
-  const path2 = resolve19(deckPath2);
+  const path2 = resolve20(deckPath2);
   const base = dirname11(path2);
-  const file2 = optionsFile ?? join24(base, ".slidecraft", "covers", "options.json");
-  if (!existsSync22(file2))
+  const file2 = optionsFile ?? join25(base, ".slidecraft", "covers", "options.json");
+  if (!existsSync23(file2))
     throw new Error("no cover options yet: run `slidecraft covers <deck>` first");
-  const r = JSON.parse(readFileSync29(file2, "utf8"));
+  const r = JSON.parse(readFileSync30(file2, "utf8"));
   const o = r.options.find((x2) => x2.option === letter.toUpperCase());
   if (!o)
     throw new Error(
@@ -217475,16 +220942,16 @@ function chooseCover(deckPath2, letter, optionsFile) {
     );
   const fields = { ...o.fields };
   if (o.file) {
-    const dest = join24(base, "assets", `${r.slideId}${extname7(o.file)}`);
-    mkdirSync20(dirname11(dest), { recursive: true });
+    const dest = join25(base, "assets", `${r.slideId}${extname8(o.file)}`);
+    mkdirSync21(dirname11(dest), { recursive: true });
     copyFileSync6(o.file, dest);
     fields.image = relative8(base, dest);
   }
-  const text4 = readFileSync29(path2, "utf8");
-  const doc = import_yaml7.default.parseDocument(text4);
+  const text4 = readFileSync30(path2, "utf8");
+  const doc = import_yaml8.default.parseDocument(text4);
   const slides = doc.get("slides", true);
-  if (!(0, import_yaml7.isSeq)(slides)) throw new Error("deck.yaml has no slides list");
-  const k = slides.items.findIndex((m) => (0, import_yaml7.isMap)(m) && m.get("id") === r.slideId);
+  if (!(0, import_yaml8.isSeq)(slides)) throw new Error("deck.yaml has no slides list");
+  const k = slides.items.findIndex((m) => (0, import_yaml8.isMap)(m) && m.get("id") === r.slideId);
   if (k < 0)
     throw new Error(`cover slide "${r.slideId}" is not in deck.yaml itself (an included file?)`);
   const slide = slides.items[k];
@@ -217492,18 +220959,18 @@ function chooseCover(deckPath2, letter, optionsFile) {
   if (removals.length) {
     for (const [key] of removals) doc.deleteIn(["slides", k, key]);
     for (const [key, v] of Object.entries(fields)) if (v !== null) doc.setIn(["slides", k, key], v);
-    writeFileSync17(path2, doc.toString({ lineWidth: 0 }));
+    writeFileSync18(path2, doc.toString({ lineWidth: 0 }));
   } else {
     const edits = Object.entries(fields).filter(([, v]) => v !== null).map(([key, value]) => ({ path: ["slides", k, key], value }));
-    writeFileSync17(path2, editYaml(text4, edits));
+    writeFileSync18(path2, editYaml(text4, edits));
   }
   return { ...o, fields };
 }
 
 // src/library/docs.ts
-var import_yaml8 = __toESM(require_dist(), 1);
-import { mkdirSync as mkdirSync21, writeFileSync as writeFileSync18 } from "node:fs";
-import { join as join25 } from "node:path";
+var import_yaml9 = __toESM(require_dist(), 1);
+import { mkdirSync as mkdirSync22, writeFileSync as writeFileSync19 } from "node:fs";
+import { join as join26 } from "node:path";
 var HEADER = (title2, what) => `<!-- Generated by \`slidecraft gen\` \u2014 do not edit by hand. -->
 # ${title2}
 
@@ -217582,7 +221049,7 @@ function layoutsDoc() {
     md += `<details><summary>Example</summary>
 
 \`\`\`yaml
-${import_yaml8.default.stringify([slide], { lineWidth: 0 })}\`\`\`
+${import_yaml9.default.stringify([slide], { lineWidth: 0 })}\`\`\`
 
 </details>
 `;
@@ -217744,44 +221211,44 @@ function catalog() {
   };
 }
 async function generateDocs() {
-  const ref = join25(DOCS_DIR, "reference");
-  mkdirSync21(ref, { recursive: true });
-  mkdirSync21(SCHEMAS_DIR, { recursive: true });
+  const ref = join26(DOCS_DIR, "reference");
+  mkdirSync22(ref, { recursive: true });
+  mkdirSync22(SCHEMAS_DIR, { recursive: true });
   const opts = { target: "draft-2020-12", unrepresentable: "any" };
   const files = {
-    [join25(ref, "layouts.gen.md")]: layoutsDoc(),
-    [join25(ref, "themes.gen.md")]: themesDoc(),
-    [join25(ref, "storylines.gen.md")]: storylinesDoc(),
-    [join25(ref, "engines.gen.md")]: await enginesDoc(),
-    [join25(ref, "error-codes.gen.md")]: codesDoc(),
-    [join25(ref, "cli.gen.md")]: cliDoc(),
-    [join25(SCHEMAS_DIR, "deck.v1.json")]: `${JSON.stringify(deckJsonSchema(), null, 2)}
+    [join26(ref, "layouts.gen.md")]: layoutsDoc(),
+    [join26(ref, "themes.gen.md")]: themesDoc(),
+    [join26(ref, "storylines.gen.md")]: storylinesDoc(),
+    [join26(ref, "engines.gen.md")]: await enginesDoc(),
+    [join26(ref, "error-codes.gen.md")]: codesDoc(),
+    [join26(ref, "cli.gen.md")]: cliDoc(),
+    [join26(SCHEMAS_DIR, "deck.v1.json")]: `${JSON.stringify(deckJsonSchema(), null, 2)}
 `,
-    [join25(SCHEMAS_DIR, "brief.v1.json")]: `${JSON.stringify(external_exports.toJSONSchema(Brief, opts), null, 2)}
+    [join26(SCHEMAS_DIR, "brief.v1.json")]: `${JSON.stringify(external_exports.toJSONSchema(Brief, opts), null, 2)}
 `,
-    [join25(SCHEMAS_DIR, "theme.v1.json")]: `${JSON.stringify(external_exports.toJSONSchema(Theme, opts), null, 2)}
+    [join26(SCHEMAS_DIR, "theme.v1.json")]: `${JSON.stringify(external_exports.toJSONSchema(Theme, opts), null, 2)}
 `,
-    [join25(SCHEMAS_DIR, "storyline.v1.json")]: `${JSON.stringify(external_exports.toJSONSchema(Storyline, opts), null, 2)}
+    [join26(SCHEMAS_DIR, "storyline.v1.json")]: `${JSON.stringify(external_exports.toJSONSchema(Storyline, opts), null, 2)}
 `,
-    [join25(LIBRARY_DIR, "catalog.json")]: `${JSON.stringify(catalog(), null, 2)}
+    [join26(LIBRARY_DIR, "catalog.json")]: `${JSON.stringify(catalog(), null, 2)}
 `
   };
-  for (const [p, c] of Object.entries(files)) writeFileSync18(p, c);
+  for (const [p, c] of Object.entries(files)) writeFileSync19(p, c);
   return Object.keys(files);
 }
 
 // src/library/fix.ts
-var import_yaml9 = __toESM(require_dist(), 1);
-import { readFileSync as readFileSync30, writeFileSync as writeFileSync19 } from "node:fs";
-import { dirname as dirname12, relative as relative9, resolve as resolve20 } from "node:path";
+var import_yaml10 = __toESM(require_dist(), 1);
+import { readFileSync as readFileSync31, writeFileSync as writeFileSync20 } from "node:fs";
+import { dirname as dirname12, relative as relative9, resolve as resolve21 } from "node:path";
 function slideLocations(deckPath2) {
-  const file2 = resolve20(deckPath2);
-  const doc = import_yaml9.default.parse(readFileSync30(file2, "utf8"));
+  const file2 = resolve21(deckPath2);
+  const doc = import_yaml10.default.parse(readFileSync31(file2, "utf8"));
   const out = [];
   (doc.slides ?? []).forEach((s2, i) => {
     if (s2 && typeof s2 === "object" && "include" in s2) {
-      const inc = resolve20(dirname12(file2), String(s2.include));
-      const list = import_yaml9.default.parse(readFileSync30(inc, "utf8"));
+      const inc = resolve21(dirname12(file2), String(s2.include));
+      const list = import_yaml10.default.parse(readFileSync31(inc, "utf8"));
       if (Array.isArray(list)) list.forEach((_, k) => out.push({ file: inc, path: [k] }));
     } else out.push({ file: file2, path: ["slides", i] });
   });
@@ -217839,7 +221306,7 @@ function fitTasks(deckPath2) {
     const ptr = parsePointer(d.pointer);
     const loc = ptr ? locs[ptr.slide] : void 0;
     if (!ptr || !loc) continue;
-    const raw = getIn(loaded.slides[ptr.slide], ptr.rest) ?? getIn(getIn(import_yaml9.default.parse(readFileSync30(loc.file, "utf8")), loc.path), ptr.rest);
+    const raw = getIn(loaded.slides[ptr.slide], ptr.rest) ?? getIn(getIn(import_yaml10.default.parse(readFileSync31(loc.file, "utf8")), loc.path), ptr.rest);
     const text4 = Array.isArray(raw) ? raw.join("\n") : typeof raw === "string" ? raw : "";
     if (!text4) continue;
     const contract = /<=\s*(\d+)/.exec(d.message)?.[1];
@@ -217862,7 +221329,7 @@ function readField(deckPath2, pointer) {
   const ptr = parsePointer(pointer);
   const loc = ptr ? slideLocations(deckPath2)[ptr.slide] : void 0;
   if (!ptr || !loc) return void 0;
-  const doc = import_yaml9.default.parseDocument(readFileSync30(loc.file, "utf8"));
+  const doc = import_yaml10.default.parseDocument(readFileSync31(loc.file, "utf8"));
   const v = doc.getIn([...loc.path, ...ptr.rest]);
   return v && typeof v === "object" && "toJSON" in v ? v.toJSON() : v;
 }
@@ -217882,26 +221349,26 @@ function applyFixes(deckPath2, fixes) {
     }
     let doc = docs.get(loc.file);
     if (!doc) {
-      doc = import_yaml9.default.parseDocument(readFileSync30(loc.file, "utf8"));
+      doc = import_yaml10.default.parseDocument(readFileSync31(loc.file, "utf8"));
       docs.set(loc.file, doc);
     }
     const full = [...loc.path, ...ptr.rest];
     const parent = doc.getIn(full.slice(0, -1), true);
-    if (!(0, import_yaml9.isMap)(parent) && !(0, import_yaml9.isSeq)(parent)) {
+    if (!(0, import_yaml10.isMap)(parent) && !(0, import_yaml10.isSeq)(parent)) {
       errors.push(`${f.pointer}: field not found in ${loc.file}`);
       continue;
     }
     const before = doc.getIn(full);
     edits.set(loc.file, [...edits.get(loc.file) ?? [], { path: full, value: f.text }]);
     changes.push({
-      file: relative9(dirname12(resolve20(deckPath2)), loc.file),
+      file: relative9(dirname12(resolve21(deckPath2)), loc.file),
       pointer: f.pointer,
-      before: (0, import_yaml9.isScalar)(before) ? before.value : before?.toJSON?.() ?? before,
+      before: (0, import_yaml10.isScalar)(before) ? before.value : before?.toJSON?.() ?? before,
       after: f.text
     });
     applied++;
   }
-  for (const [file2, list] of edits) writeFileSync19(file2, editYaml(readFileSync30(file2, "utf8"), list));
+  for (const [file2, list] of edits) writeFileSync20(file2, editYaml(readFileSync31(file2, "utf8"), list));
   if (applied)
     appendReviewLog(deckPath2, {
       stage: "fit-fix",
@@ -217912,26 +221379,26 @@ function applyFixes(deckPath2, fixes) {
 }
 
 // src/library/ingest.ts
-var import_yaml10 = __toESM(require_dist(), 1);
+var import_yaml11 = __toESM(require_dist(), 1);
 import { createHash as createHash5 } from "node:crypto";
-import { existsSync as existsSync23, mkdirSync as mkdirSync22, readdirSync as readdirSync8, readFileSync as readFileSync31, writeFileSync as writeFileSync20 } from "node:fs";
-import { basename as basename4, dirname as dirname13, extname as extname8, join as join26, relative as relative10, resolve as resolve21 } from "node:path";
+import { existsSync as existsSync24, mkdirSync as mkdirSync23, readdirSync as readdirSync8, readFileSync as readFileSync32, writeFileSync as writeFileSync21 } from "node:fs";
+import { basename as basename5, dirname as dirname13, extname as extname9, join as join27, relative as relative10, resolve as resolve22 } from "node:path";
 import { pathToFileURL as pathToFileURL4 } from "node:url";
-var decode5 = (s2) => s2.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
+var decode6 = (s2) => s2.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
 var slug = (s2) => s2.toLowerCase().replace(/\.[a-z0-9]+$/, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "source";
 async function loadPdf() {
-  const bundled = join26(ROOT, "dist", "pdf-text.mjs");
-  const mod2 = import.meta.url.includes("/dist/") && existsSync23(bundled) ? await import(pathToFileURL4(bundled).href) : await import([".", "pdf-text.ts"].join("/"));
+  const bundled = join27(ROOT, "dist", "pdf-text.mjs");
+  const mod2 = import.meta.url.includes("/dist/") && existsSync24(bundled) ? await import(pathToFileURL4(bundled).href) : await import([".", "pdf-text.ts"].join("/"));
   return mod2.pdfPages;
 }
 async function zipText(path2) {
   const JSZip9 = (await Promise.resolve().then(() => __toESM(require_lib3(), 1))).default;
-  return JSZip9.loadAsync(readFileSync31(path2));
+  return JSZip9.loadAsync(readFileSync32(path2));
 }
 async function sectionsOf(path2) {
-  const ext2 = extname8(path2).toLowerCase();
+  const ext2 = extname9(path2).toLowerCase();
   if (ext2 === ".pdf") {
-    const r = await (await loadPdf())(new Uint8Array(readFileSync31(path2)));
+    const r = await (await loadPdf())(new Uint8Array(readFileSync32(path2)));
     return {
       kind: "pdf",
       ...r.title ? { title: r.title } : {},
@@ -217946,7 +221413,7 @@ async function sectionsOf(path2) {
     let cur = { ref: "start", label: "Start", text: "" };
     for (const m of xml2.matchAll(/<w:p[ >][\s\S]*?<\/w:p>/g)) {
       const p = m[0];
-      const text4 = decode5(
+      const text4 = decode6(
         [...p.matchAll(/<w:t[^>]*>([^<]*)<\/w:t>/g)].map((t) => t[1]).join("")
       ).trim();
       if (!text4) continue;
@@ -217959,7 +221426,7 @@ async function sectionsOf(path2) {
     if (cur.text) sections.push(cur);
     const core = await zip.file("docProps/core.xml")?.async("string") ?? "";
     const title2 = /<dc:title>([^<]+)<\/dc:title>/.exec(core)?.[1];
-    return { kind: "docx", ...title2 ? { title: decode5(title2) } : {}, sections };
+    return { kind: "docx", ...title2 ? { title: decode6(title2) } : {}, sections };
   }
   if (ext2 === ".pptx") {
     const zip = await zipText(path2);
@@ -217967,7 +221434,7 @@ async function sectionsOf(path2) {
     const sections = [];
     for (const [i, n] of names.entries()) {
       const xml2 = await zip.file(n).async("string");
-      const text4 = [...xml2.matchAll(/<a:p>([\s\S]*?)<\/a:p>/g)].map((p) => decode5([...p[1].matchAll(/<a:t>([^<]*)<\/a:t>/g)].map((t) => t[1]).join(""))).filter((t) => t.trim()).join("\n");
+      const text4 = [...xml2.matchAll(/<a:p>([\s\S]*?)<\/a:p>/g)].map((p) => decode6([...p[1].matchAll(/<a:t>([^<]*)<\/a:t>/g)].map((t) => t[1]).join(""))).filter((t) => t.trim()).join("\n");
       sections.push({ ref: `slide${i + 1}`, label: `slide ${i + 1}`, text: text4 });
     }
     return { kind: "pptx", sections };
@@ -217984,40 +221451,40 @@ async function sectionsOf(path2) {
   if (ext2 === ".md" || ext2 === ".txt") {
     return {
       kind: ext2.slice(1),
-      sections: [{ ref: "text", label: "text", text: readFileSync31(path2, "utf8") }]
+      sections: [{ ref: "text", label: "text", text: readFileSync32(path2, "utf8") }]
     };
   }
-  throw new Error(`Cannot ingest ${basename4(path2)}: use PDF, DOCX, PPTX, XLSX, CSV, MD or TXT`);
+  throw new Error(`Cannot ingest ${basename5(path2)}: use PDF, DOCX, PPTX, XLSX, CSV, MD or TXT`);
 }
 async function ingest(files, opts) {
-  const deckPath2 = resolve21(opts.deck);
+  const deckPath2 = resolve22(opts.deck);
   const deckDir = dirname13(deckPath2);
-  const outDir = resolve21(opts.dir ?? join26(deckDir, "materials"));
-  mkdirSync22(outDir, { recursive: true });
-  const doc = import_yaml10.default.parseDocument(readFileSync31(deckPath2, "utf8"));
-  const sources = doc.get("sources", true);
-  const existing = (0, import_yaml10.isSeq)(sources) ? sources.items : [];
-  const have = new Set(existing.filter(import_yaml10.isMap).map((m) => String(m.get("id"))));
+  const outDir = resolve22(opts.dir ?? join27(deckDir, "materials"));
+  mkdirSync23(outDir, { recursive: true });
+  const doc = import_yaml11.default.parseDocument(readFileSync32(deckPath2, "utf8"));
+  const sources7 = doc.get("sources", true);
+  const existing = (0, import_yaml11.isSeq)(sources7) ? sources7.items : [];
+  const have = new Set(existing.filter(import_yaml11.isMap).map((m) => String(m.get("id"))));
   const fresh = [];
   const out = [];
   for (const f of files) {
-    const path2 = resolve21(f);
+    const path2 = resolve22(f);
     const r = await sectionsOf(path2);
-    const id = slug(basename4(path2));
-    const title2 = (r.title?.trim() || basename4(path2, extname8(path2)).replace(/[-_]+/g, " ")).slice(
+    const id = slug(basename5(path2));
+    const title2 = (r.title?.trim() || basename5(path2, extname9(path2)).replace(/[-_]+/g, " ")).slice(
       0,
       140
     );
     const md = [
       `# ${title2}`,
       "",
-      `> Source id \`${id}\` \xB7 ${r.kind.toUpperCase()} \xB7 ${relative10(outDir, path2)} \xB7 sha256 ${createHash5("sha256").update(readFileSync31(path2)).digest("hex").slice(0, 16)}`,
+      `> Source id \`${id}\` \xB7 ${r.kind.toUpperCase()} \xB7 ${relative10(outDir, path2)} \xB7 sha256 ${createHash5("sha256").update(readFileSync32(path2)).digest("hex").slice(0, 16)}`,
       `> Cite a place as \`${id}#${r.sections[0]?.ref ?? "p1"}\` in a slide's \`sources:\`.`,
       "",
       ...r.sections.flatMap((s2) => [`## ${s2.label} {#${s2.ref}}`, "", s2.text, ""])
     ].join("\n");
-    const mdPath = join26(outDir, `${id}.md`);
-    writeFileSync20(mdPath, md);
+    const mdPath = join27(outDir, `${id}.md`);
+    writeFileSync21(mdPath, md);
     const added = !have.has(id);
     if (added) {
       fresh.push({
@@ -218039,22 +221506,22 @@ async function ingest(files, opts) {
       added
     });
   }
-  const edits = (0, import_yaml10.isSeq)(sources) ? fresh.map((value, k) => ({ path: ["sources", existing.length + k], value })) : fresh.length ? [{ path: ["sources"], value: fresh }] : [];
-  if (edits.length) writeFileSync20(deckPath2, editYaml(readFileSync31(deckPath2, "utf8"), edits));
+  const edits = (0, import_yaml11.isSeq)(sources7) ? fresh.map((value, k) => ({ path: ["sources", existing.length + k], value })) : fresh.length ? [{ path: ["sources"], value: fresh }] : [];
+  if (edits.length) writeFileSync21(deckPath2, editYaml(readFileSync32(deckPath2, "utf8"), edits));
   return out;
 }
 function findInMaterials(query, dir, limit = 20) {
-  if (!existsSync23(dir)) return [];
+  if (!existsSync24(dir)) return [];
   const words = query.toLowerCase().split(/\s+/).filter(Boolean);
   const hits = [];
   for (const f of readdirSync8(dir).filter((n) => n.endsWith(".md"))) {
     const id = f.replace(/\.md$/, "");
-    const text4 = readFileSync31(join26(dir, f), "utf8");
-    for (const part of text4.split(/^## /m).slice(1)) {
-      const head = part.split("\n")[0] ?? "";
+    const text4 = readFileSync32(join27(dir, f), "utf8");
+    for (const part2 of text4.split(/^## /m).slice(1)) {
+      const head = part2.split("\n")[0] ?? "";
       const ref = /\{#([^}]+)\}/.exec(head)?.[1] ?? "";
       const where = head.replace(/\s*\{#[^}]+\}\s*$/, "");
-      const body = part.slice(head.length);
+      const body = part2.slice(head.length);
       const lower = body.toLowerCase();
       const score = words.filter((w) => lower.includes(w)).length + (lower.replace(/\s+/g, " ").includes(words.join(" ")) ? words.length : 0);
       if (score < Math.ceil(words.length / 2)) continue;
@@ -218073,10 +221540,10 @@ function findInMaterials(query, dir, limit = 20) {
 
 // src/library/pptx-import.ts
 var import_jszip7 = __toESM(require_lib3(), 1);
-var import_yaml11 = __toESM(require_dist(), 1);
-import { mkdirSync as mkdirSync23, readFileSync as readFileSync32, writeFileSync as writeFileSync21 } from "node:fs";
-import { basename as basename5, extname as extname9, join as join27, posix as posix4, resolve as resolve22 } from "node:path";
-var decode6 = (s2) => s2.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
+var import_yaml12 = __toESM(require_dist(), 1);
+import { mkdirSync as mkdirSync24, readFileSync as readFileSync33, writeFileSync as writeFileSync22 } from "node:fs";
+import { basename as basename6, extname as extname10, join as join28, posix as posix4, resolve as resolve23 } from "node:path";
+var decode7 = (s2) => s2.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, "&");
 function validImportedTitle(title2, fallback, slideNumber) {
   const clean4 = title2.trim();
   if (clean4.length >= 3) return clean4;
@@ -218089,7 +221556,7 @@ function paragraphs2(xml2) {
   for (const m of xml2.matchAll(/<a:p>([\s\S]*?)<\/a:p>|<a:p ([^>]*)>([\s\S]*?)<\/a:p>/g)) {
     const inner = m[1] ?? m[3] ?? "";
     const lvl = Number(/<a:pPr[^>]*lvl="(\d)"/.exec(inner)?.[1] ?? 0);
-    const text4 = decode6(
+    const text4 = decode7(
       [...inner.matchAll(/<a:t>([^<]*)<\/a:t>|<a:t [^>]*>([^<]*)<\/a:t>/g)].map((t) => t[1] ?? t[2] ?? "").join("")
     ).trim();
     const sz = Number(/<a:rPr[^>]*sz="(\d+)"/.exec(inner)?.[1] ?? 0) / 100;
@@ -218097,9 +221564,9 @@ function paragraphs2(xml2) {
   }
   return out;
 }
-async function rels2(zip, part) {
-  const dir = posix4.dirname(part);
-  const relPath = `${dir}/_rels/${posix4.basename(part)}.rels`;
+async function rels2(zip, part2) {
+  const dir = posix4.dirname(part2);
+  const relPath = `${dir}/_rels/${posix4.basename(part2)}.rels`;
   const xml2 = await zip.file(relPath)?.async("string") ?? "";
   const map2 = /* @__PURE__ */ new Map();
   for (const m of xml2.matchAll(/<Relationship [^>]*Id="([^"]+)"[^>]*Target="([^"]+)"/g)) {
@@ -218117,19 +221584,19 @@ async function rels2(zip, part) {
   }
   return map2;
 }
-async function chartData(zip, part) {
-  const xml2 = await zip.file(part)?.async("string") ?? "";
+async function chartData(zip, part2) {
+  const xml2 = await zip.file(part2)?.async("string") ?? "";
   const type = /<c:lineChart>/.test(xml2) ? "line" : /<c:barDir val="bar"\/>/.test(xml2) ? "bar" : /<c:grouping val="(stacked|percentStacked)"\/>/.test(xml2) ? "stacked" : "column";
   const series = [];
   let categories = [];
   for (const s2 of xml2.matchAll(/<c:ser>([\s\S]*?)<\/c:ser>/g)) {
     const body = s2[1];
-    const name = decode6(
+    const name = decode7(
       /<c:tx>[\s\S]*?<c:v>([^<]*)<\/c:v>/.exec(body)?.[1] ?? `Series ${series.length + 1}`
     );
     const cat = /<c:cat>([\s\S]*?)<\/c:cat>/.exec(body)?.[1] ?? "";
     const cats = [...cat.matchAll(/<c:pt idx="(\d+)">\s*<c:v>([^<]*)<\/c:v>/g)].map(
-      (m) => decode6(m[2])
+      (m) => decode7(m[2])
     );
     if (cats.length > categories.length) categories = cats;
     const val = /<c:val>([\s\S]*?)<\/c:val>/.exec(body)?.[1] ?? "";
@@ -218141,13 +221608,13 @@ async function chartData(zip, part) {
   return { type, categories, series };
 }
 async function importPptx(file2, opts = {}) {
-  const zip = await import_jszip7.default.loadAsync(readFileSync32(file2));
+  const zip = await import_jszip7.default.loadAsync(readFileSync33(file2));
   const pres = await zip.file("ppt/presentation.xml")?.async("string") ?? "";
   const presRels = await rels2(zip, "ppt/presentation.xml");
   const order = [...pres.matchAll(/<p:sldId [^>]*r:id="([^"]+)"/g)].map((m) => presRels.get(m[1])).filter((p) => !!p);
-  const id = opts.id ?? (basename5(file2, extname9(file2)).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "imported");
-  const outDir = resolve22(opts.out ?? join27("slidecraft", id));
-  mkdirSync23(join27(outDir, "assets"), { recursive: true });
+  const id = opts.id ?? (basename6(file2, extname10(file2)).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "imported");
+  const outDir = resolve23(opts.out ?? join28("slidecraft", id));
+  mkdirSync24(join28(outDir, "assets"), { recursive: true });
   let shortened = 0;
   const notesExtra = [];
   const clip = (s2, max) => {
@@ -218158,10 +221625,10 @@ async function importPptx(file2, opts = {}) {
   };
   const slides = [];
   const counts = {};
-  for (const [i, part] of order.entries()) {
+  for (const [i, part2] of order.entries()) {
     notesExtra.length = 0;
-    const xml2 = await zip.file(part)?.async("string") ?? "";
-    const r = await rels2(zip, part);
+    const xml2 = await zip.file(part2)?.async("string") ?? "";
+    const r = await rels2(zip, part2);
     let title2 = "";
     let subtitle = "";
     const texts2 = [];
@@ -218229,8 +221696,8 @@ async function importPptx(file2, opts = {}) {
       const media = r.get(picRid);
       const data = await zip.file(media)?.async("uint8array");
       if (data && /\.(png|jpe?g)$/i.test(media)) {
-        const name = `${slide.id}${extname9(media).toLowerCase()}`;
-        writeFileSync21(join27(outDir, "assets", name), data);
+        const name = `${slide.id}${extname10(media).toLowerCase()}`;
+        writeFileSync22(join28(outDir, "assets", name), data);
         slide.image = `assets/${name}`;
       }
       slide.layout = "text-image";
@@ -218248,7 +221715,7 @@ async function importPptx(file2, opts = {}) {
       notes,
       notesExtra.length ? `IMPORT \u2014 original text that did not fit:
 ${notesExtra.join("\n")}` : "",
-      `Imported from slide ${i + 1} of ${basename5(file2)}.`
+      `Imported from slide ${i + 1} of ${basename6(file2)}.`
     ].filter(Boolean).join("\n\n");
     slide.notes = allNotes.slice(0, 3e3);
     slides.push(slide);
@@ -218262,12 +221729,12 @@ ${notesExtra.join("\n")}` : "",
     sources: [],
     slides
   };
-  const deckPath2 = join27(outDir, "deck.yaml");
-  writeFileSync21(
+  const deckPath2 = join28(outDir, "deck.yaml");
+  writeFileSync22(
     deckPath2,
-    `# SlideCraft deck imported from ${basename5(file2)} \u2014 a draft to restyle.
+    `# SlideCraft deck imported from ${basename6(file2)} \u2014 a draft to restyle.
 # Next: pick a storyline/theme, rewrite titles as action titles, replace text slides with exhibits.
-${import_yaml11.default.stringify(deck, { lineWidth: 0 })}`
+${import_yaml12.default.stringify(deck, { lineWidth: 0 })}`
   );
   return { deckPath: deckPath2, slides: slides.length, layouts: counts, shortened };
 }
@@ -218417,7 +221884,7 @@ async function recommendOutput(usage, theme) {
 }
 
 // src/library/sync.ts
-import { readFileSync as readFileSync33 } from "node:fs";
+import { readFileSync as readFileSync34 } from "node:fs";
 var TITLE = "SlideCraft Title";
 function paragraphs3(xml2) {
   const out = [];
@@ -218440,7 +221907,7 @@ var same = (a, b) => {
   return x2.length === y.length && x2.every((v, i) => v === y[i]);
 };
 function readPptx(path2) {
-  const zip = unzip(readFileSync33(path2));
+  const zip = unzip(readFileSync34(path2));
   const text4 = (name) => zip.get(name)?.toString("utf8") ?? "";
   const rels4 = (file2) => {
     const dir = file2.slice(0, file2.lastIndexOf("/"));
@@ -218676,13 +222143,13 @@ function syncPptx(deckPath2, pptxPath, opts = {}) {
 // src/library/theme-import.ts
 import {
   copyFileSync as copyFileSync7,
-  existsSync as existsSync24,
-  mkdirSync as mkdirSync24,
+  existsSync as existsSync25,
+  mkdirSync as mkdirSync25,
   readdirSync as readdirSync9,
-  readFileSync as readFileSync34,
-  writeFileSync as writeFileSync22
+  readFileSync as readFileSync35,
+  writeFileSync as writeFileSync23
 } from "node:fs";
-import { basename as basename6, dirname as dirname14, extname as extname10, join as join28, relative as relative11, resolve as resolve23 } from "node:path";
+import { basename as basename7, dirname as dirname14, extname as extname11, join as join29, relative as relative11, resolve as resolve24 } from "node:path";
 var import_jszip8 = __toESM(require_lib3(), 1);
 
 // src/library/template-geometry.ts
@@ -218695,8 +222162,8 @@ function colorOf(xml2, colors) {
   const scheme = /<a:schemeClr val="(\w+)"/.exec(xml2)?.[1];
   return scheme ? colors[SCHEME[scheme] ?? scheme] : void 0;
 }
-async function shapes(zip, part, colors) {
-  const xml2 = await zip.file(part)?.async("string") ?? "";
+async function shapes(zip, part2, colors) {
+  const xml2 = await zip.file(part2)?.async("string") ?? "";
   const out = [];
   for (const m of xml2.matchAll(/<p:(sp|cxnSp)>([\s\S]*?)<\/p:\1>/g)) {
     const body = m[2];
@@ -218728,9 +222195,9 @@ var xfrm = (xml2) => {
   if (!off || !ext2) return void 0;
   return { x: +off[1] / EMU4, y: +off[2] / EMU4, w: +ext2[1] / EMU4, h: +ext2[2] / EMU4 };
 };
-async function rels3(zip, part) {
-  const dir = posix5.dirname(part);
-  const xml2 = await zip.file(`${dir}/_rels/${posix5.basename(part)}.rels`)?.async("string") ?? "";
+async function rels3(zip, part2) {
+  const dir = posix5.dirname(part2);
+  const xml2 = await zip.file(`${dir}/_rels/${posix5.basename(part2)}.rels`)?.async("string") ?? "";
   const out = /* @__PURE__ */ new Map();
   for (const m of xml2.matchAll(/<Relationship ([^>]*)\/?>/g)) {
     const id = /Id="([^"]+)"/.exec(m[1])?.[1];
@@ -218739,9 +222206,9 @@ async function rels3(zip, part) {
   }
   return out;
 }
-async function pictures(zip, part) {
-  const xml2 = await zip.file(part)?.async("string") ?? "";
-  const r = await rels3(zip, part);
+async function pictures(zip, part2) {
+  const xml2 = await zip.file(part2)?.async("string") ?? "";
+  const r = await rels3(zip, part2);
   const out = [];
   for (const m of xml2.matchAll(/<p:pic>([\s\S]*?)<\/p:pic>/g)) {
     const rid = /r:embed="([^"]+)"/.exec(m[1])?.[1];
@@ -218835,16 +222302,16 @@ function mapFont(name, fontDir, themeId, role, notes) {
   if (/^(georgia|gelasio)$/i.test(name)) return { family: "Georgia", measure: "gelasio" };
   if (/^(times( new roman)?|liberation serif|tinos)$/i.test(name))
     return { family: "Times New Roman", measure: "liberation-serif" };
-  if (fontDir && existsSync24(fontDir)) {
+  if (fontDir && existsSync25(fontDir)) {
     const files = {};
     for (const f of readdirSync9(fontDir)) {
       if (!/\.(ttf|otf)$/i.test(f)) continue;
       try {
-        const fk = $b422b1e013cd6010$export$fa5499edb1ab414a(join28(fontDir, f));
+        const fk = $b422b1e013cd6010$export$fa5499edb1ab414a(join29(fontDir, f));
         if (fk.familyName.toLowerCase() !== name.toLowerCase()) continue;
         const sub = fk.subfamilyName.toLowerCase();
         const face = /bold/.test(sub) && /italic|oblique/.test(sub) ? "boldItalic" : /bold/.test(sub) ? "bold" : /italic|oblique/.test(sub) ? "italic" : /regular|book|normal|roman/.test(sub) ? "regular" : void 0;
-        if (face && !files[face]) files[face] = join28(fontDir, f);
+        if (face && !files[face]) files[face] = join29(fontDir, f);
       } catch {
       }
     }
@@ -218881,7 +222348,7 @@ async function findLogo(zip) {
     if (!f) continue;
     const data = await f.async("uint8array");
     if (data.length > 15e5) continue;
-    if (!best || data.length > best.data.length) best = { name: basename6(t), data };
+    if (!best || data.length > best.data.length) best = { name: basename7(t), data };
   }
   return best;
 }
@@ -218893,15 +222360,15 @@ function softTint(accent, bg, ink, muted) {
   return mix(accent, bg, 0.96);
 }
 async function importTheme(file2, opts) {
-  const zip = await import_jszip8.default.loadAsync(readFileSync34(file2));
+  const zip = await import_jszip8.default.loadAsync(readFileSync35(file2));
   const themeName = Object.keys(zip.files).find((n) => /^ppt\/theme\/theme\d+\.xml$/.test(n)) ?? "ppt/theme/theme1.xml";
   const xml2 = await zip.file(themeName)?.async("string");
   if (!xml2) throw new Error(`${file2} has no Office theme (ppt/theme/theme1.xml)`);
   const c = readColors(xml2);
   const fonts = readFonts(xml2);
   const notes = [];
-  const outDir = resolve23(opts.out ?? join28(dirname14(resolve23(file2)), "slidecraft-theme"));
-  mkdirSync24(outDir, { recursive: true });
+  const outDir = resolve24(opts.out ?? join29(dirname14(resolve24(file2)), "slidecraft-theme"));
+  mkdirSync25(outDir, { recursive: true });
   const bg = c.lt1 ?? "#FFFFFF";
   const dark = luminance(bg) < 0.25;
   const ink = c.dk1 ?? "#111111";
@@ -218929,15 +222396,15 @@ async function importTheme(file2, opts) {
   const geo = await readTemplateGeometry(zip, c);
   const slideArea = geo.size.w * geo.size.h;
   const saved = /* @__PURE__ */ new Map();
-  const keep = async (part) => {
-    if (!saved.has(part)) {
-      const data = await zip.file(part)?.async("uint8array");
+  const keep = async (part2) => {
+    if (!saved.has(part2)) {
+      const data = await zip.file(part2)?.async("uint8array");
       if (!data) return void 0;
-      const name = `${opts.id}-art-${saved.size + 1}${extname10(part).toLowerCase()}`;
-      writeFileSync22(join28(outDir, name), data);
-      saved.set(part, `./${name}`);
+      const name = `${opts.id}-art-${saved.size + 1}${extname11(part2).toLowerCase()}`;
+      writeFileSync23(join29(outDir, name), data);
+      saved.set(part2, `./${name}`);
     }
-    return saved.get(part);
+    return saved.get(part2);
   };
   const toArt = async (pics) => {
     const out = [];
@@ -218991,10 +222458,10 @@ async function importTheme(file2, opts) {
           ).map((p) => geo.size.h - p.y + 0.12)
         ).toFixed(3)
       },
-      source: `title placeholder of ${basename6(file2)}`
+      source: `title placeholder of ${basename7(file2)}`
     };
-    formatPath = join28(outDir, `${opts.id}.format.json`);
-    writeFileSync22(formatPath, `${JSON.stringify(fmt3, null, 2)}
+    formatPath = join29(outDir, `${opts.id}.format.json`);
+    writeFileSync23(formatPath, `${JSON.stringify(fmt3, null, 2)}
 `);
     notes.push(
       `Frame: ${fmt3.w}\xD7${fmt3.h} in, title band where the template has its title \u2014 set "format: ${relative11(process.cwd(), formatPath)}" (relative to the deck) to use it.`
@@ -219003,8 +222470,8 @@ async function importTheme(file2, opts) {
   const logo = hasArt && smallPic ? void 0 : await findLogo(zip);
   let logoRel;
   if (logo) {
-    const name = `${opts.id}-logo${extname10(logo.name).toLowerCase()}`;
-    writeFileSync22(join28(outDir, name), logo.data);
+    const name = `${opts.id}-logo${extname11(logo.name).toLowerCase()}`;
+    writeFileSync23(join29(outDir, name), logo.data);
     logoRel = `./${name}`;
   } else if (!(hasArt && smallPic))
     notes.push(
@@ -219013,16 +222480,16 @@ async function importTheme(file2, opts) {
   for (const spec of [heading, body]) {
     if (!spec.files) continue;
     for (const [face, p] of Object.entries(spec.files)) {
-      const dest = join28(outDir, basename6(p));
-      if (resolve23(p) !== dest) copyFileSync7(p, dest);
-      spec.files[face] = `./${basename6(p)}`;
+      const dest = join29(outDir, basename7(p));
+      if (resolve24(p) !== dest) copyFileSync7(p, dest);
+      spec.files[face] = `./${basename7(p)}`;
     }
   }
   const theme = {
     schemaVersion: 1,
     id: opts.id,
     name: opts.name ?? opts.id.replace(/-/g, " ").replace(/\b\w/g, (m) => m.toUpperCase()),
-    description: `Brand theme imported from ${basename6(file2)}.`,
+    description: `Brand theme imported from ${basename7(file2)}.`,
     bestFor: ["client-proposal", "executive-update", "strategy-recommendation"],
     mood: ["brand"],
     dark,
@@ -219081,20 +222548,20 @@ async function importTheme(file2, opts) {
         }
       } : {}
     },
-    source: `imported from ${basename6(file2)}`,
+    source: `imported from ${basename7(file2)}`,
     officeTheme: `${opts.id}.theme.xml`,
-    template: `${opts.id}.template${extname10(file2).toLowerCase() === ".potx" ? ".potx" : ".pptx"}`
+    template: `${opts.id}.template${extname11(file2).toLowerCase() === ".potx" ? ".potx" : ".pptx"}`
   };
   copyFileSync7(
     file2,
-    join28(
+    join29(
       outDir,
-      `${opts.id}.template${extname10(file2).toLowerCase() === ".potx" ? ".potx" : ".pptx"}`
+      `${opts.id}.template${extname11(file2).toLowerCase() === ".potx" ? ".potx" : ".pptx"}`
     )
   );
-  writeFileSync22(join28(outDir, `${opts.id}.theme.xml`), xml2);
-  const themePath = join28(outDir, `${opts.id}.json`);
-  writeFileSync22(themePath, `${JSON.stringify(theme, null, 2)}
+  writeFileSync23(join29(outDir, `${opts.id}.theme.xml`), xml2);
+  const themePath = join29(outDir, `${opts.id}.json`);
+  writeFileSync23(themePath, `${JSON.stringify(theme, null, 2)}
 `);
   if (contrast(accent, bg) < 3)
     notes.push(
@@ -219103,15 +222570,15 @@ async function importTheme(file2, opts) {
   return {
     theme,
     themePath,
-    ...logoRel ? { logo: join28(outDir, logoRel) } : {},
+    ...logoRel ? { logo: join29(outDir, logoRel) } : {},
     ...formatPath ? { formatPath } : {},
     notes
   };
 }
 
 // src/library/theme-sample.ts
-import { existsSync as existsSync25, mkdirSync as mkdirSync25, readFileSync as readFileSync35, writeFileSync as writeFileSync23 } from "node:fs";
-import { basename as basename7, join as join29, resolve as resolve24 } from "node:path";
+import { existsSync as existsSync26, mkdirSync as mkdirSync26, readFileSync as readFileSync36, writeFileSync as writeFileSync24 } from "node:fs";
+import { basename as basename8, join as join30, resolve as resolve25 } from "node:path";
 import { pathToFileURL as pathToFileURL5 } from "node:url";
 var toHex2 = (r, g, b) => `#${[r, g, b].map(
   (v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0")
@@ -219162,15 +222629,15 @@ function derivePalette(swatches) {
   return { bg, ink, accent, others, clusters: all.slice(0, 12) };
 }
 async function loadPdfStyle() {
-  const bundled = join29(ROOT, "dist", "pdf-text.mjs");
-  const mod2 = import.meta.url.includes("/dist/") && existsSync25(bundled) ? await import(pathToFileURL5(bundled).href) : await import([".", "pdf-text.ts"].join("/"));
+  const bundled = join30(ROOT, "dist", "pdf-text.mjs");
+  const mod2 = import.meta.url.includes("/dist/") && existsSync26(bundled) ? await import(pathToFileURL5(bundled).href) : await import([".", "pdf-text.ts"].join("/"));
   return mod2.pdfStyle;
 }
 function fontFamilyName(raw) {
   return raw.replace(/^[A-Z]{6}\+/, "").replace(/(PSMT|PS|MT)$/, "").replace(/[-_]/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2").trim();
 }
 async function readPdfSample(file2) {
-  const s2 = await (await loadPdfStyle())(new Uint8Array(readFileSync35(file2)));
+  const s2 = await (await loadPdfStyle())(new Uint8Array(readFileSync36(file2)));
   const page2 = s2.page.w * s2.page.h || 1;
   const swatches = [
     ...s2.fills.map((f, i) => ({
@@ -219220,7 +222687,7 @@ function flatShare(pixels) {
   return n ? near / n : 0;
 }
 async function readImageSample(file2) {
-  const data = readFileSync35(file2);
+  const data = readFileSync36(file2);
   const mime = /\.png$/i.test(file2) ? "image/png" : /\.webp$/i.test(file2) ? "image/webp" : "image/jpeg";
   const W = 640;
   const H = 360;
@@ -219357,7 +222824,7 @@ ${await get(new URL(href, url2).href)}`;
 }
 async function themeFromSample(input2, opts) {
   const isUrl = /^https?:\/\//i.test(input2);
-  const ev = isUrl ? await readUrlSample(input2, opts.fetchImpl) : /\.pdf$/i.test(input2) ? await readPdfSample(resolve24(input2)) : /\.(png|jpe?g|webp)$/i.test(input2) ? await readImageSample(resolve24(input2)) : (() => {
+  const ev = isUrl ? await readUrlSample(input2, opts.fetchImpl) : /\.pdf$/i.test(input2) ? await readPdfSample(resolve25(input2)) : /\.(png|jpe?g|webp)$/i.test(input2) ? await readImageSample(resolve25(input2)) : (() => {
     throw new Error(`unsupported sample ${input2}: use a PDF, PNG/JPEG or an http(s) URL`);
   })();
   const notes = [...ev.notes];
@@ -219383,7 +222850,7 @@ async function themeFromSample(input2, opts) {
     mix(ink, bg, 0.55),
     mix(accent, bg, 0.72)
   ].slice(0, 6);
-  const source = isUrl ? input2 : basename7(input2);
+  const source = isUrl ? input2 : basename8(input2);
   const theme = {
     ...base,
     id: opts.id,
@@ -219420,10 +222887,10 @@ async function themeFromSample(input2, opts) {
       `accent ${accent} reads as large text only (contrast ${contrast(accent, bg).toFixed(1)}:1 on ${bg}).`
     );
   Theme.parse(theme);
-  const outDir = resolve24(opts.out ?? "slidecraft-theme");
-  mkdirSync25(outDir, { recursive: true });
-  const themePath = join29(outDir, `${opts.id}.json`);
-  writeFileSync23(themePath, `${JSON.stringify(theme, null, 2)}
+  const outDir = resolve25(opts.out ?? "slidecraft-theme");
+  mkdirSync26(outDir, { recursive: true });
+  const themePath = join30(outDir, `${opts.id}.json`);
+  writeFileSync24(themePath, `${JSON.stringify(theme, null, 2)}
 `);
   let formatPath;
   if (ev.margins && ev.kind !== "url") {
@@ -219446,11 +222913,11 @@ async function themeFromSample(input2, opts) {
       },
       source: `margins of ${source}`
     };
-    formatPath = join29(outDir, `${opts.id}.format.json`);
-    writeFileSync23(formatPath, `${JSON.stringify(fmt3, null, 2)}
+    formatPath = join30(outDir, `${opts.id}.format.json`);
+    writeFileSync24(formatPath, `${JSON.stringify(fmt3, null, 2)}
 `);
     notes.push(
-      `Margins ${fmt3.margin.l}/${fmt3.margin.r}/${fmt3.margin.t}/${fmt3.margin.b} in (l/r/t/b) \u2014 set "format: ${basename7(formatPath)}" (path relative to the deck) to use them.`
+      `Margins ${fmt3.margin.l}/${fmt3.margin.r}/${fmt3.margin.t}/${fmt3.margin.b} in (l/r/t/b) \u2014 set "format: ${basename8(formatPath)}" (path relative to the deck) to use them.`
     );
   }
   return { theme, themePath, ...formatPath ? { formatPath } : {}, notes, evidence: ev };
@@ -219458,8 +222925,8 @@ async function themeFromSample(input2, opts) {
 
 // src/qa/calibrate.ts
 import { execFileSync as execFileSync5 } from "node:child_process";
-import { mkdirSync as mkdirSync26, readFileSync as readFileSync36, writeFileSync as writeFileSync24 } from "node:fs";
-import { join as join30 } from "node:path";
+import { mkdirSync as mkdirSync27, readFileSync as readFileSync37, writeFileSync as writeFileSync25 } from "node:fs";
+import { join as join31 } from "node:path";
 var CALIBRATION_STRINGS = [
   "Enterprise and mid-market hold 78% of profit on 41% of revenue",
   "Two well-funded competitors are preparing German launches in 2027, and switching costs make early share sticky.",
@@ -219553,10 +223020,10 @@ function compareCalibration(cases, pdf) {
   const mismatches = [];
   for (const c of cases) {
     const page2 = pages[c.slide];
-    const scale = Number(/width="([\d.]+)"/.exec(page2)[1]) / 13.333;
+    const scale2 = Number(/width="([\d.]+)"/.exec(page2)[1]) / 13.333;
     const lines = [
       ...page2.matchAll(/<line xMin="([\d.]+)" yMin="([\d.]+)" xMax="([\d.]+)" yMax="([\d.]+)">/g)
-    ].map((m) => ({ x: Number(m[1]) / scale, y: (Number(m[2]) + Number(m[4])) / 2 / scale }));
+    ].map((m) => ({ x: Number(m[1]) / scale2, y: (Number(m[2]) + Number(m[4])) / 2 / scale2 }));
     const inBox = lines.filter(
       (l) => l.x >= c.box.x - 0.05 && l.x <= c.box.x + c.box.w && l.y >= c.box.y && l.y <= c.box.y + c.box.h + 0.04
     );
@@ -219580,11 +223047,11 @@ function compareCalibration(cases, pdf) {
   };
 }
 async function runCalibration(fonts, outDir) {
-  mkdirSync26(outDir, { recursive: true });
+  mkdirSync27(outDir, { recursive: true });
   const { scene, cases } = buildCalibrationScene(fonts);
-  const pptx = join30(outDir, "calibration.pptx");
-  writeFileSync24(pptx, await renderPptx(scene, new Date(Date.UTC(2026, 0, 1))));
-  writeFileSync24(join30(outDir, "expected.json"), JSON.stringify(cases, null, 2));
+  const pptx = join31(outDir, "calibration.pptx");
+  writeFileSync25(pptx, await renderPptx(scene, new Date(Date.UTC(2026, 0, 1))));
+  writeFileSync25(join31(outDir, "expected.json"), JSON.stringify(cases, null, 2));
   const d = await pptxConvertEngine.detect();
   if (!d.available)
     return {
@@ -219618,24 +223085,24 @@ async function runCalibration(fonts, outDir) {
     epoch: /* @__PURE__ */ new Date(),
     pptxPath: pptx
   });
-  const pdf = join30(outDir, "calibration.pdf");
+  const pdf = join31(outDir, "calibration.pdf");
   const r = compareCalibration(cases, pdf);
   const report = { ...r, pptx, pdf };
-  writeFileSync24(join30(outDir, "report.json"), JSON.stringify(report, null, 2));
+  writeFileSync25(join31(outDir, "report.json"), JSON.stringify(report, null, 2));
   return report;
 }
 
 // src/site.ts
 import {
   copyFileSync as copyFileSync8,
-  existsSync as existsSync26,
-  mkdirSync as mkdirSync27,
+  existsSync as existsSync27,
+  mkdirSync as mkdirSync28,
   readdirSync as readdirSync10,
-  readFileSync as readFileSync37,
+  readFileSync as readFileSync38,
   rmSync as rmSync10,
-  writeFileSync as writeFileSync25
+  writeFileSync as writeFileSync26
 } from "node:fs";
-import { basename as basename8, join as join31, relative as relative12, resolve as resolve25 } from "node:path";
+import { basename as basename9, join as join32, relative as relative12, resolve as resolve26 } from "node:path";
 var REPO = "https://github.com/eiler2005/slidecraft";
 var SITE = "https://eiler2005.github.io/slidecraft/";
 var TAGLINE = "Editable PowerPoint decks from one prompt";
@@ -219651,7 +223118,7 @@ var MEDIA = [
   ["docs/media/launch/social-preview.png", "og.png"],
   ["docs/media/launch/icon-240.png", "icon.png"]
 ];
-function onePrompt(readme = readFileSync37(join31(ROOT, "README.md"), "utf8")) {
+function onePrompt(readme = readFileSync38(join32(ROOT, "README.md"), "utf8")) {
   const section = readme.split(/^## The easiest way: one prompt$/m)[1] ?? "";
   const block2 = /```text\n([\s\S]*?)\n```/.exec(section);
   if (!block2) throw new Error('README: no ```text block under "The easiest way: one prompt"');
@@ -219659,42 +223126,42 @@ function onePrompt(readme = readFileSync37(join31(ROOT, "README.md"), "utf8")) {
 }
 var esc5 = (s2) => s2.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 async function buildSite(outDir = "site") {
-  const out = resolve25(outDir);
-  mkdirSync27(out, { recursive: true });
+  const out = resolve26(outDir);
+  mkdirSync28(out, { recursive: true });
   const storylines = loadStorylines();
   const themes = loadThemes();
   const g = await buildGallery({
-    out: join31(out, "gallery"),
+    out: join32(out, "gallery"),
     storylines,
     themes: themes.map((t) => t.id),
     width: 1200
   });
-  const hero = await buildHero(join31(out, "gallery", "hero.png"));
-  for (const [from, to] of MEDIA) copyFileSync8(join31(ROOT, from), join31(out, to));
+  const hero = await buildHero(join32(out, "gallery", "hero.png"));
+  for (const [from, to] of MEDIA) copyFileSync8(join32(ROOT, from), join32(out, to));
   const examples = [];
-  const dirs = readdirSync10(join31(ROOT, "examples")).filter((d) => existsSync26(join31(ROOT, "examples", d, "deck.yaml"))).sort(
+  const dirs = readdirSync10(join32(ROOT, "examples")).filter((d) => existsSync27(join32(ROOT, "examples", d, "deck.yaml"))).sort(
     (a, b) => a === "slidecraft-overview" ? -1 : b === "slidecraft-overview" ? 1 : a.localeCompare(b)
   );
   for (const dir of dirs) {
-    const deck = join31(ROOT, "examples", dir, "deck.yaml");
+    const deck = join32(ROOT, "examples", dir, "deck.yaml");
     const r = await buildDeck(deck, {
-      outDir: join31(out, "examples", dir),
+      outDir: join32(out, "examples", dir),
       formats: ["pptx", "pdf", "html", "onepager", "docx", "png"]
     });
     const cover = r.files.find((f) => f.kind === "png");
-    if (cover) copyFileSync8(cover.path, join31(out, "examples", dir, "cover.png"));
-    rmSync10(join31(out, "examples", dir, "previews"), { recursive: true, force: true });
+    if (cover) copyFileSync8(cover.path, join32(out, "examples", dir, "cover.png"));
+    rmSync10(join32(out, "examples", dir, "previews"), { recursive: true, force: true });
     examples.push({
       id: dir,
       title: r.scene?.title ?? dir,
       files: r.files.filter((f) => f.kind !== "png").map((f) => ({ kind: f.kind, path: relative12(out, f.path) }))
     });
   }
-  writeFileSync25(
-    join31(out, "index.html"),
+  writeFileSync26(
+    join32(out, "index.html"),
     page({ storylines, themes, examples, hero: relative12(out, hero), prompt: onePrompt() })
   );
-  writeFileSync25(join31(out, ".nojekyll"), "");
+  writeFileSync26(join32(out, ".nojekyll"), "");
   return { out, pages: 1, images: g.files.length + 1, examples: examples.length };
 }
 var KIND_LABEL = {
@@ -219714,6 +223181,10 @@ function page(d) {
     (l) => l.examples.map(
       (ex2) => `<figure class="card"><img loading="lazy" src="gallery/layouts/${l.id}--${ex2.variant ?? l.variants[0]}.png" alt="${esc5(`${l.name} \u2014 ${ex2.variant ?? l.variants[0]}`)}"><figcaption><code>${l.id}</code> \xB7 ${esc5(ex2.variant ?? l.variants[0])}<br><span>${esc5(l.purpose)}</span></figcaption></figure>`
     )
+  ).join("");
+  const diagramLayouts = LAYOUTS.filter((l) => l.tags?.includes("diagram"));
+  const diagrams = diagramLayouts.map(
+    (l) => `<figure class="card"><a href="gallery/layouts/${l.id}--${l.variants[0]}.png"><img loading="lazy" src="gallery/layouts/${l.id}--${l.variants[0]}.png" alt="${esc5(l.name)} as editable PowerPoint objects"></a><figcaption><b>${esc5(l.name)}</b><br><code>${l.id}</code><br>${esc5(l.purpose)}</figcaption></figure>`
   ).join("");
   const card2 = (e) => (
     // the cover opens the HTML deck: page through it in the browser (← →, N for notes)
@@ -219770,7 +223241,7 @@ figcaption{font-size:13px;color:var(--muted);padding-top:6px}figcaption b{color:
 footer{color:var(--muted);font-size:13px;border-top:1px solid var(--rule);margin-top:64px;padding-top:16px}
 code{font-size:13px}
 </style></head><body><main>
-<header><nav><a href="#start">One prompt</a><a href="#demo">Watch demo</a><a href="#examples">Examples</a><a href="#storylines">Storylines \xD7 themes</a><a href="#layouts">Layouts</a><a href="${REPO}/tree/main/docs">Documentation</a><a href="${REPO}">GitHub</a></nav>
+<header><nav><a href="#start">One prompt</a><a href="#demo">Watch demo</a><a href="#examples">Examples</a><a href="#diagrams">Diagrams</a><a href="#storylines">Storylines \xD7 themes</a><a href="#layouts">Layouts</a><a href="${REPO}/tree/main/docs">Documentation</a><a href="${REPO}">GitHub</a></nav>
 <h1>SlideCraft \u2014 ${esc5(TAGLINE)}</h1><p>${esc5(SUMMARY)}</p>
 <div class="cta"><a class="btn primary" href="#start">Copy the prompt</a><a class="btn" href="#examples">See example decks</a><a class="btn" href="${REPO}">GitHub</a></div>
 <figure class="demo" id="demo"><a class="play" href="${DEMO.youtube}" aria-label="Watch the SlideCraft demo on YouTube (65 seconds)"><img src="slidecraft-launch-poster.png" width="1920" height="1080" alt="SlideCraft demo: editable PowerPoint decks from one prompt"><span></span></a>
@@ -219782,9 +223253,11 @@ code{font-size:13px}
 <h2 id="examples">Example decks</h2><p>Built in CI from <code>examples/</code> with SlideCraft ${VERSION2}. Click a cover to page through the deck in your browser, or download any format.</p><div class="grid">${featured.map(card2).join("")}</div>
 <h3>More examples</h3><div class="grid">${ex}</div>
 <p><img class="hero" loading="lazy" src="${d.hero}" alt="Slides from SlideCraft example decks"></p>
+<h2 id="diagrams">Diagrams you can edit in PowerPoint</h2><p>${diagramLayouts.length} native diagram layouts, from heatmaps and Sankey flows to architecture changes, service blueprints and data models. Choose the message, keep your theme, and edit the individual objects. Advanced analytical variants include dumbbell, slopegraph, bump, ridgeline, streamgraph and beeswarm.</p>
+<p><a href="examples/diagram-gallery/diagram-gallery.pptx">Download the light PowerPoint gallery</a> \xB7 <a href="examples/diagram-gallery-midnight/diagram-gallery-midnight.pptx">Dark gallery</a> \xB7 <a href="${REPO}/blob/main/docs/how-to/create-diagrams.md">Contracts, examples and import guide</a></p><p>Available in the development repository; not yet an npm release. Browser examples reviewed; actual Office rendering and manual editing remain unverified. <a href="${REPO}/blob/main/docs/research/diagram-design-implementation-2026-10.md">Validation evidence and limits</a>.</p><div class="grid">${diagrams}</div>
 <h2 id="storylines">Storylines \xD7 themes</h2><p>${d.storylines.length} storylines in all ${d.themes.length} themes \u2014 the storyline is the task, the theme is the look; any pair works.</p>${matrix}
 <h2 id="layouts">Layouts</h2><p>${LAYOUTS.length} layouts \u2014 each one a content contract with capacity limits. Shown in consulting-classic.</p><div class="grid">${layouts}</div>
-<footer>SlideCraft ${VERSION2} \xB7 PolyForm Shield 1.0.0, free for individuals and companies \xB7 <a href="${REPO}/blob/main/COMMERCIAL.md">commercial licence</a> \xB7 Using it at a company? <a href="mailto:denis.ermilov@gmail.com?subject=SlideCraft%20Teams%20early%20access">Teams &amp; brand-kit early access</a> \xB7 generated by <code>slidecraft site</code> \xB7 <a href="${REPO}">${basename8(REPO)}</a></footer>
+<footer>SlideCraft ${VERSION2} \xB7 PolyForm Shield 1.0.0, free for individuals and companies \xB7 <a href="${REPO}/blob/main/COMMERCIAL.md">commercial licence</a> \xB7 Using it at a company? <a href="mailto:denis.ermilov@gmail.com?subject=SlideCraft%20Teams%20early%20access">Teams &amp; brand-kit early access</a> \xB7 generated by <code>slidecraft site</code> \xB7 <a href="${REPO}">${basename9(REPO)}</a></footer>
 </main><script>document.getElementById('copy').addEventListener('click',function(){var b=this;navigator.clipboard.writeText(document.getElementById('prompt').textContent).then(function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1600)})})</script></body></html>
 `;
 }
@@ -219906,7 +223379,7 @@ ${bold("Outputs")}: ${output2.formats.join(", ")}  (pptx \u2190 ${output2.engine
   program2.command("pick").description("Render options A/B/C as contact sheets and open the picker page").requiredOption("-b, --brief <path>", "brief.yaml").option("--no-open", "do not open the page").option("--json", "machine-readable output").action(async (o) => {
     const brief = requireBrief(o.brief);
     const options = templateOptions(brief);
-    const out = join32(dirname15(resolve26(o.brief)), ".slidecraft", "picker.html");
+    const out = join33(dirname15(resolve27(o.brief)), ".slidecraft", "picker.html");
     await writePicker(options, out, brief.goal);
     if (o.open && process.stdout.isTTY) openFile(out);
     if (wantsJson(o.json)) printJson({ picker: out, options });
@@ -219933,18 +223406,18 @@ ${bold("Outputs")}: ${output2.formats.join(", ")}  (pptx \u2190 ${output2.engine
       if (!storyline || !getStoryline(storyline))
         throw new Error(`unknown storyline "${storyline ?? ""}"`);
       if (!theme || !getTheme(theme)) throw new Error(`unknown theme "${theme ?? ""}"`);
-      const doc = import_yaml12.default.parseDocument(readFileSync38(o.brief, "utf8"));
+      const doc = import_yaml13.default.parseDocument(readFileSync39(o.brief, "utf8"));
       const choice = {
         storyline,
         theme,
         ...o.option ? { option: o.option.toUpperCase() } : {}
       };
       doc.set("choice", choice);
-      writeFileSync26(o.brief, String(doc));
+      writeFileSync27(o.brief, String(doc));
       if (wantsJson(o.json)) {
         printJson({
           ok: true,
-          brief: relative13(process.cwd(), resolve26(o.brief)) || o.brief,
+          brief: relative13(process.cwd(), resolve27(o.brief)) || o.brief,
           choice
         });
         return;
@@ -219955,19 +223428,19 @@ ${bold("Outputs")}: ${output2.formats.join(", ")}  (pptx \u2190 ${output2.engine
   program2.command("scaffold").description("Create a ghost deck.yaml from the chosen storyline (one slide per slot)").requiredOption("-b, --brief <path>", "brief.yaml").option("-o, --out <path>", "deck.yaml path (default: next to the brief)").option("--force", "overwrite an existing deck.yaml").option("--json", "machine-readable output").action(async (o) => {
     const brief = requireBrief(o.brief);
     if (!brief.choice) throw new Error("brief has no choice yet \u2014 run `slidecraft choose` first");
-    const out = resolve26(o.out ?? join32(dirname15(resolve26(o.brief)), "deck.yaml"));
-    if (existsSync27(out) && !o.force)
+    const out = resolve27(o.out ?? join33(dirname15(resolve27(o.brief)), "deck.yaml"));
+    if (existsSync28(out) && !o.force)
       throw new Error(`${relative13(process.cwd(), out)} exists (use --force)`);
     const deck = scaffoldDeck(brief, brief.choice.storyline, brief.choice.theme);
     if (!deck.output) {
       const plan = await recommendOutput(brief.usage, getTheme(brief.choice.theme));
       deck.output = { formats: plan.formats, engines: plan.engines };
     }
-    mkdirSync28(dirname15(out), { recursive: true });
-    writeFileSync26(
+    mkdirSync29(dirname15(out), { recursive: true });
+    writeFileSync27(
       out,
       `${SCHEMA_LINE("deck")}# Ghost deck: write the action titles first, review the title chain, then fill content.
-${import_yaml12.default.stringify(deck, { lineWidth: 0 })}`
+${import_yaml13.default.stringify(deck, { lineWidth: 0 })}`
     );
     const slides = deck.slides.length;
     if (wantsJson(o.json)) {
@@ -220096,7 +223569,7 @@ Use it: theme: ${relative13(process.cwd(), r.themePath)}   (path relative to dec
         theme: o.theme
       });
       if (o.render) {
-        const pdf = join32(dirname15(r.deckPath), "original.pdf");
+        const pdf = join33(dirname15(r.deckPath), "original.pdf");
         convertToPdf(file2, pdf);
         r.original = pdf;
       }
@@ -220133,7 +223606,7 @@ Use it: theme: ${relative13(process.cwd(), r.themePath)}   (path relative to dec
       );
   });
   program2.command("find").description("Find a phrase in ingested material; each hit comes with the citation to use").argument("<query>", "words to look for").option("--deck <deck>", "deck.yaml whose materials/ to search", "deck.yaml").option("--dir <dir>", "materials directory (overrides --deck)").option("--json", "machine-readable output").action((query, o) => {
-    const dir = resolve26(o.dir ?? join32(dirname15(resolve26(o.deck)), "materials"));
+    const dir = resolve27(o.dir ?? join33(dirname15(resolve27(o.deck)), "materials"));
     const hits = findInMaterials(query, dir);
     if (wantsJson(o.json)) printJson({ hits });
     else if (!hits.length) console.log("No matches.");
@@ -220147,7 +223620,7 @@ Use it: theme: ${relative13(process.cwd(), r.themePath)}   (path relative to dec
     "JSON list of { pointer, text } rewrites to write into the YAML"
   ).option("--json", "machine-readable output").action((deck, o) => {
     if (o.apply) {
-      const fixes = JSON.parse(readFileSync38(o.apply, "utf8"));
+      const fixes = JSON.parse(readFileSync39(o.apply, "utf8"));
       const r = applyFixes(deck, fixes);
       if (wantsJson(o.json)) printJson(r);
       else {
@@ -220341,7 +223814,7 @@ Open ${relative13(process.cwd(), r.picker)}; then --choose A|B|C`));
       t.fonts.body,
       ...t.fonts.cyrillic?.heading ? [t.fonts.cyrillic.heading] : []
     ];
-    const r = await runCalibration(fonts, resolve26(o.out));
+    const r = await runCalibration(fonts, resolve27(o.out));
     if (wantsJson(o.json)) {
       printJson(r);
       return;

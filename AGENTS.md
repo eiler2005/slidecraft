@@ -27,6 +27,8 @@ SlideCraft turns a goal into a consulting-grade deck: brief → template → sto
 
 ## Engines
 
+Native diagrams use registered layout contracts and shared Scene geometry. Run `sc layouts <id> --json`; see `docs/how-to/create-diagrams.md` and `library/references/diagram-patterns.md`. `sc import-diagram <file> -o <new-folder>` accepts bounded Mermaid/draw.io/Excalidraw subsets and writes a loss ledger: inspect it before building. Keep quantitative marks proportional and graph IDs/endpoints intact; `SC-DIAGRAM-001` must be fixed in the data or shared geometry, never by dropping edges. `readability: present` applies larger type deck-wide and can require less content. Advanced diagram charts are editable shapes, distinct from embedded Office chart worksheets. Run visual QA on actual exported objects; no raster substitution.
+
 `auto` picks `pptxgenjs` for PPTX and the native vector PDF, including inside Codex. All agents use the same themes, components and Scene IR. Codex may additionally use an available OpenAI presentation skill; the local `@oai/artifact-tool` adapter is an explicit option (`--pptx-engine artifact-tool`) for internal evaluation/testing only, never production, commercial use or benchmarking. Do not bundle OpenAI skills or runtime. For an Office-rendered PDF use `--pdf-engine pptx-convert`; for browser decks `-f html`. `resvg` previews are not proof of PowerPoint fidelity. `sc doctor` lists availability. Guide: `docs/how-to/choose-output-engine.md`.
 
 ## Hard rules

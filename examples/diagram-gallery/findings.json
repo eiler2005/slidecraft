@@ -1,0 +1,47 @@
+{
+  "reviewer": "Codex",
+  "verdict": "not-ready",
+  "summary": "All 33 slides were reviewed in Chrome in both light and dark galleries. Shared visual corrections are applied and automated checks pass. Full Office fidelity acceptance remains blocked by PowerPoint automation; the pack contains no Office reference or parity score.",
+  "findings": [
+    {
+      "slide": "all",
+      "severity": "major",
+      "area": "parity",
+      "issue": "PowerPoint export did not answer (-1712 / -9074); LibreOffice is absent. Actual Office rendering and manual native-object editing are unverified.",
+      "fix": "Repeat visual-qa with responsive PowerPoint and inspect every Office page and editable object before claiming fidelity.",
+      "status": "needs-user"
+    },
+    {
+      "slide": "heatmap, treemap",
+      "severity": "major",
+      "area": "color",
+      "issue": "Mid-tone cell fills needed a reachable contrasting text target.",
+      "fix": "Corrected the shared contrast target and use actual cell fills; regression-tested.",
+      "status": "fixed"
+    },
+    {
+      "slide": "loop, venn, exploded-axonometric",
+      "severity": "minor",
+      "area": "layout",
+      "issue": "Arrowheads, set labels and spatial layers needed clearer separation.",
+      "fix": "Clipped loop edges, moved Venn labels outside circles and derived layer spacing from footprint dimensions.",
+      "status": "fixed"
+    },
+    {
+      "slide": "chart-takeaway",
+      "severity": "minor",
+      "area": "chart",
+      "issue": "Advanced variants needed clearer rank, count and colour keys.",
+      "fix": "Added bump rank ticks, the ridgeline shared-scale note and streamgraph swatches.",
+      "status": "fixed"
+    },
+    {
+      "slide": "sequence, uml-class",
+      "severity": "minor",
+      "area": "meaning",
+      "issue": "Example titles claimed details beyond the displayed messages and classes.",
+      "fix": "Rewrote titles to describe payment confirmation and the displayed class operations.",
+      "status": "fixed"
+    }
+  ]
+}

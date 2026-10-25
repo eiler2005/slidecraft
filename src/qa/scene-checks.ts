@@ -1,6 +1,7 @@
 import { contrast } from '../engine/color.ts';
 import type { Box, Scene, SceneNode, TextNode } from '../engine/scene.ts';
 import { type Diagnostic, diag } from './codes.ts';
+import { checkDiagrams } from './diagram-checks.ts';
 
 const EPS = 0.02;
 /** Text roles that are ornaments (oversized glyphs) and may sit close to other text. */
@@ -80,6 +81,7 @@ export function checkScene(scene: Scene): Diagnostic[] {
   const out: Diagnostic[] = [];
   const { w: W, h: H } = scene.format;
   for (const s of scene.slides) {
+    out.push(...checkDiagrams(s.nodes, s.id));
     const bg = s.background ?? scene.masters[s.master]!.background;
     const texts: { t: TextNode; i: number }[] = [];
     s.nodes.forEach((n, i) => {
@@ -153,7 +155,14 @@ export function checkScene(scene: Scene): Diagnostic[] {
       if (ink.w <= 0 || t.role === 'source' || t.role === 'footer') continue;
       for (let j = i - 1; j >= 0; j--) {
         const n = s.nodes[j]!;
-        if (n.kind !== 'rect' || !n.fill || n.box.w < 0.6 || n.box.h < 0.4) continue;
+        if (
+          n.kind !== 'rect' ||
+          n.textContainer === false ||
+          !n.fill ||
+          n.box.w < 0.6 ||
+          n.box.h < 0.4
+        )
+          continue;
         const b = n.box;
         const startsInside =
           t.box.x >= b.x - EPS &&

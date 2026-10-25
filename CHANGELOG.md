@@ -4,6 +4,29 @@ All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachang
 
 ## [Unreleased]
 
+### Changed
+- Minimum Node.js version is now 22.13, matching PDF.js 6.4.299. Rebuilds include the updated PDF reader in the standalone bundle.
+
+### Added
+- 27 native diagram layouts: numeric heatmap, treemap, Sankey, fishbone, architecture delta, swimlane, dependency graph, flowchart, state machine, sequence, loop, layer stack, Kanban, user journey, service blueprint, ER, physical database schema, UML class, radar, polar, nested containment, Venn, Wardley map, story map, access matrix and two axonometric views. Every layout has a bounded contract and a synthetic example across all themes.
+- Editable shape-based dumbbell, slopegraph, bump, observed ridgeline, streamgraph and beeswarm variants; shared numeric geometry and label spreading.
+- Bounded semantic `import-diagram` for Mermaid, draw.io and Excalidraw, with a loss ledger and explicit unsupported-input diagnostics.
+- Deck-level report/presentation readability; light/dark native diagram example decks; a dedicated website gallery and authoring guide.
+
+### Fixed
+- PDF ingestion and theme sampling release the PDF.js loading task on success or failure and preserve colours and filled areas from PDF.js 6 operator lists.
+- Cubic native paths preserve fill opacity in HTML/SVG, native PDF and editable PPTX. The optional evaluation adapter reports unsupported paths explicitly.
+- Shared graph routing, identity/endpoint checks and quantitative geometry checks reject misleading diagrams. Plot bands can explicitly opt out of text-container containment.
+- Contrast correction chooses an achievable black/white endpoint on mid-tone fills.
+
+## [0.7.8] — 2026-10-19
+
+### Fixed
+- **npm README launch preview:** replace the deleted GIF with the launch-film poster and links to the 65-second video and MP4. The poster uses an absolute URL pinned to a commit, so npm can display it without package-local assets or a dependency on the current default branch.
+
+### Removed
+- **Video tooling moved to [Storygro](https://github.com/eiler2005/Storygro).** The untracked `reelcraft/` prototype, the explainer-GIF generator (`scripts/launch/story.ts`, `gif-story.ts`, `gif.ts`, `npm run launch:gif`), the GIFs and their key frames, and the 23 MB launch MP4 left this repository; Storygro keeps their source and history (`examples/slidecraft-launch`, `docs/history/slidecraft-launch.md`). The README and the site show the poster and link to the film on YouTube; the MP4 is a Storygro release asset. Future SlideCraft videos are made with Storygro.
+
 ### Added
 - **Claude plugin directory listing:** `.claude-plugin/plugin.json` carries `displayName` (SlideCraft), `version`, the site as `homepage`, and links to docs, support (issues), privacy (README "Privacy and network access") and terms (LICENSE); `.claude-plugin/icon.png` is a 1024 px icon rendered by `scripts/launch/media.ts`. Tests keep the plugin and MCP Registry versions equal to `package.json`.
 - README: the MCP server is listed in the official MCP Registry as `io.github.eiler2005/slidecraft`.

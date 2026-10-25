@@ -1,6 +1,6 @@
 # Use SlideCraft from Claude Desktop, Cursor, VS Code and other AI apps (MCP)
 
-> **Audience:** people who want decks from the AI app they already use, without a terminal workflow · **Prerequisites:** Node ≥ 22.12 · **Last reviewed:** 2026-10-11
+> **Audience:** people who want decks from the AI app they already use, without a terminal workflow · **Prerequisites:** Node ≥ 22.13 · **Last reviewed:** 2026-10-11
 
 SlideCraft includes an MCP server. MCP (Model Context Protocol) is the standard way AI apps call local tools. Once it is connected, you ask your app for a deck in plain words. The app follows the same workflow and checkpoints as Claude Code, and it sees slide previews as images.
 

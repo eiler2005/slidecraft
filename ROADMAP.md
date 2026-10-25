@@ -77,7 +77,7 @@ Your material in, your edits back, every AI app.
 | **Live preview** (`slidecraft preview --watch`) | Edit YAML, see the slide instantly | Local server with hot reload of the HTML deck and diagnostics overlay; click an element to copy its pointer |
 | **Table sync** | Bring edited table cells back too | Extends `sync` to `data-table` and option tables |
 | **Presenter tools** in the HTML deck | Rehearse and present from a browser | Timer, next-slide preview, phone remote |
-| **Talk video** | Asynchronous updates | Narrated notes + slides → MP4 |
+| **Talk video** | Asynchronous updates | Narrated notes + slides → MP4, rendered with [Storygro](https://github.com/eiler2005/Storygro) rather than inside SlideCraft |
 
 ## Principles for what goes in
 

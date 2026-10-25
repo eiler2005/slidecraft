@@ -488,7 +488,9 @@ function addNode(pptx: Pptx, slide: Slide, n: SceneNode, slideId?: string): Prom
         // round caps and joins are added in post-processing (pptxgenjs has no option)
         objectName: shapeName(n, slideId) ?? (n.round ? ROUND_SHAPE : 'Freeform'),
       };
-      o.fill = n.fill ? { color: hex(n.fill) } : { type: 'none' };
+      o.fill = n.fill
+        ? { color: hex(n.fill), transparency: Math.round((1 - (n.fillOpacity ?? 1)) * 100) }
+        : { type: 'none' };
       slide.addShape(pptx.ShapeType.custGeom, o);
       return;
     }

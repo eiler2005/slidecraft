@@ -1,7 +1,7 @@
 {
   "name": "@eiler2005/slidecraft",
   "mcpName": "io.github.eiler2005/slidecraft",
-  "version": "0.7.7",
+  "version": "0.7.8",
   "description": "Describe the goal. Pick a look. Ship a partner-ready deck. A Claude Code plugin and CLI that turns a brief into editable PPTX, vector PDF and HTML decks.",
   "type": "module",
   "license": "PolyForm-Shield-1.0.0",
@@ -29,7 +29,7 @@
     "ai-agents"
   ],
   "engines": {
-    "node": ">=22.12"
+    "node": ">=22.13"
   },
   "bin": {
     "slidecraft": "dist/slidecraft.mjs"
@@ -68,11 +68,10 @@
     "test:digital-ruble": "tsx scripts/digital-ruble-regression.ts",
     "calibrate": "tsx scripts/calibrate.ts",
     "icons": "tsx scripts/icons.ts",
-    "launch:gif": "tsx scripts/launch/gif-story.ts",
     "comparison": "tsx scripts/comparison.ts"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.15",
+    "@biomejs/biome": "2.6.2",
     "@resvg/resvg-wasm": "2.6.2",
     "@tabler/icons": "3.49.0",
     "@types/fontkit": "2.0.9",
@@ -87,8 +86,8 @@
     "pptxgenjs": "4.0.1",
     "tsx": "4.23.15",
     "typescript": "7.0.2",
-    "vitest": "5.0.3",
+    "vitest": "5.0.5",
     "yaml": "2.9.1",
-    "zod": "4.6.5"
+    "zod": "4.6.7"
   }
 }

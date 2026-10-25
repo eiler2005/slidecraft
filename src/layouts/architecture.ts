@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { roundedRoute, routeOrthogonal } from '../engine/diagram-routing.ts';
 import { cols } from '../engine/format.ts';
 import type { Box } from '../engine/scene.ts';
 import { diag } from '../qa/codes.ts';
@@ -83,19 +84,6 @@ function badge(ctx: ComposeContext, cx: number, cy: number, n: number) {
   );
 }
 
-/** Point where the segment from a box centre towards (tx, ty) leaves the box. */
-function edge(b: Box, tx: number, ty: number): [number, number] {
-  const cx = b.x + b.w / 2;
-  const cy = b.y + b.h / 2;
-  const dx = tx - cx;
-  const dy = ty - cy;
-  const k = Math.min(
-    dx ? b.w / 2 / Math.abs(dx) : Infinity,
-    dy ? b.h / 2 / Math.abs(dy) : Infinity,
-  );
-  return [cx + dx * k, cy + dy * k];
-}
-
 function diagram(ctx: ComposeContext, area: Box, c: C) {
   const { colors } = ctx;
   // zones as tall as the fullest one needs, not the whole body
@@ -130,12 +118,13 @@ function diagram(ctx: ComposeContext, area: Box, c: C) {
     z.components.forEach((comp, ci) => {
       const b = { x: zb.x + 0.2, y: y0 + ci * (h + Math.min(gap, 0.5)), w: zb.w - 0.4, h };
       boxes.set(comp.id, b);
-      ctx.rect(b, {
+      const shape = ctx.rect(b, {
         fill: comp.highlight ? colors.accent : colors.background,
         stroke: { color: comp.highlight ? colors.accent : colors.rule, width: 1 },
         radius: 0.05,
         role: 'component',
       });
+      shape.diagram = { kind: 'node', id: ctx.ptr(`architecture/${comp.id}`) };
       ctx.text(
         comp.label,
         { x: b.x + 0.1, y: b.y, w: b.w - 0.2, h: b.h },
@@ -162,17 +151,54 @@ function diagram(ctx: ComposeContext, area: Box, c: C) {
       );
       return;
     }
-    const [x1, y1] = edge(a, b.x + b.w / 2, b.y + b.h / 2);
-    const [x2, y2] = edge(b, a.x + a.w / 2, a.y + a.h / 2);
-    ctx.line(
-      x1,
-      y1,
-      x2,
-      y2,
-      { color: colors.ink, width: 1, ...(l.dashed ? { dash: 'dash' as const } : {}) },
-      { arrowEnd: true, role: 'link' },
-    );
-    if (l.marker) badge(ctx, (x1 + x2) / 2, (y1 + y2) / 2, l.marker);
+    const port = (id: string, box: Box, target: Box) => {
+      const attached = c.links
+          .map((v, j) => ({ v, j }))
+          .filter(({ v }) => v.from === id || v.to === id),
+        f = (attached.findIndex((v) => v.j === i) + 1) / (attached.length + 1);
+      const horizontal = Math.abs(box.x - target.x) > 0.01,
+        forward = horizontal ? target.x > box.x : target.y > box.y,
+        sign = forward ? 1 : -1;
+      const p: [number, number] = horizontal
+        ? [forward ? box.x + box.w : box.x, box.y + box.h * f]
+        : [box.x + box.w * f, forward ? box.y + box.h : box.y];
+      const outer: [number, number] = horizontal
+        ? [p[0] + sign * 0.12, p[1]]
+        : [p[0], p[1] + sign * 0.12];
+      return { p, outer };
+    };
+    const p = port(l.from, a, b),
+      q = port(l.to, b, a);
+    try {
+      const route = [p.p, ...routeOrthogonal(p.outer, q.outer, [...boxes.values()], area), q.p];
+      ctx.path(roundedRoute(route), {
+        stroke: { color: colors.ink, width: 1, ...(l.dashed ? { dash: 'dash' as const } : {}) },
+        role: 'link',
+        pointer: ctx.ptr(`links/${i}`),
+        diagram: {
+          kind: 'edge',
+          id: ctx.ptr(`architecture/link-${i}`),
+          from: ctx.ptr(`architecture/${l.from}`),
+          to: ctx.ptr(`architecture/${l.to}`),
+          route,
+        },
+      });
+      const last = route.at(-2)!;
+      ctx.line(
+        last[0],
+        last[1],
+        q.p[0],
+        q.p[1],
+        { color: colors.ink, width: 1 },
+        { arrowEnd: true, role: 'link-arrow' },
+      );
+      if (l.marker) {
+        const m = route[Math.floor(route.length / 2)]!;
+        badge(ctx, m[0], m[1], l.marker);
+      }
+    } catch (e) {
+      ctx.issue(diag('SC-DIAGRAM-001', (e as Error).message, { pointer: ctx.ptr(`links/${i}`) }));
+    }
   });
   c.zones.forEach((z) =>
     z.components.forEach((comp) => {

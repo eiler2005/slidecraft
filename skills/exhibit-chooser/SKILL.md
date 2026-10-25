@@ -64,3 +64,5 @@ Pick the exhibit from the **relationship** the title claims, not from the data y
 | Text that is genuinely text (definitions, scope in/out) | `text` · bullets / paragraphs / two-column |
 
 Rules: one message per slide; highlight only the insight (`highlight`); every number sourced; if the data cannot prove the title, change the title or flag the gap — never stretch the chart.
+
+Native diagrams: use `sc layouts <id> --json` for heatmap, treemap, Sankey, fishbone, architecture-delta, swimlane, flowchart, sequence, state-machine, journey/blueprint and model contracts. Existing charts also offer dumbbell, slopegraph, bump, ridgeline, streamgraph and beeswarm. See `${CLAUDE_PLUGIN_ROOT}/library/references/diagram-patterns.md` for behavior-rich patterns. Keep graph connections, quantities and evidence distinct; Venn areas are qualitative and radar axes share one scale. Deck-level `readability: present` raises typography and can require fewer elements. Never flatten these exhibits to a picture for PowerPoint.

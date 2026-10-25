@@ -1,4 +1,6 @@
-<p align="center"><img src="docs/media/launch/slidecraft-story.gif" alt="SlideCraft in 30 seconds: the problem with AI slides, one prompt, the action-title chain, cover options, the built deck, a total that does not add up being caught, and the editable PowerPoint with native chart and sources in the notes" width="100%"></p>
+<p align="center"><a href="https://www.youtube.com/watch?v=vNpDca4648Q"><img src="https://raw.githubusercontent.com/eiler2005/slidecraft/46b53a13d7960afdcd261f6b1d77755f213388d9/docs/media/launch/slidecraft-launch-poster.png" alt="Watch the SlideCraft demo: editable PowerPoint decks from one prompt" width="100%"></a></p>
+
+<p align="center"><b><a href="https://www.youtube.com/watch?v=vNpDca4648Q">▶ Watch the 65-second demo</a></b> · <a href="https://github.com/eiler2005/Storygro/releases/download/slidecraft-launch-2026-10-18/slidecraft-launch.mp4">MP4</a> · made with <a href="https://github.com/eiler2005/Storygro">Storygro</a></p>
 
 <p align="center">
   <a href="https://github.com/eiler2005/slidecraft/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/eiler2005/slidecraft/ci.yml?branch=main&label=CI&style=flat&labelColor=0B1F3A&color=1F5FBF"></a>
@@ -6,7 +8,7 @@
   <a href="#license"><img alt="PolyForm Shield license" src="https://img.shields.io/badge/license-PolyForm_Shield_1.0.0-1F5FBF?style=flat&labelColor=0B1F3A"></a>
   <a href="#install"><img alt="Works with Claude Code, Codex and any LLM agent" src="https://img.shields.io/badge/agents-Claude_Code_·_Codex_·_any_LLM-1F5FBF?style=flat&labelColor=0B1F3A"></a>
   <a href="https://eiler2005.github.io/slidecraft/"><img alt="Gallery site" src="https://img.shields.io/badge/gallery-GitHub_Pages-1F5FBF?style=flat&labelColor=0B1F3A"></a>
-  <img alt="Node 22+" src="https://img.shields.io/badge/node-%E2%89%A522.12-1F5FBF?style=flat&labelColor=0B1F3A">
+  <img alt="Node 22+" src="https://img.shields.io/badge/node-%E2%89%A522.13-1F5FBF?style=flat&labelColor=0B1F3A">
 </p>
 
 <p align="center">
@@ -124,7 +126,7 @@ agent   › Built 11 slides. Review: 0 blockers, 2 majors fixed, 1 minor left.  
 |---|---|---|
 | Brief | `brief.yaml` | goal, ask, audience, how the deck will be used → which outputs |
 | Storyline × theme | chosen from 14 × 7 | the shape of the argument for the task, and the look |
-| Content | `deck.yaml` (+ `sections/*.yaml`) | action titles and slide content against 46 layout contracts; `sources:`, `facts:` from Excel/CSV, cover visual, `language:` |
+| Content | `deck.yaml` (+ `sections/*.yaml`) | action titles and slide content against 73 layout contracts; `sources:`, `facts:` from Excel/CSV, cover visual, `language:` |
 | Your material | `materials/`, `assets/` | reports cited by page, data files, pictures |
 
 Layouts turn the content into one **Scene IR**; engines translate it into editable PPTX, PDF,
@@ -146,7 +148,7 @@ Full process: [workflow](docs/explanation/workflow.md) · [architecture](docs/ex
 
 ## Template gallery
 
-A template is **a storyline (the shape of the argument for a task) × a theme (the look)**. Any storyline works in any theme. Fourteen storylines × six themes (or your own brand theme), built from forty-two layouts. The [gallery site](https://eiler2005.github.io/slidecraft/) shows every storyline in every theme and the example decks in every format.
+A template is **a storyline (the shape of the argument for a task) × a theme (the look)**. Any storyline works in any theme. Fourteen storylines × seven themes (or your own brand theme), built from 73 layouts. The [gallery site](https://eiler2005.github.io/slidecraft/) shows every storyline in every theme and the example decks in every format.
 
 <table>
   <tr>
@@ -164,6 +166,8 @@ A template is **a storyline (the shape of the argument for a task) × a theme (t
 <p align="center"><a href="docs/reference/storylines.gen.md">All storylines →</a> · <a href="docs/reference/themes.gen.md">All themes →</a> · <a href="docs/reference/layouts.gen.md">All layouts →</a></p>
 
 Storyline is the task, theme is the look: **14 storylines × 7 themes**, independently selectable. Within each slide, route the message through `slidecraft exhibits`, reuse native library components with `slidecraft components`, and combine them using `layout: composition`. Shared design elements and content feed HTML and editable PowerPoint engines through one Scene IR. [Constructor guide](docs/how-to/compose-components.md) · [Architecture diagrams and verification limits](docs/explanation/architecture.md).
+
+**Native diagrams (development branch).** Heatmaps, treemaps, Sankey flows, architecture changes, swimlanes, journeys, sequence/state diagrams and data models use editable PowerPoint shapes and text. Six additional chart variants cover paired comparisons, ranks and distributions. Import a bounded Mermaid, draw.io or Excalidraw diagram with `node dist/slidecraft.mjs import-diagram input.mmd -o imported-diagram`; review its loss ledger before using it. These additions are in the repository and are not yet an npm release. [Diagram guide](docs/how-to/create-diagrams.md) · [Light example](examples/diagram-gallery/deck.yaml) · [Dark example](examples/diagram-gallery-midnight/deck.yaml) · [Research and implementation report](docs/research/diagram-design-implementation-2026-10.md).
 
 Also included: **business case**, **product overview**, **case study**, **project kickoff**, **post-mortem**, **training / workshop**, **sales / customer QBR**, **investment memo**. Bring your own outline and SlideCraft maps it onto layouts.
 
@@ -195,7 +199,7 @@ One spec, several engines — you choose, SlideCraft recommends based on what yo
 
 ## Install
 
-Pick your agent. All of them drive the same CLI, the committed bundle `dist/slidecraft.mjs` (Node ≥ 22.12, no `npm install`).
+Pick your agent. All of them drive the same CLI, the committed bundle `dist/slidecraft.mjs` (Node ≥ 22.13, no `npm install`).
 
 | You use | Set up | Then |
 |---|---|---|

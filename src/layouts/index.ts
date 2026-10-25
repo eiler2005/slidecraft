@@ -1,4 +1,6 @@
+import { polar, radar } from './advanced-charts.ts';
 import { agenda } from './agenda.ts';
+import { fishbone, heatmap, sankey, treemap } from './analytic-diagrams.ts';
 import { architecture } from './architecture.ts';
 import { beforeAfter } from './before-after.ts';
 import { bigStatement } from './big-statement.ts';
@@ -19,12 +21,20 @@ import { freeform } from './freeform.ts';
 import { freeformCanvas } from './freeform-canvas.ts';
 import { funnel } from './funnel.ts';
 import { gateMatrix } from './gate-matrix.ts';
+import {
+  architectureDelta,
+  dependencyGraph,
+  flowchart,
+  stateMachine,
+  swimlane,
+} from './graph-diagrams.ts';
 import { issueTree } from './issue-tree.ts';
 import { keyPoints } from './key-points.ts';
 import { kpiTiles } from './kpi-tiles.ts';
 import { marimekko } from './marimekko.ts';
 import { matrix2x2 } from './matrix-2x2.ts';
 import { maturityModel } from './maturity-model.ts';
+import { databaseSchema, erDiagram, sequence, umlClass } from './model-diagrams.ts';
 import { nativeCanvas } from './native-canvas.ts';
 import { nextSteps } from './next-steps.ts';
 import { optionsComparison } from './options-comparison.ts';
@@ -35,6 +45,16 @@ import { processSteps } from './process-steps.ts';
 import { raci } from './raci.ts';
 import { riskMatrix } from './risk-matrix.ts';
 import { sevenS } from './seven-s.ts';
+import { kanban, layerStack, loop, serviceBlueprint, userJourney } from './stage-diagrams.ts';
+import {
+  axonometricPlan,
+  explodedAxonometric,
+  nested,
+  securityMatrix,
+  storyMap,
+  venn,
+  wardley,
+} from './structure-diagrams.ts';
 import { swot } from './swot.ts';
 import { teamCards } from './team-cards.ts';
 import { text } from './text.ts';
@@ -66,6 +86,33 @@ export const LAYOUTS: LayoutDef[] = [
   kpiTiles,
   evidencePanorama,
   chartTakeaway,
+  heatmap,
+  treemap,
+  fishbone,
+  sankey,
+  architectureDelta,
+  swimlane,
+  dependencyGraph,
+  flowchart,
+  stateMachine,
+  loop,
+  layerStack,
+  kanban,
+  userJourney,
+  serviceBlueprint,
+  sequence,
+  erDiagram,
+  databaseSchema,
+  umlClass,
+  radar,
+  polar,
+  nested,
+  venn,
+  wardley,
+  storyMap,
+  securityMatrix,
+  explodedAxonometric,
+  axonometricPlan,
   waterfall,
   bubbleChart,
   marimekko,

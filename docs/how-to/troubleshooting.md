@@ -4,7 +4,7 @@
 
 | Symptom | Cause and fix |
 |---|---|
-| `node: command not found` / syntax errors | Node ≥ 22.12 required: `node --version`. |
+| `node: command not found` / syntax errors | Node ≥ 22.13 required: `node --version`. |
 | `Unrecognized key` in validate | A comma or colon inside a `{ … }` YAML value — quote it. |
 | `SC-FIT-001` everywhere | Content written for a bigger box; check the layout's limits with `layouts <id> --json` and rewrite. |
 | PowerPoint shows different line breaks | Arial/Georgia not installed on that machine (Keynote on a Mac without Office substitutes fonts). Use a theme with Arial, or deliver the PDF. |

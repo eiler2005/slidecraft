@@ -33,6 +33,7 @@
 | Add sources, images, my outline | [Cite sources](how-to/cite-sources.md) · [Add images](how-to/add-images.md) · [Bring your outline](how-to/bring-your-outline.md) |
 | Use my brand | [Apply your brand](how-to/apply-brand.md) · [Add a theme](how-to/add-theme.md) |
 | Extend the library | [Add a layout](how-to/add-layout.md) · [Add a storyline](how-to/add-storyline.md) |
+| Build editable diagrams or import Mermaid/draw.io/Excalidraw | [Native diagram guide](how-to/create-diagrams.md) |
 | See results, open examples, compare originals with rebuilds | [See results and compare with references](how-to/see-results.md) |
 | Get a final verdict and a report of what needs my attention | [Final visual QA](how-to/visual-qa.md) |
 | See every stage's hand-off and a full run in all formats | [Orchestration templates and example run](../examples/orchestration/README.md) |
@@ -54,3 +55,4 @@
 ## Research
 
 - [Presentation tools landscape and ideas](research/landscape-2026-10.md) — open-source generators, commercial tools, platform vendors and consulting add-ins, with opportunities ranked by user value (October 2026)
+- [Diagram Design review](research/diagram-design-review-2026-10.md) · [Adoption plan](research/diagram-design-adoption-plan-2026-10.md) · [PowerPoint visual specification](research/diagram-design-visual-spec-2026-10.md) · [Implementation report](research/diagram-design-implementation-2026-10.md) — comparison, implemented diagrams, validation evidence and remaining Office acceptance (24–25 October 2026; Russian)

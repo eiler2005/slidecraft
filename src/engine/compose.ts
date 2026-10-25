@@ -273,7 +273,21 @@ export interface ComposeResult {
 export function composeDeck(loaded: LoadedDeck): ComposeResult {
   const { deck, slides, baseDir } = loaded;
   const diagnostics: Diagnostic[] = [];
-  const theme = getTheme(deck.theme) ?? getTheme('consulting-classic')!;
+  const baseTheme = getTheme(deck.theme) ?? getTheme('consulting-classic')!;
+  const theme: Theme =
+    deck.readability === 'present'
+      ? {
+          ...baseTheme,
+          type: {
+            ...baseTheme.type,
+            title: Math.max(28, baseTheme.type.title),
+            heading: Math.max(18, baseTheme.type.heading),
+            body: Math.max(18, baseTheme.type.body),
+            small: Math.max(14, baseTheme.type.small),
+            minBody: Math.max(16, baseTheme.type.minBody),
+          },
+        }
+      : baseTheme;
   const format = FORMATS[deck.format] ?? FORMATS['wide-16x9']!;
   const strings: string[] = [deck.title, deck.subtitle ?? '', deck.footer ?? ''];
   slides.forEach((s) => collectStrings(s, strings));

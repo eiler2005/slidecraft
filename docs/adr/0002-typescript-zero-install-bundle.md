@@ -6,7 +6,7 @@
 The plugin runs inside Claude Code, Codex and CI on users' machines. Plugin installs from git do not reliably run `npm install`; Python + Node mixes double the setup; native modules and browser downloads break in sandboxes.
 
 ## Decision
-Everything is TypeScript on Node ≥ 22.12. Dependencies are pure JS or WebAssembly (zod, yaml, commander, fontkit, pdfkit, pptxgenjs, jszip, resvg-wasm). esbuild produces **`dist/slidecraft.mjs` + `dist/resvg.wasm`, committed** to the repo. Skills call `node "${CLAUDE_PLUGIN_ROOT}/dist/slidecraft.mjs"`. CI rebuilds the bundle and fails on drift. TypeScript (7.x) is used for type-checking only.
+Everything is TypeScript on Node ≥ 22.13. Dependencies are pure JS or WebAssembly (zod, yaml, commander, fontkit, pdfkit, pptxgenjs, jszip, resvg-wasm). esbuild produces **`dist/slidecraft.mjs` + `dist/resvg.wasm`, committed** to the repo. Skills call `node "${CLAUDE_PLUGIN_ROOT}/dist/slidecraft.mjs"`. CI rebuilds the bundle and fails on drift. TypeScript (7.x) is used for type-checking only.
 
 ## Consequences
 - Install = clone or `/plugin install`; no network, no build step for users.

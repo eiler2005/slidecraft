@@ -1,6 +1,6 @@
 # Use SlideCraft from OpenAI Codex
 
-> **Audience:** Codex users · **Prerequisites:** Codex CLI, Node ≥ 22.12 · **Last reviewed:** 2026-10-11
+> **Audience:** Codex users · **Prerequisites:** Codex CLI, Node ≥ 22.13 · **Last reviewed:** 2026-10-11
 
 ## Install the skills
 

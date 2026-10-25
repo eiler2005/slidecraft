@@ -123,7 +123,9 @@ function nodeBodySvg(n: SceneNode): string {
       return `<polygon points="${pts}" ${fill} ${strokeAttrs(n.stroke)}/>`;
     }
     case 'path': {
-      const fill = n.fill ? `fill="${n.fill}"` : 'fill="none"';
+      const fill = n.fill
+        ? `fill="${n.fill}"${n.fillOpacity !== undefined ? ` fill-opacity="${n.fillOpacity}"` : ''}`
+        : 'fill="none"';
       const round = n.round ? ' stroke-linecap="round" stroke-linejoin="round"' : '';
       return `<path d="${pathData(n.segments, PX_PER_IN)}" ${fill} ${strokeAttrs(n.stroke)}${round}/>`;
     }

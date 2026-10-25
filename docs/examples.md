@@ -1,8 +1,8 @@
 # Example library
 
-> **Audience:** anyone deciding what SlideCraft can do for their next deck · **Last reviewed:** 2026-10-11
+> **Audience:** anyone deciding what SlideCraft can do for their next deck · **Last reviewed:** 2026-10-25
 
-Eleven complete decks, each built by SlideCraft from the `deck.yaml` next to it. Open the PDF to see the result, or open the PowerPoint to see how editable it is. Then copy the folder that is closest to your task and change the words.
+Thirteen complete decks, each built by SlideCraft from the `deck.yaml` next to it. Open the PDF to see the result, or open the PowerPoint to see how editable it is. Then copy the folder that is closest to your task and change the words.
 
 The figures in the examples are fictional or illustrative, and labelled so on the slides. The SlideCraft overview is the exception: its numbers are facts about the product.
 
@@ -17,6 +17,8 @@ The figures in the examples are fictional or illustrative, and labelled so on th
 | <img src="showcase/fde-engineer/en/previews-office/01-cover.png" width="180" alt="Cover of the Forward Deployed Engineer briefing with a network motif"> | **[Forward Deployed Engineers](../examples/fde-engineer-en/deck.yaml)** · **[Russian version](../examples/fde-engineer-ru/deck.yaml)**<br>What the new AI role is, why it is hired, how to start — made through the full workflow, sources in the notes | Research readout | Consulting Classic | 6 | EN: [PowerPoint](showcase/fde-engineer/en/fde-engineer-en.pptx) · [PDF](showcase/fde-engineer/en/fde-engineer-en.pdf) · [HTML](showcase/fde-engineer/en/fde-engineer-en.html) · RU: [PowerPoint](showcase/fde-engineer/ru/fde-engineer-ru.pptx) · [PDF](showcase/fde-engineer/ru/fde-engineer-ru.pdf) · [HTML](showcase/fde-engineer/ru/fde-engineer-ru.html) |
 | <img src="showcase/fde-engineer/en-v2/previews-office/01-cover.png" width="180" alt="Cover of the second edition with a stock photo of a laptop screen showing code"> | **[Forward Deployed Engineers, second edition](../examples/fde-engineer-en-v2/README.md)**<br>Stock cover photo, theme sampled from it, value chain, icons, 7S, combo chart, totals check | Research readout | Sampled from a photo | 9 | [PowerPoint](showcase/fde-engineer/en-v2/fde-engineer-en-v2.pptx) · [PDF](showcase/fde-engineer/en-v2/fde-engineer-en-v2.pdf) · [HTML](showcase/fde-engineer/en-v2/fde-engineer-en-v2.html) · [report](showcase/fde-engineer/en-v2/visual-qa/REPORT.md) |
 | <img src="showcase/llm-concepts/previews-office/01-cover.png" width="180" alt="Cover: Shared vocabulary turns AI ambition into sound project choices"> | **[LLM and AI agent concepts — by Codex](../examples/llm-concepts/README.md)** · **[by Claude Code](../examples/llm-concepts-claude/README.md)**<br>The README prompt alone, in an empty folder, unedited — with an independent review of each | Explainer | Consulting Classic | 12 | Codex: [PowerPoint](showcase/llm-concepts/llm-ai-agents-vocabulary.pptx) · [PDF](showcase/llm-concepts/llm-ai-agents-vocabulary.pdf) · Claude Code: [PowerPoint](showcase/llm-concepts-claude/llm-ai-agents-vocabulary.pptx) · [PDF](showcase/llm-concepts-claude/llm-ai-agents-vocabulary.pdf) |
+
+The development repository also includes two **33-slide native diagram galleries**: [Consulting Classic](../examples/diagram-gallery/deck.yaml) and [Midnight](../examples/diagram-gallery-midnight/deck.yaml). They cover 27 new layouts and six chart variants with labelled synthetic data. Download PPTX/PDF/HTML from the [diagram gallery](https://eiler2005.github.io/slidecraft/#diagrams). Browser renders have been reviewed; actual Office rendering and manual-edit checks remain [unverified](research/diagram-design-implementation-2026-10.md).
 
 Every example is also a one-pager and a Word memo on the [gallery site](https://eiler2005.github.io/slidecraft/#examples).
 

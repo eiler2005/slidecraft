@@ -87,6 +87,20 @@ jobs:
       - name: Privacy check (all tracked files)
         run: .githooks/privacy-check tree
 
+  minimum-node-smoke:
+    name: smoke (minimum Node 22.13.0)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22.13.0
+      - name: Build with the standalone bundle
+        run: node dist/slidecraft.mjs build tests/fixtures/skeleton/deck.yaml -o out/minimum-node -f pptx,pdf,png
+      - name: Read PDF text and styles without npm install
+        run: node scripts/smoke-pdf-reader.mjs
+
   windows-smoke:
     # Most people who present work on Windows: build real decks there with the committed bundle.
     name: smoke (windows-latest)

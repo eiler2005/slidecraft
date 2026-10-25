@@ -1,0 +1,1083 @@
+schemaVersion: 1
+id: diagram-gallery-midnight
+title: Native diagrams and analytical exhibits
+theme: midnight
+status: final
+sources:
+  - id: illustrative
+    title: Illustrative synthetic data — not client observations
+    illustrative: true
+slides:
+  - id: chart-takeaway-bump
+    layout: chart-takeaway
+    title: Product adoption ranks change after the launch
+    variant: bump
+    tracker: Chart with takeaway
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    chart:
+      categories:
+        - Q1
+        - Q2
+        - Q3
+        - Q4
+      series:
+        - name: Core
+          values:
+            - 1
+            - 2
+            - 1
+            - 1
+        - name: New
+          values:
+            - 2
+            - 1
+            - 2
+            - 2
+    takeaway:
+      headline: The pattern guides the next investigation
+      points:
+        - Illustrative observations use the same definition.
+  - id: chart-takeaway-ridgeline
+    layout: chart-takeaway
+    title: Response-time distributions differ across the two service groups
+    variant: ridgeline
+    tracker: Chart with takeaway
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    chart:
+      categories:
+        - "10"
+        - "20"
+        - "30"
+        - "40"
+      series:
+        - name: Core
+          values:
+            - 5
+            - 12
+            - 18
+            - 8
+        - name: New
+          values:
+            - 2
+            - 6
+            - 14
+            - 16
+    takeaway:
+      headline: The pattern guides the next investigation
+      points:
+        - Illustrative observations use the same definition.
+  - id: chart-takeaway-streamgraph
+    layout: chart-takeaway
+    title: The service mix shifts across the observed periods
+    variant: streamgraph
+    tracker: Chart with takeaway
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    chart:
+      categories:
+        - Q1
+        - Q2
+        - Q3
+        - Q4
+      series:
+        - name: Core
+          values:
+            - 5
+            - 12
+            - 18
+            - 8
+        - name: New
+          values:
+            - 2
+            - 6
+            - 14
+            - 16
+    takeaway:
+      headline: The pattern guides the next investigation
+      points:
+        - Illustrative observations use the same definition.
+  - id: chart-takeaway-dumbbell
+    layout: chart-takeaway
+    title: Response times fall across every service after the redesign
+    variant: dumbbell
+    tracker: Chart with takeaway
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    chart:
+      categories:
+        - Billing
+        - Orders
+        - Accounts
+        - Returns
+      series:
+        - name: Before
+          values:
+            - 42
+            - 35
+            - 28
+            - 20
+        - name: After
+          values:
+            - 24
+            - 22
+            - 18
+            - 15
+      unit: m
+      highlight:
+        - Billing
+    takeaway:
+      headline: Billing improves the most
+      points:
+        - Both periods use the same definition and scale.
+  - id: chart-takeaway-slopegraph
+    layout: chart-takeaway
+    title: Response times fall across every service after the redesign
+    variant: slopegraph
+    tracker: Chart with takeaway
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    chart:
+      categories:
+        - Billing
+        - Orders
+        - Accounts
+        - Returns
+      series:
+        - name: Before
+          values:
+            - 42
+            - 35
+            - 28
+            - 20
+        - name: After
+          values:
+            - 24
+            - 22
+            - 18
+            - 15
+      unit: m
+      highlight:
+        - Billing
+    takeaway:
+      headline: Billing improves the most
+      points:
+        - Both periods use the same definition and scale.
+  - id: heatmap-0
+    layout: heatmap
+    title: Support delays concentrate in billing and the renewal stage
+    tracker: Numeric heatmap
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    rows:
+      - Onboarding
+      - Billing
+      - Renewal
+    columns:
+      - Email
+      - Chat
+      - Phone
+      - Self-service
+    values:
+      - - 12
+        - 8
+        - 10
+        - 3
+      - - 28
+        - 15
+        - 24
+        - 8
+      - - 34
+        - 22
+        - 18
+        - null
+    unit: min
+    focal:
+      row: 2
+      column: 0
+  - id: treemap-0
+    layout: treemap
+    title: The platform and support account for most operating spend
+    tracker: Treemap
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    items:
+      - id: platform
+        label: Platform
+        value: 42
+      - id: support
+        label: Support
+        value: 26
+      - id: sales
+        label: Sales
+        value: 18
+      - id: admin
+        label: Admin
+        value: 14
+    unit: $M
+    focal: platform
+  - id: fishbone-0
+    layout: fishbone
+    title: Handoff and data gaps explain the onboarding delays
+    tracker: Fishbone cause analysis
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    effect: Slow onboarding
+    categories:
+      - label: People
+        causes:
+          - label: Unclear owner
+            status: supported
+      - label: Process
+        causes:
+          - label: Repeated approval
+            status: confirmed
+      - label: Data
+        causes:
+          - label: Missing records
+            status: hypothesis
+      - label: Systems
+        causes:
+          - label: Manual transfer
+            status: supported
+  - id: sankey-0
+    layout: sankey
+    title: Most service effort reaches delivery through the platform team
+    tracker: Sankey flow quantities
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    stages:
+      - Demand
+      - Team
+      - Outcome
+    nodes:
+      - id: demand
+        label: Service effort
+        stage: 0
+      - id: platform
+        label: Platform
+        stage: 1
+      - id: support
+        label: Support
+        stage: 1
+      - id: delivery
+        label: Delivered
+        stage: 2
+      - id: rework
+        label: Rework
+        stage: 2
+    flows:
+      - from: demand
+        to: platform
+        value: 70
+      - from: demand
+        to: support
+        value: 30
+      - from: platform
+        to: delivery
+        value: 60
+        highlight: true
+      - from: platform
+        to: rework
+        value: 10
+      - from: support
+        to: delivery
+        value: 20
+      - from: support
+        to: rework
+        value: 10
+    unit: days
+  - id: architecture-delta-0
+    layout: architecture-delta
+    title: A durable queue separates order acceptance from fulfilment
+    tracker: Architecture delta
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    before:
+      nodes:
+        - id: web
+          label: Storefront
+          column: 0
+          row: 0
+        - id: api
+          label: Order API
+          column: 1
+          row: 0
+        - id: worker
+          label: Worker
+          column: 1
+          row: 1
+      edges:
+        - id: call
+          from: web
+          to: api
+        - id: dispatch
+          from: api
+          to: worker
+    after:
+      nodes:
+        - id: web
+          label: Storefront
+          column: 0
+          row: 0
+        - id: api
+          label: Order API
+          column: 1
+          row: 0
+        - id: worker
+          label: Worker
+          column: 1
+          row: 1
+        - id: queue
+          label: Queue
+          column: 0
+          row: 1
+          highlight: true
+      edges:
+        - id: call
+          from: web
+          to: api
+        - id: dispatch
+          from: api
+          to: queue
+        - id: consume
+          from: queue
+          to: worker
+  - id: swimlane-0
+    layout: swimlane
+    title: Operations takes ownership after the sales handoff
+    tracker: Cross-functional swimlane
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    lanes:
+      - id: sales
+        label: Sales
+      - id: ops
+        label: Operations
+      - id: finance
+        label: Finance
+    steps:
+      - id: request
+        label: Confirm scope
+        lane: sales
+        stage: 0
+      - id: deliver
+        label: Deliver service
+        lane: ops
+        stage: 1
+        highlight: true
+      - id: bill
+        label: Issue invoice
+        lane: finance
+        stage: 2
+    edges:
+      - from: request
+        to: deliver
+      - from: deliver
+        to: bill
+  - id: dependency-graph-0
+    layout: dependency-graph
+    title: The application and reporting both depend on the shared data service
+    tracker: Dependency graph
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    nodes:
+      - id: app
+        label: Application
+        column: 0
+        row: 0
+      - id: report
+        label: Reporting
+        column: 0
+        row: 1
+      - id: data
+        label: Data service
+        column: 1
+        row: 0
+        highlight: true
+      - id: store
+        label: Database
+        column: 2
+        row: 0
+    edges:
+      - from: app
+        to: data
+      - from: report
+        to: data
+      - from: data
+        to: store
+  - id: flowchart-0
+    layout: flowchart
+    title: An explicit approval decision separates standard and exceptional orders
+    tracker: Decision flowchart
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    nodes:
+      - id: start
+        label: Receive order
+        column: 0
+        row: 0
+        shape: terminal
+      - id: check
+        label: Approved?
+        column: 1
+        row: 0
+        shape: decision
+      - id: ship
+        label: Ship order
+        column: 2
+        row: 0
+      - id: review
+        label: Manual review
+        column: 1
+        row: 1
+    edges:
+      - from: start
+        to: check
+      - from: check
+        to: ship
+        label: Yes
+      - from: check
+        to: review
+        label: No
+  - id: state-machine-0
+    layout: state-machine
+    title: An order ends only after fulfilment or explicit cancellation
+    tracker: State machine
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    initial: new
+    terminal:
+      - done
+      - cancelled
+    nodes:
+      - id: new
+        label: New
+        column: 0
+        row: 0
+      - id: processing
+        label: Processing
+        column: 1
+        row: 0
+      - id: done
+        label: Completed
+        column: 2
+        row: 0
+      - id: cancelled
+        label: Cancelled
+        column: 1
+        row: 1
+    edges:
+      - from: new
+        to: processing
+        label: Accept
+      - from: processing
+        to: done
+        label: Fulfil
+      - from: processing
+        to: cancelled
+        label: Cancel
+  - id: loop-0
+    layout: loop
+    title: Customer learning improves the service and encourages repeat use
+    tracker: Loop and flywheel
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    steps:
+      - label: Use service
+      - label: Share feedback
+      - label: Improve product
+      - label: Return
+    hub: Shared learning
+    evidence: Illustrative hypothesis
+  - id: layer-stack-0
+    layout: layer-stack
+    title: Shared controls support every layer of the service
+    tracker: Layer stack
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    layers:
+      - label: Experience
+        detail: Customer channels and service interactions
+      - label: Services
+        detail: Business capabilities and orchestration
+        highlight: true
+      - label: Data
+        detail: Trusted records and governed access
+      - label: Platform
+        detail: Identity, observability and infrastructure
+    direction: Higher layers depend on the foundation
+  - id: kanban-0
+    layout: kanban
+    title: Blocked review work constrains the next delivery batch
+    tracker: Kanban snapshot
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    columns:
+      - id: todo
+        label: Ready
+        items:
+          - id: docs
+            label: Update guide
+      - id: doing
+        label: In progress
+        limit: 2
+        items:
+          - id: api
+            label: API contract
+          - id: tests
+            label: Integration tests
+      - id: review
+        label: Review
+        limit: 2
+        items:
+          - id: security
+            label: Security review
+            blocked: true
+      - id: done
+        label: Done
+        items:
+          - id: scope
+            label: Agreed scope
+  - id: user-journey-0
+    layout: user-journey
+    title: Billing friction interrupts an otherwise smooth customer journey
+    tracker: User journey
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    persona: New subscriber
+    evidence: Illustrative research hypothesis
+    stages:
+      - label: Discover
+        action: Compare plans
+        touchpoint: Website
+        sentiment: medium-high
+      - label: Sign up
+        action: Create account
+        touchpoint: App
+        sentiment: high
+      - label: First bill
+        action: Resolve mismatch
+        touchpoint: Support
+        sentiment: low
+        pain: Unexpected charge
+      - label: Continue
+        action: Resume use
+        touchpoint: App
+        sentiment: neutral
+  - id: service-blueprint-0
+    layout: service-blueprint
+    title: A hidden billing job causes the visible retry experience
+    tracker: Service blueprint
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    stages:
+      - Sign up
+      - Use
+      - Upgrade
+      - First bill
+    layers:
+      - kind: customer
+        label: Customer
+        actions:
+          - Create account
+          - Use product
+          - Choose plan
+          - Read bill
+      - kind: frontstage
+        label: Frontstage
+        actions:
+          - Welcome
+          - Usage view
+          - Checkout
+          - Receipt
+      - kind: backstage
+        label: Backstage
+        actions:
+          - CRM write
+          - Meter usage
+          - Payment check
+          - Billing job
+      - kind: support
+        label: Support
+        actions:
+          - Email
+          - Analytics
+          - Card processor
+          - Ledger
+    focal:
+      layer: backstage
+      stage: 3
+  - id: sequence-0
+    layout: sequence
+    title: Payment confirmation precedes order acceptance
+    tracker: Sequence diagram
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    participants:
+      - id: client
+        label: Customer
+      - id: api
+        label: Order service
+      - id: payment
+        label: Payment gateway
+    messages:
+      - from: client
+        to: api
+        label: Place order
+      - from: api
+        to: payment
+        label: Authorize payment
+      - from: payment
+        to: api
+        label: Payment confirmed
+        kind: return
+      - from: api
+        to: client
+        label: Order accepted
+        kind: return
+  - id: er-diagram-0
+    layout: er-diagram
+    title: Each order references one customer through its customer key
+    tracker: Entity relationship model
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    entities: &a1
+      - id: customer
+        label: Customer
+        fields: &a2
+          - id: id
+            label: customer_id
+            type: UUID
+            key: PK
+          - id: name
+            label: name
+            type: TEXT
+      - id: order
+        label: Order
+        fields: &a3
+          - id: id
+            label: order_id
+            type: UUID
+            key: PK
+          - id: customer
+            label: customer_id
+            type: UUID
+            key: FK
+    relationships:
+      - from:
+          entity: customer
+        to:
+          entity: order
+        kind: one-many
+  - id: database-schema-0
+    layout: database-schema
+    title: Each order references one customer through its customer key
+    tracker: Physical database schema
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    entities: *a1
+    relationships:
+      - from:
+          entity: customer
+          field: id
+        to:
+          entity: order
+          field: customer
+        kind: one-many
+  - id: uml-class-0
+    layout: uml-class
+    title: Order and customer classes expose different operations
+    tracker: UML class model
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    entities:
+      - id: customer
+        label: Customer
+        fields: *a2
+        operations:
+          - updateProfile()
+      - id: order
+        label: Order
+        fields: *a3
+        operations:
+          - submit()
+          - cancel()
+    relationships:
+      - from:
+          entity: customer
+        to:
+          entity: order
+        kind: one-many
+  - id: radar-0
+    layout: radar
+    title: The target model improves coverage across every assessed capability
+    tracker: Radar comparison
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    axes:
+      - Data
+      - People
+      - Process
+      - Systems
+      - Controls
+    maximum: 5
+    series:
+      - name: Today
+        values:
+          - 2
+          - 3
+          - 2
+          - 3
+          - 2
+      - name: Target
+        values:
+          - 4
+          - 4
+          - 4
+          - 4
+          - 5
+  - id: polar-0
+    layout: polar
+    title: Demand peaks in the afternoon within the daily cycle
+    tracker: Polar radial lollipop
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    items:
+      - label: Morning
+        value: 30
+      - label: Midday
+        value: 55
+      - label: Afternoon
+        value: 80
+      - label: Evening
+        value: 45
+    unit: requests
+  - id: nested-0
+    layout: nested
+    title: The service boundary contains the application and its data domain
+    tracker: Nested containment
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    items:
+      - id: service
+        label: Service boundary
+      - id: app
+        label: Application
+        parent: service
+      - id: data
+        label: Data domain
+        parent: service
+      - id: orders
+        label: Orders
+        parent: data
+      - id: customers
+        label: Customers
+        parent: data
+  - id: venn-0
+    layout: venn
+    title: The opportunity combines customer need and delivery capability
+    tracker: Qualitative set overlap
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    sets:
+      - Customer need
+      - Delivery capability
+    intersection: Viable opportunity
+  - id: wardley-map-0
+    layout: wardley-map
+    title: Commodity infrastructure supports the differentiated customer experience
+    tracker: Wardley map
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    nodes:
+      - id: experience
+        label: Experience
+        evolution: 0.25
+        visibility: 0.85
+      - id: service
+        label: Service logic
+        evolution: 0.5
+        visibility: 0.55
+        moveTo: 0.7
+      - id: compute
+        label: Compute
+        evolution: 0.85
+        visibility: 0.2
+    edges:
+      - from: experience
+        to: service
+      - from: service
+        to: compute
+  - id: story-map-0
+    layout: story-map
+    title: The first release covers the complete customer backbone at a smaller scope
+    tracker: User story map
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    releases:
+      - Release 1
+      - Release 2
+    activities:
+      - label: Discover
+        slices:
+          - Search catalogue
+          - Saved preferences
+      - label: Choose
+        slices:
+          - Compare options
+          - Recommendations
+      - label: Buy
+        slices:
+          - Basic checkout
+          - Multiple payment methods
+      - label: Use
+        slices:
+          - Order tracking
+          - Service history
+    cutAfter: 0
+  - id: security-matrix-0
+    layout: security-matrix
+    title: Operational access is limited to the resources each role needs
+    tracker: Access permissions matrix
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    roles:
+      - Analyst
+      - Operator
+      - Administrator
+    resources:
+      - Reports
+      - Pipeline
+      - Identity
+    permissions:
+      - - read
+        - none
+        - none
+      - - read
+        - write
+        - none
+      - - admin
+        - admin
+        - admin
+  - id: exploded-axonometric-0
+    layout: exploded-axonometric
+    title: Separate layers make the product assembly easier to inspect
+    tracker: Exploded axonometric
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    parts:
+      - id: base
+        label: Foundation
+        x: 0
+        y: 0
+        width: 4
+        depth: 3
+        height: 0.3
+        level: 0
+      - id: service
+        label: Service layer
+        x: 0
+        y: 0
+        width: 4
+        depth: 3
+        height: 0.3
+        level: 1
+      - id: experience
+        label: Experience
+        x: 0
+        y: 0
+        width: 4
+        depth: 3
+        height: 0.3
+        level: 2
+  - id: axonometric-plan-0
+    layout: axonometric-plan
+    title: The plan preserves the relative positions of the service areas
+    tracker: Axonometric plan
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    parts:
+      - id: work
+        label: Workspace
+        x: 0
+        y: 0
+        width: 4
+        depth: 3
+        height: 1
+      - id: support
+        label: Support
+        x: 4.3
+        y: 0
+        width: 2
+        depth: 3
+        height: 1
+      - id: entry
+        label: Entry
+        x: 0
+        y: 3.3
+        width: 2
+        depth: 1.5
+        height: 0.5
+  - id: bubble-chart-beeswarm
+    layout: bubble-chart
+    title: Most observations cluster around the typical response time
+    variant: beeswarm
+    tracker: Bubble and scatter chart
+    status: final
+    sources:
+      - illustrative
+    notes: Synthetic demonstration. Values are illustrative, not client data.
+      Diagram marks are editable native objects; advanced charts use shapes
+      rather than embedded chart worksheets.
+    xAxis:
+      label: Response time
+      unit: ms
+    yAxis:
+      label: Packing offset, not a second measure
+    items:
+      - label: A
+        x: 18
+        y: 0
+      - label: B
+        x: 20
+        y: 0
+      - label: C
+        x: 20
+        y: 0
+      - label: D
+        x: 21
+        y: 0
+      - label: E
+        x: 34
+        y: 0
+        highlight: true

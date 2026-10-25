@@ -27,9 +27,15 @@ const SUMMARY =
   'Paste one prompt into ChatGPT, Claude or Codex and get an editable PowerPoint — action titles, sourced numbers and a review before hand-off. Not a picture of slides.';
 /** Shown first under "Example decks": a cover photo, a framework deck, the deck about SlideCraft. */
 const FEATURED = ['fde-engineer-en-v2', 'llm-concepts', 'slidecraft-overview'];
-/** Launch media copied next to the page: the explainer GIF, the social card and the icon. */
+/** The launch film lives on YouTube and as a Storygro release asset (video tooling moved to Storygro). */
+const DEMO = {
+  youtube: 'https://www.youtube.com/watch?v=vNpDca4648Q',
+  mp4: 'https://github.com/eiler2005/Storygro/releases/download/slidecraft-launch-2026-10-18/slidecraft-launch.mp4',
+  maker: 'https://github.com/eiler2005/Storygro',
+};
+/** Launch media copied next to the page: the demo poster, the social card and the icon. */
 const MEDIA: [string, string][] = [
-  ['docs/media/launch/slidecraft-story.gif', 'slidecraft-story.gif'],
+  ['docs/media/launch/slidecraft-launch-poster.png', 'slidecraft-launch-poster.png'],
   ['docs/media/launch/social-preview.png', 'og.png'],
   ['docs/media/launch/icon-240.png', 'icon.png'],
 ];
@@ -129,6 +135,13 @@ function page(d: {
         `<figure class="card"><img loading="lazy" src="gallery/layouts/${l.id}--${ex.variant ?? l.variants[0]}.png" alt="${esc(`${l.name} — ${ex.variant ?? l.variants[0]}`)}"><figcaption><code>${l.id}</code> · ${esc(ex.variant ?? l.variants[0])}<br><span>${esc(l.purpose)}</span></figcaption></figure>`,
     ),
   ).join('');
+  const diagramLayouts = LAYOUTS.filter((l) => l.tags?.includes('diagram'));
+  const diagrams = diagramLayouts
+    .map(
+      (l) =>
+        `<figure class="card"><a href="gallery/layouts/${l.id}--${l.variants[0]}.png"><img loading="lazy" src="gallery/layouts/${l.id}--${l.variants[0]}.png" alt="${esc(l.name)} as editable PowerPoint objects"></a><figcaption><b>${esc(l.name)}</b><br><code>${l.id}</code><br>${esc(l.purpose)}</figcaption></figure>`,
+    )
+    .join('');
   const card = (e: (typeof d.examples)[number]) =>
     // the cover opens the HTML deck: page through it in the browser (← →, N for notes)
     `<figure class="card">${(() => {
@@ -172,7 +185,9 @@ header{padding:56px 0 24px}h1{font-size:clamp(28px,5vw,48px);line-height:1.1;mar
 nav{display:flex;gap:16px;flex-wrap:wrap;margin:16px 0}h2{margin:56px 0 8px;font-size:26px}h2+p{color:var(--muted);margin-top:0}
 .hero{width:100%;border-radius:10px;border:1px solid var(--rule)}
 .cta{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0 28px}.btn{display:inline-block;padding:10px 18px;border-radius:8px;border:1px solid var(--accent);font-weight:600;text-decoration:none}
-.btn.primary{background:var(--accent);color:var(--bg)}.gif{width:100%;height:auto;display:block;border-radius:10px;border:1px solid var(--rule)}
+.btn.primary{background:var(--accent);color:var(--bg)}
+.demo{scroll-margin-top:24px}.demo .play{position:relative;display:block;border-radius:10px;overflow:hidden}.demo .play img{border-radius:10px;aspect-ratio:16/9}.demo .play span{position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;background:rgba(11,31,58,.82);box-shadow:0 6px 24px rgba(0,0,0,.35)}.demo .play span::after{content:"";position:absolute;left:33px;top:24px;border-style:solid;border-width:18px 0 18px 28px;border-color:transparent transparent transparent #fff}
+.demo figcaption{display:flex;gap:8px 16px;flex-wrap:wrap;font-size:14px;padding-top:10px}
 .prompt{position:relative;background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:16px 16px 12px}.prompt pre{margin:0;white-space:pre-wrap;font:14px/1.5 ui-monospace,Menlo,Consolas,monospace;color:var(--ink)}
 .prompt button{position:absolute;top:10px;right:10px;font:600 13px/1 -apple-system,"Segoe UI",Arial,sans-serif;padding:8px 12px;border-radius:6px;border:1px solid var(--accent);background:var(--accent);color:var(--bg);cursor:pointer}
 .points{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin:24px 0 0;padding:0;list-style:none}.points li{background:var(--card);border:1px solid var(--rule);border-radius:10px;padding:14px 16px}.points b{display:block;margin-bottom:4px}
@@ -186,10 +201,11 @@ figcaption{font-size:13px;color:var(--muted);padding-top:6px}figcaption b{color:
 footer{color:var(--muted);font-size:13px;border-top:1px solid var(--rule);margin-top:64px;padding-top:16px}
 code{font-size:13px}
 </style></head><body><main>
-<header><nav><a href="#start">One prompt</a><a href="#examples">Examples</a><a href="#storylines">Storylines × themes</a><a href="#layouts">Layouts</a><a href="${REPO}/tree/main/docs">Documentation</a><a href="${REPO}">GitHub</a></nav>
+<header><nav><a href="#start">One prompt</a><a href="#demo">Watch demo</a><a href="#examples">Examples</a><a href="#diagrams">Diagrams</a><a href="#storylines">Storylines × themes</a><a href="#layouts">Layouts</a><a href="${REPO}/tree/main/docs">Documentation</a><a href="${REPO}">GitHub</a></nav>
 <h1>SlideCraft — ${esc(TAGLINE)}</h1><p>${esc(SUMMARY)}</p>
 <div class="cta"><a class="btn primary" href="#start">Copy the prompt</a><a class="btn" href="#examples">See example decks</a><a class="btn" href="${REPO}">GitHub</a></div>
-<img class="gif" src="slidecraft-story.gif" width="1280" height="720" alt="SlideCraft in 30 seconds: one prompt, the action-title chain, cover options, the built deck, a wrong total caught, and the editable PowerPoint"></header>
+<figure class="demo" id="demo"><a class="play" href="${DEMO.youtube}" aria-label="Watch the SlideCraft demo on YouTube (65 seconds)"><img src="slidecraft-launch-poster.png" width="1920" height="1080" alt="SlideCraft demo: editable PowerPoint decks from one prompt"><span></span></a>
+<figcaption><span>SlideCraft in 65 seconds · English audio and on-screen captions</span><a href="${DEMO.youtube}">Watch on YouTube</a><a href="${DEMO.mp4}">Download MP4</a><span>Made with <a href="${DEMO.maker}">Storygro</a></span></figcaption></figure></header>
 <h2 id="start">Start with one prompt</h2><p>No install, no YAML. Paste this into ChatGPT (agent mode), Codex, Claude or Claude Code — any assistant that can run code and open a link — and fill in the brackets.</p>
 <div class="prompt"><button type="button" id="copy">Copy</button><pre id="prompt">${esc(d.prompt)}</pre></div>
 <p class="note">The assistant runs <code>npx @eiler2005/slidecraft</code> on its side, shows you the titles and covers to approve, then hands you the .pptx and a PDF. Tested with Codex and Claude Code. For repeat work, <a href="${REPO}#install">install it into your assistant</a>.</p>
@@ -197,6 +213,8 @@ code{font-size:13px}
 <h2 id="examples">Example decks</h2><p>Built in CI from <code>examples/</code> with SlideCraft ${VERSION}. Click a cover to page through the deck in your browser, or download any format.</p><div class="grid">${featured.map(card).join('')}</div>
 <h3>More examples</h3><div class="grid">${ex}</div>
 <p><img class="hero" loading="lazy" src="${d.hero}" alt="Slides from SlideCraft example decks"></p>
+<h2 id="diagrams">Diagrams you can edit in PowerPoint</h2><p>${diagramLayouts.length} native diagram layouts, from heatmaps and Sankey flows to architecture changes, service blueprints and data models. Choose the message, keep your theme, and edit the individual objects. Advanced analytical variants include dumbbell, slopegraph, bump, ridgeline, streamgraph and beeswarm.</p>
+<p><a href="examples/diagram-gallery/diagram-gallery.pptx">Download the light PowerPoint gallery</a> · <a href="examples/diagram-gallery-midnight/diagram-gallery-midnight.pptx">Dark gallery</a> · <a href="${REPO}/blob/main/docs/how-to/create-diagrams.md">Contracts, examples and import guide</a></p><p>Available in the development repository; not yet an npm release. Browser examples reviewed; actual Office rendering and manual editing remain unverified. <a href="${REPO}/blob/main/docs/research/diagram-design-implementation-2026-10.md">Validation evidence and limits</a>.</p><div class="grid">${diagrams}</div>
 <h2 id="storylines">Storylines × themes</h2><p>${d.storylines.length} storylines in all ${d.themes.length} themes — the storyline is the task, the theme is the look; any pair works.</p>${matrix}
 <h2 id="layouts">Layouts</h2><p>${LAYOUTS.length} layouts — each one a content contract with capacity limits. Shown in consulting-classic.</p><div class="grid">${layouts}</div>
 <footer>SlideCraft ${VERSION} · PolyForm Shield 1.0.0, free for individuals and companies · <a href="${REPO}/blob/main/COMMERCIAL.md">commercial licence</a> · Using it at a company? <a href="mailto:denis.ermilov@gmail.com?subject=SlideCraft%20Teams%20early%20access">Teams &amp; brand-kit early access</a> · generated by <code>slidecraft site</code> · <a href="${REPO}">${basename(REPO)}</a></footer>

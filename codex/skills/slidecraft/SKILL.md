@@ -5,7 +5,7 @@ description: Create a presentation, slide deck, pitch deck, board update, propos
 
 # SlideCraft for Codex
 
-SlideCraft lives at `{{SLIDECRAFT_ROOT}}`. CLI (zero install, Node ≥ 22.12):
+SlideCraft lives at `{{SLIDECRAFT_ROOT}}`. CLI (zero install, Node ≥ 22.13):
 
 ```sh
 sc() { node "{{SLIDECRAFT_ROOT}}/dist/slidecraft.mjs" "$@"; }

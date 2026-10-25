@@ -1,6 +1,6 @@
 # Your first deck in 10 minutes
 
-> **Audience:** first-time users · **Prerequisites:** Claude Code, Node ≥ 22.12 · **Last reviewed:** 2026-10-10
+> **Audience:** first-time users · **Prerequisites:** Claude Code, Node ≥ 22.13 · **Last reviewed:** 2026-10-10
 
 You will install the plugin, describe a deck in one sentence, approve four checkpoints and get an editable PowerPoint and a PDF.
 

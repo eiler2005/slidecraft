@@ -122,7 +122,7 @@ async function drawNode(doc: Doc, n: SceneNode): Promise<void> {
     case 'path': {
       doc.save();
       doc.path(pathData(n.segments, P));
-      if (n.fill) doc.fillColor(n.fill);
+      if (n.fill) doc.fillOpacity(n.fillOpacity ?? 1).fillColor(n.fill);
       if (n.stroke) applyStroke(doc, n.stroke);
       if (n.round) doc.lineCap('round').lineJoin('round');
       if (n.fill && n.stroke) doc.fillAndStroke();

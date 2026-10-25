@@ -72,25 +72,29 @@ interface TextItem {
   size: number;
 }
 async function pdfItems(file: string): Promise<TextItem[][]> {
-  const doc = await pdfjs.getDocument({ data: new Uint8Array(readFileSync(file)), verbosity: 0 })
-    .promise;
-  const pages: TextItem[][] = [];
-  for (let p = 1; p <= doc.numPages; p++) {
-    const page = await doc.getPage(p);
-    const h = page.view[3]!;
-    const tc = await page.getTextContent({ disableNormalization: true });
-    pages.push(
-      (tc.items as { str: string; transform: number[] }[])
-        .filter((i) => i.str.trim())
-        .map((i) => ({
-          s: i.str,
-          x: i.transform[4]!,
-          y: h - i.transform[5]!,
-          size: Math.hypot(i.transform[2]!, i.transform[3]!),
-        })),
-    );
+  const task = pdfjs.getDocument({ data: new Uint8Array(readFileSync(file)), verbosity: 0 });
+  try {
+    const doc = await task.promise;
+    const pages: TextItem[][] = [];
+    for (let p = 1; p <= doc.numPages; p++) {
+      const page = await doc.getPage(p);
+      const h = page.view[3]!;
+      const tc = await page.getTextContent({ disableNormalization: true });
+      pages.push(
+        (tc.items as { str: string; transform: number[] }[])
+          .filter((i) => i.str.trim())
+          .map((i) => ({
+            s: i.str,
+            x: i.transform[4]!,
+            y: h - i.transform[5]!,
+            size: Math.hypot(i.transform[2]!, i.transform[3]!),
+          })),
+      );
+    }
+    return pages;
+  } finally {
+    await task.destroy();
   }
-  return pages;
 }
 function pdfWords(file: string, page: number) {
   const x = execFileSync(

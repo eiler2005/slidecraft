@@ -12,7 +12,7 @@ sources:
 slides:
   - id: summary
     layout: exec-summary
-    title: <Answer first: the governing thought as a claim>
+    title: "<Answer first: the governing thought as a claim>"
     ghost: { exhibit: "SCR + ask", data: "none", confidence: solid }
   - id: <slide-id>
     layout: <layout id from `sc exhibits --json`>

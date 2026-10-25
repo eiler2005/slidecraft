@@ -5,6 +5,25 @@
 
 Run from a clone with `node dist/slidecraft.mjs <command>` (zero install) or `npx tsx src/cli/main.ts <command>` during development. Every command accepts `--json`; when stdout is not a terminal, commands with structured results print JSON (the others ignore the flag and print plain text).
 
+## `import-diagram`
+
+Redesign a bounded Mermaid, draw.io or Excalidraw diagram as native editable slide objects, with an import ledger
+
+```
+Usage: slidecraft slidecraft import-diagram [options] <file>
+
+Redesign a bounded Mermaid, draw.io or Excalidraw diagram as native editable
+slide objects, with an import ledger
+
+Arguments:
+  file             source diagram file
+
+Options:
+  -o, --out <dir>  new deck folder (default: "slidecraft/imported-diagram")
+  --json           machine-readable output
+  -h, --help       display help for command
+```
+
 ## `rebuild`
 
 Rebuild an original native PPTX through shared geometry into editable PPTX and HTML

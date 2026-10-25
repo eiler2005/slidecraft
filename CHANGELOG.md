@@ -4,6 +4,17 @@ All notable changes to SlideCraft. Format: [Keep a Changelog](https://keepachang
 
 ## [Unreleased]
 
+### Added
+- 27 native diagram layouts: numeric heatmap, treemap, Sankey, fishbone, architecture delta, swimlane, dependency graph, flowchart, state machine, sequence, loop, layer stack, Kanban, user journey, service blueprint, ER, physical database schema, UML class, radar, polar, nested containment, Venn, Wardley map, story map, access matrix and two axonometric views. Every layout has a bounded contract and a synthetic example across all themes.
+- Editable shape-based dumbbell, slopegraph, bump, observed ridgeline, streamgraph and beeswarm variants; shared numeric geometry and label spreading.
+- Bounded semantic `import-diagram` for Mermaid, draw.io and Excalidraw, with a loss ledger and explicit unsupported-input diagnostics.
+- Deck-level report/presentation readability; light/dark native diagram example decks; a dedicated website gallery and authoring guide.
+
+### Fixed
+- Cubic native paths preserve fill opacity in HTML/SVG, native PDF and editable PPTX. The optional evaluation adapter reports unsupported paths explicitly.
+- Shared graph routing, identity/endpoint checks and quantitative geometry checks reject misleading diagrams. Plot bands can explicitly opt out of text-container containment.
+- Contrast correction chooses an achievable black/white endpoint on mid-tone fills.
+
 ## [0.7.8] — 2026-10-19
 
 ### Fixed

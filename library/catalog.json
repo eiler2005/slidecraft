@@ -161,9 +161,284 @@
         "column",
         "stacked",
         "line",
-        "combo"
+        "combo",
+        "dumbbell",
+        "slopegraph",
+        "bump",
+        "ridgeline",
+        "streamgraph"
       ],
       "purpose": "Use for one chart that proves the title, with the interpretation in a side panel.",
+      "frame": "standard"
+    },
+    {
+      "id": "heatmap",
+      "name": "Numeric heatmap",
+      "group": "numbers",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for a numeric row-by-column pattern on one explicit scale; missing observations remain distinct from zero.",
+      "frame": "standard"
+    },
+    {
+      "id": "treemap",
+      "name": "Treemap",
+      "group": "numbers",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for comparing parts of one positive total by area, with deterministic squarified geometry.",
+      "frame": "standard"
+    },
+    {
+      "id": "fishbone",
+      "name": "Fishbone cause analysis",
+      "group": "decide",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for investigating grouped causes of one observed effect, with explicit evidence status.",
+      "frame": "standard"
+    },
+    {
+      "id": "sankey",
+      "name": "Sankey flow quantities",
+      "group": "numbers",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for a conserved quantity that splits and merges across three stages on one shared scale.",
+      "frame": "standard"
+    },
+    {
+      "id": "architecture-delta",
+      "name": "Architecture delta",
+      "group": "decide",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for two synchronized system topologies with stable identities and a computed change ledger.",
+      "frame": "standard"
+    },
+    {
+      "id": "swimlane",
+      "name": "Cross-functional swimlane",
+      "group": "sequence",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for a process whose steps cross named owners through explicit handoffs.",
+      "frame": "standard"
+    },
+    {
+      "id": "dependency-graph",
+      "name": "Dependency graph",
+      "group": "decide",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for directed dependencies with shared parents and explicitly represented cycles.",
+      "frame": "standard"
+    },
+    {
+      "id": "flowchart",
+      "name": "Decision flowchart",
+      "group": "sequence",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for decision logic with labelled branches, merges and bounded return paths.",
+      "frame": "standard"
+    },
+    {
+      "id": "state-machine",
+      "name": "State machine",
+      "group": "sequence",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for one subject progressing through named states, guarded transitions and terminal outcomes.",
+      "frame": "standard"
+    },
+    {
+      "id": "loop",
+      "name": "Loop and flywheel",
+      "group": "sequence",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for a closed reinforcing cycle, with an optional accumulated result and explicit evidence.",
+      "frame": "standard"
+    },
+    {
+      "id": "layer-stack",
+      "name": "Layer stack",
+      "group": "decide",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for ordered abstraction or control layers; band thickness carries no quantitative meaning.",
+      "frame": "standard"
+    },
+    {
+      "id": "kanban",
+      "name": "Kanban snapshot",
+      "group": "sequence",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for a static work-in-progress census by state, with visible limits and blocked items.",
+      "frame": "standard"
+    },
+    {
+      "id": "user-journey",
+      "name": "User journey",
+      "group": "sequence",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for one persona across experience stages, with sourced ordinal sentiment and explicit pain points.",
+      "frame": "standard"
+    },
+    {
+      "id": "service-blueprint",
+      "name": "Service blueprint",
+      "group": "sequence",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for customer, frontstage and backstage actions on one shared stage grid with a line of visibility.",
+      "frame": "standard"
+    },
+    {
+      "id": "sequence",
+      "name": "Sequence diagram",
+      "group": "sequence",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for ordered messages between participants, including returns and self-calls; unsupported fragments require a detail view.",
+      "frame": "standard"
+    },
+    {
+      "id": "er-diagram",
+      "name": "Entity relationship model",
+      "group": "decide",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for entities, attributes and explicit cardinality; physical foreign keys use database-schema.",
+      "frame": "standard"
+    },
+    {
+      "id": "database-schema",
+      "name": "Physical database schema",
+      "group": "decide",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for physical tables and exact column-to-column foreign-key relationships.",
+      "frame": "standard"
+    },
+    {
+      "id": "uml-class",
+      "name": "UML class model",
+      "group": "decide",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for classes with attributes, operations and typed inheritance or ownership relationships.",
+      "frame": "standard"
+    },
+    {
+      "id": "radar",
+      "name": "Radar comparison",
+      "group": "numbers",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for a small number of entities assessed on the same bounded quantitative criteria.",
+      "frame": "standard"
+    },
+    {
+      "id": "polar",
+      "name": "Polar radial lollipop",
+      "group": "numbers",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for one nonnegative quantitative series over ordered cyclic categories; radius is linear.",
+      "frame": "standard"
+    },
+    {
+      "id": "nested",
+      "name": "Nested containment",
+      "group": "decide",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for qualitative scope and containment through up to three nested levels.",
+      "frame": "standard"
+    },
+    {
+      "id": "venn",
+      "name": "Qualitative set overlap",
+      "group": "decide",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for qualitative overlap between sets; circle and overlap areas do not encode quantities.",
+      "frame": "standard"
+    },
+    {
+      "id": "wardley-map",
+      "name": "Wardley map",
+      "group": "decide",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for a value chain positioned by visibility and evolution, with dependencies and explicit movement.",
+      "frame": "standard"
+    },
+    {
+      "id": "story-map",
+      "name": "User story map",
+      "group": "sequence",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for a narrative activity backbone crossed by explicit release slices and a scope cut line.",
+      "frame": "standard"
+    },
+    {
+      "id": "security-matrix",
+      "name": "Access permissions matrix",
+      "group": "decide",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for explicit per-role resource permissions; access rights are distinct from RACI responsibility.",
+      "frame": "standard"
+    },
+    {
+      "id": "exploded-axonometric",
+      "name": "Exploded axonometric",
+      "group": "decide",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for parts pulled apart along one projection axis; levels determine the assembly separation.",
+      "frame": "standard"
+    },
+    {
+      "id": "axonometric-plan",
+      "name": "Axonometric plan",
+      "group": "decide",
+      "variants": [
+        "diagram"
+      ],
+      "purpose": "Use for non-overlapping spatial footprints on one shared dimetric plan, preserving relative positions.",
       "frame": "standard"
     },
     {
@@ -184,7 +459,8 @@
       "variants": [
         "bubble",
         "scatter",
-        "portfolio"
+        "portfolio",
+        "beeswarm"
       ],
       "purpose": "Use for items positioned on two measured dimensions — with bubble size for a third, or quadrant dividers for a portfolio (growth-share) view.",
       "frame": "standard"

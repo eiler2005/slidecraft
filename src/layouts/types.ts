@@ -16,6 +16,7 @@ import type {
   TableNode,
   TextNode,
 } from '../engine/scene.ts';
+import type { PathSeg } from '../engine/svg-path.ts';
 import type { Diagnostic } from '../qa/codes.ts';
 import type { FontSpec, Theme } from '../spec/theme.ts';
 
@@ -37,6 +38,8 @@ export interface LayoutDef<S extends z.ZodObject = z.ZodObject> {
   id: string;
   name: string;
   group: LayoutGroup;
+  /** Catalogue facets; never a second layout registry. */
+  tags?: 'diagram'[];
   /** Purpose-first description: "Use for X when Y." */
   purpose: string;
   useWhen: string[];
@@ -115,6 +118,8 @@ export interface ComposeContext {
     points: [number, number][],
     opts?: Omit<PolygonNode, 'kind' | 'box' | 'points'>,
   ): PolygonNode;
+  /** Native editable freeform, with shared bounds and optional source pointer. */
+  path(segments: PathSeg[], opts?: Omit<PathNode, 'kind' | 'box' | 'segments'>): PathNode;
   line(
     x1: number,
     y1: number,

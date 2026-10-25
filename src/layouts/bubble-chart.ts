@@ -3,6 +3,7 @@ import { ensureContrast, mix } from '../engine/color.ts';
 import { cols } from '../engine/format.ts';
 import type { Box } from '../engine/scene.ts';
 import { diag } from '../qa/codes.ts';
+import { beeswarm } from './advanced-charts.ts';
 import { decimalsFor, fmt, labelWidth, linearScale, takeawayPanel, xAxis } from './kit.ts';
 import type { LayoutDef } from './types.ts';
 
@@ -74,7 +75,7 @@ export const bubbleChart: LayoutDef<typeof schema> = {
     'Positions are judgements, not numbers — use matrix-2x2',
     'One dimension only — use chart-takeaway (bar)',
   ],
-  variants: ['bubble', 'scatter', 'portfolio'],
+  variants: ['bubble', 'scatter', 'portfolio', 'beeswarm'],
   frame: 'standard',
   master: 'content',
   schema,
@@ -136,8 +137,28 @@ export const bubbleChart: LayoutDef<typeof schema> = {
       },
       sources: ['fin-plan'],
     },
+    {
+      title: 'Most observations cluster around the typical response time',
+      variant: 'beeswarm',
+      sources: ['illustrative'],
+      content: {
+        xAxis: { label: 'Response time', unit: 'ms' },
+        yAxis: { label: 'Packing offset, not a second measure' },
+        items: [
+          { label: 'A', x: 18, y: 0 },
+          { label: 'B', x: 20, y: 0 },
+          { label: 'C', x: 20, y: 0 },
+          { label: 'D', x: 21, y: 0 },
+          { label: 'E', x: 34, y: 0, highlight: true },
+        ],
+      },
+    },
   ],
   compose(ctx, c) {
+    if (ctx.variant === 'beeswarm') {
+      beeswarm(ctx, ctx.body, c);
+      return;
+    }
     const { colors, theme } = ctx;
     const sized = ctx.variant !== 'scatter';
     if (sized && c.items.some((it) => it.size === undefined))

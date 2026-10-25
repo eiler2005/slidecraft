@@ -8,6 +8,7 @@ import type { Format } from './format.ts';
 import { label, typeset } from './i18n.ts';
 import { iconNode } from './icons.ts';
 import type { Box, Paragraph, SceneNode, TableCell, TableNode, TextStyle } from './scene.ts';
+import { pathBounds } from './svg-path.ts';
 import { balanceLines, fitText, layoutText, makeTextNode, para, plainText } from './text.ts';
 
 export interface ContextInit {
@@ -195,6 +196,15 @@ export function createContext(
         points,
         ...opts,
       };
+      nodes.push(n);
+      return n;
+    },
+
+    path(segments, opts = {}) {
+      const box = pathBounds(segments);
+      if (!segments.length || Object.values(box).some((v) => !Number.isFinite(v)))
+        throw new Error('A native path requires finite geometry');
+      const n = { kind: 'path' as const, box, segments, ...opts };
       nodes.push(n);
       return n;
     },

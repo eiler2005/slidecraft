@@ -59,6 +59,8 @@ Start from the sentence in the title. Identify the **relationship** it claims, t
 
 ## Relationship patterns in detail
 
+**Native diagrams.** Numeric matrices use `heatmap`; quantities splitting/merging use `sankey`; parts by area use `treemap`. Use `architecture-delta` for stable before/after topology, `swimlane` for ownership handoffs, `sequence` for actor messages and `state-machine` for one subject's lifecycle. Journey sentiment needs evidence; service blueprints need the visibility boundary. See [diagram patterns](diagram-patterns.md), the runtime contracts and the repository's [diagram guide](../../docs/how-to/create-diagrams.md). Paired comparisons and distribution views are variants of the existing chart layouts, with editable shapes rather than Office chart worksheets.
+
 **Comparison.** Same unit, same period, same base for every item. Sort descending; highlight the item the title names. If the title says "A is twice B", the chart must make that visible (same axis, zero baseline).
 
 **Trend.** Equal time intervals. Mark the event the title refers to (a launch, a price change) in the takeaway or with a highlighted period. Do not imply causation from a trend alone.

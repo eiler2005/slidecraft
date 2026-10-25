@@ -24,6 +24,9 @@ Runtime libraries inlined into dist/slidecraft.mjs (licenses retained by their a
 
 Methodology
   - The consulting methodology generalises the author's earlier internal work (client-ai-agents).
+  - Native diagram research was informed by Cathryn Lavery's Diagram Design (MIT,
+    https://github.com/cathrynlavery/diagram-design, inspected commit 0b9b10cab3dbf695642fa1a6c4b4f60df9083689).
+    SlideCraft's TypeScript diagram implementation is original; no upstream code, fonts or assets are bundled.
 
 Not included
   - @oai/artifact-tool (OpenAI, proprietary, internal evaluation and testing only) is never

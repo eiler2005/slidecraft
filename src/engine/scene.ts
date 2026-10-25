@@ -118,6 +118,23 @@ export interface Stroke {
   dash?: 'solid' | 'dash' | 'dot';
 }
 
+/** Semantic graph identity survives composition; geometry is checked before serialization. */
+export interface DiagramMeta {
+  kind: 'node' | 'edge';
+  id: string;
+  from?: string;
+  to?: string;
+  /** Unrounded orthogonal route, in inches; data curves deliberately do not use this contract. */
+  route?: [number, number][];
+}
+
+/** Quantitative marks retain their data-to-geometry contract for independent QA. */
+export interface DiagramEncoding {
+  dimension: 'area' | 'height' | 'ribbon';
+  value: number;
+  scale: number;
+}
+
 export interface RectNode {
   kind: 'rect';
   box: Box;
@@ -127,6 +144,10 @@ export interface RectNode {
   stroke?: Stroke;
   /** Corner radius, inches. */
   radius?: number;
+  /** False for plot bands/backdrops that do not constrain nearby text. */
+  textContainer?: boolean;
+  diagram?: DiagramMeta;
+  encoding?: DiagramEncoding;
   role?: string;
 }
 
@@ -135,6 +156,7 @@ export interface EllipseNode {
   box: Box;
   fill?: Color;
   fillOpacity?: number;
+  diagram?: DiagramMeta;
   stroke?: Stroke;
   role?: string;
 }
@@ -147,6 +169,7 @@ export interface PolygonNode {
   points: [number, number][];
   fill?: Color;
   fillOpacity?: number;
+  diagram?: DiagramMeta;
   stroke?: Stroke;
   role?: string;
 }
@@ -162,6 +185,8 @@ export interface PathNode {
   fillOpacity?: number;
   stroke?: Stroke;
   round?: boolean;
+  diagram?: DiagramMeta;
+  encoding?: DiagramEncoding;
   role?: string;
   pointer?: string;
 }

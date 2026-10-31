@@ -72,12 +72,12 @@
     "comparison": "tsx scripts/comparison.ts"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.6.2",
+    "@biomejs/biome": "2.6.3",
     "@resvg/resvg-wasm": "2.6.2",
-    "@tabler/icons": "3.49.0",
+    "@tabler/icons": "3.50.0",
     "@types/fontkit": "2.0.9",
     "@types/node": "22.20.5",
-    "@types/pdfkit": "0.17.6",
+    "@types/pdfkit": "0.17.7",
     "commander": "15.0.0",
     "esbuild": "0.28.2",
     "fontkit": "2.0.4",
